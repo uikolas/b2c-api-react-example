@@ -31,6 +31,8 @@
   ],
   "homepage": "https://bitbucket.org/gordienkotolik/boilerplate.git",
   "dependencies": {
+    "@material-ui/core": "^3.0.3",
+    "@material-ui/icons": "^3.0.1",
     "body-parser": "1.18.3",
     "class-validator": "0.8.5",
     "core-js": "2.5.7",
@@ -69,6 +71,7 @@
     "@types/history": "4.6.2",
     "@types/html-webpack-plugin": "2.30.3",
     "@types/jest": "23.1.1",
+    "@types/material-ui": "^0.21.5",
     "@types/mocha": "5.2.2",
     "@types/node": "^10.3.4",
     "@types/prop-types": "15.5.3",
