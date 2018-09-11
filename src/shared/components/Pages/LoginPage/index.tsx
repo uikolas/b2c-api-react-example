@@ -110,7 +110,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 xs={12}
                 container
                 direction="row"
-                alignItems="center"
+                alignItems="flex-start"
           >
             <Grid item xs={12} sm={6}
                   direction="column"
