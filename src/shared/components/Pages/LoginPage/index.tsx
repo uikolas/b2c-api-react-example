@@ -30,9 +30,21 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
   },
+  container: {
+    position: 'relative',
+    paddingTop: theme.spacing.unit * 6,
+  },
+  divider: {
+    border: '6px solid #aaa',
+    height: '80%',
+    position: 'absolute',
+    top: 0,
+    left: 'calc(50% - 6px)',
+  },
   button: {
     marginLeft: theme.spacing.unit,
   },
+
 });
 
 interface LoginPageProps extends WithStyles<typeof styles> {
@@ -111,6 +123,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 container
                 direction="row"
                 alignItems="flex-start"
+                className={classes.container}
           >
             <Grid item xs={12} sm={6}
                   direction="column"
@@ -119,7 +132,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                   alignItems="center">
               <LoginForm handleSubmit={this.handleSubmitLoginForm} />
             </Grid>
-
+            <div className={classes.divider}></div>
             <Grid item xs={12} sm={6}
                   direction="column"
                   container
