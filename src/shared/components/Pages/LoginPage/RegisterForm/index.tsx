@@ -11,12 +11,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {styles} from '../styles/form/index';
 
 interface RegisterFormProps extends WithStyles<typeof styles> {
-  handleSubmit(event: React.SyntheticEvent): void;
+  handleSubmit: Function;
 }
 
 interface RegisterFormState {
   salutation: string;
-  agreement: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  acceptedTerms: boolean;
 }
 
 type Salutation = {
@@ -28,7 +33,12 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
 
   public state = {
     salutation: '',
-    agreement: false,
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+    acceptedTerms: false,
   };
 
   private salutations: Array<Salutation> = [
@@ -54,8 +64,20 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
 
   public handleChangeAgreement = (event: any): void => {
     this.setState({
-      agreement: !this.state.agreement,
+      acceptedTerms: !this.state.acceptedTerms,
     });
+  }
+
+  public handleChange = (name: string) => (event: any) => {
+    this.setState({
+      ...this.state, [name]: event.target.value
+    });
+  }
+
+  public handleSubmitForm = (e: any) => {
+    e.preventDefault();
+
+    this.props.handleSubmit(this.state);
   }
 
   public render() {
@@ -66,7 +88,7 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
         <Typography variant="title" color="inherit" noWrap>
           Register
         </Typography>
-        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.props.handleSubmit}>
+        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmitForm}>
 
           <TextField
             required
@@ -101,10 +123,11 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
             label="First Name"
             name="firstName"
             type="text"
-            defaultValue=""
+            value={this.state.firstName}
             className={classes.textField}
             margin="normal"
             fullWidth
+            onChange={this.handleChange('firstName')}
             InputLabelProps={{
               shrink: true,
             }}
@@ -119,7 +142,8 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
             label="Last Name"
             name="lastame"
             type="text"
-            defaultValue=""
+            value={this.state.lastName}
+            onChange={this.handleChange('lastName')}
             className={classes.textField}
             margin="normal"
             fullWidth
@@ -137,7 +161,8 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
             label="Email"
             name="email"
             type="email"
-            defaultValue=""
+            value={this.state.email}
+            onChange={this.handleChange('email')}
             className={classes.textField}
             margin="normal"
             fullWidth
@@ -163,7 +188,8 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
                 label="Password"
                 name="password"
                 type="password"
-                defaultValue=""
+                value={this.state.password}
+                onChange={this.handleChange('password')}
                 className={classes.textField}
                 margin="normal"
                 fullWidth
@@ -182,7 +208,8 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
                 label="Confirm password"
                 name="confirmPassword"
                 type="password"
-                defaultValue=""
+                value={this.state.passwordConfirmation}
+                onChange={this.handleChange('passwordConfirmation')}
                 className={classes.textField}
                 margin="normal"
                 fullWidth
@@ -199,17 +226,16 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
           <FormControlLabel
             control={
               <Checkbox
-                checked={this.state.agreement}
+                checked={this.state.acceptedTerms}
                 onChange={this.handleChangeAgreement}
-                name="agreement"
-                value="agreement"
+                name="acceptedTerms"
               />
             }
             label="I agree with ..."
           />
 
 
-          <Button variant="contained" className={classes.button}>
+          <Button type="submit" variant="contained" className={classes.button}>
             Register
           </Button>
 
