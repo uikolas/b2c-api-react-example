@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import {styles} from '../styles/formStyles/index';
+import {styles} from '../styles/form/index';
 
 interface RegisterFormProps extends WithStyles<typeof styles> {
   handleSubmit: Function;
