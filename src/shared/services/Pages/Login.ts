@@ -1,41 +1,33 @@
 import {config} from '../../config';
-import ApiClient from '../api/ApiClient';
+import api from '../api/ApiClient';
 
-const api = new ApiClient();
 
 export class PagesLoginService {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
     try {
-      // const body = {
-      //   "data": {
-      //     "type": "customers",
-      //     "attributes": {
-      //       "salutation": "Mr",
-      //       "firstName": "First",
-      //       "lastName": "test",
-      //       "email": "zfort@test.com",
-      //       "password": "zzzzzzzz",
-      //       "passwordConfirmation": "zzzzzzzz",
-      //       "acceptedTerms": true
-      //     }
-      //   }
-      // };
-
-      console.info('loginService', payload);
       const body = {
         data: {
           type: "customers",
           attributes: payload,
         }
       };
-      const result: any = await api.post(`${config.API_URL}customers`, body )
-      console.info(result);
+      const respose: any = await api.post('customers', body);
+      console.info(respose);
 
-      dispatch({
-        type: ACTION_TYPE + '_FULFILLED',
-        payload: result,
-      });
-      return result;
+      if (respose.ok) {
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          payload: respose.data,
+        });
+        return respose.data;
+      } else {
+        console.error('register', respose.problem);
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: respose.problem,
+        });
+        return null;
+      }
 
     } catch (error) {
       console.error('register', error);

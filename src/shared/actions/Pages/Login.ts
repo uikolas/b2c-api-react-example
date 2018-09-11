@@ -22,7 +22,6 @@ export const sendLoginAction = function (payload: any) {
 
 export const customerRegisterAction = function (payload: any) {
   return (dispatch: Function, getState: Function) => {
-    console.info('action', payload);
     PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
     dispatch(registerPendingState);
   };

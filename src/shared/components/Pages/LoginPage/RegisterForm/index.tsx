@@ -43,11 +43,11 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
 
   private salutations: Array<Salutation> = [
     {
-      value: 'mr',
+      value: 'Mr',
       label: 'Mr.',
     },
     {
-      value: 'mrs',
+      value: 'Mrs',
       label: 'Mrs.',
     },
   ];
