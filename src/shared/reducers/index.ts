@@ -2,6 +2,7 @@ import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
 import {pagesHome} from './Pages/Home';
+import {pagesLogin} from './Pages/Login';
 
 
 // export const reducers = combineReducers({
@@ -11,4 +12,5 @@ import {pagesHome} from './Pages/Home';
 
 export const reducers = {
   pagesHome,
+  pagesLogin,
 };

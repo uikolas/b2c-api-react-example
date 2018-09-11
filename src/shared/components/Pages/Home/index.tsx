@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {Location} from 'history';
 
-import {reduxify} from "../../../lib/redux-helper";
-import {IHomeState} from "../../../reducers/Pages/Home";
-import {getDataAction} from "../../../actions/Pages/Home";
+import {reduxify} from '../../../lib/redux-helper';
+import {IHomeState} from '../../../reducers/Pages/Home';
+import {getDataAction} from '../../../actions/Pages/Home';
 
 
 export const title = "Home";

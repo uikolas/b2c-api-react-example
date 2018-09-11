@@ -1,4 +1,5 @@
 import * as React from "react";
+import {Location} from 'history';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
@@ -8,6 +9,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+import {reduxify} from '../../../lib/redux-helper';
+import {ILoginState} from '../../../reducers/Pages/Login';
+import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
+import {Home, IProps} from '../Home';
+import {IHomeState} from '../../../reducers/Pages/Home';
 
 const styles = (theme: Theme) => createStyles({
   appBar: {
@@ -25,7 +32,10 @@ const styles = (theme: Theme) => createStyles({
 });
 
 interface LoginPageProps extends WithStyles<typeof styles> {
-
+  dispatch?: Function;
+  location?: Location;
+  customer?: any;
+  isAuth?: boolean;
 }
 
 interface LoginPageState {
@@ -131,4 +141,18 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 }
 
-export default withStyles(styles)(LoginPage);
+const DecoratedClass = withStyles(styles)(LoginPage);
+
+export const ConnectedLogin = reduxify(
+  (state: any, ownProps: any) => {
+    const routerProps: IProps = state.routing ? state.routing : {};
+    const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
+    return (
+      {
+        location: routerProps.location ? routerProps.location : ownProps.location,
+        customer: pagesLoginProps && pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
+        iAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
+      }
+    );
+  }
+)(DecoratedClass);
