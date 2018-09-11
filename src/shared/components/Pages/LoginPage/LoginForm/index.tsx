@@ -3,65 +3,104 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
 import {styles} from '../styles/form/index';
 
 interface LoginFormProps extends WithStyles<typeof styles> {
-  handleSubmit(event: React.SyntheticEvent): void;
+  handleSubmit: Function;
 }
 
-const LoginFormBase: React.SFC<LoginFormProps> = (props) => {
-  console.log('LoginFormBase props', props);
-  const { classes } = props;
-  return (
-    <React.Fragment>
-      <Typography variant="title" color="inherit" noWrap>
-        Login
-      </Typography>
-      <form className={classes.container} noValidate autoComplete="off" onSubmit={props.handleSubmit}>
-        <TextField
-          required
-          id="login-email"
-          label="Email"
-          name="email"
-          type="email"
-          defaultValue=""
-          className={classes.textField}
-          margin="normal"
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            className: classes.input,
-          }}
-        />
+interface LoginFormState {
+  username: string;
+  password: string;
+  isSubmitting: boolean;
+  isSubmitted: boolean;
+}
 
-        <TextField
-          required
-          id="login-password"
-          label="Password"
-          name="password"
-          type="password"
-          defaultValue=""
-          className={classes.textField}
-          margin="normal"
-          fullWidth
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            className: classes.input,
-          }}
-        />
+class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
 
-        <Button variant="contained" className={classes.button}>
+  public state = {
+    username: '',
+    password: '',
+    isSubmitting: false,
+    isSubmitted: false,
+  };
+
+  public handleSubmit = (event: any): void  => {
+    event.preventDefault();
+    console.log('handleSubmit event', event);
+    if(!this.state.username || !this.state.password){
+      return null;
+    }
+    const payload = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+    this.props.handleSubmit(payload);
+  }
+
+  public handleChange = (name: string) => (event: any) => {
+    this.setState({
+      ...this.state, [name]: event.target.value
+    });
+  }
+
+  public render() {
+    const {classes} = this.props;
+    return (
+      <React.Fragment>
+        <Typography variant="title" color="inherit" noWrap>
           Login
-        </Button>
+        </Typography>
+        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+          <TextField
+            required
+            id="login-email"
+            label="Email"
+            name="username"
+            onChange={this.handleChange('username')}
+            type="email"
+            defaultValue=""
+            className={classes.textField}
+            margin="normal"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              className: classes.input,
+            }}
+          />
 
-      </form>
-    </React.Fragment>
-  );
-};
+          <TextField
+            required
+            id="login-password"
+            label="Password"
+            name="password"
+            onChange={this.handleChange('password')}
+            type="password"
+            defaultValue=""
+            className={classes.textField}
+            margin="normal"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              className: classes.input,
+            }}
+          />
+
+          <Button type="submit" variant="contained" className={classes.button}>
+            Login
+          </Button>
+
+        </form>
+      </React.Fragment>
+    );
+  }
+
+}
 
 export const LoginForm = withStyles(styles)(LoginFormBase);
 

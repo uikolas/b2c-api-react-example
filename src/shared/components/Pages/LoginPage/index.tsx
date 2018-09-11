@@ -25,7 +25,7 @@ interface LoginPageProps extends WithStyles<typeof styles> {
 }
 
 interface LoginPageState {
-  open: boolean;
+
 }
 
 export interface RegisterFormState {
@@ -40,16 +40,15 @@ export interface RegisterFormState {
 
 class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {
-    open: false,
+
   };
 
   public componentDidMount() {
     toast.success('Uraaaaaaaaaa');
   }
 
-  public handleSubmitLoginForm = (event: React.SyntheticEvent): void => {
-    event.preventDefault();
-    console.log('handleSubmitLoginForm submitted');
+  public handleSubmitLoginForm = (data: any): void => {
+    this.props.dispatch(sendLoginAction(data));
   }
 
   public handleSubmitRegisterForm = (data: any): void => {
