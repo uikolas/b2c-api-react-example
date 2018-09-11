@@ -46,6 +46,16 @@ interface LoginPageState {
   open: boolean;
 }
 
+export interface RegisterFormState {
+  salutation: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+  acceptedTerms: boolean;
+}
+
 class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {
     open: false,
@@ -60,9 +70,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     console.log('handleSubmitLoginForm submitted');
   }
 
-  public handleSubmitRegisterForm = (event: React.SyntheticEvent): void => {
-    event.preventDefault();
-    console.log('handleSubmitRegisterForm submitted');
+  public handleSubmitRegisterForm = (data: any): void => {
+    this.props.dispatch(customerRegisterAction(data));
   }
 
 
@@ -145,7 +154,7 @@ export const ConnectedLogin = reduxify(
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         customer: pagesLoginProps && pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
-        iAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
+        isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
       }
     );
   }

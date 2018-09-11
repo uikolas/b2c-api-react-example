@@ -21,6 +21,7 @@ export class PagesLoginService {
       //   }
       // };
 
+      console.info('loginService', payload);
       const body = {
         data: {
           type: "customers",
