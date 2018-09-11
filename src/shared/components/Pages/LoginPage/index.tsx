@@ -16,13 +16,17 @@ import {ILoginState} from '../../../reducers/Pages/Login';
 import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
 import {Home, IProps} from '../Home';
 
+import {LoginForm} from './LoginForm';
+import {RegisterForm} from './RegisterForm';
+
+
 const styles = (theme: Theme) => createStyles({
   appBar: {
     position: 'relative',
   },
   layout: {
     width: 'auto',
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4,
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
   },
@@ -51,29 +55,19 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     toast.success('Uraaaaaaaaaa');
   }
 
-  /*handleNext = () => {
-    const { activeStep } = this.state;
-    this.setState({
-      activeStep: activeStep + 1,
-    });
-  };*/
+  public handleSubmitLoginForm = (event: React.SyntheticEvent): void => {
+    event.preventDefault();
+    console.log('handleSubmitLoginForm submitted');
+  }
 
-  /*handleBack = () => {
-    const { activeStep } = this.state;
-    this.setState({
-      activeStep: activeStep - 1,
-    });
-  };*/
+  public handleSubmitRegisterForm = (event: React.SyntheticEvent): void => {
+    event.preventDefault();
+    console.log('handleSubmitRegisterForm submitted');
+  }
 
-  /*handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
-  };*/
 
   public render() {
     const { classes } = this.props;
-    // const { activeStep } = this.state;
 
     return (
       <React.Fragment>
@@ -82,7 +76,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
           <Toolbar>
             <Grid container direction="row">
 
-              <Grid item xs={6}
+              <Grid item xs={12} sm={6}
                     direction="row"
                     container
                     justify="flex-start"
@@ -92,7 +86,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 </Typography>
               </Grid>
 
-              <Grid item xs={6}
+              <Grid item xs={12} sm={6}
                     container
                     direction="row"
                     justify="flex-end"
@@ -118,24 +112,20 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 direction="row"
                 alignItems="center"
           >
-            <Grid item xs={6}
-                  direction="row"
+            <Grid item xs={12} sm={6}
+                  direction="column"
                   container
                   justify="center"
                   alignItems="center">
-              <Typography variant="title" color="inherit" noWrap>
-                Login Part
-              </Typography>
+              <LoginForm handleSubmit={this.handleSubmitLoginForm} />
             </Grid>
 
-            <Grid item xs={6}
-                  direction="row"
+            <Grid item xs={12} sm={6}
+                  direction="column"
                   container
                   justify="center"
                   alignItems="center">
-              <Typography variant="title" color="inherit" noWrap>
-                Register Part
-              </Typography>
+              <RegisterForm handleSubmit={this.handleSubmitRegisterForm} />
             </Grid>
 
           </Grid>
