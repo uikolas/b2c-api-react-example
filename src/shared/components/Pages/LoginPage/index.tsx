@@ -25,12 +25,12 @@ interface LoginPageProps extends WithStyles<typeof styles> {
 }
 
 interface LoginPageState {
-  open: boolean;
+
 }
 
 class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {
-    open: false,
+
   };
 
   public componentDidMount() {
@@ -68,7 +68,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                   container
                   justify="center"
                   alignItems="center">
-              <LoginForm handleSubmit={this.handleSubmitLoginForm} />
+              <LoginForm action={sendLoginAction} />
             </Grid>
             <div className={classes.divider}></div>
             <Grid item xs={12} sm={6}
