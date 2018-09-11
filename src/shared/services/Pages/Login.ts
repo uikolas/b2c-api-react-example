@@ -11,20 +11,20 @@ export class PagesLoginService {
           attributes: payload,
         }
       };
-      const respose: any = await api.post('customers', body);
-      console.info(respose);
+      const response: any = await api.post('customers', body);
+      console.info(response);
 
-      if (respose.ok) {
+      if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: respose.data,
+          payload: response.data,
         });
-        return respose.data;
+        return response.data;
       } else {
-        console.error('register', respose.problem);
+        console.error('register', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: respose.problem,
+          error: response.problem,
         });
         return null;
       }
