@@ -50,20 +50,14 @@ export class PagesLoginService {
   public static async loginRequest(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
     try {
       const body = {
-        "data": {
-          "type": "string",
-          "attributes": {
-            "username": "string",
-            "password": "string"
-          },
-          "links": {
-            "self": "string"
-          }
+        data: {
+          type: "access-tokens",
+          attributes: payload,
         }
       };
 
-      const result: any = await api.post(`${config.API_URL}access-tokens`, payload );
-      console.info(result);
+      const result: any = await api.post(`${config.API_URL}access-tokens/`, body );
+      console.info('loginRequest result', result);
 
       dispatch({
         type: ACTION_TYPE + '_FULFILLED',

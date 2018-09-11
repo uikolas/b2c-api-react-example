@@ -29,6 +29,9 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
   public handleSubmit = (event: any): void  => {
     event.preventDefault();
     console.log('handleSubmit event', event);
+    if(!this.state.username || !this.state.password){
+      return null;
+    }
     const payload = {
       username: this.state.username,
       password: this.state.password,
