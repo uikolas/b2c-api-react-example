@@ -1,14 +1,8 @@
 import * as React from "react";
 import {Location} from 'history';
 import { toast } from 'react-toastify';
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import {reduxify} from '../../../lib/redux-helper';
@@ -16,37 +10,11 @@ import {ILoginState} from '../../../reducers/Pages/Login';
 import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
 import {Home, IProps} from '../Home';
 
+import {AppHeader} from '../../Common/AppHeader';
 import {LoginForm} from './LoginForm';
 import {RegisterForm} from './RegisterForm';
 
-
-const styles = (theme: Theme) => createStyles({
-  appBar: {
-    position: 'relative',
-  },
-  layout: {
-    width: 'auto',
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-  },
-  container: {
-    position: 'relative',
-    paddingTop: theme.spacing.unit * 6,
-  },
-  divider: {
-    border: '6px solid #aaa',
-    height: '80%',
-    position: 'absolute',
-    top: 0,
-    left: 'calc(50% - 6px)',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
-  },
-  button: {
-    marginLeft: theme.spacing.unit,
-  },
-
-});
+import {styles} from './styles/page';
 
 interface LoginPageProps extends WithStyles<typeof styles> {
   dispatch?: Function;
@@ -85,39 +53,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     return (
       <React.Fragment>
         <CssBaseline />
-        <AppBar position="absolute" color="default" className={classes.appBar}>
-          <Toolbar>
-            <Grid container direction="row">
-
-              <Grid item xs={12} sm={6}
-                    direction="row"
-                    container
-                    justify="flex-start"
-                    alignItems="center">
-                <Typography variant="title" color="inherit" noWrap>
-                  Spryker Logo
-                </Typography>
-              </Grid>
-
-              <Grid item xs={12} sm={6}
-                    container
-                    direction="row"
-                    justify="flex-end"
-                    alignItems="center"
-              >
-                <Button variant="contained" component="button" className={classes.button}>
-                  Register/Login
-                </Button>
-
-                <Button variant="contained" component="button" className={classes.button}>
-                  Cart
-                </Button>
-              </Grid>
-
-            </Grid>
-
-          </Toolbar>
-        </AppBar>
+        <AppHeader />
         <main className={classes.layout}>
           <Grid item
                 xs={12}
