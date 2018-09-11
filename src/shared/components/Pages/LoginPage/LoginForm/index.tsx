@@ -4,11 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import {PagesLoginService} from '../../../../services/Pages/Login';
 import {styles} from '../styles/form/index';
 
 interface LoginFormProps extends WithStyles<typeof styles> {
-  action: Function;
+  handleSubmit: Function;
 }
 
 interface LoginFormState {
@@ -31,9 +30,16 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
     event.preventDefault();
     console.log('handleSubmit event', event);
     const payload = {
-
+      username: this.state.username,
+      password: this.state.password,
     };
-    this.props.action(payload);
+    this.props.handleSubmit(payload);
+  }
+
+  public handleChange = (name: string) => (event: any) => {
+    this.setState({
+      ...this.state, [name]: event.target.value
+    });
   }
 
   public render() {
@@ -49,6 +55,7 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
             id="login-email"
             label="Email"
             name="username"
+            onChange={this.handleChange('username')}
             type="email"
             defaultValue=""
             className={classes.textField}
@@ -67,6 +74,7 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
             id="login-password"
             label="Password"
             name="password"
+            onChange={this.handleChange('password')}
             type="password"
             defaultValue=""
             className={classes.textField}

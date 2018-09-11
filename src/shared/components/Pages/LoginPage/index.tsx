@@ -47,9 +47,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     toast.success('Uraaaaaaaaaa');
   }
 
-  public handleSubmitLoginForm = (event: React.SyntheticEvent): void => {
-    event.preventDefault();
-    console.log('handleSubmitLoginForm submitted');
+  public handleSubmitLoginForm = (data: any): void => {
+    this.props.dispatch(sendLoginAction(data));
   }
 
   public handleSubmitRegisterForm = (data: any): void => {
@@ -77,7 +76,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                   container
                   justify="center"
                   alignItems="center">
-              <LoginForm action={sendLoginAction} />
+              <LoginForm handleSubmit={this.handleSubmitLoginForm} />
             </Grid>
             <div className={classes.divider}></div>
             <Grid item xs={12} sm={6}
