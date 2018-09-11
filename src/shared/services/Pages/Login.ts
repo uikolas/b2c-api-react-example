@@ -1,5 +1,6 @@
 import {config} from '../../config';
 import api from '../api/ApiClient';
+import {response} from 'spdy';
 
 
 export class PagesLoginService {
@@ -48,14 +49,23 @@ export class PagesLoginService {
         }
       };
 
-      const result: any = await api.post(`${config.API_URL}access-tokens/`, body );
-      console.info('loginRequest result', result);
+      const response: any = await api.post('access-tokens', body );
+      console.info('loginRequest result', response);
 
-      dispatch({
-        type: ACTION_TYPE + '_FULFILLED',
-        payload: result,
-      });
-      return result;
+      if (response.ok) {
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          payload: response.data,
+        });
+        return response.data;
+      } else {
+        console.error('login', response.problem);
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        return null;
+      }
 
     } catch (error) {
       console.error('login', error);
