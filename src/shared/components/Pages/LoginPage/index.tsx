@@ -40,6 +40,7 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     top: 0,
     left: 'calc(50% - 6px)',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
   },
   button: {
     marginLeft: theme.spacing.unit,
