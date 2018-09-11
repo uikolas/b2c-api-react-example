@@ -5,16 +5,6 @@ export const styles = (theme: Theme) => createStyles({
   appBar: {
     position: 'relative',
   },
-  layout: {
-    width: 'auto',
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 2,
-  },
-  container: {
-    position: 'relative',
-    paddingTop: theme.spacing.unit * 6,
-  },
   button: {
     marginLeft: theme.spacing.unit,
   },

@@ -10,6 +10,7 @@ import {ILoginState} from '../../../reducers/Pages/Login';
 import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
 import {Home, IProps} from '../Home';
 
+import {AppMain} from '../../Common/AppMain';
 import {AppHeader} from '../../Common/AppHeader';
 import {LoginForm} from './LoginForm';
 import {RegisterForm} from './RegisterForm';
@@ -54,7 +55,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
       <React.Fragment>
         <CssBaseline />
         <AppHeader />
-        <main className={classes.layout}>
+        <AppMain>
           <Grid item
                 xs={12}
                 container
@@ -77,9 +78,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                   alignItems="center">
               <RegisterForm handleSubmit={this.handleSubmitRegisterForm} />
             </Grid>
-
           </Grid>
-        </main>
+        </AppMain>
       </React.Fragment>
     );
   }
