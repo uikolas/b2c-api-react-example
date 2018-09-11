@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Location} from 'history';
+import { toast } from 'react-toastify';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
@@ -14,7 +15,6 @@ import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
 import {Home, IProps} from '../Home';
-import {IHomeState} from '../../../reducers/Pages/Home';
 
 const styles = (theme: Theme) => createStyles({
   appBar: {
@@ -46,6 +46,10 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {
     open: false,
   };
+
+  public componentDidMount() {
+    toast.success('Uraaaaaaaaaa');
+  }
 
   /*handleNext = () => {
     const { activeStep } = this.state;
