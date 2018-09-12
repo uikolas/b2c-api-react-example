@@ -22,20 +22,11 @@ interface LoginPageProps extends WithStyles<typeof styles> {
   location?: Location;
   customer?: any;
   isAuth?: boolean;
+  isLoading: boolean;
 }
 
 interface LoginPageState {
 
-}
-
-export interface RegisterFormState {
-  salutation: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  passwordConfirmation: string;
-  acceptedTerms: boolean;
 }
 
 class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
@@ -57,13 +48,13 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
 
   public render() {
-    const { classes } = this.props;
+    const { classes, isLoading } = this.props;
 
     return (
       <React.Fragment>
         <CssBaseline />
         <AppHeader />
-        <AppMain>
+        <AppMain isLoading={isLoading}>
           <Grid item
                 xs={12}
                 container
@@ -104,6 +95,7 @@ export const ConnectedLogin = reduxify(
         location: routerProps.location ? routerProps.location : ownProps.location,
         customer: pagesLoginProps && pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
+        isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
       }
     );
   }

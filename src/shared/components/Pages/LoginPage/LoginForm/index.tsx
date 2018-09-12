@@ -28,8 +28,7 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
 
   public handleSubmit = (event: any): void  => {
     event.preventDefault();
-    console.log('handleSubmit event', event);
-    if(!this.state.username || !this.state.password){
+    if(!this.state.username || !this.state.password) {
       return null;
     }
     const payload = {
@@ -99,7 +98,6 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
       </React.Fragment>
     );
   }
-
 }
 
 export const LoginForm = withStyles(styles)(LoginFormBase);
