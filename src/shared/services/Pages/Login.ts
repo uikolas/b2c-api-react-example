@@ -28,7 +28,7 @@ export class PagesLoginService {
           attributes: payload,
         }
       };
-      const result: any = await api.post(`${config.API_URL}customers`, body )
+      const result: any = await api.post(`${config.API_URL}customers`, body );
       console.info(result);
 
       dispatch({
