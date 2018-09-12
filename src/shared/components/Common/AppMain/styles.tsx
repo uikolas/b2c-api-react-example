@@ -7,6 +7,7 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing.unit * 4,
     marginLeft: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 2,
+    position: 'relative',
   },
   container: {
     position: 'relative',
