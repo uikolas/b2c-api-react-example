@@ -2,10 +2,6 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  container: {
-    position: 'relative',
-    paddingTop: theme.spacing.unit * 6,
-  },
   divider: {
     border: '6px solid #e0e0e0',
     height: '80%',

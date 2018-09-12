@@ -9,4 +9,8 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: theme.spacing.unit * 2,
     position: 'relative',
   },
+  container: {
+    position: 'relative',
+    paddingTop: theme.spacing.unit * 6,
+  },
 });

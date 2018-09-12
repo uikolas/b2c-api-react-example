@@ -1,5 +1,6 @@
 import * as React from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 import {Preloader} from '../Preloader';
 
 import {styles} from './styles';
@@ -12,8 +13,16 @@ const AppMainBase: React.SFC<AppMainProps> = (props) => {
   const { classes, isLoading } = props;
   return (
     <main className={classes.layout}>
-      {isLoading ? <Preloader/> : null}
-      {props.children}
+      <Grid item
+            xs={12}
+            container
+            direction="row"
+            alignItems="flex-start"
+            className={classes.container}
+      >
+        {isLoading ? <Preloader/> : null}
+        {props.children}
+      </Grid>
     </main>
   );
 };

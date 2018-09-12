@@ -55,28 +55,20 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
         <CssBaseline />
         <AppHeader />
         <AppMain isLoading={isLoading}>
-          <Grid item
-                xs={12}
+          <Grid item xs={12} sm={6}
+                direction="column"
                 container
-                direction="row"
-                alignItems="flex-start"
-                className={classes.container}
-          >
-            <Grid item xs={12} sm={6}
-                  direction="column"
-                  container
-                  justify="center"
-                  alignItems="center">
-              <LoginForm handleSubmit={this.handleSubmitLoginForm} />
-            </Grid>
-            <div className={classes.divider}></div>
-            <Grid item xs={12} sm={6}
-                  direction="column"
-                  container
-                  justify="center"
-                  alignItems="center">
-              <RegisterForm handleSubmit={this.handleSubmitRegisterForm} />
-            </Grid>
+                justify="center"
+                alignItems="center">
+            <LoginForm handleSubmit={this.handleSubmitLoginForm} />
+          </Grid>
+          <div className={classes.divider}></div>
+          <Grid item xs={12} sm={6}
+                direction="column"
+                container
+                justify="center"
+                alignItems="center">
+            <RegisterForm handleSubmit={this.handleSubmitRegisterForm} />
           </Grid>
         </AppMain>
       </React.Fragment>
