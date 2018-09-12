@@ -1,5 +1,6 @@
 import {config} from '../../config';
 import api from '../api/ApiClient';
+import { toast } from 'react-toastify';
 import {response} from 'spdy';
 
 
@@ -27,6 +28,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
         });
+        toast.error('Request Error: ' + response.problem);
         return null;
       }
 
@@ -36,6 +38,7 @@ export class PagesLoginService {
         type: ACTION_TYPE + '_REJECTED',
         error,
       });
+      toast.error('Unexpected Error: ' + error);
       return null;
     }
   }
@@ -57,6 +60,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data,
         });
+        toast.success('Request Success');
         return response.data;
       } else {
         console.error('login', response.problem);
@@ -64,6 +68,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
         });
+        toast.error('Request Error: ' + response.problem);
         return null;
       }
 
@@ -73,6 +78,7 @@ export class PagesLoginService {
         type: ACTION_TYPE + '_REJECTED',
         error,
       });
+      toast.error('Unexpected error: ' + error);
       return null;
     }
   }
