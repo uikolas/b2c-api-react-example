@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import {pagesHome} from './Pages/Home';
 import {pagesLogin} from './Pages/Login';
+import {pageSearch} from './Pages/Search';
 
 
 // export const reducers = combineReducers({
@@ -13,4 +14,5 @@ import {pagesLogin} from './Pages/Login';
 export const reducers = {
   pagesHome,
   pagesLogin,
+  pageSearch,
 };
