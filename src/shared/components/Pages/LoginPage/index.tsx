@@ -2,7 +2,7 @@ import * as React from "react";
 import {Location} from 'history';
 import { toast } from 'react-toastify';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import CssBaseline from '@material-ui/core/CssBaseline';
+
 import Grid from '@material-ui/core/Grid';
 
 import {reduxify} from '../../../lib/redux-helper';
@@ -44,7 +44,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   };
 
   public componentDidMount() {
-    toast.success('Uraaaaaaaaaa');
+    toast.success('Ura!!!');
   }
 
   public handleSubmitLoginForm = (data: any): void => {
@@ -61,7 +61,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     return (
       <React.Fragment>
-        <CssBaseline />
+
         <AppHeader />
         <AppMain>
           <Grid item

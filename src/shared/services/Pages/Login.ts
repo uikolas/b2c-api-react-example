@@ -12,7 +12,7 @@ export class PagesLoginService {
           attributes: payload,
         }
       };
-      const response: any = await api.post('customers', body);
+      const response: any = await api.post('customers', body, { withCredentials: true });
       console.info(response);
 
       if (response.ok) {
