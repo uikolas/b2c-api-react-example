@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
-import {Home, IProps} from '../Home';
+import {RouteProps} from "react-router";
 
 import {AppMain} from '../../Common/AppMain';
 import {AppHeader} from '../../Common/AppHeader';
@@ -82,7 +82,7 @@ const DecoratedClass = withStyles(styles)(LoginPage);
 
 export const ConnectedLogin = reduxify(
   (state: any, ownProps: any) => {
-    const routerProps: IProps = state.routing ? state.routing : {};
+    const routerProps: RouteProps = state.routing ? state.routing : {};
     const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
     return (
       {
