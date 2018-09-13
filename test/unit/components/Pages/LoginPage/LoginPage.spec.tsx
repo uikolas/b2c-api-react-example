@@ -3,10 +3,10 @@ import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 
 import {
   LoginPageBase
-} from '../../../../src/shared/components/Pages/LoginPage';
-import {styles} from '../../../../src/shared/components/Pages/LoginPage/styles/page';
-import {LoginForm} from '../../../../src/shared/components/Pages/LoginPage/LoginForm';
-import {RegisterForm} from '../../../../src/shared/components/Pages/LoginPage/RegisterForm';
+} from '../../../../../src/shared/components/Pages/LoginPage';
+import {styles} from '../../../../../src/shared/components/Pages/LoginPage/styles/page';
+import {LoginForm} from '../../../../../src/shared/components/Pages/LoginPage/LoginForm';
+import {RegisterForm} from '../../../../../src/shared/components/Pages/LoginPage/RegisterForm';
 
 // Required props
 
