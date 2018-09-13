@@ -10,6 +10,7 @@ import {
 import {fixtureSearchTerm, fixtureItems} from '../../../../../src/shared/components/Pages/SearchPage/fixture';
 import {ProductCard} from '../../../../../src/shared/components/Common/ProductCard';
 import {styles} from '../../../../../src/shared/components/Pages/SearchPage/styles/page';
+import Typography from '@material-ui/core/Typography';
 
 // Required props
 const items = fixtureItems;
@@ -49,9 +50,14 @@ describe('components->Pages->SearchPage', () => {
     expect(wrapper.find(ProductCard)).toHaveLength(CountItems);
   });
 
-  it("renders the searchTerm", () => {
+  it("renders the pageTitle", () => {
     expect(wrapper.find('#pageTitle')).toHaveLength(1);
+    expect(wrapper.find('#pageTitle').dive().dive().text()).toContain(pageTitle);
+  });
+
+  it("renders the searchTerm", () => {
     expect(wrapper.find('#searchTerm')).toHaveLength(1);
+    expect(wrapper.find('#searchTerm').dive().dive().text()).toContain(searchTerm);
   });
 
   it("renders the box when the items is null", () => {

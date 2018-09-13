@@ -41,7 +41,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
           title={productName}
         />
         <CardContent>
-          <Typography gutterBottom variant="title" className="productName">
+          <Typography gutterBottom variant="title" data-type="productName">
             {productName}
           </Typography>
           <Typography gutterBottom variant="subheading" color="primary" data-type="priceToShow">

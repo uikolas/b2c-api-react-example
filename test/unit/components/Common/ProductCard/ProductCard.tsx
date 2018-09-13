@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import {getFormattedPrice} from '../../../../../src/shared/services/priceFormatter';
 
 import {
   ProductCardBase
@@ -20,7 +20,7 @@ const images = [
     "external_url_large": "//images.icecat.biz/img/norm/high/17681791-4446.jpg"
   }
 ];
-const currency = "SSS";
+const currency = "EUR";
 
 const dispatch = () => null;
 
@@ -52,12 +52,16 @@ describe('components->Common->ProductCard', () => {
     expect(wrapper.find(CardMedia)).toHaveLength(1);
   });
 
-  it("renders the product Name block", () => {
-    expect(wrapper.find('.productName')).toHaveLength(1);
+  it("renders the image", () => {
+    expect(wrapper.find(CardMedia).dive().dive().find('img').prop('src')).toEqual(images[0].external_url_small);
   });
 
-  it("renders the price block", () => {
-    expect(wrapper.find('[data-type="priceToShow"]')).toHaveLength(1);
+  it("renders the product Name", () => {
+    expect(wrapper.find('[data-type="productName"]').dive().dive().text()).toEqual(abstract_name);
+  });
+
+  it("renders the price", () => {
+    expect(wrapper.find('[data-type="priceToShow"]').dive().dive().text()).toEqual(getFormattedPrice(price, currency));
   });
 
 });
