@@ -54,10 +54,9 @@ describe('components->Pages->SearchPage', () => {
     expect(wrapper.find('#searchTerm')).toHaveLength(1);
   });
 
-  it("renders nothing when the searchTerm is null", () => {
-    wrapper.setProps({ searchTerm: null });
-    expect(wrapper.find('#pageTitle')).toHaveLength(0);
-    expect(wrapper.find('#searchTerm')).toHaveLength(0);
+  it("renders the box when the items is null", () => {
+    wrapper.setProps({ items: null });
+    expect(wrapper.find('#emptyResult')).toHaveLength(1);
   });
 
 });

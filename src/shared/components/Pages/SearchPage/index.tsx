@@ -79,7 +79,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 />
                 </Grid>
               ))
-              : <Paper elevation={1} className={classes.empty}>
+              : <Paper elevation={1} className={classes.empty} id="emptyResult" >
                   <Typography variant="headline" component="h3">
                     Nothing to show.
                   </Typography>
