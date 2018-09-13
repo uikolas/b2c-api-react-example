@@ -16,7 +16,7 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
   currency: string;
 }
 
-const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
+export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
   const { classes, images, abstract_name: productName, price, currency } = props;
 
   // If there are more than one price, the "original price" should be shown as strikethrough price START
@@ -41,10 +41,10 @@ const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
           title={productName}
         />
         <CardContent>
-          <Typography gutterBottom variant="title">
+          <Typography gutterBottom variant="title" className="productName">
             {productName}
           </Typography>
-          <Typography gutterBottom variant="subheading" color="primary">
+          <Typography gutterBottom variant="subheading" color="primary" data-type="priceToShow">
             {priceToShow}
           </Typography>
         </CardContent>
