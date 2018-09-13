@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import {getFormattedPrice} from '../../../services/priceFormatter';
-import {IProductCard, IProductCardPrice} from '../../../interfaces/productCard';
+import {IProductCard} from '../../../interfaces/productCard';
 import {styles} from './styles';
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
@@ -17,24 +17,27 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
 }
 
 const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const { classes, images, abstractName: productName, price, prices, currency } = props;
+  const { classes, images, abstract_name: productName, price, currency } = props;
 
-  // If there are more than one price, the "original price" should be shown as strikethrough price
-  const originalPrice = prices.filter((item: IProductCardPrice) => (item.priceTypeName === 'ORIGINAL'));
+  // If there are more than one price, the "original price" should be shown as strikethrough price START
+ /* const originalPrice = prices.filter((item: IProductCardPrice) => (item.priceTypeName === 'ORIGINAL'));
   let priceToParse;
   if(originalPrice.length) {
     priceToParse = originalPrice[0].grossAmount;
   } else {
     priceToParse = price;
   }
-  const priceToShow = getFormattedPrice(priceToParse, currency);
+  const priceToShow = getFormattedPrice(priceToParse, currency);*/
+  // FINISH
+  const priceToShow = getFormattedPrice(price, currency);
+
   return (
     <Card className={classes.card} raised={true}>
       <CardActionArea>
         <CardMedia
           component="img"
           className={classes.media}
-          image={images[0].externalUrlSmall}
+          image={images[0].external_url_small}
           title={productName}
         />
         <CardContent>

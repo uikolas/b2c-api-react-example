@@ -1,6 +1,120 @@
 
 export const fixtureSearchTerm = 'fixtureSearchTerm';
+
 export const fixtureItems = [
+  {
+    "abstract_sku": "191",
+    "abstract_name": "Samsung F90BN",
+    "price": 24899,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/gallery_mediums/img_17681791_medium_1482143992_4607_19487.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/17681791-4446.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "192",
+    "abstract_name": "Samsung F90BN",
+    "price": 28178,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/gallery_mediums/img_17738941_medium_1482147097_3908_19487.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/17738941-1395.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "214",
+    "abstract_name": "Samsung Bundle",
+    "price": 95000,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/norm/medium/26935356-6244.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/26935356-6244.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "042",
+    "abstract_name": "Samsung Galaxy S7",
+    "price": 9080,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/gallery_mediums/31040075_7752.jpg",
+        "external_url_large": "//images.icecat.biz/img/gallery/31040075_7752.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "043",
+    "abstract_name": "Samsung Galaxy S7",
+    "price": 7322,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/gallery_mediums/31040074_8111.jpg",
+        "external_url_large": "//images.icecat.biz/img/gallery/31040074_8111.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "045",
+    "abstract_name": "Samsung Galaxy S6",
+    "price": 39217,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/norm/medium/26408558-5714.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/26408558-5714.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "044",
+    "abstract_name": "Samsung Galaxy S7",
+    "price": 32149,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/gallery_lows/31040076_0820990854.jpg",
+        "external_url_large": "//images.icecat.biz/img/gallery_raw/31040076_0820990854.jpeg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "046",
+    "abstract_name": "Samsung Galaxy S6",
+    "price": 4119,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/norm/medium/26408563-301.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/26408563-301.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "047",
+    "abstract_name": "Samsung Galaxy S6",
+    "price": 5724,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/norm/medium/26408568-7449.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/26408568-7449.jpg"
+      }
+    ]
+  },
+  {
+    "abstract_sku": "048",
+    "abstract_name": "Samsung Galaxy S6",
+    "price": 12244,
+    "images": [
+      {
+        "external_url_small": "//images.icecat.biz/img/norm/medium/26403666-7355.jpg",
+        "external_url_large": "//images.icecat.biz/img/norm/high/26403666-7355.jpg"
+      }
+    ]
+  }
+];
+
+export const fixtureItemsCamelCase = [
   {
     "images": [
       {

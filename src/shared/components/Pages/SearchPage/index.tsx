@@ -5,30 +5,28 @@ import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
 import {sendSearchAction} from '../../../actions/Pages/Search';
 
-
 import {AppMain} from '../../Common/AppMain';
 import {AppHeader} from '../../Common/AppHeader';
 import {ProductCard} from '../../Common/ProductCard';
+import {ISearchPageData} from "../../../interfaces/searchPageData";
 
 import {styles} from './styles/page';
 
-interface SearchPageProps extends WithStyles<typeof styles> {
-  items?: Array<IProductCard> | null;
-  searchTerm?: string;
-  currency: string;
-}
 
-interface SearchPageState {
+interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {}
 
-}
+interface SearchPageState {}
 
-class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
+export const pageTitle = 'Search results for ';
+
+export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
 
   public state: SearchPageState = {
 
@@ -36,11 +34,9 @@ class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
 
   public render() {
     const {classes, items, searchTerm, currency} = this.props;
-    console.log('SearchPageBase this.props', this.props);
 
     // TODO: isLoading should be in props
     const isLoading = false;
-    const pageTitle = 'Search results for ';
 
     return (
       <React.Fragment>
@@ -51,13 +47,18 @@ class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
                 direction="column"
                 justify="center"
                 alignItems="center"
+                className="component-container"
           >
-            <Typography variant="title" color="inherit" align="center" className={classes.pageHeader}>
-              {pageTitle}
-              <Typography variant="title" component="span" className={classes.searchTerm} >
-                {searchTerm}
-              </Typography>
-            </Typography>
+            {searchTerm
+              ? <Typography variant="title" color="inherit" align="center" className={classes.pageHeader} id="pageTitle">
+                  {pageTitle}
+                  <Typography variant="title" component="span" className={classes.searchTerm} id="searchTerm" >
+                    {searchTerm}
+                  </Typography>
+                </Typography>
+              : null
+            }
+
           </Grid>
 
           <Grid container
@@ -67,19 +68,25 @@ class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
             { (items && items.length > 0)
               ? items.map((item) => (
                 <Grid item xs={12} sm={6} md={3}
-                      key={item.abstractSku}
+                      key={item.abstract_sku}
                 >
                 <ProductCard
                   currency={currency}
                   images={item.images}
-                  prices={item.prices}
                   price={item.price}
-                  abstractName={item.abstractName}
-                  abstractSku={item.abstractSku}
+                  abstract_name={item.abstract_name}
+                  abstract_sku={item.abstract_sku}
                 />
                 </Grid>
               ))
-              : null
+              : <Paper elevation={1} className={classes.empty}>
+                  <Typography variant="headline" component="h3">
+                    Nothing to show.
+                  </Typography>
+                  <Typography component="p">
+                    Try again
+                  </Typography>
+                </Paper>
             }
           </Grid>
         </AppMain>
