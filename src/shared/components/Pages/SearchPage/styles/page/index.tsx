@@ -13,6 +13,7 @@ export const styles = (theme: Theme) => createStyles({
   container: {
     maxWidth: "1400px",
     margin: "auto",
+    justifyContent: "center",
   },
   empty: {
     ...theme.mixins.gutters(),
