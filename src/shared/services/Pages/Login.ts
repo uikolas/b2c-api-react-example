@@ -1,8 +1,5 @@
-import {config} from '../../config';
-import api from '../api/ApiClient';
+import api from '../api';
 import { toast } from 'react-toastify';
-import {response} from 'spdy';
-
 
 export class PagesLoginService {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {

@@ -62,15 +62,16 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
     });
   }
 
-  public handleChangeAgreement = (event: any): void => {
+  public handleChangeAgreement = (event: React.FormEvent<HTMLInputElement>): void => {
     this.setState({
       acceptedTerms: !this.state.acceptedTerms,
     });
   }
 
-  public handleChange = (name: string) => (event: any) => {
+  public handleChange =  (event: any) => {
+    const { name, value }: any = event.target;
     this.setState({
-      ...this.state, [name]: event.target.value
+      ...this.state, [name]: value
     });
   }
 
@@ -127,7 +128,7 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
             className={classes.textField}
             margin="normal"
             fullWidth
-            onChange={this.handleChange('firstName')}
+            onChange={this.handleChange}
             InputLabelProps={{
               shrink: true,
             }}
@@ -140,10 +141,10 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
             required
             id="register-last-name"
             label="Last Name"
-            name="lastame"
+            name="lastName"
             type="text"
             value={this.state.lastName}
-            onChange={this.handleChange('lastName')}
+            onChange={this.handleChange}
             className={classes.textField}
             margin="normal"
             fullWidth
@@ -162,7 +163,7 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
             name="email"
             type="email"
             value={this.state.email}
-            onChange={this.handleChange('email')}
+            onChange={this.handleChange}
             className={classes.textField}
             margin="normal"
             fullWidth
@@ -189,7 +190,7 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
                 name="password"
                 type="password"
                 value={this.state.password}
-                onChange={this.handleChange('password')}
+                onChange={this.handleChange}
                 className={classes.textField}
                 margin="normal"
                 fullWidth
@@ -206,10 +207,10 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
                 required
                 id="register-confirm-password"
                 label="Confirm password"
-                name="confirmPassword"
+                name="passwordConfirmation"
                 type="password"
                 value={this.state.passwordConfirmation}
-                onChange={this.handleChange('passwordConfirmation')}
+                onChange={this.handleChange}
                 className={classes.textField}
                 margin="normal"
                 fullWidth

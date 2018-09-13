@@ -1,5 +1,5 @@
 import {config} from '../../config';
-import api from '../../services/api/ApiClient';
+import api from '../../services/api';
 
 export class PagesHomeService {
   public static async getData(ACTION_TYPE: string, dispatch: Function): Promise<any> {
