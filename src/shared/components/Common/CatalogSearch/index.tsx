@@ -12,13 +12,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {ILoginState} from '../../../reducers/Pages/Login';
-import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
+import {SearchState} from '../../../reducers/Pages/Search';
+import {sendSearchAction} from '../../../actions/Pages/Search';
+import {IProductCard} from '../../../interfaces/productCard';
 import {styles} from './styles';
 
 interface CatalogProps extends WithStyles<typeof styles> {
   dispatch?: Function;
   location?: Location;
+  items: Array<IProductCard>;
 }
 
 interface CatalogState {
@@ -31,6 +33,10 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
     value: '',
     suggestions: []
   };
+
+  public componentDidMount() {
+    this.props.dispatch(sendSearchAction('sams'));
+  }
 
   private renderInputComponent = (inputProps: any) => {
     const { classes, ref, ...other } = inputProps;
@@ -85,43 +91,8 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
   }
 
   public handleSuggestionsFetchRequested = ({ value }: any) => {
-    this.setState({
-      suggestions: [
-        {
-          "abstract_sku": "070",
-          "abstract_name": "Samsung Galaxy Ace",
-          "price": 29678,
-          "images": [
-            {
-              "external_url_small": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg",
-              "external_url_large": "//images.icecat.biz/img/norm/high/13374503-9343.jpg"
-            }
-          ]
-        },
-        {
-          "abstract_sku": "017",
-          "abstract_name": "Sony Cyber-shot DSC-W800",
-          "price": 345699,
-          "images": [
-            {
-              "external_url_small": "//images.icecat.biz/img/norm/medium/21748906-Sony.jpg",
-              "external_url_large": "//images.icecat.biz/img/norm/high/21748906-Sony.jpg"
-            }
-          ]
-        },
-        {
-          "abstract_sku": "016",
-          "abstract_name": "Sony Cyber-shot DSC-W800",
-          "price": 9999,
-          "images": [
-            {
-              "external_url_small": "//images.icecat.biz/img/norm/medium/21748907-Sony.jpg",
-              "external_url_large": "//images.icecat.biz/img/norm/high/21748907-Sony.jpg"
-            }
-          ]
-        },
-      ]
-    });
+    console.info(value);
+    this.props.dispatch(sendSearchAction(value));
   }
 
   private handleSuggestionsClearRequested = () => {
@@ -139,11 +110,12 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
   private shouldRenderSuggestions = (value: string): boolean => value.trim().length > 2
 
   public render() {
-    const { classes } = this.props;
+    const { classes, items } = this.props;
 
     const autosuggestProps = {
+      // suggestions: this.state.suggestions,
+      suggestions: items,
       renderInputComponent: this.renderInputComponent,
-      suggestions: this.state.suggestions,
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
@@ -183,17 +155,17 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
 
 const DecoratedCatalog = withStyles(styles)(CatalogSearch);
 
-export default DecoratedCatalog;
+const CatalogSearchComponent = reduxify(
+  (state: any, ownProps: any) => {
+    const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+    return (
+      {
+        items: searchProps && searchProps.data.items ? searchProps.data.items : ownProps.items,
+        searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
+        currency: searchProps && searchProps.data.currency ? searchProps.data.currency : ownProps.currency,
+      }
+    );
+  }
+)(DecoratedCatalog);
 
-// export const CatalogSearchComponent = reduxify(
-//   (state: any, ownProps: any) => {
-//     const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
-//     return (
-//       {
-//         customer: pagesLoginProps && pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
-//         isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-//         isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
-//       }
-//     );
-//   }
-// )(DecoratedCatalog);
+export default CatalogSearchComponent;

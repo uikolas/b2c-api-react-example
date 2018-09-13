@@ -35,10 +35,10 @@ export class CatalogService {
     }
   }
 
-  public static async catalogSearchSuggestion(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
+  public static async catalogSearchSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
-      const response: any = await api.get('catalog-search-suggestions', params, { withCredentials: true });
+      const response: any = await api.get('catalog-search-suggestions', {q: query}, { withCredentials: true });
       console.info(response);
 
       if (response.ok) {
