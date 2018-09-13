@@ -59,7 +59,7 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
     return (
       <MenuItem selected={isHighlighted} component="div">
         <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around'}}>
-          {parts.map((part, index) => {
+          {parts.map((part, index: number) => {
             return part.highlight ? (
               <span key={String(index)} style={{ fontWeight: 500 }}>
               {part.text}
