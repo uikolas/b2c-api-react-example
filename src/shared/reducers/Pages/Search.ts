@@ -4,13 +4,14 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {IProduct} from '../../interfaces/product';
+import {IProductCard} from '../../interfaces/productCard';
 import {fixtureSearchTerm, fixtureItems} from '../../components/Pages/SearchPage/fixture';
 
 export interface SearchState extends IReduxState {
   data: {
-    items?: Array<IProduct> | null,
+    items?: Array<IProductCard> | null,
     searchTerm?: string,
+    currency: string,
   };
 }
 
@@ -18,6 +19,7 @@ export const initialState: SearchState = {
   data: {
     items: fixtureItems,
     searchTerm: fixtureSearchTerm,
+    currency: 'EUR',
   },
 };
 
@@ -38,6 +40,7 @@ export const pageSearch = function (state: SearchState = initialState, action: a
         data: {
           items: action.payload.items,
           searchTerm: action.payload.searchTerm,
+          currency: action.payload.currency,
         },
         pending: false,
         fulfilled: true,

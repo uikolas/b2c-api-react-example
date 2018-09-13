@@ -60,7 +60,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 container
                 justify="center"
                 alignItems="center">
-            <LoginForm handleSubmit={this.handleSubmitLoginForm} />
+            <LoginForm handleSubmit={this.handleSubmitLoginForm}
+          />
           </Grid>
           <div className={classes.divider}></div>
           <Grid item xs={12} sm={6}
@@ -68,7 +69,8 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 container
                 justify="center"
                 alignItems="center">
-            <RegisterForm handleSubmit={this.handleSubmitRegisterForm} />
+            <RegisterForm handleSubmit={this.handleSubmitRegisterForm}
+          />
           </Grid>
         </AppMain>
       </React.Fragment>
