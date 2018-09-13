@@ -29,7 +29,7 @@ type Salutation = {
   label: string,
 };
 
-class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormState> {
+export class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormState> {
 
   public state = {
     salutation: '',
@@ -75,9 +75,19 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
     });
   }
 
-  public handleSubmitForm = (e: any) => {
+  public handleSubmitForm = (e: any): any => {
     e.preventDefault();
-
+    if(
+      !this.state.salutation
+      || !this.state.firstName
+      || !this.state.lastName
+      || !this.state.email
+      || !this.state.password
+      || !this.state.passwordConfirmation
+      || !this.state.acceptedTerms
+    ) {
+      return null;
+    }
     this.props.handleSubmit(this.state);
   }
 
@@ -89,7 +99,13 @@ class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormSt
         <Typography variant="title" color="inherit" noWrap>
           Register
         </Typography>
-        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmitForm}>
+        <form
+          className={classes.container}
+          noValidate
+          autoComplete="off"
+          onSubmit={this.handleSubmitForm}
+          id="RegisterForm"
+        >
 
           <TextField
             required

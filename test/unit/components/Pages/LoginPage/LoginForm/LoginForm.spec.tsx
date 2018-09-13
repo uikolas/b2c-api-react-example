@@ -4,14 +4,11 @@ import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 import {
   LoginFormBase
 } from '../../../../../../src/shared/components/Pages/LoginPage/LoginForm';
-import {styles} from '../../../../../../src/shared/components/Pages/SearchPage/styles/page';
+import {styles} from '../../../../../../src/shared/components/Pages/LoginPage/styles/form';
 
 // Required props
 const handleSubmit = jest.fn();
 const dispatch = () => null;
-
-// Common html block parent
-const parent = '.component-container';
 
 const getShallowedComponent = () => (
   shallow(
@@ -42,7 +39,16 @@ describe('components->Pages->LoginPage->LoginForm', () => {
     handleSubmit.mockClear();
   });
 
-  it('DO NOT run handleSubmit function when the form WITHOUT username or password is submitted', () => {
+  it('DO NOT run handleSubmit function when the username is null and form is submitted', () => {
+    wrapper.setState({username: '', password: 'password'});
+    const form = wrapper.find('form');
+    expect(form).toHaveLength(1);
+    form.simulate('submit', { preventDefault: jest.fn() });
+    expect(handleSubmit).toHaveBeenCalledTimes(0);
+    handleSubmit.mockClear();
+  });
+
+  it('DO NOT run handleSubmit function when the password is null and form is submitted', () => {
     wrapper.setState({username: '', password: ''});
     const form = wrapper.find('form');
     expect(form).toHaveLength(1);
