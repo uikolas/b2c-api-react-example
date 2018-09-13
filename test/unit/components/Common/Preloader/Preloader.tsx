@@ -7,10 +7,7 @@ import {
 } from '../../../../../src/shared/components/Common/Preloader';
 import {styles} from '../../../../../src/shared/components/Common/Preloader/styles';
 
-
 // Required props
-
-const dispatch = () => null;
 
 const getShallowedComponent = () => (
   shallow(
