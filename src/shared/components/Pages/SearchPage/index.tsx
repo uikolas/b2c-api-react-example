@@ -68,15 +68,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             { (items && items.length > 0)
               ? items.map((item) => (
                 <Grid item xs={12} sm={6} md={3}
-                      key={item.abstractSku}
+                      key={item.abstract_sku}
                 >
                 <ProductCard
                   currency={currency}
                   images={item.images}
-                  prices={item.prices}
                   price={item.price}
-                  abstractName={item.abstractName}
-                  abstractSku={item.abstractSku}
+                  abstract_name={item.abstract_name}
+                  abstract_sku={item.abstract_sku}
                 />
                 </Grid>
               ))
