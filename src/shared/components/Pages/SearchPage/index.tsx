@@ -13,7 +13,6 @@ import {IProductCard} from '../../../interfaces/productCard';
 import {sendSearchAction} from '../../../actions/Pages/Search';
 
 import {AppMain} from '../../Common/AppMain';
-import {AppHeader} from '../../Common/AppHeader';
 import {ProductCard} from '../../Common/ProductCard';
 import {ISearchPageData} from "../../../interfaces/searchPageData";
 
@@ -40,7 +39,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     return (
       <React.Fragment>
-        <AppHeader />
         <AppMain isLoading={isLoading}>
 
           <Grid container

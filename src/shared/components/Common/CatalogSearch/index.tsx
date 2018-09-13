@@ -10,33 +10,30 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { NavLink } from 'react-router-dom';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
-import {sendSearchAction} from '../../../actions/Pages/Search';
+import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
 import {styles} from './styles';
 
 interface CatalogProps extends WithStyles<typeof styles> {
   dispatch?: Function;
   location?: Location;
-  items: Array<IProductCard>;
+  suggestions?: Array<IProductCard>;
+  searchTerm?: string;
+  currency?: string;
 }
 
 interface CatalogState {
   value: string;
-  suggestions: Array<object>;
 }
 
 class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
   public state: CatalogState = {
     value: '',
-    suggestions: []
   };
-
-  public componentDidMount() {
-    this.props.dispatch(sendSearchAction('sams'));
-  }
 
   private renderInputComponent = (inputProps: any) => {
     const { classes, ref, ...other } = inputProps;
@@ -63,25 +60,25 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
     const parts = parse(suggestion.abstract_name, matches);
 
     return (
-      <MenuItem selected={isHighlighted} component="div">
-        <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around'}}>
-          {parts.map((part, index: number) => {
-            return part.highlight ? (
-              <span key={String(index)} style={{ fontWeight: 500 }}>
+      <MenuItem className={this.props.classes.menuItem} selected={isHighlighted} component="div">
+        <span>
+        {parts.map((part, index: number) => {
+          return part.highlight ? (
+            <span key={String(index)} style={{ fontWeight: 500 }}>
               {part.text}
             </span>
-            ) : (
-              <strong key={String(index)} style={{ fontWeight: 300 }}>
-                {part.text}
-              </strong>
-            );
-          })}
-          <img
-            width={30} height={30}
-            src={`http://${suggestion.images[0].external_url_small}`} alt={suggestion.abstract_name}
-          />
-          <span>{suggestion.price}</span>
-        </div>
+          ) : (
+            <strong key={String(index)} style={{ fontWeight: 300 }}>
+              {part.text}
+            </strong>
+          );
+        })}
+        </span>
+        <img
+          width={30} height={30}
+          src={`http:${suggestion.images[0].external_url_small}`} alt={suggestion.abstract_name}
+        />
+        <span>{suggestion.price}</span>
       </MenuItem>
     );
   }
@@ -90,38 +87,45 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
     return suggestion.abstract_name;
   }
 
-  public handleSuggestionsFetchRequested = ({ value }: any) => {
-    console.info(value);
+  public handleSuggestionsFetchRequested = ({ value }: {value: string}) => {
     this.props.dispatch(sendSearchAction(value));
   }
 
   private handleSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
-    });
+    // this.props.dispatch(clearSuggestions(this.state.value));
   }
 
   private  handleChange = (event: any, { newValue }: any) => {
     this.setState({
       value: newValue,
     });
+
+    if (newValue.trim().length < 3) {
+      // this.props.dispatch(clearSuggestions(newValue));
+    }
   }
 
-  private shouldRenderSuggestions = (value: string): boolean => value.trim().length > 2
+  private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
+
+  private handleEndSearch = () => {
+    this.props.dispatch(setItemsFromSuggestions());
+  }
 
   public render() {
-    const { classes, items } = this.props;
+    const { classes, suggestions } = this.props;
+
+    console.info(classes);
+
 
     const autosuggestProps = {
-      // suggestions: this.state.suggestions,
-      suggestions: items,
+      suggestions,
       renderInputComponent: this.renderInputComponent,
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
       shouldRenderSuggestions: this.shouldRenderSuggestions,
-    }
+    };
 
     return (
       <div className={classes.root}>
@@ -145,9 +149,11 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
             </Paper>
           )}
         />
-        <Button variant="outlined">
-          Search
-        </Button>
+        <NavLink to="/search">
+          <Button variant="contained" onClick={this.handleEndSearch}>
+            Search
+          </Button>
+        </NavLink>
       </div>
     );
   }
@@ -160,7 +166,7 @@ const CatalogSearchComponent = reduxify(
     const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
     return (
       {
-        items: searchProps && searchProps.data.items ? searchProps.data.items : ownProps.items,
+        suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
         currency: searchProps && searchProps.data.currency ? searchProps.data.currency : ownProps.currency,
       }

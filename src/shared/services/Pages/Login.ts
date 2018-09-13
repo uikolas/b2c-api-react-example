@@ -49,7 +49,7 @@ export class PagesLoginService {
         }
       };
 
-      const response: any = await api.post('access-tokens', body );
+      const response: any = await api.post('access-tokens', body, { withCredentials: true });
       console.info('loginRequest result', response);
 
       if (response.ok) {

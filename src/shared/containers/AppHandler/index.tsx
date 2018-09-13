@@ -5,8 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // import 'typeface-roboto';
 
 import {IComponent} from "../../../typings/app";
-
 import {getContentRoutes} from '../../routes/contentRoutes';
+import {AppHeader} from '../../components/Common/AppHeader';
 
 
 const styles = require('./style.scss');
@@ -18,6 +18,7 @@ export const AppHandler = function (props: IComponent) {
   return (
     <div className={className}>
       <CssBaseline />
+      <AppHeader />
       {getContentRoutes()}
       <ToastContainer
         autoClose={3000}

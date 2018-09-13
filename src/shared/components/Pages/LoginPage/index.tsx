@@ -11,7 +11,6 @@ import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Lo
 import {RouteProps} from "react-router";
 
 import {AppMain} from '../../Common/AppMain';
-import {AppHeader} from '../../Common/AppHeader';
 import {LoginForm} from './LoginForm';
 import {RegisterForm} from './RegisterForm';
 
@@ -52,8 +51,6 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
 
     return (
       <React.Fragment>
-
-        <AppHeader />
         <AppMain isLoading={isLoading}>
           <Grid item xs={12} sm={6}
                 direction="column"

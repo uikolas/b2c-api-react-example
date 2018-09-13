@@ -44,7 +44,8 @@ export class CatalogService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
+          items: response.data.products,
+          searchTerm: query,
         });
         return response.data;
       } else {

@@ -33,5 +33,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   input: {
     backgroundColor: theme.palette.common.white,
+  },
+  menuItem: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 });
