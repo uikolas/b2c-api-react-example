@@ -13,5 +13,11 @@ export const styles = (theme: Theme) => createStyles({
   container: {
     maxWidth: "1400px",
     margin: "auto",
-  }
+  },
+  empty: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    margin: "0 auto",
+  },
 });

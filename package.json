@@ -232,6 +232,7 @@
     "unit": "npm run cpy:local:test && jest --runInBand",
     "coverage": "jest --runInBand --coverage",
     "test": "npm run unit",
-    "analyze": "npm run cpy:prod && cross-env NODE_ENV=bundle-analyzer webpack -p --config ./web-webpack-config.js --progress --profile --colors --profile --json > ./stats.json && webpack-bundle-analyzer ./stats.json"
+    "analyze": "npm run cpy:prod && cross-env NODE_ENV=bundle-analyzer webpack -p --config ./web-webpack-config.js --progress --profile --colors --profile --json > ./stats.json && webpack-bundle-analyzer ./stats.json",
+    "test:watch": "jest --watch"
   }
 }

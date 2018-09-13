@@ -6,13 +6,10 @@ import {
 } from '../../../typings/app';
 import {IProductCard} from '../../interfaces/productCard';
 import {fixtureSearchTerm, fixtureItems} from '../../components/Pages/SearchPage/fixture';
+import {ISearchPageData} from "../../interfaces/searchPageData/index";
 
 export interface SearchState extends IReduxState {
-  data: {
-    items?: Array<IProductCard> | null,
-    searchTerm?: string,
-    currency: string,
-  };
+  data: ISearchPageData;
 }
 
 export const initialState: SearchState = {
