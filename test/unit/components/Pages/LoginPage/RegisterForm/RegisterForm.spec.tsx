@@ -166,4 +166,14 @@ describe('components->Pages->LoginPage->RegisterForm', () => {
     handleSubmit.mockClear();
   });
 
+  it('changes the property salutation of the state when the field is changed', () => {
+
+    const value = 'mr';
+    const field = wrapper.find('form').find("#register-salutation");
+    expect(field).toHaveLength(1);
+    field.simulate('change', { preventDefault: jest.fn(), target: {value: 'mr'} });
+    expect(wrapper.state('salutation')).toEqual(value);
+
+  });
+
 });
