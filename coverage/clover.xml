@@ -1,23 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1536825956681" clover="3.2.0">
-  <project timestamp="1536825956681" name="All files">
-    <metrics statements="56" coveredstatements="43" conditionals="40" coveredconditionals="19" methods="19" coveredmethods="13" elements="115" coveredelements="75" complexity="0" loc="56" ncloc="56" packages="9" files="11" classes="11">
+<coverage generated="1536924515277" clover="3.2.0">
+  <project timestamp="1536924515277" name="All files">
+    <metrics statements="287" coveredstatements="174" conditionals="178" coveredconditionals="57" methods="85" coveredmethods="38" elements="550" coveredelements="269" complexity="0" loc="287" ncloc="287" packages="22" files="38" classes="38">
       <package name="src.shared">
         <metrics statements="1" coveredstatements="1" conditionals="10" coveredconditionals="5" methods="0" coveredmethods="0"/>
         <file name="config.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\config.ts">
           <metrics statements="1" coveredstatements="1" conditionals="10" coveredconditionals="5" methods="0" coveredmethods="0"/>
-          <line num="1" count="2" type="stmt"/>
+          <line num="1" count="6" type="stmt"/>
         </file>
       </package>
       <package name="src.shared.actions.Pages">
-        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <metrics statements="24" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="10" coveredmethods="2"/>
         <file name="Home.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\actions\Pages\Home.ts">
-          <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
           <line num="7" count="2" type="stmt"/>
           <line num="12" count="2" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+        </file>
+        <file name="Login.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\actions\Pages\Login.ts">
+          <metrics statements="10" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="16" count="2" type="stmt"/>
+          <line num="17" count="0" type="stmt"/>
+          <line num="18" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="23" count="2" type="stmt"/>
+          <line num="24" count="0" type="stmt"/>
+          <line num="25" count="0" type="stmt"/>
+          <line num="26" count="0" type="stmt"/>
+        </file>
+        <file name="Search.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\actions\Pages\Search.ts">
+          <metrics statements="9" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="1"/>
+          <line num="9" count="2" type="stmt"/>
           <line num="13" count="2" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
-          <line num="15" count="1" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="20" count="2" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+          <line num="27" count="2" type="stmt"/>
+          <line num="28" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Common.AppHeader">
+        <metrics statements="10" coveredstatements="6" conditionals="28" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\AppHeader\index.tsx">
+          <metrics statements="9" coveredstatements="5" conditionals="28" coveredconditionals="0" methods="2" coveredmethods="1"/>
+          <line num="27" count="1" type="stmt"/>
+          <line num="28" count="3" type="stmt"/>
+          <line num="30" count="3" type="stmt"/>
+          <line num="78" count="1" type="stmt"/>
+          <line num="80" count="1" type="stmt"/>
+          <line num="82" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="83" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="84" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="85" count="0" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\AppHeader\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="1" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Common.AppLogo">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\AppLogo\index.tsx">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="20" count="2" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\AppLogo\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Common.AppMain">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="1"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\AppMain\index.tsx">
+          <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="12" count="3" type="stmt"/>
+          <line num="13" count="6" type="stmt"/>
+          <line num="14" count="6" type="stmt"/>
+          <line num="30" count="3" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\AppMain\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="3" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Common.CatalogSearch">
+        <metrics statements="34" coveredstatements="20" conditionals="23" coveredconditionals="3" methods="15" coveredmethods="3"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\CatalogSearch\index.tsx">
+          <metrics statements="33" coveredstatements="19" conditionals="23" coveredconditionals="3" methods="14" coveredmethods="3"/>
+          <line num="33" count="2" type="stmt"/>
+          <line num="35" count="7" type="cond" truecount="3" falsecount="0"/>
+          <line num="36" count="7" type="stmt"/>
+          <line num="40" count="7" type="stmt"/>
+          <line num="41" count="0" type="stmt"/>
+          <line num="43" count="0" type="stmt"/>
+          <line num="49" count="0" type="stmt"/>
+          <line num="60" count="7" type="stmt"/>
+          <line num="61" count="0" type="stmt"/>
+          <line num="62" count="0" type="stmt"/>
+          <line num="64" count="0" type="stmt"/>
+          <line num="68" count="0" type="stmt"/>
+          <line num="88" count="2" type="stmt"/>
+          <line num="89" count="0" type="stmt"/>
+          <line num="92" count="7" type="stmt"/>
+          <line num="93" count="0" type="stmt"/>
+          <line num="96" count="7" type="stmt"/>
+          <line num="100" count="7" type="stmt"/>
+          <line num="101" count="0" type="stmt"/>
+          <line num="105" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="110" count="7" type="cond" truecount="0" falsecount="2"/>
+          <line num="112" count="7" type="stmt"/>
+          <line num="113" count="1" type="stmt"/>
+          <line num="116" count="2" type="stmt"/>
+          <line num="117" count="10" type="stmt"/>
+          <line num="122" count="10" type="stmt"/>
+          <line num="132" count="10" type="stmt"/>
+          <line num="148" count="0" type="stmt"/>
+          <line num="162" count="2" type="stmt"/>
+          <line num="164" count="2" type="stmt"/>
+          <line num="166" count="2" type="stmt"/>
+          <line num="168" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="169" count="0" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\CatalogSearch\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Common.Preloader">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\Preloader\index.tsx">
+          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="11" count="4" type="stmt"/>
+          <line num="12" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
+          <line num="22" count="4" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\Preloader\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="4" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Common.ProductCard">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\ProductCard\index.tsx">
+          <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="19" count="2" type="stmt"/>
+          <line num="20" count="5" type="stmt"/>
+          <line num="32" count="5" type="stmt"/>
+          <line num="34" count="5" type="stmt"/>
+          <line num="61" count="2" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Common\ProductCard\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="2" type="stmt"/>
         </file>
       </package>
       <package name="src.shared.components.Pages.Home">
@@ -42,6 +186,84 @@
           <line num="46" count="0" type="stmt"/>
         </file>
       </package>
+      <package name="src.shared.components.Pages.LoginPage">
+        <metrics statements="19" coveredstatements="14" conditionals="21" coveredconditionals="3" methods="8" coveredmethods="3"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\LoginPage\index.tsx">
+          <metrics statements="17" coveredstatements="12" conditionals="21" coveredconditionals="3" methods="6" coveredmethods="3"/>
+          <line num="29" count="3" type="cond" truecount="3" falsecount="0"/>
+          <line num="30" count="3" type="stmt"/>
+          <line num="34" count="2" type="stmt"/>
+          <line num="35" count="3" type="stmt"/>
+          <line num="38" count="3" type="stmt"/>
+          <line num="39" count="0" type="stmt"/>
+          <line num="42" count="3" type="stmt"/>
+          <line num="43" count="0" type="stmt"/>
+          <line num="47" count="2" type="stmt"/>
+          <line num="48" count="3" type="stmt"/>
+          <line num="50" count="3" type="stmt"/>
+          <line num="74" count="2" type="stmt"/>
+          <line num="76" count="2" type="stmt"/>
+          <line num="78" count="2" type="stmt"/>
+          <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="81" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="82" count="0" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\LoginPage\styles.tsx">
+          <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+          <line num="4" count="4" type="stmt"/>
+          <line num="16" count="4" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Pages.LoginPage.LoginForm">
+        <metrics statements="15" coveredstatements="14" conditionals="7" coveredconditionals="7" methods="5" coveredmethods="4"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\LoginPage\LoginForm\index.tsx">
+          <metrics statements="15" coveredstatements="14" conditionals="7" coveredconditionals="7" methods="5" coveredmethods="4"/>
+          <line num="20" count="4" type="cond" truecount="3" falsecount="0"/>
+          <line num="22" count="4" type="stmt"/>
+          <line num="29" count="4" type="stmt"/>
+          <line num="30" count="3" type="stmt"/>
+          <line num="31" count="3" type="cond" truecount="4" falsecount="0"/>
+          <line num="32" count="2" type="stmt"/>
+          <line num="34" count="1" type="stmt"/>
+          <line num="38" count="1" type="stmt"/>
+          <line num="41" count="14" type="stmt"/>
+          <line num="42" count="0" type="stmt"/>
+          <line num="47" count="3" type="stmt"/>
+          <line num="48" count="7" type="stmt"/>
+          <line num="49" count="7" type="stmt"/>
+          <line num="101" count="3" type="stmt"/>
+          <line num="103" count="3" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.components.Pages.LoginPage.RegisterForm">
+        <metrics statements="23" coveredstatements="19" conditionals="14" coveredconditionals="13" methods="7" coveredmethods="5"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\LoginPage\RegisterForm\index.tsx">
+          <metrics statements="23" coveredstatements="19" conditionals="14" coveredconditionals="13" methods="7" coveredmethods="5"/>
+          <line num="32" count="10" type="cond" truecount="3" falsecount="0"/>
+          <line num="34" count="10" type="stmt"/>
+          <line num="44" count="10" type="stmt"/>
+          <line num="55" count="10" type="stmt"/>
+          <line num="56" count="1" type="cond" truecount="1" falsecount="1"/>
+          <line num="57" count="0" type="stmt"/>
+          <line num="60" count="1" type="stmt"/>
+          <line num="65" count="10" type="stmt"/>
+          <line num="66" count="0" type="stmt"/>
+          <line num="71" count="10" type="stmt"/>
+          <line num="72" count="0" type="stmt"/>
+          <line num="73" count="0" type="stmt"/>
+          <line num="78" count="10" type="stmt"/>
+          <line num="79" count="8" type="stmt"/>
+          <line num="80" count="8" type="cond" truecount="2" falsecount="0"/>
+          <line num="89" count="7" type="stmt"/>
+          <line num="91" count="1" type="stmt"/>
+          <line num="94" count="3" type="stmt"/>
+          <line num="95" count="19" type="stmt"/>
+          <line num="97" count="19" type="stmt"/>
+          <line num="130" count="38" type="stmt"/>
+          <line num="263" count="3" type="stmt"/>
+          <line num="265" count="3" type="stmt"/>
+        </file>
+      </package>
       <package name="src.shared.components.Pages.NotFound">
         <metrics statements="9" coveredstatements="7" conditionals="5" coveredconditionals="4" methods="3" coveredmethods="2"/>
         <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\NotFound\index.tsx">
@@ -57,18 +279,59 @@
           <line num="19" count="1" type="stmt"/>
         </file>
       </package>
+      <package name="src.shared.components.Pages.SearchPage">
+        <metrics statements="18" coveredstatements="15" conditionals="31" coveredconditionals="8" methods="5" coveredmethods="3"/>
+        <file name="fixture.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\SearchPage\fixture.ts">
+          <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="117" count="2" type="stmt"/>
+        </file>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\SearchPage\index.tsx">
+          <metrics statements="14" coveredstatements="11" conditionals="31" coveredconditionals="8" methods="4" coveredmethods="3"/>
+          <line num="26" count="1" type="stmt"/>
+          <line num="28" count="5" type="cond" truecount="3" falsecount="0"/>
+          <line num="30" count="5" type="stmt"/>
+          <line num="34" count="1" type="stmt"/>
+          <line num="35" count="6" type="stmt"/>
+          <line num="38" count="6" type="stmt"/>
+          <line num="40" count="6" type="stmt"/>
+          <line num="67" count="50" type="cond" truecount="2" falsecount="0"/>
+          <line num="94" count="1" type="stmt"/>
+          <line num="96" count="1" type="stmt"/>
+          <line num="98" count="1" type="stmt"/>
+          <line num="100" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="101" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="102" count="0" type="stmt"/>
+        </file>
+        <file name="styles.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\components\Pages\SearchPage\styles.tsx">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+          <line num="4" count="1" type="stmt"/>
+        </file>
+      </package>
       <package name="src.shared.constants.ActionTypes.Pages">
-        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <file name="Home.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\constants\ActionTypes\Pages\Home.ts">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
           <line num="1" count="4" type="stmt"/>
+        </file>
+        <file name="Login.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\constants\ActionTypes\Pages\Login.ts">
+          <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+        </file>
+        <file name="Search.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\constants\ActionTypes\Pages\Search.ts">
+          <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="1" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
         </file>
       </package>
       <package name="src.shared.lib">
         <metrics statements="4" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
         <file name="redux-helper.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\lib\redux-helper.ts">
           <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-          <line num="5" count="1" type="stmt"/>
+          <line num="5" count="7" type="stmt"/>
         </file>
         <file name="tests-helper.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\lib\tests-helper.tsx">
           <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
@@ -90,31 +353,119 @@
           <line num="57" count="1" type="stmt"/>
         </file>
       </package>
+      <package name="src.shared.services.Common">
+        <metrics statements="30" coveredstatements="4" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="1"/>
+        <file name="Catalog.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\services\Common\Catalog.ts">
+          <metrics statements="30" coveredstatements="4" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="1"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="8" count="0" type="stmt"/>
+          <line num="9" count="0" type="stmt"/>
+          <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="12" count="0" type="stmt"/>
+          <line num="16" count="0" type="stmt"/>
+          <line num="18" count="0" type="stmt"/>
+          <line num="19" count="0" type="stmt"/>
+          <line num="23" count="0" type="stmt"/>
+          <line num="24" count="0" type="stmt"/>
+          <line num="28" count="0" type="stmt"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="33" count="0" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="38" count="2" type="stmt"/>
+          <line num="41" count="0" type="stmt"/>
+          <line num="42" count="0" type="stmt"/>
+          <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="45" count="0" type="stmt"/>
+          <line num="50" count="0" type="stmt"/>
+          <line num="52" count="0" type="stmt"/>
+          <line num="53" count="0" type="stmt"/>
+          <line num="57" count="0" type="stmt"/>
+          <line num="58" count="0" type="stmt"/>
+          <line num="62" count="0" type="stmt"/>
+          <line num="63" count="0" type="stmt"/>
+          <line num="67" count="0" type="stmt"/>
+          <line num="68" count="0" type="stmt"/>
+          <line num="71" count="2" type="stmt"/>
+        </file>
+      </package>
       <package name="src.shared.services.Pages">
-        <metrics statements="8" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <metrics statements="41" coveredstatements="7" conditionals="4" coveredconditionals="0" methods="5" coveredmethods="2"/>
         <file name="Home.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\services\Pages\Home.ts">
-          <metrics statements="8" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <metrics statements="8" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
           <line num="4" count="3" type="stmt"/>
           <line num="5" count="3" type="stmt"/>
-          <line num="6" count="2" type="stmt"/>
-          <line num="15" count="2" type="stmt"/>
+          <line num="6" count="0" type="stmt"/>
+          <line num="15" count="0" type="stmt"/>
           <line num="17" count="0" type="stmt"/>
           <line num="18" count="0" type="stmt"/>
           <line num="22" count="0" type="stmt"/>
           <line num="25" count="3" type="stmt"/>
+        </file>
+        <file name="Login.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\services\Pages\Login.ts">
+          <metrics statements="33" coveredstatements="4" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="1"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="7" count="0" type="stmt"/>
+          <line num="13" count="0" type="stmt"/>
+          <line num="14" count="0" type="stmt"/>
+          <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="17" count="0" type="stmt"/>
+          <line num="21" count="0" type="stmt"/>
+          <line num="23" count="0" type="stmt"/>
+          <line num="24" count="0" type="stmt"/>
+          <line num="28" count="0" type="stmt"/>
+          <line num="29" count="0" type="stmt"/>
+          <line num="33" count="0" type="stmt"/>
+          <line num="34" count="0" type="stmt"/>
+          <line num="38" count="0" type="stmt"/>
+          <line num="39" count="0" type="stmt"/>
+          <line num="43" count="2" type="stmt"/>
+          <line num="45" count="0" type="stmt"/>
+          <line num="52" count="0" type="stmt"/>
+          <line num="53" count="0" type="stmt"/>
+          <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
+          <line num="56" count="0" type="stmt"/>
+          <line num="60" count="0" type="stmt"/>
+          <line num="61" count="0" type="stmt"/>
+          <line num="63" count="0" type="stmt"/>
+          <line num="64" count="0" type="stmt"/>
+          <line num="68" count="0" type="stmt"/>
+          <line num="69" count="0" type="stmt"/>
+          <line num="73" count="0" type="stmt"/>
+          <line num="74" count="0" type="stmt"/>
+          <line num="78" count="0" type="stmt"/>
+          <line num="79" count="0" type="stmt"/>
+          <line num="82" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.services.api">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <file name="index.ts" path="C:\Users\kovalchuk\projects\react-app\src\shared\services\api\index.ts">
+          <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="4" count="4" type="stmt"/>
+        </file>
+      </package>
+      <package name="src.shared.services.priceFormatter">
+        <metrics statements="3" coveredstatements="3" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <file name="index.tsx" path="C:\Users\kovalchuk\projects\react-app\src\shared\services\priceFormatter\index.tsx">
+          <metrics statements="3" coveredstatements="3" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+          <line num="2" count="12" type="cond" truecount="2" falsecount="2"/>
+          <line num="3" count="6" type="stmt"/>
+          <line num="9" count="6" type="stmt"/>
         </file>
       </package>
       <package name="test">
         <metrics statements="5" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <file name="test-setup.js" path="C:\Users\kovalchuk\projects\react-app\test\test-setup.js">
           <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="7" count="5" type="stmt"/>
-          <line num="8" count="5" type="stmt"/>
-          <line num="10" count="5" type="stmt"/>
+          <line num="7" count="15" type="stmt"/>
+          <line num="8" count="15" type="stmt"/>
+          <line num="10" count="15" type="stmt"/>
         </file>
         <file name="test-shim.js" path="C:\Users\kovalchuk\projects\react-app\test\test-shim.js">
           <metrics statements="2" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
-          <line num="7" count="5" type="stmt"/>
+          <line num="7" count="15" type="stmt"/>
           <line num="8" count="0" type="stmt"/>
         </file>
       </package>
