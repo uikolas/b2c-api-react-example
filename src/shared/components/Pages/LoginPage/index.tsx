@@ -19,7 +19,9 @@ interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
   customer?: any;
   isAuth?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
+  handleSubmitRegisterForm: Function;
+  handleSubmitLoginForm: Function;
 }
 
 interface LoginPageState {
@@ -30,19 +32,6 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
   public state: LoginPageState = {
 
   };
-
-  public componentDidMount() {
-    toast.success('Ura!!!');
-  }
-
-  public handleSubmitLoginForm = (data: any): void => {
-    this.props.dispatch(sendLoginAction(data));
-  }
-
-  public handleSubmitRegisterForm = (data: any): void => {
-    this.props.dispatch(customerRegisterAction(data));
-  }
-
 
   public render() {
     const { classes, isLoading } = this.props;
@@ -55,7 +44,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
                 container
                 justify="center"
                 alignItems="center">
-            <LoginForm handleSubmit={this.handleSubmitLoginForm}
+            <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
           />
           </Grid>
           <div className={classes.divider} id="divider" ></div>
@@ -64,8 +53,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
                 container
                 justify="center"
                 alignItems="center">
-            <RegisterForm handleSubmit={this.handleSubmitRegisterForm}
-          />
+            <RegisterForm handleSubmit={this.props.handleSubmitRegisterForm} />
           </Grid>
         </AppMain>
       </React.Fragment>
@@ -87,5 +75,12 @@ export const ConnectedLogin = reduxify(
         isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
       }
     );
+  },
+  (dispatch: Function, ownProps: any) => {
+    return {
+      dispatch,
+      handleSubmitRegisterForm: (data: any): void => dispatch(customerRegisterAction(data)),
+      handleSubmitLoginForm: (data: any): void => dispatch(sendLoginAction(data)),
+    };
   }
 )(LoginPage);

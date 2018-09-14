@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { NavLink } from 'react-router-dom';
 import {RouteProps} from "react-router";
 
@@ -17,6 +18,7 @@ import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
+import {getFormattedPrice} from '../../../services/priceFormatter';
 import {styles} from './styles';
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
@@ -24,6 +26,7 @@ interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   suggestions?: Array<IProductCard>;
   searchTerm?: string;
   currency?: string;
+  isLoading?: boolean;
 }
 
 interface CatalogState {
@@ -58,6 +61,10 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   private renderSuggestion = (suggestion: any, { query, isHighlighted }: any) => {
+    if (this.props.isLoading) {
+      return <CircularProgress />;
+    }
+
     const matches = match(suggestion.abstract_name, query);
     const parts = parse(suggestion.abstract_name, matches);
 
@@ -78,9 +85,9 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
         </span>
         <img
           width={30} height={30}
-          src={`http:${suggestion.images[0].external_url_small}`} alt={suggestion.abstract_name}
+          src={suggestion.images[0].external_url_small} alt={suggestion.abstract_name}
         />
-        <span>{suggestion.price}</span>
+        <span>{getFormattedPrice(suggestion.price, this.props.currency)}</span>
       </MenuItem>
     );
   }
@@ -115,9 +122,6 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   public render() {
     const { classes, suggestions } = this.props;
-
-    // console.info('suggestions: ', suggestions);
-
 
     const autosuggestProps = {
       suggestions,
@@ -171,6 +175,7 @@ const CatalogSearchComponent = reduxify(
         suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
         currency: searchProps && searchProps.data.currency ? searchProps.data.currency : ownProps.currency,
+        isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
       }
     );
   }

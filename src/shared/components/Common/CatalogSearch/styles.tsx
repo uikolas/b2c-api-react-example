@@ -19,6 +19,8 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing.unit,
     left: 0,
     right: 0,
+    maxHeight: '60vh',
+    overflowY: 'auto',
   },
   suggestion: {
     display: 'flex',

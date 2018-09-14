@@ -18,6 +18,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data,
         });
+        toast.success('Successfull created.');
         return response.data;
       } else {
         console.error('register', response.problem);
@@ -55,7 +56,7 @@ export class PagesLoginService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
+          payload: response.data.attributes,
         });
         toast.success('Request Success');
         return response.data;
