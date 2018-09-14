@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/shared/components/Pages/LoginPage/index.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">src/shared/components/Pages/LoginPage</a> index.tsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">76.19% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>16/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.29% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>3/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">70.59% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>12/17</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from "react";
+import { toast } from 'react-toastify';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+&nbsp;
+import Grid from '@material-ui/core/Grid';
+&nbsp;
+import {reduxify} from '../../../lib/redux-helper';
+import {ILoginState} from '../../../reducers/Pages/Login';
+import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
+import {RouteProps} from "react-router";
+&nbsp;
+import {AppMain} from '../../Common/AppMain';
+import {LoginForm} from './LoginForm';
+import {RegisterForm} from './RegisterForm';
+&nbsp;
+import {styles} from './styles';
+&nbsp;
+interface LoginPageProps extends WithStyles&lt;typeof styles&gt;, RouteProps {
+  dispatch?: Function;
+  customer?: any;
+  isAuth?: boolean;
+  isLoading: boolean;
+}
+&nbsp;
+interface LoginPageState {
+&nbsp;
+}
+&nbsp;
+export class LoginPageBase extends React.Component&lt;LoginPageProps, LoginPageState&gt; {
+  public state: LoginPageState = {
+&nbsp;
+  };
+&nbsp;
+  public componentDidMount() {
+    toast.success('Ura!!!');
+  }
+&nbsp;
+  public handleSubmitLoginForm = <span class="fstat-no" title="function not covered" >(</span>data: any): void =&gt; {
+<span class="cstat-no" title="statement not covered" >    this.props.dispatch(sendLoginAction(data));</span>
+  }
+&nbsp;
+  public handleSubmitRegisterForm = <span class="fstat-no" title="function not covered" >(</span>data: any): void =&gt; {
+<span class="cstat-no" title="statement not covered" >    this.props.dispatch(customerRegisterAction(data));</span>
+  }
+&nbsp;
+&nbsp;
+  public render() {
+    const { classes, isLoading } = this.props;
+&nbsp;
+    return (
+      &lt;React.Fragment&gt;
+        &lt;AppMain isLoading={isLoading}&gt;
+          &lt;Grid item xs={12} sm={6}
+                direction="column"
+                container
+                justify="center"
+                alignItems="center"&gt;
+            &lt;LoginForm handleSubmit={this.handleSubmitLoginForm}
+          /&gt;
+          &lt;/Grid&gt;
+          &lt;div className={classes.divider} id="divider" &gt;&lt;/div&gt;
+          &lt;Grid item xs={12} sm={6}
+                direction="column"
+                container
+                justify="center"
+                alignItems="center"&gt;
+            &lt;RegisterForm handleSubmit={this.handleSubmitRegisterForm}
+          /&gt;
+          &lt;/Grid&gt;
+        &lt;/AppMain&gt;
+      &lt;/React.Fragment&gt;
+    );
+  }
+}
+&nbsp;
+const LoginPage = withStyles(styles)(LoginPageBase);
+&nbsp;
+export const ConnectedLogin = reduxify(
+<span class="fstat-no" title="function not covered" >  (</span>state: any, ownProps: any) =&gt; {
+    const routerProps: RouteProps = <span class="cstat-no" title="statement not covered" >state.routing ? state.routing : {};</span>
+    const pagesLoginProps: ILoginState = <span class="cstat-no" title="statement not covered" >state.pagesLogin ? state.pagesLogin : null;</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      {
+        location: routerProps.location ? routerProps.location : ownProps.location,
+        customer: pagesLoginProps &amp;&amp; pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
+        isAuth: pagesLoginProps &amp;&amp; pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
+        isLoading: pagesLoginProps &amp;&amp; pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
+      }
+    );
+  }
+)(LoginPage);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Sep 14 2018 14:28:34 GMT+0300 (FLE Daylight Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>

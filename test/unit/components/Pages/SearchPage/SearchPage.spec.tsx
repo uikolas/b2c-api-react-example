@@ -6,10 +6,10 @@ import {
   SearchPageBase,
   ConnectedSearchPage,
   pageTitle
-} from '../../../../src/shared/components/Pages/SearchPage';
-import {fixtureSearchTerm, fixtureItems} from '../../../../src/shared/components/Pages/SearchPage/fixture';
-import {ProductCard} from '../../../../src/shared/components/Common/ProductCard';
-import {styles} from '../../../../src/shared/components/Pages/SearchPage/styles/page';
+} from '../../../../../src/shared/components/Pages/SearchPage';
+import {fixtureSearchTerm, fixtureItems} from '../../../../../src/shared/components/Pages/SearchPage/fixture';
+import {ProductCard} from '../../../../../src/shared/components/Common/ProductCard';
+import {styles} from '../../../../../src/shared/components/Pages/SearchPage/styles';
 
 // Required props
 const items = fixtureItems;
@@ -18,7 +18,7 @@ const currency = 'EUR';
 
 const dispatch = () => null;
 
-const CountItems = fixtureItems.length;
+const countItems = fixtureItems.length;
 // Common html block parent
 const parent = '.component-container';
 
@@ -46,18 +46,22 @@ describe('components->Pages->SearchPage', () => {
   });
 
   it("renders the ProductCards", () => {
-    expect(wrapper.find(ProductCard)).toHaveLength(CountItems);
+    expect(wrapper.find(ProductCard)).toHaveLength(countItems);
+  });
+
+  it("renders the pageTitle", () => {
+    expect(wrapper.find('#pageTitle')).toHaveLength(1);
+    expect(wrapper.find('#pageTitle').dive().dive().text()).toContain(pageTitle);
   });
 
   it("renders the searchTerm", () => {
-    expect(wrapper.find('#pageTitle')).toHaveLength(1);
     expect(wrapper.find('#searchTerm')).toHaveLength(1);
+    expect(wrapper.find('#searchTerm').dive().dive().text()).toContain(searchTerm);
   });
 
-  it("renders nothing when the searchTerm is null", () => {
-    wrapper.setProps({ searchTerm: null });
-    expect(wrapper.find('#pageTitle')).toHaveLength(0);
-    expect(wrapper.find('#searchTerm')).toHaveLength(0);
+  it("renders the box when the items is null", () => {
+    wrapper.setProps({ items: null });
+    expect(wrapper.find('#emptyResult')).toHaveLength(1);
   });
 
 });

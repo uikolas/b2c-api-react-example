@@ -9,7 +9,7 @@ interface AppMainProps extends WithStyles<typeof styles> {
   isLoading: boolean;
 }
 
-const AppMainBase: React.SFC<AppMainProps> = (props) => {
+export const AppMainBase: React.SFC<AppMainProps> = (props) => {
   const { classes, isLoading } = props;
   return (
     <main className={classes.layout}>

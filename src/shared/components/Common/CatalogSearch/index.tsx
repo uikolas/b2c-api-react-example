@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { NavLink } from 'react-router-dom';
+import {RouteProps} from "react-router";
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
@@ -20,9 +21,8 @@ import {IProductCard} from '../../../interfaces/productCard';
 import {getFormattedPrice} from '../../../services/priceFormatter';
 import {styles} from './styles';
 
-interface CatalogProps extends WithStyles<typeof styles> {
+interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
-  location?: Location;
   suggestions?: Array<IProductCard>;
   searchTerm?: string;
   currency?: string;
@@ -33,7 +33,9 @@ interface CatalogState {
   value: string;
 }
 
-class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
+export const buttonTitle = 'Search';
+
+export class CatalogSearchBase extends React.Component<CatalogProps, CatalogState> {
   public state: CatalogState = {
     value: '',
   };
@@ -132,7 +134,7 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
     };
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} id="CatalogSearch">
         <Autosuggest
           {...autosuggestProps}
           inputProps={{
@@ -155,7 +157,7 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
         />
         <NavLink to="/search">
           <Button variant="contained" onClick={this.handleEndSearch}>
-            Search
+            {buttonTitle}
           </Button>
         </NavLink>
       </div>
@@ -163,7 +165,7 @@ class CatalogSearch extends React.Component<CatalogProps, CatalogState> {
   }
 }
 
-const DecoratedCatalog = withStyles(styles)(CatalogSearch);
+const CatalogSearch = withStyles(styles)(CatalogSearchBase);
 
 const CatalogSearchComponent = reduxify(
   (state: any, ownProps: any) => {
@@ -177,6 +179,6 @@ const CatalogSearchComponent = reduxify(
       }
     );
   }
-)(DecoratedCatalog);
+)(CatalogSearch);
 
 export default CatalogSearchComponent;
