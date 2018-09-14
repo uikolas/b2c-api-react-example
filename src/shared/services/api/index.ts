@@ -4,7 +4,7 @@ import {config} from '../../config';
 const api = apisauce.create({
   baseURL: config.API_URL,
   headers: {
-    'Accept': 'application/json',
+    'Accept': 'application/vnd.api+json',
     'Content-Type': 'application/json',
   }
 });

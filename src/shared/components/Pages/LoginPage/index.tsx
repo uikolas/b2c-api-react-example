@@ -21,7 +21,9 @@ interface LoginPageProps extends WithStyles<typeof styles> {
   location?: Location;
   customer?: any;
   isAuth?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
+  handleSubmitRegisterForm: Function;
+  handleSubmitLoginForm: Function;
 }
 
 interface LoginPageState {
@@ -32,19 +34,6 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {
 
   };
-
-  public componentDidMount() {
-    toast.success('Ura!!!');
-  }
-
-  public handleSubmitLoginForm = (data: any): void => {
-    this.props.dispatch(sendLoginAction(data));
-  }
-
-  public handleSubmitRegisterForm = (data: any): void => {
-    this.props.dispatch(customerRegisterAction(data));
-  }
-
 
   public render() {
     const { classes, isLoading } = this.props;
@@ -57,7 +46,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 container
                 justify="center"
                 alignItems="center">
-            <LoginForm handleSubmit={this.handleSubmitLoginForm}
+            <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
           />
           </Grid>
           <div className={classes.divider}></div>
@@ -66,8 +55,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
                 container
                 justify="center"
                 alignItems="center">
-            <RegisterForm handleSubmit={this.handleSubmitRegisterForm}
-          />
+            <RegisterForm handleSubmit={this.props.handleSubmitRegisterForm} />
           </Grid>
         </AppMain>
       </React.Fragment>
@@ -89,5 +77,12 @@ export const ConnectedLogin = reduxify(
         isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
       }
     );
+  },
+  (dispatch: Function, ownProps: any) => {
+    return {
+      dispatch,
+      handleSubmitRegisterForm: (data: any): void => dispatch(customerRegisterAction(data)),
+      handleSubmitLoginForm: (data: any): void => dispatch(sendLoginAction(data)),
+    };
   }
 )(DecoratedClass);

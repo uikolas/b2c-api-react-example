@@ -6,12 +6,12 @@ export class CatalogService {
     try {
 
       const response: any = await api.get('catalog-search', params, { withCredentials: true });
-      console.info(response);
+      console.info(response.data.data.attributes);
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
+          payload: response.data.data.attributes,
         });
         return response.data;
       } else {
@@ -38,13 +38,13 @@ export class CatalogService {
   public static async catalogSearchSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
-      const response: any = await api.get('catalog-search-suggestions', {q: query}, { withCredentials: true });
-      console.info(response);
+      const response: any = await api.get('catalog-search-suggestions', {q: query});
+      console.info(response.data.data.attributes);
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          items: response.data.products,
+          items: response.data.data.attributes.products,
           searchTerm: query,
         });
         return response.data;

@@ -11,6 +11,10 @@ export interface ILoginState extends IReduxState {
   data: {
     customer?: any,
     isAuth?: boolean,
+    tokenType?: string,
+    expiresIn?: string,
+    accessToken?: string,
+    refreshToken?: string,
   };
 }
 
@@ -18,6 +22,10 @@ export const initialState: ILoginState = {
   data: {
     customer: null,
     isAuth: false,
+    tokenType: '',
+    expiresIn: '',
+    accessToken: '',
+    refreshToken: '',
   },
 };
 
@@ -61,14 +69,14 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
       return {
-        error: null,
+        ...state,
         data: {
-          customer: action.payload,
-          isAuth: false,
+          ...state.data,
+          isAuth: true,
+          ...action.payload,
         },
         pending: false,
         fulfilled: true,
-        rejected: false,
       };
     case `${PAGES_LOGIN_REQUEST}_REJECTED`:
       return {
