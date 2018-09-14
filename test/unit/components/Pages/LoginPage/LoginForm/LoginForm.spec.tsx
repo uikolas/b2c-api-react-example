@@ -4,7 +4,7 @@ import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 import {
   LoginFormBase
 } from '../../../../../../src/shared/components/Pages/LoginPage/LoginForm';
-import {styles} from '../../../../../../src/shared/components/Pages/LoginPage/styles/form';
+import {formStyles} from '../../../../../../src/shared/components/Pages/LoginPage/styles';
 
 // Required props
 const handleSubmit = jest.fn();
@@ -14,7 +14,7 @@ const getShallowedComponent = () => (
   shallow(
     <LoginFormBase
       handleSubmit={handleSubmit}
-      classes={styles}
+      classes={formStyles}
     />
   )
 );

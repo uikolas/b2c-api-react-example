@@ -8,9 +8,9 @@ import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import {styles} from '../styles/form/index';
+import {formStyles} from '../styles';
 
-interface RegisterFormProps extends WithStyles<typeof styles> {
+interface RegisterFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
 }
 
@@ -262,5 +262,5 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
   }
 }
 
-export const RegisterForm = withStyles(styles)(RegisterFormBase);
+export const RegisterForm = withStyles(formStyles)(RegisterFormBase);
 

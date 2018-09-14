@@ -14,7 +14,7 @@ import {AppHeader} from '../../Common/AppHeader';
 import {LoginForm} from './LoginForm';
 import {RegisterForm} from './RegisterForm';
 
-import {styles} from './styles/page';
+import {styles} from './styles';
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
