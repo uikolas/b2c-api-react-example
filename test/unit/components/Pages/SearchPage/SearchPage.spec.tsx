@@ -18,7 +18,7 @@ const currency = 'EUR';
 
 const dispatch = () => null;
 
-const CountItems = fixtureItems.length;
+const countItems = fixtureItems.length;
 // Common html block parent
 const parent = '.component-container';
 
@@ -46,7 +46,7 @@ describe('components->Pages->SearchPage', () => {
   });
 
   it("renders the ProductCards", () => {
-    expect(wrapper.find(ProductCard)).toHaveLength(CountItems);
+    expect(wrapper.find(ProductCard)).toHaveLength(countItems);
   });
 
   it("renders the pageTitle", () => {
