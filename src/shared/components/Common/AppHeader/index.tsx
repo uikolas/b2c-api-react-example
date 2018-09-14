@@ -13,7 +13,7 @@ interface AppHeaderProps extends WithStyles<typeof styles> {
 
 }
 
-const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
+export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
   const { classes } = props;
   return (
     <React.Fragment>
