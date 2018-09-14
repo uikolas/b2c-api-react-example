@@ -1,4 +1,4 @@
-version: "3.0"
+version: "3.7"
 services:
   boilerplate-node:
     container_name: boilerplate-node
@@ -29,7 +29,7 @@ services:
         delay: 5s
         max_attempts: 3
         window: 120s
-  
+
       resources:
         limits:
           cpus: "0.50"

@@ -1,4 +1,4 @@
-FROM node:8.11.1
+FROM node:9.5.0
 
 ## Update global server dependencies repos
 #RUN apt-get update

@@ -61,10 +61,6 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   private renderSuggestion = (suggestion: any, { query, isHighlighted }: any) => {
-    if (this.props.isLoading) {
-      return <CircularProgress />;
-    }
-
     const matches = match(suggestion.abstract_name, query);
     const parts = parse(suggestion.abstract_name, matches);
 
@@ -101,7 +97,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   private handleSuggestionsClearRequested = () => {
-    // this.props.dispatch(clearSuggestions(this.state.value));
+    this.props.dispatch(clearSuggestions(this.state.value));
   }
 
   private  handleChange = (event: any, { newValue }: any) => {
@@ -110,11 +106,24 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
     });
 
     if (newValue.trim().length < 3) {
-      // this.props.dispatch(clearSuggestions(newValue));
+      this.props.dispatch(clearSuggestions(newValue));
     }
   }
 
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
+
+  private renderSuggestionsContainer = ({ containerProps , children, query }: any) => {
+    if (this.props.isLoading) {
+      console.info(containerProps);
+      return <div {... containerProps} style={{height: '100px', width: '100%'}}><CircularProgress /></div>;
+    }
+
+    return (
+      <div {... containerProps}>
+        {children}
+      </div>
+    );
+  }
 
   private handleEndSearch = () => {
     this.props.dispatch(setItemsFromSuggestions());
@@ -131,6 +140,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
       shouldRenderSuggestions: this.shouldRenderSuggestions,
+      // renderSuggestionsContainer: this.renderSuggestionsContainer,
     };
 
     return (
