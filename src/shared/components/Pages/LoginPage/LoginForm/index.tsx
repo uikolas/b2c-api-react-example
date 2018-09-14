@@ -4,9 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import {styles} from '../styles/form/index';
+import {formStyles} from '../styles';
 
-interface LoginFormProps extends WithStyles<typeof styles> {
+interface LoginFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
 }
 
@@ -17,7 +17,7 @@ interface LoginFormState {
   isSubmitted: boolean;
 }
 
-class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
+export class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
 
   public state = {
     username: '',
@@ -51,7 +51,7 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
         <Typography variant="title" color="inherit" noWrap>
           Login
         </Typography>
-        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit} id="LoginForm">
           <TextField
             required
             id="login-email"
@@ -100,5 +100,5 @@ class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
   }
 }
 
-export const LoginForm = withStyles(styles)(LoginFormBase);
+export const LoginForm = withStyles(formStyles)(LoginFormBase);
 

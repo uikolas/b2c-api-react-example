@@ -24,7 +24,7 @@ interface AppHeaderProps extends WithStyles<typeof styles> {
   searchTerm?: string;
 }
 
-const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
+export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
   const { classes } = props;
 
   return (

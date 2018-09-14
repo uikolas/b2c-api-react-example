@@ -8,7 +8,7 @@ interface PreloaderProps extends WithStyles<typeof styles> {
 
 }
 
-const PreloaderBase: React.SFC<PreloaderProps> = (props) => {
+export const PreloaderBase: React.SFC<PreloaderProps> = (props) => {
   const { classes } = props;
   return (
     <div className={classes.root}>

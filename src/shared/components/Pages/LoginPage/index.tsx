@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Location} from 'history';
 import { toast } from 'react-toastify';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
@@ -14,11 +13,10 @@ import {AppMain} from '../../Common/AppMain';
 import {LoginForm} from './LoginForm';
 import {RegisterForm} from './RegisterForm';
 
-import {styles} from './styles/page';
+import {styles} from './styles';
 
-interface LoginPageProps extends WithStyles<typeof styles> {
+interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
-  location?: Location;
   customer?: any;
   isAuth?: boolean;
   isLoading: boolean;
@@ -28,7 +26,7 @@ interface LoginPageState {
 
 }
 
-class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
+export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {
 
   };
@@ -60,7 +58,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
             <LoginForm handleSubmit={this.handleSubmitLoginForm}
           />
           </Grid>
-          <div className={classes.divider}></div>
+          <div className={classes.divider} id="divider" ></div>
           <Grid item xs={12} sm={6}
                 direction="column"
                 container
@@ -75,7 +73,7 @@ class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
   }
 }
 
-const DecoratedClass = withStyles(styles)(LoginPage);
+const LoginPage = withStyles(styles)(LoginPageBase);
 
 export const ConnectedLogin = reduxify(
   (state: any, ownProps: any) => {
@@ -90,4 +88,4 @@ export const ConnectedLogin = reduxify(
       }
     );
   }
-)(DecoratedClass);
+)(LoginPage);

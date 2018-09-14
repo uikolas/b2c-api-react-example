@@ -8,7 +8,7 @@ interface AppLogoProps extends WithStyles<typeof styles> {
 
 }
 
-const AppLogoBase: React.SFC<AppLogoProps> = (props) => {
+export const AppLogoBase: React.SFC<AppLogoProps> = (props) => {
   const { classes } = props;
   return (
     <Typography variant="title" color="inherit" noWrap className={classes.logo}>

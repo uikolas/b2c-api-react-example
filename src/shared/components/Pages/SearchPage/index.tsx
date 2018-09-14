@@ -16,7 +16,7 @@ import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
 import {ISearchPageData} from "../../../interfaces/searchPageData";
 
-import {styles} from './styles/page';
+import {styles} from './styles';
 
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {}
@@ -77,7 +77,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 />
                 </Grid>
               ))
-              : <Paper elevation={1} className={classes.empty}>
+              : <Paper elevation={1} className={classes.empty} id="emptyResult" >
                   <Typography variant="headline" component="h3">
                     Nothing to show.
                   </Typography>
