@@ -17,7 +17,7 @@ import {AppHeader} from '../../Common/AppHeader';
 import {ProductCard} from '../../Common/ProductCard';
 import {ISearchPageData} from "../../../interfaces/searchPageData";
 
-import {styles} from './styles/page';
+import {styles} from './styles';
 
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {}

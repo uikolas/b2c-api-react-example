@@ -9,8 +9,7 @@ import {
 } from '../../../../../src/shared/components/Pages/SearchPage';
 import {fixtureSearchTerm, fixtureItems} from '../../../../../src/shared/components/Pages/SearchPage/fixture';
 import {ProductCard} from '../../../../../src/shared/components/Common/ProductCard';
-import {styles} from '../../../../../src/shared/components/Pages/SearchPage/styles/page';
-import Typography from '@material-ui/core/Typography';
+import {styles} from '../../../../../src/shared/components/Pages/SearchPage/styles';
 
 // Required props
 const items = fixtureItems;
