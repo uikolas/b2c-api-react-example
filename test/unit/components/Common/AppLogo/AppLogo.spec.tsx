@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 import renderer from 'react-test-renderer';
-import { BrowserRouter as Router } from 'react-router-dom';
-import {NavLink} from "react-router-dom";
+import { MemoryRouter } from 'react-router';
 
-import Typography from '@material-ui/core/Typography';
 import {
   AppLogoBase
 } from '../../../../../src/shared/components/Common/AppLogo';
@@ -31,4 +29,19 @@ describe('components->Common->AppLogo', () => {
   it("renders the component", () => {
     expect(wrapper.find(IconLogo)).toHaveLength(1);
   });
+});
+
+describe('components->Common->AppLogo: snapshot', () => {
+
+  it('renders correctly', () => {
+    const tree = renderer
+      .create(
+        <MemoryRouter initialEntries={[ '/' ]}>
+          <AppLogoBase classes = {styles} />
+        </MemoryRouter>
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
 });
