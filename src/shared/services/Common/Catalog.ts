@@ -6,7 +6,7 @@ export class CatalogService {
     try {
 
       const response: any = await api.get('catalog-search', params, { withCredentials: true });
-      console.info(response.data.data.attributes);
+      // console.info(response.data.data.attributes);
 
       if (response.ok) {
         dispatch({
@@ -15,7 +15,7 @@ export class CatalogService {
         });
         return response.data;
       } else {
-        console.error('Catalog search', response.problem);
+        // console.error('Catalog search', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
@@ -25,7 +25,7 @@ export class CatalogService {
       }
 
     } catch (error) {
-      console.error('Catalog search', error);
+      console.error('Catalog catch search', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         error,

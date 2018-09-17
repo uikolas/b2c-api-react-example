@@ -57,4 +57,21 @@ describe('services->Common->CatalogService', () => {
     expect(result.data).toEqual(resp.data.data);
   });
 
+  it("catches errors in method catalogSearch", async () => {
+
+    const resp = {
+      problem: 'true',
+      data: {
+
+      }
+    };
+    api.get.mockImplementation(() => Promise.resolve(resp));
+
+    // work
+    const result = await CatalogService.catalogSearch('PAGES_SEARCH_REQUEST_TEST', dispatch, 'sss');
+
+    // expect
+    expect(result).toBeNull();
+  });
+
 });
