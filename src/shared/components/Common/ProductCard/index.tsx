@@ -17,29 +17,21 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const { classes, images, abstract_name: productName, price, currency } = props;
-
-  // If there are more than one price, the "original price" should be shown as strikethrough price START
- /* const originalPrice = prices.filter((item: IProductCardPrice) => (item.priceTypeName === 'ORIGINAL'));
-  let priceToParse;
-  if(originalPrice.length) {
-    priceToParse = originalPrice[0].grossAmount;
-  } else {
-    priceToParse = price;
-  }
-  const priceToShow = getFormattedPrice(priceToParse, currency);*/
-  // FINISH
+  const { classes, images, abstract_name: productName = 'No name', price = 0, currency } = props;
   const priceToShow = getFormattedPrice(price, currency);
 
   return (
     <Card className={classes.card} raised={true}>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          className={classes.media}
-          image={images[0].external_url_small}
-          title={productName}
-        />
+        { images && images[0].external_url_small
+          ? <CardMedia
+            component="img"
+            className={classes.media}
+            image={images[0].external_url_small}
+            title={productName}
+          />
+          : null
+        }
         <CardContent>
           <Typography gutterBottom variant="title" data-type="productName">
             {productName}

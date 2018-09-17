@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.19% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>16/21</span>
+        <span class='fraction'>12/18</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">14.29% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>3/21</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">33.33% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/6</span>
+        <span class='fraction'>2/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">70.59% </span>
+        <span class="strong">57.14% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/17</span>
+        <span class='fraction'>8/14</span>
       </div>
     </div>
   </div>
@@ -129,12 +129,9 @@
 84
 85
 86
-87
-88
-89
-90
-91
-92</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+87</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -170,21 +167,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -222,6 +205,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -246,7 +236,9 @@ interface LoginPageProps extends WithStyles&lt;typeof styles&gt;, RouteProps {
   dispatch?: Function;
   customer?: any;
   isAuth?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
+  handleSubmitRegisterForm: Function;
+  handleSubmitLoginForm: Function;
 }
 &nbsp;
 interface LoginPageState {
@@ -257,19 +249,6 @@ export class LoginPageBase extends React.Component&lt;LoginPageProps, LoginPageS
   public state: LoginPageState = {
 &nbsp;
   };
-&nbsp;
-  public componentDidMount() {
-    toast.success('Ura!!!');
-  }
-&nbsp;
-  public handleSubmitLoginForm = <span class="fstat-no" title="function not covered" >(</span>data: any): void =&gt; {
-<span class="cstat-no" title="statement not covered" >    this.props.dispatch(sendLoginAction(data));</span>
-  }
-&nbsp;
-  public handleSubmitRegisterForm = <span class="fstat-no" title="function not covered" >(</span>data: any): void =&gt; {
-<span class="cstat-no" title="statement not covered" >    this.props.dispatch(customerRegisterAction(data));</span>
-  }
-&nbsp;
 &nbsp;
   public render() {
     const { classes, isLoading } = this.props;
@@ -282,7 +261,7 @@ export class LoginPageBase extends React.Component&lt;LoginPageProps, LoginPageS
                 container
                 justify="center"
                 alignItems="center"&gt;
-            &lt;LoginForm handleSubmit={this.handleSubmitLoginForm}
+            &lt;LoginForm handleSubmit={this.props.handleSubmitLoginForm}
           /&gt;
           &lt;/Grid&gt;
           &lt;div className={classes.divider} id="divider" &gt;&lt;/div&gt;
@@ -291,8 +270,7 @@ export class LoginPageBase extends React.Component&lt;LoginPageProps, LoginPageS
                 container
                 justify="center"
                 alignItems="center"&gt;
-            &lt;RegisterForm handleSubmit={this.handleSubmitRegisterForm}
-          /&gt;
+            &lt;RegisterForm handleSubmit={this.props.handleSubmitRegisterForm} /&gt;
           &lt;/Grid&gt;
         &lt;/AppMain&gt;
       &lt;/React.Fragment&gt;
@@ -314,6 +292,13 @@ export const ConnectedLogin = reduxify(
         isLoading: pagesLoginProps &amp;&amp; pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
       }
     );
+  },
+<span class="fstat-no" title="function not covered" >  (</span>dispatch: Function, ownProps: any) =&gt; {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      dispatch,
+      handleSubmitRegisterForm: <span class="fstat-no" title="function not covered" >(</span>data: any): void =&gt; <span class="cstat-no" title="statement not covered" >dispatch(customerRegisterAction(data)),</span>
+      handleSubmitLoginForm: <span class="fstat-no" title="function not covered" >(</span>data: any): void =&gt; <span class="cstat-no" title="statement not covered" >dispatch(sendLoginAction(data)),</span>
+    };
   }
 )(LoginPage);
 &nbsp;</pre></td></tr>
@@ -322,7 +307,7 @@ export const ConnectedLogin = reduxify(
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Sep 14 2018 14:28:34 GMT+0300 (FLE Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Sep 17 2018 14:38:08 GMT+0300 (FLE Daylight Time)
 </div>
 </div>
 <script src="..\..\..\..\..\prettify.js"></script>
