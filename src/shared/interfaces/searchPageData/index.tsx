@@ -6,4 +6,5 @@ export interface ISearchPageData {
   items: Array<IProductCard> | null;
   searchTerm: string | null;
   currency: string | null;
+  selectedProduct: object;
 }
