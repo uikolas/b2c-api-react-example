@@ -28,50 +28,48 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
   const { classes } = props;
 
   return (
-    <React.Fragment>
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Grid container direction="row">
+    <AppBar position="absolute" color="default" className={classes.appBar}>
+      <Toolbar>
+        <Grid container direction="row">
 
-            <Grid item sm={3}
-                  direction="row"
-                  container
-                  justify="flex-start"
-                  alignItems="center">
-              <AppLogo />
-            </Grid>
-
-            <Grid item sm={5}>
-              <CatalogSearch />
-            </Grid>
-            <Grid item sm={4}
-                  container
-                  direction="row"
-                  justify="flex-end"
-                  alignItems="center"
-            >
-              <NavLink to="/login">
-                <Button
-                  variant="contained"
-                  component="button"
-                  className={classes.button}
-                >
-                  Register/Login
-                </Button>
-              </NavLink>
-
-              <NavLink to="/cart">
-                <Button variant="contained" component="button" className={classes.button}>
-                Cart
-              </Button>
-              </NavLink>
-            </Grid>
-
+          <Grid item sm={3}
+                direction="row"
+                container
+                justify="flex-start"
+                alignItems="center">
+            <AppLogo />
           </Grid>
 
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
+          <Grid item sm={5}>
+            <CatalogSearch />
+          </Grid>
+          <Grid item sm={4}
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+          >
+            <NavLink to="/login">
+              <Button
+                variant="contained"
+                component="button"
+                className={classes.button}
+              >
+                Register/Login
+              </Button>
+            </NavLink>
+
+            <NavLink to="/cart">
+              <Button variant="contained" component="button" className={classes.button}>
+                Cart
+              </Button>
+            </NavLink>
+          </Grid>
+
+        </Grid>
+
+      </Toolbar>
+    </AppBar>
   );
 };
 
