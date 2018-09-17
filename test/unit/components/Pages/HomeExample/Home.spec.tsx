@@ -5,13 +5,13 @@ import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 
 // import {configureEnzyme} from '../../../../src/shared/lib/tests-helper';
 // import {ErrorBoundary} from '../../../../src/shared/components/Library/ErrorBoundary';
-import {title, Home, ConnectedHome} from '../../../../../src/shared/components/Pages/Home';
+import {title, Home, ConnectedHome} from '../../../../../src/shared/components/Pages/HomeExample';
 // import {items} from "../../../../src/shared/services/Pages/Home.fixtures";
 
 
 // configureEnzyme();
 
-describe('components->Pages->Home', () => {
+describe('components->Pages->HomeExample', () => {
   // const initialState = {
   //   error: null,
   //   data: {

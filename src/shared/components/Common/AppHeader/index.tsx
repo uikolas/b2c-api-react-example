@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom';
 import {AppLogo} from '../AppLogo';
 import CatalogSearch from '../CatalogSearch';
 import {styles} from './styles';
+import {pathHomePage} from '../../../routes/contentRoutes';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
@@ -16,7 +17,7 @@ import {RouteProps} from "react-router";
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
 
-interface AppHeaderProps extends WithStyles<typeof styles> {
+interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   customer?: any;
   isAuth?: boolean;
   isLoading: boolean;
@@ -25,7 +26,7 @@ interface AppHeaderProps extends WithStyles<typeof styles> {
 }
 
 export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
-  const { classes } = props;
+  const { classes, location } = props;
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -41,7 +42,10 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
           </Grid>
 
           <Grid item sm={5}>
-            <CatalogSearch />
+            { location.pathname === pathHomePage
+              ? null
+              : <CatalogSearch />
+            }
           </Grid>
           <Grid item sm={4}
                 container
