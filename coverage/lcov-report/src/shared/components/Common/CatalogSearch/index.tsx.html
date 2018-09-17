@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.27% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>23/44</span>
+        <span class='fraction'>23/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">13.04% </span>
+        <span class="strong">10.34% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>3/23</span>
+        <span class='fraction'>3/29</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">21.43% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>3/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.58% </span>
+        <span class="strong">54.29% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>19/33</span>
+        <span class='fraction'>19/35</span>
       </div>
     </div>
   </div>
@@ -222,7 +222,15 @@
 177
 178
 179
-180</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+180
+181
+182
+183
+184
+185</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -282,6 +290,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,9 +352,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -391,6 +400,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -413,6 +423,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { NavLink } from 'react-router-dom';
 import {RouteProps} from "react-router";
 &nbsp;
@@ -420,6 +431,7 @@ import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
+import {getFormattedPrice} from '../../../services/priceFormatter';
 import {styles} from './styles';
 &nbsp;
 interface CatalogProps extends WithStyles&lt;typeof styles&gt;, RouteProps {
@@ -427,6 +439,7 @@ interface CatalogProps extends WithStyles&lt;typeof styles&gt;, RouteProps {
   suggestions?: Array&lt;IProductCard&gt;;
   searchTerm?: string;
   currency?: string;
+  isLoading?: boolean;
 }
 &nbsp;
 interface CatalogState {
@@ -461,6 +474,10 @@ export class CatalogSearchBase extends React.Component&lt;CatalogProps, CatalogS
   }
 &nbsp;
   private renderSuggestion = <span class="fstat-no" title="function not covered" >(</span>suggestion: any, { <span class="cstat-no" title="statement not covered" >query,</span> <span class="cstat-no" title="statement not covered" >isHighlighted </span>}: any) =&gt; {
+<span class="cstat-no" title="statement not covered" >    if (this.props.isLoading) {</span>
+<span class="cstat-no" title="statement not covered" >      return &lt;CircularProgress /&gt;;</span>
+    }
+&nbsp;
     const matches = <span class="cstat-no" title="statement not covered" >match(suggestion.abstract_name, query);</span>
     const parts = <span class="cstat-no" title="statement not covered" >parse(suggestion.abstract_name, matches);</span>
 &nbsp;
@@ -481,9 +498,9 @@ export class CatalogSearchBase extends React.Component&lt;CatalogProps, CatalogS
         &lt;/span&gt;
         &lt;img
           width={30} height={30}
-          src={`http:${suggestion.images[0].external_url_small}`} alt={suggestion.abstract_name}
+          src={suggestion.images[0].external_url_small} alt={suggestion.abstract_name}
         /&gt;
-        &lt;span&gt;{suggestion.price}&lt;/span&gt;
+        &lt;span&gt;{getFormattedPrice(suggestion.price, this.props.currency)}&lt;/span&gt;
       &lt;/MenuItem&gt;
     );
   }
@@ -518,9 +535,6 @@ export class CatalogSearchBase extends React.Component&lt;CatalogProps, CatalogS
 &nbsp;
   public render() {
     const { classes, suggestions } = this.props;
-&nbsp;
-    // console.info('suggestions: ', suggestions);
-&nbsp;
 &nbsp;
     const autosuggestProps = {
       suggestions,
@@ -574,6 +588,7 @@ const CatalogSearchComponent = reduxify(
         suggestions: searchProps &amp;&amp; searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps &amp;&amp; searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
         currency: searchProps &amp;&amp; searchProps.data.currency ? searchProps.data.currency : ownProps.currency,
+        isLoading: searchProps &amp;&amp; searchProps.pending ? searchProps.pending : ownProps.pending,
       }
     );
   }
@@ -586,7 +601,7 @@ export default CatalogSearchComponent;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Sep 14 2018 14:28:34 GMT+0300 (FLE Daylight Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Sep 17 2018 14:38:08 GMT+0300 (FLE Daylight Time)
 </div>
 </div>
 <script src="..\..\..\..\..\prettify.js"></script>
