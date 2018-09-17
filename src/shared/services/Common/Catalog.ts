@@ -15,7 +15,7 @@ export class CatalogService {
         });
         return response.data;
       } else {
-        console.error('Catalog search', response.problem);
+        // console.error('Catalog search', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
@@ -25,7 +25,7 @@ export class CatalogService {
       }
 
     } catch (error) {
-      console.error('Catalog search', error);
+      console.error('Catalog catch search', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         error,
