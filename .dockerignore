@@ -12,4 +12,3 @@
 /out-tsc-server
 /stats.json
 /__test__/**/*(spec|test).(t|j)sx?.snap
-/.env

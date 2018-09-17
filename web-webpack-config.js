@@ -1,13 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const PrettierPlugin = require("prettier-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const DashboardPlugin = require("webpack-dashboard/plugin");
 
 const basicConfig = require('./basic-webpack-config');
+
+console.info('webpack config', process.env.API_URL);
 
 
 const {
@@ -92,9 +94,9 @@ const config = {
     path: path.resolve(__dirname, 'build', 'web'), // string
 
     // the filename template for entry chunks
-    filename: webpackDevServer ? '[name].js': '[name].[hash].js',
+    filename: "[name].[hash].bundle.js", // string
 
-    chunkFilename: webpackDevServer ? '[name].js': '[name].[hash].js',
+    chunkFilename: "[name].[chunkhash].chunk.js",
 
     // the url to the output directory resolved relative to the HTML page
     publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : "/",
@@ -110,6 +112,11 @@ const config = {
           ie8: false,
           safari10: true,
           ecma: 8,
+          parse: {
+            // Let uglify-js parse ecma 8 code but always output
+            // ES5 compliant code for older browsers
+            ecma: 8
+          },
           mangle: PRODUCTION ? {
             keep_classnames: true,
             keep_fnames: true,
@@ -123,26 +130,30 @@ const config = {
             drop_console: PRODUCTION,
             // inline: false,
             keep_classnames: true,
-            ecma: 8,
+            ecma: 5,
+            comparisons: false
           },
           output: {
+            ecma: 5,
             comments: false,
             beautify: false,
           },
         },
       }),
+      new OptimizeCSSAssetsPlugin({})
     ],
     splitChunks: {
       chunks: 'async',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
+      automaticNameDelimiter: "-",
+      // hidePathInfo: true,
       name: true,
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
+          name: "vendors",
+          chunks: "all",
+          reuseExistingChunk: true
         },
         default: {
           minChunks: 2,
@@ -151,6 +162,9 @@ const config = {
         },
       },
     },
+    runtimeChunk: {
+      name: "runtime"
+    }
   },
   plugins: [
     cleanBuild(['build/web']),
@@ -161,9 +175,9 @@ const config = {
       'global.GENTLY': false,
       ...definableConstants,
     }),
-    new ExtractTextPlugin({
-      filename: '[name][hash].css',
-      disable: false,
+    new MiniCssExtractPlugin({
+      filename: webpackDevServer ? "[name].css" : "[name].[hash].css",
+      chunkFilename: webpackDevServer ? "[id].css" : "[id].[hash].css"
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, `src`, `web`, `index.ejs`),

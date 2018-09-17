@@ -2,7 +2,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
 dotenv.config();
@@ -31,7 +31,7 @@ const API_PATH = process.env.API_PATH ? process.env.API_PATH : '/api/';
 const API_URL = process.env.API_URL ? process.env.API_URL : 'http://localhost:8080/api/';
 const SECRET = process.env.SECRET || 'fdgdfVVVsf3t43rfsdFSS';
 const AUTH_TOKEN_LIFETIME = process.env.AUTH_TOKEN_LIFETIME ?
-  parseInt(process.env.AUTH_TOKEN_LIFETIME, 10) : 24*60*60*1000;
+  parseInt(process.env.AUTH_TOKEN_LIFETIME, 10) : 24 * 60 * 60 * 1000;
 const APP_TITLE = process.env.APP_TITLE || 'App';
 
 const definableConstants = {
@@ -67,7 +67,7 @@ const globalCssLoaderOptions = {
     modules: false,
     sourceMap: !PRODUCTION,
     minimize: PRODUCTION,
-    discardComments: {removeAll: true},
+    discardComments: { removeAll: true },
   },
 };
 const localCssLoaderOptions = {
@@ -78,7 +78,7 @@ const localCssLoaderOptions = {
     localIdentName: !PRODUCTION ? '[path]___[name]__[local]___[hash:base64:5]' : '[hash:base64:5]',
     sourceMap: !PRODUCTION,
     minimize: PRODUCTION,
-    discardComments: {removeAll: true},
+    discardComments: { removeAll: true },
   },
 };
 const sassLoaderOptions = {
@@ -86,135 +86,127 @@ const sassLoaderOptions = {
   options: {
     includePaths: [
       path.resolve(__dirname, "node_modules"),
-      path.resolve(__dirname, "src"),
+      path.resolve(__dirname, "src")
     ]
   },
 };
 const localCssLoader = {
   test: /\.css$/,
   exclude: /node_modules/, // Ignore the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      localCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    localCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    }
+  ]
 };
 const localLessLoader = {
   test: /\.less$/,
   exclude: /node_modules/, // Ignore the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      localCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-      "less-loader",
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    localCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    },
+    "less-loader"
+  ]
 };
 const localSaasLoader = {
   test: /\.sass$/,
   exclude: /node_modules/, // Ignore the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      localCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-      sassLoaderOptions,
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    localCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    },
+    sassLoaderOptions
+  ]
 };
 const localScssLoader = {
   test: /\.scss$/,
   exclude: /node_modules/, // Ignore the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      localCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-      sassLoaderOptions,
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    localCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    },
+    sassLoaderOptions
+  ]
 };
 const globalCssLoader = {
   test: /\.css$/,
   include: /node_modules/, // Proceed the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      globalCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    globalCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    }
+  ]
 };
 const globalLessLoader = {
   test: /\.less$/,
   include: /node_modules/, // Proceed the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      globalCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-      "less-loader",
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    globalCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    },
+    "less-loader"
+  ]
 };
 const globalSaasLoader = {
   test: /\.sass$/,
   include: /node_modules/, // Proceed the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      globalCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-      sassLoaderOptions,
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    globalCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    },
+    sassLoaderOptions
+  ]
 };
 const globalScssLoader = {
   test: /\.scss$/,
   include: /node_modules/, // Proceed the folder containing 3rd party scripts
-  loader: ExtractTextPlugin.extract({
-    use: [
-      globalCssLoaderOptions,
-      {
-        loader: 'resolve-url-loader',
-      },
-      {
-        loader: 'postcss-loader',
-      },
-      sassLoaderOptions,
-    ],
-  }),
+  use: [
+    MiniCssExtractPlugin.loader,
+    globalCssLoaderOptions,
+    {
+      loader: "resolve-url-loader"
+    },
+    {
+      loader: "postcss-loader"
+    },
+    sassLoaderOptions
+  ]
 };
 const tsLoader = {
   test: /\.tsx?$/,
@@ -256,7 +248,7 @@ const stylesLoaders = [
   globalCssLoader,
   globalLessLoader,
   globalSaasLoader,
-  globalScssLoader,
+  globalScssLoader
 ];
 const commonLoaders = [
   {test: /\.node$/, loader: 'node-loader'},
@@ -268,7 +260,7 @@ const commonLoaders = [
 ];
 const webLoaders = [
   ...stylesLoaders,
-  ...staticLoaders,
+  ...staticLoaders
 ];
 const cleanBuild = (paths) => {
   return new CleanWebpackPlugin(paths, {
@@ -282,7 +274,7 @@ const configureLoader = () => {
     minimize: PRODUCTION,
     debug: !PRODUCTION,
     options: {
-      context: __dirname,
+      context: __dirname
     },
   });
 };
@@ -350,5 +342,5 @@ module.exports = {
   cleanBuild,
   configureLoader,
   commonExtensions,
-  webExtensions,
+  webExtensions
 };

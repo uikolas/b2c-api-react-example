@@ -26,7 +26,7 @@ export const AppHandler = function (props: IComponent) {
         position={toast.POSITION.BOTTOM_LEFT}
         pauseOnHover={true}
         style={{
-          width: '100%',
+          width: '90%',
           left: 0,
         }}
       />
