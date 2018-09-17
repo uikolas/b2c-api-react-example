@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {SearchState} from '../../../reducers/Pages/Search';
+import {ProductState} from '../../../reducers/Pages/Product';
 import {IProductCard} from '../../../interfaces/productCard';
 import {sendSearchAction} from '../../../actions/Pages/Search';
 
@@ -55,13 +55,13 @@ export const ProductPage = withStyles(styles)(ProductPageBase);
 export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
-    const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+    const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
-        product: pageSearchProps && pageSearchProps.data && pageSearchProps.data.selectedProduct
-          ? pageSearchProps.data.selectedProduct
+        isLoading: productProps && productProps.pending ? productProps.pending : ownProps.pending,
+        product: productProps && productProps.data && productProps.data.selectedProduct
+          ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
       }
     );

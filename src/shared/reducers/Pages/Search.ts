@@ -20,7 +20,6 @@ export const initialState: SearchState = {
     items: [],
     searchTerm: '',
     currency: 'EUR',
-    selectedProduct: {}
   },
 };
 
