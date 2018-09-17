@@ -2,8 +2,9 @@ import * as React from 'react';
 import { HTMLAttributes, shallow, ShallowWrapper, mount } from "enzyme";
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
-import {getFormattedPrice} from '../../../../../src/shared/services/priceFormatter';
+import renderer from 'react-test-renderer';
 
+import {getFormattedPrice} from '../../../../../src/shared/services/priceFormatter';
 import {
   ProductCardBase
 } from '../../../../../src/shared/components/Common/ProductCard';
@@ -62,6 +63,35 @@ describe('components->Common->ProductCard', () => {
 
   it("renders the price", () => {
     expect(wrapper.find('[data-type="priceToShow"]').dive().dive().text()).toEqual(getFormattedPrice(price, currency));
+  });
+
+});
+
+describe('components->Common->ProductCard: snapshot', () => {
+
+  it('renders correctly', () => {
+    const tree = renderer
+      .create(
+        getShallowedComponent()
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('renders correctly if something is missed', () => {
+    const tree = renderer
+      .create(
+        <ProductCardBase
+          abstract_sku={null}
+          abstract_name={null}
+          price={null}
+          images={null}
+          currency={currency}
+          classes={styles}
+        />
+      )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
 });
