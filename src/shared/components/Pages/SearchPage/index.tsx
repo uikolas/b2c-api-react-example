@@ -6,11 +6,12 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { push } from 'react-router-redux';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
-import {sendSearchAction} from '../../../actions/Pages/Search';
+import {getProductDataAction} from '../../../actions/Pages/Product';
 
 import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
@@ -30,6 +31,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   public state: SearchPageState = {
 
   };
+
+  public renderProduct = (sku: string, name: string) => {
+    this.props.dispatch(getProductDataAction(sku));
+    this.props.dispatch(push(`/product/${name}`));
+  }
 
   public render() {
     const {classes, items, searchTerm, currency} = this.props;
@@ -74,6 +80,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   price={item.price}
                   abstract_name={item.abstract_name}
                   abstract_sku={item.abstract_sku}
+                  onSelectProduct={this.renderProduct}
                 />
                 </Grid>
               ))

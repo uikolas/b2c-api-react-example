@@ -7,9 +7,9 @@ export class ProductService {
     try {
 
       const response: any = await api.get(`abstract-products/${sku}`);
-      console.info(response.data.data.attributes);
 
       if (response.ok) {
+        console.info(response.data.data.attributes);
         const {attributes, included}: any = response.data.data;
 
         const result = {

@@ -2,8 +2,9 @@
 import {IProductCard} from "../productCard/index";
 
 export interface ISearchPageData {
-  suggestions: Array<IProductCard> | null;
-  items: Array<IProductCard> | null;
-  searchTerm: string | null;
-  currency: string | null;
+  dispatch?: Function;
+  suggestions?: Array<IProductCard>;
+  items?: Array<IProductCard>;
+  searchTerm?: string;
+  currency?: string;
 }

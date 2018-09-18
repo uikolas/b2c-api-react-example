@@ -13,16 +13,22 @@ import {IProductCard} from '../../../interfaces/productCard';
 import {styles} from './styles';
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
-  currency: string;
+  currency?: string;
+  onSelectProduct?: Function;
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const { classes, images, abstract_name: productName = 'No name', price = 0, currency } = props;
+  const { classes, images, abstract_name: productName = 'No name', price = 0, currency, abstract_sku } = props;
   const priceToShow = getFormattedPrice(price, currency);
+
+  const handleProductClick = (e: any) => {
+    e.preventDefault();
+    props.onSelectProduct(abstract_sku, productName);
+  }
 
   return (
     <Card className={classes.card} raised={true}>
-      <CardActionArea>
+      <CardActionArea onClick={handleProductClick}>
         { images && images[0].external_url_small
           ? <CardMedia
             component="img"

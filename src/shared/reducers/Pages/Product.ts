@@ -11,7 +11,7 @@ export interface ProductState extends IReduxState {
 
 export const initialState: ProductState = {
   data: {
-    selectedProduct: {},
+    selectedProduct: null,
   },
 };
 
@@ -29,6 +29,10 @@ export const pageProduct = function (state: ProductState = initialState, action:
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
       return {
         ...state,
+        data: {
+          ...state.data,
+          selectedProduct: null,
+        },
         error: null,
         pending: true,
         fulfilled: false,

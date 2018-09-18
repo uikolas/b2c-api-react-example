@@ -25,8 +25,8 @@ export interface IProductCardImages {
 }
 
 export interface IProductCard {
-  images: Array<IProductCardImages> | null;
-  price: number | null;
-  abstract_name: string | null;
-  abstract_sku: string | null;
+  images?: Array<IProductCardImages>;
+  price?: number;
+  abstract_name?: string;
+  abstract_sku?: string;
 }

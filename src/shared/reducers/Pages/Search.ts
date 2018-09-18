@@ -16,7 +16,7 @@ export interface SearchState extends IReduxState {
 
 export const initialState: SearchState = {
   data: {
-    suggestions: [],
+    suggestions: fixtureItems,
     items: [],
     searchTerm: '',
     currency: 'EUR',
