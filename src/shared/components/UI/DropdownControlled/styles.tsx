@@ -14,6 +14,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 200,
+    minWidth: 300,
   },
 });
