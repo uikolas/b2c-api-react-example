@@ -5,9 +5,12 @@ import 'react-responsive-carousel/lib/styles/carousel.css';
 
 import {styles} from './styles';
 
-
+export interface IImageSlide {
+  id: string | number;
+  src: string;
+}
 interface ImageSliderProps extends WithStyles<typeof styles> {
-  images: Array<string>;
+  images: Array<IImageSlide>;
 }
 
 export const ImageSliderBase: React.SFC<ImageSliderProps> = (props): JSX.Element => {
@@ -26,7 +29,7 @@ export const ImageSliderBase: React.SFC<ImageSliderProps> = (props): JSX.Element
       showStatus={isMultipleImages}
     >
       { (images)
-        ? images.map( (image) => <div><img src={image} /></div> )
+        ? images.map( (image) => <div key={image.id}><img src={image.src} /></div> )
         : null
       }
     </Carousel>
