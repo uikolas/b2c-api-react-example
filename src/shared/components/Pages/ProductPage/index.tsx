@@ -9,6 +9,8 @@ import {sendSearchAction} from '../../../actions/Pages/Search';
 
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
+import {ProductGeneralInfo} from './ProductGeneralInfo';
+import {getFormattedPrice} from '../../../services/priceFormatter';
 import {ISearchPageData} from "../../../interfaces/searchPageData";
 
 import {styles} from './styles';
@@ -17,6 +19,7 @@ import {styles} from './styles';
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
+  currency: string;
 }
 
 interface ProductPageState {}
@@ -29,7 +32,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public render() {
-    const {classes, isLoading} = this.props;
+    const {classes, isLoading, currency} = this.props;
 
     const images = [
       "//images.icecat.biz/img/norm/high/17681791-4446.jpg",
@@ -44,7 +47,11 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
             <ImageSlider images={images} />
           </Grid>
           <Grid item xs={12} sm={6} >
-            Product
+            <ProductGeneralInfo
+              name="Product Name"
+              sku="Product SKU"
+              price={getFormattedPrice(0, currency)}
+            />
           </Grid>
         </Grid>
       </AppMain>
@@ -62,6 +69,7 @@ export const ConnectedProductPage = reduxify(
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
+        currency: pageSearchProps && pageSearchProps.data.currency ? pageSearchProps.data.currency : ownProps.currency,
         product: pageSearchProps && pageSearchProps.data && pageSearchProps.data.selectedProduct
           ? pageSearchProps.data.selectedProduct
           : ownProps.selectedProduct,
