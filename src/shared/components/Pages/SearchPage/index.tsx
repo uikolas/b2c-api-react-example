@@ -16,6 +16,7 @@ import {getProductDataAction} from '../../../actions/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
 import {ISearchPageData} from "../../../interfaces/searchPageData";
+import config from '../../../config';
 
 import {styles} from './styles';
 
@@ -34,7 +35,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public renderProduct = (sku: string, name: string) => {
     this.props.dispatch(getProductDataAction(sku));
-    this.props.dispatch(push(`/product/${name}`));
+    this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
   }
 
   public render() {

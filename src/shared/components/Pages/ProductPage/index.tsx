@@ -160,7 +160,6 @@ export const ConnectedProductPage = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-
         isLoading: productProps && productProps.pending ? productProps.pending : ownProps.pending,
         product: productProps && productProps.data && productProps.data.selectedProduct
           ? productProps.data.selectedProduct

@@ -13,7 +13,7 @@ export const getContentRoutes = function() {
     <Switch>
       <Route path={`${config.WEB_PATH}`} exact component={ConnectedHomePage}/>
       <Route path={`${config.WEB_PATH}search`} component={ConnectedSearchPage} />
-      <Route path={`${config.WEB_PATH}product/:name`} component={ConnectedProductPage} />
+      <Route path={`${config.WEB_PATH}product`} component={ConnectedProductPage} />
       <Route path={`${config.WEB_PATH}login`} component={ConnectedLogin} />
       <Route path={`${config.WEB_PATH}cart`} render={() => <div>Cart Page</div>}/>
       <Route path={`${config.WEB_PATH}*`} component={NotFound} />

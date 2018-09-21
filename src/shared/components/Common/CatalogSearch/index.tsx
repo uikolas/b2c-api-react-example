@@ -132,7 +132,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   private handleEndSearch = () => {
     this.props.dispatch(setItemsFromSuggestions());
-    this.props.dispatch(push('/search'));
+    this.props.dispatch(push(`/${config.WEB_PATH}search`));
   }
 
   public render() {
