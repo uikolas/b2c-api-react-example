@@ -41,7 +41,10 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
           </Grid>
 
           <Grid item sm={5}>
-            <CatalogSearch />
+            { location.pathname === config.WEB_PATH
+              ? null
+              : <CatalogSearch />
+            }
           </Grid>
           <Grid item sm={4}
                 container

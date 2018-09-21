@@ -25,7 +25,7 @@ export class ProductService {
           switch (data.type) {
             case 'abstract-product-image-sets':
               result.images = [];
-              result.images = data.attributes.imageSets.map((set: any) => [...result.images, ...set.images]);
+              result.images = data.attributes.imageSets.map((set: any) => set.images);
               break;
             case 'abstract-product-prices':
               result.price = data.attributes.price;

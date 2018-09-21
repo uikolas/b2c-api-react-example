@@ -118,6 +118,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
   private renderSuggestionsContainer = ({ containerProps , children, query }: any) => {
+    console.info('renderSuggestionsContainer');
     if (this.props.isLoading) {
       console.info(containerProps);
       return <div {... containerProps} style={{height: '100px', width: '100%'}}><CircularProgress /></div>;
@@ -136,7 +137,9 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   public render() {
-    const { classes, suggestions } = this.props;
+    const { classes, suggestions, location } = this.props;
+
+    console.info(location);
 
     const autosuggestProps = {
       suggestions,
@@ -186,9 +189,11 @@ const CatalogSearch = withStyles(styles)(CatalogSearchBase);
 
 const CatalogSearchComponent = reduxify(
   (state: any, ownProps: any) => {
+    const routerProps: RouteProps = state.routing ? state.routing : {};
     const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
     return (
       {
+        location: routerProps.location ? routerProps.location : ownProps.location,
         suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
         currency: searchProps && searchProps.data.currency ? searchProps.data.currency : ownProps.currency,
