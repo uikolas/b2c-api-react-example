@@ -99,7 +99,7 @@ const config = {
     chunkFilename: "[name].[chunkhash].chunk.js",
 
     // the url to the output directory resolved relative to the HTML page
-    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : "/",
+    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : '/react',
   },
   optimization: {
     minimizer: [

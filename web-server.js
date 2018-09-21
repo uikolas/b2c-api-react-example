@@ -22,7 +22,7 @@ appRouter.use('*', (req, res) => {
 });
 // }
 
-webServer.use('/', appRouter);
+webServer.use('/react/', appRouter);
 
 // Error Handler
 webServer.use((err, req, res, next) => {

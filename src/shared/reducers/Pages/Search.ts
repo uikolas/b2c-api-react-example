@@ -16,7 +16,7 @@ export interface SearchState extends IReduxState {
 
 export const initialState: SearchState = {
   data: {
-    suggestions: fixtureItems,
+    suggestions: [],
     items: [],
     searchTerm: '',
     currency: 'EUR',
@@ -29,10 +29,6 @@ export const pageSearch = function (state: SearchState = initialState, action: a
     case `${PAGES_SEARCH_REQUEST}_PENDING`:
       return {
         ...state,
-        data: {
-          ...state.data,
-          suggestions: [],
-        },
         error: null,
         pending: true,
         fulfilled: false,

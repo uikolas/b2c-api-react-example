@@ -6,7 +6,9 @@ import {
 } from '../../../typings/app';
 
 export interface ProductState extends IReduxState {
-  data: any;
+  data: {
+    selectedProduct: any,
+  };
 }
 
 export const initialState: ProductState = {

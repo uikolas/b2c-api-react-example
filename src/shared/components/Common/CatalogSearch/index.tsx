@@ -1,10 +1,10 @@
 import * as React from "react";
-import {Location} from 'history';
 import { toast } from 'react-toastify';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { push } from 'react-router-redux';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -14,6 +14,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { NavLink } from 'react-router-dom';
 import {RouteProps} from "react-router";
 
+import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
@@ -93,11 +94,15 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   public handleSuggestionsFetchRequested = ({ value }: {value: string}) => {
-    this.props.dispatch(sendSearchAction(value));
+    if (!this.props.isLoading) {
+      this.props.dispatch(sendSearchAction(value));
+    }
   }
 
   private handleSuggestionsClearRequested = () => {
-    this.props.dispatch(clearSuggestions(this.state.value));
+    // if (!this.props.isLoading) {
+    //   this.props.dispatch(clearSuggestions(this.state.value));
+    // }
   }
 
   private  handleChange = (event: any, { newValue }: any) => {
@@ -127,6 +132,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   private handleEndSearch = () => {
     this.props.dispatch(setItemsFromSuggestions());
+    this.props.dispatch(push('/search'));
   }
 
   public render() {
@@ -136,16 +142,17 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
       suggestions,
       renderInputComponent: this.renderInputComponent,
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
-      onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
+      // onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
       shouldRenderSuggestions: this.shouldRenderSuggestions,
-      // renderSuggestionsContainer: this.renderSuggestionsContainer,
+      renderSuggestionsContainer: this.renderSuggestionsContainer,
     };
 
     return (
       <div className={classes.root} id="CatalogSearch">
         <Autosuggest
+          alwaysRenderSuggestions
           {...autosuggestProps}
           inputProps={{
             classes,
@@ -165,7 +172,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
             </Paper>
           )}
         />
-        <NavLink to="/search">
+        <NavLink to={`${config.WEB_PATH}search`}>
           <Button variant="contained" onClick={this.handleEndSearch}>
             {buttonTitle}
           </Button>

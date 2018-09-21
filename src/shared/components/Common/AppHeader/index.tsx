@@ -9,8 +9,7 @@ import { NavLink } from 'react-router-dom';
 import {AppLogo} from '../AppLogo';
 import CatalogSearch from '../CatalogSearch';
 import {styles} from './styles';
-import {pathHomePage} from '../../../routes/contentRoutes';
-
+import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
@@ -42,10 +41,7 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
           </Grid>
 
           <Grid item sm={5}>
-            { location.pathname === pathHomePage
-              ? null
-              : <CatalogSearch />
-            }
+            <CatalogSearch />
           </Grid>
           <Grid item sm={4}
                 container
@@ -53,7 +49,7 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
                 justify="flex-end"
                 alignItems="center"
           >
-            <NavLink to="/login">
+            <NavLink to={`${config.WEB_PATH}login`}>
               <Button
                 variant="contained"
                 component="button"
@@ -63,7 +59,7 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
               </Button>
             </NavLink>
 
-            <NavLink to="/cart">
+            <NavLink to={`${config.WEB_PATH}cart`}>
               <Button variant="contained" component="button" className={classes.button}>
                 Cart
               </Button>

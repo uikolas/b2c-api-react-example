@@ -25,7 +25,7 @@ import {styles} from './styles';
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
-  currency: string;
+  // currency: string;
 }
 
 interface ISuperAttr {
@@ -110,9 +110,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public render(): JSX.Element {
-    const {classes, isLoading, currency} = this.props;
+    const {classes, isLoading, product } = this.props;
+
+    console.info(product);
 
     // TODO: check currency
+    const currency = 'EUR';
 
     return (
       <AppMain isLoading={isLoading}>
@@ -162,7 +165,6 @@ export const ConnectedProductPage = reduxify(
         product: productProps && productProps.data && productProps.data.selectedProduct
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
-        currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
       }
     );
   }

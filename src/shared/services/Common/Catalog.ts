@@ -5,7 +5,7 @@ export class CatalogService {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
     try {
 
-      const response: any = await api.get('catalog-search', params);
+      const response: any = await api.get('catalog-search', params, { withCredentials: true });
       console.info(response.data.data[0].attributes);
 
       if (response.ok) {
