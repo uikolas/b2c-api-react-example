@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import {getFormattedPrice} from '../../../services/priceFormatter';
-import {IProductCard} from '../../../interfaces/productCard';
+import {IProductCard} from '../../../interfaces/product';
 import {styles} from './styles';
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {

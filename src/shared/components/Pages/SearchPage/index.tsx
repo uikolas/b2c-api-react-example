@@ -10,7 +10,7 @@ import { push } from 'react-router-redux';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
-import {IProductCard} from '../../../interfaces/productCard';
+import {IProductCard} from '../../../interfaces/product';
 import {getProductDataAction} from '../../../actions/Pages/Product';
 
 import {AppMain} from '../../Common/AppMain';

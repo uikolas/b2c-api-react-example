@@ -30,7 +30,7 @@ export class ProductService {
               data.attributes.imageSets.map((set: any) => {
                 set.images.forEach((imgs: any) => {
                   result.images.push(imgs);
-                })
+                });
               });
               break;
             case 'abstract-product-prices':
@@ -39,6 +39,7 @@ export class ProductService {
             case 'abstract-product-availabilities':
               result.availability = data.attributes.availability;
               result.availableQuantity = data.attributes.quantity;
+              break;
             default:
               break;
           }

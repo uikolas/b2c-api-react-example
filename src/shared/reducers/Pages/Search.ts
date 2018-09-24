@@ -9,7 +9,6 @@ import {
 import {
   CURRENCY_DEFAULT,
 } from '../../constants/Environment';
-import {IProductCard} from '../../interfaces/productCard';
 import {fixtureSearchTerm, fixtureItems} from '../../components/Pages/SearchPage/fixture';
 import {ISearchPageData} from "../../interfaces/searchPageData";
 

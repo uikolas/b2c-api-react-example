@@ -10,6 +10,9 @@ interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
   price: string;
 }
 
+export const skuTitle = "SKU: ";
+export const priceTitle = "Price: ";
+
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
   const { classes, name = "No name", sku = "No SKU", price = "No price" } = props;
 
@@ -19,10 +22,10 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
         {name}
       </Typography>
       <Typography variant="subheading" color="inherit" gutterBottom={true}>
-        {sku}
+        {skuTitle}{sku}
       </Typography>
       <Typography variant="subheading" color="inherit" gutterBottom={true}>
-        {price}
+        {priceTitle}{price}
       </Typography>
     </div>
 

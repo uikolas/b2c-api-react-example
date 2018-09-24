@@ -1,5 +1,5 @@
 
-import {IProductCard} from "../productCard/index";
+import {IProductCard} from "../product/index";
 
 export interface ISearchPageData {
   dispatch?: Function;
