@@ -23,6 +23,7 @@ import {getFormattedPrice} from '../../../services/priceFormatter';
 import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
+import {getProductDataAction} from "../../../actions/Pages/Product";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -41,7 +42,9 @@ export const buttonTitle = 'Search';
 export class CatalogSearchBase extends React.Component<CatalogProps, CatalogState> {
   public state: CatalogState = {
     value: '',
-  };
+  }
+
+  public timer: any
 
   private renderInputComponent = (inputProps: any) => {
     const { classes, ref, ...other } = inputProps;
@@ -97,8 +100,15 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   public handleSuggestionsFetchRequested = ({ value }: {value: string}) => {
     const { value: currentValue } = this.state;
+
     if (!this.props.isLoading && value != currentValue) {
-      this.props.dispatch(sendSearchAction(value));
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(() => {
+        if (this.state.value === value) {
+          this.props.dispatch(sendSearchAction(value));
+        }
+      }, 350);
     }
   }
 
@@ -109,34 +119,25 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   private  handleChange = (event: any, { newValue }: any) => {
-    this.setState({
-      value: newValue,
-    });
-
     if (newValue.trim().length < 3) {
       this.props.dispatch(clearSuggestions(newValue));
     }
+
+    this.setState({
+      value: newValue,
+    });
   }
 
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
-  private renderSuggestionsContainer = ({ containerProps , children, query }: any) => {
-    console.info('renderSuggestionsContainer');
-    if (this.props.isLoading) {
-      console.info(containerProps);
-      return <div {... containerProps} style={{height: '100px', width: '100%'}}><CircularProgress /></div>;
-    }
-
-    return (
-      <div {... containerProps}>
-        {children}
-      </div>
-    );
+  private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
+    this.props.dispatch(getProductDataAction(suggestion.abstract_sku));
+    this.props.dispatch(push(`${config.WEB_PATH}product/${suggestion.abstract_name}`));
   }
 
   private handleEndSearch = () => {
     this.props.dispatch(setItemsFromSuggestions());
-    this.props.dispatch(push(`/${config.WEB_PATH}search`));
+    this.props.dispatch(push(`${config.WEB_PATH}search`));
   }
 
   public render() {
@@ -150,7 +151,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
       shouldRenderSuggestions: this.shouldRenderSuggestions,
-      renderSuggestionsContainer: this.renderSuggestionsContainer,
+      onSuggestionSelected: this.onSuggestionSelected,
     };
 
     return (
@@ -178,6 +179,11 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
         <NavLink to={`${config.WEB_PATH}search`}>
           <SprykerButton title={buttonTitle} onClick={this.handleEndSearch}/>
         </NavLink>
+        {
+          this.props.isLoading
+            ? <div className={classes.pendingProgress}><CircularProgress variant="indeterminate" size={34} /></div>
+            : null
+        }
       </div>
     );
   }

@@ -40,5 +40,9 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between'
-  }
+  },
+  pendingProgress: {
+    position: 'absolute',
+    left: '40%',
+  },
 });
