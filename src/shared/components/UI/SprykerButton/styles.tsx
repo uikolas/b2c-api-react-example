@@ -3,9 +3,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-
   },
-  buyBtn: {
-    minWidth: "300px",
+  button: {
+    marginLeft: theme.spacing.unit,
   },
 });

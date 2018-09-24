@@ -20,6 +20,8 @@ import {SearchState} from '../../../reducers/Pages/Search';
 import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
 import {IProductCard} from '../../../interfaces/productCard';
 import {getFormattedPrice} from '../../../services/priceFormatter';
+import {SprykerButton} from '../../UI/SprykerButton';
+
 import {styles} from './styles';
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
@@ -176,9 +178,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
           )}
         />
         <NavLink to={`${config.WEB_PATH}search`}>
-          <Button variant="contained" onClick={this.handleEndSearch}>
-            {buttonTitle}
-          </Button>
+          <SprykerButton title={buttonTitle} onClick={this.handleEndSearch}/>
         </NavLink>
       </div>
     );
