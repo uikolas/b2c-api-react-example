@@ -19,6 +19,8 @@ export class ProductService {
           superAttributes: attributes.attributeMap, // 135 attribute_variants[], super_attributes[],
           images: [],
           price: 0,
+          availability: true,
+          availableQuantity: 0,
         };
 
         included.forEach((data: any) => {
@@ -34,6 +36,9 @@ export class ProductService {
             case 'abstract-product-prices':
               result.price = data.attributes.price;
               break;
+            case 'abstract-product-availabilities':
+              result.availability = data.attributes.availability;
+              result.availableQuantity = data.attributes.quantity;
             default:
               break;
           }
