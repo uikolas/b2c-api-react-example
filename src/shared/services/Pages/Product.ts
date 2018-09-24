@@ -11,13 +11,13 @@ export class ProductService {
       if (response.ok) {
         const { data: {attributes}, included }: any = response.data;
 
-        const result = {
+        const result: any = {
           sku,
           name: attributes.name,
           description: attributes.description,
           attributes: attributes.attributes,
           superAttributes: attributes.attributeMap, // 135 attribute_variants[], super_attributes[],
-          images: [{}],
+          images: [],
           price: 0,
         };
 
@@ -25,7 +25,11 @@ export class ProductService {
           switch (data.type) {
             case 'abstract-product-image-sets':
               result.images = [];
-              result.images = data.attributes.imageSets.map((set: any) => set.images);
+              data.attributes.imageSets.map((set: any) => {
+                set.images.forEach((imgs: any) => {
+                  result.images.push(imgs);
+                })
+              });
               break;
             case 'abstract-product-prices':
               result.price = data.attributes.price;

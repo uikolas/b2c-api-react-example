@@ -100,6 +100,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   private handleSuggestionsClearRequested = () => {
+    console.info('handleSuggestionsClearRequested');
     // if (!this.props.isLoading) {
     //   this.props.dispatch(clearSuggestions(this.state.value));
     // }
@@ -145,7 +146,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
       suggestions,
       renderInputComponent: this.renderInputComponent,
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
-      // onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
+      onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
       shouldRenderSuggestions: this.shouldRenderSuggestions,
@@ -155,7 +156,6 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
     return (
       <div className={classes.root} id="CatalogSearch">
         <Autosuggest
-          alwaysRenderSuggestions
           {...autosuggestProps}
           inputProps={{
             classes,
