@@ -35,7 +35,7 @@ export interface IProductCard {
 
 export interface IProductSuperAttributes {
   attribute_variants: any;
-  product_concrete_ids: Array<string>;
+  product_concrete_ids: any;
   super_attributes: any;
 }
 

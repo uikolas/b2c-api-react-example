@@ -18,7 +18,8 @@ import {ProductAttributes} from './ProductAttributes';
 import {IProductCardImages} from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 import {styles} from './styles';
-import {productPropsFixture} from './fixture';
+import {productPropsFixtureSuper as productFixture} from './fixture';
+import {parseSuperAttributes} from "../../../services/productHelper";
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
@@ -109,8 +110,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public render(): JSX.Element {
-    // productPropsFixture - fixture for testing
-    if (!this.props.product && !productPropsFixture) {
+    // TODO: productFixture - fixture for testing - remove
+    if (!this.props.product && !productFixture) {
       return null;
     }
     const {
@@ -128,11 +129,15 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       availability,
       attributes,
       description,
-    } = product || productPropsFixture ;
+      superAttributes,
+    } = product || productFixture ;
+
+    const superData = parseSuperAttributes(superAttributes);
 
     console.info('product: ', product);
-    console.info('images: ', images);
     console.info('props: ', this.props);
+    console.info('state: ', this.state);
+    console.info('superData: ', superData);
 
     return (
       <AppMain isLoading={isLoading}>
@@ -147,21 +152,20 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                 sku={sku}
                 price={getFormattedPrice(price, currency)}
               />
-              <DropdownControlled
-                nameAttr={test_nameAttr}
-                nameToShow="nameToShow"
-                value={this.getSuperAttrValue(test_nameAttr)}
-                handleChange={this.dropdownHandleChange}
-                menuItems={fixture_menuItems}
-              />
 
-              <DropdownControlled
-                nameAttr={test_nameAttr_2}
-                nameToShow="nameToShow__2"
-                value={this.getSuperAttrValue(test_nameAttr_2)}
-                handleChange={this.dropdownHandleChange}
-                menuItems={fixture_menuItems_2}
-              />
+              { superData
+                ? superData.map((item) => (
+                  <DropdownControlled
+                    key={item.name}
+                    nameAttr={item.name}
+                    nameToShow={item.nameToShow}
+                    value={this.getSuperAttrValue(item.name)}
+                    handleChange={this.dropdownHandleChange}
+                    menuItems={item.data}
+                  />
+                ))
+                : null
+              }
 
               <ProductAvailability availability={availability} />
               <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
