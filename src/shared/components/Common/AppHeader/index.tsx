@@ -25,7 +25,7 @@ interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
 }
 
 export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
-  const { classes, location } = props;
+  const { classes, location, isAuth } = props;
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -58,7 +58,7 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
                 component="button"
                 className={classes.button}
               >
-                Register/Login
+                { isAuth ? 'Logout' : 'Register/Login' }
               </Button>
             </NavLink>
 

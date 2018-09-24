@@ -18,7 +18,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data,
         });
-        toast.success('Successfull created.');
+        toast.success('You have successfully registered');
         return response.data;
       } else {
         console.error('register', response.problem);
@@ -36,7 +36,7 @@ export class PagesLoginService {
         type: ACTION_TYPE + '_REJECTED',
         error,
       });
-      toast.error('Unexpected Error: ' + error);
+      toast.error('Unexpected Error: ' + error.message);
       return null;
     }
   }
@@ -58,7 +58,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data.attributes,
         });
-        toast.success('Request Success');
+        toast.success('Successfull login');
         return response.data;
       } else {
         console.error('login', response.problem);
