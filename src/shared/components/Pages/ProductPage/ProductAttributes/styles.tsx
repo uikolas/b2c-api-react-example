@@ -6,6 +6,7 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     width: "100%",
     padding: theme.spacing.unit * 4,
+    justifyContent: "flex-start",
   },
   value: {
     display: "inline"
