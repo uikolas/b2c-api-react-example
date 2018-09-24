@@ -2,6 +2,7 @@ import * as React from "react";
 import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 import {reduxify} from '../../../lib/redux-helper';
 
@@ -13,11 +14,11 @@ import {DropdownControlled, defaultItemValue} from '../../UI/DropdownControlled'
 import {getFormattedPrice} from '../../../services/priceFormatter';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
-
-import {productPropsFixture} from './fixture';
+import {ProductAttributes} from './ProductAttributes';
 import {IProductCardImages} from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 import {styles} from './styles';
+import {productPropsFixture} from './fixture';
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
@@ -125,6 +126,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       price,
       images,
       availability,
+      attributes,
+      description,
     } = product || productPropsFixture ;
 
     console.info('product: ', product);
@@ -133,36 +136,46 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     return (
       <AppMain isLoading={isLoading}>
-        <Grid container justify="center" >
-          <Grid item xs={12} sm={6} className={classes.sliderParent}>
-            <ImageSlider images={this.getImageData(images)} />
-          </Grid>
-          <Grid item xs={12} sm={6} >
-            <ProductGeneralInfo
-              name={name}
-              sku={sku}
-              price={getFormattedPrice(price, currency)}
-            />
-            <DropdownControlled
-              nameAttr={test_nameAttr}
-              nameToShow="nameToShow"
-              value={this.getSuperAttrValue(test_nameAttr)}
-              handleChange={this.dropdownHandleChange}
-              menuItems={fixture_menuItems}
-            />
+        <div className={classes.root} >
+          <Grid container justify="center" >
+            <Grid item xs={12} sm={6} className={classes.sliderParent}>
+              <ImageSlider images={this.getImageData(images)} />
+            </Grid>
+            <Grid item xs={12} sm={6} >
+              <ProductGeneralInfo
+                name={name}
+                sku={sku}
+                price={getFormattedPrice(price, currency)}
+              />
+              <DropdownControlled
+                nameAttr={test_nameAttr}
+                nameToShow="nameToShow"
+                value={this.getSuperAttrValue(test_nameAttr)}
+                handleChange={this.dropdownHandleChange}
+                menuItems={fixture_menuItems}
+              />
 
-            <DropdownControlled
-              nameAttr={test_nameAttr_2}
-              nameToShow="nameToShow__2"
-              value={this.getSuperAttrValue(test_nameAttr_2)}
-              handleChange={this.dropdownHandleChange}
-              menuItems={fixture_menuItems_2}
-            />
+              <DropdownControlled
+                nameAttr={test_nameAttr_2}
+                nameToShow="nameToShow__2"
+                value={this.getSuperAttrValue(test_nameAttr_2)}
+                handleChange={this.dropdownHandleChange}
+                menuItems={fixture_menuItems_2}
+              />
 
-            <ProductAvailability availability={availability} />
-            <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
+              <ProductAvailability availability={availability} />
+              <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid container justify="center" >
+            <ProductAttributes attributes={attributes} />
+            <Grid item xs={12}>
+              <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
+                {description}
+              </Typography>
+            </Grid>
+          </Grid>
+        </div>
       </AppMain>
     );
   }

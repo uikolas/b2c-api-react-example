@@ -39,6 +39,10 @@ export interface IProductSuperAttributes {
   super_attributes: any;
 }
 
+export interface IProductAttributes {
+  [key: string]: string | number;
+}
+
 export interface IProductPropFullData {
   attributes: object;
   availability: boolean;
