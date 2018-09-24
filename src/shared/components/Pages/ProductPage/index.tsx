@@ -130,8 +130,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
         sku,
         price,
         images,
-      }
-    } = this.props;
+      }    } = this.props;
 
     console.info('product: ', product);
     console.info('images: ', images);
