@@ -17,7 +17,8 @@ import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
 import {DropdownControlled, defaultItemValue} from '../../UI/DropdownControlled';
 import {getFormattedPrice} from '../../../services/priceFormatter';
-import {ISearchPageData} from "../../../interfaces/searchPageData";
+import {ProductAvailability} from './ProductAvailability';
+import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
 
@@ -25,7 +26,7 @@ import {styles} from './styles';
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
-  // currency: string;
+  currency: string;
 }
 
 interface ISuperAttr {
@@ -36,7 +37,9 @@ interface ProductPageState {
   superAttrSelected: ISuperAttr;
 }
 
-const images = [
+export const buyBtnTitle = "Add to cart";
+
+const imagesFix = [
   {
     id: 1,
     src: "//images.icecat.biz/img/norm/high/17681791-4446.jpg",
@@ -72,6 +75,7 @@ const fixture_menuItems_2 = [
 ];
 const test_nameAttr = 'test_nameAttr';
 const test_nameAttr_2 = 'test_nameAttr_2';
+const availability_fixture = true;
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
 
@@ -97,6 +101,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     });
   }
 
+  public buyBtnHandler = (event: any): void => {
+    console.log('buyBtnHandler clicked');
+  }
+
   private getSuperAttrValue = (key: string) => {
 
     if (!key) {
@@ -110,24 +118,36 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public render(): JSX.Element {
-    const {classes, isLoading, product } = this.props;
+    if (!this.props.product) {
+      return null;
+    }
+    const {
+      classes,
+      isLoading,
+      currency,
+      product, product: {
+        name,
+        sku,
+        price,
+        images,
+      }
+    } = this.props;
 
-    console.info(product);
-
-    // TODO: check currency
-    const currency = 'EUR';
+    console.info('product: ', product);
+    console.info('images: ', images);
+    console.info('props: ', this.props);
 
     return (
       <AppMain isLoading={isLoading}>
         <Grid container justify="center" >
           <Grid item xs={12} sm={6} >
-            <ImageSlider images={images} />
+            <ImageSlider images={imagesFix} />
           </Grid>
           <Grid item xs={12} sm={6} >
             <ProductGeneralInfo
-              name="Product Name"
-              sku="Product SKU"
-              price={getFormattedPrice(0, currency)}
+              name={name}
+              sku={sku}
+              price={getFormattedPrice(price, currency)}
             />
             <DropdownControlled
               nameAttr={test_nameAttr}
@@ -144,6 +164,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
               handleChange={this.dropdownHandleChange}
               menuItems={fixture_menuItems_2}
             />
+
+            <ProductAvailability availability={availability_fixture} />
+            <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
           </Grid>
         </Grid>
       </AppMain>
@@ -164,6 +187,7 @@ export const ConnectedProductPage = reduxify(
         product: productProps && productProps.data && productProps.data.selectedProduct
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
+        currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
       }
     );
   }

@@ -6,6 +6,9 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
+import {
+  CURRENCY_DEFAULT,
+} from '../../constants/Environment';
 import {IProductCard} from '../../interfaces/productCard';
 import {fixtureSearchTerm, fixtureItems} from '../../components/Pages/SearchPage/fixture';
 import {ISearchPageData} from "../../interfaces/searchPageData";
@@ -19,7 +22,7 @@ export const initialState: SearchState = {
     suggestions: [],
     items: [],
     searchTerm: '',
-    currency: 'EUR',
+    currency: CURRENCY_DEFAULT,
   },
 };
 

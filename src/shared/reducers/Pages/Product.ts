@@ -4,16 +4,21 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
+import {
+  CURRENCY_DEFAULT,
+} from '../../constants/Environment';
 
 export interface ProductState extends IReduxState {
   data: {
     selectedProduct: any,
+    currency: string,
   };
 }
 
 export const initialState: ProductState = {
   data: {
     selectedProduct: null,
+    currency: CURRENCY_DEFAULT,
   },
 };
 
