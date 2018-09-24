@@ -14,7 +14,7 @@ import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
 import {SearchState} from '../../../reducers/Pages/Search';
-import {IProductCard} from '../../../interfaces/productCard';
+import {IProductCard} from '../../../interfaces/product';
 import {SprykerButton} from '../../UI/SprykerButton';
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {

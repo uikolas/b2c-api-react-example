@@ -8,4 +8,6 @@ export const styles = (theme: Theme) => createStyles({
   buyBtn: {
     minWidth: "300px",
   },
+  sliderParent: {
+  },
 });

@@ -6,12 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import {reduxify} from '../../../lib/redux-helper';
 
 import {ProductState} from '../../../reducers/Pages/Product';
-import {IProductCard} from '../../../interfaces/productCard';
-
-// import {SearchState} from '../../../reducers/Pages/Search';
-
-import {sendSearchAction} from '../../../actions/Pages/Search';
-
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -20,8 +14,10 @@ import {getFormattedPrice} from '../../../services/priceFormatter';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
 
+import {productPropsFixture} from './fixture';
+import {IProductCardImages} from '../../../interfaces/product';
+import {IImageSlide} from '../../../components/Common/ImageSlider';
 import {styles} from './styles';
-
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
@@ -39,20 +35,6 @@ interface ProductPageState {
 
 export const buyBtnTitle = "Add to cart";
 
-const imagesFix = [
-  {
-    id: 1,
-    src: "//images.icecat.biz/img/norm/high/17681791-4446.jpg",
-  },
-  {
-    id: 2,
-    src: "//images.icecat.biz/img/norm/high/17681791-4446.jpg",
-  },
-  {
-    id: 3,
-    src: "//images.icecat.biz/img/norm/high/17681791-4446.jpg",
-  },
-];
 const fixture_menuItems = [
   {
     value: 1,
@@ -75,7 +57,6 @@ const fixture_menuItems_2 = [
 ];
 const test_nameAttr = 'test_nameAttr';
 const test_nameAttr_2 = 'test_nameAttr_2';
-const availability_fixture = true;
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
 
@@ -106,7 +87,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private getSuperAttrValue = (key: string) => {
-
     if (!key) {
       return defaultItemValue;
     }
@@ -117,20 +97,35 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     );
   }
 
+  private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> => {
+    const response = images.map((element: any, index: number) => (
+      {
+        id: index,
+        src: element.externalUrlLarge,
+      }
+    ));
+    return response;
+  }
+
   public render(): JSX.Element {
-    if (!this.props.product) {
+    // productPropsFixture - fixture for testing
+    if (!this.props.product && !productPropsFixture) {
       return null;
     }
     const {
       classes,
       isLoading,
       currency,
-      product, product: {
-        name,
-        sku,
-        price,
-        images,
-      }    } = this.props;
+      product,
+    } = this.props;
+
+    const {
+      name,
+      sku,
+      price,
+      images,
+      availability,
+    } = product || productPropsFixture ;
 
     console.info('product: ', product);
     console.info('images: ', images);
@@ -139,8 +134,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     return (
       <AppMain isLoading={isLoading}>
         <Grid container justify="center" >
-          <Grid item xs={12} sm={6} >
-            <ImageSlider images={imagesFix} />
+          <Grid item xs={12} sm={6} className={classes.sliderParent}>
+            <ImageSlider images={this.getImageData(images)} />
           </Grid>
           <Grid item xs={12} sm={6} >
             <ProductGeneralInfo
@@ -164,7 +159,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
               menuItems={fixture_menuItems_2}
             />
 
-            <ProductAvailability availability={availability_fixture} />
+            <ProductAvailability availability={availability} />
             <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
           </Grid>
         </Grid>

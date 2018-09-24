@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => createStyles({
   slider: {
     marginLeft: "auto",
     marginRight: "auto",
-    width: "400px",
+    width: "30%",
+    maxWidth: "350px",
   },
 });
