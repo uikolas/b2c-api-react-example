@@ -34,6 +34,9 @@ export class ProductService {
             case 'abstract-product-prices':
               result.price = data.attributes.price;
               break;
+            case 'abstract-product-availabilities':
+              result.availability = data.attributes.availability;
+              result.available-quantity = data.attributes.quantity;
             default:
               break;
           }

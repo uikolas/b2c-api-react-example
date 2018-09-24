@@ -94,13 +94,13 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 
   public handleSuggestionsFetchRequested = ({ value }: {value: string}) => {
-    if (!this.props.isLoading) {
+    const { value: currentValue } = this.state;
+    if (!this.props.isLoading && value != currentValue) {
       this.props.dispatch(sendSearchAction(value));
     }
   }
 
   private handleSuggestionsClearRequested = () => {
-    console.info('handleSuggestionsClearRequested');
     // if (!this.props.isLoading) {
     //   this.props.dispatch(clearSuggestions(this.state.value));
     // }
@@ -139,8 +139,6 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   public render() {
     const { classes, suggestions, location } = this.props;
-
-    console.info(location);
 
     const autosuggestProps = {
       suggestions,
