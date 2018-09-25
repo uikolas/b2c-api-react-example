@@ -10,7 +10,7 @@ export const productPendingState = {
 
 export const getProductDataAction = function (sku: string) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(productPendingState);
     ProductService.getAbstractData(PAGES_PRODUCT_REQUEST, dispatch, sku);
+    dispatch(productPendingState);
   };
 };
