@@ -16,12 +16,12 @@ export const getAvailabilityDisplay = (availability: boolean, locale: string = L
   let map;
   const availabilityMap: IAvailabilityMap = {
     'de-DE': {
-      yes: 'Yes',
-      not: 'No',
+      yes: 'Available',
+      not: 'Not available',
     },
     fallback: {
-      yes: 'Yes',
-      not: 'No',
+      yes: 'Available',
+      not: 'Not available',
     }
   };
 
@@ -37,5 +37,3 @@ export const getAvailabilityDisplay = (availability: boolean, locale: string = L
 
   return map.yes;
 };
-
-
