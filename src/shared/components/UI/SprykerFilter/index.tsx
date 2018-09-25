@@ -16,10 +16,9 @@ export interface IMenuItemsDropdown {
 
 interface SprykerFilterProps extends WithStyles<typeof styles> {
   attributeName?: string;
-  value: string;
-  handleChange: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
-  menuItems: Array<IMenuItemsDropdown>;
-  menuItemFirst?: IMenuItemsDropdown;
+  value?: string;
+  handleChange?: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
+  menuItems?: Array<IMenuItemsDropdown>;
 }
 
 interface SprykerFilterState {
