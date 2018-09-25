@@ -61,7 +61,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-
     this.setInitialData();
   }
 
@@ -115,6 +114,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private setInitialData = (): void => {
+    if (!this.props.product) {
+      return null;
+    }
     const productData = this.getProductDataObject(this.props.product.abstractProduct);
 
     this.setState( (prevState: ProductPageState) => {
