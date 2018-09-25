@@ -1,11 +1,24 @@
 import api from '../api';
 import { toast } from 'react-toastify';
+import {API_WITH_FIXTURES} from '../../constants/Environment';
+import {catalogFixture} from './catalogFixture';
 
 export class CatalogService {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
     try {
 
-      const response: any = await api.get('catalog-search', params, { withCredentials: true });
+      let response: any;
+      // TODO: this is only for development reasons - remove after finish
+      if(API_WITH_FIXTURES) {
+        response = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: catalogFixture,
+        };
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        response = await api.get('catalog-search', params, { withCredentials: true });
+      }
       console.info(response.data.data[0].attributes);
 
       if (response.ok) {
@@ -38,7 +51,18 @@ export class CatalogService {
   public static async catalogSearchSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
-      const response: any = await api.get('catalog-search-suggestions', {q: query}, { withCredentials: true });
+      let response: any;
+      // TODO: this is only for development reasons - remove after finish
+      if(API_WITH_FIXTURES) {
+        response = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: catalogFixture,
+        };
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        response = await api.get('catalog-search-suggestions', {q: query}, { withCredentials: true });
+      }
 
       if (response.ok) {
         dispatch({

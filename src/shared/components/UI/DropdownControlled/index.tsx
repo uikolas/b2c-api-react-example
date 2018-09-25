@@ -76,7 +76,16 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
             variant="filled"
           >
             <MenuItem value={menuItemFirst.value}><em>{menuItemFirst.name}</em></MenuItem>
-            {menuItems.map((item) => ( <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>))}
+            {menuItems.map((item) => {
+              return (
+                <MenuItem
+                  key={item.value}
+                  value={item.value}
+                >
+                  {item.name}
+                  </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </div>

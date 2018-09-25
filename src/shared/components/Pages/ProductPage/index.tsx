@@ -15,12 +15,19 @@ import {getFormattedPrice} from '../../../services/priceFormatter';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {ProductAttributes} from './ProductAttributes';
-import {IProductCardImages} from '../../../interfaces/product';
+import {
+  IProductAttributeMap,
+  IProductAttributes,
+  IProductCardImages,
+  IProductPropFullData,
+  ISuperAttributes,
+} from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
-import {styles} from './styles';
-import {productPropsFixtureSuper as productFixture} from './fixture';
-import {parseSuperAttributes, getAvailabilityDisplay} from "../../../services/productHelper";
 
+import {styles} from './styles';
+import {ISuperAttribute} from "../../../services/productHelper/superAttributes";
+
+export const buyBtnTitle = "Add to cart";
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
@@ -28,35 +35,96 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   currency: string;
 }
 
-interface ISuperAttr {
-  [key: string]: string | number;
-}
+type TCurrentProductType = 'abstractProduct' | 'concreteProduct';
 
-interface ProductPageState {
-  superAttrSelected: ISuperAttr;
+interface ProductPageState extends IProductPropFullData, ISuperAttributes {
+  attributeMap: IProductAttributeMap | null;
+  superAttrSelected: IProductAttributes;
+  currentProductType: TCurrentProductType;
 }
-
-export const buyBtnTitle = "Add to cart";
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
 
   public state: ProductPageState = {
+    attributeMap: null,
     superAttrSelected: {},
+    superAttributes: null,
+    currentProductType: null,
+    sku: null,
+    name: null,
+    images: null,
+    availability: null,
+    description: null,
+    price: null,
+    attributes: null,
+    quantity: null,
   };
+
+  public componentDidMount = () => {
+
+    this.setInitialData();
+  }
 
   public dropdownHandleChange = (event: any, child: React.ReactNode): void => {
     const key = event.target.name;
     const value = event.target.value;
+    let productData: IProductPropFullData;
+
+    if (value === defaultItemValue) {
+      // If selected nothing
+      productData = this.getProductDataObject(
+        this.props.product.abstractProduct
+      );
+    } else {
+      // If selected a concrete product
+      const idProductConcrete = this.state.attributeMap.attribute_variants[`${key}:${value}`].id_product_concrete;
+      productData = this.getProductDataObject(
+        this.props.product.concreteProducts[idProductConcrete]
+      );
+    }
+
     this.setState( (prevState: ProductPageState) => {
       if (this.state.superAttrSelected[key] === value) {
         return;
       }
       return (
         {
+          ...prevState,
           superAttrSelected: {
             ...prevState.superAttrSelected,
             [key]: value,
           },
+          currentProductType: 'concreteProduct',
+          ...productData,
+        }
+      );
+    });
+  }
+
+  private getProductDataObject = (data: IProductPropFullData): IProductPropFullData => {
+    return {
+      sku: data.sku,
+      name: data.name,
+      images: data.images,
+      availability: data.availability,
+      description: data.description,
+      price: data.price,
+      attributes: data.attributes,
+      quantity: data.quantity,
+    };
+  }
+
+  private setInitialData = (): void => {
+    const productData = this.getProductDataObject(this.props.product.abstractProduct);
+
+    this.setState( (prevState: ProductPageState) => {
+      return (
+        {
+          ...prevState,
+          currentProductType: 'abstractProduct',
+          superAttributes: this.props.product.superAttributes,
+          attributeMap: this.props.product.attributeMap,
+          ...productData,
         }
       );
     });
@@ -88,8 +156,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public render(): JSX.Element {
-    // TODO: productFixture - fixture for testing - remove
-    if (!this.props.product && !productFixture) {
+    console.info('props: ', this.props);
+    if (!this.props.product || !this.state.currentProductType) {
       return null;
     }
     const {
@@ -97,42 +165,32 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       isLoading,
       currency,
       product,
+
     } = this.props;
 
     const {
-      name,
-      sku,
-      price,
-      images,
-      availability,
-      attributes,
-      description,
       superAttributes,
-    } = product || productFixture ;
-
-    const superData = parseSuperAttributes(superAttributes);
+    } = product;
 
     console.info('product: ', product);
-    console.info('props: ', this.props);
     console.info('state: ', this.state);
-    console.info('superData: ', superData);
 
     return (
       <AppMain isLoading={isLoading}>
         <div className={classes.root} >
           <Grid container justify="center" >
             <Grid item xs={12} sm={6} className={classes.sliderParent}>
-              <ImageSlider images={this.getImageData(images)} />
+              <ImageSlider images={this.getImageData(this.state.images)} />
             </Grid>
             <Grid item xs={12} sm={6} >
               <ProductGeneralInfo
-                name={name}
-                sku={sku}
-                price={getFormattedPrice(price, currency)}
+                name={this.state.name}
+                sku={this.state.sku}
+                price={getFormattedPrice(this.state.price, currency)}
               />
 
-              { superData
-                ? superData.map((item) => (
+              { this.state.superAttributes
+                ? this.state.superAttributes.map((item: ISuperAttribute) => (
                   <DropdownControlled
                     key={item.name}
                     nameAttr={item.name}
@@ -145,15 +203,15 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                 : null
               }
 
-              <ProductAvailability availability={getAvailabilityDisplay(availability)} />
+              <ProductAvailability availability={this.state.availability} />
               <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
             </Grid>
           </Grid>
           <Grid container justify="center" >
-            <ProductAttributes attributes={attributes} />
+            <ProductAttributes attributes={this.state.attributes} />
             <Grid item xs={12}>
               <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
-                {description}
+                {this.state.description}
               </Typography>
             </Grid>
           </Grid>

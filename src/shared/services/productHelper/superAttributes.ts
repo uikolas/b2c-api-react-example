@@ -1,5 +1,13 @@
+import {
+  IProductAttributeMap,
+} from "../../interfaces/product";
 
-import {IProductSuperAttributes} from "../../interfaces/product/index";
+
+export interface ISuperAttribute {
+  name: string;
+  nameToShow: string;
+  data: Array<ISuperAttributeData>;
+}
 
 interface ISuperAttributeData {
   value: string;
@@ -7,14 +15,8 @@ interface ISuperAttributeData {
   idProductConcrete: string | number;
 }
 
-interface ISuperAttribute {
-  name: string;
-  nameToShow: string;
-  data: Array<ISuperAttributeData>;
-}
-
-export const parseSuperAttributes = (superAttributes: IProductSuperAttributes) => {
-  if(!superAttributes.super_attributes || typeof superAttributes.super_attributes !== 'object'){
+export const parseSuperAttributes = (superAttributes: IProductAttributeMap): Array<ISuperAttribute> | boolean => {
+  if(!superAttributes.super_attributes || typeof superAttributes.super_attributes !== 'object') {
     return false;
   }
 
