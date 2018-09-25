@@ -61,7 +61,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    this.setInitialData();
+    if (this.props.product) {
+      this.setInitialData();
+    }
+
   }
 
   public dropdownHandleChange = (event: any, child: React.ReactNode): void => {
