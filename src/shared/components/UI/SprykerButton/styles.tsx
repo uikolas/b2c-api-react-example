@@ -3,13 +3,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    width: "100%",
-    maxWidth: "1400px",
-    margin: "auto",
   },
-  buyBtn: {
-    minWidth: "300px",
-  },
-  sliderParent: {
+  button: {
+    marginLeft: theme.spacing.unit,
   },
 });

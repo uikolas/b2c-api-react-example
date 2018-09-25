@@ -14,7 +14,8 @@ import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
 import {SearchState} from '../../../reducers/Pages/Search';
-import {IProductCard} from '../../../interfaces/productCard';
+import {IProductCard} from '../../../interfaces/product';
+import {SprykerButton} from '../../UI/SprykerButton';
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   customer?: any;
@@ -53,19 +54,11 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
                 alignItems="center"
           >
             <NavLink to={`${config.WEB_PATH}login`}>
-              <Button
-                variant="contained"
-                component="button"
-                className={classes.button}
-              >
-                { isAuth ? 'Logout' : 'Register/Login' }
-              </Button>
+              <SprykerButton title="Register/Login" />
             </NavLink>
 
             <NavLink to={`${config.WEB_PATH}cart`}>
-              <Button variant="contained" component="button" className={classes.button}>
-                Cart
-              </Button>
+              <SprykerButton title="Cart" />
             </NavLink>
           </Grid>
 

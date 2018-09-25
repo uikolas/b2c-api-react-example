@@ -18,8 +18,10 @@ import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
-import {IProductCard} from '../../../interfaces/productCard';
+import {IProductCard} from '../../../interfaces/product';
 import {getFormattedPrice} from '../../../services/priceFormatter';
+import {SprykerButton} from '../../UI/SprykerButton';
+
 import {styles} from './styles';
 import {getProductDataAction} from "../../../actions/Pages/Product";
 
@@ -175,9 +177,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
           )}
         />
         <NavLink to={`${config.WEB_PATH}search`}>
-          <Button variant="contained" onClick={this.handleEndSearch}>
-            {buttonTitle}
-          </Button>
+          <SprykerButton title={buttonTitle} onClick={this.handleEndSearch}/>
         </NavLink>
         {
           this.props.isLoading
