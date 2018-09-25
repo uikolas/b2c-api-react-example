@@ -11,7 +11,7 @@ import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
 import {DropdownControlled, defaultItemValue} from '../../UI/DropdownControlled';
-import {getFormattedPrice} from '../../../services/priceFormatter';
+import {getFormattedPrice} from '../../../services/productHelper';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {ProductAttributes} from './ProductAttributes';

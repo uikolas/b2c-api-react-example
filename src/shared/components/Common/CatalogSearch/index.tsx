@@ -19,7 +19,7 @@ import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
 import {IProductCard} from '../../../interfaces/product';
-import {getFormattedPrice} from '../../../services/priceFormatter';
+import {getFormattedPrice} from '../../../services/productHelper';
 import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
