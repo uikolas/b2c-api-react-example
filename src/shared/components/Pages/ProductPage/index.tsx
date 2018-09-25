@@ -168,10 +168,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     } = this.props;
 
-    const {
-      superAttributes,
-    } = product;
-
     console.info('product: ', product);
     console.info('state: ', this.state);
 
