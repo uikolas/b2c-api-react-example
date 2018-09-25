@@ -19,7 +19,8 @@ import {IProductCardImages} from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 import {styles} from './styles';
 import {productPropsFixtureSuper as productFixture} from './fixture';
-import {parseSuperAttributes} from "../../../services/productHelper";
+import {parseSuperAttributes, getAvailabilityDisplay} from "../../../services/productHelper";
+
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
@@ -36,29 +37,6 @@ interface ProductPageState {
 }
 
 export const buyBtnTitle = "Add to cart";
-
-const fixture_menuItems = [
-  {
-    value: 1,
-    name: 'One'
-  },
-  {
-    value: 2,
-    name: 'Two'
-  },
-];
-const fixture_menuItems_2 = [
-  {
-    value: 'Hi',
-    name: 'Hi'
-  },
-  {
-    value: 'Hello',
-    name: 'Hello'
-  },
-];
-const test_nameAttr = 'test_nameAttr';
-const test_nameAttr_2 = 'test_nameAttr_2';
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
 
@@ -167,7 +145,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                 : null
               }
 
-              <ProductAvailability availability={availability} />
+              <ProductAvailability availability={getAvailabilityDisplay(availability)} />
               <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
             </Grid>
           </Grid>
