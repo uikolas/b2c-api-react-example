@@ -4,13 +4,6 @@
   externalUrlLarge: string;
 }
 
-export interface IProductCardPrice {
-  priceTypeName: string;
-  grossAmount: number;
-  DEFAULT?: number;
-  ORIGINAL?: number;
-}
-
 export interface IProductCard {
   images: Array<IProductCardImages>;
   price: number;
@@ -18,6 +11,14 @@ export interface IProductCard {
   abstractName: string;
   abstractSku: string;
 }*/
+
+export interface IProductCardPrice {
+  priceTypeName?: string;
+  grossAmount?: number;
+  DEFAULT?: number;
+  ORIGINAL?: number;
+  [key: string]: any;
+}
 
 export interface IProductCardImages {
   external_url_small?: string;
@@ -30,7 +31,10 @@ export interface IProductCard {
   images?: Array<IProductCardImages>;
   price?: number;
   abstract_name?: string;
+  abstractName?: string;
   abstract_sku?: string;
+  abstractSku?: string;
+  prices?: Array<IProductCardPrice>
 }
 
 export interface IProductSuperAttributes {

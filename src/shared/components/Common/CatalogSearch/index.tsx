@@ -17,12 +17,12 @@ import {RouteProps} from "react-router";
 import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
-import {sendSearchAction, clearSuggestions, setItemsFromSuggestions} from '../../../actions/Pages/Search';
 import {IProductCard} from '../../../interfaces/product';
 import {getFormattedPrice} from '../../../services/priceFormatter';
 import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
+import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../../actions/Pages/Search';
 import {getProductDataAction} from "../../../actions/Pages/Product";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
@@ -31,6 +31,10 @@ interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   searchTerm?: string;
   currency?: string;
   isLoading?: boolean;
+  getSuggestions?: Function;
+  getSearchResult?: Function;
+  getProductData?: Function;
+  changeLocation?: Function;
 }
 
 interface CatalogState {
@@ -106,7 +110,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
       this.timer = setTimeout(() => {
         if (this.state.value === value) {
-          this.props.dispatch(sendSearchAction(value));
+          this.props.getSuggestions(value);
         }
       }, 350);
     }
@@ -131,13 +135,13 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
-    this.props.dispatch(getProductDataAction(suggestion.abstract_sku));
-    this.props.dispatch(push(`${config.WEB_PATH}product/${suggestion.abstract_name}`));
+    this.props.getProductData(suggestion.abstract_sku);
+    this.props.changeLocation(`${config.WEB_PATH}product/${suggestion.abstract_name}`);
   }
 
-  private handleEndSearch = () => {
-    this.props.dispatch(setItemsFromSuggestions());
-    this.props.dispatch(push(`${config.WEB_PATH}search`));
+  private handleFullSearch = () => {
+    this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
+    this.props.changeLocation(`${config.WEB_PATH}search`);
   }
 
   public render() {
@@ -177,7 +181,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
           )}
         />
         <NavLink to={`${config.WEB_PATH}search`}>
-          <SprykerButton title={buttonTitle} onClick={this.handleEndSearch}/>
+          <SprykerButton title={buttonTitle} onClick={this.handleFullSearch}/>
         </NavLink>
         {
           this.props.isLoading
@@ -204,7 +208,14 @@ const CatalogSearchComponent = reduxify(
         isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
       }
     );
-  }
+  },
+  (dispatch: Function) => ({
+    dispatch,
+    getSuggestions: (query: string) => dispatch(sendSuggestionAction(query)),
+    getSearchResult: (params: any) => dispatch(sendSearchAction(params)),
+    getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
+    changeLocation: (location: string) => dispatch(push(location)),
+  })
 )(CatalogSearch);
 
 export default CatalogSearchComponent;

@@ -18,29 +18,47 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const { classes, images, abstract_name: productName = 'No name', price = 0, currency, abstract_sku } = props;
-  const priceToShow = getFormattedPrice(price, currency);
+  const { classes, images, abstract_name, abstractName, price, prices, currency, abstract_sku, abstractSku } = props;
+  const name = abstract_name || abstractName || 'No name';
+  const sku = abstract_sku || abstractSku;
+
+  let actualPrice = 0;
+
+  if (prices && prices.length > 1) {
+    prices.forEach((data) => {
+      if (data.priceTypeName === 'ORIGINAL') {
+        actualPrice = data.ORIGINAL;
+      }
+    });
+  } else if (prices && prices.length === 1) {
+    const priceType: string = prices[0].priceTypeName;
+    actualPrice = prices[0][priceType];
+  } else {
+    actualPrice = price || 0;
+  }
+
+  const priceToShow = getFormattedPrice(actualPrice, currency);
 
   const handleProductClick = (e: any) => {
     e.preventDefault();
-    props.onSelectProduct(abstract_sku, productName);
+    props.onSelectProduct(sku, name);
   }
 
   return (
     <Card className={classes.card} raised={true}>
       <CardActionArea onClick={handleProductClick}>
-        { images && images[0].external_url_small
+        { images && images.length
           ? <CardMedia
             component="img"
             className={classes.media}
-            image={images[0].external_url_small}
-            title={productName}
+            image={images[0].external_url_large || images[0].externalUrlLarge}
+            title={name}
           />
           : null
         }
         <CardContent>
           <Typography gutterBottom variant="title" data-type="productName">
-            {productName}
+            {name}
           </Typography>
           <Typography gutterBottom variant="subheading" color="primary" data-type="priceToShow">
             {priceToShow}

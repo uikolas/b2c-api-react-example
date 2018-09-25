@@ -1,18 +1,29 @@
 import {
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
-  PAGES_SEARCH_SET_ITEMS,
+  PAGES_SUGGESTION_REQUEST,
 } from '../../constants/ActionTypes/Pages/Search';
 import {CatalogService} from '../../services/Common/Catalog';
 
+
+export const suggestPendingState = {
+  type: PAGES_SUGGESTION_REQUEST + '_PENDING',
+};
 
 export const searchPendingState = {
   type: PAGES_SEARCH_REQUEST + '_PENDING',
 };
 
-export const sendSearchAction = function (query: string) {
+export const sendSuggestionAction = function (query: string) {
   return (dispatch: Function, getState: Function) => {
-    CatalogService.catalogSearchSuggestion(PAGES_SEARCH_REQUEST, dispatch, query);
+    CatalogService.catalogSuggestion(PAGES_SUGGESTION_REQUEST, dispatch, query);
+    dispatch(suggestPendingState);
+  };
+};
+
+export const sendSearchAction = function (params: any) {
+  return (dispatch: Function, getState: Function) => {
+    CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
     dispatch(searchPendingState);
   };
 };
@@ -23,9 +34,3 @@ export const clearSuggestions = function(searchTerm: string) {
     searchTerm,
   };
 };
-
-export const setItemsFromSuggestions = function() {
-  return {
-    type: PAGES_SEARCH_SET_ITEMS,
-  };
-}

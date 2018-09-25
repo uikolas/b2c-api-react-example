@@ -11,7 +11,9 @@ export class CatalogService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data.data[0].attributes,
+          items: response.data.data[0].attributes.products,
+          filters: response.data.data[0].attributes.valueFacets,
+          rangeFilters: response.data.data[0].attributes.rangeFacets,
         });
         return response.data;
       } else {
@@ -35,7 +37,7 @@ export class CatalogService {
     }
   }
 
-  public static async catalogSearchSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
+  public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
       const response: any = await api.get('catalog-search-suggestions', {q: query}, { withCredentials: true });
@@ -43,13 +45,13 @@ export class CatalogService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          items: response.data.data[0].attributes.products,
+          products: response.data.data[0].attributes.products,
           searchTerm: query,
           currency: response.data.data[0].attributes.currency || '',
         });
         return response.data;
       } else {
-        console.error('Catalog search', response.problem);
+        console.error('Catalog suggestion', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
@@ -59,7 +61,7 @@ export class CatalogService {
       }
 
     } catch (error) {
-      console.error('Catalog search', error);
+      console.error('Catalog suggestion', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         error,

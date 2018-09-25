@@ -37,7 +37,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
     this.setState(prev => ({isOpen: !prev.isOpen}));
   }
 
-  private handleChange = (event: any) => {
+  private handleChangeValues = (event: any) => {
     this.setState({ value: event.target.value });
   }
 
@@ -68,7 +68,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
             onClose={this.handleChangeShowing}
             onOpen={this.handleChangeShowing}
             value={this.state.value}
-            onChange={this.handleChange}
+            onChange={this.handleChangeValues}
             variant="filled"
           >
             {menuItems.map((item) => (
