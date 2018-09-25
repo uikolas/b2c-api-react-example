@@ -1,49 +1,27 @@
 import api from '../api';
 import { toast } from 'react-toastify';
-import {number, object} from 'prop-types';
+import {API_WITH_FIXTURES} from '../../constants/Environment';
+import {fixtureFull, fixtureOneProduct, fixtureSuperFull} from './productFixtureWithSuperAttr';
+import {parseProductResponse} from "../productHelper";
 
 export class ProductService {
   public static async getAbstractData(ACTION_TYPE: string, dispatch: Function, sku: string): Promise<any> {
     try {
 
-      const response: any = await api.get(`abstract-products/${sku}`);
-
-      if (response.ok) {
-        const { data: {attributes}, included }: any = response.data;
-
-        const result: any = {
-          sku,
-          name: attributes.name,
-          description: attributes.description,
-          attributes: attributes.attributes,
-          superAttributes: attributes.attributeMap, // 135 attribute_variants[], super_attributes[],
-          images: [],
-          price: 0,
-          availability: true,
-          availableQuantity: 0,
+      let response: any;
+      // TODO: this is only for development reasons - remove after finish
+      if(API_WITH_FIXTURES) {
+        response = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: fixtureSuperFull,
         };
-
-        included.forEach((data: any) => {
-          switch (data.type) {
-            case 'abstract-product-image-sets':
-              result.images = [];
-              data.attributes.imageSets.map((set: any) => {
-                set.images.forEach((imgs: any) => {
-                  result.images.push(imgs);
-                });
-              });
-              break;
-            case 'abstract-product-prices':
-              result.price = data.attributes.price;
-              break;
-            case 'abstract-product-availabilities':
-              result.availability = data.attributes.availability;
-              result.availableQuantity = data.attributes.quantity;
-              break;
-            default:
-              break;
-          }
-        });
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        response = await api.get(`abstract-products/${sku}`);
+      }
+      if (response.ok) {
+        const result: any = parseProductResponse(response.data);
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
@@ -51,7 +29,6 @@ export class ProductService {
         });
         return result;
       } else {
-        // console.error('Catalog search', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
