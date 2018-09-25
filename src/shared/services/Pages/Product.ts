@@ -1,7 +1,7 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {fixtureFull, fixtureOneProduct} from './productFixtureWithSuperAttr';
+import {fixtureFull, fixtureOneProduct, fixtureSuperFull} from './productFixtureWithSuperAttr';
 import {parseProductResponse} from "../productHelper";
 
 export class ProductService {
@@ -14,7 +14,7 @@ export class ProductService {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: fixtureFull,
+          data: fixtureSuperFull,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {

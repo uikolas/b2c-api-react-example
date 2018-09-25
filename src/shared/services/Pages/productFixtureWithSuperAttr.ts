@@ -588,6 +588,1165 @@ export const fixtureFull: any = {
   ]
 };
 
+export const fixtureSuperFull: any = {
+  "data": {
+    "type": "abstract-products",
+    "id": "070",
+    "attributes": {
+      "sku": "070",
+      "name": "Samsung Galaxy Ace",
+      "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+      "attributes": {
+        "sensor_type": "CMOS",
+        "display_type": "TFT",
+        "weight": "118 g",
+        "usb_version": "2",
+        "brand": "Samsung"
+      },
+      "superAttributesDefinition": [],
+      "attributeMap": {
+        "attribute_variants": {
+          "series:Ace 2": {
+            "internal_storage_capacity:2.1 GB": {
+              "id_product_concrete": "070_133745031"
+            },
+            "internal_storage_capacity:8 GB": {
+              "id_product_concrete": "070_203704321"
+            }
+          },
+          "internal_storage_capacity:2.1 GB": {
+            "series:Ace 2": {
+              "id_product_concrete": "070_133745031"
+            },
+            "series:Ace 3": {
+              "id_product_concrete": "070_133913221"
+            }
+          },
+          "internal_storage_capacity:8 GB": {
+            "series:Ace 2": {
+              "id_product_concrete": "070_203704321"
+            },
+            "series:Ace 3": {
+              "id_product_concrete": "070_133745032"
+            },
+            "series:Ace Plus": {
+              "id_product_concrete": "070_133913222"
+            }
+          },
+          "series:Ace 3": {
+            "internal_storage_capacity:2.1 GB": {
+              "id_product_concrete": "070_133913221"
+            },
+            "internal_storage_capacity:8 GB": {
+              "id_product_concrete": "070_133745032"
+            },
+            "internal_storage_capacity:2.7 GB": {
+              "id_product_concrete": "070_203704322"
+            }
+          },
+          "internal_storage_capacity:2.7 GB": {
+            "series:Ace 3": {
+              "id_product_concrete": "070_203704322"
+            },
+            "series:Ace Plus": {
+              "id_product_concrete": "070_133745033"
+            }
+          },
+          "series:Ace Plus": {
+            "internal_storage_capacity:8 GB": {
+              "id_product_concrete": "070_133913222"
+            },
+            "internal_storage_capacity:2.7 GB": {
+              "id_product_concrete": "070_133745033"
+            }
+          }
+        },
+        "super_attributes": {
+          "series": [
+            "Ace 2",
+            "Ace 3",
+            "Ace Plus"
+          ],
+          "internal_storage_capacity": [
+            "2.1 GB",
+            "8 GB",
+            "2.7 GB"
+          ]
+        },
+        "product_concrete_ids": [
+          "070_133745031",
+          "070_203704321",
+          "070_133913221",
+          "070_133745032",
+          "070_203704322",
+          "070_133913222",
+          "070_133745033"
+        ]
+      },
+      "metaTitle": "Samsung Galaxy Ace",
+      "metaKeywords": "Samsung,Communication Electronics",
+      "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+    },
+    "links": {
+      "self": "/abstract-products/070"
+    },
+    "relationships": {
+      "concrete-products": {
+        "data": [
+          {
+            "type": "concrete-products",
+            "id": "070_133745031"
+          },
+          {
+            "type": "concrete-products",
+            "id": "070_203704321"
+          },
+          {
+            "type": "concrete-products",
+            "id": "070_133913221"
+          },
+          {
+            "type": "concrete-products",
+            "id": "070_133745032"
+          },
+          {
+            "type": "concrete-products",
+            "id": "070_203704322"
+          },
+          {
+            "type": "concrete-products",
+            "id": "070_133913222"
+          },
+          {
+            "type": "concrete-products",
+            "id": "070_133745033"
+          }
+        ]
+      },
+      "abstract-product-image-sets": {
+        "data": [
+          {
+            "type": "abstract-product-image-sets",
+            "id": "070"
+          }
+        ]
+      },
+      "abstract-product-availabilities": {
+        "data": [
+          {
+            "type": "abstract-product-availabilities",
+            "id": "070"
+          }
+        ]
+      },
+      "abstract-product-prices": {
+        "data": [
+          {
+            "type": "abstract-product-prices",
+            "id": "070"
+          }
+        ]
+      },
+      "category-nodes": {
+        "data": [
+          {
+            "type": "category-nodes",
+            "id": "11"
+          },
+          {
+            "type": "category-nodes",
+            "id": "12"
+          },
+          {
+            "type": "category-nodes",
+            "id": "14"
+          }
+        ]
+      },
+      "tax-sets": {
+        "data": [
+          {
+            "type": "tax-sets",
+            "id": "deb94215-a1fc-5cdc-af6e-87ec3a847480"
+          }
+        ]
+      }
+    }
+  },
+  "included": [
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_133745031",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133745031/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_133745031",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_133745031/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_133745031",
+      "attributes": {
+        "price": 44436,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 44436
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133745031/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_133745031",
+      "attributes": {
+        "sku": "070_133745031",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace 2",
+          "internal_storage_capacity": "2.1 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_133745031"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_133745031"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_133745031"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_133745031"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_203704321",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_203704321/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_203704321",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_203704321/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_203704321",
+      "attributes": {
+        "price": 17077,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 17077
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_203704321/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_203704321",
+      "attributes": {
+        "sku": "070_203704321",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace 2",
+          "internal_storage_capacity": "8 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_203704321"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_203704321"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_203704321"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_203704321"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_133913221",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133913221/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_133913221",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_133913221/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_133913221",
+      "attributes": {
+        "price": 40462,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 40462
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133913221/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_133913221",
+      "attributes": {
+        "sku": "070_133913221",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace 3",
+          "internal_storage_capacity": "2.1 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_133913221"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_133913221"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_133913221"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_133913221"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_133745032",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133745032/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_133745032",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_133745032/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_133745032",
+      "attributes": {
+        "price": 24435,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 24435
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133745032/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_133745032",
+      "attributes": {
+        "sku": "070_133745032",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace 3",
+          "internal_storage_capacity": "8 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_133745032"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_133745032"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_133745032"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_133745032"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_203704322",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_203704322/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_203704322",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_203704322/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_203704322",
+      "attributes": {
+        "price": 42131,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 42131
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_203704322/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_203704322",
+      "attributes": {
+        "sku": "070_203704322",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace 3",
+          "internal_storage_capacity": "2.7 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_203704322"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_203704322"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_203704322"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_203704322"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_133913222",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133913222/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_133913222",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_133913222/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_133913222",
+      "attributes": {
+        "price": 41575,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 41575
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133913222/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_133913222",
+      "attributes": {
+        "sku": "070_133913222",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace Plus",
+          "internal_storage_capacity": "8 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_133913222"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_133913222"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_133913222"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_133913222"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "concrete-product-image-sets",
+      "id": "070_133745033",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133745033/concrete-product-image-sets"
+      }
+    },
+    {
+      "type": "concrete-product-availabilities",
+      "id": "070_133745033",
+      "attributes": {
+        "availability": true,
+        "quantity": 10,
+        "isNeverOutOfStock": false
+      },
+      "links": {
+        "self": "/concrete-products/070_133745033/concrete-product-availabilities"
+      }
+    },
+    {
+      "type": "concrete-product-prices",
+      "id": "070_133745033",
+      "attributes": {
+        "price": 11714,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 11714
+          }
+        ]
+      },
+      "links": {
+        "self": "/concrete-products/070_133745033/concrete-product-prices"
+      }
+    },
+    {
+      "type": "concrete-products",
+      "id": "070_133745033",
+      "attributes": {
+        "sku": "070_133745033",
+        "name": "Samsung Galaxy Ace",
+        "description": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core 800MHz processor to handle all your games and applications smoothly and efficiently. You’ll see all your entertainment at its best too, via a spacious 3.8” WVGA display that offers great clarity. 4GB of memory and extended battery power mean that this is one phone that won’t let you down. The Galaxy Ace 2’s elegant and compact design means it will fit perfectly in your pocket, too – as well as fitting in with your style. GALAXY Ace 2 users enjoy unrivalled power and excellent performance thanks to robust dual core 800MHz processor that keeps up with heavy usage and demanding applications. Smart CPU manages power consumption across applications so your phone works efficiently and conserves energy, maximising your phone’s functionalities.",
+        "attributes": {
+          "sensor_type": "CMOS",
+          "display_type": "TFT",
+          "weight": "118 g",
+          "usb_version": "2",
+          "brand": "Samsung",
+          "series": "Ace Plus",
+          "internal_storage_capacity": "2.7 GB"
+        },
+        "superAttributesDefinition": [
+          "series",
+          "internal_storage_capacity"
+        ],
+        "metaTitle": "Samsung Galaxy Ace",
+        "metaKeywords": "Samsung,Communication Electronics",
+        "metaDescription": "Ace performance at an accessible price Choose a smartphone that offers great value and outstanding performance. The Samsung Galaxy Ace 2 packs a Dual Core"
+      },
+      "links": {
+        "self": "/concrete-products/070_133745033"
+      },
+      "relationships": {
+        "concrete-product-image-sets": {
+          "data": [
+            {
+              "type": "concrete-product-image-sets",
+              "id": "070_133745033"
+            }
+          ]
+        },
+        "concrete-product-availabilities": {
+          "data": [
+            {
+              "type": "concrete-product-availabilities",
+              "id": "070_133745033"
+            }
+          ]
+        },
+        "concrete-product-prices": {
+          "data": [
+            {
+              "type": "concrete-product-prices",
+              "id": "070_133745033"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "abstract-product-image-sets",
+      "id": "070",
+      "attributes": {
+        "imageSets": [
+          {
+            "name": "default",
+            "images": [
+              {
+                "externalUrlLarge": "//images.icecat.biz/img/norm/high/13374503-9343.jpg",
+                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/13374503-9343.jpg"
+              }
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "/abstract-products/070/abstract-product-image-sets"
+      }
+    },
+    {
+      "type": "abstract-product-availabilities",
+      "id": "070",
+      "attributes": {
+        "availability": true,
+        "quantity": 70
+      },
+      "links": {
+        "self": "/abstract-products/070/abstract-product-availabilities"
+      }
+    },
+    {
+      "type": "abstract-product-prices",
+      "id": "070",
+      "attributes": {
+        "price": 29678,
+        "prices": [
+          {
+            "priceTypeName": "DEFAULT",
+            "netAmount": null,
+            "grossAmount": 29678
+          }
+        ]
+      },
+      "links": {
+        "self": "/abstract-products/070/abstract-product-prices"
+      }
+    },
+    {
+      "type": "category-nodes",
+      "id": "11",
+      "attributes": {
+        "nodeId": 11,
+        "name": "Telecom & Navigation",
+        "metaTitle": "Telecom & Navigation",
+        "metaKeywords": "Telecom & Navigation",
+        "metaDescription": "Telecom & Navigation",
+        "isActive": true,
+        "children": [
+          {
+            "nodeId": 12,
+            "name": "Smartphones",
+            "metaTitle": "Smartphones",
+            "metaKeywords": "Smartphones",
+            "metaDescription": "Smartphones",
+            "isActive": true,
+            "children": {},
+            "parents": {},
+            "order": 80
+          }
+        ],
+        "parents": [
+          {
+            "nodeId": 1,
+            "name": "Demoshop",
+            "metaTitle": "Demoshop",
+            "metaKeywords": "English version of Demoshop",
+            "metaDescription": "English version of Demoshop",
+            "isActive": true,
+            "children": {},
+            "parents": {},
+            "order": null
+          }
+        ],
+        "order": 80
+      },
+      "links": {
+        "self": "/category-nodes/11"
+      }
+    },
+    {
+      "type": "category-nodes",
+      "id": "12",
+      "attributes": {
+        "nodeId": 12,
+        "name": "Smartphones",
+        "metaTitle": "Smartphones",
+        "metaKeywords": "Smartphones",
+        "metaDescription": "Smartphones",
+        "isActive": true,
+        "children": {},
+        "parents": [
+          {
+            "nodeId": 11,
+            "name": "Telecom & Navigation",
+            "metaTitle": "Telecom & Navigation",
+            "metaKeywords": "Telecom & Navigation",
+            "metaDescription": "Telecom & Navigation",
+            "isActive": true,
+            "children": {},
+            "parents": [
+              {
+                "nodeId": 1,
+                "name": "Demoshop",
+                "metaTitle": "Demoshop",
+                "metaKeywords": "English version of Demoshop",
+                "metaDescription": "English version of Demoshop",
+                "isActive": true,
+                "children": {},
+                "parents": {},
+                "order": null
+              }
+            ],
+            "order": 80
+          }
+        ],
+        "order": 80
+      },
+      "links": {
+        "self": "/category-nodes/12"
+      }
+    },
+    {
+      "type": "category-nodes",
+      "id": "14",
+      "attributes": {
+        "nodeId": 14,
+        "name": "Variant Showcase",
+        "metaTitle": "Variant Showcase",
+        "metaKeywords": "These are products that have more than 1 variant.",
+        "metaDescription": "These are products that have more than 1 variant.",
+        "isActive": true,
+        "children": {},
+        "parents": [
+          {
+            "nodeId": 1,
+            "name": "Demoshop",
+            "metaTitle": "Demoshop",
+            "metaKeywords": "English version of Demoshop",
+            "metaDescription": "English version of Demoshop",
+            "isActive": true,
+            "children": {},
+            "parents": {},
+            "order": null
+          }
+        ],
+        "order": 50
+      },
+      "links": {
+        "self": "/category-nodes/14"
+      }
+    },
+    {
+      "type": "tax-sets",
+      "id": "deb94215-a1fc-5cdc-af6e-87ec3a847480",
+      "attributes": {
+        "name": "Communication Electronics",
+        "restTaxRates": [
+          {
+            "name": "Austria Standard",
+            "rate": "20.00",
+            "country": "AT"
+          },
+          {
+            "name": "Belgium Standard",
+            "rate": "21.00",
+            "country": "BE"
+          },
+          {
+            "name": "Bulgaria Standard",
+            "rate": "20.00",
+            "country": "BG"
+          },
+          {
+            "name": "Czech Republic Standard",
+            "rate": "21.00",
+            "country": "CZ"
+          },
+          {
+            "name": "Denmark Standard",
+            "rate": "25.00",
+            "country": "DK"
+          },
+          {
+            "name": "France Standard",
+            "rate": "20.00",
+            "country": "FR"
+          },
+          {
+            "name": "Germany Standard",
+            "rate": "19.00",
+            "country": "DE"
+          },
+          {
+            "name": "Hungary Standard",
+            "rate": "27.00",
+            "country": "HU"
+          },
+          {
+            "name": "Italy Standard",
+            "rate": "22.00",
+            "country": "IT"
+          },
+          {
+            "name": "Netherlands Standard",
+            "rate": "21.00",
+            "country": "NL"
+          },
+          {
+            "name": "Romania Standard",
+            "rate": "20.00",
+            "country": "RO"
+          },
+          {
+            "name": "Slovakia Standard",
+            "rate": "20.00",
+            "country": "SK"
+          },
+          {
+            "name": "Slovenia Standard",
+            "rate": "22.00",
+            "country": "SI"
+          },
+          {
+            "name": "Luxembourg Reduced1",
+            "rate": "3.00",
+            "country": "LU"
+          },
+          {
+            "name": "Poland Reduced1",
+            "rate": "5.00",
+            "country": "PL"
+          }
+        ]
+      },
+      "links": {
+        "self": "/abstract-products/070/tax-sets"
+      }
+    }
+  ]
+};
+
 export const fixtureOneProduct: any = {
   "data": {
     "type": "abstract-products",
