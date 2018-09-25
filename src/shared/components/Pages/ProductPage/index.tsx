@@ -195,7 +195,7 @@ export const ConnectedProductPage = reduxify(
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         isLoading: productProps && productProps.pending ? productProps.pending : ownProps.pending,
-        product: productProps && productProps.data && productProps.data.selectedProduct
+        product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
         currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,

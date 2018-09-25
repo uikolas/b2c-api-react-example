@@ -1,6 +1,7 @@
 import {
   PAGES_CUSTOMER_REGISTER,
   PAGES_LOGIN_REQUEST,
+  PAGES_CUSTOMER_LOGOUT,
 } from '../../constants/ActionTypes/Pages/Login';
 import {
   IReduxState,
@@ -85,6 +86,11 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         pending: false,
         fulfilled: false,
         rejected: true,
+      };
+    case PAGES_CUSTOMER_LOGOUT:
+      return {
+        ...state,
+        data: initialState.data
       };
     default:
       return state;

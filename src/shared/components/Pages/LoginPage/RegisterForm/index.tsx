@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { toast } from 'react-toastify';
 
 import {formStyles} from '../styles';
 
@@ -47,12 +48,20 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
       label: 'Mr.',
     },
     {
+      value: 'Ms',
+      label: 'Ms.',
+    },
+    {
       value: 'Mrs',
       label: 'Mrs.',
     },
+    {
+      value: 'Dr',
+      label: 'Dr.',
+    }
   ];
 
-  public handleChangeSalutation = (event: any): void => {
+  public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if(!event.target.value) {
       return;
     }
@@ -86,8 +95,15 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
       || !this.state.passwordConfirmation
       || !this.state.acceptedTerms
     ) {
+      toast.warn('Not all fields are filled');
       return null;
     }
+
+    if (this.state.password !== this.state.passwordConfirmation) {
+      toast.warn('The passwords must match');
+      return null;
+    }
+
     this.props.handleSubmit(this.state);
   }
 

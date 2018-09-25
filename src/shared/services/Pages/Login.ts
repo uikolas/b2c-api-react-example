@@ -58,7 +58,7 @@ export class PagesLoginService {
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data.attributes,
         });
-        toast.success('Successfull login');
+        toast.success('You are now logged in');
         return response.data;
       } else {
         console.error('login', response.problem);

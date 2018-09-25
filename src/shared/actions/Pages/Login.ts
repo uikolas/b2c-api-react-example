@@ -1,6 +1,7 @@
 import {
   PAGES_LOGIN_REQUEST,
   PAGES_CUSTOMER_REGISTER,
+  PAGES_CUSTOMER_LOGOUT,
 } from '../../constants/ActionTypes/Pages/Login';
 import {PagesLoginService} from '../../services/Pages/Login';
 
@@ -25,4 +26,8 @@ export const customerRegisterAction = function (payload: any) {
     PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
     dispatch(registerPendingState);
   };
+};
+
+export const logout = function () {
+  return { type: PAGES_CUSTOMER_LOGOUT };
 };
