@@ -61,10 +61,22 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
+    console.log('componentDidMount 1');
     if (this.props.product) {
+      console.log('componentDidMount 2');
+      console.log('this.props.product', this.props.product);
       this.setInitialData();
     }
 
+  }
+
+  public componentDidUpdate = (prevProps: any, prevState: any) => {
+    console.log('componentDidUpdate 1');
+    if (this.props.product && !prevState.currentProductType) {
+      console.log('componentDidUpdate 2');
+      console.log('this.props.product', this.props.product);
+      this.setInitialData();
+    }
   }
 
   public dropdownHandleChange = (event: any, child: React.ReactNode): void => {

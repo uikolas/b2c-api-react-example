@@ -65,7 +65,7 @@ export const parseProductResponse = (response: IResponse): any => {
       result.concreteProducts[row.id].price =  row.attributes.price;
       result.concreteProducts[row.id].prices =  row.attributes.prices;
     } else if (row.type === 'concrete-product-availabilities' && !result.concreteProducts[row.id].availability) {
-      result.concreteProducts[row.id].availability =  row.attributes.availability;
+      result.concreteProducts[row.id].availability =  getAvailabilityDisplay(row.attributes.availability);
       result.concreteProducts[row.id].quantity =  row.attributes.quantity;
     }
     // Concrete part end
