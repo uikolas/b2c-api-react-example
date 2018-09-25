@@ -1,8 +1,12 @@
 import * as React from 'react';
+import { ToastContainer, Slide, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+// import 'typeface-roboto';
 
 import {IComponent} from "../../../typings/app";
-
 import {getContentRoutes} from '../../routes/contentRoutes';
+import {AppHeader} from '../../components/Common/AppHeader';
 
 
 const styles = require('./style.scss');
@@ -13,7 +17,19 @@ const className = styles.appHandler;
 export const AppHandler = function (props: IComponent) {
   return (
     <div className={className}>
+      <CssBaseline />
+      <AppHeader />
       {getContentRoutes()}
+      <ToastContainer
+        autoClose={3000}
+        transition={Slide}
+        position={toast.POSITION.BOTTOM_LEFT}
+        pauseOnHover={true}
+        style={{
+          width: '90%',
+          left: 0,
+        }}
+      />
     </div>
   );
 };

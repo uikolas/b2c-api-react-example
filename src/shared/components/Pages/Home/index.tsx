@@ -1,55 +1,95 @@
-import * as React from 'react';
-import {Location} from 'history';
+import * as React from "react";
+import {RouteProps} from "react-router";
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
 
-import {reduxify} from "../../../lib/redux-helper";
-import {IHomeState} from "../../../reducers/Pages/Home";
-import {getDataAction} from "../../../actions/Pages/Home";
+import {reduxify} from '../../../lib/redux-helper';
+import {SearchState} from '../../../reducers/Pages/Search';
+import CatalogSearch from '../../Common/CatalogSearch';
+import {sendSearchAction} from '../../../actions/Pages/Search';
+
+import {AppMain} from '../../Common/AppMain';
+
+import {styles} from './styles';
 
 
-export const title = "Home";
-
-export interface IProps {
-  dispatch?: Function;
-  location?: Location;
-  items?: any[];
-  itemsCount?: number;
+interface HomePageProps extends WithStyles<typeof styles> {
+  isLoading?: boolean;
 }
 
+interface HomePageState {}
 
-export class Home extends React.PureComponent<IProps, any> {
-  public displayName: string = 'Home';
+export const pageTitle = 'Search results for ';
 
-  public componentDidMount() {
-    this.props.dispatch(getDataAction());
-  }
+export class HomePageBase extends React.Component<HomePageProps, HomePageState> {
 
-  public componentDidCatch(error: any, info: any) {
-    console.error('Home->componentDidCatch->error', error);
-    console.error('Home->componentDidCatch->info', info);
-  }
+  public state: HomePageState = {
+
+  };
+
   public render() {
+    const {classes, isLoading} = this.props;
+    console.log('this.props', this.props);
+
     return (
-      <React.Fragment>
-        <div>{title}</div>
-        {this.props.items ? this.props.items.map(
-          (item: any, index: number) => (<span id={item._id} key={item._id}>{item.company} {item.balance}</span>)
-        ) : null}
-      </React.Fragment>
+      <AppMain isLoading={isLoading}>
+
+        <Grid container
+              justify="center"
+              alignItems="center"
+              className={classes.heroBlock}
+        >
+          <Grid item xs={12} sm={6}>
+            <CatalogSearch />
+          </Grid>
+        </Grid>
+
+        <Grid container
+              justify="center"
+              alignItems="center"
+              className={classes.contentBlock}
+        >
+          <Grid item xs={12} sm={6}>
+            <Typography variant="title" color="textPrimary" align="center">
+              Content block
+            </Typography>
+          </Grid>
+
+        </Grid>
+
+        <Grid container
+              justify="center"
+              alignItems="center"
+              className={classes.footerBlock}
+        >
+          <Grid item xs={12} sm={6}>
+            <Typography variant="title" color="textPrimary" align="center">
+              Footer
+            </Typography>
+          </Grid>
+
+        </Grid>
+
+
+
+      </AppMain>
     );
   }
 }
 
-export const ConnectedHome = reduxify(
+export const HomePage = withStyles(styles)(HomePageBase);
+
+export const ConnectedHomePage = reduxify(
   (state: any, ownProps: any) => {
-    const routerProps: IProps = state.routing ? state.routing : {};
-    const pagesHomeProps: IHomeState = state.pagesHome ? state.pagesHome : null;
+    const routerProps: RouteProps = state.routing ? state.routing : {};
+    const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        items: pagesHomeProps && pagesHomeProps.data.items ? pagesHomeProps.data.items : ownProps.items,
-        itemsCount: pagesHomeProps && pagesHomeProps.data.items_count ?
-          pagesHomeProps.data.items_count : ownProps.itemsCount,
+        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
       }
     );
   }
-)(Home);
+)(HomePage);

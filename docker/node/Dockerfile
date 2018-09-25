@@ -1,4 +1,4 @@
-FROM node:8.11.1
+FROM node:9.5.0
 
 ## Update global server dependencies repos
 #RUN apt-get update
@@ -28,7 +28,7 @@ RUN npm run dist
 # Expose ports without publishing them to the host machine - they’ll only be accessible to linked services.
 # Only the internal port can be specified.
 # Open ports
-EXPOSE 80
+EXPOSE 3000
 
 # Command to run app in container
 CMD [ "npm", "start" ]

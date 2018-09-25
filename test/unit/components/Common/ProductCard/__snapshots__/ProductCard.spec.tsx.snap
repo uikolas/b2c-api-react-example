@@ -1,0 +1,152 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components->Common->ProductCard: snapshot renders correctly 1`] = `
+<div
+  className="MuiPaper-root-02 MuiPaper-elevation8-012 MuiPaper-rounded-03 MuiCard-root-01"
+>
+  <button
+    className="MuiButtonBase-root-032 MuiCardActionArea-root-029"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex="0"
+    type="button"
+  >
+    <img
+      className="MuiCardMedia-root-035 MuiCardMedia-media-036"
+      src="//images.icecat.biz/img/gallery_mediums/img_17681791_medium_1482143992_4607_19487.jpg"
+      title="test_name"
+    />
+    <div
+      className="MuiCardContent-root-037"
+    >
+      <h2
+        className="MuiTypography-root-038 MuiTypography-title-044 MuiTypography-gutterBottom-055"
+        data-type="productName"
+      >
+        test_name
+      </h2>
+      <h3
+        className="MuiTypography-root-038 MuiTypography-subheading-045 MuiTypography-colorPrimary-058 MuiTypography-gutterBottom-055"
+        data-type="priceToShow"
+      >
+        € 22,222.00
+      </h3>
+    </div>
+    <span
+      className="MuiCardActionArea-focusHighlight-031"
+    />
+    <span
+      className="MuiTouchRipple-root-063"
+    />
+  </button>
+  <div
+    className="MuiCardActions-root-070"
+  >
+    <button
+      className="MuiButtonBase-root-032 MuiButton-root-072 MuiButton-text-074 MuiButton-textSecondary-076 MuiButton-flat-077 MuiButton-flatSecondary-079 MuiButton-sizeSmall-095 MuiCardActions-action-071"
+      disabled={false}
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex="0"
+      type="button"
+    >
+      <span
+        className="MuiButton-label-073"
+      >
+        Learn More
+      </span>
+      <span
+        className="MuiTouchRipple-root-063"
+      />
+    </button>
+  </div>
+</div>
+`;
+
+exports[`components->Common->ProductCard: snapshot renders correctly if something is missed 1`] = `
+<div
+  className="MuiPaper-root-02 MuiPaper-elevation8-012 MuiPaper-rounded-03 MuiCard-root-01"
+>
+  <button
+    className="MuiButtonBase-root-032 MuiCardActionArea-root-029"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex="0"
+    type="button"
+  >
+    <div
+      className="MuiCardContent-root-037"
+    >
+      <h2
+        className="MuiTypography-root-038 MuiTypography-title-044 MuiTypography-gutterBottom-055"
+        data-type="productName"
+      />
+      <h3
+        className="MuiTypography-root-038 MuiTypography-subheading-045 MuiTypography-colorPrimary-058 MuiTypography-gutterBottom-055"
+        data-type="priceToShow"
+      >
+        € 0.00
+      </h3>
+    </div>
+    <span
+      className="MuiCardActionArea-focusHighlight-031"
+    />
+    <span
+      className="MuiTouchRipple-root-063"
+    />
+  </button>
+  <div
+    className="MuiCardActions-root-070"
+  >
+    <button
+      className="MuiButtonBase-root-032 MuiButton-root-072 MuiButton-text-074 MuiButton-textSecondary-076 MuiButton-flat-077 MuiButton-flatSecondary-079 MuiButton-sizeSmall-095 MuiCardActions-action-071"
+      disabled={false}
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex="0"
+      type="button"
+    >
+      <span
+        className="MuiButton-label-073"
+      >
+        Learn More
+      </span>
+      <span
+        className="MuiTouchRipple-root-063"
+      />
+    </button>
+  </div>
+</div>
+`;
