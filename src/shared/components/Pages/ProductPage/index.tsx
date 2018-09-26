@@ -27,6 +27,7 @@ import {IImageSlide} from '../../../components/Common/ImageSlider';
 import {styles} from './styles';
 import {ISuperAttribute} from "../../../services/productHelper/superAttributes";
 import {getAvailabilityDisplay} from "../../../services/productHelper/availability";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 export const buyBtnTitle = "Add to cart";
 
@@ -281,7 +282,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
               }
 
               <ProductAvailability availability={this.state.availability} />
-              <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
+              <SprykerButton
+                title={buyBtnTitle}
+                extraClasses={classes.buyBtn}
+                onClick={this.buyBtnHandler}
+                IconType={AddShoppingCartIcon}
+              />
             </Grid>
           </Grid>
           <Grid container justify="center" >

@@ -3,6 +3,8 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Badge from '@material-ui/core/Badge';
 import { NavLink } from 'react-router-dom';
 
 import {AppLogo} from '../AppLogo';
@@ -31,7 +33,13 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
 
   const handleLogout = () => {
     dispatch(logout());
-  }
+  };
+
+  const shoppingCart = (
+    <Badge badgeContent={0} color="primary" classes={{ badge: classes.badge }}>
+      <ShoppingCartIcon className={classes.icon} />
+    </Badge>
+  );
 
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -66,7 +74,10 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
             </NavLink>
 
             <NavLink to={`${config.WEB_PATH}cart`}>
-              <SprykerButton title="Cart" />
+              <SprykerButton
+                title="Cart"
+                iconComponent={shoppingCart}
+              />
             </NavLink>
           </Grid>
 

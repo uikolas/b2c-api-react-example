@@ -7,4 +7,7 @@ export const styles = (theme: Theme) => createStyles({
   button: {
     marginLeft: theme.spacing.unit,
   },
+  icon: {
+    marginLeft: theme.spacing.unit * 2,
+  }
 });
