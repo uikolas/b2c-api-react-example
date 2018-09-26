@@ -32,7 +32,7 @@ export type TCurrentProductType = 'abstractProduct' | 'concreteProduct' | 'absen
 
 export interface IProductPropFullData {
   attributes: object;
-  availability: string | null | boolean;
+  availability: boolean | null;
   quantity: number | null;
   description: string | null;
   images: Array<IProductCardImages> | null;

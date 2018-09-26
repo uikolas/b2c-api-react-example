@@ -127,7 +127,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       sku: data ? data.sku : null,
       name: data ? data.name : defaultValues.name,
       images: data ? data.images : defaultValues.images,
-      availability: data ? data.availability : getAvailabilityDisplay(false),
+      availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
       attributes: data ? data.attributes : defaultValues.attributes,
@@ -239,6 +239,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     return response;
   }
 
+  private isBuyBtnDisabled = () => {
+    if (this.state.productType === 'concreteProduct' && this.state.availability) {
+      return false;
+    }
+    return true;
+  }
+
   public render(): JSX.Element {
     console.info('props: ', this.props);
     if (!this.props.product || !this.state.productType) {
@@ -252,6 +259,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     } = this.props;
     console.info('state: ', this.state);
+    console.info('availability: ', this.state.availability);
 
     return (
       <AppMain isLoading={isLoading}>
@@ -281,12 +289,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                 : null
               }
 
-              <ProductAvailability availability={this.state.availability} />
+              <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
               <SprykerButton
                 title={buyBtnTitle}
                 extraClasses={classes.buyBtn}
                 onClick={this.buyBtnHandler}
                 IconType={AddShoppingCartIcon}
+                disabled={this.isBuyBtnDisabled()}
               />
             </Grid>
           </Grid>

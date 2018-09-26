@@ -50,7 +50,7 @@ export const parseProductResponse = (response: IResponse): any => {
       result.abstractProduct.price = row.attributes.price;
       result.abstractProduct.prices = row.attributes.prices;
     } else if (row.type === 'abstract-product-availabilities') {
-      result.abstractProduct.availability = getAvailabilityDisplay(row.attributes.availability);
+      result.abstractProduct.availability = row.attributes.availability;
       result.abstractProduct.quantity = row.attributes.quantity;
       // Abstract part end
 
@@ -67,7 +67,7 @@ export const parseProductResponse = (response: IResponse): any => {
       result.concreteProducts[row.id].price =  row.attributes.price;
       result.concreteProducts[row.id].prices =  row.attributes.prices;
     } else if (row.type === 'concrete-product-availabilities' && !result.concreteProducts[row.id].availability) {
-      result.concreteProducts[row.id].availability =  getAvailabilityDisplay(row.attributes.availability);
+      result.concreteProducts[row.id].availability =  row.attributes.availability;
       result.concreteProducts[row.id].quantity =  row.attributes.quantity;
     }
     // Concrete part end
