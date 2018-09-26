@@ -26,6 +26,7 @@ import {IImageSlide} from '../../../components/Common/ImageSlider';
 
 import {styles} from './styles';
 import {ISuperAttribute} from "../../../services/productHelper/superAttributes";
+import {getAvailabilityDisplay} from "../../../services/productHelper/availability";
 
 export const buyBtnTitle = "Add to cart";
 
@@ -35,12 +36,11 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   currency: string;
 }
 
-type TCurrentProductType = 'abstractProduct' | 'concreteProduct';
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
   attributeMap: IProductAttributeMap | null;
   superAttrSelected: IProductAttributes;
-  currentProductType: TCurrentProductType;
+  // currentProductType: TCurrentProductType;
 }
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
@@ -49,7 +49,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     attributeMap: null,
     superAttrSelected: {},
     superAttributes: null,
-    currentProductType: null,
+    // currentProductType: null,
+    productType: null,
     sku: null,
     name: null,
     images: null,
@@ -67,7 +68,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (this.props.product && !prevState.currentProductType) {
+    if (this.props.product && !prevState.productType) {
       this.setInitialData();
     }
   }
@@ -75,9 +76,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public dropdownHandleChange = (event: any, child: React.ReactNode): void => {
     const key = event.target.name;
     const value = event.target.value;
-    // console.log('key ', key);
-    // console.log('value ', value);
-    let productData: IProductPropFullData;
+
+    let productData: IProductPropFullData | null;
 
     if (value === defaultItemValue) {
       // If selected nothing
@@ -86,10 +86,17 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       );
     } else {
       // If selected a concrete product
-      const idProductConcrete = this.state.attributeMap.attribute_variants[`${key}:${value}`].id_product_concrete;
-      productData = this.getProductDataObject(
-        this.props.product.concreteProducts[idProductConcrete]
-      );
+      const idProductConcrete = this.getIdProductConcrete(key, value);
+
+      if (!idProductConcrete) {
+        // Such product does not exist
+        productData = this.getProductDataObject(null);
+      } else {
+        // Such product exists
+        productData = this.getProductDataObject(
+          this.props.product.concreteProducts[idProductConcrete]
+        );
+      }
     }
 
     this.setState( (prevState: ProductPageState) => {
@@ -103,37 +110,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
             ...prevState.superAttrSelected,
             [key]: value,
           },
-          currentProductType: 'concreteProduct',
-          ...productData,
-        }
-      );
-    });
-  }
-
-  private getProductDataObject = (data: IProductPropFullData): IProductPropFullData => {
-    return {
-      sku: data.sku,
-      name: data.name,
-      images: data.images,
-      availability: data.availability,
-      description: data.description,
-      price: data.price,
-      attributes: data.attributes,
-      quantity: data.quantity,
-    };
-  }
-
-  private setInitialData = (): void => {
-
-    const productData = this.getProductDataObject(this.props.product.abstractProduct);
-
-    this.setState( (prevState: ProductPageState) => {
-      return (
-        {
-          ...prevState,
-          currentProductType: 'abstractProduct',
-          superAttributes: this.props.product.superAttributes,
-          attributeMap: this.props.product.attributeMap,
           ...productData,
         }
       );
@@ -142,6 +118,103 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public buyBtnHandler = (event: any): void => {
     console.log('buyBtnHandler clicked');
+  }
+
+  private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
+    const defaultValues = this.props.product.abstractProduct;
+    return {
+      sku: data ? data.sku : null,
+      name: data ? data.name : defaultValues.name,
+      images: data ? data.images : defaultValues.images,
+      availability: data ? data.availability : getAvailabilityDisplay(false),
+      description: data ? data.description : defaultValues.description,
+      price: data ? data.price : null,
+      attributes: data ? data.attributes : defaultValues.attributes,
+      quantity: data ? data.quantity : null,
+      productType: data ? data.productType : 'absentProduct',
+    };
+  }
+
+  private setInitialData = (): void => {
+
+    const productData = this.getProductDataObject(this.props.product.abstractProduct);
+
+    // Parsing superAttributes to set initial data for this.state.superAttrSelected
+    const selectedAttrNames = this.getInitialSuperAttrSelected();
+
+    this.setState( (prevState: ProductPageState) => {
+      return (
+        {
+          ...prevState,
+          superAttributes: this.props.product.superAttributes,
+          attributeMap: this.props.product.attributeMap,
+          superAttrSelected: selectedAttrNames,
+          ...productData,
+        }
+      );
+    });
+  }
+
+  private getInitialSuperAttrSelected = (): any => {
+    const attributes = this.props.product.superAttributes;
+    if (!attributes.length) {
+      return null;
+    }
+    const superAttrSelected: object = {};
+
+    const selectedAttrNames = attributes
+      .map((attr: ISuperAttribute) => (attr.name))
+      .reduce((acc: any, name: string) => {
+        acc[name] = null;
+        return acc;
+      }, superAttrSelected);
+
+    return selectedAttrNames;
+  }
+
+  private findIdProductConcreteByPath = (path: Array<string>): string => {
+    const variants = {...this.state.attributeMap.attribute_variants};
+    const id = path.reduce((acc: any, key: string) => {
+      if (acc[key] && acc[key].id_product_concrete) {
+        return acc[key].id_product_concrete;
+      }
+      return acc[key];
+    }, variants);
+
+    return id;
+  }
+
+  // Created path from object of superAttrSelected
+  private createPathToIdProductConcrete = (selected: IProductAttributes) => {
+    let path: Array<string> = [];
+    let isAllSuperAttrSelected: boolean = true;
+
+    // Create path to id_product_concrete if all fields in superAttrSelected is NOT empty
+    for (let prop in selected) {
+      if (!selected[prop] || selected[prop] === defaultItemValue) {
+        isAllSuperAttrSelected = false;
+        continue;
+      }
+      path.push(`${prop}:${selected[prop]}`);
+    }
+
+    if (!isAllSuperAttrSelected) {
+      return false;
+    }
+
+    return path;
+  }
+
+  private getIdProductConcrete = (key: string, value: string) => {
+    const selected = {...this.state.superAttrSelected};
+    selected[key] = value;
+    const path = this.createPathToIdProductConcrete(selected);
+    if (!path) {
+      return false;
+    }
+
+    const id = this.findIdProductConcreteByPath(path);
+    return id;
   }
 
   private getSuperAttrValue = (key: string) => {
@@ -167,7 +240,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    if (!this.props.product || !this.state.currentProductType) {
+    if (!this.props.product || !this.state.productType) {
       return null;
     }
     const {
@@ -177,8 +250,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       product,
 
     } = this.props;
-
-    console.info('product: ', product);
     console.info('state: ', this.state);
 
     return (

@@ -12,7 +12,7 @@ export interface ISuperAttribute {
 interface ISuperAttributeData {
   value: string;
   name: string;
-  idProductConcrete: string | number;
+  idProductConcrete?: string | number;
 }
 
 export const parseSuperAttributes = (superAttributes: IProductAttributeMap): Array<ISuperAttribute> | boolean => {
@@ -33,7 +33,7 @@ export const parseSuperAttributes = (superAttributes: IProductAttributeMap): Arr
         {
           value,
           name: value,
-          idProductConcrete: superAttributes.attribute_variants[`${name}:${value}`].id_product_concrete
+          // idProductConcrete: superAttributes.attribute_variants[`${name}:${value}`].id_product_concrete
         }
       );
     });
