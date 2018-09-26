@@ -28,6 +28,8 @@ export interface ISuperAttributes {
   superAttributes: Array<ISuperAttribute> | null;
 }
 
+export type TCurrentProductType = 'abstractProduct' | 'concreteProduct' | 'absentProduct';
+
 export interface IProductPropFullData {
   attributes: object;
   availability: string | null | boolean;
@@ -37,4 +39,5 @@ export interface IProductPropFullData {
   name: string | null;
   price: number | null;
   sku: string | null;
+  productType: TCurrentProductType | null;
 }

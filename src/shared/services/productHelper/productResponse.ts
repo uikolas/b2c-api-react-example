@@ -27,6 +27,7 @@ export const parseProductResponse = (response: IResponse): any => {
       price: null,
       availability: null,
       quantity: null,
+      productType: 'abstractProduct',
     },
     concreteProducts: {
 
@@ -59,6 +60,7 @@ export const parseProductResponse = (response: IResponse): any => {
       result.concreteProducts[row.id].sku = row.attributes.sku;
       result.concreteProducts[row.id].description = row.attributes.description;
       result.concreteProducts[row.id].attributes = row.attributes.attributes;
+      result.concreteProducts[row.id].productType = 'concreteProduct';
     } else if (row.type === 'concrete-product-image-sets' && !result.concreteProducts[row.id].images) {
       result.concreteProducts[row.id].images = parseImageSets(row.attributes.imageSets);
     } else if (row.type === 'concrete-product-prices' && !result.concreteProducts[row.id].price) {
