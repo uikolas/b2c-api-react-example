@@ -28,6 +28,10 @@ export interface ISuperAttributes {
   superAttributes: Array<ISuperAttribute> | null;
 }
 
+export const concreteProductType = 'concreteProduct';
+export const abstractProductType = 'abstractProduct';
+export const absentProductType = 'absentProduct';
+
 export type TCurrentProductType = 'abstractProduct' | 'concreteProduct' | 'absentProduct';
 
 export interface IProductPropFullData {

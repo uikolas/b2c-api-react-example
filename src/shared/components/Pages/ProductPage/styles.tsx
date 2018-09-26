@@ -8,6 +8,15 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: "1400px",
     margin: "auto",
   },
+  buyBtnArea: {
+
+  },
+  buyBtnParent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
   buyBtn: {
     minWidth: "300px",
     fontSize: 18,

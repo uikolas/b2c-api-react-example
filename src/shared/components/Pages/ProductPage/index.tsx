@@ -5,28 +5,32 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {reduxify} from '../../../lib/redux-helper';
-
 import {ProductState} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
 import {DropdownControlled, defaultItemValue} from '../../UI/DropdownControlled';
-import {getFormattedPrice} from '../../../services/productHelper';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {ProductAttributes} from './ProductAttributes';
 import {
+  concreteProductType,
+  absentProductType,
   IProductAttributeMap,
   IProductAttributes,
   IProductCardImages,
   IProductPropFullData,
-  ISuperAttributes,
+  ISuperAttributes, abstractProductType,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
 import {styles} from './styles';
-import {ISuperAttribute} from "../../../services/productHelper/superAttributes";
-import {getAvailabilityDisplay} from "../../../services/productHelper/availability";
+import {
+  getFormattedPrice,
+  ISuperAttribute,
+  getAvailabilityDisplay,
+  createQuantityVariants,
+} from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 export const buyBtnTitle = "Add to cart";
@@ -131,8 +135,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
       attributes: data ? data.attributes : defaultValues.attributes,
-      quantity: data ? data.quantity : null,
-      productType: data ? data.productType : 'absentProduct',
+      quantity: data ? data.quantity : defaultValues.quantity,
+      productType: data ? data.productType : absentProductType,
     };
   }
 
@@ -240,9 +244,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private isBuyBtnDisabled = () => {
-    if (this.state.productType === 'concreteProduct' && this.state.availability) {
+    if (this.state.productType === concreteProductType && this.state.availability) {
       return false;
     }
+    // TODO: Check if only one product
     return true;
   }
 
@@ -259,7 +264,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     } = this.props;
     console.info('state: ', this.state);
-    console.info('availability: ', this.state.availability);
 
     return (
       <AppMain isLoading={isLoading}>
@@ -290,13 +294,32 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
               }
 
               <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
-              <SprykerButton
-                title={buyBtnTitle}
-                extraClasses={classes.buyBtn}
-                onClick={this.buyBtnHandler}
-                IconType={AddShoppingCartIcon}
-                disabled={this.isBuyBtnDisabled()}
-              />
+
+              <Grid container justify="center" className={classes.buyBtnArea}>
+                <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
+                  <SprykerButton
+                    title={buyBtnTitle}
+                    extraClasses={classes.buyBtn}
+                    onClick={this.buyBtnHandler}
+                    IconType={AddShoppingCartIcon}
+                    disabled={this.isBuyBtnDisabled()}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                  {this.isBuyBtnDisabled() && !this.state.quantity
+                    ? null
+                    : <DropdownControlled
+                      nameAttr="quantity"
+                      nameToShow="Quantity"
+                      value={1}
+                      handleChange={this.dropdownHandleChange}
+                      menuItems={createQuantityVariants(this.state.quantity)}
+                    />
+                  }
+                </Grid>
+              </Grid>
+
+
             </Grid>
           </Grid>
           <Grid container justify="center" >
