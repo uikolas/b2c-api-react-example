@@ -9,7 +9,7 @@ import {ProductState} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
-import {DropdownControlled, defaultItemValue} from '../../UI/DropdownControlled';
+import {DropdownControlled} from '../../UI/DropdownControlled';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {ProductAttributes} from './ProductAttributes';
@@ -17,6 +17,7 @@ import {
   concreteProductType,
   absentProductType,
   abstractProductType,
+  defaultItemValueDropdown,
   IProductAttributeMap,
   IProductAttributes,
   IProductCardImages,
@@ -36,6 +37,9 @@ import {
   getAvailabilityDisplay,
   createQuantityVariants,
   displayProductNameWithSuperAttr,
+  createPathToIdProductConcrete,
+  findIdProductConcreteByPath,
+  getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addProductToCart} from "../../../actions/Common/Cart";
@@ -49,7 +53,6 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   currency: string;
   addProductToCart: Function;
 }
-
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
   attributeMap: IProductAttributeMap | null;
@@ -93,7 +96,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     let productData: IProductPropFullData | null;
 
-    if (value === defaultItemValue) {
+    if (value === defaultItemValueDropdown) {
       // If selected nothing
       productData = this.getProductDataObject(
         this.props.product.abstractProduct
@@ -184,7 +187,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     const productData = this.getProductDataObject(this.props.product.abstractProduct);
 
     // Parsing superAttributes to set initial data for this.state.superAttrSelected
-    const selectedAttrNames = this.getInitialSuperAttrSelected();
+    const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
 
     this.setState( (prevState: ProductPageState) => {
       return (
@@ -199,76 +202,26 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     });
   }
 
-  private getInitialSuperAttrSelected = (): any => {
-    const attributes = this.props.product.superAttributes;
-    if (!attributes.length) {
-      return null;
-    }
-    const superAttrSelected: object = {};
-
-    const selectedAttrNames = attributes
-      .map((attr: ISuperAttribute) => (attr.name))
-      .reduce((acc: any, name: string) => {
-        acc[name] = null;
-        return acc;
-      }, superAttrSelected);
-
-    return selectedAttrNames;
-  }
-
-  private findIdProductConcreteByPath = (path: Array<string>): string => {
-    const variants = {...this.state.attributeMap.attribute_variants};
-    const id = path.reduce((acc: any, key: string) => {
-      if (acc[key] && acc[key].id_product_concrete) {
-        return acc[key].id_product_concrete;
-      }
-      return acc[key];
-    }, variants);
-
-    return id;
-  }
-
-  // Created path from object of superAttrSelected
-  private createPathToIdProductConcrete = (selected: IProductAttributes) => {
-    let path: Array<string> = [];
-    let isAllSuperAttrSelected: boolean = true;
-
-    // Create path to id_product_concrete if all fields in superAttrSelected is NOT empty
-    for (let prop in selected) {
-      if (!selected[prop] || selected[prop] === defaultItemValue) {
-        isAllSuperAttrSelected = false;
-        continue;
-      }
-      path.push(`${prop}:${selected[prop]}`);
-    }
-
-    if (!isAllSuperAttrSelected) {
-      return false;
-    }
-
-    return path;
-  }
-
   private getIdProductConcrete = (key: string, value: string) => {
     const selected = {...this.state.superAttrSelected};
     selected[key] = value;
-    const path = this.createPathToIdProductConcrete(selected);
+    const path = createPathToIdProductConcrete(selected);
     if (!path) {
       return false;
     }
 
-    const id = this.findIdProductConcreteByPath(path);
+    const id = findIdProductConcreteByPath(path, this.state.attributeMap.attribute_variants);
     return id;
   }
 
   private getSuperAttrValue = (key: string) => {
     if (!key) {
-      return defaultItemValue;
+      return defaultItemValueDropdown;
     }
     return (
       this.state.superAttrSelected[key]
         ? this.state.superAttrSelected[key]
-        : defaultItemValue
+        : defaultItemValueDropdown
     );
   }
 

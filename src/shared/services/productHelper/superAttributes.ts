@@ -43,3 +43,20 @@ export const parseSuperAttributes = (superAttributes: IProductAttributeMap): Arr
 
   return superData;
 };
+
+export const getInitialSuperAttrSelected = (superAttributes: Array<ISuperAttribute>): any => {
+  const attributes = [...superAttributes];
+  if (!attributes.length) {
+    return null;
+  }
+  const superAttrSelected: object = {};
+
+  const selectedAttrNames = attributes
+    .map((attr: ISuperAttribute) => (attr.name))
+    .reduce((acc: any, name: string) => {
+      acc[name] = null;
+      return acc;
+    }, superAttrSelected);
+
+  return selectedAttrNames;
+};

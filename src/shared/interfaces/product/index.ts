@@ -2,11 +2,18 @@ import {ISuperAttribute} from "../../services/productHelper/superAttributes";
 
 // Constants
 export const concreteProductType = 'concreteProduct';
+export type TConcreteProductType = 'concreteProduct';
+
 export const abstractProductType = 'abstractProduct';
+export type TAbstractProductType = 'abstractProduct';
+
 export const absentProductType = 'absentProduct';
+export type TAbsentProductType = 'absentProduct';
+
+export const defaultItemValueDropdown = " ";
 
 // Types
-export type TProductType = 'abstractProduct' | 'concreteProduct' | 'absentProduct';
+export type TProductType = TAbstractProductType | TConcreteProductType | TAbsentProductType;
 export type TProductDescription = string;
 export type TProductSKU = string | number;
 export type TProductName = string;

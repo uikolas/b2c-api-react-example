@@ -1,10 +1,18 @@
 import {getAvailabilityDisplay} from './availability';
-import {parseSuperAttributes, ISuperAttribute} from './superAttributes';
+import {
+  parseSuperAttributes,
+  ISuperAttribute,
+  getInitialSuperAttrSelected
+} from './superAttributes';
 import {parseImageSets} from './imageSetsParser';
 import {parseProductResponse} from './productResponse';
 import {getFormattedPrice} from './priceFormatter';
 import {createQuantityVariants} from './quantity';
 import {displayProductNameWithSuperAttr} from './name';
+import {
+  createPathToIdProductConcrete,
+  findIdProductConcreteByPath
+} from './attributeMap';
 
 export {
   getAvailabilityDisplay,
@@ -15,4 +23,7 @@ export {
   getFormattedPrice,
   createQuantityVariants,
   displayProductNameWithSuperAttr,
+  createPathToIdProductConcrete,
+  findIdProductConcreteByPath,
+  getInitialSuperAttrSelected,
 };
