@@ -21,6 +21,13 @@ interface RangeFacets {
   docCount?: any;
 }
 
+interface Pagination {
+  numFound: number;
+  currentPage: number;
+  maxPage: number;
+  currentItemsPerPage: number;
+}
+
 export interface ISearchPageData {
   dispatch?: Function;
   suggestions?: Array<IProductCard>;
@@ -29,4 +36,6 @@ export interface ISearchPageData {
   rangeFilters?: Array<RangeFacets>;
   searchTerm?: string;
   currency?: string;
+  sortParams?: Array<string>;
+  pagination: Pagination;
 }

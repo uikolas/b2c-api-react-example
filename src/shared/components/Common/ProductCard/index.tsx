@@ -51,7 +51,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
           ? <CardMedia
             component="img"
             className={classes.media}
-            image={images[0].external_url_large || images[0].externalUrlLarge}
+            image={images.length ? (images[0].external_url_small || images[0].externalUrlSmall || '') : ''}
             title={name}
           />
           : null

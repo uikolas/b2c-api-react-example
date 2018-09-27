@@ -24,9 +24,15 @@ export const initialState: SearchState = {
     currency: CURRENCY_DEFAULT,
     filters: [],
     rangeFilters: [],
+    sortParams: [],
+    pagination: {
+      numFound: 0,
+      currentPage: 0,
+      maxPage: 0,
+      currentItemsPerPage: 0,
+    }
   },
 };
-
 
 export const pageSearch = function (state: SearchState = initialState, action: any): SearchState {
   switch (action.type) {
@@ -73,7 +79,9 @@ export const pageSearch = function (state: SearchState = initialState, action: a
           ...state.data,
           items: action.items,
           filters: action.filters,
-          rangeFilters: action.rangeFilters
+          rangeFilters: action.rangeFilters,
+          sortParams: action.sortParams,
+          pagination: action.pagination,
         },
         pending: false,
         fulfilled: true,

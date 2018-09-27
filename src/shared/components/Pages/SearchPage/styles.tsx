@@ -3,17 +3,16 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   pageHeader: {
-    marginBottom: theme.spacing.unit * 8,
+    marginBottom: theme.spacing.unit * 2,
   },
   searchTerm: {
     fontStyle: "italic",
     fontWeight: "bold",
     display: "inline",
   },
-  container: {
-    maxWidth: "1400px",
-    margin: "auto",
-    justifyContent: "center",
+  buttonsRow: {
+    marginBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
   },
   empty: {
     ...theme.mixins.gutters(),

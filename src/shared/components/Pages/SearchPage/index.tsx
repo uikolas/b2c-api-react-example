@@ -10,8 +10,11 @@ import { push } from 'react-router-redux';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
-import {IProductCard} from '../../../interfaces/product';
+import {SprykerFilterElement} from '../../../components/UI/SprykerFilter';
+import {SprykerRange} from '../../../components/UI/SprykerRangeFilter';
+import {SprykerButton} from '../../../components/UI/SprykerButton';
 import {getProductDataAction} from '../../../actions/Pages/Product';
+import {sendSearchAction} from '../../../actions/Pages/Search';
 
 import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
@@ -21,17 +24,42 @@ import config from '../../../config';
 import {styles} from './styles';
 
 
-interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {}
+interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
+  isLoading: boolean;
+}
 
-interface SearchPageState {}
+interface SearchPageState {
+  activeFilters: object;
+  rangeFilters: object;
+}
 
 export const pageTitle = 'Search results for ';
 
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
 
   public state: SearchPageState = {
+    activeFilters: {},
+    rangeFilters: {},
+  }
 
-  };
+  public updateActiveFilters = (name: string, values: Array<string>) => {
+    this.setState((prevState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
+  }
+
+  public updateRangeFilters = (name: string, values: {gte: number | string, lte: number | string}) => {
+    this.setState((prevState) => ({rangeFilters: {...prevState.rangeFilters, [name]:  {min: values.gte, max: values.lte}}}));
+  }
+
+  public updateSearch = (e: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.info(this.state.rangeFilters);
+    this.props.dispatch(sendSearchAction({
+      q: this.props.searchTerm,
+      currency: this.props.currency,
+      ...this.state.activeFilters,
+    }));
+  }
 
   public renderProduct = (sku: string, name: string) => {
     this.props.dispatch(getProductDataAction(sku));
@@ -39,20 +67,39 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public render() {
-    const {classes, items, searchTerm, currency} = this.props;
+    const { classes, items, searchTerm, currency, filters, rangeFilters, isLoading } = this.props;
 
-    // TODO: isLoading should be in props
-    const isLoading = false;
+    const renderFilters = filters && filters.length
+      ? filters.map((filter: any) => (
+          <Grid item xs={3} key={filter.name}>
+            <SprykerFilterElement
+              attributeName={filter.name}
+              menuItems={filter.values && filter.values.length ? filter.values : []}
+              handleChange={this.updateActiveFilters}
+            />
+          </Grid>
+        ))
+      : null;
+
+    const renderRangeFilters = rangeFilters && rangeFilters.length
+      ? rangeFilters.map((filter: any) => (
+        <Grid item xs={4} key={filter.name}>
+          <SprykerRange
+            attributeName={filter.name}
+            min={filter.min} max={filter.max}
+            handleChange={this.updateRangeFilters}
+          />
+        </Grid>
+      ))
+      : null;
+
 
     return (
       <React.Fragment>
         <AppMain isLoading={isLoading}>
-
           <Grid container
-                direction="column"
                 justify="center"
                 alignItems="center"
-                className="component-container"
           >
             {searchTerm
               ? <Typography variant="title" color="inherit" align="center" className={classes.pageHeader} id="pageTitle">
@@ -63,38 +110,64 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 </Typography>
               : null
             }
-
           </Grid>
 
-          <Grid container
-                spacing={32}
-                className={classes.container}
-          >
-            { (items && items.length > 0)
-              ? items.map((item) => (
-                <Grid item xs={12} sm={6} md={3}
-                      key={item.abstract_sku || item.abstractSku}
+          <Grid container>
+            <Grid item xs={3}>
+            </Grid>
+            <Grid item xs={9} container>
+              {renderFilters}
+
+              {renderRangeFilters}
+
+              <Grid item xs={12} container className={classes.buttonsRow}>
+                <Grid
+                  item
+                  xs={4}
                 >
-                <ProductCard
-                  currency={currency}
-                  images={item.images}
-                  price={item.price}
-                  prices={item.prices}
-                  abstract_name={item.abstract_name || item.abstractName}
-                  abstract_sku={item.abstract_sku || item.abstractSku}
-                  onSelectProduct={this.renderProduct}
-                />
+                  <SprykerButton title="Filter" onClick={this.updateSearch} />
                 </Grid>
-              ))
-              : <Paper elevation={1} className={classes.empty} id="emptyResult" >
-                  <Typography variant="headline" component="h3">
-                    Nothing to show.
-                  </Typography>
-                  <Typography component="p">
-                    Try again
-                  </Typography>
-                </Paper>
-            }
+                <Grid
+                  item
+                  xs={8}
+                >
+                  Sorting
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                container
+                spacing={32}
+              >
+                {
+                  items && items.length > 0
+                    ? items.map((item: any) => (
+                      <Grid item xs={12} sm={6} md={3}
+                            key={item.abstract_sku || item.abstractSku}
+                      >
+                        <ProductCard
+                          currency={currency}
+                          images={item.images}
+                          price={item.price}
+                          prices={item.prices}
+                          abstract_name={item.abstract_name || item.abstractName}
+                          abstract_sku={item.abstract_sku || item.abstractSku}
+                          onSelectProduct={this.renderProduct}
+                        />
+                      </Grid>
+                    ))
+                    : <Paper elevation={1} className={classes.empty} id="emptyResult" >
+                      <Typography variant="headline" component="h3">
+                        Nothing to show.
+                      </Typography>
+                      <Typography component="p">
+                        {isLoading ? 'Waiting results' : 'Try another search'}
+                      </Typography>
+                    </Paper>
+                }
+              </Grid>
+            </Grid>
           </Grid>
         </AppMain>
       </React.Fragment>
@@ -111,9 +184,11 @@ export const ConnectedSearchPage = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        items: pageSearchProps && pageSearchProps.data.items ? pageSearchProps.data.items : ownProps.items,
-        searchTerm: pageSearchProps && pageSearchProps.data.searchTerm ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
-        currency: pageSearchProps && pageSearchProps.data.currency ? pageSearchProps.data.currency : ownProps.currency,
+        items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : ownProps.items,
+        searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
+        currency: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currency : ownProps.currency,
+        filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
+        rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
         // isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
       }

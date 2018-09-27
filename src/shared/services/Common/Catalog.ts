@@ -6,14 +6,21 @@ export class CatalogService {
     try {
 
       const response: any = await api.get('catalog-search', params, { withCredentials: true });
-      console.info(response.data.data[0].attributes);
 
       if (response.ok) {
+        const pagination = response.data.data[0].attributes.pagination;
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           items: response.data.data[0].attributes.products,
           filters: response.data.data[0].attributes.valueFacets,
           rangeFilters: response.data.data[0].attributes.rangeFacets,
+          sortParams: response.data.data[0].attributes.sort.sortParamNames,
+          pagination: {
+            numFound: pagination.numFound,
+            currentPage: pagination.currentPage,
+            maxPage: pagination.maxPage,
+            currentItemsPerPage: pagination.currentItemsPerPage,
+          },
         });
         return response.data;
       } else {

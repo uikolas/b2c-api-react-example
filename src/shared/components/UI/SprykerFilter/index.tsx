@@ -7,17 +7,14 @@ import Chip from '@material-ui/core/Chip';
 
 import {styles} from './styles';
 
-export const defaultItemValue = " ";
-
 export interface IMenuItemsDropdown {
   value: string | number;
-  name: string | number;
+  doc_count: string | number;
 }
 
 interface SprykerFilterProps extends WithStyles<typeof styles> {
   attributeName?: string;
-  value?: string;
-  handleChange?: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
+  handleChange?: Function;
   menuItems?: Array<IMenuItemsDropdown>;
 }
 
@@ -39,11 +36,13 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
 
   private handleChangeValues = (event: any) => {
     this.setState({ value: event.target.value });
+    this.props.handleChange(this.props.attributeName, event.target.value);
   }
 
   private handleDelete = (item: any) => () => {
     const values = [...this.state.value].filter((val) => val !== item);
     this.setState({value: values});
+    this.props.handleChange(this.props.attributeName, values);
   }
 
   public render() {
@@ -75,8 +74,10 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               <MenuItem
                 key={item.value}
                 value={item.value}
+                className={classes.menuItem}
               >
-                {item.name}
+                <span>{item.value}</span>
+                <span>{item.doc_count}</span>
               </MenuItem>))
             }
           </Select>

@@ -91,7 +91,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
         </span>
         <img
           width={30} height={30}
-          src={suggestion.images[0].external_url_small} alt={suggestion.abstract_name}
+          src={suggestion.images.length ? suggestion.images[0].external_url_small : ''} alt={suggestion.abstract_name}
         />
         <span>{getFormattedPrice(suggestion.price, this.props.currency)}</span>
       </MenuItem>
