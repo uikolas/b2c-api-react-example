@@ -15,7 +15,8 @@ import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
 import {SearchState} from '../../../reducers/Pages/Search';
-import {IProductCard} from '../../../interfaces/product';
+import {getTotalProductsQuantity, ICartState} from '../../../reducers/Common/Cart';
+import {IProductCard, TProductQuantity} from '../../../interfaces/product';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {logout} from '../../../actions/Pages/Login';
 
@@ -26,18 +27,23 @@ interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   suggestions?: Array<IProductCard>;
   searchTerm?: string;
+  totalProductsQuantity: TProductQuantity;
 }
 
 export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
-  const { classes, location, isAuth, dispatch } = props;
+  const { classes, location, isAuth, dispatch, totalProductsQuantity } = props;
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
   const shoppingCart = (
-    <Badge badgeContent={0} color="primary" classes={{ badge: classes.badge }}>
-      <ShoppingCartIcon className={classes.icon} />
+    <ShoppingCartIcon className={classes.icon} />
+  );
+
+  const shoppingCartWithQuantity = (
+    <Badge badgeContent={totalProductsQuantity} color="primary" classes={{ badge: classes.badge }}>
+      {shoppingCart}
     </Badge>
   );
 
@@ -76,7 +82,7 @@ export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
             <NavLink to={`${config.WEB_PATH}cart`}>
               <SprykerButton
                 title="Cart"
-                iconComponent={shoppingCart}
+                iconComponent={totalProductsQuantity ? shoppingCartWithQuantity : shoppingCart}
               />
             </NavLink>
           </Grid>
@@ -95,6 +101,7 @@ export const AppHeader = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
     const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+    const totalProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -103,6 +110,7 @@ export const AppHeader = reduxify(
         isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
         suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
+        totalProductsQuantity,
       }
     );
   }

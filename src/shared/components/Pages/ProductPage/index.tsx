@@ -16,11 +16,16 @@ import {ProductAttributes} from './ProductAttributes';
 import {
   concreteProductType,
   absentProductType,
+  abstractProductType,
   IProductAttributeMap,
   IProductAttributes,
   IProductCardImages,
   IProductPropFullData,
-  ISuperAttributes, abstractProductType,
+  ISuperAttributes,
+  TProductSKU,
+  TProductQuantity,
+  TProductName,
+  TProductPrice,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -30,22 +35,26 @@ import {
   ISuperAttribute,
   getAvailabilityDisplay,
   createQuantityVariants,
+  displayProductNameWithSuperAttr,
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import {addProductToCart} from "../../../actions/Common/Cart";
 
 export const buyBtnTitle = "Add to cart";
+const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
   currency: string;
+  addProductToCart: Function;
 }
 
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
   attributeMap: IProductAttributeMap | null;
   superAttrSelected: IProductAttributes;
-  // currentProductType: TCurrentProductType;
+  quantitySelected: TProductQuantity;
 }
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
@@ -53,8 +62,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public state: ProductPageState = {
     attributeMap: null,
     superAttrSelected: {},
+    quantitySelected: quantitySelectedInitial,
     superAttributes: null,
-    // currentProductType: null,
     productType: null,
     sku: null,
     name: null,
@@ -78,7 +87,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
   }
 
-  public dropdownHandleChange = (event: any, child: React.ReactNode): void => {
+  public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
     const key = event.target.name;
     const value = event.target.value;
 
@@ -108,21 +117,51 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       if (this.state.superAttrSelected[key] === value) {
         return;
       }
-      return (
-        {
+      return ({
           ...prevState,
           superAttrSelected: {
             ...prevState.superAttrSelected,
             [key]: value,
           },
+          quantitySelected: quantitySelectedInitial,
           ...productData,
-        }
-      );
+      });
     });
   }
 
-  public buyBtnHandler = (event: any): void => {
-    console.log('buyBtnHandler clicked');
+  public handleProductQuantityChange = (event: any, child: React.ReactNode): void => {
+    const value = event.target.value;
+    this.setState( (prevState: ProductPageState) => {
+      if (this.state.quantitySelected === value) {
+        return;
+      }
+      return ({
+          ...prevState,
+          quantitySelected: value,
+      });
+    });
+  }
+
+  public handleBuyBtnClick = (event: any): any => {
+    if (this.state.productType === concreteProductType) {
+      const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
+      this.props.addProductToCart(
+        this.state.sku,
+        productName,
+        this.state.quantitySelected,
+        this.state.price,
+      );
+      this.setState( (prevState: ProductPageState) => {
+        if (this.state.quantitySelected === quantitySelectedInitial) {
+          return;
+        }
+        return ({
+          ...prevState,
+          quantitySelected: quantitySelectedInitial,
+        });
+      });
+    }
+    return null;
   }
 
   private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
@@ -286,7 +325,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                     nameAttr={item.name}
                     nameToShow={item.nameToShow}
                     value={this.getSuperAttrValue(item.name)}
-                    handleChange={this.dropdownHandleChange}
+                    handleChange={this.handleSuperAttributesChange}
                     menuItems={item.data}
                   />
                 ))
@@ -300,7 +339,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <SprykerButton
                     title={buyBtnTitle}
                     extraClasses={classes.buyBtn}
-                    onClick={this.buyBtnHandler}
+                    onClick={this.handleBuyBtnClick}
                     IconType={AddShoppingCartIcon}
                     disabled={this.isBuyBtnDisabled()}
                   />
@@ -311,8 +350,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                     : <DropdownControlled
                       nameAttr="quantity"
                       nameToShow="Quantity"
-                      value={1}
-                      handleChange={this.dropdownHandleChange}
+                      value={this.state.quantitySelected}
+                      handleChange={this.handleProductQuantityChange}
                       menuItems={createQuantityVariants(this.state.quantity)}
                     />
                   }
@@ -352,5 +391,11 @@ export const ConnectedProductPage = reduxify(
         currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
       }
     );
-  }
+  },
+  (dispatch: Function) => ({
+      addProductToCart: (sku: TProductSKU,
+                         name: TProductName ,
+                         quantity: TProductQuantity,
+                         price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+  }),
 )(ProductPage);

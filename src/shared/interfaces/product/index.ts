@@ -1,5 +1,22 @@
 import {ISuperAttribute} from "../../services/productHelper/superAttributes";
 
+// Constants
+export const concreteProductType = 'concreteProduct';
+export const abstractProductType = 'abstractProduct';
+export const absentProductType = 'absentProduct';
+
+// Types
+export type TProductType = 'abstractProduct' | 'concreteProduct' | 'absentProduct';
+export type TProductDescription = string;
+export type TProductSKU = string | number;
+export type TProductName = string;
+export type TProductPrice = number;
+export type TProductQuantity = number;
+export type TProductCurrency = string;
+export type TProductAvailability = boolean;
+export type TProductAttributes = object;
+
+// Interfaces
 export interface IProductCardImages {
   external_url_small?: string;
   external_url_large?: string;
@@ -28,20 +45,14 @@ export interface ISuperAttributes {
   superAttributes: Array<ISuperAttribute> | null;
 }
 
-export const concreteProductType = 'concreteProduct';
-export const abstractProductType = 'abstractProduct';
-export const absentProductType = 'absentProduct';
-
-export type TCurrentProductType = 'abstractProduct' | 'concreteProduct' | 'absentProduct';
-
 export interface IProductPropFullData {
-  attributes: object;
-  availability: boolean | null;
-  quantity: number | null;
-  description: string | null;
+  attributes: TProductAttributes | null;
+  availability: TProductAvailability | null;
+  quantity: TProductQuantity | null;
+  description: TProductDescription | null;
   images: Array<IProductCardImages> | null;
-  name: string | null;
-  price: number | null;
-  sku: string | null;
-  productType: TCurrentProductType | null;
+  name: TProductName | null;
+  price: TProductPrice | null;
+  sku: TProductSKU | null;
+  productType: TProductType | null;
 }

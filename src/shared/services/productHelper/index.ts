@@ -4,6 +4,7 @@ import {parseImageSets} from './imageSetsParser';
 import {parseProductResponse} from './productResponse';
 import {getFormattedPrice} from './priceFormatter';
 import {createQuantityVariants} from './quantity';
+import {displayProductNameWithSuperAttr} from './name';
 
 export {
   getAvailabilityDisplay,
@@ -13,4 +14,5 @@ export {
   parseProductResponse,
   getFormattedPrice,
   createQuantityVariants,
+  displayProductNameWithSuperAttr,
 };
