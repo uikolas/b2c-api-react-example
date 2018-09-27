@@ -42,12 +42,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
 
   public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
     if (this.props.totalProductsQuantity > prevProps.totalProductsQuantity) {
-      this.setState((prevState: AppHeaderState) => {
-        return ({
-          ...prevState,
-          isCartNotificationOpen: true,
-        });
-      });
+      this.handleOpenCartNotification();
     }
   }
 
@@ -55,8 +50,12 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     this.props.dispatch(logout());
   }
 
-  public handleCloseCartNotification = (event: any): void => {
+  public handleCloseCartNotification = (event?: any, reason?: string): void => {
     this.setState({ isCartNotificationOpen: false });
+  }
+
+  public handleOpenCartNotification = (event?: any): void => {
+    this.setState({ isCartNotificationOpen: true });
   }
 
   public render(): JSX.Element {
@@ -105,6 +104,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
                 extraClasses={classes.cartNotification}
                 isOpen={this.state.isCartNotificationOpen}
                 onClickClose={this.handleCloseCartNotification}
+                onClickOpen={this.handleOpenCartNotification}
                 vertical="top"
                 horizontal="right"
               />

@@ -10,12 +10,12 @@ import {styles} from './styles';
 interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOrigin {
   message: string;
   onClickClose: (event: React.SyntheticEvent<any>, reason?: string) => void;
+  onClickOpen: Function;
   extraClasses?: string;
   isOpen?: boolean;
 }
 
-export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (props): JSX.Element => {
-
+export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (props) => {
   const {
     classes,
     message = 'Empty message',
@@ -36,7 +36,7 @@ export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (pro
       }}
       message={<span id="message-id">{message}</span>}
       className={`${classes.root} ${extraClasses}`}
-      autoHideDuration={5000}
+      autoHideDuration={1000}
       action={[
         <IconButton
           key="close"
@@ -50,6 +50,6 @@ export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (pro
       ]}
     />
   );
-};
+}
 
 export const SprykerNotification = withStyles(styles)(SprykerNotificationBase);
