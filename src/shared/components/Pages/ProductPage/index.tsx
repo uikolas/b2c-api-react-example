@@ -245,7 +245,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (this.state.productType === concreteProductType && this.state.availability) {
       return false;
     }
-    // TODO: Check if only one product
     return true;
   }
 
@@ -302,7 +301,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   />
                 </Grid>
                 <Grid item xs={12} sm={6} >
-                  {this.isBuyBtnDisabled() && !this.state.quantity
+                  {this.isBuyBtnDisabled()
                     ? null
                     : <DropdownControlled
                       nameAttr="quantity"
