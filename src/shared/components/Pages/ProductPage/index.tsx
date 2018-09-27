@@ -183,8 +183,14 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private setInitialData = (): void => {
-
-    const productData = this.getProductDataObject(this.props.product.abstractProduct);
+    let productData: IProductPropFullData | null;
+    const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
+    const isOneConcreteProduct = (concreteProductsIds.length === 1);
+    if (isOneConcreteProduct) {
+      productData = this.getProductDataObject(this.props.product.concreteProducts[concreteProductsIds[0]]);
+    } else {
+      productData = this.getProductDataObject(this.props.product.abstractProduct);
+    }
 
     // Parsing superAttributes to set initial data for this.state.superAttrSelected
     const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
@@ -252,8 +258,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       classes,
       isLoading,
       currency,
-      product,
-
     } = this.props;
     console.info('state: ', this.state);
 
