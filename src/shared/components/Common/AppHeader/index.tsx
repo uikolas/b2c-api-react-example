@@ -3,8 +3,6 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Badge from '@material-ui/core/Badge';
 import { NavLink } from 'react-router-dom';
 
 import {AppLogo} from '../AppLogo';
@@ -15,10 +13,12 @@ import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
 import {SearchState} from '../../../reducers/Pages/Search';
-import {getTotalProductsQuantity, ICartState} from '../../../reducers/Common/Cart';
+import {getTotalProductsQuantity} from '../../../reducers/Common/Cart';
 import {IProductCard, TProductQuantity} from '../../../interfaces/product';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {logout} from '../../../actions/Pages/Login';
+import {ShoppingCart} from '../ShoppingCart';
+import {SprykerNotification} from '../../UI/SprykerNotification';
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -30,69 +30,93 @@ interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   totalProductsQuantity: TProductQuantity;
 }
 
-export const AppHeaderBase: React.SFC<AppHeaderProps> = (props) => {
-  const { classes, location, isAuth, dispatch, totalProductsQuantity } = props;
+interface AppHeaderState {
+  isCartNotificationOpen: boolean;
+}
 
-  const handleLogout = () => {
-    dispatch(logout());
+export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderState> {
+
+  public state: AppHeaderState = {
+    isCartNotificationOpen: false,
   };
 
-  const shoppingCart = (
-    <ShoppingCartIcon className={classes.icon} />
-  );
+  public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
+    if (this.props.totalProductsQuantity > prevProps.totalProductsQuantity) {
+      this.setState((prevState: AppHeaderState) => {
+        return ({
+          ...prevState,
+          isCartNotificationOpen: true,
+        });
+      });
+    }
+  }
 
-  const shoppingCartWithQuantity = (
-    <Badge badgeContent={totalProductsQuantity} color="primary" classes={{ badge: classes.badge }}>
-      {shoppingCart}
-    </Badge>
-  );
+  public handleLogout = () => {
+    this.props.dispatch(logout());
+  }
 
-  return (
-    <AppBar position="absolute" color="default" className={classes.appBar}>
-      <Toolbar>
-        <Grid container direction="row">
+  public handleCloseCartNotification = (event: any): void => {
+    this.setState({ isCartNotificationOpen: false });
+  }
 
-          <Grid item sm={3}
-                direction="row"
-                container
-                justify="flex-start"
-                alignItems="center">
-            <AppLogo />
-          </Grid>
+  public render(): JSX.Element {
+    const { classes, location, isAuth, totalProductsQuantity } = this.props;
 
-          <Grid item sm={5}>
-            { location.pathname === config.WEB_PATH || location.pathname === `${config.WEB_PATH}login`
-              ? <CatalogSearch />
-              : null
-            }
-          </Grid>
-          <Grid item sm={4}
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="center"
-          >
-            <NavLink to={isAuth ? `${config.WEB_PATH}`: `${config.WEB_PATH}login`}>
-              <SprykerButton
-                title={isAuth ? 'Logout' : 'Register/Login'}
-                onClick={isAuth ? handleLogout : null}
+    return (
+      <AppBar position="absolute" color="default" className={classes.appBar}>
+        <Toolbar>
+          <Grid container direction="row">
+
+            <Grid item sm={3}
+                  direction="row"
+                  container
+                  justify="flex-start"
+                  alignItems="center">
+              <AppLogo />
+            </Grid>
+
+            <Grid item sm={5}>
+              { location.pathname === config.WEB_PATH || location.pathname === `${config.WEB_PATH}login`
+                ? <CatalogSearch />
+                : null
+              }
+            </Grid>
+            <Grid item sm={4}
+                  container
+                  direction="row"
+                  justify="flex-end"
+                  alignItems="center"
+            >
+              <NavLink to={isAuth ? `${config.WEB_PATH}`: `${config.WEB_PATH}login`}>
+                <SprykerButton
+                  title={isAuth ? 'Logout' : 'Register/Login'}
+                  onClick={isAuth ? this.handleLogout : null}
+                />
+              </NavLink>
+
+              <NavLink to={`${config.WEB_PATH}cart`}>
+                <SprykerButton
+                  title="Cart"
+                  iconComponent={<ShoppingCart totalProductsQuantity={totalProductsQuantity} />}
+                />
+              </NavLink>
+              <SprykerNotification
+                message="Your product was added to your cart"
+                extraClasses={classes.cartNotification}
+                isOpen={this.state.isCartNotificationOpen}
+                onClickClose={this.handleCloseCartNotification}
+                vertical="top"
+                horizontal="right"
               />
-            </NavLink>
+            </Grid>
 
-            <NavLink to={`${config.WEB_PATH}cart`}>
-              <SprykerButton
-                title="Cart"
-                iconComponent={totalProductsQuantity ? shoppingCartWithQuantity : shoppingCart}
-              />
-            </NavLink>
           </Grid>
 
-        </Grid>
-
-      </Toolbar>
-    </AppBar>
-  );
-};
+        </Toolbar>
+      </AppBar>
+    );
+  }
+}
 
 const DecoratedHeader = withStyles(styles)(AppHeaderBase);
 

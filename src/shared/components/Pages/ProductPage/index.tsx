@@ -196,15 +196,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
 
     this.setState( (prevState: ProductPageState) => {
-      return (
-        {
+      return ({
           ...prevState,
           superAttributes: this.props.product.superAttributes,
           attributeMap: this.props.product.attributeMap,
           superAttrSelected: selectedAttrNames,
           ...productData,
-        }
-      );
+        });
     });
   }
 
