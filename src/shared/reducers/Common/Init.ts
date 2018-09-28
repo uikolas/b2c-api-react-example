@@ -15,6 +15,7 @@ export type TAppCurrency = string | null;
 export type TAppStore = string | null;
 
 export interface IInitData {
+  ok: boolean;
   priceMode: TAppPriceMode;
   currency: TAppCurrency;
   store: TAppStore;
@@ -26,6 +27,7 @@ export interface IInitState extends IReduxState {
 
 export const initialState: IInitState = {
   data: {
+    ok: false,
     priceMode: null,
     currency: null,
     store: null,
@@ -47,6 +49,7 @@ export const init = function (state: IInitState = initialState, action: any): II
       ...state,
       data: {
         ...state.data,
+        ok: true,
         priceMode: PRICE_MODE_DEFAULT,
         currency: CURRENCY_DEFAULT,
         store: STORE_DEFAULT,
@@ -74,7 +77,7 @@ export const init = function (state: IInitState = initialState, action: any): II
 
 // TODO: Should be changed a logic
 export function isAppInitiated(state: any, props: any): boolean {
-  return (state.init.data.currency && state.init.data.store);
+  return (state.init.data.ok);
 }
 
 export function getAppCurrency(state: any, props: any): TAppCurrency {
