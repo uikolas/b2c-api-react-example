@@ -20,7 +20,7 @@ export interface ICartItem {
 }
 
 export interface ICartData {
-  isCartCreated: boolean;
+  cartCreated: boolean;
   items: Array<ICartItem>;
 }
 
@@ -30,7 +30,7 @@ export interface ICartState extends IReduxState {
 
 export const initialState: ICartState = {
   data: {
-    isCartCreated: false,
+    cartCreated: false,
     items: [],
   },
 };
@@ -71,10 +71,7 @@ const handleCartCreate = (cartState: ICartState, payload: any) => {
     ...cartState,
     data: {
       ...cartState.data,
-      isCartCreated: true,
-      /*suggestions: action.items,
-      searchTerm: action.searchTerm,
-      currency: action.currency || state.data.currency,*/
+      cartCreated: true,
     },
     pending: false,
     fulfilled: true,
@@ -128,6 +125,10 @@ export function getTotalProductsQuantity(state: any, props: any): TProductQuanti
 // Number of items in the cart
 export function getTotalItemsQuantity(state: any, props: any): TProductQuantity {
   return state.cart.data.items.length;
+}
+
+export function isCartCreated(state: any, props: any): boolean {
+  return (state.cart.data.cartCreated);
 }
 
 // selectors INNER

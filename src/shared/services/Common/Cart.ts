@@ -2,6 +2,7 @@ import api from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture} from './cartFixture';
+import {getTestDataPromise} from "../apiFixture/index";
 
 interface ICartCreatePayload {
   priceMode: string;
@@ -22,11 +23,12 @@ export class CartService {
       let response: any;
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
-        response = {
+        const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
           data: cartCreateFixture,
         };
+        response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
         const response: any = await api.post('carts', body, { withCredentials: true });

@@ -43,7 +43,7 @@ import {
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData} from "../../../reducers/Common/Cart";
+import {ICartState, ICartData, isCartCreated} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
@@ -66,7 +66,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appStore: TAppStore;
   addProductToCart: Function;
   cartCreate: Function;
-  cart: ICartData | null;
+  cartCreated: boolean;
   dispatch: Function;
 }
 
@@ -169,13 +169,14 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
       // Create cart if not exist
       // TODO: May be moved this logic
-      if (this.props.cart && this.props.cart.isCartCreated === false) {
+      if (this.props.cartCreated === false) {
         const payload = {
           priceMode: this.props.appPriceMode,
           currency: this.props.appCurrency,
           store: this.props.appStore,
         };
         this.props.dispatch(cartCreateAction(payload));
+        return;
       }
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
@@ -279,14 +280,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    if (!this.props.product || !this.state.productType) {
+    if (!this.props.product || !this.state.productType || !this.props.isApp) {
       return null;
     }
-    const {
-      classes,
-      isLoading,
-      appCurrency,
-    } = this.props;
+    const {classes, isLoading, appCurrency} = this.props;
     console.info('state: ', this.state);
 
     return (
@@ -367,6 +364,7 @@ export const ConnectedProductPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
+    const cartCreated: boolean = isCartCreated(state, ownProps);
     const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
     const appPriceMode: TAppPriceMode = getAppPriceMode(state, ownProps);
     const appStore: TAppStore = getAppStore(state, ownProps);
@@ -375,11 +373,11 @@ export const ConnectedProductPage = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: productProps && productProps.pending ? productProps.pending : ownProps.pending,
+        isLoading: cartProps && cartProps.pending ? cartProps.pending : ownProps.pending,
         product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
-        cart: cartProps && cartProps.data ? cartProps.data : ownProps.cart,
+        cartCreated,
         isApp,
         appCurrency,
         appPriceMode,

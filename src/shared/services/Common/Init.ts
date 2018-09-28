@@ -6,6 +6,7 @@ import {
   CURRENCY_DEFAULT,
   STORE_DEFAULT,
 } from '../../constants/Environment';
+import {getTestDataPromise} from "../apiFixture/index";
 
 interface ICartCreatePayload {
 }
@@ -15,8 +16,9 @@ export class InitAppService {
   public static async getInitData(ACTION_TYPE: string, dispatch: Function, payload?: any): Promise<any> {
     try {
       let response: any;
+
       // TODO: this is only for development reasons - remove after finish
-      response = {
+      const result = {
         ok: true,
         problem: 'Test API_WITH_FIXTURES',
         data: {
@@ -25,6 +27,7 @@ export class InitAppService {
           store: STORE_DEFAULT,
         },
       };
+      response = await getTestDataPromise(result);
 
       if (response.ok) {
         dispatch({

@@ -22,7 +22,7 @@ export interface IInitData {
 }
 
 export interface IInitState extends IReduxState {
-  data: IInitData;
+  data: IInitData | null;
 }
 
 export const initialState: IInitState = {
@@ -62,7 +62,7 @@ export const init = function (state: IInitState = initialState, action: any): II
     case `${INIT_APP_ACTION_TYPE}_REJECTED`:
       return {
         error: action.error,
-        data: null,
+        data: {...initialState.data},
         pending: false,
         fulfilled: false,
         rejected: true,
@@ -81,13 +81,13 @@ export function isAppInitiated(state: any, props: any): boolean {
 }
 
 export function getAppCurrency(state: any, props: any): TAppCurrency {
-  return isAppInitiated ? state.init.data.currency : null;
+  return isAppInitiated(state, props) ? state.init.data.currency : null;
 }
 
 export function getAppPriceMode(state: any, props: any): TAppPriceMode {
-  return isAppInitiated ?  state.init.data.priceMode : null;
+  return isAppInitiated(state, props) ?  state.init.data.priceMode : null;
 }
 
 export function getAppStore(state: any, props: any): TAppStore {
-  return isAppInitiated ?  state.init.data.store : null;
+  return isAppInitiated(state, props) ?  state.init.data.store : null;
 }

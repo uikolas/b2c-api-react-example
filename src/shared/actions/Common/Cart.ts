@@ -5,6 +5,8 @@ import {
 import {TProductName, TProductPrice, TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {CartService} from "../../services/Common/Cart";
 
+
+// TODO: Add product after cart is created
 export const addProductToCart = function(
                                           sku: TProductSKU,
                                           name: TProductName ,
