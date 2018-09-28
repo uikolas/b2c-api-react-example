@@ -1,15 +1,13 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
+import {blueGrey, teal} from '@material-ui/core/colors';
 
 export const styles = (theme: Theme) => createStyles({
-  appBar: {
-    position: 'relative',
+  root: {
+    position: "absolute",
   },
-  button: {
-    marginLeft: theme.spacing.unit,
+  close: {
+    padding: theme.spacing.unit / 2,
   },
-  cartNotification: {
-    top: "70px",
-    right: "21px",
-  },
+
 });

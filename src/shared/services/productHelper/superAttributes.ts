@@ -1,20 +1,22 @@
+import {
+  IProductAttributeMap,
+} from "../../interfaces/product";
 
-import {IProductSuperAttributes} from "../../interfaces/product/index";
 
-interface ISuperAttributeData {
-  value: string;
-  name: string;
-  idProductConcrete: string | number;
-}
-
-interface ISuperAttribute {
+export interface ISuperAttribute {
   name: string;
   nameToShow: string;
   data: Array<ISuperAttributeData>;
 }
 
-export const parseSuperAttributes = (superAttributes: IProductSuperAttributes) => {
-  if(!superAttributes.super_attributes || typeof superAttributes.super_attributes !== 'object'){
+interface ISuperAttributeData {
+  value: string;
+  name: string;
+  idProductConcrete?: string | number;
+}
+
+export const parseSuperAttributes = (superAttributes: IProductAttributeMap): Array<ISuperAttribute> | boolean => {
+  if(!superAttributes.super_attributes || typeof superAttributes.super_attributes !== 'object') {
     return false;
   }
 
@@ -31,7 +33,7 @@ export const parseSuperAttributes = (superAttributes: IProductSuperAttributes) =
         {
           value,
           name: value,
-          idProductConcrete: superAttributes.attribute_variants[`${name}:${value}`].id_product_concrete
+          // idProductConcrete: superAttributes.attribute_variants[`${name}:${value}`].id_product_concrete
         }
       );
     });
@@ -40,4 +42,21 @@ export const parseSuperAttributes = (superAttributes: IProductSuperAttributes) =
   });
 
   return superData;
+};
+
+export const getInitialSuperAttrSelected = (superAttributes: Array<ISuperAttribute>): any => {
+  const attributes = [...superAttributes];
+  if (!attributes.length) {
+    return null;
+  }
+  const superAttrSelected: object = {};
+
+  const selectedAttrNames = attributes
+    .map((attr: ISuperAttribute) => (attr.name))
+    .reduce((acc: any, name: string) => {
+      acc[name] = null;
+      return acc;
+    }, superAttrSelected);
+
+  return selectedAttrNames;
 };

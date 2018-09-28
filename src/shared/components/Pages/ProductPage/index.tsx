@@ -5,97 +5,227 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {reduxify} from '../../../lib/redux-helper';
-
 import {ProductState} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
-import {DropdownControlled, defaultItemValue} from '../../UI/DropdownControlled';
-import {getFormattedPrice} from '../../../services/priceFormatter';
+import {DropdownControlled} from '../../UI/DropdownControlled';
 import {ProductAvailability} from './ProductAvailability';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {ProductAttributes} from './ProductAttributes';
-import {IProductCardImages} from '../../../interfaces/product';
+import {
+  concreteProductType,
+  absentProductType,
+  abstractProductType,
+  defaultItemValueDropdown,
+  IProductAttributeMap,
+  IProductAttributes,
+  IProductCardImages,
+  IProductPropFullData,
+  ISuperAttributes,
+  TProductSKU,
+  TProductQuantity,
+  TProductName,
+  TProductPrice,
+} from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
+
 import {styles} from './styles';
-import {productPropsFixtureSuper as productFixture} from './fixture';
-import {parseSuperAttributes} from "../../../services/productHelper";
+import {
+  getFormattedPrice,
+  ISuperAttribute,
+  getAvailabilityDisplay,
+  createQuantityVariants,
+  displayProductNameWithSuperAttr,
+  createPathToIdProductConcrete,
+  findIdProductConcreteByPath,
+  getInitialSuperAttrSelected,
+} from "../../../services/productHelper";
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import {addProductToCart} from "../../../actions/Common/Cart";
+
+export const buyBtnTitle = "Add to cart";
+const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
   currency: string;
+  addProductToCart: Function;
 }
 
-interface ISuperAttr {
-  [key: string]: string | number;
+interface ProductPageState extends IProductPropFullData, ISuperAttributes {
+  attributeMap: IProductAttributeMap | null;
+  superAttrSelected: IProductAttributes;
+  quantitySelected: TProductQuantity;
 }
-
-interface ProductPageState {
-  superAttrSelected: ISuperAttr;
-}
-
-export const buyBtnTitle = "Add to cart";
-
-const fixture_menuItems = [
-  {
-    value: 1,
-    name: 'One'
-  },
-  {
-    value: 2,
-    name: 'Two'
-  },
-];
-const fixture_menuItems_2 = [
-  {
-    value: 'Hi',
-    name: 'Hi'
-  },
-  {
-    value: 'Hello',
-    name: 'Hello'
-  },
-];
-const test_nameAttr = 'test_nameAttr';
-const test_nameAttr_2 = 'test_nameAttr_2';
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
 
   public state: ProductPageState = {
+    attributeMap: null,
     superAttrSelected: {},
+    quantitySelected: quantitySelectedInitial,
+    superAttributes: null,
+    productType: null,
+    sku: null,
+    name: null,
+    images: null,
+    availability: null,
+    description: null,
+    price: null,
+    attributes: null,
+    quantity: null,
   };
 
-  public dropdownHandleChange = (event: any, child: React.ReactNode): void => {
+  public componentDidMount = () => {
+    if (this.props.product) {
+      this.setInitialData();
+    }
+  }
+
+  public componentDidUpdate = (prevProps: any, prevState: any) => {
+    if (this.props.product && !prevState.productType) {
+      this.setInitialData();
+    }
+  }
+
+  public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
     const key = event.target.name;
     const value = event.target.value;
+
+    let productData: IProductPropFullData | null;
+
+    if (value === defaultItemValueDropdown) {
+      // If selected nothing
+      productData = this.getProductDataObject(
+        this.props.product.abstractProduct
+      );
+    } else {
+      // If selected a concrete product
+      const idProductConcrete = this.getIdProductConcrete(key, value);
+
+      if (!idProductConcrete) {
+        // Such product does not exist
+        productData = this.getProductDataObject(null);
+      } else {
+        // Such product exists
+        productData = this.getProductDataObject(
+          this.props.product.concreteProducts[idProductConcrete]
+        );
+      }
+    }
+
     this.setState( (prevState: ProductPageState) => {
       if (this.state.superAttrSelected[key] === value) {
         return;
       }
-      return (
-        {
+      return ({
+          ...prevState,
           superAttrSelected: {
             ...prevState.superAttrSelected,
             [key]: value,
           },
-        }
-      );
+          quantitySelected: quantitySelectedInitial,
+          ...productData,
+      });
     });
   }
 
-  public buyBtnHandler = (event: any): void => {
-    console.log('buyBtnHandler clicked');
+  public handleProductQuantityChange = (event: any, child: React.ReactNode): void => {
+    const value = event.target.value;
+    this.setState( (prevState: ProductPageState) => {
+      if (this.state.quantitySelected === value) {
+        return;
+      }
+      return ({
+          ...prevState,
+          quantitySelected: value,
+      });
+    });
+  }
+
+  public handleBuyBtnClick = (event: any): any => {
+    if (this.state.productType === concreteProductType) {
+      const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
+      this.props.addProductToCart(
+        this.state.sku,
+        productName,
+        this.state.quantitySelected,
+        this.state.price,
+      );
+      this.setState( (prevState: ProductPageState) => {
+        if (this.state.quantitySelected === quantitySelectedInitial) {
+          return;
+        }
+        return ({
+          ...prevState,
+          quantitySelected: quantitySelectedInitial,
+        });
+      });
+    }
+    return null;
+  }
+
+  private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
+    const defaultValues = this.props.product.abstractProduct;
+    return {
+      sku: data ? data.sku : null,
+      name: data ? data.name : defaultValues.name,
+      images: data ? data.images : defaultValues.images,
+      availability: data ? data.availability : false,
+      description: data ? data.description : defaultValues.description,
+      price: data ? data.price : null,
+      attributes: data ? data.attributes : defaultValues.attributes,
+      quantity: data ? data.quantity : defaultValues.quantity,
+      productType: data ? data.productType : absentProductType,
+    };
+  }
+
+  private setInitialData = (): void => {
+    let productData: IProductPropFullData | null;
+    const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
+    const isOneConcreteProduct = (concreteProductsIds.length === 1);
+    if (isOneConcreteProduct) {
+      productData = this.getProductDataObject(this.props.product.concreteProducts[concreteProductsIds[0]]);
+    } else {
+      productData = this.getProductDataObject(this.props.product.abstractProduct);
+    }
+
+    // Parsing superAttributes to set initial data for this.state.superAttrSelected
+    const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
+
+    this.setState( (prevState: ProductPageState) => {
+      return ({
+          ...prevState,
+          superAttributes: this.props.product.superAttributes,
+          attributeMap: this.props.product.attributeMap,
+          superAttrSelected: selectedAttrNames,
+          ...productData,
+        });
+    });
+  }
+
+  private getIdProductConcrete = (key: string, value: string) => {
+    const selected = {...this.state.superAttrSelected};
+    selected[key] = value;
+    const path = createPathToIdProductConcrete(selected);
+    if (!path) {
+      return false;
+    }
+
+    const id = findIdProductConcreteByPath(path, this.state.attributeMap.attribute_variants);
+    return id;
   }
 
   private getSuperAttrValue = (key: string) => {
     if (!key) {
-      return defaultItemValue;
+      return defaultItemValueDropdown;
     }
     return (
       this.state.superAttrSelected[key]
         ? this.state.superAttrSelected[key]
-        : defaultItemValue
+        : defaultItemValueDropdown
     );
   }
 
@@ -109,73 +239,87 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     return response;
   }
 
+  private isBuyBtnDisabled = () => {
+    if (this.state.productType === concreteProductType && this.state.availability) {
+      return false;
+    }
+    return true;
+  }
+
   public render(): JSX.Element {
-    // TODO: productFixture - fixture for testing - remove
-    if (!this.props.product && !productFixture) {
+    console.info('props: ', this.props);
+    if (!this.props.product || !this.state.productType) {
       return null;
     }
     const {
       classes,
       isLoading,
       currency,
-      product,
     } = this.props;
-
-    const {
-      name,
-      sku,
-      price,
-      images,
-      availability,
-      attributes,
-      description,
-      superAttributes,
-    } = product || productFixture ;
-
-    const superData = parseSuperAttributes(superAttributes);
-
-    console.info('product: ', product);
-    console.info('props: ', this.props);
     console.info('state: ', this.state);
-    console.info('superData: ', superData);
 
     return (
       <AppMain isLoading={isLoading}>
         <div className={classes.root} >
           <Grid container justify="center" >
             <Grid item xs={12} sm={6} className={classes.sliderParent}>
-              <ImageSlider images={this.getImageData(images)} />
+              <ImageSlider images={this.getImageData(this.state.images)} />
             </Grid>
             <Grid item xs={12} sm={6} >
               <ProductGeneralInfo
-                name={name}
-                sku={sku}
-                price={getFormattedPrice(price, currency)}
+                name={this.state.name}
+                sku={this.state.sku}
+                price={getFormattedPrice(this.state.price, currency)}
               />
 
-              { superData
-                ? superData.map((item) => (
+              { this.state.superAttributes
+                ? this.state.superAttributes.map((item: ISuperAttribute) => (
                   <DropdownControlled
                     key={item.name}
                     nameAttr={item.name}
                     nameToShow={item.nameToShow}
                     value={this.getSuperAttrValue(item.name)}
-                    handleChange={this.dropdownHandleChange}
+                    handleChange={this.handleSuperAttributesChange}
                     menuItems={item.data}
                   />
                 ))
                 : null
               }
 
-              <ProductAvailability availability={availability} />
-              <SprykerButton title={buyBtnTitle} extraClasses={classes.buyBtn} onClick={this.buyBtnHandler}/>
+              <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
+
+              <Grid container justify="center" className={classes.buyBtnArea}>
+                <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
+                  <SprykerButton
+                    title={buyBtnTitle}
+                    extraClasses={classes.buyBtn}
+                    onClick={this.handleBuyBtnClick}
+                    IconType={AddShoppingCartIcon}
+                    disabled={this.isBuyBtnDisabled()}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6} >
+                  {this.isBuyBtnDisabled()
+                    ? null
+                    : <DropdownControlled
+                      nameAttr="quantity"
+                      nameToShow="Quantity"
+                      value={this.state.quantitySelected}
+                      handleChange={this.handleProductQuantityChange}
+                      menuItems={createQuantityVariants(this.state.quantity)}
+                    />
+                  }
+                </Grid>
+              </Grid>
+
+
             </Grid>
           </Grid>
           <Grid container justify="center" >
-            <ProductAttributes attributes={attributes} />
+            <ProductAttributes attributes={this.state.attributes} />
             <Grid item xs={12}>
               <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
-                {description}
+                {this.state.description}
               </Typography>
             </Grid>
           </Grid>
@@ -201,5 +345,11 @@ export const ConnectedProductPage = reduxify(
         currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
       }
     );
-  }
+  },
+  (dispatch: Function) => ({
+      addProductToCart: (sku: TProductSKU,
+                         name: TProductName ,
+                         quantity: TProductQuantity,
+                         price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+  }),
 )(ProductPage);

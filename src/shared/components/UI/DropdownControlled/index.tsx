@@ -6,8 +6,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
 import {styles} from './styles';
-
-export const defaultItemValue = " ";
+import {defaultItemValueDropdown} from "../../../interfaces/product/";
 
 export interface IMenuItemsDropdown {
   value: string | number;
@@ -46,7 +45,7 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
       handleChange,
       menuItems,
       menuItemFirst = {
-        value: defaultItemValue,
+        value: defaultItemValueDropdown,
         name: 'please select',
       }
     } = this.props;
@@ -76,7 +75,16 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
             variant="filled"
           >
             <MenuItem value={menuItemFirst.value}><em>{menuItemFirst.name}</em></MenuItem>
-            {menuItems.map((item) => ( <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>))}
+            {menuItems.map((item) => {
+              return (
+                <MenuItem
+                  key={item.value}
+                  value={item.value}
+                >
+                  {item.name}
+                  </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
       </div>
