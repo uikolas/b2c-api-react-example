@@ -28,6 +28,13 @@ interface Pagination {
   currentItemsPerPage: number;
 }
 
+interface Category {
+  nodeId?: number | string;
+  order?: number | string;
+  name?: string;
+  children?: Array<Category> | object;
+}
+
 export interface ISearchPageData {
   dispatch?: Function;
   suggestions?: Array<IProductCard>;
@@ -38,4 +45,5 @@ export interface ISearchPageData {
   currency?: string;
   sortParams?: Array<string>;
   pagination: Pagination;
+  categories: Array<Category>
 }

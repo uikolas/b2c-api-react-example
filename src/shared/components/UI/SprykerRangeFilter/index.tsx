@@ -13,16 +13,16 @@ interface SprykerRangeProps extends WithStyles<typeof styles> {
 }
 
 interface SprykerRangeState {
-  gte: number | string;
-  lte: number | string;
+  min: number | string;
+  max: number | string;
   [key: string]: any;
 }
 
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
 
   public state: SprykerRangeState = {
-    gte: this.props.min,
-    lte: this.props.max,
+    min: this.props.min,
+    max: this.props.max,
   };
 
   private handleChangeValues = (param: string) => (event: any) => {
@@ -42,7 +42,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
     return (
       <FormControl className={classes.root}>
         <Grid container alignItems="center" justify="space-between">
-          <span>{attributeName}:</span>
+          <span className={classes.rangeFilterName}>{attributeName}:</span>
           <TextField
             id={`${attributeName}-min`}
             inputProps={{
@@ -50,8 +50,8 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
               max,
             }}
             type="number"
-            value={this.state.gte}
-            onChange={this.handleChangeValues('gte')}
+            value={this.state.min}
+            onChange={this.handleChangeValues('min')}
           />
           <span> -- </span>
           <TextField
@@ -61,8 +61,8 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
               max,
             }}
             type="number"
-            value={this.state.lte}
-            onChange={this.handleChangeValues('lte')}
+            value={this.state.max}
+            onChange={this.handleChangeValues('max')}
           />
         </Grid>
       </FormControl>

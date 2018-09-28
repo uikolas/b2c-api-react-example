@@ -139,13 +139,16 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
     this.props.changeLocation(`${config.WEB_PATH}product/${suggestion.abstract_name}`);
   }
 
-  private handleFullSearch = () => {
-    this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
-    this.props.changeLocation(`${config.WEB_PATH}search`);
+  private handleFullSearch = (e: any) => {
+    e.preventDefault();
+    if (!this.props.isLoading) {
+      this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
+      this.props.changeLocation(`${config.WEB_PATH}search`);
+    }
   }
 
   public render() {
-    const { classes, suggestions, location } = this.props;
+    const { classes, suggestions, location, isLoading } = this.props;
 
     const autosuggestProps = {
       suggestions,
@@ -180,9 +183,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
             </Paper>
           )}
         />
-        <NavLink to={`${config.WEB_PATH}search`}>
-          <SprykerButton title={buttonTitle} onClick={this.handleFullSearch}/>
-        </NavLink>
+        <SprykerButton title={buttonTitle} onClick={this.handleFullSearch} disabled={isLoading} />
         {
           this.props.isLoading
             ? <div className={classes.pendingProgress}><CircularProgress variant="indeterminate" size={34} /></div>

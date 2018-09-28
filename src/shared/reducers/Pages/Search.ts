@@ -2,6 +2,7 @@ import {
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
   PAGES_SUGGESTION_REQUEST,
+  CATEGORIES_REQUEST,
 } from '../../constants/ActionTypes/Pages/Search';
 import {
   IReduxState,
@@ -30,7 +31,8 @@ export const initialState: SearchState = {
       currentPage: 0,
       maxPage: 0,
       currentItemsPerPage: 0,
-    }
+    },
+    categories: [],
   },
 };
 
@@ -44,6 +46,8 @@ export const pageSearch = function (state: SearchState = initialState, action: a
         fulfilled: false,
         rejected: false,
       };
+    case `${CATEGORIES_REQUEST}_PENDING`:
+      return state;
     case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
       return {
         ...state,
@@ -57,6 +61,7 @@ export const pageSearch = function (state: SearchState = initialState, action: a
         fulfilled: true,
       };
     case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
+    case `${CATEGORIES_REQUEST}_REJECTED`:
       return {
         ...state,
         error: action.error,
@@ -85,6 +90,14 @@ export const pageSearch = function (state: SearchState = initialState, action: a
         },
         pending: false,
         fulfilled: true,
+      };
+    case `${CATEGORIES_REQUEST}_FULFILLED`:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          categories: action.categories,
+        },
       };
     case `${PAGES_SEARCH_REQUEST}_REJECTED`:
       return {

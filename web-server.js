@@ -22,6 +22,11 @@ appRouter.use('*', (req, res) => {
 });
 // }
 
+// webServer.use('*', (req, res, next) => {
+//   console.info('Request on 3000');
+//   next();
+// });
+
 webServer.use('/react/', appRouter);
 
 // Error Handler

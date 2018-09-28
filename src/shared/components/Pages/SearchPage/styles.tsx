@@ -20,4 +20,18 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: theme.spacing.unit * 2,
     margin: "0 auto",
   },
+  formControl: {
+    width: '90%',
+    marginLeft: '5%'
+  },
+  pagesContainer: {
+    marginBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
+  },
+  pageNumber: {
+    maxWidth: theme.spacing.unit * 5,
+  },
+  nestedList: {
+    marginLeft: theme.spacing.unit * 2,
+  }
 });

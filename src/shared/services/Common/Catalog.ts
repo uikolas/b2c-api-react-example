@@ -77,4 +77,36 @@ export class CatalogService {
       return null;
     }
   }
+
+  public static async getCategoriesTree(ACTION_TYPE: string, dispatch: Function): Promise<any> {
+    try {
+
+      const response: any = await api.get('category-trees', {}, { withCredentials: true });
+
+      if (response.ok) {
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          categories: response.data.data[0].attributes.categoryNodesStorage,
+        });
+        return response.data.data[0];
+      } else {
+        // console.error('Catalog search', response.problem);
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      console.error('Categories catch:', error);
+      dispatch({
+        type: ACTION_TYPE + '_REJECTED',
+        error,
+      });
+      toast.error('Unexpected Error: ' + error);
+      return null;
+    }
+  }
 }

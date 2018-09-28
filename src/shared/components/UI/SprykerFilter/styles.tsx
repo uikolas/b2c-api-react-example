@@ -17,6 +17,7 @@ export const styles = (theme: Theme) => createStyles({
   formControl: {
     margin: theme.spacing.unit,
     width: '100%',
+    textTransform: 'capitalize',
   },
   chip: {
     margin: theme.spacing.unit / 2,

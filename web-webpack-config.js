@@ -9,7 +9,7 @@ const DashboardPlugin = require("webpack-dashboard/plugin");
 
 const basicConfig = require('./basic-webpack-config');
 
-console.info('webpack config', process.env.API_URL);
+console.info('Webpack config: API_URL:', process.env.API_URL);
 
 
 const {
@@ -99,7 +99,8 @@ const config = {
     chunkFilename: "[name].[chunkhash].chunk.js",
 
     // the url to the output directory resolved relative to the HTML page
-    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : '/react',
+
+    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : '/react/',
   },
   optimization: {
     minimizer: [

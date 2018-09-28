@@ -61,7 +61,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               name: attributeName,
               id: `${attributeName}-filter`,
             }}
-            renderValue={() => attributeName}
+            renderValue={() => attributeName.split('_').join(' ')}
             displayEmpty
             open={this.state.isOpen}
             onClose={this.handleChangeShowing}

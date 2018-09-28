@@ -23,8 +23,10 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  menuItem: {
-    display: 'flex',
-    justifyContent: 'space-between',
+  rangeFilterName: {
+    width: '30%',
+    maxWidth: '40%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
   }
 });
