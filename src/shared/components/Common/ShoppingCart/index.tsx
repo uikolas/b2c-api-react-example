@@ -7,10 +7,11 @@ import {styles} from './styles';
 import {TProductQuantity} from "../../../interfaces/product/index";
 
 interface ShoppingCartProps extends WithStyles<typeof styles> {
- totalProductsQuantity: TProductQuantity;
+  cartItemsQuantity: TProductQuantity;
+  cartProductsQuantity: TProductQuantity;
 }
 
-export const ShoppingCartBase: React.SFC<ShoppingCartProps> = ({totalProductsQuantity, classes}) => {
+export const ShoppingCartBase: React.SFC<ShoppingCartProps> = ({cartItemsQuantity, cartProductsQuantity, classes}) => {
 
   const shoppingCart = (
     <ShoppingCartIcon className={classes.icon} />
@@ -18,7 +19,7 @@ export const ShoppingCartBase: React.SFC<ShoppingCartProps> = ({totalProductsQua
 
   const shoppingCartWithQuantity = (
     <Badge
-      badgeContent={totalProductsQuantity}
+      badgeContent={cartItemsQuantity}
       color="primary"
       classes={{ badge: classes.badge }}
     >
@@ -27,7 +28,7 @@ export const ShoppingCartBase: React.SFC<ShoppingCartProps> = ({totalProductsQua
   );
 
   return (
-    totalProductsQuantity ? shoppingCartWithQuantity : shoppingCart
+    cartItemsQuantity ? shoppingCartWithQuantity : shoppingCart
   );
 };
 

@@ -68,10 +68,16 @@ const handleCartRemove = (cartState: ICartState, payload: ICartItem) => {
 };
 
 // selectors
+// Number of products(including quantity per each product) in the cart
 export function getTotalProductsQuantity(state: any, props: any): TProductQuantity {
   return state.cart.items.reduce((acc: number, item: ICartItem) => {
     return acc + item.quantity;
   }, 0);
+}
+
+// Number of items in the cart
+export function getTotalItemsQuantity(state: any, props: any): TProductQuantity {
+  return state.cart.items.length;
 }
 
 // selectors INNER

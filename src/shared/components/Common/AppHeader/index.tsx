@@ -13,7 +13,10 @@ import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
 import {SearchState} from '../../../reducers/Pages/Search';
-import {getTotalProductsQuantity} from '../../../reducers/Common/Cart';
+import {
+  getTotalItemsQuantity,
+  getTotalProductsQuantity,
+} from '../../../reducers/Common/Cart';
 import {IProductCard, TProductQuantity} from '../../../interfaces/product';
 import {SprykerButton} from '../../UI/SprykerButton';
 import {logout} from '../../../actions/Pages/Login';
@@ -27,7 +30,8 @@ interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   suggestions?: Array<IProductCard>;
   searchTerm?: string;
-  totalProductsQuantity: TProductQuantity;
+  cartItemsQuantity: TProductQuantity;
+  cartProductsQuantity: TProductQuantity;
 }
 
 interface AppHeaderState {
@@ -41,7 +45,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
   };
 
   public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
-    if (this.props.totalProductsQuantity > prevProps.totalProductsQuantity) {
+    if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
       this.handleOpenCartNotification();
     }
   }
@@ -59,7 +63,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
   }
 
   public render(): JSX.Element {
-    const { classes, location, isAuth, totalProductsQuantity } = this.props;
+    const { classes, location, isAuth, cartItemsQuantity, cartProductsQuantity } = this.props;
 
     return (
       <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -96,7 +100,12 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
               <NavLink to={`${config.WEB_PATH}cart`}>
                 <SprykerButton
                   title="Cart"
-                  iconComponent={<ShoppingCart totalProductsQuantity={totalProductsQuantity} />}
+                  iconComponent={(
+                    <ShoppingCart
+                      cartItemsQuantity={cartItemsQuantity}
+                      cartProductsQuantity={cartProductsQuantity}
+                    />
+                  )}
                 />
               </NavLink>
               <SprykerNotification
@@ -125,7 +134,8 @@ export const AppHeader = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
     const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
-    const totalProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
+    const cartItemsQuantity: TProductQuantity = getTotalItemsQuantity(state, ownProps);
+    const cartProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -134,7 +144,8 @@ export const AppHeader = reduxify(
         isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
         suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
-        totalProductsQuantity,
+        cartItemsQuantity,
+        cartProductsQuantity,
       }
     );
   }
