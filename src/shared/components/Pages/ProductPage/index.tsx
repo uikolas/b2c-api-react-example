@@ -44,6 +44,15 @@ import {
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
 import {ICartState, ICartData} from "../../../reducers/Common/Cart";
+import {initAppAction} from "../../../actions/Common/Init";
+import {
+  getAppCurrency,
+  getAppPriceMode,
+  getAppStore, isAppInitiated,
+  TAppCurrency,
+  TAppPriceMode,
+  TAppStore,
+} from "../../../reducers/Common/Init";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -51,7 +60,10 @@ const quantitySelectedInitial = 1;
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
-  currency: string;
+  isApp: boolean;
+  appCurrency: TAppCurrency;
+  appPriceMode: TAppPriceMode;
+  appStore: TAppStore;
   addProductToCart: Function;
   cartCreate: Function;
   cart: ICartData | null;
@@ -83,6 +95,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
+    if (!this.props.isApp) {
+      this.props.dispatch(initAppAction(null));
+    }
     if (this.props.product) {
       this.setInitialData();
     }
@@ -156,9 +171,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       // TODO: May be moved this logic
       if (this.props.cart && this.props.cart.isCartCreated === false) {
         const payload = {
-          priceMode: 'priceMode',
-          currency: this.props.currency,
-          store: 'DE',
+          priceMode: this.props.appPriceMode,
+          currency: this.props.appCurrency,
+          store: this.props.appStore,
         };
         this.props.dispatch(cartCreateAction(payload));
       }
@@ -270,7 +285,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     const {
       classes,
       isLoading,
-      currency,
+      appCurrency,
     } = this.props;
     console.info('state: ', this.state);
 
@@ -285,7 +300,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
               <ProductGeneralInfo
                 name={this.state.name}
                 sku={this.state.sku}
-                price={getFormattedPrice(this.state.price, currency)}
+                price={getFormattedPrice(this.state.price, appCurrency)}
               />
 
               { this.state.superAttributes
@@ -352,6 +367,11 @@ export const ConnectedProductPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
+    const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
+    const appPriceMode: TAppPriceMode = getAppPriceMode(state, ownProps);
+    const appStore: TAppStore = getAppStore(state, ownProps);
+    const isApp: boolean = isAppInitiated(state, ownProps);
+
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -360,7 +380,10 @@ export const ConnectedProductPage = reduxify(
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
         cart: cartProps && cartProps.data ? cartProps.data : ownProps.cart,
-        currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
+        isApp,
+        appCurrency,
+        appPriceMode,
+        appStore,
       }
     );
   },
@@ -370,6 +393,5 @@ export const ConnectedProductPage = reduxify(
                        name: TProductName ,
                        quantity: TProductQuantity,
                        price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
-    cartCreate: (data: any): void => dispatch(cartCreateAction(data)),
   }),
 )(ProductPage);

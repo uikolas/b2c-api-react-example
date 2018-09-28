@@ -6,6 +6,7 @@ import {pagesLogin} from './Pages/Login';
 import {pageSearch} from './Pages/Search';
 import {pageProduct} from './Pages/Product';
 import {cart} from './Common/Cart';
+import {init} from './Common/Init';
 
 
 // export const reducers = combineReducers({
@@ -19,4 +20,5 @@ export const reducers = {
   pageSearch,
   pageProduct,
   cart,
+  init,
 };

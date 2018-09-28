@@ -12,11 +12,6 @@ interface ICartCreatePayload {
 export class CartService {
 
   public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload): Promise<any> {
-
-    console.log('cartCreate ACTION_TYPE', ACTION_TYPE);
-    console.log('cartCreate dispatch', dispatch);
-    console.log('cartCreate payload', payload);
-
     try {
       const body = {
         data: {
