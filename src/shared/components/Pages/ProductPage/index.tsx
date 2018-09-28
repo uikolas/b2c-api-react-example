@@ -42,7 +42,8 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {addProductToCart} from "../../../actions/Common/Cart";
+import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
+import {ICartState, ICartData} from "../../../reducers/Common/Cart";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -52,6 +53,9 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   currency: string;
   addProductToCart: Function;
+  cartCreate: Function;
+  cart: ICartData | null;
+  dispatch: Function;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -147,6 +151,18 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public handleBuyBtnClick = (event: any): any => {
     if (this.state.productType === concreteProductType) {
+
+      // Create cart if not exist
+      // TODO: May be moved this logic
+      if (this.props.cart && this.props.cart.isCartCreated === false) {
+        const payload = {
+          priceMode: 'priceMode',
+          currency: this.props.currency,
+          store: 'DE',
+        };
+        this.props.dispatch(cartCreateAction(payload));
+      }
+
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
       this.props.addProductToCart(
         this.state.sku,
@@ -335,6 +351,7 @@ export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
+    const cartProps: ICartState = state.cart ? state.cart : null;
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -342,14 +359,17 @@ export const ConnectedProductPage = reduxify(
         product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
+        cart: cartProps && cartProps.data ? cartProps.data : ownProps.cart,
         currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
       }
     );
   },
   (dispatch: Function) => ({
-      addProductToCart: (sku: TProductSKU,
-                         name: TProductName ,
-                         quantity: TProductQuantity,
-                         price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+    dispatch,
+    addProductToCart: (sku: TProductSKU,
+                       name: TProductName ,
+                       quantity: TProductQuantity,
+                       price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+    cartCreate: (data: any): void => dispatch(cartCreateAction(data)),
   }),
 )(ProductPage);

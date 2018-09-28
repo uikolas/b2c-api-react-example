@@ -1,5 +1,6 @@
 import {
   CART_ADD_PRODUCT,
+  CART_CREATE,
 } from '../../constants/ActionTypes/Common/Cart';
 import {
   IReduxState,
@@ -11,31 +12,75 @@ import {
   TProductPrice,
 } from "../../interfaces/product";
 
-interface ICartItem {
+export interface ICartItem {
   sku: TProductSKU;
   name: TProductName;
   quantity: TProductQuantity;
   price: TProductPrice;
 }
 
-export interface ICartState extends IReduxState {
+export interface ICartData {
+  isCartCreated: boolean;
   items: Array<ICartItem>;
 }
 
+export interface ICartState extends IReduxState {
+  data: ICartData;
+}
+
 export const initialState: ICartState = {
-  items: [],
+  data: {
+    isCartCreated: false,
+    items: [],
+  },
 };
 
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
     case CART_ADD_PRODUCT:
       return handleCartAdd(state, action.payload);
+    case `${CART_CREATE}_PENDING`:
+      return {
+        ...state,
+        error: null,
+        pending: true,
+        fulfilled: false,
+        rejected: false,
+      };
+    case `${CART_CREATE}_FULFILLED`:
+      return handleCartCreate(state, action.payload);
+    case `${CART_CREATE}_REJECTED`:
+      return {
+        ...state,
+        error: action.error,
+        pending: false,
+        fulfilled: false,
+        rejected: true,
+      };
     default:
       return state;
   }
 };
 
 // handlers
+const handleCartCreate = (cartState: ICartState, payload: any) => {
+
+  // TODO: handle store necessary data to state
+
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+      isCartCreated: true,
+      /*suggestions: action.items,
+      searchTerm: action.searchTerm,
+      currency: action.currency || state.data.currency,*/
+    },
+    pending: false,
+    fulfilled: true,
+  };
+};
+
 const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
 
   let items: Array<ICartItem> = [];
@@ -51,45 +96,50 @@ const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
     addedItem.quantity = existedItem.quantity + payload.quantity;
     items.push(addedItem);
   } else {
-    items = [...cartState.items, addedItem];
+    items = [...cartState.data.items, addedItem];
   }
 
   return {
     ...cartState,
-    items,
+    data: {
+      ...cartState.data,
+      items: [...items],
+    },
   };
 };
 
 const handleCartRemove = (cartState: ICartState, payload: ICartItem) => {
   return {
-    ...cartState,
-    items: cartState.items.filter((item: ICartItem): Array<ICartItem> | boolean => item.sku !== payload.sku)
+    ...cartState.data,
+    data: {
+      items: cartState.data.items.filter((item: ICartItem): Array<ICartItem> | boolean => item.sku !== payload.sku)
+    }
   };
 };
 
 // selectors
 // Number of products(including quantity per each product) in the cart
 export function getTotalProductsQuantity(state: any, props: any): TProductQuantity {
-  return state.cart.items.reduce((acc: number, item: ICartItem) => {
+  return state.cart.data.items.reduce((acc: number, item: ICartItem) => {
     return acc + item.quantity;
   }, 0);
 }
 
 // Number of items in the cart
 export function getTotalItemsQuantity(state: any, props: any): TProductQuantity {
-  return state.cart.items.length;
+  return state.cart.data.items.length;
 }
 
 // selectors INNER
 function getProductFromCart(cartState: ICartState, sku: TProductSKU): ICartItem {
-  return (cartState.items.filter((item: ICartItem): any => item.sku === sku))[0];
+  return (cartState.data.items.filter((item: ICartItem): any => item.sku === sku))[0];
 }
 
 function isProductExistsInCart(cartState: ICartState, sku: TProductSKU): boolean {
-  return Boolean(cartState.items.filter((item: ICartItem): any => item.sku === sku).length);
+  return Boolean(cartState.data.items.filter((item: ICartItem): any => item.sku === sku).length);
 }
 
 function getCartItemsWithoutSelected(cartState: ICartState, sku: TProductSKU): Array<ICartItem> {
-  return cartState.items.filter((item: ICartItem): any => item.sku !== sku);
+  return cartState.data.items.filter((item: ICartItem): any => item.sku !== sku);
 }
 
