@@ -64,8 +64,6 @@ export class PagesLoginService {
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
         response = await api.post('access-tokens', body, { withCredentials: true });
-        console.info('loginRequest response.data.data.attributes', response.data.data.attributes);
-        console.info('loginRequest response.data.attributes', response.data.attributes);
       }
 
       console.info('loginRequest result', response);
