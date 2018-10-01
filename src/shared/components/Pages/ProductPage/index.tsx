@@ -43,7 +43,7 @@ import {
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated, isCartLoading} from "../../../reducers/Common/Cart";
+import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
@@ -186,12 +186,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       }
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
-      this.props.addProductToCart(
-        this.state.sku,
-        productName,
-        this.state.quantitySelected,
-        this.state.price,
-      );
+      this.props.addProductToCart({
+        sku: this.state.sku,
+        name: productName,
+        quantity: this.state.quantitySelected,
+        price: this.state.price,
+      });
       this.setState( (prevState: ProductPageState) => {
         if (this.state.quantitySelected === quantitySelectedInitial) {
           return;
@@ -404,9 +404,6 @@ export const ConnectedProductPage = reduxify(
   },
   (dispatch: Function) => ({
     dispatch,
-    addProductToCart: (sku: TProductSKU,
-                       name: TProductName ,
-                       quantity: TProductQuantity,
-                       price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+    addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCart(cartItem)),
   }),
 )(ProductPage);

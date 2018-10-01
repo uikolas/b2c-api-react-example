@@ -53,6 +53,7 @@ export const initialState: ICartState = {
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
     case CART_ADD_PRODUCT:
+      console.log('action', action);
       return handleCartAdd(state, action.payload);
     case `${CART_CREATE}_PENDING`:
       return handleCartPending(state, action.payload);
@@ -67,7 +68,6 @@ export const cart = function (state: ICartState = initialState, action: any): IC
 
 // handlers
 const handleCartFulfilled = (cartState: ICartState, payload: any) => {
-
   return {
     ...cartState,
     data: {
@@ -85,7 +85,6 @@ const handleCartFulfilled = (cartState: ICartState, payload: any) => {
 };
 
 const handleCartRejected = (cartState: ICartState, payload: any) => {
-
   return {
     ...cartState,
     data: {
@@ -96,7 +95,6 @@ const handleCartRejected = (cartState: ICartState, payload: any) => {
   };
 };
 const handleCartPending = (cartState: ICartState, payload: any) => {
-
   return {
     ...cartState,
     data: {
@@ -110,12 +108,7 @@ const handleCartPending = (cartState: ICartState, payload: any) => {
 const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
 
   let items: Array<ICartItem> = [];
-  const addedItem = {
-    sku: payload.sku,
-    name: payload.name,
-    quantity: payload.quantity,
-    price: payload.price,
-  };
+  const addedItem = payload;
   const existedItem = getProductFromCart(cartState, payload.sku);
   if (existedItem) {
     items = getCartItemsWithoutSelected(cartState, payload.sku);

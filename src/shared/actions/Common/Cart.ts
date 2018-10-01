@@ -2,25 +2,15 @@ import {
   CART_ADD_PRODUCT,
   CART_CREATE,
 } from '../../constants/ActionTypes/Common/Cart';
-import {TProductName, TProductPrice, TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {CartService} from "../../services/Common/Cart";
-import {string} from "prop-types";
-
+import {ICartItem} from "../../reducers/Common/Cart";
 
 // TODO: Add product after cart is created
-export const addProductToCart = function(
-                                          sku: TProductSKU,
-                                          name: TProductName ,
-                                          quantity: TProductQuantity,
-                                          price: TProductPrice
-                                        ) {
+export const addProductToCart = function(cartItem: ICartItem) {
   return {
     type: CART_ADD_PRODUCT,
     payload: {
-      sku,
-      name,
-      quantity,
-      price,
+      cartItem
     },
   };
 };
