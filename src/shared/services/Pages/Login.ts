@@ -1,5 +1,8 @@
 import api from '../api';
 import { toast } from 'react-toastify';
+import {API_WITH_FIXTURES} from "../../constants/Environment/index";
+import {fixtureLogin} from "./loginFixture";
+import {getTestDataPromise} from "../apiFixture/index";
 
 export class PagesLoginService {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
@@ -11,7 +14,6 @@ export class PagesLoginService {
         }
       };
       const response: any = await api.post('customers', body, { withCredentials: true });
-      console.info(response);
 
       if (response.ok) {
         dispatch({
@@ -50,7 +52,21 @@ export class PagesLoginService {
         }
       };
 
-      const response: any = await api.post('access-tokens', body, { withCredentials: true });
+      let response: any;
+      // TODO: this is only for development reasons - remove after finish
+      if(API_WITH_FIXTURES) {
+        const result = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: fixtureLogin.data,
+        };
+        response = await getTestDataPromise(result);
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        response = await api.post('access-tokens', body, { withCredentials: true });
+      }
+
+      console.info('loginRequest result', response);
 
       if (response.ok) {
         dispatch({
