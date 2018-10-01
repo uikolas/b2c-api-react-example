@@ -43,12 +43,14 @@ import {
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated} from "../../../reducers/Common/Cart";
+import {ICartState, ICartData, isCartCreated, isCartLoading} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
   getAppPriceMode,
-  getAppStore, isAppInitiated,
+  getAppStore,
+  isAppInitiated,
+  isAppLoading,
   TAppCurrency,
   TAppPriceMode,
   TAppStore,
@@ -280,78 +282,84 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    if (!this.props.product || !this.state.productType || !this.props.isApp) {
+    /*if (!this.props.product || !this.state.productType || !this.props.isApp) {
       return null;
-    }
+    }*/
     const {classes, isLoading, appCurrency} = this.props;
     console.info('state: ', this.state);
+    console.info('isLoading: ', isLoading);
 
     return (
       <AppMain isLoading={isLoading}>
-        <div className={classes.root} >
-          <Grid container justify="center" >
-            <Grid item xs={12} sm={6} className={classes.sliderParent}>
-              <ImageSlider images={this.getImageData(this.state.images)} />
-            </Grid>
-            <Grid item xs={12} sm={6} >
-              <ProductGeneralInfo
-                name={this.state.name}
-                sku={this.state.sku}
-                price={getFormattedPrice(this.state.price, appCurrency)}
-              />
-
-              { this.state.superAttributes
-                ? this.state.superAttributes.map((item: ISuperAttribute) => (
-                  <DropdownControlled
-                    key={item.name}
-                    nameAttr={item.name}
-                    nameToShow={item.nameToShow}
-                    value={this.getSuperAttrValue(item.name)}
-                    handleChange={this.handleSuperAttributesChange}
-                    menuItems={item.data}
-                  />
-                ))
-                : null
-              }
-
-              <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
-
-              <Grid container justify="center" className={classes.buyBtnArea}>
-                <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
-                  <SprykerButton
-                    title={buyBtnTitle}
-                    extraClasses={classes.buyBtn}
-                    onClick={this.handleBuyBtnClick}
-                    IconType={AddShoppingCartIcon}
-                    disabled={this.isBuyBtnDisabled()}
-                  />
+        { (!this.props.product || !this.state.productType || !this.props.isApp)
+          ? null
+          : (
+            <div className={classes.root} >
+              <Grid container justify="center" >
+                <Grid item xs={12} sm={6} className={classes.sliderParent}>
+                  <ImageSlider images={this.getImageData(this.state.images)} />
                 </Grid>
                 <Grid item xs={12} sm={6} >
-                  {this.isBuyBtnDisabled()
-                    ? null
-                    : <DropdownControlled
-                      nameAttr="quantity"
-                      nameToShow="Quantity"
-                      value={this.state.quantitySelected}
-                      handleChange={this.handleProductQuantityChange}
-                      menuItems={createQuantityVariants(this.state.quantity)}
-                    />
+                  <ProductGeneralInfo
+                    name={this.state.name}
+                    sku={this.state.sku}
+                    price={getFormattedPrice(this.state.price, appCurrency)}
+                  />
+
+                  { this.state.superAttributes
+                    ? this.state.superAttributes.map((item: ISuperAttribute) => (
+                      <DropdownControlled
+                        key={item.name}
+                        nameAttr={item.name}
+                        nameToShow={item.nameToShow}
+                        value={this.getSuperAttrValue(item.name)}
+                        handleChange={this.handleSuperAttributesChange}
+                        menuItems={item.data}
+                      />
+                    ))
+                    : null
                   }
+
+                  <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
+
+                  <Grid container justify="center" className={classes.buyBtnArea}>
+                    <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
+                      <SprykerButton
+                        title={buyBtnTitle}
+                        extraClasses={classes.buyBtn}
+                        onClick={this.handleBuyBtnClick}
+                        IconType={AddShoppingCartIcon}
+                        disabled={this.isBuyBtnDisabled()}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                      {this.isBuyBtnDisabled()
+                        ? null
+                        : <DropdownControlled
+                          nameAttr="quantity"
+                          nameToShow="Quantity"
+                          value={this.state.quantitySelected}
+                          handleChange={this.handleProductQuantityChange}
+                          menuItems={createQuantityVariants(this.state.quantity)}
+                        />
+                      }
+                    </Grid>
+                  </Grid>
+
+
                 </Grid>
               </Grid>
-
-
-            </Grid>
-          </Grid>
-          <Grid container justify="center" >
-            <ProductAttributes attributes={this.state.attributes} />
-            <Grid item xs={12}>
-              <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
-                {this.state.description}
-              </Typography>
-            </Grid>
-          </Grid>
-        </div>
+              <Grid container justify="center" >
+                <ProductAttributes attributes={this.state.attributes} />
+                <Grid item xs={12}>
+                  <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
+                    {this.state.description}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </div>
+          )
+        }
       </AppMain>
     );
   }
@@ -365,15 +373,18 @@ export const ConnectedProductPage = reduxify(
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
     const cartCreated: boolean = isCartCreated(state, ownProps);
+    const cartLoading: boolean = isCartLoading(state, ownProps);
     const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
     const appPriceMode: TAppPriceMode = getAppPriceMode(state, ownProps);
     const appStore: TAppStore = getAppStore(state, ownProps);
     const isApp: boolean = isAppInitiated(state, ownProps);
+    const appLoading: boolean = isAppLoading(state, ownProps);
+    const isLoading = cartLoading || appLoading || false;
 
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: cartProps && cartProps.pending ? cartProps.pending : ownProps.pending,
+        isLoading: isLoading ? isLoading : ownProps.pending,
         product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,

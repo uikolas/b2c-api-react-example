@@ -45,7 +45,7 @@ export class CartService {
         console.error('register', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: {error: response.problem},
         });
         toast.error('Request Error: ' + response.problem);
         return null;
@@ -55,7 +55,7 @@ export class CartService {
       console.error('register', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payload: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
       return null;

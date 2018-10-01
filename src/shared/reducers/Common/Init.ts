@@ -4,11 +4,8 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {
-  CURRENCY_DEFAULT,
-  PRICE_MODE_DEFAULT,
-  STORE_DEFAULT,
-} from "../../constants/Environment/index";
+
+import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
@@ -37,47 +34,62 @@ export const initialState: IInitState = {
 export const init = function (state: IInitState = initialState, action: any): IInitState {
   switch (action.type) {
     case `${INIT_APP_ACTION_TYPE}_PENDING`:
-      return {
-        ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
-      };
+      return handleInitAppPending(state, action.payload);
     case `${INIT_APP_ACTION_TYPE}_FULFILLED`:
-      return {
-      ...state,
-      data: {
-        ...state.data,
-        ok: true,
-        priceMode: PRICE_MODE_DEFAULT,
-        currency: CURRENCY_DEFAULT,
-        store: STORE_DEFAULT,
-      },
-      error: null,
-      pending: true,
-      fulfilled: false,
-      rejected: false,
-    };
+      return handleInitAppFulfilled(state, action.payload);
     case `${INIT_APP_ACTION_TYPE}_REJECTED`:
-      return {
-        error: action.error,
-        data: {...initialState.data},
-        pending: false,
-        fulfilled: false,
-        rejected: true,
-      };
+      return handleInitAppRejected(state, action.payload);
     default:
       return state;
   }
 };
 
+// handlers
+const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
+  return {
+    ...appState,
+    data: {
+      ...appState.data,
+      ok: true,
+      priceMode: payload.priceMode,
+      currency: payload.currency,
+      store: payload.store,
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleInitAppRejected = (appState: IInitState, payload: any) => {
+  return {
+    ...appState,
+    data: {
+      ...appState.data,
+      ok: false,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
+const handleInitAppPending = (appState: IInitState, payload: any) => {
+  return {
+    ...appState,
+    data: {
+      ...appState.data,
+      ok: false,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
+
 
 // selectors
 
-// TODO: Should be changed a logic
 export function isAppInitiated(state: any, props: any): boolean {
   return (state.init.data.ok);
+}
+
+export function isAppLoading(state: any, props: any): boolean {
+  return (state.init && state.init.pending && state.init.pending === true);
 }
 
 export function getAppCurrency(state: any, props: any): TAppCurrency {

@@ -11,6 +11,7 @@ import {
   TProductName,
   TProductPrice,
 } from "../../interfaces/product";
+import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export interface ICartItem {
   sku: TProductSKU;
@@ -40,32 +41,18 @@ export const cart = function (state: ICartState = initialState, action: any): IC
     case CART_ADD_PRODUCT:
       return handleCartAdd(state, action.payload);
     case `${CART_CREATE}_PENDING`:
-      return {
-        ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
-      };
+      return handleCartPending(state, action.payload);
     case `${CART_CREATE}_FULFILLED`:
-      return handleCartCreate(state, action.payload);
+      return handleCartFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
-      return {
-        ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
-      };
+      return handleCartRejected(state, action.payload);
     default:
       return state;
   }
 };
 
 // handlers
-const handleCartCreate = (cartState: ICartState, payload: any) => {
-
-  // TODO: handle store necessary data to state
+const handleCartFulfilled = (cartState: ICartState, payload: any) => {
 
   return {
     ...cartState,
@@ -73,10 +60,33 @@ const handleCartCreate = (cartState: ICartState, payload: any) => {
       ...cartState.data,
       cartCreated: true,
     },
-    pending: false,
-    fulfilled: true,
+    ...getReducerPartFulfilled(),
   };
 };
+
+const handleCartRejected = (cartState: ICartState, payload: any) => {
+
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+      cartCreated: false,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
+const handleCartPending = (cartState: ICartState, payload: any) => {
+
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+      cartCreated: false,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
 
 const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
 
@@ -129,6 +139,10 @@ export function getTotalItemsQuantity(state: any, props: any): TProductQuantity 
 
 export function isCartCreated(state: any, props: any): boolean {
   return (state.cart.data.cartCreated);
+}
+
+export function isCartLoading(state: any, props: any): boolean {
+  return (state.cart && state.cart.pending && state.cart.pending === true);
 }
 
 // selectors INNER

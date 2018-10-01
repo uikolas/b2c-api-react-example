@@ -39,7 +39,7 @@ export class InitAppService {
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          payload: {error: response.problem},
         });
         toast.error('Request Error: ' + response.problem);
         return null;
@@ -48,7 +48,7 @@ export class InitAppService {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payload: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
       return null;
