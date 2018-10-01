@@ -36,6 +36,8 @@ export class CartService {
         const response: any = await api.post('carts', body, { withCredentials: true });
       }
 
+      console.log('cartCreate response: ', response);
+
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
@@ -44,7 +46,7 @@ export class CartService {
         toast.success('You have successfully created a cart');
         return response.data;
       } else {
-        console.error('register', response.problem);
+        console.error('cartCreate', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: {error: response.problem},
