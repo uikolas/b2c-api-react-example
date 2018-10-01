@@ -16,7 +16,7 @@ export class CartService {
     try {
       const body = {
         data: {
-          type: "cart",
+          type: "carts",
           attributes: payload,
         }
       };
@@ -33,7 +33,7 @@ export class CartService {
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        const response: any = await api.post('carts', body, { withCredentials: true });
+        response = await api.post('carts', body, { withCredentials: true });
       }
 
       console.log('cartCreate response: ', response);
