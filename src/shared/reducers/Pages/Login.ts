@@ -6,7 +6,7 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-
+import {TAccessToken} from "../../interfaces/login/index";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -14,7 +14,7 @@ export interface ILoginState extends IReduxState {
     isAuth?: boolean,
     tokenType?: string,
     expiresIn?: string,
-    accessToken?: string,
+    accessToken?: TAccessToken,
     refreshToken?: string,
   };
 }
@@ -29,7 +29,6 @@ export const initialState: ILoginState = {
     refreshToken: '',
   },
 };
-
 
 export const pagesLogin = function (state: ILoginState = initialState, action: any): ILoginState {
   switch (action.type) {
@@ -96,3 +95,17 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       return state;
   }
 };
+
+// selectors
+
+export function isUserAuthenticated(state: any, props: any): boolean {
+  return (state.pagesLogin && state.pagesLogin.data && state.pagesLogin.data.isAuth === true);
+}
+
+export function getAccessToken(state: any, props: any): TAccessToken | null {
+  return (
+    isUserAuthenticated(state, props) && state.pagesLogin.data.accessToken
+    ? state.pagesLogin.data.accessToken
+    : null
+  );
+}

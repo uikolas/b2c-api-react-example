@@ -1,0 +1,1 @@
+export const INIT_APP_ACTION_TYPE = 'INIT_APP_ACTION_TYPE';

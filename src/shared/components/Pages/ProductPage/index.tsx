@@ -42,7 +42,21 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {addProductToCart} from "../../../actions/Common/Cart";
+import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
+import {ICartState, ICartData, isCartCreated, isCartLoading} from "../../../reducers/Common/Cart";
+import {initAppAction} from "../../../actions/Common/Init";
+import {
+  getAppCurrency,
+  getAppPriceMode,
+  getAppStore,
+  isAppInitiated,
+  isAppLoading,
+  TAppCurrency,
+  TAppPriceMode,
+  TAppStore,
+} from "../../../reducers/Common/Init";
+import {getAccessToken} from "../../../reducers/Pages/Login";
+import {TAccessToken} from "../../../interfaces/login/index";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -50,8 +64,15 @@ const quantitySelectedInitial = 1;
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
-  currency: string;
+  isApp: boolean;
+  appCurrency: TAppCurrency;
+  appPriceMode: TAppPriceMode;
+  appStore: TAppStore;
   addProductToCart: Function;
+  cartCreate: Function;
+  cartCreated: boolean;
+  dispatch: Function;
+  accessToken: TAccessToken;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -79,6 +100,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
+    if (!this.props.isApp) {
+      this.props.dispatch(initAppAction(null));
+    }
     if (this.props.product) {
       this.setInitialData();
     }
@@ -147,6 +171,20 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public handleBuyBtnClick = (event: any): any => {
     if (this.state.productType === concreteProductType) {
+
+      // Create cart if not exist
+      // TODO: May be moved this logic
+      if (this.props.cartCreated === false) {
+        const payload = {
+          priceMode: this.props.appPriceMode,
+          currency: this.props.appCurrency,
+          store: this.props.appStore,
+        };
+        const accessToken = this.props.accessToken;
+        this.props.dispatch(cartCreateAction(payload, accessToken));
+        return;
+      }
+
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
       this.props.addProductToCart(
         this.state.sku,
@@ -248,82 +286,84 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    if (!this.props.product || !this.state.productType) {
+    /*if (!this.props.product || !this.state.productType || !this.props.isApp) {
       return null;
-    }
-    const {
-      classes,
-      isLoading,
-      currency,
-    } = this.props;
+    }*/
+    const {classes, isLoading, appCurrency} = this.props;
     console.info('state: ', this.state);
+    console.info('isLoading: ', isLoading);
 
     return (
       <AppMain isLoading={isLoading}>
-        <div className={classes.root} >
-          <Grid container justify="center" >
-            <Grid item xs={12} sm={6} className={classes.sliderParent}>
-              <ImageSlider images={this.getImageData(this.state.images)} />
-            </Grid>
-            <Grid item xs={12} sm={6} >
-              <ProductGeneralInfo
-                name={this.state.name}
-                sku={this.state.sku}
-                price={getFormattedPrice(this.state.price, currency)}
-              />
-
-              { this.state.superAttributes
-                ? this.state.superAttributes.map((item: ISuperAttribute) => (
-                  <DropdownControlled
-                    key={item.name}
-                    nameAttr={item.name}
-                    nameToShow={item.nameToShow}
-                    value={this.getSuperAttrValue(item.name)}
-                    handleChange={this.handleSuperAttributesChange}
-                    menuItems={item.data}
-                  />
-                ))
-                : null
-              }
-
-              <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
-
-              <Grid container justify="center" className={classes.buyBtnArea}>
-                <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
-                  <SprykerButton
-                    title={buyBtnTitle}
-                    extraClasses={classes.buyBtn}
-                    onClick={this.handleBuyBtnClick}
-                    IconType={AddShoppingCartIcon}
-                    disabled={this.isBuyBtnDisabled()}
-                  />
+        { (!this.props.product || !this.state.productType || !this.props.isApp)
+          ? null
+          : (
+            <div className={classes.root} >
+              <Grid container justify="center" >
+                <Grid item xs={12} sm={6} className={classes.sliderParent}>
+                  <ImageSlider images={this.getImageData(this.state.images)} />
                 </Grid>
                 <Grid item xs={12} sm={6} >
-                  {this.isBuyBtnDisabled()
-                    ? null
-                    : <DropdownControlled
-                      nameAttr="quantity"
-                      nameToShow="Quantity"
-                      value={this.state.quantitySelected}
-                      handleChange={this.handleProductQuantityChange}
-                      menuItems={createQuantityVariants(this.state.quantity)}
-                    />
+                  <ProductGeneralInfo
+                    name={this.state.name}
+                    sku={this.state.sku}
+                    price={getFormattedPrice(this.state.price, appCurrency)}
+                  />
+
+                  { this.state.superAttributes
+                    ? this.state.superAttributes.map((item: ISuperAttribute) => (
+                      <DropdownControlled
+                        key={item.name}
+                        nameAttr={item.name}
+                        nameToShow={item.nameToShow}
+                        value={this.getSuperAttrValue(item.name)}
+                        handleChange={this.handleSuperAttributesChange}
+                        menuItems={item.data}
+                      />
+                    ))
+                    : null
                   }
+
+                  <ProductAvailability availability={getAvailabilityDisplay(this.state.availability)} />
+
+                  <Grid container justify="center" className={classes.buyBtnArea}>
+                    <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
+                      <SprykerButton
+                        title={buyBtnTitle}
+                        extraClasses={classes.buyBtn}
+                        onClick={this.handleBuyBtnClick}
+                        IconType={AddShoppingCartIcon}
+                        disabled={this.isBuyBtnDisabled()}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                      {this.isBuyBtnDisabled()
+                        ? null
+                        : <DropdownControlled
+                          nameAttr="quantity"
+                          nameToShow="Quantity"
+                          value={this.state.quantitySelected}
+                          handleChange={this.handleProductQuantityChange}
+                          menuItems={createQuantityVariants(this.state.quantity)}
+                        />
+                      }
+                    </Grid>
+                  </Grid>
+
+
                 </Grid>
               </Grid>
-
-
-            </Grid>
-          </Grid>
-          <Grid container justify="center" >
-            <ProductAttributes attributes={this.state.attributes} />
-            <Grid item xs={12}>
-              <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
-                {this.state.description}
-              </Typography>
-            </Grid>
-          </Grid>
-        </div>
+              <Grid container justify="center" >
+                <ProductAttributes attributes={this.state.attributes} />
+                <Grid item xs={12}>
+                  <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
+                    {this.state.description}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </div>
+          )
+        }
       </AppMain>
     );
   }
@@ -335,21 +375,38 @@ export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
+    const cartProps: ICartState = state.cart ? state.cart : null;
+    const accessToken = getAccessToken(state, ownProps);
+    const cartCreated: boolean = isCartCreated(state, ownProps);
+    const cartLoading: boolean = isCartLoading(state, ownProps);
+    const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
+    const appPriceMode: TAppPriceMode = getAppPriceMode(state, ownProps);
+    const appStore: TAppStore = getAppStore(state, ownProps);
+    const isApp: boolean = isAppInitiated(state, ownProps);
+    const appLoading: boolean = isAppLoading(state, ownProps);
+    const isLoading = cartLoading || appLoading || false;
+
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: productProps && productProps.pending ? productProps.pending : ownProps.pending,
+        isLoading: isLoading ? isLoading : ownProps.pending,
         product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
-        currency: productProps && productProps.data.currency ? productProps.data.currency : ownProps.currency,
+        cartCreated,
+        isApp,
+        appCurrency,
+        appPriceMode,
+        appStore,
+        accessToken,
       }
     );
   },
   (dispatch: Function) => ({
-      addProductToCart: (sku: TProductSKU,
-                         name: TProductName ,
-                         quantity: TProductQuantity,
-                         price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+    dispatch,
+    addProductToCart: (sku: TProductSKU,
+                       name: TProductName ,
+                       quantity: TProductQuantity,
+                       price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
   }),
 )(ProductPage);
