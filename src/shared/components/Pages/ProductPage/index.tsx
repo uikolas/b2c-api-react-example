@@ -42,7 +42,7 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {addProductToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
+import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
 import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
@@ -59,7 +59,8 @@ import {
 import {getAccessToken} from "../../../reducers/Pages/Login";
 import {TAccessToken} from "../../../interfaces/login";
 import {createCartItem} from "../../../services/cartHelper";
-import {ICartCreatePayload} from "../../../services/Common/Cart";
+import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {TCartId} from "../../../interfaces/cart/index";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -184,9 +185,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       }
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
-      this.props.addProductToCart(
+      /*this.props.addProductToCart(
         createCartItem(this.state.sku, productName, this.state.quantitySelected, this.state.price)
+      );*/
+      this.props.addProductToCart(
+        createCartItem(this.state.sku, this.state.quantitySelected,)
       );
+      // payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
       this.setState( (prevState: ProductPageState) => {
         if (this.state.quantitySelected === quantitySelectedInitial) {
           return;
@@ -394,7 +399,12 @@ export const ConnectedProductPage = reduxify(
   },
   (dispatch: Function) => ({
     dispatch,
-    addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCartAction(cartItem)),
-    createCart: (payload: ICartCreatePayload, accessToken: TAccessToken) => dispatch(cartCreateAction(payload, accessToken)),
+    // addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCartAction(cartItem)),
+    addProductToCart: (
+      payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
+    ) => dispatch(addItemToCartAction(payload, cartId, accessToken)),
+    createCart: (
+      payload: ICartCreatePayload, accessToken: TAccessToken
+    ) => dispatch(cartCreateAction(payload, accessToken)),
   }),
 )(ProductPage);

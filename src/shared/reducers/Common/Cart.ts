@@ -1,6 +1,7 @@
 import {
   CART_ADD_PRODUCT,
   CART_CREATE,
+  CART_ADD_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
 import {
   IReduxState,
@@ -52,7 +53,11 @@ export const initialState: ICartState = {
 
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
-    case CART_ADD_PRODUCT:
+    /*case CART_ADD_PRODUCT:
+      return handleCartAdd(state, action.payload);*/
+    case `${CART_ADD_ITEM}_PENDING`:
+      return handleCartAddPending(state, action.payload);
+    case CART_ADD_ITEM:
       return handleCartAdd(state, action.payload);
     case `${CART_CREATE}_PENDING`:
       return handleCartPending(state, action.payload);
@@ -126,14 +131,24 @@ const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
   };
 };
 
-const handleCartRemove = (cartState: ICartState, payload: ICartItem) => {
+const handleCartAddPending = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...initialState.data,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
+/*const handleCartRemove = (cartState: ICartState, payload: ICartItem) => {
   return {
     ...cartState.data,
     data: {
       items: cartState.data.items.filter((item: ICartItem): Array<ICartItem> | boolean => item.sku !== payload.sku)
     }
   };
-};
+};*/
 
 // selectors
 // Number of products(including quantity per each product) in the cart
