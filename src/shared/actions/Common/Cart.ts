@@ -6,7 +6,7 @@ import {CartService} from "../../services/Common/Cart";
 import {ICartItem} from "../../reducers/Common/Cart";
 
 // TODO: Add product after cart is created
-export const addProductToCart = function(cartItem: ICartItem) {
+export const addProductToCartAction = function(cartItem: ICartItem) {
   return {
     type: CART_ADD_PRODUCT,
     payload: {

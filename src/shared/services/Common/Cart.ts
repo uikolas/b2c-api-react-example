@@ -3,8 +3,9 @@ import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture} from './cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
+import {TAccessToken} from "../../interfaces/login";
 
-interface ICartCreatePayload {
+export interface ICartCreatePayload {
   priceMode: string;
   currency: string;
   store: string;
@@ -12,7 +13,11 @@ interface ICartCreatePayload {
 
 export class CartService {
 
-  public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload, accessToken: string): Promise<any> {
+  public static async cartCreate(
+                                  ACTION_TYPE: string,
+                                  dispatch: Function,
+                                  payload: ICartCreatePayload,
+                                  accessToken: TAccessToken): Promise<any> {
     try {
       const body = {
         data: {

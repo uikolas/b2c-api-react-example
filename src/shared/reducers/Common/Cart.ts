@@ -53,7 +53,6 @@ export const initialState: ICartState = {
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
     case CART_ADD_PRODUCT:
-      console.log('action', action);
       return handleCartAdd(state, action.payload);
     case `${CART_CREATE}_PENDING`:
       return handleCartPending(state, action.payload);
