@@ -41,7 +41,7 @@ export class CartService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
+          payload: response.data.data,
         });
         toast.success('You have successfully created a cart');
         return response.data;
