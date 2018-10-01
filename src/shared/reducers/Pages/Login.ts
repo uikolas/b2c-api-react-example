@@ -73,8 +73,9 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
     case `${REFRESH_TOKEN_REQUEST}_FULFILLED`:
-      localStorage.setItem('tokenStart', Math.floor(Date.now() / 1000).toString(10));
-      localStorage.setItem('token', action.payload.accessToken);
+      localStorage.setItem('tokenExpire', (Math.floor(Date.now() / 1000) + action.payload.expiresIn - 120).toString(10));
+      localStorage.setItem('accessToken', action.payload.accessToken);
+      localStorage.setItem('refreshToken', action.payload.refreshToken);
       return {
         ...state,
         data: {

@@ -170,7 +170,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     const renderRangeFilters: any[] = rangeFilters && rangeFilters.length
       ? rangeFilters.map((filter: any) => (
-        <Grid item xs={6} key={filter.name}>
+        <Grid item xs={4} key={filter.name}>
           <SprykerRange
             attributeName={filter.name.includes('price') ? 'price' : filter.name}
             min={filter.min} max={filter.max}

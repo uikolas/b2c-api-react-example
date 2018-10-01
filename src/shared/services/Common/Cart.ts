@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture} from './cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
+import {RefreshTokenService} from './RefreshToken';
 
 interface ICartCreatePayload {
   priceMode: string;
@@ -22,7 +23,7 @@ export class CartService {
       };
       console.log('cartCreate accessToken', accessToken);
       let response: any;
-      setAuthToken(accessToken);
+      //setAuthToken(accessToken);
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         const result = {
@@ -33,7 +34,12 @@ export class CartService {
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        response = await api.post('carts', body, { withCredentials: true });
+        try {
+          const token = await RefreshTokenService.getActualToken(dispatch);
+          response = await api.post('carts', body, { withCredentials: true, headers: {Authorization: `Bearer ${token}`} });
+        } catch (err) {
+          console.error(err);
+        }
       }
 
       console.log('cartCreate response: ', response);
