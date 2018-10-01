@@ -1,6 +1,9 @@
 import apisauce from 'apisauce';
 import {config} from '../../config';
 
+export const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth);
+export const removeAuthToken = () => api. deleteHeader('Authorization');
+
 const api = apisauce.create({
   baseURL: config.API_URL,
   headers: {

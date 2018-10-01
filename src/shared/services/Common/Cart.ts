@@ -1,4 +1,4 @@
-import api from '../api';
+import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture} from './cartFixture';
@@ -31,6 +31,7 @@ export class CartService {
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
+        setAuthToken(accessToken);
         const response: any = await api.post('carts', body, { withCredentials: true });
       }
 
