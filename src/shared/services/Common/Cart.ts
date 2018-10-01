@@ -12,7 +12,7 @@ interface ICartCreatePayload {
 
 export class CartService {
 
-  public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload): Promise<any> {
+  public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload, accessToken: string): Promise<any> {
     try {
       const body = {
         data: {
@@ -26,7 +26,7 @@ export class CartService {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: cartCreateFixture,
+          data: cartCreateFixture.data,
         };
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);

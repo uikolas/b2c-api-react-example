@@ -12,6 +12,7 @@ import {
   TProductPrice,
 } from "../../interfaces/product";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {ICartDiscounts, ICartTotals, TCartId, TCartPriceMode, TCartStore, TCartType} from "../../interfaces/cart";
 
 export interface ICartItem {
   sku: TProductSKU;
@@ -23,7 +24,14 @@ export interface ICartItem {
 export interface ICartData {
   cartCreated: boolean;
   items: Array<ICartItem>;
+  type: TCartType | null;
+  id: TCartId | null;
+  priceMode: TCartPriceMode | null;
+  store: TCartStore | null;
+  discounts: Array<ICartDiscounts>;
+  totals: ICartTotals | null;
 }
+
 
 export interface ICartState extends IReduxState {
   data: ICartData;
@@ -33,6 +41,12 @@ export const initialState: ICartState = {
   data: {
     cartCreated: false,
     items: [],
+    type: null,
+    id: null,
+    priceMode: null,
+    store: null,
+    discounts: null,
+    totals: null,
   },
 };
 
@@ -59,6 +73,12 @@ const handleCartFulfilled = (cartState: ICartState, payload: any) => {
     data: {
       ...cartState.data,
       cartCreated: true,
+      type: payload.type,
+      id: payload.id,
+      priceMode: payload.attributes.priceMode,
+      store: payload.attributes.store,
+      discounts: payload.attributes.discounts,
+      totals: payload.attributes.totals,
     },
     ...getReducerPartFulfilled(),
   };
@@ -80,8 +100,7 @@ const handleCartPending = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {
-      ...cartState.data,
-      cartCreated: false,
+      ...initialState.data,
     },
     ...getReducerPartPending(),
   };

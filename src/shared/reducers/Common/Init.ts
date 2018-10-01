@@ -73,14 +73,11 @@ const handleInitAppPending = (appState: IInitState, payload: any) => {
   return {
     ...appState,
     data: {
-      ...appState.data,
-      ok: false,
+      ...initialState.data,
     },
     ...getReducerPartPending(),
   };
 };
-
-
 
 // selectors
 

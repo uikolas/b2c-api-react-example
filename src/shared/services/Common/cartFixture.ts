@@ -1,16 +1,16 @@
 export const cartCreateFixture: any = {
   data: {
-    type: "type_string",
-    id: "id_string",
+    type: "type_data",
+    id: "id_data",
     attributes: {
-      priceMode: "string",
-      currency: "string",
-      store: "string",
+      priceMode: "priceMode_data",
+      currency: "currency_data",
+      store: "store_data",
       discounts: [
         {
-          displayName: "string",
+          displayName: "displayName_data",
           amount: 0,
-          code: "string"
+          code: "code_data"
         }
       ],
       totals: {

@@ -55,6 +55,8 @@ import {
   TAppPriceMode,
   TAppStore,
 } from "../../../reducers/Common/Init";
+import {getAccessToken} from "../../../reducers/Pages/Login";
+import {TAccessToken} from "../../../interfaces/login/index";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -70,6 +72,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   cartCreate: Function;
   cartCreated: boolean;
   dispatch: Function;
+  accessToken: TAccessToken;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -177,7 +180,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
           currency: this.props.appCurrency,
           store: this.props.appStore,
         };
-        this.props.dispatch(cartCreateAction(payload));
+        const accessToken = this.props.accessToken;
+        this.props.dispatch(cartCreateAction(payload, accessToken));
         return;
       }
 
@@ -372,6 +376,7 @@ export const ConnectedProductPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
+    const accessToken = getAccessToken(state, ownProps);
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
@@ -393,6 +398,7 @@ export const ConnectedProductPage = reduxify(
         appCurrency,
         appPriceMode,
         appStore,
+        accessToken,
       }
     );
   },

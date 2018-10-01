@@ -4,6 +4,7 @@ import {
 } from '../../constants/ActionTypes/Common/Cart';
 import {TProductName, TProductPrice, TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {CartService} from "../../services/Common/Cart";
+import {string} from "prop-types";
 
 
 // TODO: Add product after cart is created
@@ -28,9 +29,9 @@ export const cartCreatePendingState = {
   type: CART_CREATE + '_PENDING',
 };
 
-export const cartCreateAction = function (payload: any) {
+export const cartCreateAction = function (payload: any, accessToken: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(cartCreatePendingState);
-    CartService.cartCreate(CART_CREATE, dispatch, payload);
+    CartService.cartCreate(CART_CREATE, dispatch, payload, accessToken);
   };
 };
