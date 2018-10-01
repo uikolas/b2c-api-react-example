@@ -27,6 +27,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '30%',
     maxWidth: '40%',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    textTransform: 'capitalize',
   }
 });

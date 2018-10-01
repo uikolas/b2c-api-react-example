@@ -51,15 +51,14 @@ export class PagesLoginService {
       };
 
       const response: any = await api.post('access-tokens', body, { withCredentials: true });
-      console.info('loginRequest result', response);
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data.attributes,
+          payload: response.data.data.attributes,
         });
         toast.success('You are now logged in');
-        return response.data;
+        return response.data.data.attributes;
       } else {
         console.error('login', response.problem);
         dispatch({
@@ -72,6 +71,45 @@ export class PagesLoginService {
 
     } catch (error) {
       console.error('login', error);
+      dispatch({
+        type: ACTION_TYPE + '_REJECTED',
+        error,
+      });
+      toast.error('Unexpected error: ' + error);
+      return null;
+    }
+  }
+
+  public static async refreshtokenRequest(ACTION_TYPE: string, dispatch: Function, refreshToken: string): Promise<any> {
+    try {
+      const body = {
+        data: {
+          type: "refresh-tokens",
+          attributes: {refreshToken},
+        }
+      };
+
+      const response: any = await api.post('refresh-tokens', body, { withCredentials: true });
+
+      if (response.ok) {
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          payload: response.data.data.attributes,
+        });
+
+        return response.data.data.attributes;
+      } else {
+        console.error('Refresh token', response.problem);
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      console.error('Refresh token', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         error,

@@ -2,6 +2,7 @@ import {
   PAGES_CUSTOMER_REGISTER,
   PAGES_LOGIN_REQUEST,
   PAGES_CUSTOMER_LOGOUT,
+  REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {
   IReduxState,
@@ -34,6 +35,7 @@ export const initialState: ILoginState = {
 export const pagesLogin = function (state: ILoginState = initialState, action: any): ILoginState {
   switch (action.type) {
     case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
+    case `${REFRESH_TOKEN_REQUEST}_PENDING`:
       return {
         ...state,
         error: null,
@@ -53,6 +55,8 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         rejected: false,
       };
     case `${PAGES_CUSTOMER_REGISTER}_REJECTED`:
+    case `${PAGES_LOGIN_REQUEST}_REJECTED`:
+    case `${REFRESH_TOKEN_REQUEST}_REJECTED`:
       return {
         ...state,
         error: action.error,
@@ -69,6 +73,9 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         rejected: false,
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
+    case `${REFRESH_TOKEN_REQUEST}_FULFILLED`:
+      localStorage.setItem('tokenStart', Math.floor(Date.now() / 1000).toString(10));
+      localStorage.setItem('token', action.payload.accessToken);
       return {
         ...state,
         data: {
@@ -78,14 +85,6 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         },
         pending: false,
         fulfilled: true,
-      };
-    case `${PAGES_LOGIN_REQUEST}_REJECTED`:
-      return {
-        ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
       };
     case PAGES_CUSTOMER_LOGOUT:
       return {

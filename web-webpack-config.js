@@ -17,6 +17,7 @@ const {
   definableConstants,
   DEV_SERVER_HOST,
   DEV_SERVER_PORT,
+  WEB_PATH,
 
   commonLoaders,
   webLoaders,
@@ -100,7 +101,7 @@ const config = {
 
     // the url to the output directory resolved relative to the HTML page
 
-    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : '/react/',
+    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : WEB_PATH,
   },
   optimization: {
     minimizer: [
