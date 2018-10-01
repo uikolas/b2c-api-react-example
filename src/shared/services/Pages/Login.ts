@@ -67,11 +67,12 @@ export class PagesLoginService {
       }
 
       console.info('loginRequest result', response);
+      console.info('loginRequest response.data.data.attributes', response.data.data.attributes);
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data.attributes,
+          payload: response.data.data.attributes,
         });
         toast.success('You are now logged in');
         return response.data;

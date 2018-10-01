@@ -19,8 +19,10 @@ export class CartService {
           type: "cart",
           attributes: payload,
         }
-      }
+      };
+      console.log('cartCreate accessToken', accessToken);
       let response: any;
+      setAuthToken(accessToken);
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         const result = {
@@ -31,7 +33,6 @@ export class CartService {
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        setAuthToken(accessToken);
         const response: any = await api.post('carts', body, { withCredentials: true });
       }
 
