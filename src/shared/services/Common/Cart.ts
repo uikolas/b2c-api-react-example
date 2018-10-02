@@ -22,6 +22,8 @@ export interface ICartAddItem {
   quantity: TProductQuantity;
 }
 
+const authenticateErrorText = 'You should register or login to add item to the cart';
+
 export class CartService {
 
   public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload): Promise<any> {
@@ -49,6 +51,10 @@ export class CartService {
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
+          if (!token) {
+            toast.error(authenticateErrorText);
+            throw new SyntaxError("cartCreate: token is not correct!");
+          }
           setAuthToken(token);
           response = await api.post('carts', body, { withCredentials: true });
         } catch (err) {
@@ -128,6 +134,11 @@ export class CartService {
         try {
           const endpoint = `carts/${cartId}/items`;
           const token = await RefreshTokenService.getActualToken(dispatch);
+          console.log('cartAddItem : token', token);
+          if (!token) {
+            toast.error(authenticateErrorText);
+            throw new SyntaxError("cartAddItem: token is not correct!");
+          }
           setAuthToken(token);
           response = await api.post(endpoint, body, { withCredentials: true });
         } catch (err) {
