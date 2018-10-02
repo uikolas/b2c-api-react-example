@@ -6,6 +6,7 @@ import {
 } from '../../../typings/app';
 
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {ICartCreatePayload} from "../../services/Common/Cart";
 
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
@@ -99,4 +100,16 @@ export function getAppPriceMode(state: any, props: any): TAppPriceMode {
 
 export function getAppStore(state: any, props: any): TAppStore {
   return isAppInitiated(state, props) ?  state.init.data.store : null;
+}
+
+export function getPayloadForCreateCart(state: any, props: any): ICartCreatePayload {
+  return (
+    isAppInitiated(state, props)
+      ? {
+          priceMode: state.init.data.priceMode,
+          currency: state.init.data.currency,
+          store: state.init.data.store,
+        }
+      : null
+  );
 }

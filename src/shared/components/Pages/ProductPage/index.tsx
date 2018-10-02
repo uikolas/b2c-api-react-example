@@ -42,13 +42,14 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated, isCartLoading} from "../../../reducers/Common/Cart";
+import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
+import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
   getAppPriceMode,
   getAppStore,
+  getPayloadForCreateCart,
   isAppInitiated,
   isAppLoading,
   TAppCurrency,
@@ -56,7 +57,10 @@ import {
   TAppStore,
 } from "../../../reducers/Common/Init";
 import {getAccessToken} from "../../../reducers/Pages/Login";
-import {TAccessToken} from "../../../interfaces/login/index";
+import {TAccessToken} from "../../../interfaces/login";
+import {createCartItem} from "../../../services/cartHelper";
+import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {TCartId} from "../../../interfaces/cart/index";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -69,10 +73,11 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
   addProductToCart: Function;
-  cartCreate: Function;
+  createCart: Function;
   cartCreated: boolean;
   dispatch: Function;
   accessToken: TAccessToken;
+  payloadForCreateCart: ICartCreatePayload;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -175,23 +180,18 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       // Create cart if not exist
       // TODO: May be moved this logic
       if (this.props.cartCreated === false) {
-        const payload = {
-          priceMode: this.props.appPriceMode,
-          currency: this.props.appCurrency,
-          store: this.props.appStore,
-        };
-        const accessToken = this.props.accessToken;
-        this.props.dispatch(cartCreateAction(payload, accessToken));
+        this.props.createCart(this.props.payloadForCreateCart, this.props.accessToken);
         return;
       }
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
+      /*this.props.addProductToCart(
+        createCartItem(this.state.sku, productName, this.state.quantitySelected, this.state.price)
+      );*/
       this.props.addProductToCart(
-        this.state.sku,
-        productName,
-        this.state.quantitySelected,
-        this.state.price,
+        createCartItem(this.state.sku, this.state.quantitySelected,)
       );
+      // payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
       this.setState( (prevState: ProductPageState) => {
         if (this.state.quantitySelected === quantitySelectedInitial) {
           return;
@@ -286,9 +286,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    /*if (!this.props.product || !this.state.productType || !this.props.isApp) {
-      return null;
-    }*/
     const {classes, isLoading, appCurrency} = this.props;
     console.info('state: ', this.state);
     console.info('isLoading: ', isLoading);
@@ -380,8 +377,7 @@ export const ConnectedProductPage = reduxify(
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
-    const appPriceMode: TAppPriceMode = getAppPriceMode(state, ownProps);
-    const appStore: TAppStore = getAppStore(state, ownProps);
+    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isApp: boolean = isAppInitiated(state, ownProps);
     const appLoading: boolean = isAppLoading(state, ownProps);
     const isLoading = cartLoading || appLoading || false;
@@ -396,17 +392,19 @@ export const ConnectedProductPage = reduxify(
         cartCreated,
         isApp,
         appCurrency,
-        appPriceMode,
-        appStore,
         accessToken,
+        payloadForCreateCart,
       }
     );
   },
   (dispatch: Function) => ({
     dispatch,
-    addProductToCart: (sku: TProductSKU,
-                       name: TProductName ,
-                       quantity: TProductQuantity,
-                       price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
+    // addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCartAction(cartItem)),
+    addProductToCart: (
+      payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
+    ) => dispatch(addItemToCartAction(payload, cartId, accessToken)),
+    createCart: (
+      payload: ICartCreatePayload, accessToken: TAccessToken
+    ) => dispatch(cartCreateAction(payload, accessToken)),
   }),
 )(ProductPage);
