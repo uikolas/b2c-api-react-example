@@ -8,8 +8,12 @@ import {TCartId} from "../../interfaces/cart";
 import {parseAddToCartResponse} from "../cartHelper";
 import {parseCartCreateResponse} from "../cartHelper/response";
 import {RefreshTokenService} from './RefreshToken';
-import {CART_CREATE} from "../../constants/ActionTypes/Common/Cart";
-import {cartAddItemPendingStateAction, cartCreatePendingStateAction} from "../../actions/Common/Cart";
+import {
+  cartAddItemFulfilledStateAction,
+  cartAddItemPendingStateAction, cartAddItemRejectedStateAction, cartCreateFulfilledStateAction,
+  cartCreatePendingStateAction,
+  cartCreateRejectedStateAction
+} from "../../actions/Common/Cart";
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -26,10 +30,9 @@ export const authenticateErrorText = 'You should register or login to add item t
 
 export class CartService {
 
-  public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload): Promise<any> {
+  public static async cartCreate(dispatch: Function, payload: ICartCreatePayload): Promise<any> {
     try {
-
-      dispatch(cartCreatePendingStateAction);
+      dispatch(cartCreatePendingStateAction());
 
       const body = {
         data: {
@@ -64,35 +67,24 @@ export class CartService {
       console.log('cartCreate response: ', response);
       if (response.ok) {
         const responseParsed = parseCartCreateResponse(response.data);
-        dispatch({
-          type: ACTION_TYPE + '_FULFILLED',
-          payload: responseParsed,
-        });
+        dispatch(cartAddItemFulfilledStateAction(responseParsed));
         toast.success('You have successfully created a cart');
         return responseParsed.id;
       } else {
-        dispatch({
-          type: ACTION_TYPE + '_REJECTED',
-          error: {error: response.problem},
-        });
+        dispatch(cartCreateRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch({
-        type: ACTION_TYPE + '_REJECTED',
-        payload: {error: error.message},
-      });
+      dispatch(cartCreateRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
   }
 
   // Adds an item to the cart.
-  public static async cartAddItem(
-                                  ACTION_TYPE: string,
-                                  dispatch: Function,
+  public static async cartAddItem(dispatch: Function,
                                   payload: ICartAddItem,
                                   cartId: TCartId | null,
                                   payloadCartCreate: ICartCreatePayload): Promise<any> {
@@ -100,13 +92,13 @@ export class CartService {
       // Create cart if not exist
       if (!cartId) {
         try {
-          cartId = await CartService.cartCreate(CART_CREATE, dispatch, payloadCartCreate);
+          cartId = await CartService.cartCreate(dispatch, payloadCartCreate);
         } catch (err) {
           console.error('await CartService.cartCreate err', err);
         }
       }
 
-      dispatch(cartAddItemPendingStateAction);
+      dispatch(cartAddItemPendingStateAction());
 
       const body = {
         data: {
@@ -130,7 +122,6 @@ export class CartService {
         try {
           const endpoint = `carts/${cartId}/items`;
           const token = await RefreshTokenService.getActualToken(dispatch);
-          console.log('CartService: cartAddItem: token', token);
           if (!token) {
             throw new Error(authenticateErrorText);
           }
@@ -146,27 +137,17 @@ export class CartService {
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
         console.log('cartAddItem responseParsed: ', responseParsed);
-
-        dispatch({
-          type: ACTION_TYPE + '_FULFILLED',
-          payload: responseParsed,
-        });
+        dispatch(cartCreateFulfilledStateAction(responseParsed));
         toast.success('You have successfully added an item to the cart ');
         return responseParsed;
       } else {
-        dispatch({
-          type: ACTION_TYPE + '_REJECTED',
-          error: {error: response.problem},
-        });
+        dispatch(cartAddItemRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch({
-        type: ACTION_TYPE + '_REJECTED',
-        payload: {error: error.message},
-      });
+      dispatch(cartAddItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }

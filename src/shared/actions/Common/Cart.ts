@@ -3,7 +3,7 @@ import {
   CART_CREATE,
 } from '../../constants/ActionTypes/Common/Cart';
 import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Common/Cart";
-import {TCartId} from "../../interfaces/cart/index";
+import {ICartDataResponse, TCartId} from "../../interfaces/cart/index";
 
 
 export const addItemToCartAction = function(
@@ -12,20 +12,40 @@ export const addItemToCartAction = function(
                                             payloadCartCreate: ICartCreatePayload
                                           ) {
   return (dispatch: Function, getState: Function) => {
-    CartService.cartAddItem(CART_ADD_ITEM, dispatch, payload, cartId, payloadCartCreate);
+    CartService.cartAddItem(dispatch, payload, cartId, payloadCartCreate);
   };
 };
 
-export const cartAddItemPendingStateAction = {
+export const cartAddItemPendingStateAction = () => ({
   type: CART_ADD_ITEM + '_PENDING',
-};
+});
 
-export const cartCreatePendingStateAction = {
+export const cartAddItemFulfilledStateAction = (payload: ICartDataResponse) => ({
+  type: CART_ADD_ITEM + '_FULFILLED',
+  payload,
+});
+
+export const cartAddItemRejectedStateAction = (message: string) => ({
+  type: CART_ADD_ITEM + '_REJECTED',
+  payload: {error: message},
+});
+
+export const cartCreatePendingStateAction = () => ({
   type: CART_CREATE + '_PENDING',
-};
+});
+
+export const cartCreateRejectedStateAction = (message: string) => ({
+  type: CART_CREATE + '_REJECTED',
+  payload: {error: message},
+});
+
+export const cartCreateFulfilledStateAction = (payload: ICartDataResponse) => ({
+  type: CART_CREATE + '_FULFILLED',
+  payload,
+});
 
 export const cartCreateAction = function (payload: ICartCreatePayload) {
   return (dispatch: Function, getState: Function) => {
-    CartService.cartCreate(CART_CREATE, dispatch, payload);
+    CartService.cartCreate(dispatch, payload);
   };
 };
