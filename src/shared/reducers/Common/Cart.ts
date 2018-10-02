@@ -171,6 +171,10 @@ export function isCartLoading(state: any, props: any): boolean {
   return (state.cart && state.cart.pending && state.cart.pending === true);
 }
 
+export function getCartId(state: any, props: any): TCartId {
+  return (isCartCreated(state, props) && state.cart.data.id) ? state.cart.data.id : null;
+}
+
 // selectors INNER
 function getProductFromCart(cartState: ICartState, sku: TProductSKU): ICartItem {
   return (cartState.data.items.filter((item: ICartItem): any => item.sku === sku))[0];

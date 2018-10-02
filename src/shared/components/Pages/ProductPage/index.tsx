@@ -43,12 +43,10 @@ import {
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem} from "../../../reducers/Common/Cart";
+import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem, getCartId} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
-  getAppPriceMode,
-  getAppStore,
   getPayloadForCreateCart,
   isAppInitiated,
   isAppLoading,
@@ -72,9 +70,10 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appCurrency: TAppCurrency;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
-  addProductToCart: Function;
+  addItemToCart: Function;
   createCart: Function;
   cartCreated: boolean;
+  cartId: TCartId;
   dispatch: Function;
   accessToken: TAccessToken;
   payloadForCreateCart: ICartCreatePayload;
@@ -188,8 +187,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       /*this.props.addProductToCart(
         createCartItem(this.state.sku, productName, this.state.quantitySelected, this.state.price)
       );*/
-      this.props.addProductToCart(
-        createCartItem(this.state.sku, this.state.quantitySelected,)
+      this.props.addItemToCart(
+        createCartItem(this.state.sku, this.state.quantitySelected),
+        this.props.cartId,
+        this.props.accessToken
       );
       // payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
       this.setState( (prevState: ProductPageState) => {
@@ -376,6 +377,7 @@ export const ConnectedProductPage = reduxify(
     const accessToken = getAccessToken(state, ownProps);
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
+    const cartId: TCartId = getCartId(state, ownProps);
     const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isApp: boolean = isAppInitiated(state, ownProps);
@@ -390,6 +392,7 @@ export const ConnectedProductPage = reduxify(
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
         cartCreated,
+        cartId,
         isApp,
         appCurrency,
         accessToken,
@@ -400,7 +403,7 @@ export const ConnectedProductPage = reduxify(
   (dispatch: Function) => ({
     dispatch,
     // addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCartAction(cartItem)),
-    addProductToCart: (
+    addItemToCart: (
       payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
     ) => dispatch(addItemToCartAction(payload, cartId, accessToken)),
     createCart: (
