@@ -51,15 +51,13 @@ export class CartService {
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
-          console.log('CartService: cartCreate: token', token);
           if (!token) {
-            toast.error(authenticateErrorText);
-            throw new Error("cartCreate: token is not correct!");
+            throw new Error(authenticateErrorText);
           }
           setAuthToken(token);
           response = await api.post('carts', body, { withCredentials: true });
         } catch (err) {
-          throw new Error("cartCreate " + err);
+          console.error('CartService: cartCreate: err', err);
         }
       }
 
@@ -73,7 +71,6 @@ export class CartService {
         toast.success('You have successfully created a cart');
         return responseParsed.id;
       } else {
-        console.error('cartCreate REJECTED response', response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: {error: response.problem},
@@ -83,7 +80,6 @@ export class CartService {
       }
 
     } catch (error) {
-      console.error('cartCreate', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         payload: {error: error.message},
@@ -106,7 +102,6 @@ export class CartService {
         try {
           cartId = await CartService.cartCreate(CART_CREATE, dispatch, payloadCartCreate);
         } catch (err) {
-          console.log('await CartService.cartCreate cartId: ', cartId);
           console.error('await CartService.cartCreate err', err);
         }
       }
@@ -137,13 +132,12 @@ export class CartService {
           const token = await RefreshTokenService.getActualToken(dispatch);
           console.log('CartService: cartAddItem: token', token);
           if (!token) {
-            toast.error(authenticateErrorText);
-            throw new Error("cartAddItem: token is not correct!");
+            throw new Error(authenticateErrorText);
           }
           setAuthToken(token);
           response = await api.post(endpoint, body, { withCredentials: true });
         } catch (err) {
-          console.error(err);
+          console.error('CartService: cartAddItem: err', err);
         }
       }
 
@@ -160,7 +154,6 @@ export class CartService {
         toast.success('You have successfully added an item to the cart ');
         return responseParsed;
       } else {
-        console.error('cartCreate', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: {error: response.problem},
@@ -170,7 +163,6 @@ export class CartService {
       }
 
     } catch (error) {
-      console.error('cartAddItem', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         payload: {error: error.message},
