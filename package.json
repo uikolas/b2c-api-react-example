@@ -224,7 +224,7 @@
     "cpy:prod": "cpy prod.env ./ --rename=.env",
     "build:web": "webpack-cli --config ./web-webpack-config.js --progress --profile --colors",
     "build:web:prod": "cross-env NODE_ENV=production npm run build:web",
-    "dist:dev": "npm run cpy:local:dev && npm run build:web:prod",
+    "dist:dev": "npm run cpy:local:dev && npm run build:web",
     "start:docker": "npm run cpy:local:docker && sudo docker-compose up --build",
     "dist:prod": "npm run cpy:prod && npm run build:web:prod && npm start",
     "dist": "npm run build:web:prod",

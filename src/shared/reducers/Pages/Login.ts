@@ -2,11 +2,12 @@ import {
   PAGES_CUSTOMER_REGISTER,
   PAGES_LOGIN_REQUEST,
   PAGES_CUSTOMER_LOGOUT,
+  REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {
   IReduxState,
 } from '../../../typings/app';
-
+import {TAccessToken} from "../../interfaces/login/index";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -14,7 +15,7 @@ export interface ILoginState extends IReduxState {
     isAuth?: boolean,
     tokenType?: string,
     expiresIn?: string,
-    accessToken?: string,
+    accessToken?: TAccessToken,
     refreshToken?: string,
   };
 }
@@ -30,10 +31,10 @@ export const initialState: ILoginState = {
   },
 };
 
-
 export const pagesLogin = function (state: ILoginState = initialState, action: any): ILoginState {
   switch (action.type) {
     case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
+    case `${REFRESH_TOKEN_REQUEST}_PENDING`:
       return {
         ...state,
         error: null,
@@ -53,6 +54,8 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         rejected: false,
       };
     case `${PAGES_CUSTOMER_REGISTER}_REJECTED`:
+    case `${PAGES_LOGIN_REQUEST}_REJECTED`:
+    case `${REFRESH_TOKEN_REQUEST}_REJECTED`:
       return {
         ...state,
         error: action.error,
@@ -69,6 +72,10 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         rejected: false,
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
+    case `${REFRESH_TOKEN_REQUEST}_FULFILLED`:
+      localStorage.setItem('tokenExpire', (Math.floor(Date.now() / 1000) + action.payload.expiresIn - 120).toString(10));
+      localStorage.setItem('accessToken', action.payload.accessToken);
+      localStorage.setItem('refreshToken', action.payload.refreshToken);
       return {
         ...state,
         data: {
@@ -79,14 +86,6 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         pending: false,
         fulfilled: true,
       };
-    case `${PAGES_LOGIN_REQUEST}_REJECTED`:
-      return {
-        ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
-      };
     case PAGES_CUSTOMER_LOGOUT:
       return {
         ...state,
@@ -96,3 +95,17 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       return state;
   }
 };
+
+// selectors
+
+export function isUserAuthenticated(state: any, props: any): boolean {
+  return (state.pagesLogin && state.pagesLogin.data && state.pagesLogin.data.isAuth === true);
+}
+
+export function getAccessToken(state: any, props: any): TAccessToken | null {
+  return (
+    isUserAuthenticated(state, props) && state.pagesLogin.data.accessToken
+    ? state.pagesLogin.data.accessToken
+    : null
+  );
+}

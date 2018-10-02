@@ -2,6 +2,7 @@ import {
   PAGES_LOGIN_REQUEST,
   PAGES_CUSTOMER_REGISTER,
   PAGES_CUSTOMER_LOGOUT,
+  REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {PagesLoginService} from '../../services/Pages/Login';
 
@@ -11,7 +12,7 @@ export const loginPendingState = {
 };
 
 export const registerPendingState = {
-  type: PAGES_LOGIN_REQUEST + '_PENDING',
+  type: PAGES_CUSTOMER_REGISTER + '_PENDING',
 };
 
 export const sendLoginAction = function (payload: any) {

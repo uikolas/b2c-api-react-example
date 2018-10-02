@@ -16,13 +16,13 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
+import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { push } from 'react-router-redux';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {SprykerFilterElement} from '../../../components/UI/SprykerFilter';
-import {SprykerRange} from '../../../components/UI/SprykerRangeFilter';
+import {SprykerRange, SprykerRangeState} from '../../../components/UI/SprykerRangeFilter';
 import {SprykerButton} from '../../../components/UI/SprykerButton';
 import {getProductDataAction} from '../../../actions/Pages/Product';
 import {sendSearchAction, getCategoriesAction} from '../../../actions/Pages/Search';
@@ -34,6 +34,12 @@ import config from '../../../config';
 
 import {styles} from './styles';
 
+type IQuery = {
+  q?: string,
+  currency?: string,
+  sort?: string,
+  [key: string]: string | number,
+};
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
@@ -41,7 +47,7 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
 
 interface SearchPageState {
   activeFilters: object;
-  rangeFilters: object;
+  rangeFilters: {[key: string]: SprykerRangeState};
   sort: string;
   selectedCategory: number | string;
 }
@@ -62,23 +68,30 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
-    this.setState((prevState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
+    this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
   }
 
-  public updateRangeFilters = (name: string, values: {min: number | string, max: number | string}) => {
-    this.setState((prevState) => ({rangeFilters: {...prevState.rangeFilters, [name]:  {min: values.min, max: values.max}}}));
+  public updateRangeFilters = (name: string, values: SprykerRangeState ) => {
+    this.setState((prevState: SearchPageState) => ({rangeFilters: {...prevState.rangeFilters, [name]:  {min: values.min, max: values.max}}}));
   }
 
   public updateSearch = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
-    this.props.dispatch(sendSearchAction({
+    const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
       ...this.state.activeFilters,
-    }));
+    };
+
+    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
+      query[`${key}[min]`] = this.state.rangeFilters[key].min;
+      query[`${key}[max]`] = this.state.rangeFilters[key].max;
+    });
+
+    this.props.dispatch(sendSearchAction(query));
   }
 
   public handleSetSorting = (e: any) => {
@@ -86,13 +99,28 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public handlePagination = (e: any, value: number | string) => {
-    this.props.dispatch(sendSearchAction({
+    const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
       page: value,
       ...this.state.activeFilters,
-    }));
+    };
+
+    if (value === 'prev') {
+      query.page = this.props.pagination.currentPage - 1;
+    }
+
+    if (value === 'next') {
+      query.page = this.props.pagination.currentPage + 1;
+    }
+
+    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
+      query[`${key}[min]`] = this.state.rangeFilters[key].min;
+      query[`${key}[max]`] = this.state.rangeFilters[key].max;
+    });
+
+    this.props.dispatch(sendSearchAction(query));
   }
 
   public renderProduct = (sku: string, name: string) => {
@@ -102,13 +130,21 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public selectCategory = (category: string | number) => (e: any) => {
     this.setState({selectedCategory: category});
-    this.props.dispatch(sendSearchAction({
+
+    const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
       category,
       ...this.state.activeFilters,
-    }));
+    };
+
+    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
+      query[`${key}[min]`] = this.state.rangeFilters[key].min;
+      query[`${key}[max]`] = this.state.rangeFilters[key].max;
+    });
+
+    this.props.dispatch(sendSearchAction(query));
   }
 
   public render() {
@@ -132,11 +168,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       });
     }
 
-    const renderRangeFilters = rangeFilters && rangeFilters.length
+    const renderRangeFilters: any[] = rangeFilters && rangeFilters.length
       ? rangeFilters.map((filter: any) => (
         <Grid item xs={4} key={filter.name}>
           <SprykerRange
-            attributeName={filter.name}
+            attributeName={filter.name.includes('price') ? 'price' : filter.name}
             min={filter.min} max={filter.max}
             handleChange={this.updateRangeFilters}
           />
@@ -144,9 +180,26 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ))
       : null;
 
-    const pages = [];
+    const pages: any[] = [];
 
-    for (let i = 1; i <= pagination.maxPage; i++) {
+    if (+pagination.currentPage > 1) {
+      pages.push(
+        <BottomNavigationAction
+          showLabel
+          icon={<ChevronLeft />}
+          value="prev"
+          key="prev"
+          className={classes.pageNumber}
+        />
+      );
+    }
+
+    const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
+    const end = pagination.maxPage > 5
+      ? pagination.currentPage <= 5 ? 5 : pagination.currentPage
+      : pagination.maxPage;
+
+    for (let i = start; i <= end; i++) {
       pages.push(
         <BottomNavigationAction
           showLabel
@@ -155,6 +208,18 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
           key={`page-${i}`}
           className={classes.pageNumber}
         />);
+    }
+
+    if (+pagination.currentPage < pagination.maxPage) {
+      pages.push(
+        <BottomNavigationAction
+          showLabel
+          icon={<ChevronRight />}
+          value="next"
+          key="next"
+          className={classes.pageNumber}
+        />
+      );
     }
 
     const categoryList = categories.map((category) => {
@@ -222,7 +287,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             <Grid item xs={9} container>
               {renderFilters}
 
-              {/*{renderRangeFilters}*/}
+              <Grid item xs={12} container>
+                {renderRangeFilters}
+              </Grid>
 
               <Grid item xs={12} container className={classes.buttonsRow}>
                 <Grid
