@@ -23,11 +23,7 @@ export interface ICartAddItem {
 
 export class CartService {
 
-  public static async cartCreate(
-                                  ACTION_TYPE: string,
-                                  dispatch: Function,
-                                  payload: ICartCreatePayload,
-                                  accessToken: TAccessToken): Promise<any> {
+  public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload): Promise<any> {
     try {
       const body = {
         data: {
@@ -37,7 +33,6 @@ export class CartService {
       };
 
       let response: any;
-      //setAuthToken(accessToken);
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         const result = {
@@ -50,7 +45,8 @@ export class CartService {
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
-          response = await api.post('carts', body, { withCredentials: true, headers: {Authorization: `Bearer ${token}`} });
+          setAuthToken(token);
+          response = await api.post('carts', body, { withCredentials: true });
         } catch (err) {
           console.error(err);
         }
@@ -88,12 +84,10 @@ export class CartService {
   }
 
   // Adds an item to the cart.
-  public static async cartAddItem(
-                                  ACTION_TYPE: string,
+  public static async cartAddItem(ACTION_TYPE: string,
                                   dispatch: Function,
                                   payload: ICartAddItem,
-                                  cartId: TCartId,
-                                  accessToken: TAccessToken): Promise<any> {
+                                  cartId: TCartId): Promise<any> {
     try {
       const body = {
         data: {
@@ -103,7 +97,7 @@ export class CartService {
       };
 
       let response: any;
-      setAuthToken(accessToken);
+
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         const result = {
@@ -114,8 +108,14 @@ export class CartService {
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        const endpoint = `carts/${cartId}/items`;
-        response = await api.post(endpoint, body, { withCredentials: true });
+        try {
+          const endpoint = `carts/${cartId}/items`;
+          const token = await RefreshTokenService.getActualToken(dispatch);
+          setAuthToken(token);
+          response = await api.post(endpoint, body, { withCredentials: true });
+        } catch (err) {
+          console.error(err);
+        }
       }
 
       const responseParsed = parseAddToCartResponse(response.data);

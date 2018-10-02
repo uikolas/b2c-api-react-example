@@ -75,7 +75,6 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   cartCreated: boolean;
   cartId: TCartId;
   dispatch: Function;
-  accessToken: TAccessToken;
   payloadForCreateCart: ICartCreatePayload;
 }
 
@@ -179,7 +178,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       // Create cart if not exist
       // TODO: May be moved this logic
       if (this.props.cartCreated === false) {
-        this.props.createCart(this.props.payloadForCreateCart, this.props.accessToken);
+        this.props.createCart(this.props.payloadForCreateCart);
         return;
       }
 
@@ -187,8 +186,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
       this.props.addItemToCart(
         createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
-        this.props.cartId,
-        this.props.accessToken
+        this.props.cartId
       );
 
       this.setState( (prevState: ProductPageState) => {
@@ -372,7 +370,6 @@ export const ConnectedProductPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
-    const accessToken = getAccessToken(state, ownProps);
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
@@ -382,8 +379,7 @@ export const ConnectedProductPage = reduxify(
     const appLoading: boolean = isAppLoading(state, ownProps);
     const isLoading = cartLoading || appLoading || false;
 
-    return (
-      {
+    return ({
         location: routerProps.location ? routerProps.location : ownProps.location,
         isLoading: isLoading ? isLoading : ownProps.pending,
         product: productProps && productProps.data
@@ -393,18 +389,12 @@ export const ConnectedProductPage = reduxify(
         cartId,
         isApp,
         appCurrency,
-        accessToken,
         payloadForCreateCart,
-      }
-    );
+    });
   },
   (dispatch: Function) => ({
     dispatch,
-    addItemToCart: (
-      payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
-    ) => dispatch(addItemToCartAction(payload, cartId, accessToken)),
-    createCart: (
-      payload: ICartCreatePayload, accessToken: TAccessToken
-    ) => dispatch(cartCreateAction(payload, accessToken)),
+    addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
+    createCart: (payload: ICartCreatePayload) => dispatch(cartCreateAction(payload)),
   }),
 )(ProductPage);
