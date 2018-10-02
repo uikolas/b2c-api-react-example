@@ -68,7 +68,6 @@ export class CartService {
       if (response.ok) {
         const responseParsed = parseCartCreateResponse(response.data);
         dispatch(cartAddItemFulfilledStateAction(responseParsed));
-        toast.success('You have successfully created a cart');
         return responseParsed.id;
       } else {
         dispatch(cartCreateRejectedStateAction(response.problem));
@@ -138,7 +137,6 @@ export class CartService {
         const responseParsed = parseAddToCartResponse(response.data);
         console.log('cartAddItem responseParsed: ', responseParsed);
         dispatch(cartCreateFulfilledStateAction(responseParsed));
-        toast.success('You have successfully added an item to the cart ');
         return responseParsed;
       } else {
         dispatch(cartAddItemRejectedStateAction(response.problem));

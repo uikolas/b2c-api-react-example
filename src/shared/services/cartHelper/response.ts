@@ -1,5 +1,6 @@
 import {ICartDataResponse, ICartResponseItem} from "../../interfaces/cart/index";
 import {createCartItemFromResponse} from "./item";
+import {parseImageSets} from "../productHelper/imageSetsParser";
 
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
@@ -10,12 +11,31 @@ export const parseCartCreateResponse = (data: any): ICartDataResponse => {
 };
 
 export const parseAddToCartResponse = (data: any): ICartDataResponse => {
-  const items = data.included
-    .filter((item: any) => ( item.type === 'items' ))
-    .map((item: any) => {
-      return createCartItemFromResponse(item);
-    });
 
+  const result: any = {};
+  // Fill data with concrete products ids
+  if (data.data.relationships.items.data) {
+    data.data.relationships.items.data.forEach((datum: any) => {
+      result[datum.id] = {};
+    });
+  }
+
+  data.included.forEach((row: any) => {
+    if (row.type === 'concrete-product-image-sets' && !result[row.id].images) {
+      const images = parseImageSets(row.attributes.imageSets);
+      result[row.id].image = images[0].externalUrlSmall ? images[0].externalUrlSmall : null;
+    } else if (row.type === 'items' && !result[row.id].sku) {
+      result[row.id].sku = row.id;
+      result[row.id].quantity = row.attributes.quantity;
+      result[row.id].amount = row.attributes.amount;
+      result[row.id].calculations = row.attributes.calculations;
+      result[row.id].groupKey = row.attributes.groupKey;
+    } else if (row.type === 'concrete-products' && !result[row.id].name) {
+      result[row.id].name = row.attributes.name;
+    }
+  });
+
+  const items = Object.values(result);
   return {
     ...parseCommonDataInCartResponse(data),
     items,
