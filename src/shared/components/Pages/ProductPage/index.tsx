@@ -43,7 +43,7 @@ import {
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem, getCartId} from "../../../reducers/Common/Cart";
+import {ICartState, isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
@@ -56,7 +56,7 @@ import {
 } from "../../../reducers/Common/Init";
 import {getAccessToken} from "../../../reducers/Pages/Login";
 import {TAccessToken} from "../../../interfaces/login";
-import {createCartItem} from "../../../services/cartHelper";
+import {createCartItemAddToCart} from "../../../services/cartHelper";
 import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 
@@ -184,15 +184,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       }
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
-      /*this.props.addProductToCart(
-        createCartItem(this.state.sku, productName, this.state.quantitySelected, this.state.price)
-      );*/
+
       this.props.addItemToCart(
-        createCartItem(this.state.sku, this.state.quantitySelected),
+        createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
         this.props.cartId,
         this.props.accessToken
       );
-      // payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
+
       this.setState( (prevState: ProductPageState) => {
         if (this.state.quantitySelected === quantitySelectedInitial) {
           return;
@@ -402,7 +400,6 @@ export const ConnectedProductPage = reduxify(
   },
   (dispatch: Function) => ({
     dispatch,
-    // addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCartAction(cartItem)),
     addItemToCart: (
       payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
     ) => dispatch(addItemToCartAction(payload, cartId, accessToken)),

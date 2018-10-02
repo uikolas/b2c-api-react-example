@@ -1,5 +1,4 @@
 import {
-  CART_ADD_PRODUCT,
   CART_CREATE,
   CART_ADD_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
@@ -13,24 +12,21 @@ import {
   TProductPrice,
 } from "../../interfaces/product";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {ICartDiscounts, ICartTotals, TCartId, TCartPriceMode, TCartStore, TCartType} from "../../interfaces/cart";
+import {
+  ICartItemCalculation, ICartDataResponse, TCartId,
+} from "../../interfaces/cart";
 
 export interface ICartItem {
   sku: TProductSKU;
-  name: TProductName;
+  // name: TProductName;
   quantity: TProductQuantity;
-  price: TProductPrice;
+  amount: TProductPrice | null;
+  calculations: ICartItemCalculation;
+  groupKey: string;
 }
 
-export interface ICartData {
+export interface ICartData extends ICartDataResponse {
   cartCreated: boolean;
-  items: Array<ICartItem>;
-  type: TCartType | null;
-  id: TCartId | null;
-  priceMode: TCartPriceMode | null;
-  store: TCartStore | null;
-  discounts: Array<ICartDiscounts>;
-  totals: ICartTotals | null;
 }
 
 
@@ -41,8 +37,8 @@ export interface ICartState extends IReduxState {
 export const initialState: ICartState = {
   data: {
     cartCreated: false,
+    currency: null,
     items: [],
-    type: null,
     id: null,
     priceMode: null,
     store: null,
@@ -53,42 +49,37 @@ export const initialState: ICartState = {
 
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
-    /*case CART_ADD_PRODUCT:
-      return handleCartAdd(state, action.payload);*/
     case `${CART_ADD_ITEM}_PENDING`:
-      return handleCartAddPending(state, action.payload);
-    case CART_ADD_ITEM:
-      return handleCartAdd(state, action.payload);
+      return handleCartAddItemPending(state, action.payload);
+    case `${CART_ADD_ITEM}_FULFILLED`:
+      return handleCartAddItemFulfilled(state, action.payload);
+    case `${CART_ADD_ITEM}_REJECTED`:
+      return handleCartAddItemRejected(state, action.payload);
     case `${CART_CREATE}_PENDING`:
-      return handleCartPending(state, action.payload);
+      return handleCartCreatePending(state, action.payload);
     case `${CART_CREATE}_FULFILLED`:
-      return handleCartFulfilled(state, action.payload);
+      return handleCartCreateFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
-      return handleCartRejected(state, action.payload);
+      return handleCartCreateRejected(state, action.payload);
     default:
       return state;
   }
 };
 
 // handlers
-const handleCartFulfilled = (cartState: ICartState, payload: any) => {
+const handleCartCreateFulfilled = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {
       ...cartState.data,
       cartCreated: true,
-      type: payload.type,
-      id: payload.id,
-      priceMode: payload.attributes.priceMode,
-      store: payload.attributes.store,
-      discounts: payload.attributes.discounts,
-      totals: payload.attributes.totals,
+      ...payload,
     },
     ...getReducerPartFulfilled(),
   };
 };
 
-const handleCartRejected = (cartState: ICartState, payload: any) => {
+const handleCartCreateRejected = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {
@@ -98,18 +89,17 @@ const handleCartRejected = (cartState: ICartState, payload: any) => {
     ...getReducerPartRejected(payload.error),
   };
 };
-const handleCartPending = (cartState: ICartState, payload: any) => {
+const handleCartCreatePending = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {
-      ...initialState.data,
+      ...cartState.data,
     },
     ...getReducerPartPending(),
   };
 };
 
-
-const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
+/*const handleCartAddItem = (cartState: ICartState, payload: ICartItem) => {
 
   let items: Array<ICartItem> = [];
   const addedItem = payload;
@@ -128,27 +118,40 @@ const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
       ...cartState.data,
       items: [...items],
     },
+    ...getReducerPartFulfilled(),
   };
-};
+};*/
 
-const handleCartAddPending = (cartState: ICartState, payload: any) => {
+const handleCartAddItemFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
   return {
     ...cartState,
     data: {
-      ...initialState.data,
+      ...cartState.data,
+      ...payload,
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleCartAddItemPending = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
     },
     ...getReducerPartPending(),
   };
 };
 
-/*const handleCartRemove = (cartState: ICartState, payload: ICartItem) => {
+const handleCartAddItemRejected = (cartState: ICartState, payload: any) => {
   return {
-    ...cartState.data,
+    ...cartState,
     data: {
-      items: cartState.data.items.filter((item: ICartItem): Array<ICartItem> | boolean => item.sku !== payload.sku)
-    }
+      ...initialState.data,
+    },
+    ...getReducerPartRejected(payload.error),
   };
-};*/
+};
 
 // selectors
 // Number of products(including quantity per each product) in the cart

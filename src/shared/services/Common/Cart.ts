@@ -6,6 +6,8 @@ import {getTestDataPromise} from "../apiFixture/index";
 import {TAccessToken} from "../../interfaces/login";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {TCartId} from "../../interfaces/cart";
+import {parseAddToCartResponse} from "../cartHelper";
+import {parseCartCreateResponse} from "../cartHelper/response";
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -49,11 +51,12 @@ export class CartService {
       }
 
       console.log('cartCreate response: ', response);
+      const responseParsed = parseCartCreateResponse(response.data);
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data.data,
+          payload: responseParsed,
         });
         toast.success('You have successfully created a cart');
         return response.data;
@@ -109,15 +112,18 @@ export class CartService {
         response = await api.post(endpoint, body, { withCredentials: true });
       }
 
+      const responseParsed = parseAddToCartResponse(response.data);
+
       console.log('cartAddItem response: ', response);
+      console.log('cartAddItem responseParsed: ', responseParsed);
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data.data,
+          payload: responseParsed,
         });
         toast.success('You have successfully added an item to the cart ' + cartId);
-        return response.data;
+        return responseParsed;
       } else {
         console.error('cartCreate', response.problem);
         dispatch({

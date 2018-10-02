@@ -1,5 +1,7 @@
-import {createCartItem} from './item';
+import {createCartItemAddToCart} from './item';
+import {parseAddToCartResponse} from './response';
 
 export {
-  createCartItem,
+  createCartItemAddToCart,
+  parseAddToCartResponse,
 };
