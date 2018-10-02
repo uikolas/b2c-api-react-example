@@ -51,6 +51,7 @@ export class CartService {
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
+          console.log('CartService: cartCreate: token', token);
           if (!token) {
             toast.error(authenticateErrorText);
             throw new SyntaxError("cartCreate: token is not correct!");
@@ -104,8 +105,9 @@ export class CartService {
       // Create cart if not exist
       if (!cartId) {
         try {
-          const cartId = await CartService.cartCreate(CART_CREATE, dispatch, payloadCartCreate);
+          cartId = await CartService.cartCreate(CART_CREATE, dispatch, payloadCartCreate);
         } catch (err) {
+          console.log('await CartService.cartCreate cartId: ', cartId);
           console.error(err);
         }
       }
@@ -134,7 +136,7 @@ export class CartService {
         try {
           const endpoint = `carts/${cartId}/items`;
           const token = await RefreshTokenService.getActualToken(dispatch);
-          console.log('cartAddItem : token', token);
+          console.log('CartService: cartAddItem: token', token);
           if (!token) {
             toast.error(authenticateErrorText);
             throw new SyntaxError("cartAddItem: token is not correct!");
