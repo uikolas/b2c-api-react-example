@@ -390,6 +390,7 @@ export const ConnectedProductPage = reduxify(
         isApp,
         appCurrency,
         payloadForCreateCart,
+        isUserLoggedIn,
     });
   },
   (dispatch: Function) => ({
