@@ -29,6 +29,7 @@ interface CartPageProps extends WithStyles<typeof styles> {
 
 interface CartPageState {
   anchorEl: HTMLElement | null;
+  currentItem: any;
 }
 
 export const pageTitle = 'Search results for ';
@@ -36,7 +37,8 @@ export const pageTitle = 'Search results for ';
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
 
   public state: CartPageState = {
-    anchorEl: null
+    anchorEl: null,
+    currentItem: null
   };
 
   public handleDeleteItem = (sku: string) => (e: any) => {
@@ -45,12 +47,27 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     // action del
   }
 
-  public openMenu = (e: any) => {
-    this.setState({ anchorEl: e.currentTarget });
+  public openMenu = (item: any) => (e: any) => {
+    this.setState({ anchorEl: e.currentTarget, currentItem: item });
+  }
+
+  public closeMenu = () => {
+    this.setState({ anchorEl: null, currentItem: null });
+  }
+
+  public setItemQty = (e: any) => {
+    console.info(e.target.value, this.state.currentItem.quantity);
+    this.closeMenu();
   }
 
   public render() {
     const {classes, } = this.props;
+
+    const quantities: number[] = [];
+
+    for (let i = 0; i < 11; i++) {
+      quantities.push(i);
+    }
 
     // export interface ICartItem {
     //   sku: TProductSKU;
@@ -60,7 +77,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     // }
 
     const items = [
-      {sku: 1, name: 'Sony', price: 50, quantity: 1, img: '//images.icecat.biz/img/norm/high/24602396-8292.jpg'},
+      {sku: 1, name: 'Sony', price: 50, quantity: 3, img: '//images.icecat.biz/img/norm/high/24602396-8292.jpg'},
       {sku: 2, name: 'Sony Player', price: 120, quantity: 1, img: '//images.icecat.biz/img/gallery/17360369_3328.jpg'},
       {sku: 3, name: 'Samsung', price: 80, quantity: 2, img: '//images.icecat.biz/img/norm/high/24699831-1991.jpg'}
     ];
@@ -78,14 +95,14 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         <TableCell>
           <span>{item.quantity}</span>
           <IconButton
-            onClick={this.openMenu}
+            onClick={this.openMenu(item)}
           >
             <MoreVertIcon />
           </IconButton>
         </TableCell>
         <TableCell numeric>
           <IconButton  onClick={this.handleDeleteItem(item.sku)}>
-            <DeleteIcon />
+            <DeleteIcon className={classes.delIcon} />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -100,7 +117,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             align="center"
             className={classes.title}
           >
-            Cart have items
+            {items.length > 0 ? `Cart have ${items.length} items` : 'Empty cart, go shopping'}
           </Typography>
         </Grid>
         <Grid
@@ -129,9 +146,18 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         <Menu
           anchorEl={this.state.anchorEl}
           open={!!this.state.anchorEl}
-          onClose={this.handleClose}
+          onClose={this.closeMenu}
         >
-
+          {
+            quantities.map((i: number) => (
+              <MenuItem
+                value={i}
+                key={`qty-${i}`}
+                selected={this.state.currentItem && i === this.state.currentItem.quantity}
+                onClick={this.setItemQty}
+              >{i}</MenuItem>
+            ))
+          }
         </Menu>
       </Grid>
     );
