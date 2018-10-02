@@ -147,7 +147,7 @@ const handleCartAddItemRejected = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {
-      ...initialState.data,
+      ...cartState.data,
     },
     ...getReducerPartRejected(payload.error),
   };

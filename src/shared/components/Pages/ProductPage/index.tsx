@@ -3,6 +3,7 @@ import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { toast } from 'react-toastify';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ProductState} from '../../../reducers/Pages/Product';
@@ -54,10 +55,9 @@ import {
   TAppPriceMode,
   TAppStore,
 } from "../../../reducers/Common/Init";
-import {getAccessToken} from "../../../reducers/Pages/Login";
-import {TAccessToken} from "../../../interfaces/login";
+import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
-import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 
 export const buyBtnTitle = "Add to cart";
@@ -67,6 +67,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
   isApp: boolean;
+  isUserLoggedIn: boolean;
   appCurrency: TAppCurrency;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
@@ -173,7 +174,11 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public handleBuyBtnClick = (event: any): any => {
-    if (this.state.productType === concreteProductType) {
+    if (!this.props.isUserLoggedIn) {
+      toast.error(authenticateErrorText);
+      return;
+    }
+    if (this.state.productType === concreteProductType ) {
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
 
@@ -362,6 +367,7 @@ export const ProductPage = withStyles(styles)(ProductPageBase);
 export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
+    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
     const cartCreated: boolean = isCartCreated(state, ownProps);

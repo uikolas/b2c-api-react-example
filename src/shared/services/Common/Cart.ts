@@ -22,7 +22,7 @@ export interface ICartAddItem {
   quantity: TProductQuantity;
 }
 
-const authenticateErrorText = 'You should register or login to add item to the cart';
+export const authenticateErrorText = 'You should register or login to add item to the cart';
 
 export class CartService {
 
@@ -54,19 +54,18 @@ export class CartService {
           console.log('CartService: cartCreate: token', token);
           if (!token) {
             toast.error(authenticateErrorText);
-            throw new SyntaxError("cartCreate: token is not correct!");
+            throw new Error("cartCreate: token is not correct!");
           }
           setAuthToken(token);
           response = await api.post('carts', body, { withCredentials: true });
         } catch (err) {
-          console.error(err);
+          throw new Error("cartCreate " + err);
         }
       }
 
       console.log('cartCreate response: ', response);
-      const responseParsed = parseCartCreateResponse(response.data);
-
       if (response.ok) {
+        const responseParsed = parseCartCreateResponse(response.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payload: responseParsed,
@@ -74,7 +73,7 @@ export class CartService {
         toast.success('You have successfully created a cart');
         return responseParsed.id;
       } else {
-        console.error('cartCreate', response.problem);
+        console.error('cartCreate REJECTED response', response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: {error: response.problem},
@@ -108,7 +107,7 @@ export class CartService {
           cartId = await CartService.cartCreate(CART_CREATE, dispatch, payloadCartCreate);
         } catch (err) {
           console.log('await CartService.cartCreate cartId: ', cartId);
-          console.error(err);
+          console.error('await CartService.cartCreate err', err);
         }
       }
 
@@ -139,7 +138,7 @@ export class CartService {
           console.log('CartService: cartAddItem: token', token);
           if (!token) {
             toast.error(authenticateErrorText);
-            throw new SyntaxError("cartAddItem: token is not correct!");
+            throw new Error("cartAddItem: token is not correct!");
           }
           setAuthToken(token);
           response = await api.post(endpoint, body, { withCredentials: true });
@@ -148,12 +147,12 @@ export class CartService {
         }
       }
 
-      const responseParsed = parseAddToCartResponse(response.data);
-
       console.log('cartAddItem response: ', response);
-      console.log('cartAddItem responseParsed: ', responseParsed);
 
       if (response.ok) {
+        const responseParsed = parseAddToCartResponse(response.data);
+        console.log('cartAddItem responseParsed: ', responseParsed);
+
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payload: responseParsed,
