@@ -3,12 +3,13 @@ import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture} from './cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
-import {TAccessToken} from "../../interfaces/login";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {TCartId} from "../../interfaces/cart";
 import {parseAddToCartResponse} from "../cartHelper";
 import {parseCartCreateResponse} from "../cartHelper/response";
 import {RefreshTokenService} from './RefreshToken';
+import {CART_CREATE} from "../../constants/ActionTypes/Common/Cart";
+import {cartAddItemPendingStateAction, cartCreatePendingStateAction} from "../../actions/Common/Cart";
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -25,6 +26,9 @@ export class CartService {
 
   public static async cartCreate(ACTION_TYPE: string, dispatch: Function, payload: ICartCreatePayload): Promise<any> {
     try {
+
+      dispatch(cartCreatePendingStateAction);
+
       const body = {
         data: {
           type: "carts",
@@ -61,7 +65,7 @@ export class CartService {
           payload: responseParsed,
         });
         toast.success('You have successfully created a cart');
-        return response.data;
+        return responseParsed.id;
       } else {
         console.error('cartCreate', response.problem);
         dispatch({
@@ -73,7 +77,7 @@ export class CartService {
       }
 
     } catch (error) {
-      console.error('register', error);
+      console.error('cartCreate', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         payload: {error: error.message},
@@ -84,11 +88,24 @@ export class CartService {
   }
 
   // Adds an item to the cart.
-  public static async cartAddItem(ACTION_TYPE: string,
+  public static async cartAddItem(
+                                  ACTION_TYPE: string,
                                   dispatch: Function,
                                   payload: ICartAddItem,
-                                  cartId: TCartId): Promise<any> {
+                                  cartId: TCartId | null,
+                                  payloadCartCreate: ICartCreatePayload): Promise<any> {
     try {
+      // Create cart if not exist
+      if (!cartId) {
+        try {
+          const cartId = await CartService.cartCreate(CART_CREATE, dispatch, payloadCartCreate);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      dispatch(cartAddItemPendingStateAction);
+
       const body = {
         data: {
           type: "items",
@@ -128,7 +145,7 @@ export class CartService {
           type: ACTION_TYPE + '_FULFILLED',
           payload: responseParsed,
         });
-        toast.success('You have successfully added an item to the cart ' + cartId);
+        toast.success('You have successfully added an item to the cart ');
         return responseParsed;
       } else {
         console.error('cartCreate', response.problem);

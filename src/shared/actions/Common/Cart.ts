@@ -6,24 +6,26 @@ import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Comm
 import {TCartId} from "../../interfaces/cart/index";
 
 
-export const addItemToCartAction = function(payload: ICartAddItem, cartId: TCartId) {
+export const addItemToCartAction = function(
+                                            payload: ICartAddItem,
+                                            cartId: TCartId,
+                                            payloadCartCreate: ICartCreatePayload
+                                          ) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(cartAddItemPendingState);
-    CartService.cartAddItem(CART_ADD_ITEM, dispatch, payload, cartId);
+    CartService.cartAddItem(CART_ADD_ITEM, dispatch, payload, cartId, payloadCartCreate);
   };
 };
 
-export const cartAddItemPendingState = {
+export const cartAddItemPendingStateAction = {
   type: CART_ADD_ITEM + '_PENDING',
 };
 
-export const cartCreatePendingState = {
+export const cartCreatePendingStateAction = {
   type: CART_CREATE + '_PENDING',
 };
 
 export const cartCreateAction = function (payload: ICartCreatePayload) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(cartCreatePendingState);
     CartService.cartCreate(CART_CREATE, dispatch, payload);
   };
 };

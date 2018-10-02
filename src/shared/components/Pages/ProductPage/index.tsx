@@ -175,18 +175,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public handleBuyBtnClick = (event: any): any => {
     if (this.state.productType === concreteProductType) {
 
-      // Create cart if not exist
-      // TODO: May be moved this logic
-      if (this.props.cartCreated === false) {
-        this.props.createCart(this.props.payloadForCreateCart);
-        return;
-      }
-
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
 
       this.props.addItemToCart(
         createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
-        this.props.cartId
+        this.props.cartId,
+        this.props.payloadForCreateCart
       );
 
       this.setState( (prevState: ProductPageState) => {
@@ -394,7 +388,9 @@ export const ConnectedProductPage = reduxify(
   },
   (dispatch: Function) => ({
     dispatch,
-    addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
+    addItemToCart: (
+      payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
+    ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
     createCart: (payload: ICartCreatePayload) => dispatch(cartCreateAction(payload)),
   }),
 )(ProductPage);
