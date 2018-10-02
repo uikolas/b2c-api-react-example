@@ -8,6 +8,7 @@ import {TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {TCartId} from "../../interfaces/cart";
 import {parseAddToCartResponse} from "../cartHelper";
 import {parseCartCreateResponse} from "../cartHelper/response";
+import {RefreshTokenService} from './RefreshToken';
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -36,7 +37,7 @@ export class CartService {
       };
 
       let response: any;
-      setAuthToken(accessToken);
+      //setAuthToken(accessToken);
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         const result = {
@@ -47,7 +48,12 @@ export class CartService {
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        response = await api.post('carts', body, { withCredentials: true });
+        try {
+          const token = await RefreshTokenService.getActualToken(dispatch);
+          response = await api.post('carts', body, { withCredentials: true, headers: {Authorization: `Bearer ${token}`} });
+        } catch (err) {
+          console.error(err);
+        }
       }
 
       console.log('cartCreate response: ', response);

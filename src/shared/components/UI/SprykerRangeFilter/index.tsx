@@ -12,7 +12,7 @@ interface SprykerRangeProps extends WithStyles<typeof styles> {
   max?: number | string;
 }
 
-interface SprykerRangeState {
+export interface SprykerRangeState {
   min: number | string;
   max: number | string;
   [key: string]: any;
