@@ -3,6 +3,7 @@ import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { toast } from 'react-toastify';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ProductState} from '../../../reducers/Pages/Product';
@@ -43,12 +44,10 @@ import {
 } from "../../../services/productHelper";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated, isCartLoading, ICartItem} from "../../../reducers/Common/Cart";
+import {ICartState, isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
 import {
   getAppCurrency,
-  getAppPriceMode,
-  getAppStore,
   getPayloadForCreateCart,
   isAppInitiated,
   isAppLoading,
@@ -56,10 +55,9 @@ import {
   TAppPriceMode,
   TAppStore,
 } from "../../../reducers/Common/Init";
-import {getAccessToken} from "../../../reducers/Pages/Login";
-import {TAccessToken} from "../../../interfaces/login";
-import {createCartItem} from "../../../services/cartHelper";
-import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {createCartItemAddToCart} from "../../../services/cartHelper";
+import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 
 export const buyBtnTitle = "Add to cart";
@@ -69,14 +67,15 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
   isApp: boolean;
+  isUserLoggedIn: boolean;
   appCurrency: TAppCurrency;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
-  addProductToCart: Function;
+  addItemToCart: Function;
   createCart: Function;
   cartCreated: boolean;
+  cartId: TCartId;
   dispatch: Function;
-  accessToken: TAccessToken;
   payloadForCreateCart: ICartCreatePayload;
 }
 
@@ -175,23 +174,20 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public handleBuyBtnClick = (event: any): any => {
-    if (this.state.productType === concreteProductType) {
-
-      // Create cart if not exist
-      // TODO: May be moved this logic
-      if (this.props.cartCreated === false) {
-        this.props.createCart(this.props.payloadForCreateCart, this.props.accessToken);
-        return;
-      }
+    if (!this.props.isUserLoggedIn) {
+      toast.error(authenticateErrorText);
+      return;
+    }
+    if (this.state.productType === concreteProductType ) {
 
       const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
-      /*this.props.addProductToCart(
-        createCartItem(this.state.sku, productName, this.state.quantitySelected, this.state.price)
-      );*/
-      this.props.addProductToCart(
-        createCartItem(this.state.sku, this.state.quantitySelected,)
+
+      this.props.addItemToCart(
+        createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
+        this.props.cartId,
+        this.props.payloadForCreateCart
       );
-      // payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
+
       this.setState( (prevState: ProductPageState) => {
         if (this.state.quantitySelected === quantitySelectedInitial) {
           return;
@@ -371,40 +367,37 @@ export const ProductPage = withStyles(styles)(ProductPageBase);
 export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
+    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartProps: ICartState = state.cart ? state.cart : null;
-    const accessToken = getAccessToken(state, ownProps);
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
+    const cartId: TCartId = getCartId(state, ownProps);
     const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isApp: boolean = isAppInitiated(state, ownProps);
     const appLoading: boolean = isAppLoading(state, ownProps);
     const isLoading = cartLoading || appLoading || false;
 
-    return (
-      {
+    return ({
         location: routerProps.location ? routerProps.location : ownProps.location,
         isLoading: isLoading ? isLoading : ownProps.pending,
         product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,
         cartCreated,
+        cartId,
         isApp,
         appCurrency,
-        accessToken,
         payloadForCreateCart,
-      }
-    );
+        isUserLoggedIn,
+    });
   },
   (dispatch: Function) => ({
     dispatch,
-    // addProductToCart: (cartItem: ICartItem) => dispatch(addProductToCartAction(cartItem)),
-    addProductToCart: (
-      payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken
-    ) => dispatch(addItemToCartAction(payload, cartId, accessToken)),
-    createCart: (
-      payload: ICartCreatePayload, accessToken: TAccessToken
-    ) => dispatch(cartCreateAction(payload, accessToken)),
+    addItemToCart: (
+      payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
+    ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
+    createCart: (payload: ICartCreatePayload) => dispatch(cartCreateAction(payload)),
   }),
 )(ProductPage);

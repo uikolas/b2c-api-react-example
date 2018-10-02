@@ -1,41 +1,51 @@
 import {
-  CART_ADD_PRODUCT,
   CART_ADD_ITEM,
   CART_CREATE,
 } from '../../constants/ActionTypes/Common/Cart';
 import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Common/Cart";
-import {ICartItem} from "../../reducers/Common/Cart";
-import {TAccessToken} from "../../interfaces/login";
-import {TCartId} from "../../interfaces/cart/index";
+import {ICartDataResponse, TCartId} from "../../interfaces/cart/index";
 
-// TODO: Add product after cart is created
-/*export const addProductToCartAction = function(cartItem: ICartItem) {
-  return {
-    type: CART_ADD_PRODUCT,
-    payload: {
-      cartItem
-    },
-  };
-};*/
 
-export const addItemToCartAction = function(payload: ICartAddItem, cartId: TCartId, accessToken: TAccessToken) {
+export const addItemToCartAction = function(
+                                            payload: ICartAddItem,
+                                            cartId: TCartId,
+                                            payloadCartCreate: ICartCreatePayload
+                                          ) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(cartAddItemPendingState);
-    CartService.cartAddItem(CART_ADD_ITEM, dispatch, payload, cartId, accessToken);
+    CartService.cartAddItem(dispatch, payload, cartId, payloadCartCreate);
   };
 };
 
-export const cartAddItemPendingState = {
+export const cartAddItemPendingStateAction = () => ({
   type: CART_ADD_ITEM + '_PENDING',
-};
+});
 
-export const cartCreatePendingState = {
+export const cartAddItemFulfilledStateAction = (payload: ICartDataResponse) => ({
+  type: CART_ADD_ITEM + '_FULFILLED',
+  payload,
+});
+
+export const cartAddItemRejectedStateAction = (message: string) => ({
+  type: CART_ADD_ITEM + '_REJECTED',
+  payload: {error: message},
+});
+
+export const cartCreatePendingStateAction = () => ({
   type: CART_CREATE + '_PENDING',
-};
+});
 
-export const cartCreateAction = function (payload: ICartCreatePayload, accessToken: TAccessToken) {
+export const cartCreateRejectedStateAction = (message: string) => ({
+  type: CART_CREATE + '_REJECTED',
+  payload: {error: message},
+});
+
+export const cartCreateFulfilledStateAction = (payload: ICartDataResponse) => ({
+  type: CART_CREATE + '_FULFILLED',
+  payload,
+});
+
+export const cartCreateAction = function (payload: ICartCreatePayload) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(cartCreatePendingState);
-    CartService.cartCreate(CART_CREATE, dispatch, payload, accessToken);
+    CartService.cartCreate(dispatch, payload);
   };
 };
