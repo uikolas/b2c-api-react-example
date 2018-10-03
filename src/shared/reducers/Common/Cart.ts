@@ -60,7 +60,6 @@ export const cart = function (state: ICartState = initialState, action: any): IC
     case `${CART_ADD_ITEM}_FULFILLED`:
       return handleCartAddItemFulfilled(state, action.payload);
     case `${CART_ADD_ITEM}_REJECTED`:
-    case `${CART_DELETE_ITEM}_REJECTED`:
       return handleCartAddItemRejected(state, action.payload);
     case `${CART_CREATE}_PENDING`:
       return handleCartCreatePending(state, action.payload);
@@ -69,7 +68,15 @@ export const cart = function (state: ICartState = initialState, action: any): IC
     case `${CART_CREATE}_REJECTED`:
       return handleCartCreateRejected(state, action.payload);
     case `${CART_DELETE_ITEM}_PENDING`:
-      return state;
+      return {
+        ...state,
+        ...getReducerPartPending(),
+      };
+    case `${CART_DELETE_ITEM}_REJECTED`:
+      return {
+        ...state,
+        ...getReducerPartRejected(action.error),
+      };
     case `${CART_DELETE_ITEM}_FULFILLED`:
       const itemsAfterDelete: Array<ICartItem> = state.data.items.filter((item) => item.sku !== action.itemId);
       return {

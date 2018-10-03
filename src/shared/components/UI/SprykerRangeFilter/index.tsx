@@ -42,28 +42,33 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
     return (
       <FormControl className={classes.root}>
         <Grid container alignItems="center" justify="space-between">
-          <span className={classes.rangeFilterName}>{attributeName}:</span>
-          <TextField
-            id={`${attributeName}-min`}
-            inputProps={{
-              min,
-              max,
-            }}
-            type="number"
-            value={this.state.min}
-            onChange={this.handleChangeValues('min')}
-          />
-          <span> -- </span>
-          <TextField
-            id={`${attributeName}-max`}
-            inputProps={{
-              min,
-              max,
-            }}
-            type="number"
-            value={this.state.max}
-            onChange={this.handleChangeValues('max')}
-          />
+          <span className={classes.rangeFilterName}>{attributeName.includes('price') ? 'price' : attributeName}:</span>
+          <div>
+            <span className={classes.padRight}>from</span>
+            <TextField
+              id={`${attributeName}-min`}
+              inputProps={{
+                min,
+                max,
+              }}
+              type="number"
+              value={this.state.min}
+              onChange={this.handleChangeValues('min')}
+            />
+          </div>
+          <div>
+            <span className={classes.padRight}>to</span>
+            <TextField
+              id={`${attributeName}-max`}
+              inputProps={{
+                min,
+                max,
+              }}
+              type="number"
+              value={this.state.max}
+              onChange={this.handleChangeValues('max')}
+            />
+          </div>
         </Grid>
       </FormControl>
     );

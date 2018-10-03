@@ -172,7 +172,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ? rangeFilters.map((filter: any) => (
         <Grid item xs={4} key={filter.name}>
           <SprykerRange
-            attributeName={filter.name.includes('price') ? 'price' : filter.name}
+            attributeName={filter.name}
             min={filter.min} max={filter.max}
             handleChange={this.updateRangeFilters}
           />
@@ -394,7 +394,7 @@ export const ConnectedSearchPage = reduxify(
         pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
         categories: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categories : ownProps.categories,
         // isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
+        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.isLoading,
       }
     );
   }

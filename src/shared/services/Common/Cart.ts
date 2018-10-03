@@ -165,10 +165,17 @@ export class CartService {
           itemId,
         });
 
-        const newCart = await api.get(`carts/${cartId}`);
+        const newCartResponse: any = await api.get(`carts/${cartId}`);
 
-        const responseParsed = parseAddToCartResponse(newCart.data);
-        dispatch(cartAddItemFulfilledStateAction(responseParsed));
+        if (newCartResponse.ok) {
+          const responseParsed = parseAddToCartResponse(newCartResponse.data);
+          dispatch(cartAddItemFulfilledStateAction(responseParsed));
+        } else {
+          dispatch({
+            type: ACTION_TYPE + '_REJECTED',
+            error: newCartResponse.problem,
+          });
+        }
 
         return response.ok;
       } else {
