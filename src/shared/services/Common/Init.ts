@@ -7,15 +7,19 @@ import {
   STORE_DEFAULT,
 } from '../../constants/Environment';
 import {getTestDataPromise} from "../apiFixture/index";
-
-interface ICartCreatePayload {
-}
+import {
+  IInitApplicationDataPayload,
+  initApplicationDataFulfilledStateAction,
+  initApplicationDataPendingStateAction,
+  initApplicationDataRejectedStateAction
+} from "../../actions/Common/Init";
 
 export class InitAppService {
 
-  public static async getInitData(ACTION_TYPE: string, dispatch: Function, payload?: any): Promise<any> {
+  public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<any> {
     try {
       let response: any;
+      dispatch(initApplicationDataPendingStateAction());
 
       // TODO: this is only for development reasons - remove after finish
       const result = {
@@ -30,26 +34,17 @@ export class InitAppService {
       response = await getTestDataPromise(result);
 
       if (response.ok) {
-        dispatch({
-          type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
-        });
+        dispatch(initApplicationDataFulfilledStateAction(response.data));
         toast.success('Init data was set');
         return response.data;
       } else {
-        dispatch({
-          type: ACTION_TYPE + '_REJECTED',
-          payload: {error: response.problem},
-        });
+        dispatch(initApplicationDataRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch({
-        type: ACTION_TYPE + '_REJECTED',
-        payload: {error: error.message},
-      });
+      dispatch(initApplicationDataRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }

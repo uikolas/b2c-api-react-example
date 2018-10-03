@@ -74,7 +74,7 @@ export class PagesLoginService {
           payload: response.data.data.attributes,
         });
         toast.success('You are now logged in');
-        return response.data;
+        return response.data.data.attributes;
       } else {
         console.error('login', response.problem);
         dispatch({

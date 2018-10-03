@@ -7,11 +7,8 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {
-  CURRENCY_DEFAULT,
-} from '../../constants/Environment';
-import {fixtureSearchTerm, fixtureItems} from '../../components/Pages/SearchPage/fixture';
 import {ISearchPageData} from "../../interfaces/searchPageData";
+import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
@@ -22,7 +19,6 @@ export const initialState: SearchState = {
     suggestions: [],
     items: [],
     searchTerm: '',
-    currency: CURRENCY_DEFAULT,
     filters: [],
     rangeFilters: [],
     sortParams: [],
@@ -41,10 +37,7 @@ export const pageSearch = function (state: SearchState = initialState, action: a
     case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
       return {
         ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
+        ...getReducerPartPending(),
       };
     case `${CATEGORIES_REQUEST}_PENDING`:
       return state;
@@ -57,25 +50,18 @@ export const pageSearch = function (state: SearchState = initialState, action: a
           searchTerm: action.searchTerm,
           currency: action.currency || state.data.currency,
         },
-        pending: false,
-        fulfilled: true,
+        ...getReducerPartFulfilled(),
       };
     case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
     case `${CATEGORIES_REQUEST}_REJECTED`:
       return {
         ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
+        ...getReducerPartRejected(action.error),
       };
     case `${PAGES_SEARCH_REQUEST}_PENDING`:
       return {
         ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
+        ...getReducerPartPending(),
       };
     case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
       return {
@@ -88,8 +74,7 @@ export const pageSearch = function (state: SearchState = initialState, action: a
           sortParams: action.sortParams,
           pagination: action.pagination,
         },
-        pending: false,
-        fulfilled: true,
+        ...getReducerPartFulfilled(),
       };
     case `${CATEGORIES_REQUEST}_FULFILLED`:
       return {
@@ -102,10 +87,7 @@ export const pageSearch = function (state: SearchState = initialState, action: a
     case `${PAGES_SEARCH_REQUEST}_REJECTED`:
       return {
         ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
+        ...getReducerPartRejected(action.error),
       };
     case PAGES_SEARCH_REQUEST_CLEAR:
       return {
@@ -116,3 +98,20 @@ export const pageSearch = function (state: SearchState = initialState, action: a
       return state;
   }
 };
+
+// selectors
+export function getSearchTerm(state: any, props: any): string | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.searchTerm
+      ? state.pageSearch.data.searchTerm
+      : null
+  );
+}
+
+export function getSuggestions(state: any, props: any): string | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.suggestions
+      ? state.pageSearch.data.suggestions
+      : null
+  );
+}

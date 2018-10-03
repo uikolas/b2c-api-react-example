@@ -17,6 +17,7 @@ interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
   customer?: any;
   isAuth?: boolean;
+  refreshToken?: string;
   isLoading?: boolean;
   handleSubmitRegisterForm: Function;
   handleSubmitLoginForm: Function;
@@ -54,7 +55,6 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
             <RegisterForm handleSubmit={this.props.handleSubmitRegisterForm} />
           </Grid>
         </AppMain>
-
       </React.Fragment>
     );
   }
@@ -69,8 +69,9 @@ export const ConnectedLogin = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        customer: pagesLoginProps && pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
-        isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
+        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customer : ownProps.customer,
+        isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
+        refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
         isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
       }
     );
