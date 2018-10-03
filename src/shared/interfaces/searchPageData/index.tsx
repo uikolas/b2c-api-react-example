@@ -1,5 +1,6 @@
 
 import {IProductCard} from "../product";
+import {TAppCurrency} from "../../reducers/Common/Init";
 
 interface FilterValue {
   value: any;
@@ -9,7 +10,7 @@ interface FilterValue {
 interface ValueFacets {
   name?: string;
   docCount?: any;
-  values?: Array<FilterValue>
+  values?: Array<FilterValue>;
 }
 
 interface RangeFacets {
@@ -42,7 +43,8 @@ export interface ISearchPageData {
   filters?: Array<ValueFacets>;
   rangeFilters?: Array<RangeFacets>;
   searchTerm?: string;
+  currency?: TAppCurrency;
   sortParams?: Array<string>;
   pagination: Pagination;
-  categories: Array<Category>
+  categories: Array<Category>;
 }
