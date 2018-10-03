@@ -4,6 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import {AppLogo} from '../AppLogo';
 import CatalogSearch from '../CatalogSearch';
@@ -22,6 +23,9 @@ import {SprykerButton} from '../../UI/SprykerButton';
 import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
+import {initApplicationDataAction} from "../../../actions/Common/Init";
+import {isAppInitiated, isAppLoading} from "../../../reducers/Common/Init";
+import {Preloader} from "../Preloader/index";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -32,6 +36,8 @@ interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   searchTerm?: string;
   cartItemsQuantity: TProductQuantity;
   cartProductsQuantity: TProductQuantity;
+  initApplicationData: Function;
+  isAppDataSet: boolean;
 }
 
 interface AppHeaderState {
@@ -43,6 +49,13 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
   public state: AppHeaderState = {
     isCartNotificationOpen: false,
   };
+
+  public componentDidMount = () => {
+    if (!this.props.isAppDataSet) {
+      this.props.initApplicationData(null);
+      return;
+    }
+  }
 
   public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
@@ -63,7 +76,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
   }
 
   public render(): JSX.Element {
-    const { classes, location, isAuth, cartItemsQuantity, cartProductsQuantity } = this.props;
+    const { classes, location, isAuth, cartItemsQuantity, cartProductsQuantity, isLoading } = this.props;
 
     return (
       <AppBar position="absolute" color="default" className={classes.appBar}>
@@ -122,6 +135,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
           </Grid>
 
         </Toolbar>
+        {isLoading ? <Preloader extraClasses={classes.preloader}/> : null}
       </AppBar>
     );
   }
@@ -136,17 +150,24 @@ export const AppHeader = reduxify(
     const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
     const cartItemsQuantity: TProductQuantity = getTotalItemsQuantity(state, ownProps);
     const cartProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
-    return (
-      {
+    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const appLoading: boolean = isAppLoading(state, ownProps);
+    const isLoading = appLoading || ownProps.pending || false;
+
+    return ({
         location: routerProps.location ? routerProps.location : ownProps.location,
         customer: pagesLoginProps && pagesLoginProps.data.customer ? pagesLoginProps.data.customer : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-        isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
         suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
         cartItemsQuantity,
         cartProductsQuantity,
-      }
-    );
-  }
+        isAppDataSet,
+        isLoading,
+    });
+  },
+  (dispatch: Function) => ({
+    dispatch,
+    initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
+  }),
 )(DecoratedHeader);

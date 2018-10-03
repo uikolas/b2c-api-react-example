@@ -12,4 +12,7 @@ export const styles = (theme: Theme) => createStyles({
     top: "70px",
     right: "21px",
   },
+  preloader: {
+    top: "70px",
+  },
 });
