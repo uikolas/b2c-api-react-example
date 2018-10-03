@@ -1,7 +1,7 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {cartCreateFixture} from './cartFixture';
+import {cartCreateFixture, cartUpdateQuantityFixture} from './cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {TCartId} from "../../interfaces/cart";
@@ -213,7 +213,7 @@ export class CartService {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: cartCreateFixture.data,
+          data: cartUpdateQuantityFixture.data,
         };
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
@@ -225,7 +225,7 @@ export class CartService {
             throw new Error(authenticateErrorText);
           }
           setAuthToken(token);
-          response = await api.post(endpoint, body, { withCredentials: true });
+          response = await api.patch(endpoint, body, { withCredentials: true });
         } catch (err) {
           console.error('CartService: cartUpdateItem: err', err);
         }
