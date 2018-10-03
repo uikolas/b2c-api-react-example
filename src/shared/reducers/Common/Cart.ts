@@ -1,6 +1,7 @@
 import {
   CART_CREATE,
   CART_ADD_ITEM,
+  CART_DELETE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
 import {
   IReduxState,
@@ -35,7 +36,6 @@ export interface ICartData extends ICartDataResponse {
   cartCreated: boolean;
 }
 
-
 export interface ICartState extends IReduxState {
   data: ICartData;
 }
@@ -60,6 +60,7 @@ export const cart = function (state: ICartState = initialState, action: any): IC
     case `${CART_ADD_ITEM}_FULFILLED`:
       return handleCartAddItemFulfilled(state, action.payload);
     case `${CART_ADD_ITEM}_REJECTED`:
+    case `${CART_DELETE_ITEM}_REJECTED`:
       return handleCartAddItemRejected(state, action.payload);
     case `${CART_CREATE}_PENDING`:
       return handleCartCreatePending(state, action.payload);
@@ -67,6 +68,16 @@ export const cart = function (state: ICartState = initialState, action: any): IC
       return handleCartCreateFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
       return handleCartCreateRejected(state, action.payload);
+    case `${CART_DELETE_ITEM}_PENDING`:
+      return state;
+    case `${CART_DELETE_ITEM}_FULFILLED`:
+      const itemsAfterDelete: Array<ICartItem> = state.data.items.filter((item) => item.sku !== action.itemId);
+      return {
+        ...state,
+        data: {...state.data, items: itemsAfterDelete},
+        ...getReducerPartFulfilled(),
+      };
+
     default:
       return state;
   }
@@ -108,7 +119,12 @@ const handleCartCreatePending = (cartState: ICartState, payload: any) => {
 /*const handleCartAddItem = (cartState: ICartState, payload: ICartItem) => {
 
   let items: Array<ICartItem> = [];
-  const addedItem = payload;
+  const addedItem = {
+    sku: payload.sku,
+    name: payload.name,
+    quantity: payload.quantity,
+    price: payload.price,
+  };
   const existedItem = getProductFromCart(cartState, payload.sku);
   if (existedItem) {
     items = getCartItemsWithoutSelected(cartState, payload.sku);

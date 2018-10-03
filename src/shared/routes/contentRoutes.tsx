@@ -6,6 +6,7 @@ import {NotFound} from '../components/Pages/NotFound';
 import {ConnectedLogin} from '../components/Pages/LoginPage';
 import {ConnectedSearchPage} from '../components/Pages/SearchPage';
 import {ConnectedProductPage} from '../components/Pages/ProductPage';
+import {ConnectedCartPage} from '../components/Pages/CartPage';
 import config from '../config';
 
 export const getContentRoutes = function() {
@@ -15,7 +16,7 @@ export const getContentRoutes = function() {
       <Route path={`${config.WEB_PATH}search`} component={ConnectedSearchPage} />
       <Route path={`${config.WEB_PATH}product`} component={ConnectedProductPage} />
       <Route path={`${config.WEB_PATH}login`} component={ConnectedLogin} />
-      <Route path={`${config.WEB_PATH}cart`} render={() => <div>Cart Page</div>}/>
+      <Route path={`${config.WEB_PATH}cart`} component={ConnectedCartPage} />
       <Route path={`${config.WEB_PATH}*`} component={NotFound} />
     </Switch>
   );
