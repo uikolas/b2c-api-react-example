@@ -10,7 +10,9 @@ import {parseCartCreateResponse} from "../cartHelper/response";
 import {RefreshTokenService} from './RefreshToken';
 import {
   cartAddItemFulfilledStateAction,
-  cartAddItemPendingStateAction, cartAddItemRejectedStateAction, cartCreateFulfilledStateAction,
+  cartAddItemPendingStateAction,
+  cartAddItemRejectedStateAction,
+  cartCreateFulfilledStateAction,
   cartCreatePendingStateAction,
   cartCreateRejectedStateAction
 } from "../../actions/Common/Cart";
@@ -67,7 +69,7 @@ export class CartService {
       console.log('cartCreate response: ', response);
       if (response.ok) {
         const responseParsed = parseCartCreateResponse(response.data);
-        dispatch(cartAddItemFulfilledStateAction(responseParsed));
+        dispatch(cartCreateFulfilledStateAction(responseParsed));
         return responseParsed.id;
       } else {
         dispatch(cartCreateRejectedStateAction(response.problem));
@@ -136,7 +138,7 @@ export class CartService {
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
         console.log('cartAddItem responseParsed: ', responseParsed);
-        dispatch(cartCreateFulfilledStateAction(responseParsed));
+        dispatch(cartAddItemFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
         dispatch(cartAddItemRejectedStateAction(response.problem));
