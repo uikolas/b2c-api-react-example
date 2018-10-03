@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {ICartState, ICartItem, getCartId} from '../../../reducers/Common/Cart';
+import {ICartState, ICartItem, getCartId, isCartLoading} from '../../../reducers/Common/Cart';
 import {getFormattedPrice} from '../../../services/productHelper';
 import {cartDeleteItemAction, updateItemInCartAction} from '../../../actions/Common/Cart';
 import {styles} from './styles';
@@ -24,7 +24,7 @@ import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/ca
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {ICartAddItem} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
-import {TProductQuantity} from "../../../interfaces/product/index";
+import {AppMain} from "../../Common/AppMain/index";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -34,6 +34,7 @@ interface CartPageProps extends WithStyles<typeof styles> {
   cartId: TCartId;
   currency: TAppCurrency;
   updateItemInCart: Function;
+  isLoading: boolean;
 }
 
 interface CartPageState {
@@ -84,7 +85,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   }
 
   public render() {
-    const {classes, items, totals} = this.props;
+    const {classes, items, totals, isLoading} = this.props;
 
     const quantities: number[] = [];
 
@@ -142,63 +143,65 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     ));
 
     return (
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography
-            variant="title"
-            noWrap
-            align="center"
-            className={classes.title}
+      <AppMain isLoading={isLoading}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              variant="title"
+              noWrap
+              align="center"
+              className={classes.title}
+            >
+              {items.length > 0 ? `Cart have ${items.length} items` : 'Empty cart, go shopping'}
+            </Typography>
+          </Grid>
+          <Grid
+            item xs={9}
+            container
+            alignItems="center"
           >
-            {items.length > 0 ? `Cart have ${items.length} items` : 'Empty cart, go shopping'}
-          </Typography>
-        </Grid>
-        <Grid
-          item xs={9}
-          container
-          alignItems="center"
-        >
-          <Paper className={classes.root}>
-            <div className={classes.tableWrapper}>
-              <Table className={classes.table}>
-                <TableBody>
-                  {rows}
-                </TableBody>
-              </Table>
-            </div>
-          </Paper>
-        </Grid>
+            <Paper className={classes.root}>
+              <div className={classes.tableWrapper}>
+                <Table className={classes.table}>
+                  <TableBody>
+                    {rows}
+                  </TableBody>
+                </Table>
+              </div>
+            </Paper>
+          </Grid>
 
-        <Grid
-          item xs={3}
-          container
-          direction="column"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Typography>SubTotal: {totals.subtotal}</Typography>
-          <Typography>TaxTotal: {totals.taxTotal}</Typography>
-          <Typography >Discount: {`- ${totals.discountTotal}`}</Typography>
-          <Typography variant="body2" color="primary">GrandTotal: {totals.grandTotal}</Typography>
-        </Grid>
+          <Grid
+            item xs={3}
+            container
+            direction="column"
+            justify="space-evenly"
+            alignItems="center"
+          >
+            <Typography>SubTotal: {totals.subtotal}</Typography>
+            <Typography>TaxTotal: {totals.taxTotal}</Typography>
+            <Typography >Discount: {`- ${totals.discountTotal}`}</Typography>
+            <Typography variant="body2" color="primary">GrandTotal: {totals.grandTotal}</Typography>
+          </Grid>
 
-        <Menu
-          anchorEl={this.state.anchorEl}
-          open={!!this.state.anchorEl}
-          onClose={this.closeMenu}
-        >
-          {
-            quantities.map((i: number) => (
-              <MenuItem
-                value={i}
-                key={`qty-${i}`}
-                selected={this.state.currentItem && i === this.state.currentItem.quantity}
-                onClick={this.setItemQty}
-              >{i}</MenuItem>
-            ))
-          }
-        </Menu>
+          <Menu
+            anchorEl={this.state.anchorEl}
+            open={!!this.state.anchorEl}
+            onClose={this.closeMenu}
+          >
+            {
+              quantities.map((i: number) => (
+                <MenuItem
+                  value={i}
+                  key={`qty-${i}`}
+                  selected={this.state.currentItem && i === this.state.currentItem.quantity}
+                  onClick={this.setItemQty}
+                >{i}</MenuItem>
+              ))
+            }
+          </Menu>
       </Grid>
+      </AppMain>
     );
   }
 }
@@ -211,6 +214,8 @@ export const ConnectedCartPage = reduxify(
     const cartProps: ICartState = state.cart ? state.cart : null;
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
+    const cartLoading: boolean = isCartLoading(state, ownProps);
+    const isLoading = cartLoading || false;
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -218,6 +223,7 @@ export const ConnectedCartPage = reduxify(
         totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
         cartId,
         currency,
+        isLoading,
       }
     );
   },
