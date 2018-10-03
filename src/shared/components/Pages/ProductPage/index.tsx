@@ -38,14 +38,12 @@ import {
   findIdProductConcreteByPath,
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
-import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
-import {initAppAction} from "../../../actions/Common/Init";
+import {addItemToCartAction} from "../../../actions/Common/Cart";
+import {isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {
   getAppCurrency,
   getPayloadForCreateCart,
   isAppInitiated,
-  isAppLoading,
   TAppCurrency,
   TAppPriceMode,
   TAppStore,
@@ -61,16 +59,14 @@ const quantitySelectedInitial = 1;
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isLoading: boolean;
-  isApp: boolean;
+  isAppDataSet: boolean;
   isUserLoggedIn: boolean;
-  appCurrency: TAppCurrency;
+  currency: TAppCurrency;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
   addItemToCart: Function;
-  createCart: Function;
   cartCreated: boolean;
   cartId: TCartId;
-  dispatch: Function;
   payloadForCreateCart: ICartCreatePayload;
 }
 
@@ -99,9 +95,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (!this.props.isApp) {
-      this.props.dispatch(initAppAction(null));
-    }
     if (this.props.product) {
       this.setInitialData();
     }
@@ -277,13 +270,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    const {classes, isLoading, appCurrency} = this.props;
+    const {classes, isLoading, currency} = this.props;
     console.info('state: ', this.state);
     console.info('isLoading: ', isLoading);
 
     return (
       <AppMain isLoading={isLoading}>
-        { (!this.props.product || !this.state.productType || !this.props.isApp)
+        { (!this.props.product || !this.state.productType || !this.props.isAppDataSet)
           ? null
           : (
             <div className={classes.root} >
@@ -295,7 +288,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={getFormattedPrice(this.state.price, appCurrency)}
+                    price={getFormattedPrice(this.state.price, currency)}
                   />
 
                   { this.state.superAttributes
@@ -337,8 +330,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                       }
                     </Grid>
                   </Grid>
-
-
                 </Grid>
               </Grid>
               <Grid container justify="center" >
@@ -364,15 +355,13 @@ export const ConnectedProductPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
-    const cartProps: ICartState = state.cart ? state.cart : null;
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
-    const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
-    const isApp: boolean = isAppInitiated(state, ownProps);
-    const appLoading: boolean = isAppLoading(state, ownProps);
-    const isLoading = cartLoading || appLoading || false;
+    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const isLoading = cartLoading || false;
 
     return ({
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -382,17 +371,15 @@ export const ConnectedProductPage = reduxify(
           : ownProps.selectedProduct,
         cartCreated,
         cartId,
-        isApp,
-        appCurrency,
+        isAppDataSet,
+        currency,
         payloadForCreateCart,
         isUserLoggedIn,
     });
   },
   (dispatch: Function) => ({
-    dispatch,
     addItemToCart: (
       payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
     ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
-    createCart: (payload: ICartCreatePayload) => dispatch(cartCreateAction(payload)),
   }),
 )(ProductPage);

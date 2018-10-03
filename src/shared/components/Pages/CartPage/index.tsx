@@ -24,14 +24,15 @@ import {styles} from './styles';
 import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
 import {NavLink} from "react-router-dom";
 import config from "../../../config";
+import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
-  location: string,
-  isLoading: boolean,
-  items: Array<ICartItem>,
-  totals: ICartTotals,
-  cartId: TCartId,
+  location: string;
+  items: Array<ICartItem>;
+  totals: ICartTotals;
+  cartId: TCartId;
+  currency: TAppCurrency;
 }
 
 interface CartPageState {
@@ -68,7 +69,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   }
 
   public render() {
-    const {classes, isLoading, items, totals} = this.props;
+    const {classes, items, totals} = this.props;
 
     const quantities: number[] = [];
 
@@ -90,7 +91,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         <TableCell>
           <img src={item.image} height={60} />
         </TableCell>
-        <TableCell>{getFormattedPrice(item.calculations.sumPrice)}</TableCell>
+        <TableCell>{getFormattedPrice(item.calculations.sumPrice, this.props.currency)}</TableCell>
         <TableCell>
           <span>{item.quantity}</span>
           <IconButton
@@ -137,7 +138,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           </Typography>
         </Grid>
         <Grid item xs={12}>
-        <AppMain isLoading={isLoading} />
+
         </Grid>
         <Grid
           item xs={9}
@@ -199,13 +200,14 @@ export const ConnectedCartPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const cartProps: ICartState = state.cart ? state.cart : null;
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: cartProps && cartProps.pending ? cartProps.pending : ownProps.isLoading || false,
         items: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
         totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
         cartId: cartProps && cartProps.data ? cartProps.data.id : ownProps.id,
+        currency,
       }
     );
   }

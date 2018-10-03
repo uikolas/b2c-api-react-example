@@ -8,6 +8,7 @@ import {
   IReduxState,
 } from '../../../typings/app';
 import {TAccessToken} from "../../interfaces/login/index";
+import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -37,39 +38,27 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
       return {
         ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
+        ...getReducerPartPending(),
       };
     case `${PAGES_CUSTOMER_REGISTER}_FULFILLED`:
       return {
-        error: null,
         data: {
           customer: action.payload,
           isAuth: false,
         },
-        pending: false,
-        fulfilled: true,
-        rejected: false,
+        ...getReducerPartFulfilled(),
       };
     case `${PAGES_CUSTOMER_REGISTER}_REJECTED`:
     case `${PAGES_LOGIN_REQUEST}_REJECTED`:
     case `${REFRESH_TOKEN_REQUEST}_REJECTED`:
       return {
         ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
+        ...getReducerPartRejected(action.error),
       };
     case `${PAGES_LOGIN_REQUEST}_PENDING`:
       return {
         ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
+        ...getReducerPartPending(),
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
     case `${REFRESH_TOKEN_REQUEST}_FULFILLED`:
@@ -83,8 +72,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
           isAuth: true,
           ...action.payload,
         },
-        pending: false,
-        fulfilled: true,
+        ...getReducerPartFulfilled(),
       };
     case PAGES_CUSTOMER_LOGOUT:
       localStorage.clear();
@@ -108,5 +96,13 @@ export function getAccessToken(state: any, props: any): TAccessToken | null {
     isUserAuthenticated(state, props) && state.pagesLogin.data.accessToken
     ? state.pagesLogin.data.accessToken
     : null
+  );
+}
+
+export function getLoginCustomer(state: any, props: any): any | null {
+  return (
+    isUserAuthenticated(state, props) && state.pagesLogin.data && state.pagesLogin.data.customer
+      ? state.pagesLogin.data.customer
+      : null
   );
 }

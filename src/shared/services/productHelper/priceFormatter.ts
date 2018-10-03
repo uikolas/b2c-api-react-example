@@ -1,11 +1,11 @@
 import {
-  CURRENCY_DEFAULT,
   LOCALE_DEFAULT,
 } from '../../constants/Environment';
+import {TAppCurrency} from "../../reducers/Common/Init";
 
 export const getFormattedPrice = (
   value: number,
-  currency: string = CURRENCY_DEFAULT,
+  currency: TAppCurrency,
   locale: string = LOCALE_DEFAULT
 ): string => {
   const formatter = new Intl.NumberFormat(locale, {

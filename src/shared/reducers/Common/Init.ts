@@ -13,7 +13,7 @@ export type TAppCurrency = string | null;
 export type TAppStore = string | null;
 
 export interface IInitData {
-  ok: boolean;
+  ok?: boolean;
   priceMode: TAppPriceMode;
   currency: TAppCurrency;
   store: TAppStore;
@@ -74,7 +74,7 @@ const handleInitAppPending = (appState: IInitState, payload: any) => {
   return {
     ...appState,
     data: {
-      ...initialState.data,
+      ...appState.data,
     },
     ...getReducerPartPending(),
   };

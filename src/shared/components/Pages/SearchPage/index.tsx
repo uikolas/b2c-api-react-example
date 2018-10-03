@@ -33,10 +33,11 @@ import {ISearchPageData} from "../../../interfaces/searchPageData";
 import config from '../../../config';
 
 import {styles} from './styles';
+import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 
 type IQuery = {
   q?: string,
-  currency?: string,
+  currency: TAppCurrency,
   sort?: string,
   [key: string]: string | number,
 };
@@ -382,19 +383,20 @@ export const ConnectedSearchPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : ownProps.items,
         searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
-        currency: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currency : ownProps.currency,
         filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
         rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
         sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
         pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
         categories: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categories : ownProps.categories,
         // isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.isLoading,
+        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
+        currency,
       }
     );
   }
