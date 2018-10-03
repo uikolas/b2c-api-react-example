@@ -5,13 +5,10 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { push } from 'react-router-redux';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { NavLink } from 'react-router-dom';
 import {RouteProps} from "react-router";
 
 import config from '../../../config';
@@ -24,12 +21,13 @@ import {SprykerButton} from '../../UI/SprykerButton';
 import {styles} from './styles';
 import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../../actions/Pages/Search';
 import {getProductDataAction} from "../../../actions/Pages/Product";
+import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
   suggestions?: Array<IProductCard>;
   searchTerm?: string;
-  currency?: string;
+  currency: TAppCurrency;
   isLoading?: boolean;
   getSuggestions?: Function;
   getSearchResult?: Function;
@@ -200,13 +198,14 @@ const CatalogSearchComponent = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
         searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
-        currency: searchProps && searchProps.data.currency ? searchProps.data.currency : ownProps.currency,
         isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
+        currency,
       }
     );
   },

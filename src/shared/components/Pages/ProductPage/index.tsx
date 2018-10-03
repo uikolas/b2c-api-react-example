@@ -39,12 +39,11 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import {addItemToCartAction} from "../../../actions/Common/Cart";
-import {ICartState, isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
+import {isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {
   getAppCurrency,
   getPayloadForCreateCart,
   isAppInitiated,
-  isAppLoading,
   TAppCurrency,
   TAppPriceMode,
   TAppStore,

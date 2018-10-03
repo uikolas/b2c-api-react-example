@@ -42,7 +42,6 @@ export interface ISearchPageData {
   filters?: Array<ValueFacets>;
   rangeFilters?: Array<RangeFacets>;
   searchTerm?: string;
-  currency?: string;
   sortParams?: Array<string>;
   pagination: Pagination;
   categories: Array<Category>

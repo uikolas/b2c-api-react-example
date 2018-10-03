@@ -11,9 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import {getFormattedPrice} from '../../../services/productHelper';
 import {IProductCard} from '../../../interfaces/product';
 import {styles} from './styles';
+import {TAppCurrency} from "../../../reducers/Common/Init";
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
-  currency?: string;
+  currency: TAppCurrency;
   onSelectProduct?: Function;
 }
 

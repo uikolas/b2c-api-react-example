@@ -7,9 +7,6 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {
-  CURRENCY_DEFAULT,
-} from '../../constants/Environment';
 import {ISearchPageData} from "../../interfaces/searchPageData";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
@@ -22,7 +19,6 @@ export const initialState: SearchState = {
     suggestions: [],
     items: [],
     searchTerm: '',
-    currency: CURRENCY_DEFAULT,
     filters: [],
     rangeFilters: [],
     sortParams: [],

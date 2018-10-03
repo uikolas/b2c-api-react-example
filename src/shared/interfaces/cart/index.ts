@@ -1,4 +1,5 @@
 import {ICartItem} from "../../reducers/Common/Cart";
+import {TAppCurrency} from "../../reducers/Common/Init";
 
 export type TCartId = string;
 export type TCartPriceMode = string;
@@ -28,7 +29,7 @@ export interface ICartTotals {
 
 export interface ICartDataResponse {
   id: TCartId;
-  currency: string;
+  currency: TAppCurrency;
   discounts: ICartDiscounts | any;
   priceMode: TCartPriceMode;
   store: TCartStore;
