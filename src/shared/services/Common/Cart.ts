@@ -154,7 +154,7 @@ export class CartService {
     }
   }
 
-  public static async cartDeleteItem(ACTION_TYPE: string, dispatch: Function, cartId: string, itemId: string): Promise<any> {
+  public static async cartDeleteItem(ACTION_TYPE: string, dispatch: Function, cartId: TCartId, itemId: TProductSKU): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);

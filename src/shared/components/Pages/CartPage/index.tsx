@@ -25,6 +25,7 @@ import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {ICartAddItem} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
 import {AppMain} from "../../Common/AppMain/index";
+import {TProductSKU} from "../../../interfaces/product/index";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -34,6 +35,7 @@ interface CartPageProps extends WithStyles<typeof styles> {
   cartId: TCartId;
   currency: TAppCurrency;
   updateItemInCart: Function;
+  deleteItemInCart: Function;
   isLoading: boolean;
 }
 
@@ -68,12 +70,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   // Update quantity of the item
   public setItemQty = (e: any) => {
     const newQuantity = e.target.value;
-    console.info('setItemQty: newQuantity', newQuantity);
-    console.info('setItemQty: oldQuantity', this.state.currentItem.quantity);
 
-    // TODO: If is selected 0, the cart item should be removed from the cart
+    // If is selected 0, the cart item should be removed from the cart
     if (newQuantity <= 0) {
-      console.info('Remove item start');
+      this.props.deleteItemInCart(this.props.cartId, this.state.currentItem.sku);
     } else {
       this.props.updateItemInCart(
         createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
@@ -231,5 +231,8 @@ export const ConnectedCartPage = reduxify(
     updateItemInCart: (
       payload: ICartAddItem, cartId: TCartId
     ) => dispatch(updateItemInCartAction(payload, cartId)),
+    deleteItemInCart: (
+      cartId: TCartId, itemId: TProductSKU
+    ) => dispatch(cartDeleteItemAction(cartId, itemId)),
   })
 )(CartPage);

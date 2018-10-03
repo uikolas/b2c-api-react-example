@@ -6,6 +6,7 @@ import {
 } from '../../constants/ActionTypes/Common/Cart';
 import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Common/Cart";
 import {ICartDataResponse, TCartId} from "../../interfaces/cart/index";
+import {TProductSKU} from "../../interfaces/product/index";
 
 
 export const addItemToCartAction = function(
@@ -56,7 +57,7 @@ export const cartCreateAction = function (payload: ICartCreatePayload) {
   };
 };
 
-export const cartDeleteItemAction = function (cartId: TCartId, itemId: string) {
+export const cartDeleteItemAction = function (cartId: TCartId, itemId: TProductSKU) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartDeleteItem(CART_DELETE_ITEM, dispatch, cartId, itemId);
     dispatch(cartDeleteItemPendingStateAction);
