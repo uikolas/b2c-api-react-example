@@ -21,13 +21,15 @@ import {getFormattedPrice} from '../../../services/productHelper';
 import {cartDeleteItemAction} from '../../../actions/Common/Cart';
 import {styles} from './styles';
 import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
+import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
-  location: string,
-  items: Array<ICartItem>,
-  totals: ICartTotals,
-  cartId: TCartId,
+  location: string;
+  items: Array<ICartItem>;
+  totals: ICartTotals;
+  cartId: TCartId;
+  currency: TAppCurrency;
 }
 
 interface CartPageState {
@@ -104,7 +106,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         <TableCell>
           <img src={item.image} height={60} />
         </TableCell>
-        <TableCell>{getFormattedPrice(item.calculations.sumPrice)}</TableCell>
+        <TableCell>{getFormattedPrice(item.calculations.sumPrice, this.props.currency)}</TableCell>
         <TableCell>
           <span>{item.quantity}</span>
           <IconButton
@@ -189,12 +191,14 @@ export const ConnectedCartPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const cartProps: ICartState = state.cart ? state.cart : null;
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         items: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
         totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
         cartId: cartProps && cartProps.data ? cartProps.data.id : ownProps.id,
+        currency,
       }
     );
   }

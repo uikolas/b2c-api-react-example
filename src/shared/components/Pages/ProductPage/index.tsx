@@ -61,7 +61,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
-  appCurrency: TAppCurrency;
+  currency: TAppCurrency;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
   addItemToCart: Function;
@@ -270,7 +270,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    const {classes, isLoading, appCurrency} = this.props;
+    const {classes, isLoading, currency} = this.props;
     console.info('state: ', this.state);
     console.info('isLoading: ', isLoading);
 
@@ -288,7 +288,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={getFormattedPrice(this.state.price, appCurrency)}
+                    price={getFormattedPrice(this.state.price, currency)}
                   />
 
                   { this.state.superAttributes
@@ -358,7 +358,7 @@ export const ConnectedProductPage = reduxify(
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
-    const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading = cartLoading || false;
@@ -372,7 +372,7 @@ export const ConnectedProductPage = reduxify(
         cartCreated,
         cartId,
         isAppDataSet,
-        appCurrency,
+        currency,
         payloadForCreateCart,
         isUserLoggedIn,
     });
