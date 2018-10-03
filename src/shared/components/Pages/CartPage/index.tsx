@@ -17,24 +17,22 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ICartState, ICartItem} from '../../../reducers/Common/Cart';
-
+import {getFormattedPrice} from '../../../services/productHelper';
 import {cartDeleteItemAction} from '../../../actions/Common/Cart';
-
 import {styles} from './styles';
-import {ICartTotals, TCartId, CartItem} from "../../../interfaces/cart";
-
+import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
   location: string,
-  items: Array[any],
+  items: Array<ICartItem>,
   totals: ICartTotals,
   cartId: TCartId,
 }
 
 interface CartPageState {
   anchorEl: HTMLElement | null;
-  currentItem: any;
+  currentItem: ICartItem | null;
 }
 
 export const pageTitle = 'Search results for ';
@@ -52,7 +50,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     this.props.dispatch(cartDeleteItemAction(this.props.cartId, sku));
   }
 
-  public openMenu = (item: any) => (e: any) => {
+  public openMenu = (item: ICartItem) => (e: any) => {
     this.setState({ anchorEl: e.currentTarget, currentItem: item });
   }
 
@@ -66,26 +64,36 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   }
 
   public render() {
-    const {classes, } = this.props;
+    const {classes, items, totals} = this.props;
 
     const quantities: number[] = [];
 
-    for (let i = 0; i < 11; i++) {
-      quantities.push(i);
+    if (this.state.currentItem) {
+      const {availableQuantity} = this.state.currentItem;
+      const maxItems = availableQuantity && availableQuantity < 10 ? availableQuantity : 10;
+
+      for (let i = 0; i <= maxItems; i++) {
+        quantities.push(i);
+      }
     }
 
     // export interface ICartItem {
-    //   sku: TProductSKU;
-    //   name: TProductName;
-    //   quantity: TProductQuantity;
-    //   price: TProductPrice;
+    //   sku: TProductSKU| null;
+    //   name: TProductName| null;
+    //   image: TProductImageSRC| null;
+    //   quantity: TProductQuantity| null;
+    //   amount: TProductPrice | null;
+    //   calculations: ICartItemCalculation| null;
+    //   groupKey: string | null;
+    //   availability: TProductAvailability | null;
+    //   availableQuantity: TProductQuantity | null;
     // }
 
-    const items = [
-      {sku: 1, name: 'Sony', price: 50, quantity: 3, img: '//images.icecat.biz/img/norm/high/24602396-8292.jpg'},
-      {sku: 2, name: 'Sony Player', price: 120, quantity: 1, img: '//images.icecat.biz/img/gallery/17360369_3328.jpg'},
-      {sku: 3, name: 'Samsung', price: 80, quantity: 2, img: '//images.icecat.biz/img/norm/high/24699831-1991.jpg'}
-    ];
+    // const items = [
+    //   {sku: 1, name: 'Sony', price: 50, quantity: 3, img: '//images.icecat.biz/img/norm/high/24602396-8292.jpg'},
+    //   {sku: 2, name: 'Sony Player', price: 120, quantity: 1, img: '//images.icecat.biz/img/gallery/17360369_3328.jpg'},
+    //   {sku: 3, name: 'Samsung', price: 80, quantity: 2, img: '//images.icecat.biz/img/norm/high/24699831-1991.jpg'}
+    // ];
 
     const rows = items.map((item: any) => (
       <TableRow
@@ -94,9 +102,9 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
       >
         <TableCell component="th" scope="row">{item.name}</TableCell>
         <TableCell>
-          <img src={item.img} height={60} />
+          <img src={item.image} height={60} />
         </TableCell>
-        <TableCell>{item.price}</TableCell>
+        <TableCell>{getFormattedPrice(item.calculations.sumPrice)}</TableCell>
         <TableCell>
           <span>{item.quantity}</span>
           <IconButton
@@ -126,7 +134,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           </Typography>
         </Grid>
         <Grid
-          item xs={10}
+          item xs={9}
           container
           alignItems="center"
         >
@@ -142,10 +150,16 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         </Grid>
 
         <Grid
-          item xs={2}
+          item xs={3}
           container
+          direction="column"
+          justify="space-evenly"
+          alignItems="center"
         >
-
+          <Typography>SubTotal: {totals.subtotal}</Typography>
+          <Typography>TaxTotal: {totals.taxTotal}</Typography>
+          <Typography >Discount: {`- ${totals.discountTotal}`}</Typography>
+          <Typography variant="body2" color="primary">GrandTotal: {totals.grandTotal}</Typography>
         </Grid>
 
         <Menu

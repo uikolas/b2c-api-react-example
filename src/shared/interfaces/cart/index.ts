@@ -1,7 +1,5 @@
 import {ICartItem} from "../../reducers/Common/Cart";
 
-export interface CartItem extends ICartItem {};
-
 export type TCartId = string;
 export type TCartPriceMode = string;
 export type TCartStore = string;

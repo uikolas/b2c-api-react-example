@@ -160,11 +160,17 @@ export class CartService {
       const response: any = await api.delete(`carts/${cartId}/items/${itemId}`, {}, { withCredentials: true });
 
       if (response.ok) {
-        // dispatch({
-        //   type: ACTION_TYPE + '_FULFILLED',
-        //   categories: response.data.data[0].attributes.categoryNodesStorage,
-        // });
-        // return response.data.data[0];
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          itemId,
+        });
+
+        const newCart = await api.get(`carts/${cartId}`);
+
+        const responseParsed = parseAddToCartResponse(newCart.data);
+        dispatch(cartAddItemFulfilledStateAction(responseParsed));
+
+        return response.ok;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
