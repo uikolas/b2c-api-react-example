@@ -56,14 +56,16 @@ export const initialState: ICartState = {
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
     case `${CART_ADD_ITEM}_PENDING`:
-      return handleCartAddItemPending(state, action.payload);
+    case `${CART_UPDATE_ITEM}_PENDING`:
+    case `${CART_CREATE}_PENDING`:
+      return handlePending(state, action.payload);
     case `${CART_ADD_ITEM}_FULFILLED`:
-      return handleCartAddItemFulfilled(state, action.payload);
+    case `${CART_UPDATE_ITEM}_FULFILLED`:
+      return handleFulfilled(state, action.payload);
     case `${CART_ADD_ITEM}_REJECTED`:
     case `${CART_DELETE_ITEM}_REJECTED`:
-      return handleCartAddItemRejected(state, action.payload);
-    case `${CART_CREATE}_PENDING`:
-      return handleCartCreatePending(state, action.payload);
+    case `${CART_UPDATE_ITEM}_REJECTED`:
+      return handleRejected(state, action.payload);
     case `${CART_CREATE}_FULFILLED`:
       return handleCartCreateFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
@@ -77,18 +79,43 @@ export const cart = function (state: ICartState = initialState, action: any): IC
         data: {...state.data, items: itemsAfterDelete},
         ...getReducerPartFulfilled(),
       };
-    case `${CART_UPDATE_ITEM}_PENDING`:
-      return handleCartUpdateItemPending(state, action.payload);
-    case `${CART_UPDATE_ITEM}_FULFILLED`:
-      return handleCartUpdateItemFulfilled(state, action.payload);
-    case `${CART_CREATE}_REJECTED`:
-      return handleCartUpdateItemRejected(state, action.payload);
     default:
       return state;
   }
 };
 
 // handlers
+const handleFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+      ...payload,
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleRejected = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
+
+const handlePending = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
 const handleCartCreateFulfilled = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
@@ -107,78 +134,6 @@ const handleCartCreateRejected = (cartState: ICartState, payload: any) => {
     data: {
       ...cartState.data,
       cartCreated: false,
-    },
-    ...getReducerPartRejected(payload.error),
-  };
-};
-
-const handleCartCreatePending = (cartState: ICartState, payload: any) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-    },
-    ...getReducerPartPending(),
-  };
-};
-
-const handleCartAddItemFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-      ...payload,
-    },
-    ...getReducerPartFulfilled(),
-  };
-};
-
-const handleCartAddItemPending = (cartState: ICartState, payload: any) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-    },
-    ...getReducerPartPending(),
-  };
-};
-
-const handleCartAddItemRejected = (cartState: ICartState, payload: any) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-    },
-    ...getReducerPartRejected(payload.error),
-  };
-};
-
-const handleCartUpdateItemFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-      ...payload,
-    },
-    ...getReducerPartFulfilled(),
-  };
-};
-
-const handleCartUpdateItemPending = (cartState: ICartState, payload: any) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-    },
-    ...getReducerPartPending(),
-  };
-};
-
-const handleCartUpdateItemRejected = (cartState: ICartState, payload: any) => {
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
     },
     ...getReducerPartRejected(payload.error),
   };
