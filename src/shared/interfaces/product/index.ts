@@ -22,6 +22,7 @@ export type TProductQuantity = number;
 export type TProductCurrency = string;
 export type TProductAvailability = boolean;
 export type TProductAttributes = object;
+export type TProductImageSRC = string;
 
 // Interfaces
 export interface IProductCardPrice {

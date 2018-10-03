@@ -6,13 +6,3 @@ export const createCartItemAddToCart = (sku: TProductSKU, quantity: TProductQuan
   sku,
   quantity,
 });
-
-export const createCartItemFromResponse = (item: any): ICartItem => {
-  return {
-    sku: item.id,
-    quantity: item.attributes.quantity,
-    amount: item.attributes.amount,
-    calculations: item.attributes.calculations,
-    groupKey: item.attributes.groupKey,
-  };
-};

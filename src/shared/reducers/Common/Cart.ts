@@ -10,19 +10,25 @@ import {
   TProductQuantity,
   TProductName,
   TProductPrice,
+  TProductImageSRC, TProductAvailability,
 } from "../../interfaces/product";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {
-  ICartItemCalculation, ICartDataResponse, TCartId,
+  ICartItemCalculation,
+  ICartDataResponse,
+  TCartId,
 } from "../../interfaces/cart";
 
 export interface ICartItem {
-  sku: TProductSKU;
-  // name: TProductName;
-  quantity: TProductQuantity;
+  sku: TProductSKU| null;
+  name: TProductName| null;
+  image: TProductImageSRC| null;
+  quantity: TProductQuantity| null;
   amount: TProductPrice | null;
-  calculations: ICartItemCalculation;
-  groupKey: string;
+  calculations: ICartItemCalculation| null;
+  groupKey: string | null;
+  availability: TProductAvailability | null;
+  availableQuantity: TProductQuantity | null;
 }
 
 export interface ICartData extends ICartDataResponse {
