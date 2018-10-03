@@ -15,7 +15,7 @@ import {
   cartCreateRejectedStateAction
 } from "../../actions/Common/Cart";
 
-interface ICartCreatePayload {
+export interface ICartCreatePayload {
   priceMode: string;
   currency: string;
   store: string;
@@ -40,7 +40,7 @@ export class CartService {
           attributes: payload,
         }
       };
-      console.log('cartCreate accessToken', accessToken);
+
       let response: any;
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
@@ -148,6 +148,38 @@ export class CartService {
 
     } catch (error) {
       dispatch(cartAddItemRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async cartDeleteItem(ACTION_TYPE: string, dispatch: Function, cartId: string, itemId: string): Promise<any> {
+    try {
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      setAuthToken(token);
+      const response: any = await api.delete(`carts/${cartId}/items/${itemId}`, {}, { withCredentials: true });
+
+      if (response.ok) {
+        // dispatch({
+        //   type: ACTION_TYPE + '_FULFILLED',
+        //   categories: response.data.data[0].attributes.categoryNodesStorage,
+        // });
+        // return response.data.data[0];
+      } else {
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      console.error('Delete item catch:', error);
+      dispatch({
+        type: ACTION_TYPE + '_REJECTED',
+        error: error.message,
+      });
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }

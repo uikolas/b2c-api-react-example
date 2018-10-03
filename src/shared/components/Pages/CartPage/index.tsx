@@ -18,13 +18,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {reduxify} from '../../../lib/redux-helper';
 import {ICartState, ICartItem} from '../../../reducers/Common/Cart';
 
-import {sendSearchAction} from '../../../actions/Pages/Search';
+import {cartDeleteItemAction} from '../../../actions/Common/Cart';
 
 import {styles} from './styles';
-import {TProductName, TProductPrice, TProductQuantity, TProductSKU} from "../../../interfaces/product";
+import {ICartTotals, TCartId, CartItem} from "../../../interfaces/cart";
 
 
 interface CartPageProps extends WithStyles<typeof styles> {
+  dispatch: Function;
+  location: string,
+  items: Array[any],
+  totals: ICartTotals,
+  cartId: TCartId,
 }
 
 interface CartPageState {
@@ -44,7 +49,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   public handleDeleteItem = (sku: string) => (e: any) => {
     e.preventDefault();
 
-    // action del
+    this.props.dispatch(cartDeleteItemAction(this.props.cartId, sku));
   }
 
   public openMenu = (item: any) => (e: any) => {
@@ -174,6 +179,8 @@ export const ConnectedCartPage = reduxify(
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         items: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
+        totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
+        cartId: cartProps && cartProps.data ? cartProps.data.id : ownProps.id,
       }
     );
   }
