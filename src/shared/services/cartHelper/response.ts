@@ -1,7 +1,5 @@
-import {ICartDataResponse, ICartResponseItem} from "../../interfaces/cart/index";
-import {createCartItemFromResponse} from "./item";
+import {ICartDataResponse} from "../../interfaces/cart/index";
 import {parseImageSets} from "../productHelper/imageSetsParser";
-
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
   return {
@@ -32,6 +30,9 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
       result[row.id].groupKey = row.attributes.groupKey;
     } else if (row.type === 'concrete-products' && !result[row.id].name) {
       result[row.id].name = row.attributes.name;
+    } else if (row.type === 'concrete-product-availabilities' && !result[row.id].availability) {
+      result[row.id].availability = row.attributes.availability;
+      result[row.id].availableQuantity = row.attributes.quantity;
     }
   });
 
