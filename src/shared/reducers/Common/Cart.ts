@@ -1,7 +1,7 @@
 import {
   CART_CREATE,
   CART_ADD_ITEM,
-  CART_DELETE_ITEM,
+  CART_DELETE_ITEM, CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
 import {
   IReduxState,
@@ -77,7 +77,12 @@ export const cart = function (state: ICartState = initialState, action: any): IC
         data: {...state.data, items: itemsAfterDelete},
         ...getReducerPartFulfilled(),
       };
-
+    case `${CART_UPDATE_ITEM}_PENDING`:
+      return handleCartUpdateItemPending(state, action.payload);
+    case `${CART_UPDATE_ITEM}_FULFILLED`:
+      return handleCartUpdateItemFulfilled(state, action.payload);
+    case `${CART_CREATE}_REJECTED`:
+      return handleCartUpdateItemRejected(state, action.payload);
     default:
       return state;
   }
@@ -106,6 +111,7 @@ const handleCartCreateRejected = (cartState: ICartState, payload: any) => {
     ...getReducerPartRejected(payload.error),
   };
 };
+
 const handleCartCreatePending = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
@@ -115,34 +121,6 @@ const handleCartCreatePending = (cartState: ICartState, payload: any) => {
     ...getReducerPartPending(),
   };
 };
-
-/*const handleCartAddItem = (cartState: ICartState, payload: ICartItem) => {
-
-  let items: Array<ICartItem> = [];
-  const addedItem = {
-    sku: payload.sku,
-    name: payload.name,
-    quantity: payload.quantity,
-    price: payload.price,
-  };
-  const existedItem = getProductFromCart(cartState, payload.sku);
-  if (existedItem) {
-    items = getCartItemsWithoutSelected(cartState, payload.sku);
-    addedItem.quantity = existedItem.quantity + payload.quantity;
-    items.push(addedItem);
-  } else {
-    items = [...cartState.data.items, addedItem];
-  }
-
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-      items: [...items],
-    },
-    ...getReducerPartFulfilled(),
-  };
-};*/
 
 const handleCartAddItemFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
   return {
@@ -166,6 +144,37 @@ const handleCartAddItemPending = (cartState: ICartState, payload: any) => {
 };
 
 const handleCartAddItemRejected = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
+
+const handleCartUpdateItemFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+      ...payload,
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleCartUpdateItemPending = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
+const handleCartUpdateItemRejected = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {

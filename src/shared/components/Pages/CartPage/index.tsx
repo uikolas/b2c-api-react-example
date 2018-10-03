@@ -16,12 +16,15 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {ICartState, ICartItem} from '../../../reducers/Common/Cart';
+import {ICartState, ICartItem, getCartId} from '../../../reducers/Common/Cart';
 import {getFormattedPrice} from '../../../services/productHelper';
-import {cartDeleteItemAction} from '../../../actions/Common/Cart';
+import {cartDeleteItemAction, updateItemInCartAction} from '../../../actions/Common/Cart';
 import {styles} from './styles';
 import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
+import {ICartAddItem} from "../../../services/Common/Cart";
+import {createCartItemAddToCart} from "../../../services/cartHelper/item";
+import {TProductQuantity} from "../../../interfaces/product/index";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -30,6 +33,7 @@ interface CartPageProps extends WithStyles<typeof styles> {
   totals: ICartTotals;
   cartId: TCartId;
   currency: TAppCurrency;
+  updateItemInCart: Function;
 }
 
 interface CartPageState {
@@ -60,8 +64,22 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     this.setState({ anchorEl: null, currentItem: null });
   }
 
+  // Update quantity of the item
   public setItemQty = (e: any) => {
-    console.info(e.target.value, this.state.currentItem.quantity);
+    const newQuantity = e.target.value;
+    console.info('setItemQty: newQuantity', newQuantity);
+    console.info('setItemQty: oldQuantity', this.state.currentItem.quantity);
+
+    // TODO: If is selected 0, the cart item should be removed from the cart
+    if (newQuantity <= 0) {
+      console.info('Remove item start');
+    } else {
+      this.props.updateItemInCart(
+        createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
+        this.props.cartId,
+      );
+    }
+
     this.closeMenu();
   }
 
@@ -192,14 +210,20 @@ export const ConnectedCartPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const cartProps: ICartState = state.cart ? state.cart : null;
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
+    const cartId: TCartId = getCartId(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         items: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
         totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
-        cartId: cartProps && cartProps.data ? cartProps.data.id : ownProps.id,
+        cartId,
         currency,
       }
     );
-  }
+  },
+  (dispatch: Function) => ({
+    updateItemInCart: (
+      payload: ICartAddItem, cartId: TCartId
+    ) => dispatch(updateItemInCartAction(payload, cartId)),
+  })
 )(CartPage);

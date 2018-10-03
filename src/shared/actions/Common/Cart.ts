@@ -2,6 +2,7 @@ import {
   CART_ADD_ITEM,
   CART_CREATE,
   CART_DELETE_ITEM,
+  CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
 import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Common/Cart";
 import {ICartDataResponse, TCartId} from "../../interfaces/cart/index";
@@ -55,9 +56,29 @@ export const cartCreateAction = function (payload: ICartCreatePayload) {
   };
 };
 
-export const cartDeleteItemAction = function (cartId: string, itemId: string) {
+export const cartDeleteItemAction = function (cartId: TCartId, itemId: string) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartDeleteItem(CART_DELETE_ITEM, dispatch, cartId, itemId);
     dispatch(cartDeleteItemPendingStateAction);
+  };
+};
+
+export const cartUpdateItemPendingStateAction = () => ({
+  type: CART_UPDATE_ITEM + '_PENDING',
+});
+
+export const cartUpdateItemRejectedStateAction = (message: string) => ({
+  type: CART_UPDATE_ITEM + '_REJECTED',
+  payload: {error: message},
+});
+
+export const cartUpdateItemFulfilledStateAction = (payload: ICartDataResponse) => ({
+  type: CART_UPDATE_ITEM + '_FULFILLED',
+  payload,
+});
+
+export const updateItemInCartAction = function (payload: ICartAddItem, cartId: TCartId) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.cartUpdateItem(dispatch, payload, cartId);
   };
 };

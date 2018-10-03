@@ -381,5 +381,5 @@ export const ConnectedProductPage = reduxify(
     addItemToCart: (
       payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
     ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
-  }),
+  })
 )(ProductPage);

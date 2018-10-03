@@ -14,7 +14,8 @@ import {
   cartAddItemRejectedStateAction,
   cartCreateFulfilledStateAction,
   cartCreatePendingStateAction,
-  cartCreateRejectedStateAction
+  cartCreateRejectedStateAction, cartUpdateItemFulfilledStateAction, cartUpdateItemPendingStateAction,
+  cartUpdateItemRejectedStateAction
 } from "../../actions/Common/Cart";
 
 export interface ICartCreatePayload {
@@ -186,6 +187,65 @@ export class CartService {
         type: ACTION_TYPE + '_REJECTED',
         error: error.message,
       });
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  // Update cart item quantity.
+  public static async cartUpdateItem( dispatch: Function,
+                                      payload: ICartAddItem,
+                                      cartId: TCartId | null): Promise<any> {
+    try {
+      dispatch(cartUpdateItemPendingStateAction());
+
+      const body = {
+        data: {
+          type: "items",
+          attributes: payload,
+        }
+      };
+      const {sku} = payload;
+      let response: any;
+
+      // TODO: this is only for development reasons - remove after finish
+      if(API_WITH_FIXTURES) {
+        const result = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: cartCreateFixture.data,
+        };
+        response = await getTestDataPromise(result);
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        try {
+          const endpoint = `carts/${cartId}/items/${sku}`;
+          const token = await RefreshTokenService.getActualToken(dispatch);
+          if (!token) {
+            throw new Error(authenticateErrorText);
+          }
+          setAuthToken(token);
+          response = await api.post(endpoint, body, { withCredentials: true });
+        } catch (err) {
+          console.error('CartService: cartUpdateItem: err', err);
+        }
+      }
+
+      console.log('cartUpdateItem response: ', response);
+
+      if (response.ok) {
+        const responseParsed = parseAddToCartResponse(response.data);
+        console.log('cartUpdateItem responseParsed: ', responseParsed);
+        dispatch(cartUpdateItemFulfilledStateAction(responseParsed));
+        return responseParsed;
+      } else {
+        dispatch(cartUpdateItemRejectedStateAction(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch(cartUpdateItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
