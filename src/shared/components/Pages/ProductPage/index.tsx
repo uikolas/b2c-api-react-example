@@ -4,6 +4,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { toast } from 'react-toastify';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ProductState} from '../../../reducers/Pages/Product';
@@ -17,17 +18,13 @@ import {ProductAttributes} from './ProductAttributes';
 import {
   concreteProductType,
   absentProductType,
-  abstractProductType,
   defaultItemValueDropdown,
   IProductAttributeMap,
   IProductAttributes,
   IProductCardImages,
   IProductPropFullData,
   ISuperAttributes,
-  TProductSKU,
   TProductQuantity,
-  TProductName,
-  TProductPrice,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -37,12 +34,10 @@ import {
   ISuperAttribute,
   getAvailabilityDisplay,
   createQuantityVariants,
-  displayProductNameWithSuperAttr,
   createPathToIdProductConcrete,
   findIdProductConcreteByPath,
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {addItemToCartAction, cartCreateAction} from "../../../actions/Common/Cart";
 import {ICartState, isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {initAppAction} from "../../../actions/Common/Init";
@@ -179,9 +174,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       return;
     }
     if (this.state.productType === concreteProductType ) {
-
-      const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
-
       this.props.addItemToCart(
         createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
         this.props.cartId,
@@ -263,7 +255,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     );
   }
 
-  private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> => {
+  private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> | null => {
+    if (!images) {
+      return null;
+    }
     const response = images.map((element: any, index: number) => (
       {
         id: index,
