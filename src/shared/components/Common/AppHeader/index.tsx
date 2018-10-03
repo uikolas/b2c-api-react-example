@@ -25,6 +25,7 @@ import {SprykerNotification} from '../../UI/SprykerNotification';
 import {initApplicationDataAction} from "../../../actions/Common/Init";
 import {isAppInitiated, isAppLoading} from "../../../reducers/Common/Init";
 import {Preloader} from "../Preloader/index";
+import {isStateLoading} from "../../../reducers/index";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -148,7 +149,8 @@ export const AppHeader = reduxify(
     const cartProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const appLoading: boolean = isAppLoading(state, ownProps);
-    const isLoading = appLoading || ownProps.pending || false;
+    // const isLoading = appLoading || ownProps.pending || false;
+    const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const searchTerm = getSearchTerm(state, ownProps);
     const suggestions = getSuggestions(state, ownProps);

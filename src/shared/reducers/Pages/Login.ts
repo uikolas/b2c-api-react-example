@@ -105,3 +105,7 @@ export function getLoginCustomer(state: any, props: any): any | null {
       : null
   );
 }
+
+export function isPageLoginStateLoading(state: any, props: any): boolean {
+  return (state.pagesLogin && state.pagesLogin.pending && state.pagesLogin.pending === true);
+}

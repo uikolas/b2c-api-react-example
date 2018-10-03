@@ -36,7 +36,6 @@ interface CartPageProps extends WithStyles<typeof styles> {
   currency: TAppCurrency;
   updateItemInCart: Function;
   deleteItemInCart: Function;
-  isLoading: boolean;
 }
 
 interface CartPageState {
@@ -85,7 +84,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   }
 
   public render() {
-    const {classes, items, totals, isLoading} = this.props;
+    const {classes, items, totals} = this.props;
 
     const quantities: number[] = [];
 
@@ -143,7 +142,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     ));
 
     return (
-      <AppMain isLoading={isLoading}>
+      <AppMain>
         <Grid container>
           <Grid item xs={12}>
             <Typography
@@ -214,8 +213,6 @@ export const ConnectedCartPage = reduxify(
     const cartProps: ICartState = state.cart ? state.cart : null;
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
-    const cartLoading: boolean = isCartLoading(state, ownProps);
-    const isLoading = cartLoading || false;
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -223,7 +220,6 @@ export const ConnectedCartPage = reduxify(
         totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
         cartId,
         currency,
-        isLoading,
       }
     );
   },

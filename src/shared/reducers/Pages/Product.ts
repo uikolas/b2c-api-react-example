@@ -48,3 +48,7 @@ export const pageProduct = function (state: ProductState = initialState, action:
       return state;
   }
 };
+
+export function isPageProductStateLoading(state: any, props: any): boolean {
+  return (state.pageProduct && state.pageProduct.pending && state.pageProduct.pending === true);
+}

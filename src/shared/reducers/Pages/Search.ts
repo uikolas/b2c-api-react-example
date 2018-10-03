@@ -100,6 +100,10 @@ export const pageSearch = function (state: SearchState = initialState, action: a
 };
 
 // selectors
+export function isPageSearchStateLoading(state: any, props: any): boolean {
+  return (state.pageSearch && state.pageSearch.pending && state.pageSearch.pending === true);
+}
+
 export function getSearchTerm(state: any, props: any): string | null {
   return (
     state.pageSearch.data && state.pageSearch.data.searchTerm

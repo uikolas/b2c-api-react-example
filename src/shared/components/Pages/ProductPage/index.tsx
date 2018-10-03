@@ -58,7 +58,6 @@ const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
-  isLoading: boolean;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
   currency: TAppCurrency;
@@ -270,12 +269,11 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    const {classes, isLoading, currency} = this.props;
+    const {classes, currency} = this.props;
     console.info('state: ', this.state);
-    console.info('isLoading: ', isLoading);
 
     return (
-      <AppMain isLoading={isLoading}>
+      <AppMain>
         { (!this.props.product || !this.state.productType || !this.props.isAppDataSet)
           ? null
           : (
@@ -361,11 +359,9 @@ export const ConnectedProductPage = reduxify(
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const isLoading = cartLoading || false;
 
     return ({
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: isLoading ? isLoading : ownProps.pending,
         product: productProps && productProps.data
           ? productProps.data.selectedProduct
           : ownProps.selectedProduct,

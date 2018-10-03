@@ -16,7 +16,7 @@ import {styles} from './styles';
 
 
 interface HomePageProps extends WithStyles<typeof styles> {
-  isLoading?: boolean;
+
 }
 
 interface HomePageState {}
@@ -30,11 +30,11 @@ export class HomePageBase extends React.Component<HomePageProps, HomePageState> 
   };
 
   public render() {
-    const {classes, isLoading} = this.props;
+    const {classes} = this.props;
     console.log('this.props', this.props);
 
     return (
-      <AppMain isLoading={isLoading}>
+      <AppMain>
 
         <Grid container
               justify="center"
@@ -88,7 +88,6 @@ export const ConnectedHomePage = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
       }
     );
   }

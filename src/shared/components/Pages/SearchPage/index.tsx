@@ -260,7 +260,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     return (
       <React.Fragment>
-        <AppMain isLoading={isLoading}>
+        <AppMain>
           <Grid container
                 justify="center"
                 alignItems="center"
