@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { toast } from 'react-toastify';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import {FormattedNumber} from 'react-intl';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ProductState} from '../../../reducers/Pages/Product';
@@ -30,7 +31,6 @@ import {IImageSlide} from '../../../components/Common/ImageSlider';
 
 import {styles} from './styles';
 import {
-  getFormattedPrice,
   ISuperAttribute,
   getAvailabilityDisplay,
   createQuantityVariants,
@@ -286,7 +286,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={getFormattedPrice(this.state.price, currency)}
+                    price={<FormattedNumber value={this.state.price} style="currency" currency={currency} />}
                   />
 
                   { this.state.superAttributes

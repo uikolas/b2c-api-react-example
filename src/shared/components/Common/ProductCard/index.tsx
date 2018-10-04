@@ -7,8 +7,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {FormattedNumber} from 'react-intl';
 
-import {getFormattedPrice} from '../../../services/productHelper';
 import {IProductCard} from '../../../interfaces/product';
 import {styles} from './styles';
 import {TAppCurrency} from "../../../reducers/Common/Init";
@@ -38,7 +38,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
     actualPrice = price || 0;
   }
 
-  const priceToShow = getFormattedPrice(actualPrice, currency);
+  const priceToShow = <FormattedNumber value={actualPrice} style="currency" currency={currency} />;
 
   const handleProductClick = (e: any) => {
     e.preventDefault();

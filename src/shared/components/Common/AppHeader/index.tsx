@@ -148,9 +148,6 @@ export const AppHeader = reduxify(
     const cartItemsQuantity: TProductQuantity = getTotalItemsQuantity(state, ownProps);
     const cartProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const appLoading: boolean = isAppLoading(state, ownProps);
-    // const isLoading = appLoading || ownProps.pending || false;
-    const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const searchTerm = getSearchTerm(state, ownProps);
     const suggestions = getSuggestions(state, ownProps);
@@ -162,7 +159,6 @@ export const AppHeader = reduxify(
         cartItemsQuantity,
         cartProductsQuantity,
         isAppDataSet,
-        isLoading,
         isUserLoggedIn,
     });
   },
