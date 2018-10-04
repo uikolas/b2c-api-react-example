@@ -98,7 +98,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (this.props.product) {
       this.setInitialData();
     }
-    if (!this.props.product && this.props.locationProductSKU) {
+    if (!this.props.product && this.props.locationProductSKU && this.props.isAppDataSet) {
       this.props.getProductData(this.props.locationProductSKU);
     }
   }
