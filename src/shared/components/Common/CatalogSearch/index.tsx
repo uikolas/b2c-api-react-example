@@ -134,7 +134,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
     this.props.getProductData(suggestion.abstract_sku);
-    this.props.changeLocation(`${config.WEB_PATH}product/${suggestion.abstract_name}`);
+    this.props.changeLocation(`${config.WEB_PATH}product/${suggestion.abstract_sku}`);
   }
 
   private handleFullSearch = (e: any) => {

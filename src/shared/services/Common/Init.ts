@@ -41,7 +41,6 @@ export class InitAppService {
         const responseParsed = parseStoreResponse(response.data);
         console.log('getInitData responseParsed: ', responseParsed);
         dispatch(initApplicationDataFulfilledStateAction(responseParsed));
-        toast.success('Init data was set');
         return response.data;
       } else {
         dispatch(initApplicationDataRejectedStateAction(response.problem));
