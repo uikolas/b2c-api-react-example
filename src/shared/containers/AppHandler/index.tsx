@@ -18,7 +18,6 @@ const styles = require('./style.scss');
 // console.info('secondary', styles.secondary); // -> #1F4F7F
 const className = styles.appHandler;
 
-
 interface AppHandlerProps extends IComponent {
   isLoading: boolean;
   locale: TAppLocale;
