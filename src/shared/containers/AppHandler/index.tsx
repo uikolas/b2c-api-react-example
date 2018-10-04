@@ -9,9 +9,10 @@ import {getContentRoutes} from '../../routes/contentRoutes';
 import {AppHeader} from '../../components/Common/AppHeader';
 import {isStateLoading} from "../../reducers/index";
 import {reduxify} from "../../lib/redux-helper";
-import {getAppLocale, TAppLocale} from "../../reducers/Common/Init";
+import {getAppLocale, isAppInitiated, TAppLocale} from "../../reducers/Common/Init";
 import {getLocaleData} from "../../services/localeHelper/index";
 import {APP_LOCALE_DEFAULT} from "../../constants/Environment/index";
+import {initApplicationDataAction} from "../../actions/Common/Init";
 
 const styles = require('./style.scss');
 // console.info('primary', styles.primary); // -> #BF4040
@@ -21,11 +22,20 @@ const className = styles.appHandler;
 interface AppHandlerProps extends IComponent {
   isLoading: boolean;
   locale: TAppLocale;
+  initApplicationData: Function;
+  isAppDataSet: boolean;
 }
 
 interface AppHandlerState {
 }
 export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerState> {
+
+  public componentDidMount = () => {
+    if (!this.props.isAppDataSet) {
+      this.props.initApplicationData(null);
+      return;
+    }
+  }
 
   public render(): JSX.Element {
     const {isLoading, locale} = this.props;
@@ -57,10 +67,16 @@ export const AppHandler = reduxify(
   (state: any, ownProps: any) => {
     const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
     const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
+    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
 
     return ({
       isLoading,
       locale,
+      isAppDataSet,
     });
   },
+  (dispatch: Function) => ({
+    dispatch,
+    initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
+  }),
 )(AppHandlerBase);
