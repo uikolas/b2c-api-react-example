@@ -30,7 +30,6 @@ import {IImageSlide} from '../../../components/Common/ImageSlider';
 
 import {styles} from './styles';
 import {
-  getFormattedPrice,
   ISuperAttribute,
   getAvailabilityDisplay,
   createQuantityVariants,
@@ -41,10 +40,8 @@ import {
 import {addItemToCartAction} from "../../../actions/Common/Cart";
 import {isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {
-  getAppCurrency,
   getPayloadForCreateCart,
   isAppInitiated,
-  TAppCurrency,
   TAppPriceMode,
   TAppStore,
 } from "../../../reducers/Common/Init";
@@ -52,6 +49,7 @@ import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
 import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
+import {AppPrice} from "../../Common/AppPrice/index";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -60,7 +58,6 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
-  currency: TAppCurrency;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
   addItemToCart: Function;
@@ -269,7 +266,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    const {classes, currency} = this.props;
+    const {classes} = this.props;
     console.info('state: ', this.state);
 
     return (
@@ -286,7 +283,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={getFormattedPrice(this.state.price, currency)}
+                    price={<AppPrice value={this.state.price}/>}
                   />
 
                   { this.state.superAttributes
@@ -356,7 +353,6 @@ export const ConnectedProductPage = reduxify(
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
-    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
 
@@ -368,7 +364,6 @@ export const ConnectedProductPage = reduxify(
         cartCreated,
         cartId,
         isAppDataSet,
-        currency,
         payloadForCreateCart,
         isUserLoggedIn,
     });

@@ -12,7 +12,7 @@ import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {isUserAuthenticated} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
-import {getSearchTerm, getSuggestions, SearchState} from '../../../reducers/Pages/Search';
+import {getSearchTerm, getSuggestions} from '../../../reducers/Pages/Search';
 import {
   getTotalItemsQuantity,
   getTotalProductsQuantity,
@@ -22,10 +22,7 @@ import {SprykerButton} from '../../UI/SprykerButton';
 import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
-import {initApplicationDataAction} from "../../../actions/Common/Init";
-import {isAppInitiated, isAppLoading} from "../../../reducers/Common/Init";
 import {Preloader} from "../Preloader/index";
-import {isStateLoading} from "../../../reducers/index";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -35,8 +32,6 @@ interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   searchTerm?: string;
   cartItemsQuantity: TProductQuantity;
   cartProductsQuantity: TProductQuantity;
-  initApplicationData: Function;
-  isAppDataSet: boolean;
 }
 
 interface AppHeaderState {
@@ -49,12 +44,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     isCartNotificationOpen: false,
   };
 
-  public componentDidMount = () => {
-    if (!this.props.isAppDataSet) {
-      this.props.initApplicationData(null);
-      return;
-    }
-  }
+
 
   public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
@@ -147,10 +137,6 @@ export const AppHeader = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const cartItemsQuantity: TProductQuantity = getTotalItemsQuantity(state, ownProps);
     const cartProductsQuantity: TProductQuantity = getTotalProductsQuantity(state, ownProps);
-    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const appLoading: boolean = isAppLoading(state, ownProps);
-    // const isLoading = appLoading || ownProps.pending || false;
-    const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const searchTerm = getSearchTerm(state, ownProps);
     const suggestions = getSuggestions(state, ownProps);
@@ -161,13 +147,7 @@ export const AppHeader = reduxify(
         searchTerm,
         cartItemsQuantity,
         cartProductsQuantity,
-        isAppDataSet,
-        isLoading,
         isUserLoggedIn,
     });
-  },
-  (dispatch: Function) => ({
-    dispatch,
-    initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
-  }),
+  }
 )(DecoratedHeader);

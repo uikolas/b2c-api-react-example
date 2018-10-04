@@ -15,13 +15,13 @@ import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/product';
-import {getFormattedPrice} from '../../../services/productHelper';
 import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
 import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../../actions/Pages/Search';
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
+import {AppPrice} from "../AppPrice/index";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -91,7 +91,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
           width={30} height={30}
           src={suggestion.images.length ? suggestion.images[0].external_url_small : ''} alt={suggestion.abstract_name}
         />
-        <span>{getFormattedPrice(suggestion.price, this.props.currency)}</span>
+        <span><AppPrice value={suggestion.price}/></span>
       </MenuItem>
     );
   }

@@ -17,17 +17,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import {reduxify} from '../../../lib/redux-helper';
 import {ICartState, ICartItem, getCartId, isCartLoading} from '../../../reducers/Common/Cart';
 import {SprykerButton} from '../../../components/UI/SprykerButton';
-import {getFormattedPrice} from '../../../services/productHelper';
 import {cartDeleteItemAction, updateItemInCartAction} from '../../../actions/Common/Cart';
 import {styles} from './styles';
 import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
 import {NavLink} from "react-router-dom";
 import config from "../../../config";
-import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {ICartAddItem} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
 import {AppMain} from "../../Common/AppMain/index";
 import {TProductSKU} from "../../../interfaces/product/index";
+import {AppPrice} from "../../Common/AppPrice/index";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -35,7 +34,6 @@ interface CartPageProps extends WithStyles<typeof styles> {
   items: Array<ICartItem>;
   totals: ICartTotals;
   cartId: TCartId;
-  currency: TAppCurrency;
   updateItemInCart: Function;
   deleteItemInCart: Function;
 }
@@ -86,7 +84,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   }
 
   public render() {
-    const {classes, items, totals, currency} = this.props;
+    const {classes, items, totals} = this.props;
 
     const quantities: number[] = [];
 
@@ -108,7 +106,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         <TableCell>
           <img src={item.image} height={60} />
         </TableCell>
-        <TableCell>{getFormattedPrice(item.calculations.sumPrice, currency)}</TableCell>
+        <TableCell><AppPrice value={item.calculations.sumPrice}/></TableCell>
         <TableCell>
           <span>{item.quantity}</span>
           <IconButton
@@ -182,10 +180,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           justify="space-evenly"
           alignItems="center"
         >
-          <Typography variant="body2">SubTotal: {totals && getFormattedPrice(totals.subtotal, currency)}</Typography>
-          <Typography variant="body1">TaxTotal: {totals && getFormattedPrice(totals.taxTotal, currency)}</Typography>
-          <Typography variant="body2">Discount: {`- ${totals && totals.discountTotal}`}</Typography>
-          <Typography variant="subheading" color="primary">GrandTotal: {totals && getFormattedPrice(totals.grandTotal, currency)}</Typography>
+          <Typography variant="body2">SubTotal: {totals && <AppPrice value={totals.subtotal}/>}</Typography>
+          <Typography variant="body1">TaxTotal: {totals && <AppPrice value={totals.taxTotal}/>}</Typography>
+          <Typography variant="body2">Discount: {`- ${totals.discountTotal}`}</Typography>
+          <Typography variant="subheading" color="primary">GrandTotal: {totals && <AppPrice value={totals.grandTotal}/>}</Typography>
         </Grid>
         <Grid item xs={12} container justify="center" className={classes.footer}>
           <NavLink to={`${config.WEB_PATH}search`}>
@@ -221,7 +219,6 @@ export const ConnectedCartPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const cartProps: ICartState = state.cart ? state.cart : null;
-    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
     return (
       {
@@ -229,7 +226,6 @@ export const ConnectedCartPage = reduxify(
         items: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
         totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
         cartId,
-        currency,
       }
     );
   },
