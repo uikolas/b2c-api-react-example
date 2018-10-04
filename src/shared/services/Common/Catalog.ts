@@ -19,7 +19,6 @@ export class CatalogService {
       } else {
         response = await api.get('catalog-search', params, { withCredentials: true });
       }
-      console.info(response.data.data[0].attributes);
 
       if (response.ok) {
         const pagination = response.data.data[0].attributes.pagination;

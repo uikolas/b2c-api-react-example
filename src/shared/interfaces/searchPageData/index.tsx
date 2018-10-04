@@ -7,13 +7,14 @@ interface FilterValue {
   doc_count: number;
 }
 
-interface ValueFacets {
+export interface ValueFacets {
   name?: string;
   docCount?: any;
   values?: Array<FilterValue>;
+  activeValue?: Array<string> | null;
 }
 
-interface RangeFacets {
+export interface RangeFacets {
   name?: string;
   min?: number;
   max?: number;

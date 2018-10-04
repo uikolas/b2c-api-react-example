@@ -12,13 +12,13 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
 
   const result: any = {};
   // Fill data with concrete products ids
-  if (data.data.relationships.items.data) {
+  if (data.data.relationships && data.data.relationships.items) {
     data.data.relationships.items.data.forEach((datum: any) => {
       result[datum.id] = {};
     });
   }
 
-  data.included.forEach((row: any) => {
+  data.included && data.included.forEach((row: any) => {
     if (row.type === 'concrete-product-image-sets' && !result[row.id].images) {
       const images = parseImageSets(row.attributes.imageSets);
       result[row.id].image = images[0].externalUrlSmall ? images[0].externalUrlSmall : null;

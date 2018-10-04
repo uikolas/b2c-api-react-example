@@ -127,18 +127,20 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
     if (!items || ! items.length) {
       return (
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              variant="display2"
-              noWrap
-              align="center"
-              className={classes.title}
-            >
-              Empty cart, go shopping
-            </Typography>
+        <AppMain>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography
+                variant="display2"
+                noWrap
+                align="center"
+                className={classes.title}
+              >
+                Empty cart, go shopping
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
+        </AppMain>
       );
     }
 
