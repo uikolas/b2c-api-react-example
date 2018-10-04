@@ -8,27 +8,18 @@ import {styles} from './styles';
 interface SprykerRangeProps extends WithStyles<typeof styles> {
   attributeName?: string;
   handleChange?: Function;
-  min?: number | string;
-  max?: number | string;
+  min?: number;
+  max?: number;
+  currentValue?: {min: number, max: number},
 }
 
 export interface SprykerRangeState {
-  min: number | string;
-  max: number | string;
-  [key: string]: any;
 }
 
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
 
-  public state: SprykerRangeState = {
-    min: this.props.min,
-    max: this.props.max,
-  };
-
   private handleChangeValues = (param: string) => (event: any) => {
-    this.setState({ [param]: event.target.value }, () => {
-      this.props.handleChange(this.props.attributeName, this.state);
-    });
+    this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: +event.target.value});
   }
 
   public render() {
@@ -37,6 +28,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
       attributeName,
       min,
       max,
+      currentValue,
     } = this.props;
 
     return (
@@ -52,7 +44,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
                 max,
               }}
               type="number"
-              value={this.state.min}
+              value={currentValue.min}
               onChange={this.handleChangeValues('min')}
             />
           </div>
@@ -65,7 +57,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
                 max,
               }}
               type="number"
-              value={this.state.max}
+              value={currentValue.max}
               onChange={this.handleChangeValues('max')}
             />
           </div>

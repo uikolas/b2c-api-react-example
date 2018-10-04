@@ -54,6 +54,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
   public handleDeleteItem = (sku: string) => (e: any) => {
     e.preventDefault();
+
     this.props.deleteItemInCart(this.props.cartId, sku);
   }
 

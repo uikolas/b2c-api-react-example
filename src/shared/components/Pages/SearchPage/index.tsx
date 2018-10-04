@@ -22,14 +22,14 @@ import { push } from 'react-router-redux';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {SprykerFilterElement} from '../../../components/UI/SprykerFilter';
-import {SprykerRange, SprykerRangeState} from '../../../components/UI/SprykerRangeFilter';
-import {SprykerButton} from '../../../components/UI/SprykerButton';
+import {SprykerRange} from '../../../components/UI/SprykerRangeFilter';
+
 import {getProductDataAction} from '../../../actions/Pages/Product';
 import {sendSearchAction, getCategoriesAction} from '../../../actions/Pages/Search';
 
 import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
-import {ISearchPageData} from "../../../interfaces/searchPageData";
+import {ISearchPageData, ValueFacets, RangeFacets} from "../../../interfaces/searchPageData";
 import config from '../../../config';
 
 import {styles} from './styles';
@@ -46,9 +46,11 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
 }
 
+type RangeType = {min: number, max: number};
+
 interface SearchPageState {
-  activeFilters: object;
-  rangeFilters: {[key: string]: SprykerRangeState};
+  activeFilters: {[name: string]: string[]};
+  activeRangeFilters: {[name: string]: RangeType};
   sort: string;
   selectedCategory: number | string;
 }
@@ -56,24 +58,43 @@ interface SearchPageState {
 export const pageTitle = 'Search results for ';
 
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
+  constructor(props : SearchPageProps){
+    super(props);
+
+    const activeFilters: {[key: string]: string[]} = {};
+    const activeRangeFilters: {[key: string]: RangeType} = {};
+
+    props.filters.forEach((filter: ValueFacets) => {
+      if (filter.activeValue && filter.activeValue.length) {
+        activeFilters[filter.name] = filter.activeValue;
+      }
+    });
+
+    props.rangeFilters.forEach((filter: RangeFacets) => {
+      if (filter.activeMin && filter.activeMax) {
+        activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax}
+      }
+    });
+
+    this.state = {
+      activeFilters,
+      activeRangeFilters,
+      sort: '',
+      selectedCategory: 0,
+    };
+  }
 
   public componentWillMount() {
     this.props.dispatch(getCategoriesAction());
-  }
-
-  public state: SearchPageState = {
-    activeFilters: {},
-    rangeFilters: {},
-    sort: '',
-    selectedCategory: 0,
   }
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
     this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
   }
 
-  public updateRangeFilters = (name: string, values: SprykerRangeState ) => {
-    this.setState((prevState: SearchPageState) => ({rangeFilters: {...prevState.rangeFilters, [name]:  {min: values.min, max: values.max}}}));
+  public updateRangeFilters = (name: string, {min, max}: RangeType ) => {
+    console.info(min, max);
+    this.setState((prevState: SearchPageState) => ({activeRangeFilters: {...prevState.activeRangeFilters, [name]:  {min, max}}}));
   }
 
   public updateSearch = (e: any) => {
@@ -87,10 +108,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
-    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
-      query[`${key}[min]`] = this.state.rangeFilters[key].min;
-      query[`${key}[max]`] = this.state.rangeFilters[key].max;
-    });
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -116,10 +137,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       query.page = this.props.pagination.currentPage + 1;
     }
 
-    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
-      query[`${key}[min]`] = this.state.rangeFilters[key].min;
-      query[`${key}[max]`] = this.state.rangeFilters[key].max;
-    });
+
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -140,10 +162,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
-    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
-      query[`${key}[min]`] = this.state.rangeFilters[key].min;
-      query[`${key}[max]`] = this.state.rangeFilters[key].max;
-    });
+
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -161,6 +184,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               <SprykerFilterElement
                 attributeName={filter.name}
                 menuItems={filter.values}
+                activeValues={this.state.activeFilters[filter.name] || []}
                 handleChange={this.updateActiveFilters}
               />
             </Grid>
@@ -175,6 +199,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
           <SprykerRange
             attributeName={filter.name}
             min={filter.min} max={filter.max}
+            currentValue={this.state.activeRangeFilters[filter.name] || {min: filter.min, max: filter.max}}
             handleChange={this.updateRangeFilters}
           />
         </Grid>
@@ -281,6 +306,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               <List
                 component="nav"
                 subheader={<ListSubheader component="div">Categories</ListSubheader>}
+                className={classes.categoryList}
               >
                 {categoryList}
               </List>
