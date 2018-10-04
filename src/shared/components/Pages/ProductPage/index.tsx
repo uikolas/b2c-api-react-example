@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {ProductState} from '../../../reducers/Pages/Product';
+import {isPageProductStateLoading, ProductState} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -24,7 +24,7 @@ import {
   IProductCardImages,
   IProductPropFullData,
   ISuperAttributes,
-  TProductQuantity,
+  TProductQuantity, TProductSKU,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -50,6 +50,7 @@ import {createCartItemAddToCart} from "../../../services/cartHelper";
 import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 import {AppPrice} from "../../Common/AppPrice/index";
+import {getProductDataAction} from "../../../actions/Pages/Product";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -61,9 +62,12 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
   addItemToCart: Function;
+  getProductData: Function;
   cartCreated: boolean;
   cartId: TCartId;
   payloadForCreateCart: ICartCreatePayload;
+  isLoading: boolean;
+  locationProductSKU?: string;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -99,6 +103,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     if (this.props.product && !prevState.productType) {
       this.setInitialData();
+    }
+    if (!this.props.product && this.props.locationProductSKU && this.props.isAppDataSet && !this.props.isLoading) {
+      this.props.getProductData(this.props.locationProductSKU);
     }
   }
 
@@ -266,7 +273,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    const {classes} = this.props;
+    const {classes, isLoading} = this.props;
     console.info('state: ', this.state);
 
     return (
@@ -355,22 +362,28 @@ export const ConnectedProductPage = reduxify(
     const cartId: TCartId = getCartId(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const isLoading: boolean = isPageProductStateLoading(state, ownProps);
+    const pathname: string = routerProps.location ? routerProps.location.pathname : null;
+    const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
 
     return ({
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        product: productProps && productProps.data
-          ? productProps.data.selectedProduct
-          : ownProps.selectedProduct,
-        cartCreated,
-        cartId,
-        isAppDataSet,
-        payloadForCreateCart,
-        isUserLoggedIn,
+      location: routerProps.location ? routerProps.location : ownProps.location,
+      product: productProps && productProps.data
+        ? productProps.data.selectedProduct
+        : ownProps.selectedProduct,
+      cartCreated,
+      cartId,
+      isAppDataSet,
+      payloadForCreateCart,
+      isUserLoggedIn,
+      isLoading,
+      locationProductSKU,
     });
   },
   (dispatch: Function) => ({
     addItemToCart: (
       payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
     ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
+    getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
   })
 )(ProductPage);

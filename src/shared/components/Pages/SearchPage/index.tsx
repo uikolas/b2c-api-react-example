@@ -148,7 +148,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public renderProduct = (sku: string, name: string) => {
     this.props.dispatch(getProductDataAction(sku));
-    this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
+    this.props.dispatch(push(`${config.WEB_PATH}product/${sku}`));
   }
 
   public selectCategory = (category: string | number) => (e: any) => {
