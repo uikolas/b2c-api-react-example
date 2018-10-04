@@ -152,7 +152,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             align="center"
             className={classes.title}
           >
-            {`Cart have ${items.length} items`}
+            {`Cart has ${items.length} items`}
           </Typography>
         </Grid>
         <Grid item xs={12}>

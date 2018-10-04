@@ -78,7 +78,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     const { classes, location, isUserLoggedIn, cartItemsQuantity, cartProductsQuantity, isLoading } = this.props;
 
     return (
-      <AppBar position="absolute" color="default" className={classes.appBar}>
+      <AppBar position="fixed" color="default" className={classes.appBar}>
         <Toolbar>
           <Grid container direction="row">
 
