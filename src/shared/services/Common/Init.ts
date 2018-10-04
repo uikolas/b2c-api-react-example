@@ -31,7 +31,9 @@ export class InitAppService {
           store: STORE_DEFAULT,
         },
       };
-      response = await getTestDataPromise(result);
+      // response = await getTestDataPromise(result);
+      response = await api.get('stores', null);
+      console.log('getInitData response: ', response);
 
       if (response.ok) {
         dispatch(initApplicationDataFulfilledStateAction(response.data));

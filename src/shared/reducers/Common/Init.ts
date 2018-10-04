@@ -7,7 +7,6 @@ import {
 
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {ICartCreatePayload} from "../../services/Common/Cart";
-import {APP_LOCALE_DEFAULT} from "../../constants/Environment/index";
 
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
