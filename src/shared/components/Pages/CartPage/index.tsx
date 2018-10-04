@@ -57,7 +57,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   public handleDeleteItem = (sku: string) => (e: any) => {
     e.preventDefault();
 
-    this.props.dispatch(cartDeleteItemAction(this.props.cartId, sku));
+    this.props.deleteItemInCart(this.props.cartId, sku);
   }
 
   public openMenu = (item: ICartItem) => (e: any) => {
@@ -182,7 +182,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         >
           <Typography variant="body2">SubTotal: {totals && getFormattedPrice(totals.subtotal, currency)}</Typography>
           <Typography variant="body1">TaxTotal: {totals && getFormattedPrice(totals.taxTotal, currency)}</Typography>
-          <Typography variant="body2">Discount: {`- ${totals.discountTotal}`}</Typography>
+          <Typography variant="body2">Discount: {`- ${totals && totals.discountTotal}`}</Typography>
           <Typography variant="subheading" color="primary">GrandTotal: {totals && getFormattedPrice(totals.grandTotal, currency)}</Typography>
         </Grid>
         <Grid item xs={12} container justify="center" className={classes.footer}>
