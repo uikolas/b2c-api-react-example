@@ -12,7 +12,7 @@ import {reduxify} from "../../lib/redux-helper";
 import {getAppLocale, isAppInitiated, TAppLocale} from "../../reducers/Common/Init";
 import {getLocaleData} from "../../services/localeHelper/index";
 import {APP_LOCALE_DEFAULT} from "../../constants/Environment/index";
-import {initApplicationDataAction} from "../../actions/Common/Init";
+import {initApplicationDataAction, setAuthFromStorageAction} from "../../actions/Common/Init";
 
 const styles = require('./style.scss');
 // console.info('primary', styles.primary); // -> #BF4040
@@ -23,6 +23,7 @@ interface AppHandlerProps extends IComponent {
   isLoading: boolean;
   locale: TAppLocale;
   initApplicationData: Function;
+  setAuth: Function,
   isAppDataSet: boolean;
 }
 
@@ -31,6 +32,18 @@ interface AppHandlerState {
 export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerState> {
 
   public componentDidMount = () => {
+    const accessToken: string = localStorage.getItem('accessToken');
+    const expiresIn: string = localStorage.getItem('tokenExpire');
+    const refreshToken: string = localStorage.getItem('refreshToken');
+
+    if (accessToken && expiresIn && refreshToken) {
+      this.props.setAuth({
+        accessToken,
+        expiresIn,
+        refreshToken,
+      });
+    }
+
     if (!this.props.isAppDataSet) {
       this.props.initApplicationData(null);
       return;
@@ -78,5 +91,6 @@ export const AppHandler = reduxify(
   (dispatch: Function) => ({
     dispatch,
     initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
+    setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
   }),
 )(AppHandlerBase);

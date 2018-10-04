@@ -5,6 +5,9 @@ import {
   REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {
+  SET_AUTH_FROM_STORAGE,
+} from '../../constants/ActionTypes/Common/Init';
+import {
   IReduxState,
 } from '../../../typings/app';
 import {TAccessToken} from "../../interfaces/login/index";
@@ -73,6 +76,15 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
           ...action.payload,
         },
         ...getReducerPartFulfilled(),
+      };
+    case `${SET_AUTH_FROM_STORAGE}_FULFILLED`:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          isAuth: true,
+          ...action.payload,
+        },
       };
     case PAGES_CUSTOMER_LOGOUT:
       localStorage.clear();

@@ -1,5 +1,6 @@
 import {
- INIT_APP_ACTION_TYPE
+ INIT_APP_ACTION_TYPE,
+  SET_AUTH_FROM_STORAGE,
 } from '../../constants/ActionTypes/Common/Init';
 import {InitAppService} from "../../services/Common/Init";
 import {IInitData} from "../../reducers/Common/Init";
@@ -27,3 +28,8 @@ export const initApplicationDataAction = function (payload: IInitApplicationData
     InitAppService.getInitData(dispatch, payload);
   };
 };
+
+export const setAuthFromStorageAction = (payload: {expiresIn: string, accessToken: string, refreshToken: string}) => ({
+  type: SET_AUTH_FROM_STORAGE + '_FULFILLED',
+  payload,
+});
