@@ -16,18 +16,17 @@ interface SprykerFilterProps extends WithStyles<typeof styles> {
   attributeName?: string;
   handleChange?: Function;
   menuItems?: Array<IMenuItemsDropdown>;
+  activeValues?: Array<string>;
 }
 
 interface SprykerFilterState {
   isOpen: boolean;
-  value: any[];
 }
 
 export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFilterState> {
 
   public state: SprykerFilterState = {
     isOpen: false,
-    value: [],
   };
 
   private handleChangeShowing = (): void => {
@@ -35,13 +34,11 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
   }
 
   private handleChangeValues = (event: any) => {
-    this.setState({ value: event.target.value });
     this.props.handleChange(this.props.attributeName, event.target.value);
   }
 
   private handleDelete = (item: any) => () => {
-    const values = [...this.state.value].filter((val) => val !== item);
-    this.setState({value: values});
+    const values = [...this.props.activeValues].filter((val) => val !== item);
     this.props.handleChange(this.props.attributeName, values);
   }
 
@@ -50,6 +47,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
       classes,
       attributeName,
       menuItems,
+      activeValues,
     } = this.props;
 
     return (
@@ -66,7 +64,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
             open={this.state.isOpen}
             onClose={this.handleChangeShowing}
             onOpen={this.handleChangeShowing}
-            value={this.state.value}
+            value={activeValues}
             onChange={this.handleChangeValues}
             variant="filled"
           >
@@ -81,7 +79,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               </MenuItem>))
             }
           </Select>
-          {this.state.value.map(item => (
+          {activeValues.map(item => (
             <Chip
               key={item}
               label={item}

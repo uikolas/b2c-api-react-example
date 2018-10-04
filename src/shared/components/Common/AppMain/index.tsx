@@ -6,11 +6,10 @@ import {Preloader} from '../Preloader';
 import {styles} from './styles';
 
 interface AppMainProps extends WithStyles<typeof styles> {
-  isLoading: boolean;
 }
 
 export const AppMainBase: React.SFC<AppMainProps> = (props) => {
-  const { classes, isLoading } = props;
+  const { classes } = props;
   return (
     <main className={classes.layout}>
       <Grid item
@@ -20,7 +19,6 @@ export const AppMainBase: React.SFC<AppMainProps> = (props) => {
             alignItems="flex-start"
             className={classes.container}
       >
-        {isLoading ? <Preloader/> : null}
         {props.children}
       </Grid>
     </main>

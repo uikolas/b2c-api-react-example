@@ -8,17 +8,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import {getFormattedPrice} from '../../../services/productHelper';
 import {IProductCard} from '../../../interfaces/product';
 import {styles} from './styles';
+import {AppPrice} from "../AppPrice";
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
-  currency?: string;
   onSelectProduct?: Function;
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const { classes, images, abstract_name, abstractName, price, prices, currency, abstract_sku, abstractSku } = props;
+  const { classes, images, abstract_name, abstractName, price, prices, abstract_sku, abstractSku } = props;
   const name = abstract_name || abstractName || 'No name';
   const sku = abstract_sku || abstractSku;
 
@@ -37,7 +36,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
     actualPrice = price || 0;
   }
 
-  const priceToShow = getFormattedPrice(actualPrice, currency);
+  const priceToShow = <AppPrice value={actualPrice}/>;
 
   const handleProductClick = (e: any) => {
     e.preventDefault();

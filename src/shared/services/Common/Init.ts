@@ -7,49 +7,49 @@ import {
   STORE_DEFAULT,
 } from '../../constants/Environment';
 import {getTestDataPromise} from "../apiFixture/index";
-
-interface ICartCreatePayload {
-}
+import {
+  IInitApplicationDataPayload,
+  initApplicationDataFulfilledStateAction,
+  initApplicationDataPendingStateAction,
+  initApplicationDataRejectedStateAction
+} from "../../actions/Common/Init";
+import {initFixture} from "./initFixture";
+import {parseStoreResponse} from "../initHelper/store";
 
 export class InitAppService {
 
-  public static async getInitData(ACTION_TYPE: string, dispatch: Function, payload?: any): Promise<any> {
+  public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<any> {
     try {
       let response: any;
+      dispatch(initApplicationDataPendingStateAction());
 
       // TODO: this is only for development reasons - remove after finish
-      const result = {
-        ok: true,
-        problem: 'Test API_WITH_FIXTURES',
-        data: {
-          priceMode: PRICE_MODE_DEFAULT,
-          currency: CURRENCY_DEFAULT,
-          store: STORE_DEFAULT,
-        },
-      };
-      response = await getTestDataPromise(result);
+      if(API_WITH_FIXTURES) {
+        const result = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: initFixture,
+        };
+        response = await getTestDataPromise(result);
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        response = await api.get('stores', null);
+      }
+      console.log('getInitData response: ', response);
 
       if (response.ok) {
-        dispatch({
-          type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
-        });
-        toast.success('Init data was set');
+        const responseParsed = parseStoreResponse(response.data);
+        console.log('getInitData responseParsed: ', responseParsed);
+        dispatch(initApplicationDataFulfilledStateAction(responseParsed));
         return response.data;
       } else {
-        dispatch({
-          type: ACTION_TYPE + '_REJECTED',
-          payload: {error: response.problem},
-        });
+        dispatch(initApplicationDataRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch({
-        type: ACTION_TYPE + '_REJECTED',
-        payload: {error: error.message},
-      });
+      dispatch(initApplicationDataRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }

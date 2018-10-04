@@ -28,5 +28,8 @@ export const styles = (theme: Theme) => createStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     textTransform: 'capitalize',
+  },
+  padRight: {
+    marginRight: theme.spacing.unit,
   }
 });

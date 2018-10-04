@@ -57,3 +57,7 @@ export const pagesHome = function (state: IHomeState = initialState, action: any
       return state;
   }
 };
+
+export function isPageHomeStateLoading(state: any, props: any): boolean {
+  return (state.pagesHome && state.pagesHome.pending && state.pagesHome.pending === true);
+}

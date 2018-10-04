@@ -18,7 +18,6 @@ interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   customer?: any;
   isAuth?: boolean;
   refreshToken?: string;
-  isLoading?: boolean;
   handleSubmitRegisterForm: Function;
   handleSubmitLoginForm: Function;
 }
@@ -33,29 +32,27 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
   };
 
   public render() {
-    const { classes, isLoading } = this.props;
+    const { classes } = this.props;
 
     return (
-      <React.Fragment>
-        <AppMain isLoading={isLoading}>
-          <Grid item xs={12} sm={6}
-                direction="column"
-                container
-                justify="center"
-                alignItems="center">
-            <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
+      <AppMain>
+        <Grid item xs={12} sm={6}
+              direction="column"
+              container
+              justify="center"
+              alignItems="center">
+          <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
           />
-          </Grid>
-          <div className={classes.divider} id="divider" ></div>
-          <Grid item xs={12} sm={6}
-                direction="column"
-                container
-                justify="center"
-                alignItems="center">
-            <RegisterForm handleSubmit={this.props.handleSubmitRegisterForm} />
-          </Grid>
-        </AppMain>
-      </React.Fragment>
+        </Grid>
+        <div className={classes.divider} id="divider" ></div>
+        <Grid item xs={12} sm={6}
+              direction="column"
+              container
+              justify="center"
+              alignItems="center">
+          <RegisterForm handleSubmit={this.props.handleSubmitRegisterForm} />
+        </Grid>
+      </AppMain>
     );
   }
 }
@@ -72,7 +69,6 @@ export const ConnectedLogin = reduxify(
         customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customer : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
-        isLoading: pagesLoginProps && pagesLoginProps.pending ? pagesLoginProps.pending : ownProps.pending,
       }
     );
   },

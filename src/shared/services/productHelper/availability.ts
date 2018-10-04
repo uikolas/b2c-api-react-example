@@ -1,5 +1,5 @@
 import {
-  LOCALE_DEFAULT,
+  APP_LOCALE_DEFAULT
 } from '../../constants/Environment';
 
 interface IAvailabilityValues {
@@ -11,11 +11,11 @@ interface IAvailabilityMap {
   [key: string]: IAvailabilityValues;
 }
 
-export const getAvailabilityDisplay = (availability: boolean, locale: string = LOCALE_DEFAULT) => {
+export const getAvailabilityDisplay = (availability: boolean, locale: string = APP_LOCALE_DEFAULT) => {
 
   let map;
   const availabilityMap: IAvailabilityMap = {
-    'de-DE': {
+    'de': {
       yes: 'Available',
       not: 'Not available',
     },
