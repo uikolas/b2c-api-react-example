@@ -1,18 +1,20 @@
 
 import {IProductCard} from "../product";
+import {TAppCurrency} from "../../reducers/Common/Init";
 
 interface FilterValue {
   value: any;
   doc_count: number;
 }
 
-interface ValueFacets {
+export interface ValueFacets {
   name?: string;
   docCount?: any;
-  values?: Array<FilterValue>
+  values?: Array<FilterValue>;
+  activeValue?: Array<string> | null;
 }
 
-interface RangeFacets {
+export interface RangeFacets {
   name?: string;
   min?: number;
   max?: number;
@@ -42,8 +44,8 @@ export interface ISearchPageData {
   filters?: Array<ValueFacets>;
   rangeFilters?: Array<RangeFacets>;
   searchTerm?: string;
-  currency?: string;
+  currency?: TAppCurrency;
   sortParams?: Array<string>;
   pagination: Pagination;
-  categories: Array<Category>
+  categories: Array<Category>;
 }

@@ -5,9 +5,13 @@ import {
   REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {
+  SET_AUTH_FROM_STORAGE,
+} from '../../constants/ActionTypes/Common/Init';
+import {
   IReduxState,
 } from '../../../typings/app';
 import {TAccessToken} from "../../interfaces/login/index";
+import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -37,39 +41,27 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
       return {
         ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
+        ...getReducerPartPending(),
       };
     case `${PAGES_CUSTOMER_REGISTER}_FULFILLED`:
       return {
-        error: null,
         data: {
           customer: action.payload,
           isAuth: false,
         },
-        pending: false,
-        fulfilled: true,
-        rejected: false,
+        ...getReducerPartFulfilled(),
       };
     case `${PAGES_CUSTOMER_REGISTER}_REJECTED`:
     case `${PAGES_LOGIN_REQUEST}_REJECTED`:
     case `${REFRESH_TOKEN_REQUEST}_REJECTED`:
       return {
         ...state,
-        error: action.error,
-        pending: false,
-        fulfilled: false,
-        rejected: true,
+        ...getReducerPartRejected(action.error),
       };
     case `${PAGES_LOGIN_REQUEST}_PENDING`:
       return {
         ...state,
-        error: null,
-        pending: true,
-        fulfilled: false,
-        rejected: false,
+        ...getReducerPartPending(),
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
     case `${REFRESH_TOKEN_REQUEST}_FULFILLED`:
@@ -83,10 +75,19 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
           isAuth: true,
           ...action.payload,
         },
-        pending: false,
-        fulfilled: true,
+        ...getReducerPartFulfilled(),
+      };
+    case `${SET_AUTH_FROM_STORAGE}_FULFILLED`:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          isAuth: true,
+          ...action.payload,
+        },
       };
     case PAGES_CUSTOMER_LOGOUT:
+      localStorage.clear();
       return {
         ...state,
         data: initialState.data
@@ -108,4 +109,16 @@ export function getAccessToken(state: any, props: any): TAccessToken | null {
     ? state.pagesLogin.data.accessToken
     : null
   );
+}
+
+export function getLoginCustomer(state: any, props: any): any | null {
+  return (
+    isUserAuthenticated(state, props) && state.pagesLogin.data && state.pagesLogin.data.customer
+      ? state.pagesLogin.data.customer
+      : null
+  );
+}
+
+export function isPageLoginStateLoading(state: any, props: any): boolean {
+  return (state.pagesLogin && state.pagesLogin.pending && state.pagesLogin.pending === true);
 }

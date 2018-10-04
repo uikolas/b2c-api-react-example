@@ -1,12 +1,12 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
-import {pagesHome} from './Pages/Home';
-import {pagesLogin} from './Pages/Login';
-import {pageSearch} from './Pages/Search';
-import {pageProduct} from './Pages/Product';
-import {cart} from './Common/Cart';
-import {init} from './Common/Init';
+import {isPageHomeStateLoading, pagesHome} from './Pages/Home';
+import {isPageLoginStateLoading, pagesLogin} from './Pages/Login';
+import {isPageSearchStateLoading, pageSearch} from './Pages/Search';
+import {isPageProductStateLoading, pageProduct} from './Pages/Product';
+import {cart, isCartLoading} from './Common/Cart';
+import {init, isAppLoading} from './Common/Init';
 
 
 // export const reducers = combineReducers({
@@ -22,3 +22,14 @@ export const reducers = {
   cart,
   init,
 };
+
+export function isStateLoading(state: any, props: any): boolean {
+  return Boolean(
+    isPageProductStateLoading(state, props)
+    || isPageLoginStateLoading(state, props)
+    || isCartLoading(state, props)
+    || isPageSearchStateLoading(state, props)
+    || isPageHomeStateLoading(state, props)
+    || isAppLoading(state, props)
+  );
+}

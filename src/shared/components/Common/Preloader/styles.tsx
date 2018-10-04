@@ -8,5 +8,7 @@ export const styles = (theme: Theme) => createStyles({
     top: - theme.spacing.unit * 4,
     left: 0,
     width: '100%',
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
   },
 });

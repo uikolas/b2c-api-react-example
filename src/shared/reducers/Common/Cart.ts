@@ -1,6 +1,7 @@
 import {
-  CART_ADD_PRODUCT,
   CART_CREATE,
+  CART_ADD_ITEM,
+  CART_DELETE_ITEM, CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
 import {
   IReduxState,
@@ -10,28 +11,30 @@ import {
   TProductQuantity,
   TProductName,
   TProductPrice,
+  TProductImageSRC, TProductAvailability,
 } from "../../interfaces/product";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {ICartDiscounts, ICartTotals, TCartId, TCartPriceMode, TCartStore, TCartType} from "../../interfaces/cart";
+import {
+  ICartItemCalculation,
+  ICartDataResponse,
+  TCartId,
+} from "../../interfaces/cart";
 
 export interface ICartItem {
-  sku: TProductSKU;
-  name: TProductName;
-  quantity: TProductQuantity;
-  price: TProductPrice;
+  sku: TProductSKU| null;
+  name: TProductName| null;
+  image: TProductImageSRC| null;
+  quantity: TProductQuantity| null;
+  amount: TProductPrice | null;
+  calculations: ICartItemCalculation| null;
+  groupKey: string | null;
+  availability: TProductAvailability | null;
+  availableQuantity: TProductQuantity | null;
 }
 
-export interface ICartData {
+export interface ICartData extends ICartDataResponse {
   cartCreated: boolean;
-  items: Array<ICartItem>;
-  type: TCartType | null;
-  id: TCartId | null;
-  priceMode: TCartPriceMode | null;
-  store: TCartStore | null;
-  discounts: Array<ICartDiscounts>;
-  totals: ICartTotals | null;
 }
-
 
 export interface ICartState extends IReduxState {
   data: ICartData;
@@ -40,8 +43,8 @@ export interface ICartState extends IReduxState {
 export const initialState: ICartState = {
   data: {
     cartCreated: false,
+    currency: null,
     items: [],
-    type: null,
     id: null,
     priceMode: null,
     store: null,
@@ -52,40 +55,88 @@ export const initialState: ICartState = {
 
 export const cart = function (state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
-    case CART_ADD_PRODUCT:
-      return handleCartAdd(state, action.payload);
+    case `${CART_ADD_ITEM}_PENDING`:
+    case `${CART_UPDATE_ITEM}_PENDING`:
     case `${CART_CREATE}_PENDING`:
-      return handleCartPending(state, action.payload);
+      return handlePending(state, action.payload);
+    case `${CART_ADD_ITEM}_FULFILLED`:
+    case `${CART_UPDATE_ITEM}_FULFILLED`:
+      return handleFulfilled(state, action.payload);
+    case `${CART_ADD_ITEM}_REJECTED`:
+    case `${CART_DELETE_ITEM}_REJECTED`:
+    case `${CART_UPDATE_ITEM}_REJECTED`:
+      return handleRejected(state, action.payload);
     case `${CART_CREATE}_FULFILLED`:
-      return handleCartFulfilled(state, action.payload);
+      return handleCartCreateFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
-      return handleCartRejected(state, action.payload);
+      return handleCartCreateRejected(state, action.payload);
+    case `${CART_DELETE_ITEM}_PENDING`:
+      return {
+        ...state,
+        ...getReducerPartPending(),
+      };
+    case `${CART_DELETE_ITEM}_REJECTED`:
+      return {
+        ...state,
+        ...getReducerPartRejected(action.error),
+      };
+    case `${CART_DELETE_ITEM}_FULFILLED`:
+      const itemsAfterDelete: Array<ICartItem> = state.data.items.filter((item) => item.sku !== action.itemId);
+      return {
+        ...state,
+        data: {...state.data, items: itemsAfterDelete},
+        ...getReducerPartFulfilled(),
+      };
     default:
       return state;
   }
 };
 
 // handlers
-const handleCartFulfilled = (cartState: ICartState, payload: any) => {
-
+const handleFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
   return {
     ...cartState,
     data: {
       ...cartState.data,
-      cartCreated: true,
-      type: payload.type,
-      id: payload.id,
-      priceMode: payload.attributes.priceMode,
-      store: payload.attributes.store,
-      discounts: payload.attributes.discounts,
-      totals: payload.attributes.totals,
+      ...payload,
     },
     ...getReducerPartFulfilled(),
   };
 };
 
-const handleCartRejected = (cartState: ICartState, payload: any) => {
+const handleRejected = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
 
+const handlePending = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
+const handleCartCreateFulfilled = (cartState: ICartState, payload: any) => {
+  return {
+    ...cartState,
+    data: {
+      ...cartState.data,
+      cartCreated: true,
+      ...payload,
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleCartCreateRejected = (cartState: ICartState, payload: any) => {
   return {
     ...cartState,
     data: {
@@ -93,53 +144,6 @@ const handleCartRejected = (cartState: ICartState, payload: any) => {
       cartCreated: false,
     },
     ...getReducerPartRejected(payload.error),
-  };
-};
-const handleCartPending = (cartState: ICartState, payload: any) => {
-
-  return {
-    ...cartState,
-    data: {
-      ...initialState.data,
-    },
-    ...getReducerPartPending(),
-  };
-};
-
-
-const handleCartAdd = (cartState: ICartState, payload: ICartItem) => {
-
-  let items: Array<ICartItem> = [];
-  const addedItem = {
-    sku: payload.sku,
-    name: payload.name,
-    quantity: payload.quantity,
-    price: payload.price,
-  };
-  const existedItem = getProductFromCart(cartState, payload.sku);
-  if (existedItem) {
-    items = getCartItemsWithoutSelected(cartState, payload.sku);
-    addedItem.quantity = existedItem.quantity + payload.quantity;
-    items.push(addedItem);
-  } else {
-    items = [...cartState.data.items, addedItem];
-  }
-
-  return {
-    ...cartState,
-    data: {
-      ...cartState.data,
-      items: [...items],
-    },
-  };
-};
-
-const handleCartRemove = (cartState: ICartState, payload: ICartItem) => {
-  return {
-    ...cartState.data,
-    data: {
-      items: cartState.data.items.filter((item: ICartItem): Array<ICartItem> | boolean => item.sku !== payload.sku)
-    }
   };
 };
 
@@ -162,6 +166,10 @@ export function isCartCreated(state: any, props: any): boolean {
 
 export function isCartLoading(state: any, props: any): boolean {
   return (state.cart && state.cart.pending && state.cart.pending === true);
+}
+
+export function getCartId(state: any, props: any): TCartId {
+  return (isCartCreated(state, props) && state.cart.data.id) ? state.cart.data.id : null;
 }
 
 // selectors INNER

@@ -3,9 +3,11 @@ import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { toast } from 'react-toastify';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {ProductState} from '../../../reducers/Pages/Product';
+import {isPageProductStateLoading, ProductState} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -16,63 +18,56 @@ import {ProductAttributes} from './ProductAttributes';
 import {
   concreteProductType,
   absentProductType,
-  abstractProductType,
   defaultItemValueDropdown,
   IProductAttributeMap,
   IProductAttributes,
   IProductCardImages,
   IProductPropFullData,
   ISuperAttributes,
-  TProductSKU,
-  TProductQuantity,
-  TProductName,
-  TProductPrice,
+  TProductQuantity, TProductSKU,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
 import {styles} from './styles';
 import {
-  getFormattedPrice,
   ISuperAttribute,
   getAvailabilityDisplay,
   createQuantityVariants,
-  displayProductNameWithSuperAttr,
   createPathToIdProductConcrete,
   findIdProductConcreteByPath,
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {addProductToCart, cartCreateAction} from "../../../actions/Common/Cart";
-import {ICartState, ICartData, isCartCreated, isCartLoading} from "../../../reducers/Common/Cart";
-import {initAppAction} from "../../../actions/Common/Init";
+import {addItemToCartAction} from "../../../actions/Common/Cart";
+import {isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
 import {
-  getAppCurrency,
-  getAppPriceMode,
-  getAppStore,
+  getPayloadForCreateCart,
   isAppInitiated,
-  isAppLoading,
-  TAppCurrency,
   TAppPriceMode,
   TAppStore,
 } from "../../../reducers/Common/Init";
-import {getAccessToken} from "../../../reducers/Pages/Login";
-import {TAccessToken} from "../../../interfaces/login/index";
+import {isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {createCartItemAddToCart} from "../../../services/cartHelper";
+import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {TCartId} from "../../../interfaces/cart/index";
+import {AppPrice} from "../../Common/AppPrice/index";
+import {getProductDataAction} from "../../../actions/Pages/Product";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: any;
-  isLoading: boolean;
-  isApp: boolean;
-  appCurrency: TAppCurrency;
+  isAppDataSet: boolean;
+  isUserLoggedIn: boolean;
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
-  addProductToCart: Function;
-  cartCreate: Function;
+  addItemToCart: Function;
+  getProductData: Function;
   cartCreated: boolean;
-  dispatch: Function;
-  accessToken: TAccessToken;
+  cartId: TCartId;
+  payloadForCreateCart: ICartCreatePayload;
+  isLoading: boolean;
+  locationProductSKU?: string;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -100,9 +95,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (!this.props.isApp) {
-      this.props.dispatch(initAppAction(null));
-    }
     if (this.props.product) {
       this.setInitialData();
     }
@@ -111,6 +103,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     if (this.props.product && !prevState.productType) {
       this.setInitialData();
+    }
+    if (!this.props.product && this.props.locationProductSKU && this.props.isAppDataSet && !this.props.isLoading) {
+      this.props.getProductData(this.props.locationProductSKU);
     }
   }
 
@@ -170,28 +165,17 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public handleBuyBtnClick = (event: any): any => {
-    if (this.state.productType === concreteProductType) {
-
-      // Create cart if not exist
-      // TODO: May be moved this logic
-      if (this.props.cartCreated === false) {
-        const payload = {
-          priceMode: this.props.appPriceMode,
-          currency: this.props.appCurrency,
-          store: this.props.appStore,
-        };
-        const accessToken = this.props.accessToken;
-        this.props.dispatch(cartCreateAction(payload, accessToken));
-        return;
-      }
-
-      const productName = displayProductNameWithSuperAttr(this.state.name, this.state.superAttrSelected);
-      this.props.addProductToCart(
-        this.state.sku,
-        productName,
-        this.state.quantitySelected,
-        this.state.price,
+    if (!this.props.isUserLoggedIn) {
+      toast.error(authenticateErrorText);
+      return;
+    }
+    if (this.state.productType === concreteProductType ) {
+      this.props.addItemToCart(
+        createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
+        this.props.cartId,
+        this.props.payloadForCreateCart
       );
+
       this.setState( (prevState: ProductPageState) => {
         if (this.state.quantitySelected === quantitySelectedInitial) {
           return;
@@ -267,7 +251,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     );
   }
 
-  private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> => {
+  private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> | null => {
+    if (!images) {
+      return null;
+    }
     const response = images.map((element: any, index: number) => (
       {
         id: index,
@@ -286,16 +273,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
-    /*if (!this.props.product || !this.state.productType || !this.props.isApp) {
-      return null;
-    }*/
-    const {classes, isLoading, appCurrency} = this.props;
+    const {classes, isLoading} = this.props;
     console.info('state: ', this.state);
-    console.info('isLoading: ', isLoading);
 
     return (
-      <AppMain isLoading={isLoading}>
-        { (!this.props.product || !this.state.productType || !this.props.isApp)
+      <AppMain>
+        { (!this.props.product || !this.state.productType || !this.props.isAppDataSet)
           ? null
           : (
             <div className={classes.root} >
@@ -307,7 +290,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={getFormattedPrice(this.state.price, appCurrency)}
+                    price={<AppPrice value={this.state.price}/>}
                   />
 
                   { this.state.superAttributes
@@ -349,8 +332,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                       }
                     </Grid>
                   </Grid>
-
-
                 </Grid>
               </Grid>
               <Grid container justify="center" >
@@ -374,39 +355,35 @@ export const ProductPage = withStyles(styles)(ProductPageBase);
 export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
+    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
-    const cartProps: ICartState = state.cart ? state.cart : null;
-    const accessToken = getAccessToken(state, ownProps);
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
-    const appCurrency: TAppCurrency = getAppCurrency(state, ownProps);
-    const appPriceMode: TAppPriceMode = getAppPriceMode(state, ownProps);
-    const appStore: TAppStore = getAppStore(state, ownProps);
-    const isApp: boolean = isAppInitiated(state, ownProps);
-    const appLoading: boolean = isAppLoading(state, ownProps);
-    const isLoading = cartLoading || appLoading || false;
+    const cartId: TCartId = getCartId(state, ownProps);
+    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
+    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const isLoading: boolean = isPageProductStateLoading(state, ownProps);
+    const pathname: string = routerProps.location ? routerProps.location.pathname : null;
+    const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
 
-    return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        isLoading: isLoading ? isLoading : ownProps.pending,
-        product: productProps && productProps.data
-          ? productProps.data.selectedProduct
-          : ownProps.selectedProduct,
-        cartCreated,
-        isApp,
-        appCurrency,
-        appPriceMode,
-        appStore,
-        accessToken,
-      }
-    );
+    return ({
+      location: routerProps.location ? routerProps.location : ownProps.location,
+      product: productProps && productProps.data
+        ? productProps.data.selectedProduct
+        : ownProps.selectedProduct,
+      cartCreated,
+      cartId,
+      isAppDataSet,
+      payloadForCreateCart,
+      isUserLoggedIn,
+      isLoading,
+      locationProductSKU,
+    });
   },
   (dispatch: Function) => ({
-    dispatch,
-    addProductToCart: (sku: TProductSKU,
-                       name: TProductName ,
-                       quantity: TProductQuantity,
-                       price: TProductPrice ) => dispatch(addProductToCart(sku, name, quantity, price)),
-  }),
+    addItemToCart: (
+      payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
+    ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
+    getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
+  })
 )(ProductPage);

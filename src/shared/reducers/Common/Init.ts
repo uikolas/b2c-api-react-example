@@ -6,16 +6,19 @@ import {
 } from '../../../typings/app';
 
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {ICartCreatePayload} from "../../services/Common/Cart";
 
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
 export type TAppStore = string | null;
+export type TAppLocale = string | null;
 
 export interface IInitData {
-  ok: boolean;
+  ok?: boolean;
   priceMode: TAppPriceMode;
   currency: TAppCurrency;
   store: TAppStore;
+  locale: TAppLocale;
 }
 
 export interface IInitState extends IReduxState {
@@ -28,6 +31,7 @@ export const initialState: IInitState = {
     priceMode: null,
     currency: null,
     store: null,
+    locale: null,
   },
 };
 
@@ -54,6 +58,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
       priceMode: payload.priceMode,
       currency: payload.currency,
       store: payload.store,
+      locale: payload.locale,
     },
     ...getReducerPartFulfilled(),
   };
@@ -73,7 +78,7 @@ const handleInitAppPending = (appState: IInitState, payload: any) => {
   return {
     ...appState,
     data: {
-      ...initialState.data,
+      ...appState.data,
     },
     ...getReducerPartPending(),
   };
@@ -93,10 +98,26 @@ export function getAppCurrency(state: any, props: any): TAppCurrency {
   return isAppInitiated(state, props) ? state.init.data.currency : null;
 }
 
+export function getAppLocale(state: any, props: any): TAppStore {
+  return isAppInitiated(state, props) ?  state.init.data.locale : null;
+}
+
 export function getAppPriceMode(state: any, props: any): TAppPriceMode {
   return isAppInitiated(state, props) ?  state.init.data.priceMode : null;
 }
 
 export function getAppStore(state: any, props: any): TAppStore {
   return isAppInitiated(state, props) ?  state.init.data.store : null;
+}
+
+export function getPayloadForCreateCart(state: any, props: any): ICartCreatePayload {
+  return (
+    isAppInitiated(state, props)
+      ? {
+          priceMode: state.init.data.priceMode,
+          currency: state.init.data.currency,
+          store: state.init.data.store,
+        }
+      : null
+  );
 }

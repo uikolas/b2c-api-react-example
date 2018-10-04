@@ -22,21 +22,22 @@ import { push } from 'react-router-redux';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {SprykerFilterElement} from '../../../components/UI/SprykerFilter';
-import {SprykerRange, SprykerRangeState} from '../../../components/UI/SprykerRangeFilter';
-import {SprykerButton} from '../../../components/UI/SprykerButton';
+import {SprykerRange} from '../../../components/UI/SprykerRangeFilter';
+
 import {getProductDataAction} from '../../../actions/Pages/Product';
 import {sendSearchAction, getCategoriesAction} from '../../../actions/Pages/Search';
 
 import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
-import {ISearchPageData} from "../../../interfaces/searchPageData";
+import {ISearchPageData, ValueFacets, RangeFacets} from "../../../interfaces/searchPageData";
 import config from '../../../config';
 
 import {styles} from './styles';
+import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 
 type IQuery = {
   q?: string,
-  currency?: string,
+  currency: TAppCurrency,
   sort?: string,
   [key: string]: string | number,
 };
@@ -45,9 +46,11 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
 }
 
+type RangeType = {min: number, max: number};
+
 interface SearchPageState {
-  activeFilters: object;
-  rangeFilters: {[key: string]: SprykerRangeState};
+  activeFilters: {[name: string]: string[]};
+  activeRangeFilters: {[name: string]: RangeType};
   sort: string;
   selectedCategory: number | string;
 }
@@ -55,24 +58,43 @@ interface SearchPageState {
 export const pageTitle = 'Search results for ';
 
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
+  constructor(props : SearchPageProps){
+    super(props);
+
+    const activeFilters: {[key: string]: string[]} = {};
+    const activeRangeFilters: {[key: string]: RangeType} = {};
+
+    props.filters.forEach((filter: ValueFacets) => {
+      if (filter.activeValue && filter.activeValue.length) {
+        activeFilters[filter.name] = filter.activeValue;
+      }
+    });
+
+    props.rangeFilters.forEach((filter: RangeFacets) => {
+      if (filter.activeMin && filter.activeMax) {
+        activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax}
+      }
+    });
+
+    this.state = {
+      activeFilters,
+      activeRangeFilters,
+      sort: '',
+      selectedCategory: 0,
+    };
+  }
 
   public componentWillMount() {
     this.props.dispatch(getCategoriesAction());
-  }
-
-  public state: SearchPageState = {
-    activeFilters: {},
-    rangeFilters: {},
-    sort: '',
-    selectedCategory: 0,
   }
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
     this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
   }
 
-  public updateRangeFilters = (name: string, values: SprykerRangeState ) => {
-    this.setState((prevState: SearchPageState) => ({rangeFilters: {...prevState.rangeFilters, [name]:  {min: values.min, max: values.max}}}));
+  public updateRangeFilters = (name: string, {min, max}: RangeType ) => {
+    console.info(min, max);
+    this.setState((prevState: SearchPageState) => ({activeRangeFilters: {...prevState.activeRangeFilters, [name]:  {min, max}}}));
   }
 
   public updateSearch = (e: any) => {
@@ -86,10 +108,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
-    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
-      query[`${key}[min]`] = this.state.rangeFilters[key].min;
-      query[`${key}[max]`] = this.state.rangeFilters[key].max;
-    });
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -115,17 +137,18 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       query.page = this.props.pagination.currentPage + 1;
     }
 
-    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
-      query[`${key}[min]`] = this.state.rangeFilters[key].min;
-      query[`${key}[max]`] = this.state.rangeFilters[key].max;
-    });
+
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
 
   public renderProduct = (sku: string, name: string) => {
     this.props.dispatch(getProductDataAction(sku));
-    this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
+    this.props.dispatch(push(`${config.WEB_PATH}product/${sku}`));
   }
 
   public selectCategory = (category: string | number) => (e: any) => {
@@ -139,10 +162,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
-    Object.keys(this.state.rangeFilters).forEach((key: string | number) => {
-      query[`${key}[min]`] = this.state.rangeFilters[key].min;
-      query[`${key}[max]`] = this.state.rangeFilters[key].max;
-    });
+
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -160,6 +184,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               <SprykerFilterElement
                 attributeName={filter.name}
                 menuItems={filter.values}
+                activeValues={this.state.activeFilters[filter.name] || []}
                 handleChange={this.updateActiveFilters}
               />
             </Grid>
@@ -172,8 +197,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ? rangeFilters.map((filter: any) => (
         <Grid item xs={4} key={filter.name}>
           <SprykerRange
-            attributeName={filter.name.includes('price') ? 'price' : filter.name}
+            attributeName={filter.name}
             min={filter.min} max={filter.max}
+            currentValue={this.state.activeRangeFilters[filter.name] || {min: filter.min, max: filter.max}}
             handleChange={this.updateRangeFilters}
           />
         </Grid>
@@ -259,7 +285,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     return (
       <React.Fragment>
-        <AppMain isLoading={isLoading}>
+        <AppMain>
           <Grid container
                 justify="center"
                 alignItems="center"
@@ -280,6 +306,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               <List
                 component="nav"
                 subheader={<ListSubheader component="div">Categories</ListSubheader>}
+                className={classes.categoryList}
               >
                 {categoryList}
               </List>
@@ -382,12 +409,12 @@ export const ConnectedSearchPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : ownProps.items,
         searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
-        currency: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currency : ownProps.currency,
         filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
         rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
         sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
@@ -395,6 +422,7 @@ export const ConnectedSearchPage = reduxify(
         categories: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categories : ownProps.categories,
         // isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
+        currency,
       }
     );
   }

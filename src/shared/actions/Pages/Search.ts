@@ -21,22 +21,22 @@ export const categoriesPendingState = {
 
 export const sendSuggestionAction = function (query: string) {
   return (dispatch: Function, getState: Function) => {
-    CatalogService.catalogSuggestion(PAGES_SUGGESTION_REQUEST, dispatch, query);
     dispatch(suggestPendingState);
+    CatalogService.catalogSuggestion(PAGES_SUGGESTION_REQUEST, dispatch, query);
   };
 };
 
 export const sendSearchAction = function (params: any) {
   return (dispatch: Function, getState: Function) => {
-    CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
     dispatch(searchPendingState);
+    CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
   };
 };
 
 export const getCategoriesAction = function () {
   return (dispatch: Function, getState: Function) => {
-    CatalogService.getCategoriesTree(CATEGORIES_REQUEST, dispatch);
     dispatch(categoriesPendingState);
+    CatalogService.getCategoriesTree(CATEGORIES_REQUEST, dispatch);
   };
 };
 

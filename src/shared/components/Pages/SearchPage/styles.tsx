@@ -10,6 +10,9 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: "bold",
     display: "inline",
   },
+  categoryList: {
+    width: '95%',
+  },
   buttonsRow: {
     marginBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 2,
