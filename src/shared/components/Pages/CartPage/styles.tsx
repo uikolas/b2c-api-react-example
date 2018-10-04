@@ -3,7 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   title: {
-    margin: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 3,
   },
   root: {
     width: '100%',
@@ -19,10 +19,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: 32,
     color: theme.palette.secondary.light,
   },
-  pageHeader: {
-    marginBottom: theme.spacing.unit * 2,
-  },
-  contentBlock: {
-
+  footer: {
+    margin: theme.spacing.unit * 3,
   },
 });

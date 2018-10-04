@@ -75,6 +75,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         ...getReducerPartFulfilled(),
       };
     case PAGES_CUSTOMER_LOGOUT:
+      localStorage.clear();
       return {
         ...state,
         data: initialState.data

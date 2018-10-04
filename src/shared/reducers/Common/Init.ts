@@ -11,12 +11,14 @@ import {ICartCreatePayload} from "../../services/Common/Cart";
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
 export type TAppStore = string | null;
+export type TAppLocale = string | null;
 
 export interface IInitData {
   ok?: boolean;
   priceMode: TAppPriceMode;
   currency: TAppCurrency;
   store: TAppStore;
+  locale: TAppLocale;
 }
 
 export interface IInitState extends IReduxState {
@@ -29,6 +31,7 @@ export const initialState: IInitState = {
     priceMode: null,
     currency: null,
     store: null,
+    locale: null,
   },
 };
 
@@ -55,6 +58,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
       priceMode: payload.priceMode,
       currency: payload.currency,
       store: payload.store,
+      locale: payload.locale,
     },
     ...getReducerPartFulfilled(),
   };
@@ -92,6 +96,10 @@ export function isAppLoading(state: any, props: any): boolean {
 
 export function getAppCurrency(state: any, props: any): TAppCurrency {
   return isAppInitiated(state, props) ? state.init.data.currency : null;
+}
+
+export function getAppLocale(state: any, props: any): TAppStore {
+  return isAppInitiated(state, props) ?  state.init.data.locale : null;
 }
 
 export function getAppPriceMode(state: any, props: any): TAppPriceMode {
