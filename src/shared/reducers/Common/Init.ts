@@ -58,6 +58,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
       priceMode: payload.priceMode,
       currency: payload.currency,
       store: payload.store,
+      locale: payload.locale,
     },
     ...getReducerPartFulfilled(),
   };

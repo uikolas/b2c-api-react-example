@@ -13,6 +13,8 @@ import {
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction
 } from "../../actions/Common/Init";
+import {initFixture} from "./initFixture";
+import {parseStoreResponse} from "../initHelper/store";
 
 export class InitAppService {
 
@@ -22,21 +24,23 @@ export class InitAppService {
       dispatch(initApplicationDataPendingStateAction());
 
       // TODO: this is only for development reasons - remove after finish
-      const result = {
-        ok: true,
-        problem: 'Test API_WITH_FIXTURES',
-        data: {
-          priceMode: PRICE_MODE_DEFAULT,
-          currency: CURRENCY_DEFAULT,
-          store: STORE_DEFAULT,
-        },
-      };
-      // response = await getTestDataPromise(result);
-      response = await api.get('stores', null);
+      if(API_WITH_FIXTURES) {
+        const result = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: initFixture,
+        };
+        response = await getTestDataPromise(result);
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        response = await api.get('stores', null);
+      }
       console.log('getInitData response: ', response);
 
       if (response.ok) {
-        dispatch(initApplicationDataFulfilledStateAction(response.data));
+        const responseParsed = parseStoreResponse(response.data);
+        console.log('getInitData responseParsed: ', responseParsed);
+        dispatch(initApplicationDataFulfilledStateAction(responseParsed));
         toast.success('Init data was set');
         return response.data;
       } else {
