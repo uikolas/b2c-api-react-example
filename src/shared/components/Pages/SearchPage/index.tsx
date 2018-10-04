@@ -108,10 +108,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -138,10 +138,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
 
 
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -163,18 +163,16 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     };
 
 
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
+    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    // });
 
     this.props.dispatch(sendSearchAction(query));
   }
 
   public render() {
     const { classes, items, searchTerm, currency, filters, rangeFilters, isLoading, sortParams, pagination, categories } = this.props;
-
-    console.info(this.state.activeRangeFilters);
 
     const renderFilters: any[] = [];
 
