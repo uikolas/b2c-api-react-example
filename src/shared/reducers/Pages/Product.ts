@@ -52,3 +52,7 @@ export const pageProduct = function (state: ProductState = initialState, action:
 export function isPageProductStateLoading(state: any, props: any): boolean {
   return (state.pageProduct && state.pageProduct.pending && state.pageProduct.pending === true);
 }
+
+export function isPageProductStateRejected(state: any, props: any): boolean {
+  return (state.pageProduct && state.pageProduct.rejected && state.pageProduct.rejected === true);
+}
