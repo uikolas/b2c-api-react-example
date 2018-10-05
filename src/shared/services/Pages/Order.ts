@@ -9,6 +9,7 @@ import {
 } from "../../actions/Pages/Order";
 import {getTestDataPromise} from "../apiFixture/index";
 import {orderAuthenticateErrorText} from "../../constants/messages/errors";
+import {orderHistoryFixtureEmpty} from "../fixtures/OrderHistoryFixture";
 
 export class OrderService {
 
@@ -30,7 +31,7 @@ export class OrderService {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: 'ok',
+          data: orderHistoryFixtureEmpty,
         };
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);

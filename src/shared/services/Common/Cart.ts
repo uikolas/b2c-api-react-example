@@ -1,7 +1,7 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {cartCreateFixture, cartUpdateQuantityFixture} from './cartFixture';
+import {cartCreateFixture, cartUpdateQuantityFixture} from '../fixtures/cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {TCartId} from "../../interfaces/cart";
