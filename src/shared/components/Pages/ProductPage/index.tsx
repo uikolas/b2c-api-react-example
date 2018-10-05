@@ -8,8 +8,8 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {
-  getProduct, isPageProductStateLoading, isPageProductStateRejected,
-  ProductState
+  getProduct, isPageProductStateInitiated, isPageProductStateLoading,
+  isPageProductStateRejected
 } from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
@@ -41,7 +41,7 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import {addItemToCartAction} from "../../../actions/Common/Cart";
-import {isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
+import {isCartCreated, getCartId} from "../../../reducers/Common/Cart";
 import {
   getPayloadForCreateCart,
   isAppInitiated,
@@ -50,11 +50,12 @@ import {
 } from "../../../reducers/Common/Init";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
-import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getRouterLocation} from "../../../selectors/Common/location";
+import {cartAuthenticateErrorText} from "../../../constants/messages/errors";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -72,6 +73,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   payloadForCreateCart: ICartCreatePayload;
   isLoading: boolean;
   isRejected: boolean;
+  isInitiated: boolean;
   locationProductSKU?: string;
 }
 
@@ -112,8 +114,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (!this.props.product
       && this.props.locationProductSKU
       && this.props.isAppDataSet
-      && !this.props.isLoading
-      && !this.props.isRejected
+      && !this.props.isInitiated
+      // && !this.props.isRejected
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
@@ -176,7 +178,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public handleBuyBtnClick = (event: any): any => {
     if (!this.props.isUserLoggedIn) {
-      toast.error(authenticateErrorText);
+      toast.error(cartAuthenticateErrorText);
       return;
     }
     if (this.state.productType === concreteProductType ) {
@@ -373,6 +375,7 @@ export const ConnectedProductPage = reduxify(
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
+    const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const pathname: string = (location && location.pathname) ? location.pathname : null;
     const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
 
@@ -384,6 +387,7 @@ export const ConnectedProductPage = reduxify(
       isAppDataSet,
       payloadForCreateCart,
       isUserLoggedIn,
+      isInitiated,
       isLoading,
       isRejected,
       locationProductSKU,

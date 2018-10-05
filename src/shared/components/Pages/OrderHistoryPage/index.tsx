@@ -8,12 +8,26 @@ import {reduxify} from '../../../lib/redux-helper';
 import {AppMain} from '../../Common/AppMain';
 
 import {styles} from './styles';
+import {getRouterLocation} from "../../../selectors/Common/location";
+import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
+import {
+  isOrderHistoryFulfilled, isOrderHistoryInitiated, isOrderHistoryLoading,
+  isOrderHistoryStateRejected
+} from "../../../reducers/Pages/OrderHistory";
+import {isAppInitiated} from "../../../reducers/Common/Init";
+import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 
 
 export const pageTitle = "Orders History";
 
 interface OrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
-
+  getOrdersCollection: Function;
+  isLoading: boolean;
+  isRejected: boolean;
+  isFulfilled: boolean;
+  isAppDataSet: boolean;
+  isUserLoggedIn: boolean;
+  isInitiated: boolean;
 }
 
 interface OrderHistoryPageState {
@@ -26,8 +40,16 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
 
   };
 
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
+  public componentDidMount = () => {
+    // this.props.getOrdersCollection();
+  }
 
+  public componentDidUpdate = (prevProps: any, prevState: any) => {
+    if (!this.props.isInitiated
+      && this.props.isAppDataSet
+    ) {
+      this.props.getOrdersCollection();
+    }
   }
 
   public render(): JSX.Element {
@@ -68,11 +90,25 @@ export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
 
 export const ConnectedOrderHistoryPage = reduxify(
   (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
+    const location = getRouterLocation(state, ownProps);
+    const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
+    const isRejected: boolean = isOrderHistoryStateRejected(state, ownProps);
+    const isFulfilled = isOrderHistoryFulfilled(state, ownProps);
+    const isInitiated = isOrderHistoryInitiated(state, ownProps);
+    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
 
     return ({
-      location: routerProps.location ? routerProps.location : ownProps.location,
-
+      location,
+      isLoading,
+      isRejected,
+      isFulfilled,
+      isAppDataSet,
+      isUserLoggedIn,
+      isInitiated,
     });
-  }
+  },
+  (dispatch: Function) => ({
+    getOrdersCollection: (sku: string) => dispatch(getOrdersCollectionAction()),
+  })
 )(OrderHistoryPage);

@@ -7,6 +7,7 @@ import {isPageSearchStateLoading, pageSearch} from './Pages/Search';
 import {isPageProductStateLoading, pageProduct} from './Pages/Product';
 import {cart, isCartLoading} from './Common/Cart';
 import {init, isAppLoading} from './Common/Init';
+import {orderHistory, isOrderHistoryLoading} from "./Pages/OrderHistory";
 
 
 // export const reducers = combineReducers({
@@ -21,6 +22,7 @@ export const reducers = {
   pageProduct,
   cart,
   init,
+  orderHistory,
 };
 
 export function isStateLoading(state: any, props: any): boolean {
@@ -31,5 +33,6 @@ export function isStateLoading(state: any, props: any): boolean {
     || isPageSearchStateLoading(state, props)
     || isPageHomeStateLoading(state, props)
     || isAppLoading(state, props)
+    || isOrderHistoryLoading(state, props)
   );
 }

@@ -49,18 +49,25 @@ export const pageProduct = function (state: ProductState = initialState, action:
       return state;
   }
 };
+export function isPageProductStateInitiated(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageProduct.initiated && state.pageProduct.initiated === true);
+}
 
 export function isPageProductStateLoading(state: any, props: any): boolean {
-  return (state.pageProduct && state.pageProduct.pending && state.pageProduct.pending === true);
+  return (isStateExist(state, props) && state.pageProduct.pending && state.pageProduct.pending === true);
 }
 
 export function isPageProductStateRejected(state: any, props: any): boolean {
-  return (state.pageProduct && state.pageProduct.rejected && state.pageProduct.rejected === true);
+  return (isStateExist(state, props) && state.pageProduct.rejected && state.pageProduct.rejected === true);
 }
 
 export function getProduct(state: any, props: any): IProductDataParsed | null {
   if (isPageProductStateRejected(state, props)) {
     return null;
   }
-  return (state.pageProduct && state.pageProduct.data.selectedProduct) ? state.pageProduct.data.selectedProduct : null;
+  return (isStateExist(state, props) && state.pageProduct.data.selectedProduct) ? state.pageProduct.data.selectedProduct : null;
+}
+
+function isStateExist(state: any, props: any): boolean {
+  return Boolean(state.pageProduct);
 }
