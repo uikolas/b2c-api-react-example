@@ -1,3 +1,4 @@
+/* tslint:disable */
 export const catalogFixture: any = {
   "data": [
     {

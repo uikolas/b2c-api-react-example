@@ -1,3 +1,4 @@
+/* tslint:disable */
 export const fixtureFull: any = {
   "data": {
     "type": "abstract-products",
