@@ -2173,5 +2173,5 @@ export const fixtureOneProduct: any = {
 };
 
 export const fixtureError: any = {
-  data: {"errors":[{"code":"301","status":404,"detail":"Abstract product is not found."}]}
+  "errors":[{"code":"301","status":404,"detail":"Abstract product is not found."}]
 }
