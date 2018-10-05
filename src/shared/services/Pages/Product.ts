@@ -16,9 +16,9 @@ export class ProductService {
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         response = {
-          ok: false,
+          ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: fixtureError,
+          data: fixtureSuperFull,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
