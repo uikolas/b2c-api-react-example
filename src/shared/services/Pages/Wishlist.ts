@@ -91,7 +91,7 @@ export class WishlistService {
           type: ACTION_TYPE + '_FULFILLED',
           wishlistId,
         });
-        return response.data.data;
+        return response.ok;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',

@@ -51,7 +51,7 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
         ...getReducerPartFulfilled(),
       };
     case `${ADD_WISHLIST}_FULFILLED`: {
-      const wishlists = state.data.wishlists.filter((wishlist: IWishlist) => wishlist.id !== action.wishlistId);
+      const wishlists = [...state.data.wishlists, action.wishlist];
       return {
         ...state,
         data: {...state.data, wishlists},
@@ -59,7 +59,7 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
       };
     }
     case `${DELETE_WISHLIST}_FULFILLED`: {
-      const wishlists = [...state.data.wishlists, action.wishlist];
+      const wishlists = state.data.wishlists.filter((wishlist: IWishlist) => wishlist.id !== action.wishlistId);
       return {
         ...state,
         data: {...state.data, wishlists},
