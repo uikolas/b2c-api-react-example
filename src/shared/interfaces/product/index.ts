@@ -23,6 +23,7 @@ export type TProductCurrency = string;
 export type TProductAvailability = boolean;
 export type TProductAttributes = object;
 export type TProductImageSRC = string;
+export type TProductAttributeMap = object;
 
 // Interfaces
 export interface IProductCardPrice {
@@ -47,7 +48,7 @@ export interface IProductCard {
   abstractName?: string;
   abstract_sku?: string;
   abstractSku?: string;
-  prices?: Array<IProductCardPrice>
+  prices?: Array<IProductCardPrice>;
 }
 
 export interface IProductAttributeMap {
@@ -74,4 +75,13 @@ export interface IProductPropFullData {
   price: TProductPrice | null;
   sku: TProductSKU | null;
   productType: TProductType | null;
+}
+
+export interface IProductDataParsed {
+  attributeMap: TProductAttributeMap;
+  superAttributes: ISuperAttributes;
+  abstractProduct: IProductPropFullData;
+  concreteProducts: {
+    [key: string]: IProductPropFullData
+  };
 }
