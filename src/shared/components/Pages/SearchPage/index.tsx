@@ -84,7 +84,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     };
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     this.props.dispatch(getCategoriesAction());
   }
 
@@ -105,6 +105,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
+      include: '',
       ...this.state.activeFilters,
     };
 
@@ -125,6 +126,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
+      include: '',
       page: value,
       ...this.state.activeFilters,
     };
@@ -158,6 +160,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
+      include: '',
       category,
       ...this.state.activeFilters,
     };

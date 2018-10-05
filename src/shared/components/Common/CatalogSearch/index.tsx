@@ -140,7 +140,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   private handleFullSearch = (e: any) => {
     e.preventDefault();
     if (!this.props.isLoading) {
-      this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
+      this.props.getSearchResult({q: this.state.value, currency: this.props.currency, include: ''});
       this.props.changeLocation(`${config.WEB_PATH}search`);
     }
   }
