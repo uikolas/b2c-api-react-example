@@ -80,18 +80,27 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
               <AppLogo />
             </Grid>
 
-            <Grid item sm={5}>
+            <Grid item sm={4}>
               { location.pathname === config.WEB_PATH || location.pathname === `${config.WEB_PATH}login`
                 ? <CatalogSearch />
                 : null
               }
             </Grid>
-            <Grid item sm={4}
+            <Grid item sm={5}
                   container
                   direction="row"
                   justify="flex-end"
                   alignItems="center"
             >
+              { isUserLoggedIn
+                ? (
+                  <NavLink to={`${config.WEB_PATH}wishlist`}>
+                    <SprykerButton
+                      title="Wishlist"
+                    />
+                  </NavLink>)
+                : null
+              }
               <NavLink to={isUserLoggedIn ? `${config.WEB_PATH}`: `${config.WEB_PATH}login`}>
                 <SprykerButton
                   title={isUserLoggedIn ? 'Logout' : 'Register/Login'}

@@ -1,24 +1,17 @@
-import { routerReducer as routing } from 'react-router-redux';
-import { combineReducers } from 'redux';
-
 import {isPageHomeStateLoading, pagesHome} from './Pages/Home';
 import {isPageLoginStateLoading, pagesLogin} from './Pages/Login';
 import {isPageSearchStateLoading, pageSearch} from './Pages/Search';
 import {isPageProductStateLoading, pageProduct} from './Pages/Product';
+import {pageWishlist} from './Pages/Wishlist';
 import {cart, isCartLoading} from './Common/Cart';
 import {init, isAppLoading} from './Common/Init';
-
-
-// export const reducers = combineReducers({
-//   routing,
-//   pagesHome,
-// });
 
 export const reducers = {
   pagesHome,
   pagesLogin,
   pageSearch,
   pageProduct,
+  pageWishlist,
   cart,
   init,
 };
