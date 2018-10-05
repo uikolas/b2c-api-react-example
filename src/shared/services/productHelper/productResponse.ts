@@ -1,18 +1,17 @@
 import {
   parseSuperAttributes,
   parseImageSets,
-  getAvailabilityDisplay,
 } from "./index";
-import {concreteProductType, abstractProductType} from "../../interfaces/product";
+import {concreteProductType, abstractProductType, IProductDataParsed} from "../../interfaces/product";
 
 interface IResponse {
   data: object;
   included: object;
 }
 
-export const parseProductResponse = (response: IResponse): any => {
+export const parseProductResponse = (response: IResponse): IProductDataParsed => {
   if (!response) {
-    return false;
+    return null;
   }
   const { data, included }: any = response;
 
