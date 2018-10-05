@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {isPageProductStateLoading, ProductState} from '../../../reducers/Pages/Product';
+import {isPageProductStateLoading, isPageProductStateRejected, ProductState} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -67,6 +67,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   cartId: TCartId;
   payloadForCreateCart: ICartCreatePayload;
   isLoading: boolean;
+  isRejected: boolean;
   locationProductSKU?: string;
 }
 
@@ -95,16 +96,21 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (this.props.product) {
+    /*if (this.props.product) {
       this.setInitialData();
-    }
+    }*/
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     if (this.props.product && !prevState.productType) {
       this.setInitialData();
     }
-    if (!this.props.product && this.props.locationProductSKU && this.props.isAppDataSet && !this.props.isLoading) {
+    if (!this.props.product
+      && this.props.locationProductSKU
+      && this.props.isAppDataSet
+      && !this.props.isLoading
+      && !this.props.isRejected
+    ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
   }
@@ -278,7 +284,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     return (
       <AppMain>
-        { (!this.props.product || !this.state.productType || !this.props.isAppDataSet)
+        { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
           ? null
           : (
             <div className={classes.root} >
@@ -363,6 +369,7 @@ export const ConnectedProductPage = reduxify(
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
+    const isRejected: boolean = isPageProductStateRejected(state, ownProps);
     const pathname: string = routerProps.location ? routerProps.location.pathname : null;
     const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
 
@@ -377,6 +384,7 @@ export const ConnectedProductPage = reduxify(
       payloadForCreateCart,
       isUserLoggedIn,
       isLoading,
+      isRejected,
       locationProductSKU,
     });
   },

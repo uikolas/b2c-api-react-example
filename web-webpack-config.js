@@ -101,7 +101,7 @@ const config = {
 
     // the url to the output directory resolved relative to the HTML page
 
-    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : WEB_PATH,
+    publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + WEB_PATH : WEB_PATH,
   },
   optimization: {
     minimizer: [
