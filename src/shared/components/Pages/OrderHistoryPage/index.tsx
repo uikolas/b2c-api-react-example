@@ -45,8 +45,10 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (!this.props.isInitiated
-      && this.props.isAppDataSet
+    if (
+      /*!this.props.isInitiated
+      && this.props.isAppDataSet*/
+      !this.props.isInitiated
     ) {
       this.props.getOrdersCollection();
     }
