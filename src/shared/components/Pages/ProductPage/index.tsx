@@ -7,7 +7,10 @@ import { toast } from 'react-toastify';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {isPageProductStateLoading, isPageProductStateRejected, ProductState} from '../../../reducers/Pages/Product';
+import {
+  getProduct, isPageProductStateLoading, isPageProductStateRejected,
+  ProductState
+} from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -24,7 +27,7 @@ import {
   IProductCardImages,
   IProductPropFullData,
   ISuperAttributes,
-  TProductQuantity, TProductSKU,
+  TProductQuantity, TProductSKU, IProductDataParsed,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -51,12 +54,13 @@ import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../
 import {TCartId} from "../../../interfaces/cart/index";
 import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
+import {getRouterLocation} from "../../../selectors/Common/location";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
-  product: any;
+  product: IProductDataParsed | null;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
   appPriceMode: TAppPriceMode;
@@ -96,9 +100,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    /*if (this.props.product) {
+    if (this.props.product) {
       this.setInitialData();
-    }*/
+    }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
@@ -360,24 +364,21 @@ export const ProductPage = withStyles(styles)(ProductPageBase);
 
 export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
+    const location = getRouterLocation(state, ownProps);
+    const product = getProduct(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartCreated: boolean = isCartCreated(state, ownProps);
-    const cartLoading: boolean = isCartLoading(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
-    const pathname: string = routerProps.location ? routerProps.location.pathname : null;
+    const pathname: string = (location && location.pathname) ? location.pathname : null;
     const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
 
     return ({
-      location: routerProps.location ? routerProps.location : ownProps.location,
-      product: productProps && productProps.data
-        ? productProps.data.selectedProduct
-        : ownProps.selectedProduct,
+      location,
+      product,
       cartCreated,
       cartId,
       isAppDataSet,

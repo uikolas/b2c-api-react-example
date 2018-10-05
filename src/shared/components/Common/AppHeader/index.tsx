@@ -3,6 +3,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
+import BookmarkBorderOutlined from '@material-ui/icons/BookmarkBorderOutlined';
 import { NavLink } from 'react-router-dom';
 
 import {AppLogo} from '../AppLogo';
@@ -22,7 +23,7 @@ import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
 import {Preloader} from "../Preloader/index";
-import {pathCartPage, pathHomePage, pathLoginPage} from "../../../routes/contentRoutes";
+import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -119,6 +120,17 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
                 vertical="top"
                 horizontal="right"
               />
+              { /* TODO: Add fetching data on click !!!*/ }
+              {isUserLoggedIn
+                ?  <NavLink to={pathOrderHistoryPage}>
+                    <SprykerButton
+                      title={'Orders History'}
+                      IconType={BookmarkBorderOutlined}
+                    />
+                  </NavLink>
+                : null
+              }
+
             </Grid>
 
           </Grid>

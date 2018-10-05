@@ -5,10 +5,11 @@ import {
   IReduxState,
 } from '../../../typings/app';
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {IProductDataParsed} from "../../interfaces/product/index";
 
 export interface ProductState extends IReduxState {
   data: {
-    selectedProduct: any,
+    selectedProduct: IProductDataParsed | null,
   };
 }
 
@@ -55,4 +56,11 @@ export function isPageProductStateLoading(state: any, props: any): boolean {
 
 export function isPageProductStateRejected(state: any, props: any): boolean {
   return (state.pageProduct && state.pageProduct.rejected && state.pageProduct.rejected === true);
+}
+
+export function getProduct(state: any, props: any): IProductDataParsed | null {
+  if (isPageProductStateRejected(state, props)) {
+    return null;
+  }
+  return (state.pageProduct && state.pageProduct.data.selectedProduct) ? state.pageProduct.data.selectedProduct : null;
 }

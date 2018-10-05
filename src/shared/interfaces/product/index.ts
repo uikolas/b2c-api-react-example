@@ -78,9 +78,9 @@ export interface IProductPropFullData {
 }
 
 export interface IProductDataParsed {
-  attributeMap: TProductAttributeMap;
-  superAttributes: ISuperAttributes;
-  abstractProduct: IProductPropFullData;
+  attributeMap: IProductAttributeMap | null;
+  superAttributes: Array<ISuperAttribute> | null;
+  abstractProduct: IProductPropFullData | null;
   concreteProducts: {
     [key: string]: IProductPropFullData
   };
