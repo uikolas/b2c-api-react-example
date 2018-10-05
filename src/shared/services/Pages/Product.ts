@@ -22,7 +22,9 @@ export class ProductService {
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        response = await api.get(`abstract-products/${sku}`);
+        response = await api.get(`abstract-products/${sku}`, {include:
+            'abstract-product-image-sets,abstract-product-prices,abstract-product-availabilities,concrete-products,concrete-product-image-sets,concrete-product-prices,concrete-product-availabilities'
+        });
       }
       if (response.ok) {
         const responseParsed: any = parseProductResponse(response.data);

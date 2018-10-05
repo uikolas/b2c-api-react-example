@@ -70,7 +70,7 @@ export class CatalogService {
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        response = await api.get('catalog-search-suggestions', {q: query}, { withCredentials: true });
+        response = await api.get('catalog-search-suggestions', {q: query, include: ''}, { withCredentials: true });
       }
 
       if (response.ok) {
