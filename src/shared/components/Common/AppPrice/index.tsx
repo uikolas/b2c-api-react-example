@@ -6,14 +6,15 @@ import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 interface AppPriceProps {
   currency: TAppCurrency;
   value: number | null;
+  specificCurrency?: TAppCurrency;
 }
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
-  const { currency, value } = props;
+  const { currency, value, specificCurrency } = props;
 
   return (
     value
-      ? <FormattedNumber value={value} style="currency" currency={currency} />
+      ? <FormattedNumber value={value} style="currency" currency={specificCurrency ? specificCurrency : currency} />
       : null
   );
 };

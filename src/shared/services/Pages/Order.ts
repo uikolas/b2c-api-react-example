@@ -9,7 +9,8 @@ import {
 } from "../../actions/Pages/Order";
 import {getTestDataPromise} from "../apiFixture/index";
 import {orderAuthenticateErrorText} from "../../constants/messages/errors";
-import {orderHistoryFixtureEmpty} from "../fixtures/OrderHistoryFixture";
+import {orderHistoryFixtureEmpty, orderHistoryFixtureFull} from "../fixtures/OrderHistoryFixture";
+import {parseGetOrdersCollectionResponse} from "../orderHelper/response";
 
 export class OrderService {
 
@@ -18,20 +19,13 @@ export class OrderService {
     try {
       dispatch(ordersCollectionPendingStateAction());
 
-      /*const body = {
-        data: {
-          type: "carts",
-          attributes: payload,
-        }
-      };*/
-
       let response: any;
       // TODO: this is only for development reasons - remove after finish
       if(API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: orderHistoryFixtureEmpty,
+          data: orderHistoryFixtureFull,
         };
         response = await getTestDataPromise(result);
         console.log('+++API_WITH_FIXTURES response: ', response);
@@ -50,9 +44,9 @@ export class OrderService {
 
       console.log('OrderService: getOrdersCollection: response: ', response);
       if (response.ok) {
-        const responseParsed = response.data;
+        const responseParsed = parseGetOrdersCollectionResponse(response.data);
         dispatch(ordersCollectionFulfilledStateAction(responseParsed));
-        return responseParsed.id;
+        return responseParsed;
       } else {
         dispatch(ordersCollectionRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);

@@ -5,13 +5,10 @@ import {
   IReduxState,
 } from '../../../typings/app';
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {IOrderCollectionParsed, TOrderCollection} from "../../interfaces/order/index";
 
 
-export interface IOrderItem {
-
-}
-
-export interface IOrderData {
+export interface IOrderData extends IOrderCollectionParsed {
 
 }
 
@@ -21,7 +18,7 @@ export interface IOrderHistoryState extends IReduxState {
 
 export const initialState: IOrderHistoryState = {
   data: {
-
+    items: null,
   },
 };
 
@@ -39,7 +36,7 @@ export const orderHistory = function (state: IOrderHistoryState = initialState, 
 };
 
 // handlers
-const handleFulfilled = (orderHistoryState: IOrderHistoryState, payload: any) => {
+const handleFulfilled = (orderHistoryState: IOrderHistoryState, payload: IOrderCollectionParsed | null) => {
   return {
     ...orderHistoryState,
     data: {
@@ -71,6 +68,14 @@ const handlePending = (orderHistoryState: IOrderHistoryState, payload: any) => {
 };
 
 // selectors
+export function getOrdersCollectionFromStore(state: any, props: any): TOrderCollection {
+  return isOrderHistoryItems(state, props) ? state.orderHistory.data.items : null;
+}
+
+export function isOrderHistoryItems(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.orderHistory.data.items);
+}
+
 export function isOrderHistoryStateRejected(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.orderHistory.rejected && state.orderHistory.rejected === true);
 }

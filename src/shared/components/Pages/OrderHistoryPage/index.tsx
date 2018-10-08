@@ -11,11 +11,19 @@ import {styles} from './styles';
 import {getRouterLocation} from "../../../selectors/Common/location";
 import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
 import {
-  isOrderHistoryFulfilled, isOrderHistoryInitiated, isOrderHistoryLoading,
+  getOrdersCollectionFromStore,
+  isOrderHistoryFulfilled,
+  isOrderHistoryInitiated,
+  isOrderHistoryItems,
+  isOrderHistoryLoading,
   isOrderHistoryStateRejected
 } from "../../../reducers/Pages/OrderHistory";
 import {isAppInitiated} from "../../../reducers/Common/Init";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {TOrderCollection} from "../../../interfaces/order/index";
+import {noOrderText} from "../../../constants/messages/orders";
+import {OrderList} from "./OrderList/index";
+import {OrderHistoryContext} from './context';
 
 
 export const pageTitle = "Orders History";
@@ -28,6 +36,8 @@ interface OrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
   isInitiated: boolean;
+  isHasOrders: boolean;
+  orders: TOrderCollection;
 }
 
 interface OrderHistoryPageState {
@@ -48,6 +58,11 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
     this.initRequestData();
   }
 
+  public viewClickHandler = (event: any): any => {
+    const value = event.currentTarget.value;
+    console.log('viewClickHandler: value ', value);
+  }
+
   private initRequestData = () => {
     if (!this.props.isInitiated && this.props.isAppDataSet) {
       this.props.getOrdersCollection();
@@ -59,30 +74,45 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   public render(): JSX.Element {
     console.info('props: ', this.props);
     console.info('state: ', this.state);
-    const {classes} = this.props;
+    const {classes, isHasOrders, isFulfilled, orders} = this.props;
 
     return (
       <AppMain>
-        { (!this.props)
+        { (isFulfilled === false)
           ? null
           : (
-            <div className={classes.root} >
-              <Grid container justify="center" >
-                <Grid item xs={12}>
-                  <Typography variant="title" color="inherit" gutterBottom={true}>
-                    {pageTitle}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container justify="center" >
-                <Grid item xs={12} sm={6}>
+            <OrderHistoryContext.Provider
+              value={{
+                viewClickHandler: this.viewClickHandler,
+              }}
+            >
 
-                </Grid>
-                <Grid item xs={12} sm={6}>
+                <div className={classes.root} >
+                  <Grid container justify="center" >
+                    <Grid item xs={12}>
+                      <Typography align="center" variant="headline" gutterBottom={true}>
+                        {pageTitle}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid container justify="center" >
+                    {isHasOrders
+                      ? <React.Fragment>
+                        <Grid item xs={12} sm={3}>
 
-                </Grid>
-              </Grid>
-            </div>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                          <OrderList items={orders} />
+                        </Grid>
+                      </React.Fragment>
+                      : <Typography variant="title" color="inherit" gutterBottom={true}>
+                        {noOrderText}
+                      </Typography>
+                    }
+
+                  </Grid>
+                </div>
+            </OrderHistoryContext.Provider>
           )
         }
       </AppMain>
@@ -101,6 +131,8 @@ export const ConnectedOrderHistoryPage = reduxify(
     const isInitiated = isOrderHistoryInitiated(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
+    const isHasOrders = isOrderHistoryItems(state, ownProps);
+    const orders = getOrdersCollectionFromStore(state, ownProps);
 
     return ({
       location,
@@ -110,6 +142,8 @@ export const ConnectedOrderHistoryPage = reduxify(
       isAppDataSet,
       isUserLoggedIn,
       isInitiated,
+      isHasOrders,
+      orders,
     });
   },
   (dispatch: Function) => ({
