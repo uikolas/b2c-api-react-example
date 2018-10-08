@@ -8,7 +8,6 @@ import {
 
 
 export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse): IOrderCollectionParsed | null => {
-  console.log('parseGetOrdersCollectionResponse: data', data);
   if (!Array.isArray(data.data) || !data.data.length) {
     return null;
   }
@@ -25,6 +24,5 @@ export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse)
   const response = {
     items,
   };
-  console.log('parseGetOrdersCollectionResponse: response', response);
   return response;
 };

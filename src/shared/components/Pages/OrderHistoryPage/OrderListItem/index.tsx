@@ -11,14 +11,14 @@ import {SprykerButton} from "../../../UI/SprykerButton/index";
 import {OrderHistoryContext} from '../context';
 
 interface OrderListItemProps extends WithStyles<typeof styles>, IOrderItem {
-  onViewClick?: Function;
+
 }
 
 export const viewOrderButton = "View Order";
 export const reorderButton = "Reorder";
 
 export const OrderListItemBase: React.SFC<OrderListItemProps> = (props): JSX.Element => {
-  const { classes, id, dateCreated, currency, totals, totals: {grandTotal}, onViewClick } = props;
+  const { classes, id, dateCreated, currency, totals: {grandTotal} } = props;
 
   return (
     <OrderHistoryContext.Consumer>
@@ -35,7 +35,10 @@ export const OrderListItemBase: React.SFC<OrderListItemProps> = (props): JSX.Ele
               value={id}
               onClick={viewClickHandler}
             />
-            {reorderButton}
+            <SprykerButton
+              title={reorderButton}
+              value={id}
+            />
           </TableCell>
         </TableRow>
       )}
