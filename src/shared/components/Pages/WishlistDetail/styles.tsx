@@ -6,15 +6,13 @@ export const styles = (theme: Theme) => createStyles({
     width: '70%',
     marginTop: theme.spacing.unit * 4,
   },
-  newList: {
-    width: '75%',
-    margin: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 2}px`,
-  },
   headerCell: {
     color: theme.palette.common.black,
     fontSize: '0.85rem',
   },
-  updateCell: {
-    display: 'flex'
+  vertical: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 });

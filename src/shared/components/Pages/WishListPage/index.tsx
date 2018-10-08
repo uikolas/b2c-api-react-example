@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Location} from 'history';
-import { toast } from 'react-toastify';
+import {FormattedDate} from 'react-intl';
 import {RouteProps} from "react-router";
+import {NavLink} from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,37 +17,35 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
 
 import { push } from 'react-router-redux';
 
 import {reduxify} from '../../../lib/redux-helper';
-
-import {getWishlistsAction, addWishlistAction, deleteWishlistAction, updateWishlistAction} from '../../../actions/Pages/Wishlist';
-
+import {
+  getWishlistsAction,
+  addWishlistAction,
+  deleteWishlistAction,
+  updateWishlistAction,
+  getDetailWishlistAction,
+} from '../../../actions/Pages/Wishlist';
 import {AppMain} from '../../Common/AppMain';
-
 import {IWishlist} from "../../../interfaces/wishlist";
-import config from '../../../config';
-
-import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {WishlistState} from "../../../reducers/Pages/Wishlist";
 import {styles} from './styles';
-
-type IQuery = {
-  q?: string,
-  currency: TAppCurrency,
-  sort?: string,
-  [key: string]: string | number,
-};
+import config from "../../../config";
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
   wishlists: IWishlist[];
+  isLoading: boolean,
 }
 
 
 interface WishlistPageState {
   name: string;
+  updatedName: string,
+  updatedList: string,
 }
 
 export const pageTitle = 'Search results for ';
@@ -56,6 +54,8 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
 
   public state: WishlistPageState = {
     name: '',
+    updatedName: '',
+    updatedList: '',
   }
 
   public componentDidMount() {
@@ -68,41 +68,92 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     });
   }
 
-  public addWishlist = () => {
-    this.props.dispatch(addWishlistAction(this.state.name));
+  public handleChangeUpdatedName = (event: any) => {
+    this.setState({
+      updatedName: event.target.value,
+    });
   }
 
-  public handleUpdateWishlist = (wishlistId: string) => (e: any) => {
-    this.props.dispatch(updateWishlistAction(wishlistId, 'LALALA'));
+  public addWishlist = () => {
+    this.props.dispatch(addWishlistAction(this.state.name));
+    this.setState({name: ''});
+  }
+
+  public handleUpdateWishlist = (e: any) => {
+    this.props.dispatch(updateWishlistAction(this.state.updatedList, this.state.updatedName));
+    this.setState({updatedList: '', updatedName: ''})
   }
 
   public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
     this.props.dispatch(deleteWishlistAction(wishlistId));
   }
 
+  private setUpdatedWishlist = (id: string, name: string) => (e: any) => {
+    this.setState({updatedList: id, updatedName: name});
+  }
+
+  public setCurrentWishlist = (wishlistId: string) =>  (e: any) => {
+    this.props.dispatch(getDetailWishlistAction(wishlistId));
+  }
+
   public render() {
-    const { classes, wishlists } = this.props;
+    const { classes, wishlists, isLoading } = this.props;
 
     const rows: any[] = wishlists.map((item: any) => (
       <TableRow
         hover
         key={item.id}
       >
-        <TableCell component="th" scope="row">{item.name}</TableCell>
+        <TableCell component="th" scope="row">
+          {this.state.updatedList && this.state.updatedList === item.id
+            ? (
+              <form noValidate autoComplete="off" className={classes.updateCell}>
+                <TextField
+                  value={this.state.updatedName}
+                  onChange={this.handleChangeUpdatedName}
+                />
+                <IconButton
+                  color="primary"
+                  onClick={this.handleUpdateWishlist}
+                  disabled={isLoading}
+                >
+                  <SaveIcon />
+                </IconButton>
+              </form>
+            )
+            : <NavLink
+                to={`${config.WEB_PATH}wishlist/${item.name}`}
+                onClick={this.setCurrentWishlist(item.id)}
+              >
+                {item.name}
+              </NavLink>
+          }
+        </TableCell>
         <TableCell>{item.numberOfItems}</TableCell>
-        <TableCell>{item.createdAt}</TableCell>
+        <TableCell>
+          <FormattedDate
+            value={new Date(item.createdAt)}
+            year='numeric'
+            month='short'
+            day='2-digit'
+          />
+        </TableCell>
         <TableCell numeric>
           <IconButton
-            onClick={this.handleUpdateWishlist(item.id)}
+            color="primary"
+            onClick={this.setUpdatedWishlist(item.id, item.name)}
+            disabled={isLoading}
           >
-            <EditIcon className={classes.icons} />
+            <EditIcon />
           </IconButton>
         </TableCell>
         <TableCell numeric>
           <IconButton
+            color="primary"
             onClick={this.handleDeleteWishlist(item.id)}
+            disabled={isLoading}
           >
-            <DeleteIcon className={classes.icons} />
+            <DeleteIcon />
           </IconButton>
         </TableCell>
       </TableRow>
@@ -161,12 +212,11 @@ export const ConnectedWishlistPage = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
-    const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
-        currency,
+        isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
       }
     );
   }

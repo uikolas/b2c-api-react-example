@@ -26,6 +26,10 @@ export const deleteWishlistPendingState = {
   type: DELETE_WISHLIST + '_PENDING',
 };
 
+export const detailWishlistPendingState = {
+  type: DETAIL_WISHLIST + '_PENDING',
+};
+
 export const getWishlistsAction = function () {
   return (dispatch: Function, getState: Function) => {
     dispatch(getAllListPendingState);
@@ -51,5 +55,12 @@ export const deleteWishlistAction = function (wishlistId: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(deleteWishlistPendingState);
     WishlistService.deleteWishlist(DELETE_WISHLIST, dispatch, wishlistId);
+  };
+};
+
+export const getDetailWishlistAction = function (wishlistId: string) {
+  return (dispatch: Function, getState: Function) => {
+    dispatch(detailWishlistPendingState);
+    WishlistService.getWishlist(DETAIL_WISHLIST, dispatch, wishlistId);
   };
 };

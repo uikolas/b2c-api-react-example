@@ -10,18 +10,22 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {IWishlist} from '../../interfaces/wishlist';
+import {IWishlist, IWishlistItem} from '../../interfaces/wishlist';
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export interface WishlistState extends IReduxState {
   data: {
     wishlists: IWishlist[],
+    currentWishlist: IWishlist | null,
+    currentItems: Array<IWishlistItem>,
   };
 }
 
 export const initialState: WishlistState = {
   data: {
     wishlists: [],
+    currentWishlist: null,
+    currentItems: [],
   },
 };
 
@@ -36,10 +40,17 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
         ...state,
         ...getReducerPartPending(),
       };
+    case `${DETAIL_WISHLIST}_PENDING`:
+      return {
+        ...state,
+        data: {...state.data, currentWishlist: null, currentItems: []},
+        ...getReducerPartPending(),
+      };
     case `${WISHLIST_ALL_LISTS}_REJECTED`:
     case `${ADD_WISHLIST}_REJECTED`:
     case `${DELETE_WISHLIST}_REJECTED`:
     case `${UPDATE_WISHLIST}_REJECTED`:
+    case `${DETAIL_WISHLIST}_REJECTED`:
       return {
         ...state,
         ...getReducerPartRejected(action.error),
@@ -74,7 +85,19 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
         ...getReducerPartFulfilled(),
       };
     }
+    case `${DETAIL_WISHLIST}_FULFILLED`: {
+      return {
+        ...state,
+        data: {...state.data, currentWishlist: action.wishlist, currentItems: action.items},
+        ...getReducerPartFulfilled(),
+      };
+    }
+
     default:
       return state;
   }
 };
+
+export function isPageWishlistStateLoading(state: any, props: any): boolean {
+  return (state.pageWishlist && state.pageWishlist.pending);
+}

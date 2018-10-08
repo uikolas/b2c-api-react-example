@@ -94,7 +94,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
             >
               { isUserLoggedIn
                 ? (
-                  <NavLink to={`${config.WEB_PATH}wishlist`}>
+                  <NavLink to={`${config.WEB_PATH}wishlists`}>
                     <SprykerButton
                       title="Wishlist"
                     />

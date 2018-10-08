@@ -1,8 +1,7 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import {IWishlist} from "../../interfaces/wishlist";
-
+import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
@@ -18,6 +17,46 @@ export class WishlistService {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           wishlists,
+        });
+        return response.data.data;
+      } else {
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch({
+        type: ACTION_TYPE + '_REJECTED',
+        error: error.message,
+      });
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async getWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<any> {
+    try {
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      setAuthToken(token);
+
+      const response: any = await api.get(`wishlists/${wishlistId}`, {}, { withCredentials: true });
+
+      if (response.ok) {
+        let items: IWishlistItem[] = [];
+        const wishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
+
+        if (response.data.included) {
+          items = WishlistService.parseWishlistItems(response.data.included);
+        }
+
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          wishlist,
+          items
         });
         return response.data.data;
       } else {
@@ -86,7 +125,6 @@ export class WishlistService {
       const response: any = await api.delete(`wishlists/${wishlistId}`, {}, { withCredentials: true });
 
       if (response.ok) {
-        console.info(response.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           wishlistId,
@@ -151,6 +189,45 @@ export class WishlistService {
     }
   }
 
+  public static async addItemWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string, sku: string): Promise<any> {
+    try {
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      setAuthToken(token);
+
+      const body: any = {
+        data: {
+          type: 'wishlists',
+          attributes: {sku}
+        }
+      };
+
+      const response: any = await api.post(`wishlists/${wishlistId}/wishlist-items`, body, { withCredentials: true });
+
+      if (response.ok) {
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          wishlist: WishlistService.parseWishlistResponse(response.data.data),
+        });
+        return response.data.data;
+      } else {
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch({
+        type: ACTION_TYPE + '_REJECTED',
+        error,
+      });
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
   private static parseWishlistResponse(data: any): IWishlist {
     const wishlist: IWishlist = {
       id: data.id,
@@ -161,5 +238,35 @@ export class WishlistService {
     };
 
     return wishlist;
+  }
+
+  private static parseWishlistItems(included: any[]): IWishlistItem[] {
+    const items: {[key: string]: IWishlistItem} = {};
+
+    included.forEach((row: any) => {
+      if (!items[row.id]) {
+        items[row.id] = {attributes: [], image: ''} as IWishlistItem;
+      }
+
+      if (row.type === 'concrete-product-image-sets') {
+        if (row.attributes.imageSets && row.attributes.imageSets.length && row.attributes.imageSets[0].images && row.attributes.imageSets[0].images.length) {
+          items[row.id].image = row.attributes.imageSets[0].images[0].externalUrlSmall;
+        }
+      } else if (row.type === 'concrete-products') {
+        items[row.id].sku = row.attributes.sku;
+        items[row.id].name = row.attributes.name;
+        Object.keys(row.attributes.attributes).forEach((attr: string) => {
+          if (row.attributes.superAttributesDefinition.includes(attr)) {
+            items[row.id].attributes.push({[attr]: row.attributes.attributes[attr]});
+          }
+        });
+      } else if (row.type === 'concrete-product-prices') {
+        items[row.id].prices = row.attributes.prices;
+      } else if (row.type === 'concrete-product-availabilities') {
+        items[row.id].availability = row.attributes.availability;
+      }
+    });
+
+    return Object.values(items);
   }
 }
