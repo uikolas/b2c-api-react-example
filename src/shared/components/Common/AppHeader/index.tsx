@@ -82,9 +82,9 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
             </Grid>
 
             <Grid item sm={5}>
-              { location.pathname === pathHomePage || location.pathname === pathLoginPage
-                ? <CatalogSearch />
-                : null
+              { location.pathname === pathHomePage
+                ? null
+                : <CatalogSearch />
               }
             </Grid>
             <Grid item sm={4}
