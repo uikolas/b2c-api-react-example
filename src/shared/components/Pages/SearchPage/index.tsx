@@ -30,10 +30,10 @@ import {sendSearchAction, getCategoriesAction} from '../../../actions/Pages/Sear
 import {AppMain} from '../../Common/AppMain';
 import {ProductCard} from '../../Common/ProductCard';
 import {ISearchPageData, ValueFacets, RangeFacets} from "../../../interfaces/searchPageData";
-import config from '../../../config';
 
 import {styles} from './styles';
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
+import {pathProductPage, pathProductPageBase} from "../../../routes/contentRoutes";
 
 type IQuery = {
   q?: string,
@@ -148,7 +148,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public renderProduct = (sku: string, name: string) => {
     this.props.dispatch(getProductDataAction(sku));
-    this.props.dispatch(push(`${config.WEB_PATH}product/${sku}`));
+    this.props.dispatch(push(`${pathProductPageBase}/${sku}`));
   }
 
   public selectCategory = (category: string | number) => (e: any) => {

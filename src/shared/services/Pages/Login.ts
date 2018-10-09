@@ -1,7 +1,7 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from "../../constants/Environment/index";
-import {fixtureLogin} from "./loginFixture";
+import {fixtureLogin} from "../fixtures/loginFixture";
 import {getTestDataPromise} from "../apiFixture/index";
 
 export class PagesLoginService {

@@ -12,6 +12,7 @@ export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
 export type TAppStore = string | null;
 export type TAppLocale = string | null;
+export type TAppTimeZone = string | null;
 
 export interface IInitData {
   ok?: boolean;
@@ -19,6 +20,7 @@ export interface IInitData {
   currency: TAppCurrency;
   store: TAppStore;
   locale: TAppLocale;
+  timeZone: TAppTimeZone;
 }
 
 export interface IInitState extends IReduxState {
@@ -32,6 +34,7 @@ export const initialState: IInitState = {
     currency: null,
     store: null,
     locale: null,
+    timeZone: null,
   },
 };
 
@@ -59,6 +62,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
       currency: payload.currency,
       store: payload.store,
       locale: payload.locale,
+      timeZone: payload.timeZone,
     },
     ...getReducerPartFulfilled(),
   };
@@ -100,6 +104,10 @@ export function getAppCurrency(state: any, props: any): TAppCurrency {
 
 export function getAppLocale(state: any, props: any): TAppStore {
   return isAppInitiated(state, props) ?  state.init.data.locale : null;
+}
+
+export function getAppTimeZone(state: any, props: any): TAppTimeZone {
+  return isAppInitiated(state, props) ?  state.init.data.timeZone : null;
 }
 
 export function getAppPriceMode(state: any, props: any): TAppPriceMode {

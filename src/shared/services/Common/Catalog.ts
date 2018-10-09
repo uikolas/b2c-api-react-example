@@ -1,7 +1,7 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {catalogFixture} from './catalogFixture';
+import {catalogFixture} from '../fixtures/catalogFixture';
 
 export class CatalogService {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {

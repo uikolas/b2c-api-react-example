@@ -13,7 +13,7 @@ import {
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction
 } from "../../actions/Common/Init";
-import {initFixture} from "./initFixture";
+import {initFixture} from "../fixtures/initFixture";
 import {parseStoreResponse} from "../initHelper/store";
 
 export class InitAppService {
