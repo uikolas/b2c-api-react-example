@@ -5,6 +5,10 @@ export type TOrderDate = string;
 export type TOrderId = string;
 export type TOrderCollection = Array<IOrderItem> | null;
 
+/**
+ *  Order History
+ */
+
 export interface IOrderTotals {
   canceledTotal: number;
   discountTotal: number;
@@ -36,4 +40,11 @@ export interface IOrderItemResponse {
     totals: IOrderTotals;
   };
   id: TOrderId;
+}
+
+/**
+ *  Order Detail
+ */
+export interface IOrderDetailsParsed {
+  orderId: TOrderId;
 }

@@ -8,12 +8,12 @@ import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} 
 import {IOrderCollectionParsed, TOrderCollection} from "../../interfaces/order/index";
 
 
-export interface IOrderData extends IOrderCollectionParsed {
+export interface IOrdersData extends IOrderCollectionParsed {
 
 }
 
 export interface IOrderHistoryState extends IReduxState {
-  data: IOrderData;
+  data: IOrdersData;
 }
 
 export const initialState: IOrderHistoryState = {

@@ -8,7 +8,7 @@ import {reduxify} from '../../../lib/redux-helper';
 import {AppMain} from '../../Common/AppMain';
 
 import {styles} from './styles';
-import {getRouterLocation} from "../../../selectors/Common/location";
+import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
 import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
 import {
   getOrdersCollectionFromStore,
@@ -24,6 +24,7 @@ import {TOrderCollection} from "../../../interfaces/order/index";
 import {noOrderText} from "../../../constants/messages/orders";
 import {OrderList} from "./OrderList/index";
 import {OrderHistoryContext} from './context';
+import {pathOrderDetailsPage, pathOrderDetailsPageBase} from "../../../routes/contentRoutes";
 
 
 export const pageTitle = "Orders History";
@@ -38,6 +39,7 @@ interface OrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
   isInitiated: boolean;
   isHasOrders: boolean;
   orders: TOrderCollection;
+  routerPush: Function;
 }
 
 interface OrderHistoryPageState {
@@ -61,6 +63,10 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   public viewClickHandler = (event: any): any => {
     const value = event.currentTarget.value;
     console.log('viewClickHandler: value ', value);
+    if (!value) {
+      throw new Error('value is empty!');
+    }
+    this.props.routerPush(`${pathOrderDetailsPageBase}/${value}`);
   }
 
   private initRequestData = () => {
@@ -133,6 +139,7 @@ export const ConnectedOrderHistoryPage = reduxify(
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const isHasOrders = isOrderHistoryItems(state, ownProps);
     const orders = getOrdersCollectionFromStore(state, ownProps);
+    const routerPush = getRouterHistoryPush(state, ownProps);
 
     return ({
       location,
@@ -144,9 +151,10 @@ export const ConnectedOrderHistoryPage = reduxify(
       isInitiated,
       isHasOrders,
       orders,
+      routerPush,
     });
   },
   (dispatch: Function) => ({
-    getOrdersCollection: (sku: string) => dispatch(getOrdersCollectionAction()),
+    getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
   })
 )(OrderHistoryPage);

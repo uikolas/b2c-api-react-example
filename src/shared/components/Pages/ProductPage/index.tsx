@@ -27,7 +27,8 @@ import {
   IProductCardImages,
   IProductPropFullData,
   ISuperAttributes,
-  TProductQuantity, TProductSKU, IProductDataParsed,
+  TProductQuantity,
+  IProductDataParsed,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -54,7 +55,7 @@ import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
-import {getRouterLocation} from "../../../selectors/Common/location";
+import {getRouterLocation, getRouterMatchParam, TRouterMatchParam} from "../../../selectors/Common/router";
 import {cartAuthenticateErrorText} from "../../../constants/messages/errors";
 
 export const buyBtnTitle = "Add to cart";
@@ -74,7 +75,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   isRejected: boolean;
   isInitiated: boolean;
-  locationProductSKU?: string;
+  locationProductSKU?: TRouterMatchParam;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -115,7 +116,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       && this.props.locationProductSKU
       && this.props.isAppDataSet
       && !this.props.isInitiated
-      // && !this.props.isRejected
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
@@ -376,8 +376,7 @@ export const ConnectedProductPage = reduxify(
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
-    const pathname: string = (location && location.pathname) ? location.pathname : null;
-    const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
+    const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
 
     return ({
       location,

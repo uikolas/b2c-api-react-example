@@ -1,8 +1,13 @@
 import {
   ORDERS_COLLECTION_REQUEST,
+  ORDER_DETAILS_REQUEST,
 } from '../../constants/ActionTypes/Pages/Order';
 import {OrderService} from "../../services/Pages/Order";
-import {IOrderCollectionParsed} from "../../interfaces/order/index";
+import {IOrderCollectionParsed, IOrderDetailsParsed, TOrderId} from "../../interfaces/order/index";
+
+/**
+ *  Order History
+ */
 
 export const ordersCollectionPendingStateAction = () => ({
   type: ORDERS_COLLECTION_REQUEST + '_PENDING',
@@ -13,7 +18,6 @@ export const ordersCollectionRejectedStateAction = (message: string) => ({
   payload: {error: message},
 });
 
-// TODO: Change interface payload
 export const ordersCollectionFulfilledStateAction = (payload: IOrderCollectionParsed) => ({
   type: ORDERS_COLLECTION_REQUEST + '_FULFILLED',
   payload,
@@ -22,5 +26,29 @@ export const ordersCollectionFulfilledStateAction = (payload: IOrderCollectionPa
 export const getOrdersCollectionAction = function () {
   return (dispatch: Function, getState: Function) => {
     OrderService.getOrdersCollection(dispatch);
+  };
+};
+
+/**
+ *  Order Detail
+ */
+
+export const orderDetailsPendingStateAction = () => ({
+  type: ORDER_DETAILS_REQUEST + '_PENDING',
+});
+
+export const orderDetailsRejectedStateAction = (message: string) => ({
+  type: ORDER_DETAILS_REQUEST + '_REJECTED',
+  payload: {error: message},
+});
+
+export const orderDetailsFulfilledStateAction = (payload: IOrderDetailsParsed) => ({
+  type: ORDER_DETAILS_REQUEST + '_FULFILLED',
+  payload,
+});
+
+export const getOrderDetailsAction = function (orderId: TOrderId) {
+  return (dispatch: Function, getState: Function) => {
+    OrderService.getOrderDetails(dispatch, orderId);
   };
 };

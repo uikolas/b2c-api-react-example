@@ -20,7 +20,7 @@ import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../..
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {AppPrice} from "../AppPrice/index";
-import {pathProductPage, pathSearchPage} from "../../../routes/contentRoutes";
+import {pathProductPage, pathProductPageBase, pathSearchPage} from "../../../routes/contentRoutes";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -133,7 +133,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
     this.props.getProductData(suggestion.abstract_sku);
-    this.props.changeLocation(`${pathProductPage}/${suggestion.abstract_sku}`);
+    this.props.changeLocation(`${pathProductPageBase}/${suggestion.abstract_sku}`);
   }
 
   private handleFullSearch = (e: any) => {
