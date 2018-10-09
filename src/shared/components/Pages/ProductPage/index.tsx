@@ -28,7 +28,7 @@ import {
   IProductPropFullData,
   ISuperAttributes,
   TProductQuantity,
-  IProductDataParsed,
+  IProductDataParsed, priceTypeNameOriginal,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -98,6 +98,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     availability: null,
     description: null,
     price: null,
+    priceOriginalGross: null,
+    priceOriginalNet: null,
+    priceDefaultGross: null,
+    priceDefaultNet: null,
     attributes: null,
     quantity: null,
   };
@@ -210,6 +214,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
+      priceOriginalGross: data ? data.priceOriginalGross : null,
+      priceOriginalNet: data ? data.priceOriginalNet : null,
+      priceDefaultGross: data ? data.priceDefaultGross : null,
+      priceDefaultNet: data ? data.priceDefaultNet : null,
       attributes: data ? data.attributes : defaultValues.attributes,
       quantity: data ? data.quantity : defaultValues.quantity,
       productType: data ? data.productType : absentProductType,
@@ -302,7 +310,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={<AppPrice value={this.state.price}/>}
+                    price={<AppPrice value={this.state.priceDefaultGross}/>}
+                    oldPrice={<AppPrice value={this.state.priceOriginalGross} priceType={priceTypeNameOriginal}/>}
                   />
 
                   { this.state.superAttributes

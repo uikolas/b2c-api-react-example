@@ -25,6 +25,17 @@ export type TProductAttributes = object;
 export type TProductImageSRC = string;
 export type TProductAttributeMap = object;
 
+export const priceTypeNameDefault = 'DEFAULT';
+export type TPriceTypeNameDefault = 'DEFAULT';
+export const priceTypeNameOriginal = 'ORIGINAL';
+export type TPriceTypeNameOriginal = 'ORIGINAL';
+
+export type TPriceTypeName = TPriceTypeNameDefault | TPriceTypeNameOriginal;
+export type TPriceTypeOriginalGross = number | null;
+export type TPriceTypeOriginalNet = number | null;
+export type TPriceTypeDefaultGross = number | null;
+export type TPriceTypeDefaultNet = number | null;
+
 // Interfaces
 export interface IProductCardPrice {
   priceTypeName?: string;
@@ -32,6 +43,12 @@ export interface IProductCardPrice {
   DEFAULT?: number;
   ORIGINAL?: number;
   [key: string]: any;
+}
+
+export interface IProductPricesItem {
+  grossAmount: number | null;
+  netAmount: number | null;
+  priceTypeName: TPriceTypeName;
 }
 
 export interface IProductCardImages {
@@ -73,6 +90,10 @@ export interface IProductPropFullData {
   images: Array<IProductCardImages> | null;
   name: TProductName | null;
   price: TProductPrice | null;
+  priceOriginalGross: TPriceTypeOriginalGross;
+  priceOriginalNet: TPriceTypeOriginalNet;
+  priceDefaultGross: TPriceTypeDefaultGross;
+  priceDefaultNet: TPriceTypeDefaultNet;
   sku: TProductSKU | null;
   productType: TProductType | null;
 }

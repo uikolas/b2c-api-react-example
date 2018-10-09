@@ -1,7 +1,7 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {catalogFixture} from '../fixtures/catalogFixture';
+import {catalogFixture, suggestionFixture} from '../fixtures/catalogFixture';
 
 export class CatalogService {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
@@ -15,7 +15,7 @@ export class CatalogService {
           problem: 'Test API_WITH_FIXTURES',
           data: catalogFixture,
         };
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.log('+++API_WITH_FIXTURES catalogSearch response: ', response);
       } else {
         response = await api.get('catalog-search', params, { withCredentials: true });
       }
@@ -66,7 +66,7 @@ export class CatalogService {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: catalogFixture,
+          data: suggestionFixture,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {

@@ -1,10 +1,17 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {fixtureError, fixtureFull, fixtureOneProduct, fixtureSuperFull} from '../fixtures/productFixtureWithSuperAttr';
+import {
+  fixtureError,
+  fixtureFull,
+  fixtureOneProduct,
+  fixtureProductPrices,
+  fixtureSuperFull
+} from '../fixtures/productFixtureWithSuperAttr';
 import {parseProductResponse} from "../productHelper";
 import {
-  getProductDataFulfilledStateAction, getProductDataItemPendingStateAction,
+  getProductDataFulfilledStateAction,
+  getProductDataItemPendingStateAction,
   getProductDataRejectedStateAction
 } from "../../actions/Pages/Product";
 
@@ -18,7 +25,7 @@ export class ProductService {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: fixtureSuperFull,
+          data: fixtureProductPrices,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
