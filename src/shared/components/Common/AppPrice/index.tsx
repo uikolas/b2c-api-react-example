@@ -11,10 +11,15 @@ interface AppPriceProps {
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
   const { currency, value, specificCurrency } = props;
+  const valueFormatted = value ? (value / 100) : 0;
 
   return (
     value
-      ? <FormattedNumber value={value} style="currency" currency={specificCurrency ? specificCurrency : currency} />
+      ? <FormattedNumber
+          value={valueFormatted}
+          style="currency"
+          currency={specificCurrency ? specificCurrency : currency}
+        />
       : null
   );
 };
