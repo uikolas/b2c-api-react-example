@@ -7,18 +7,18 @@ import {
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {IOrderDetailsParsed} from "../../interfaces/order/index";
 
-
-export interface IOrderData extends IOrderDetailsParsed {
-
-}
-
 export interface IOrderDetailsState extends IReduxState {
-  data: IOrderData;
+  data: IOrderDetailsParsed;
 }
 
 export const initialState: IOrderDetailsState = {
   data: {
-    orderId: null,
+    id: null,
+    dateCreated: null,
+    currency: null,
+    totals: null,
+    expenses: null,
+    items: null,
   },
 };
 

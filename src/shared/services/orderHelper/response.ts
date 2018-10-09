@@ -2,6 +2,8 @@
 import {
   IOrderCollectionParsed,
   IOrderCollectionResponse,
+  IOrderDetailsParsed,
+  IOrderDetailsResponse,
   IOrderItem,
   IOrderItemResponse,
 } from "../../interfaces/order/index";
@@ -24,5 +26,24 @@ export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse)
   const response = {
     items,
   };
+  return response;
+};
+
+export const parseGetOrderDetailsResponse = (data: IOrderDetailsResponse): IOrderDetailsParsed | null => {
+  if (!Array.isArray(data) || !data.length) {
+    return null;
+  }
+
+  const attributes = data.attributes;
+
+  const response = {
+    id: data.id,
+    dateCreated: attributes.createdAt,
+    currency: attributes.currencyIsoCode,
+    totals: attributes.totals,
+    expenses: attributes.expenses,
+    items: attributes.items,
+  }
+
   return response;
 };

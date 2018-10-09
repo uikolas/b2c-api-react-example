@@ -12,7 +12,7 @@ import {
 import {getTestDataPromise} from "../apiFixture/index";
 import {orderAuthenticateErrorText} from "../../constants/messages/errors";
 import {orderHistoryFixtureEmpty, orderHistoryFixtureFull} from "../fixtures/OrderHistoryFixture";
-import {parseGetOrdersCollectionResponse} from "../orderHelper/response";
+import {parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse} from "../orderHelper/response";
 import {orderDetailsFixtureFull} from "../fixtures/orderDetailsFixture";
 import {TOrderId} from "../../interfaces/order/index";
 
@@ -68,11 +68,6 @@ export class OrderService {
   public static async getOrderDetails(dispatch: Function, orderId: TOrderId): Promise<any> {
     try {
       dispatch(orderDetailsPendingStateAction());
-      const body = {
-        data: {
-          type: "carts",
-        }
-      };
 
       let response: any;
       // TODO: this is only for development reasons - remove after finish
@@ -92,7 +87,7 @@ export class OrderService {
           }
           setAuthToken(token);
           const endpoint = `orders/${orderId}`;
-          response = await api.get(endpoint, body, { withCredentials: true });
+          response = await api.get(endpoint, null, { withCredentials: true });
         } catch (err) {
           console.error('OrderService: getOrderDetails: err', err);
         }
@@ -100,8 +95,7 @@ export class OrderService {
 
       console.log('OrderService: getOrderDetails: response: ', response);
       if (response.ok) {
-        // const responseParsed = parseGetOrdersCollectionResponse(response.data);
-        const responseParsed = response.data;
+        const responseParsed = parseGetOrderDetailsResponse(response.data.data);
         dispatch(orderDetailsFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
