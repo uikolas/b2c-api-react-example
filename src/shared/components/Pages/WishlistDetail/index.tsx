@@ -5,14 +5,12 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
@@ -21,15 +19,24 @@ import { push } from 'react-router-redux';
 
 import {reduxify} from '../../../lib/redux-helper';
 
-import {getWishlistsAction, addWishlistAction, deleteWishlistAction, updateWishlistAction} from '../../../actions/Pages/Wishlist';
+import {deleteItemAction} from '../../../actions/Pages/Wishlist';
+import {getProductDataAction} from '../../../actions/Pages/Product';
+import {addItemToCartAction} from "../../../actions/Common/Cart";
 
 import {AppMain} from '../../Common/AppMain';
+import {AppPrice} from '../../Common/AppPrice';
 
 import {IWishlist, IWishlistItem} from "../../../interfaces/wishlist";
-import config from '../../../config';
+import {TCartId} from '../../../interfaces/cart';
 
-import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
+import {getAppCurrency, getPayloadForCreateCart, TAppCurrency} from "../../../reducers/Common/Init";
 import {WishlistState} from "../../../reducers/Pages/Wishlist";
+import {getCartId, getTotalItemsQuantity, isCartLoading} from "../../../reducers/Common/Cart";
+
+import {ICartCreatePayload} from "../../../services/Common/Cart";
+import {createCartItemAddToCart} from "../../../services/cartHelper";
+
+import config from '../../../config';
 import {styles} from './styles';
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
@@ -37,13 +44,16 @@ interface WishlistPageProps extends WithStyles<typeof styles> {
   wishlist: IWishlist;
   products: Array<IWishlistItem>;
   isLoading: boolean,
+  currency: TAppCurrency,
+  cartLoading: boolean,
+  cartId: TCartId,
+  payloadForCreateCart: ICartCreatePayload,
+  cartItemsLength: number,
 }
 
 
 interface WishlistPageState {
-  name: string;
-  updatedName: string,
-  updatedList: string,
+  movedItem: string;
 }
 
 export const pageTitle = 'Search results for ';
@@ -51,53 +61,71 @@ export const pageTitle = 'Search results for ';
 export class WishlistDetailBase extends React.Component<WishlistPageProps, WishlistPageState> {
 
   public state: WishlistPageState = {
-    name: '',
-    updatedName: '',
-    updatedList: '',
+    movedItem: '',
   }
 
-  public handleChangeName = (event: any) => {
-    this.setState({
-      name: event.target.value,
-    });
+  public componentDidUpdate(prevProps: WishlistPageProps, prevState: WishlistPageState ) {
+    if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
+      this.props.dispatch(deleteItemAction(this.props.wishlist.id, prevState.movedItem));
+      this.setState({movedItem: ''});
+    }
   }
 
-  public handleChangeUpdatedName = (event: any) => {
-    this.setState({
-      updatedName: event.target.value,
-    });
+  public renderProduct = (sku: string, name: string) => (e: any) => {
+    this.props.dispatch(getProductDataAction(sku.split('_')[0]));
+    this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
   }
 
-  public addWishlist = () => {
-    this.props.dispatch(addWishlistAction(this.state.name));
-    this.setState({name: ''});
+  public handleDeleteItem = (sku: string) => (e: any) => {
+    this.props.dispatch(deleteItemAction(this.props.wishlist.id, sku));
   }
 
-  public handleUpdateWishlist = (e: any) => {
-    this.props.dispatch(updateWishlistAction(this.state.updatedList, this.state.updatedName));
-    this.setState({updatedList: '', updatedName: ''})
+  public moveToCart = (sku: string) => (e: any) => {
+    this.setState({movedItem: sku});
+    this.props.dispatch(addItemToCartAction(
+      createCartItemAddToCart(sku, 1),
+      this.props.cartId,
+      this.props.payloadForCreateCart
+    ));
   }
 
-  public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
-    this.props.dispatch(deleteWishlistAction(wishlistId));
-  }
+  public moveAllProductsToCart = (e: any) => {
 
-  private setUpdatedWishlist = (id: string, name: string) => (e: any) => {
-    this.setState({updatedList: id, updatedName: name});
   }
 
   public render() {
-    const { classes, wishlist, products, isLoading } = this.props;
+    const { classes, wishlist, products, isLoading, cartLoading, currency } = this.props;
+
+    if (!products.length && isLoading) {
+      return null;
+    } else if (!products.length && !isLoading) {
+      return (
+        <Grid container>
+          <Grid item xs={12} container justify="center">
+            <Typography
+              variant="headline"
+              children={wishlist ? `Wishlist ${wishlist.name}` : ''}
+              paragraph
+            />
+          </Grid>
+          <Grid item xs={12} container justify="center">
+            <Typography
+              variant="title"
+              children={wishlist ? 'Currently there are no items in your wishlist.' : ''}
+            />
+          </Grid>
+        </Grid>
+      );
+    }
 
     const rows: any[] = products.map((item: IWishlistItem) => {
       const prices: any = {default: '', original: ''};
 
       item.prices.forEach((price: any) => {
-        console.info(price);
         if (price.priceTypeName.toLowerCase() === 'default') {
-          price.default = price.grossAmount / 100 + '';
+          prices.default = price.grossAmount / 100 + '';
         } else if (price.priceTypeName.toLowerCase() === 'original') {
-          price.original = price.grossAmount / 100 + '';
+          prices.original = price.grossAmount / 100 + '';
         }
       });
 
@@ -109,35 +137,44 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
           <TableCell component="th" scope="row">
             <img src={item.image} height={52} />
           </TableCell>
-          <TableCell className={classes.vertical}>
-            <span>{item.name}</span>
-            <span>{item.sku}</span>
-            {
-              item.attributes.map((attr: any) => <span>{`${attr.keys()[0]}: ${attr.values()[0]}`}</span>)
-            }
-          </TableCell>
-          <TableCell className={classes.vertical}>
-            <span>{prices.original}</span>
-            <span>{prices.default}</span>
-            <span>500</span>
+          <TableCell>
+            <div className={classes.vertical}>
+              <span className={classes.name} onClick={this.renderProduct(item.sku, item.name)}>
+                {item.name}
+              </span>
+              <span>{item.sku}</span>
+              {
+                item.attributes.map((attr: any, idx: number) => (
+                  <span className={classes.attributes} key={`attr-${item.sku}-${idx}`}>
+                    {`${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}`}
+                  </span>
+                ))
+              }
+            </div>
           </TableCell>
           <TableCell>
+            <div className={classes.vertical}>
+              <span><AppPrice value={prices.original} currency={currency} /></span>
+              <span><AppPrice value={prices.default} currency={currency} /></span>
+            </div>
+          </TableCell>
+          <TableCell padding="dense">
             {item.availability ? 'Available' : 'Not available'}
           </TableCell>
-          <TableCell numeric>
+          <TableCell padding="checkbox">
             <IconButton
               color="primary"
-              onClick={this.setUpdatedWishlist(item.sku, item.name)}
-              disabled={isLoading}
+              onClick={this.moveToCart(item.sku)}
+              disabled={isLoading || cartLoading}
             >
               <CartIcon />
             </IconButton>
           </TableCell>
-          <TableCell numeric>
+          <TableCell padding="none">
             <IconButton
               color="primary"
-              onClick={this.handleDeleteWishlist(item.sku)}
-              disabled={isLoading}
+              onClick={this.handleDeleteItem(item.sku)}
+              disabled={isLoading || cartLoading}
             >
               <DeleteIcon />
             </IconButton>
@@ -150,24 +187,32 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
       <AppMain>
         <Grid container>
 
-          <Grid item xs={12} container justify="center">
+          <Grid item xs={12} container justify="space-around">
             <Typography
               variant="headline"
               children={wishlist ? `Wishlist ${wishlist.name}` : ''}
             />
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={this.moveAllProductsToCart}
+              disabled={isLoading || cartLoading}
+            >
+              Add all available products to cart
+            </Button>
           </Grid>
 
           <Grid item xs={12} container justify="center">
             <Paper elevation={4} className={classes.paperContainer}>
               <Table>
                 <TableHead>
-                  <TableRow>
+                  <TableRow key="table-header">
                     <TableCell></TableCell>
                     <TableCell className={classes.headerCell}>Product</TableCell>
                     <TableCell className={classes.headerCell}>Price</TableCell>
                     <TableCell className={classes.headerCell}>Availability</TableCell>
-                    <TableCell numeric></TableCell>
-                    <TableCell numeric></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -190,6 +235,10 @@ export const ConnectedWishlistDetailPage = reduxify(
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
+    const cartId: TCartId = getCartId(state, ownProps);
+    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
+    const cartItemsLength: number = getTotalItemsQuantity(state, ownProps);
+    const cartLoading: boolean = isCartLoading(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
@@ -197,6 +246,10 @@ export const ConnectedWishlistDetailPage = reduxify(
         products: wishlistProps && wishlistProps.data ? wishlistProps.data.currentItems : ownProps.products,
         isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
         currency,
+        cartId,
+        payloadForCreateCart,
+        cartItemsLength,
+        cartLoading,
       }
     );
   }

@@ -204,11 +204,50 @@ export class WishlistService {
       const response: any = await api.post(`wishlists/${wishlistId}/wishlist-items`, body, { withCredentials: true });
 
       if (response.ok) {
+        let items: IWishlistItem[] = [];
+        const wishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
+
+        if (response.data.included) {
+          items = WishlistService.parseWishlistItems(response.data.included);
+        }
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlist: WishlistService.parseWishlistResponse(response.data.data),
+          wishlist,
+          items,
         });
         return response.data.data;
+      } else {
+        dispatch({
+          type: ACTION_TYPE + '_REJECTED',
+          error: response.problem,
+        });
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch({
+        type: ACTION_TYPE + '_REJECTED',
+        error,
+      });
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async deleteItemWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string, sku: string): Promise<any> {
+    try {
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      setAuthToken(token);
+
+      const response: any = await api.delete(`wishlists/${wishlistId}/wishlist-items/${sku}`, {}, { withCredentials: true });
+
+      if (response.ok) {
+        dispatch({
+          type: ACTION_TYPE + '_FULFILLED',
+          sku,
+        });
+        return response.ok;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',

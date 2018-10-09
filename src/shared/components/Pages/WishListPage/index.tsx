@@ -39,6 +39,7 @@ interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
   wishlists: IWishlist[];
   isLoading: boolean,
+  isInitial: boolean,
 }
 
 
@@ -59,7 +60,9 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
   }
 
   public componentDidMount() {
-    this.props.dispatch(getWishlistsAction());
+    if (!this.props.isInitial) {
+      this.props.dispatch(getWishlistsAction());
+    }
   }
 
   public handleChangeName = (event: any) => {
@@ -97,7 +100,23 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
   }
 
   public render() {
-    const { classes, wishlists, isLoading } = this.props;
+    const { classes, wishlists, isLoading, isInitial } = this.props;
+
+    if (!wishlists.length && isLoading) {
+      return null;
+    } else if (!wishlists.length && !isLoading && isInitial) {
+      return (
+        <Grid container>
+          <Grid item xs={12} container justify="center">
+            <Typography
+              variant="headline"
+              children="You haven`t yet wishlists."
+              paragraph
+            />
+          </Grid>
+        </Grid>
+      );
+    }
 
     const rows: any[] = wishlists.map((item: any) => (
       <TableRow
@@ -138,7 +157,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
             day='2-digit'
           />
         </TableCell>
-        <TableCell numeric>
+        <TableCell padding="checkbox">
           <IconButton
             color="primary"
             onClick={this.setUpdatedWishlist(item.id, item.name)}
@@ -147,7 +166,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
             <EditIcon />
           </IconButton>
         </TableCell>
-        <TableCell numeric>
+        <TableCell padding="checkbox">
           <IconButton
             color="primary"
             onClick={this.handleDeleteWishlist(item.id)}
@@ -216,6 +235,7 @@ export const ConnectedWishlistPage = reduxify(
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
         wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
+        isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : ownProps.isInitial,
         isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
       }
     );

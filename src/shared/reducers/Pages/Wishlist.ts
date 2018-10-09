@@ -18,6 +18,7 @@ export interface WishlistState extends IReduxState {
     wishlists: IWishlist[],
     currentWishlist: IWishlist | null,
     currentItems: Array<IWishlistItem>,
+    isInitial: boolean,
   };
 }
 
@@ -26,6 +27,7 @@ export const initialState: WishlistState = {
     wishlists: [],
     currentWishlist: null,
     currentItems: [],
+    isInitial: false,
   },
 };
 
@@ -36,6 +38,8 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
     case `${ADD_WISHLIST}_PENDING`:
     case `${DELETE_WISHLIST}_PENDING`:
     case `${UPDATE_WISHLIST}_PENDING`:
+    case `${DELETE_ITEM_WISHLIST}_PENDING`:
+    case `${ADD_ITEM_WISHLIST}_PENDING`:
       return {
         ...state,
         ...getReducerPartPending(),
@@ -50,7 +54,14 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
     case `${ADD_WISHLIST}_REJECTED`:
     case `${DELETE_WISHLIST}_REJECTED`:
     case `${UPDATE_WISHLIST}_REJECTED`:
+      return {
+        ...state,
+        data: {...state.data, isInitial: false},
+        ...getReducerPartRejected(action.error),
+      };
     case `${DETAIL_WISHLIST}_REJECTED`:
+    case `${DELETE_ITEM_WISHLIST}_REJECTED`:
+    case `${ADD_ITEM_WISHLIST}_REJECTED`:
       return {
         ...state,
         ...getReducerPartRejected(action.error),
@@ -58,14 +69,14 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
     case `${WISHLIST_ALL_LISTS}_FULFILLED`:
       return {
         ...state,
-        data: {...state.data, wishlists: action.wishlists},
+        data: {...state.data, wishlists: action.wishlists, isInitial: true},
         ...getReducerPartFulfilled(),
       };
     case `${ADD_WISHLIST}_FULFILLED`: {
       const wishlists = [...state.data.wishlists, action.wishlist];
       return {
         ...state,
-        data: {...state.data, wishlists},
+        data: {...state.data, wishlists, isInitial: true},
         ...getReducerPartFulfilled(),
       };
     }
@@ -73,7 +84,7 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
       const wishlists = state.data.wishlists.filter((wishlist: IWishlist) => wishlist.id !== action.wishlistId);
       return {
         ...state,
-        data: {...state.data, wishlists},
+        data: {...state.data, wishlists, isInitial: true},
         ...getReducerPartFulfilled(),
       };
     }
@@ -81,7 +92,7 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
       const wishlists = state.data.wishlists.map((wishlist: IWishlist) => wishlist.id === action.wishlistId ? action.data : wishlist);
       return {
         ...state,
-        data: {...state.data, wishlists},
+        data: {...state.data, wishlists, isInitial: true},
         ...getReducerPartFulfilled(),
       };
     }
@@ -89,6 +100,20 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
       return {
         ...state,
         data: {...state.data, currentWishlist: action.wishlist, currentItems: action.items},
+        ...getReducerPartFulfilled(),
+      };
+    }
+    case `${ADD_ITEM_WISHLIST}_FULFILLED`:
+      return {
+        ...state,
+        data: {...state.data, currentWishlist: action.wishlist, currentItems: action.items},
+        ...getReducerPartFulfilled(),
+      };
+    case `${DELETE_ITEM_WISHLIST}_FULFILLED`: {
+      const currentItems = state.data.currentItems.filter((item: IWishlistItem) => item.sku !== action.sku);
+      return {
+        ...state,
+        data: {...state.data, currentItems},
         ...getReducerPartFulfilled(),
       };
     }

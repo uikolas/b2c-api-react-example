@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing.unit * 4,
   },
   newList: {
-    width: '75%',
+    width: '70%',
     margin: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 2}px`,
   },
   headerCell: {

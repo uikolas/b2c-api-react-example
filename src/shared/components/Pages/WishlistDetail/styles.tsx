@@ -13,6 +13,13 @@ export const styles = (theme: Theme) => createStyles({
   vertical: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+  },
+  name: {
+    fontSize: '0.9rem',
+    color: theme.palette.primary.main,
+    cursor: 'pointer',
+  },
+  attributes: {
+    textTransform: 'capitalize',
   }
 });
