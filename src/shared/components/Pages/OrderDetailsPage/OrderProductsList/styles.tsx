@@ -3,19 +3,20 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-
-  },
-  section: {
     borderBottom: `1px solid ${theme.palette.grey.A100}`,
-    paddingBottom: theme.spacing.unit * 2,
-    paddingTop: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit,
   },
-  btnBackOuter: {
-    justifyContent: "flex-end",
-    display: "flex",
+  title: {
+    borderBottom: `1px solid ${theme.palette.grey.A100}`,
+    paddingBottom: theme.spacing.unit * 2,
   },
-  value: {
-    display: "inline"
+  tableOuter: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
+    overflowX: 'auto',
+  },
+  table: {
+    minWidth: 700,
   },
 });

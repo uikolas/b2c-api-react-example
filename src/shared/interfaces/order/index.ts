@@ -7,6 +7,7 @@ export type TOrderDate = string;
 export type TOrderId = string;
 export type TOrderCollection = Array<IOrderItem> | null;
 export type TOrderExpenseName = string;
+export type TOrderProducts = Array<IOrderDetailsItem> | null;
 
 /**
  *  Order History
@@ -57,7 +58,7 @@ export interface IOrderDetailsResponse {
 
 export interface IOrderDetailsParsed extends IOrderItem {
   expenses: Array<IOrderDetailsExpenseItem>;
-  items: Array<IOrderDetailsItem>;
+  items: TOrderProducts;
 }
 
 export interface IOrderDetailsExpenseItem {

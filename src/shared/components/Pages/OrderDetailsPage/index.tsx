@@ -15,7 +15,7 @@ import {
 } from "../../../selectors/Common/router";
 import {emptyOrderText} from "../../../constants/messages/orders";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {isAppInitiated} from "../../../reducers/Common/Init";
+import {getAppCurrency, isAppInitiated, TAppCurrency} from "../../../reducers/Common/Init";
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
@@ -27,6 +27,9 @@ import {
 import {getOrderDetailsAction} from "../../../actions/Pages/Order";
 import {IOrderDetailsParsed, TOrderId} from "../../../interfaces/order/index";
 import {OrderDetailsGeneralInfo} from "./OrderDetailsGeneralInfo/index";
+import {OrderProductList} from "./OrderProductsList/index";
+import {OrderDetailsContext} from './context';
+import {emptyValueErrorText} from "../../../constants/messages/errors";
 
 
 export const pageTitle = "Orders History";
@@ -43,6 +46,7 @@ interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
   orderIdParam: TRouterMatchParam;
   order: IOrderDetailsParsed;
   routerGoBack: Function;
+  currency: TAppCurrency;
 }
 
 interface OrderDetailsPageState {
@@ -63,6 +67,14 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
     this.initRequestData();
   }
 
+  public selectItemHandler = (event: any): any => {
+    console.log('selectItemHandler: event: ', event);
+    const value = event.currentTarget.value;
+    if (!value) {
+      throw new Error(emptyValueErrorText);
+    }
+  }
+
   private initRequestData = () => {
     if (!this.props.isInitiated && this.props.isAppDataSet) {
       if (this.props.orderIdParam) {
@@ -76,24 +88,30 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   public render(): JSX.Element {
     console.info('props: ', this.props);
     console.info('state: ', this.state);
-    const {classes, isOrderExist, isFulfilled, routerGoBack, order} = this.props;
+    const {classes, isOrderExist, isFulfilled, routerGoBack, currency, order} = this.props;
 
     return (
       <AppMain>
         { (isFulfilled === false)
           ? null
           : (
-            <div className={classes.root} >
-              <Grid container justify="center" >
-                <Grid item xs={12}>
-                  <Typography align="center" variant="headline" gutterBottom={true}>
-                    {pageTitle}
-                  </Typography>
+            <OrderDetailsContext.Provider
+              value={{
+                selectItemHandler: this.selectItemHandler,
+                currency,
+              }}
+            >
+              <div className={classes.root} >
+                <Grid container justify="center" >
+                  <Grid item xs={12}>
+                    <Typography align="center" variant="headline" gutterBottom={true}>
+                      {pageTitle}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid container justify="center" >
-                {isOrderExist
-                  ? <React.Fragment>
+                <Grid container justify="center" >
+                  {isOrderExist
+                    ? <React.Fragment>
                       <Grid item xs={12} sm={3}>
 
                       </Grid>
@@ -103,15 +121,18 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                           date={order.dateCreated}
                           btnBackHandler={routerGoBack}
                         />
+                        <OrderProductList items={order.items} />
                       </Grid>
                     </React.Fragment>
-                  : <Typography variant="title" color="inherit" gutterBottom={true}>
-                    {emptyOrderText}
+                    : <Typography variant="title" color="inherit" gutterBottom={true}>
+                      {emptyOrderText}
                     </Typography>
-                }
+                  }
 
-              </Grid>
-            </div>
+                </Grid>
+              </div>
+            </OrderDetailsContext.Provider>
+
           )
         }
       </AppMain>
@@ -134,6 +155,7 @@ export const ConnectedOrderDetailsPage = reduxify(
     const order = getOrderDetailsFromStore(state, ownProps);
     const orderIdParam = getRouterMatchParam(state, ownProps, 'orderId');
     const routerGoBack = getRouterHistoryBack(state, ownProps);
+    const currency = getAppCurrency(state, ownProps);
 
     return ({
       location,
@@ -147,6 +169,7 @@ export const ConnectedOrderDetailsPage = reduxify(
       orderIdParam,
       order,
       routerGoBack,
+      currency,
     });
   },
   (dispatch: Function) => ({
