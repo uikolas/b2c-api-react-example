@@ -30,7 +30,7 @@ export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse)
 };
 
 export const parseGetOrderDetailsResponse = (data: IOrderDetailsResponse): IOrderDetailsParsed | null => {
-  if (!Array.isArray(data) || !data.length) {
+  if (!data) {
     return null;
   }
 
@@ -43,7 +43,6 @@ export const parseGetOrderDetailsResponse = (data: IOrderDetailsResponse): IOrde
     totals: attributes.totals,
     expenses: attributes.expenses,
     items: attributes.items,
-  }
-
+  };
   return response;
 };

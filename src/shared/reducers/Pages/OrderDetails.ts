@@ -68,12 +68,12 @@ const handlePending = (orderDetailsState: IOrderDetailsState, payload: any) => {
 };
 
 // selectors
-/*export function getOrdersCollectionFromStore(state: any, props: any): TOrderCollection {
-  return isOrderHistoryItems(state, props) ? state.orderDetails.data.items : null;
-}*/
+export function getOrderDetailsFromStore(state: any, props: any): IOrderDetailsParsed {
+  return isOrderDetailsPresent(state, props) ? state.orderDetails.data : null;
+}
 
 export function isOrderDetailsPresent(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.orderDetails.data.orderId);
+  return Boolean(isStateExist(state, props) && state.orderDetails.data.id);
 }
 
 export function isOrderDetailsStateRejected(state: any, props: any): boolean {

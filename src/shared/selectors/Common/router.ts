@@ -21,3 +21,11 @@ export function getRouterHistoryPush(state: any, props: any): Function | null {
 
   return props.history.push;
 }
+
+export function getRouterHistoryBack(state: any, props: any): Function | null {
+  if (!props.history || !props.history.goBack ) {
+    return null;
+  }
+
+  return props.history.goBack;
+}

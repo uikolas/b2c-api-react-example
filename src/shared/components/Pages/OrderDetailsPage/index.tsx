@@ -8,6 +8,7 @@ import {reduxify} from '../../../lib/redux-helper';
 import {AppMain} from '../../Common/AppMain';
 import {styles} from './styles';
 import {
+  getRouterHistoryBack,
   getRouterLocation,
   getRouterMatchParam,
   TRouterMatchParam
@@ -16,6 +17,7 @@ import {emptyOrderText} from "../../../constants/messages/orders";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {isAppInitiated} from "../../../reducers/Common/Init";
 import {
+  getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
   isOrderDetailsInitiated,
   isOrderDetailsLoading,
@@ -23,10 +25,11 @@ import {
   isOrderDetailsStateRejected,
 } from "../../../reducers/Pages/OrderDetails";
 import {getOrderDetailsAction} from "../../../actions/Pages/Order";
-import {TOrderId} from "../../../interfaces/order/index";
+import {IOrderDetailsParsed, TOrderId} from "../../../interfaces/order/index";
+import {OrderDetailsGeneralInfo} from "./OrderDetailsGeneralInfo/index";
 
 
-export const pageTitle = "Order Details";
+export const pageTitle = "Orders History";
 
 interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
@@ -38,6 +41,8 @@ interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
   isOrderExist: boolean;
   getOrderData: Function;
   orderIdParam: TRouterMatchParam;
+  order: IOrderDetailsParsed;
+  routerGoBack: Function;
 }
 
 interface OrderDetailsPageState {
@@ -71,7 +76,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   public render(): JSX.Element {
     console.info('props: ', this.props);
     console.info('state: ', this.state);
-    const {classes, isOrderExist, isFulfilled} = this.props;
+    const {classes, isOrderExist, isFulfilled, routerGoBack, order} = this.props;
 
     return (
       <AppMain>
@@ -89,16 +94,20 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
               <Grid container justify="center" >
                 {isOrderExist
                   ? <React.Fragment>
-                    <Grid item xs={12} sm={3}>
+                      <Grid item xs={12} sm={3}>
 
-                    </Grid>
-                    <Grid item xs={12} sm={9}>
-
-                    </Grid>
-                  </React.Fragment>
+                      </Grid>
+                      <Grid item xs={12} sm={9}>
+                        <OrderDetailsGeneralInfo
+                          orderId={order.id}
+                          date={order.dateCreated}
+                          btnBackHandler={routerGoBack}
+                        />
+                      </Grid>
+                    </React.Fragment>
                   : <Typography variant="title" color="inherit" gutterBottom={true}>
                     {emptyOrderText}
-                  </Typography>
+                    </Typography>
                 }
 
               </Grid>
@@ -122,8 +131,9 @@ export const ConnectedOrderDetailsPage = reduxify(
     const isAppDataSet = isAppInitiated(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const isOrderExist = isOrderDetailsPresent(state, ownProps);
-    // const orders = getOrdersCollectionFromStore(state, ownProps);
+    const order = getOrderDetailsFromStore(state, ownProps);
     const orderIdParam = getRouterMatchParam(state, ownProps, 'orderId');
+    const routerGoBack = getRouterHistoryBack(state, ownProps);
 
     return ({
       location,
@@ -135,6 +145,8 @@ export const ConnectedOrderDetailsPage = reduxify(
       isInitiated,
       isOrderExist,
       orderIdParam,
+      order,
+      routerGoBack,
     });
   },
   (dispatch: Function) => ({

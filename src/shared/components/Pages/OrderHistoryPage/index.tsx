@@ -62,7 +62,6 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
 
   public viewClickHandler = (event: any): any => {
     const value = event.currentTarget.value;
-    console.log('viewClickHandler: value ', value);
     if (!value) {
       throw new Error('value is empty!');
     }
