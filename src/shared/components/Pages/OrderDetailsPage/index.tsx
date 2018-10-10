@@ -15,7 +15,7 @@ import {
 } from "../../../selectors/Common/router";
 import {emptyOrderText} from "../../../constants/messages/orders";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {getAppCurrency, isAppInitiated, TAppCurrency} from "../../../reducers/Common/Init";
+import {getAppCurrency, getPayloadForCreateCart, isAppInitiated, TAppCurrency} from "../../../reducers/Common/Init";
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
@@ -36,7 +36,11 @@ import {OrderDetailsContext} from './context';
 import {emptyValueErrorText} from "../../../constants/messages/errors";
 import {OrderDetailsTotals} from "./OrderDetailsTotals/index";
 import {SprykerButton} from "../../UI/SprykerButton/index";
-import {TCartAddItemCollection} from "../../../interfaces/cart/index";
+import {ICartAddItem, TCartAddItemCollection, TCartId} from "../../../interfaces/cart/index";
+import {addItemToCartAction} from "../../../actions/Common/Cart";
+import {ICartCreatePayload} from "../../../services/Common/Cart";
+import {getCartId} from "../../../reducers/Common/Cart";
+import {createCartItemAddToCart} from "../../../services/cartHelper/item";
 
 
 export const pageTitle = "Orders History";
@@ -54,6 +58,10 @@ interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
   order: IOrderDetailsParsed;
   routerGoBack: Function;
   currency: TAppCurrency;
+
+  payloadForCreateCart: ICartCreatePayload;
+  cartId: TCartId;
+  addItemToCart: Function;
 }
 
 interface OrderDetailsPageState {
@@ -86,7 +94,6 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
     if (requestOrderCondition) {
       this.initRequestData();
     }
-    console.log('*** selectedItems ***', this.state.selectedItems);
   }
 
   public selectItemHandler = (event: any): any => {
@@ -98,25 +105,69 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
     }
 
     this.setState( (prevState: OrderDetailsPageState) => {
+
+      const newSelectedItems = {
+        ...prevState.selectedItems,
+        [key]: !prevState.selectedItems[key],
+      };
+
       return ({
         ...prevState,
-        selectedItems: {
-          ...prevState.selectedItems,
-          [key]: !prevState.selectedItems[key],
-        },
-        selectedItemsData: [...this.getSelectedItemsData()]
+        selectedItems: newSelectedItems,
+        selectedItemsData: this.getSelectedItemsData(newSelectedItems)
       });
     });
   }
 
   public reorderSelectedClickHandler = (event: any): any => {
     console.log('reorderSelectedClickHandler clicked');
+    const items = [...this.state.selectedItemsData];
+    console.log('reorderSelectedClickHandler items', items);
+    console.log('reorderSelectedClickHandler this.state.selectedItemsData', this.state.selectedItemsData);
+    if (!items) {
+      return false;
+    }
+
+    // Process array in sequence
+    /*async function processArray() {
+      for (const item of items) {
+        await this.props.addItemToCart(
+          createCartItemAddToCart(item.sku, item.quantity),
+          this.props.cartId,
+          this.props.payloadForCreateCart
+        );
+      }
+    }*/
+
+    const processArray = this.getAsyncProcessArrayFunction(items);
+    processArray();
+
   }
 
+  private getAsyncProcessArrayFunction = (items: TCartAddItemCollection) => {
+
+    const cartId = this.props.cartId;
+    const payloadForCreateCart = this.props.payloadForCreateCart;
+    const addItemToCart = this.props.addItemToCart;
+
+    async function processArray() {
+      for (const item of items) {
+        await addItemToCart(
+          createCartItemAddToCart(item.sku, item.quantity),
+          cartId,
+          payloadForCreateCart
+        );
+      }
+    }
+
+    return processArray;
+
+  }
+
+
   public isReorderSelectedDisabled = (): boolean => {
-    const result = this.getSelectedItemsData();
-    console.log('getSelectedItemsData result ', result);
-    return true;
+    const result = this.state.selectedItemsData;
+    return Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length);
   }
 
   public reorderAllClickHandler = (event: any): any => {
@@ -130,11 +181,10 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
     return true;
   }
 
-  private getSelectedItemsData = (): TCartAddItemCollection => {
-    const items = {...this.state.selectedItems};
+  private getSelectedItemsData = (selectedItems: IOrderDetailsSelectedItems): TCartAddItemCollection => {
     const result = [];
-    for (let sku in items) {
-      if (items[sku]) {
+    for (let sku in selectedItems) {
+      if (selectedItems[sku]) {
         result.push({
           sku,
           quantity: this.props.order.items.filter((item: IOrderDetailsItem) => (item.sku === sku))[0].quantity,
@@ -252,6 +302,9 @@ export const ConnectedOrderDetailsPage = reduxify(
     const routerGoBack = getRouterHistoryBack(state, ownProps);
     const currency = getAppCurrency(state, ownProps);
 
+    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
+    const cartId: TCartId = getCartId(state, ownProps);
+
     return ({
       location,
       isLoading,
@@ -265,9 +318,14 @@ export const ConnectedOrderDetailsPage = reduxify(
       order,
       routerGoBack,
       currency,
+      payloadForCreateCart,
+      cartId,
     });
   },
   (dispatch: Function) => ({
     getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId)),
+    addItemToCart: (
+      payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
+    ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
   })
 )(OrderDetailsPage);

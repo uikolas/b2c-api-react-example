@@ -36,7 +36,6 @@ export const OrderDetailsTotalsBase: React.SFC<OrderDetailsTotalsProps> = (props
     grandTotal
   } = props;
 
-  console.log('expenses ', expenses);
   const renderTotalItem = (
                             value: TAbstractTotal,
                             title: string = '',
