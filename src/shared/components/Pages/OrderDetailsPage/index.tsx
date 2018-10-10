@@ -33,6 +33,7 @@ import {OrderDetailsGeneralInfo} from "./OrderDetailsGeneralInfo/index";
 import {OrderProductList} from "./OrderProductsList/index";
 import {OrderDetailsContext} from './context';
 import {emptyValueErrorText} from "../../../constants/messages/errors";
+import {OrderDetailsTotals} from "./OrderDetailsTotals/index";
 
 
 export const pageTitle = "Orders History";
@@ -146,6 +147,15 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                           btnBackHandler={routerGoBack}
                         />
                         <OrderProductList items={order.items} />
+                        <OrderDetailsTotals
+                          currency={currency}
+                          canceledTotal={order.totals.canceledTotal}
+                          expenseTotal={order.totals.expenseTotal}
+                          discountTotal={order.totals.discountTotal}
+                          taxTotal={order.totals.taxTotal}
+                          subtotal={order.totals.subtotal}
+                          grandTotal={order.totals.grandTotal}
+                        />
                       </Grid>
                     </React.Fragment>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>

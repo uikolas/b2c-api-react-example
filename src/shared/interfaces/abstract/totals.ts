@@ -1,9 +1,12 @@
-export type TExpenseTotal = number;
-export type TDiscountTotal = number;
-export type TTaxTotal = number;
-export type TSubtotal = number;
-export type TGrandTotal = number;
-export type TCanceledTotal = number;
+export type TAbstractTotal = number;
+
+export type TExpenseTotal = TAbstractTotal;
+export type TDiscountTotal = TAbstractTotal;
+export type TTaxTotal = TAbstractTotal;
+export type TSubtotal = TAbstractTotal;
+export type TGrandTotal = TAbstractTotal;
+export type TCanceledTotal = TAbstractTotal;
+
 
 export interface IAbstractTotals {
   expenseTotal: TExpenseTotal;
