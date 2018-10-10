@@ -60,12 +60,15 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   };
 
   public componentDidMount = () => {
-    this.initRequestData();
+    const result = this.initRequestData();
+    console.log('componentDidMount: initRequestData: result: ', result);
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
+    console.log('componentDidUpdate: prevProps: ', prevProps);
     if (this.props.orderIdParam !== prevProps.orderIdParam) {
-      this.initRequestData();
+      const result = this.initRequestData();
+      console.log('componentDidUpdate: initRequestData: result: ', result);
     }
   }
 
@@ -78,6 +81,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   private initRequestData = () => {
+    console.log('initRequestData: common condition', (!this.props.isInitiated && this.props.isAppDataSet && this.props.orderIdParam));
     if (!this.props.isInitiated && this.props.isAppDataSet && this.props.orderIdParam) {
       this.props.getOrderData(this.props.orderIdParam);
       return true;
