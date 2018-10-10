@@ -51,8 +51,8 @@ import {
 } from "../../../reducers/Common/Init";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
-import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
-import {TCartId} from "../../../interfaces/cart/index";
+import {ICartCreatePayload} from "../../../services/Common/Cart";
+import {ICartAddItem, TCartId} from "../../../interfaces/cart/index";
 import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getRouterLocation, getRouterMatchParam, TRouterMatchParam} from "../../../selectors/Common/router";

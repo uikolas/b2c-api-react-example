@@ -26,6 +26,7 @@ import {
 } from "../../../reducers/Pages/OrderDetails";
 import {getOrderDetailsAction} from "../../../actions/Pages/Order";
 import {
+  IOrderDetailsItem,
   IOrderDetailsParsed, IOrderDetailsSelectedItems,
   TOrderId
 } from "../../../interfaces/order/index";
@@ -34,6 +35,8 @@ import {OrderProductList} from "./OrderProductsList/index";
 import {OrderDetailsContext} from './context';
 import {emptyValueErrorText} from "../../../constants/messages/errors";
 import {OrderDetailsTotals} from "./OrderDetailsTotals/index";
+import {SprykerButton} from "../../UI/SprykerButton/index";
+import {TCartAddItemCollection} from "../../../interfaces/cart/index";
 
 
 export const pageTitle = "Orders History";
@@ -55,12 +58,17 @@ interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
 
 interface OrderDetailsPageState {
   selectedItems: IOrderDetailsSelectedItems;
+  selectedItemsData: TCartAddItemCollection;
 }
+
+const reorderSelectedBtnTitle = "Reorder selected items";
+const reorderAllBtnTitle = "Reorder all";
 
 export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps, OrderDetailsPageState> {
 
   public state: OrderDetailsPageState = {
     selectedItems: {},
+    selectedItemsData: null,
   };
 
   public componentDidMount = () => {
@@ -96,8 +104,44 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
           ...prevState.selectedItems,
           [key]: !prevState.selectedItems[key],
         },
+        selectedItemsData: [...this.getSelectedItemsData()]
       });
     });
+  }
+
+  public reorderSelectedClickHandler = (event: any): any => {
+    console.log('reorderSelectedClickHandler clicked');
+  }
+
+  public isReorderSelectedDisabled = (): boolean => {
+    const result = this.getSelectedItemsData();
+    console.log('getSelectedItemsData result ', result);
+    return true;
+  }
+
+  public reorderAllClickHandler = (event: any): any => {
+    console.log('reorderAllClickHandler clicked');
+  }
+
+  public isReorderAllDisabled = (): boolean => {
+    if (this.props.order.items.length) {
+      return false;
+    }
+    return true;
+  }
+
+  private getSelectedItemsData = (): TCartAddItemCollection => {
+    const items = {...this.state.selectedItems};
+    const result = [];
+    for (let sku in items) {
+      if (items[sku]) {
+        result.push({
+          sku,
+          quantity: this.props.order.items.filter((item: IOrderDetailsItem) => (item.sku === sku))[0].quantity,
+        });
+      }
+    }
+    return result.length ? result : null;
   }
 
   private initRequestData = () => {
@@ -157,6 +201,22 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                           subtotal={order.totals.subtotal}
                           grandTotal={order.totals.grandTotal}
                         />
+
+
+                        <Grid item xs={12} className={`${classes.section} ${classes.btnOuter}`}>
+                          <SprykerButton
+                            title={reorderSelectedBtnTitle}
+                            extraClasses={classes.reorderBtn}
+                            onClick={this.reorderSelectedClickHandler}
+                            disabled={this.isReorderSelectedDisabled()}
+                          />
+                          <SprykerButton
+                            title={reorderAllBtnTitle}
+                            extraClasses={classes.reorderBtn}
+                            onClick={this.reorderAllClickHandler}
+                            disabled={this.isReorderAllDisabled()}
+                          />
+                        </Grid>
                       </Grid>
                     </React.Fragment>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>

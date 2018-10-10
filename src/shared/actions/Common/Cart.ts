@@ -4,8 +4,8 @@ import {
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
-import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Common/Cart";
-import {ICartDataResponse, TCartId} from "../../interfaces/cart/index";
+import {CartService, ICartCreatePayload} from "../../services/Common/Cart";
+import {ICartAddItem, ICartDataResponse, TCartId} from "../../interfaces/cart/index";
 import {TProductSKU} from "../../interfaces/product/index";
 
 

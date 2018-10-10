@@ -4,7 +4,7 @@ import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture, cartUpdateQuantityFixture} from '../fixtures/cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
-import {TCartId} from "../../interfaces/cart";
+import {ICartAddItem, TCartId} from "../../interfaces/cart";
 import {parseAddToCartResponse} from "../cartHelper";
 import {parseCartCreateResponse} from "../cartHelper/response";
 import {RefreshTokenService} from './RefreshToken';
@@ -23,11 +23,6 @@ export interface ICartCreatePayload {
   priceMode: string;
   currency: string;
   store: string;
-}
-
-export interface ICartAddItem {
-  sku: TProductSKU;
-  quantity: TProductQuantity;
 }
 
 export class CartService {

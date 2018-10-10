@@ -1,6 +1,7 @@
 import {ICartItem} from "../../reducers/Common/Cart";
 import {TAppCurrency} from "../../reducers/Common/Init";
 import {IAbstractTotals} from "../abstract/totals";
+import {TProductQuantity, TProductSKU} from "../product/index";
 
 export type TCartId = string;
 export type TCartPriceMode = string;
@@ -8,11 +9,17 @@ export type TCartStore = string;
 export type TCartDisplayName = string;
 export type TCartAmount = number;
 export type TCartCode = string;
+export type TCartAddItemCollection = Array<ICartAddItem> | null;
 
 export interface ICartDiscounts {
   displayName: TCartDisplayName;
   amount: TCartAmount;
   code: TCartCode;
+}
+
+export interface ICartAddItem {
+  sku: TProductSKU;
+  quantity: TProductQuantity;
 }
 
 export interface ICartTotals extends IAbstractTotals {
