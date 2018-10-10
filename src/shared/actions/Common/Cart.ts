@@ -5,7 +5,7 @@ import {
   CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
 import {CartService, ICartCreatePayload} from "../../services/Common/Cart";
-import {ICartAddItem, ICartDataResponse, TCartId} from "../../interfaces/cart/index";
+import {ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId} from "../../interfaces/cart/index";
 import {TProductSKU} from "../../interfaces/product/index";
 
 
@@ -81,5 +81,15 @@ export const cartUpdateItemFulfilledStateAction = (payload: ICartDataResponse) =
 export const updateItemInCartAction = function (payload: ICartAddItem, cartId: TCartId) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartUpdateItem(dispatch, payload, cartId);
+  };
+};
+
+export const addMultipleItemsToCartAction = function(
+  payload: TCartAddItemCollection,
+  cartId: TCartId,
+  payloadCartCreate: ICartCreatePayload
+) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.cartMultipleItems(dispatch, payload, cartId, payloadCartCreate);
   };
 };

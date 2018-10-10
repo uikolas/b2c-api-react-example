@@ -37,7 +37,7 @@ import {emptyValueErrorText} from "../../../constants/messages/errors";
 import {OrderDetailsTotals} from "./OrderDetailsTotals/index";
 import {SprykerButton} from "../../UI/SprykerButton/index";
 import {ICartAddItem, TCartAddItemCollection, TCartId} from "../../../interfaces/cart/index";
-import {addItemToCartAction} from "../../../actions/Common/Cart";
+import {addItemToCartAction, addMultipleItemsToCartAction} from "../../../actions/Common/Cart";
 import {ICartCreatePayload} from "../../../services/Common/Cart";
 import {getCartId} from "../../../reducers/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
@@ -61,7 +61,7 @@ interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
 
   payloadForCreateCart: ICartCreatePayload;
   cartId: TCartId;
-  addItemToCart: Function;
+  addMultipleItemsToCart: Function;
 }
 
 interface OrderDetailsPageState {
@@ -128,25 +128,14 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
       return false;
     }
 
-    // Process array in sequence
-    /*async function processArray() {
-      for (const item of items) {
-        await this.props.addItemToCart(
-          createCartItemAddToCart(item.sku, item.quantity),
-          this.props.cartId,
-          this.props.payloadForCreateCart
-        );
-      }
-    }*/
+    this.props.addMultipleItemsToCart(items, this.props.cartId, this.props.payloadForCreateCart);
 
-    const processArray = this.getAsyncProcessArrayFunction(items);
-    processArray();
 
   }
 
   private getAsyncProcessArrayFunction = (items: TCartAddItemCollection) => {
 
-    const cartId = this.props.cartId;
+    /*const cartId = this.props.cartId;
     const payloadForCreateCart = this.props.payloadForCreateCart;
     const addItemToCart = this.props.addItemToCart;
 
@@ -160,7 +149,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
       }
     }
 
-    return processArray;
+    return processArray;*/
 
   }
 
@@ -324,8 +313,8 @@ export const ConnectedOrderDetailsPage = reduxify(
   },
   (dispatch: Function) => ({
     getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId)),
-    addItemToCart: (
-      payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
-    ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
+    addMultipleItemsToCart: (
+      payload: TCartAddItemCollection, cartId: TCartId, payloadCartCreate: ICartCreatePayload
+    ) => dispatch(addMultipleItemsToCartAction(payload, cartId, payloadCartCreate)),
   })
 )(OrderDetailsPage);

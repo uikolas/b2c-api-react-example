@@ -4,7 +4,7 @@ import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {cartCreateFixture, cartUpdateQuantityFixture} from '../fixtures/cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
-import {ICartAddItem, TCartId} from "../../interfaces/cart";
+import {ICartAddItem, TCartAddItemCollection, TCartId} from "../../interfaces/cart";
 import {parseAddToCartResponse} from "../cartHelper";
 import {parseCartCreateResponse} from "../cartHelper/response";
 import {RefreshTokenService} from './RefreshToken';
@@ -251,4 +251,91 @@ export class CartService {
       return null;
     }
   }
+
+  // Adds an multiple items to the cart.
+  public static async cartMultipleItems(dispatch: Function,
+                                        payload: TCartAddItemCollection,
+                                        cartId: TCartId | null,
+                                        payloadCartCreate: ICartCreatePayload): Promise<any> {
+    if (!payload) {
+      return false;
+    }
+    try {
+      // Create cart if not exist
+      if (!cartId) {
+        try {
+          cartId = await CartService.cartCreate(dispatch, payloadCartCreate);
+        } catch (err) {
+          console.error('await CartService.cartCreate err', err);
+        }
+      }
+
+      // Global response
+      let globalResponse: boolean = true;
+
+      for (const item of payload) {
+        if (!globalResponse) {
+          dispatch(cartAddItemRejectedStateAction("Error in processing adding products in sequence"));
+          return false;
+        }
+        dispatch(cartAddItemPendingStateAction());
+        const processResult =  await this.addingItemProcess(dispatch, item, cartId);
+        console.log('*** processResult ***', processResult);
+        if (processResult.ok) {
+          const responseParsed = parseAddToCartResponse(processResult.data);
+          dispatch(cartAddItemFulfilledStateAction(responseParsed));
+          globalResponse = true;
+        } else {
+          dispatch(cartAddItemRejectedStateAction(processResult.problem));
+          toast.error('Request Error: ' + processResult.problem);
+          globalResponse = false;
+        }
+      }
+      return globalResponse;
+    } catch (error) {
+      dispatch(cartAddItemRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  private static async addingItemProcess(dispatch: Function,
+                                         payload: ICartAddItem,
+                                         cartId: TCartId): Promise<any> {
+    const body = {
+      data: {
+        type: "items",
+        attributes: payload,
+      }
+    };
+
+    let response: any;
+
+    // TODO: this is only for development reasons - remove after finish
+    if(API_WITH_FIXTURES) {
+      const result = {
+        ok: true,
+        problem: 'Test API_WITH_FIXTURES',
+        data: cartCreateFixture.data,
+      };
+      response = await getTestDataPromise(result);
+      console.log('+++API_WITH_FIXTURES response: ', response);
+    } else {
+      try {
+        const endpoint = `carts/${cartId}/items`;
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(cartAuthenticateErrorText);
+        }
+        setAuthToken(token);
+        response = await api.post(endpoint, body, { withCredentials: true });
+      } catch (err) {
+        console.error('CartService: cartAddItem: err', err);
+      }
+    }
+
+    console.log('cartAddItem response: ', response);
+    return response;
+  }
+
 }
