@@ -149,6 +149,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                         <OrderProductList items={order.items} />
                         <OrderDetailsTotals
                           currency={currency}
+                          expenses={order.expenses}
                           canceledTotal={order.totals.canceledTotal}
                           expenseTotal={order.totals.expenseTotal}
                           discountTotal={order.totals.discountTotal}

@@ -8,6 +8,7 @@ export type TOrderId = string;
 export type TOrderCollection = Array<IOrderItem> | null;
 export type TOrderExpenseName = string;
 export type TOrderProducts = Array<IOrderDetailsItem> | null;
+export type TOrderExpenses = Array<IOrderDetailsExpenseItem> | null;
 
 /**
  *  Order History
@@ -49,7 +50,7 @@ export interface IOrderDetailsResponse {
   attributes: {
     createdAt: TOrderCreatedAt,
     currencyIsoCode: TAppCurrency;
-    expenses: Array<IOrderDetailsExpenseItem>;
+    expenses: TOrderExpenses;
     items: Array<IOrderDetailsItem>;
     totals: IOrderTotals;
   };
@@ -57,7 +58,7 @@ export interface IOrderDetailsResponse {
 }
 
 export interface IOrderDetailsParsed extends IOrderItem {
-  expenses: Array<IOrderDetailsExpenseItem>;
+  expenses: TOrderExpenses;
   items: TOrderProducts;
 }
 
