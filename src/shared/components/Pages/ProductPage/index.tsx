@@ -10,6 +10,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import {reduxify} from '../../../lib/redux-helper';
 import {isPageProductStateLoading, isPageProductStateRejected, ProductState} from '../../../reducers/Pages/Product';
 import {WishlistState} from '../../../reducers/Pages/Wishlist';
+import {
+  getProduct, isPageProductStateInitiated, isPageProductStateLoading,
+  isPageProductStateRejected
+} from '../../../reducers/Pages/Product';
+import {WishlistState} from '../../../reducers/Pages/Wishlist';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -26,7 +31,8 @@ import {
   IProductCardImages,
   IProductPropFullData,
   ISuperAttributes,
-  TProductQuantity, TProductSKU,
+  TProductQuantity,
+  IProductDataParsed, priceTypeNameOriginal,
 } from '../../../interfaces/product';
 import {IImageSlide} from '../../../components/Common/ImageSlider';
 
@@ -40,30 +46,32 @@ import {
   getInitialSuperAttrSelected,
 } from "../../../services/productHelper";
 import {addItemToCartAction} from "../../../actions/Common/Cart";
-import {
-  getWishlistsAction,
-  addItemAction,
-} from '../../../actions/Pages/Wishlist';
-import {isCartCreated, isCartLoading, getCartId} from "../../../reducers/Common/Cart";
+import {isCartCreated, getCartId} from "../../../reducers/Common/Cart";
 import {
   getPayloadForCreateCart,
   isAppInitiated,
   TAppPriceMode,
   TAppStore,
 } from "../../../reducers/Common/Init";
+import {
+  getWishlistsAction,
+  addItemAction,
+} from '../../../actions/Pages/Wishlist';
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
-import {authenticateErrorText, ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
+import {ICartAddItem, ICartCreatePayload} from "../../../services/Common/Cart";
 import {TCartId} from "../../../interfaces/cart/index";
 import {IWishlist} from "../../../interfaces/wishlist";
 import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
+import {getRouterLocation, getRouterMatchParam, TRouterMatchParam} from "../../../selectors/Common/router";
+import {cartAuthenticateErrorText} from "../../../constants/messages/errors";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
-  product: any;
+  product: IProductDataParsed | null;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
   appPriceMode: TAppPriceMode;
@@ -77,7 +85,8 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   payloadForCreateCart: ICartCreatePayload;
   isLoading: boolean;
   isRejected: boolean;
-  locationProductSKU?: string;
+  isInitiated: boolean;
+  locationProductSKU?: TRouterMatchParam;
   wishlistsInitial?: boolean,
   wishlists?: Array<IWishlist>,
 }
@@ -103,15 +112,19 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     availability: null,
     description: null,
     price: null,
+    priceOriginalGross: null,
+    priceOriginalNet: null,
+    priceDefaultGross: null,
+    priceDefaultNet: null,
     attributes: null,
     quantity: null,
     selectedWishlist: '',
   };
 
   public componentDidMount = () => {
-    /*if (this.props.product) {
+    if (this.props.product) {
       this.setInitialData();
-    }*/
+    }
 
     if (!this.props.wishlistsInitial) {
       this.props.getWishlists();
@@ -125,8 +138,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (!this.props.product
       && this.props.locationProductSKU
       && this.props.isAppDataSet
-      && !this.props.isLoading
-      && !this.props.isRejected
+      && !this.props.isInitiated
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
@@ -202,7 +214,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public handleBuyBtnClick = (event: any): any => {
     if (!this.props.isUserLoggedIn) {
-      toast.error(authenticateErrorText);
+      toast.error(cartAuthenticateErrorText);
       return;
     }
     if (this.state.productType === concreteProductType) {
@@ -234,6 +246,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
+      priceOriginalGross: data ? data.priceOriginalGross : null,
+      priceOriginalNet: data ? data.priceOriginalNet : null,
+      priceDefaultGross: data ? data.priceDefaultGross : null,
+      priceDefaultNet: data ? data.priceDefaultNet : null,
       attributes: data ? data.attributes : defaultValues.attributes,
       quantity: data ? data.quantity : defaultValues.quantity,
       productType: data ? data.productType : absentProductType,
@@ -331,7 +347,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
-                    price={<AppPrice value={this.state.price}/>}
+                    price={<AppPrice value={this.state.priceDefaultGross}/>}
+                    oldPrice={<AppPrice value={this.state.priceOriginalGross} priceType={priceTypeNameOriginal}/>}
                   />
 
                   { this.state.superAttributes
@@ -418,29 +435,28 @@ export const ProductPage = withStyles(styles)(ProductPageBase);
 
 export const ConnectedProductPage = reduxify(
   (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
+    const location = getRouterLocation(state, ownProps);
+    const product = getProduct(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
-    const pathname: string = routerProps.location ? routerProps.location.pathname : null;
-    const locationProductSKU: string = pathname ? pathname.split('/')[3] : null;
+    const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
+    const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
 
     return ({
-      location: routerProps.location ? routerProps.location : ownProps.location,
-      product: productProps && productProps.data
-        ? productProps.data.selectedProduct
-        : ownProps.selectedProduct,
+      location,
+      product,
       cartCreated,
       cartId,
       isAppDataSet,
       payloadForCreateCart,
       isUserLoggedIn,
+      isInitiated,
       isLoading,
       isRejected,
       locationProductSKU,

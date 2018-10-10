@@ -3,18 +3,24 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 
 import {styles} from './styles';
+import {
+  TPriceTypeDefaultGross, TPriceTypeOriginalGross, TProductName,
+  TProductSKU
+} from "../../../../interfaces/product/index";
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
-  name: string;
-  sku: string | number;
-  price: string;
+  name: TProductName;
+  sku: TProductSKU;
+  price: TPriceTypeOriginalGross;
+  oldPrice: TPriceTypeDefaultGross;
 }
 
 export const skuTitle = "SKU: ";
 export const priceTitle = "Price: ";
+export const oldPriceTitle = "Old price: ";
 
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
-  const { classes, name = "No name", sku = "No SKU", price = "No price" } = props;
+  const { classes, name = "No name", sku = "No SKU", price = "No price", oldPrice } = props;
 
   return (
     <div className={classes.root}>
@@ -24,6 +30,14 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
       <Typography variant="subheading" color="inherit" gutterBottom={true}>
         {skuTitle}{sku}
       </Typography>
+      {oldPrice
+        ? (
+          <Typography variant="subheading" gutterBottom={true}>
+            {oldPriceTitle}{oldPrice}
+          </Typography>
+        )
+        : null
+      }
       <Typography variant="subheading" color="inherit" gutterBottom={true}>
         {priceTitle}{price}
       </Typography>

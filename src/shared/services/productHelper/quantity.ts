@@ -21,4 +21,4 @@ export const createQuantityVariants = (quantity: number | null):  Array<IMenuIte
   });
 
   return data;
-}
+};

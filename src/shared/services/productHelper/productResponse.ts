@@ -2,7 +2,10 @@ import {
   parseSuperAttributes,
   parseImageSets,
 } from "./index";
-import {concreteProductType, abstractProductType, IProductDataParsed} from "../../interfaces/product";
+import {
+  concreteProductType, abstractProductType, IProductDataParsed,
+  priceTypeNameDefault, priceTypeNameOriginal
+} from "../../interfaces/product";
 
 interface IResponse {
   data: object;
@@ -25,6 +28,10 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
       attributes: data.attributes.attributes,
       images: [],
       price: null,
+      priceOriginalGross: null,
+      priceOriginalNet: null,
+      priceDefaultGross: null,
+      priceDefaultNet: null,
       availability: null,
       quantity: null,
       productType: abstractProductType,
@@ -66,6 +73,19 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
     } else if (row.type === 'concrete-product-prices' && !result.concreteProducts[row.id].price) {
       result.concreteProducts[row.id].price =  row.attributes.price;
       result.concreteProducts[row.id].prices =  row.attributes.prices;
+      if (row.attributes.prices && row.attributes.prices.length) {
+        row.attributes.prices.forEach((priceData: any) => {
+          if (priceData.priceTypeName === priceTypeNameDefault) {
+            result.concreteProducts[row.id].priceDefaultGross = priceData.grossAmount;
+            result.concreteProducts[row.id].priceDefaultNet = priceData.netAmount;
+          }
+          if (priceData.priceTypeName === priceTypeNameOriginal) {
+            result.concreteProducts[row.id].priceOriginalGross = priceData.grossAmount;
+            result.concreteProducts[row.id].priceOriginaltNet = priceData.netAmount;
+          }
+        });
+      }
+
     } else if (row.type === 'concrete-product-availabilities' && !result.concreteProducts[row.id].availability) {
       result.concreteProducts[row.id].availability =  row.attributes.availability;
       result.concreteProducts[row.id].quantity =  row.attributes.quantity;
