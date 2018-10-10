@@ -252,7 +252,7 @@ export class CartService {
     }
   }
 
-  // Adds an multiple items to the cart.
+  // Adds multiple items to the cart.
   public static async cartMultipleItems(dispatch: Function,
                                         payload: TCartAddItemCollection,
                                         cartId: TCartId | null,
@@ -280,7 +280,6 @@ export class CartService {
         }
         dispatch(cartAddItemPendingStateAction());
         const processResult =  await this.addingItemProcess(dispatch, item, cartId);
-        console.log('*** processResult ***', processResult);
         if (processResult.ok) {
           const responseParsed = parseAddToCartResponse(processResult.data);
           dispatch(cartAddItemFulfilledStateAction(responseParsed));
@@ -319,7 +318,6 @@ export class CartService {
         data: cartCreateFixture.data,
       };
       response = await getTestDataPromise(result);
-      console.log('+++API_WITH_FIXTURES response: ', response);
     } else {
       try {
         const endpoint = `carts/${cartId}/items`;
@@ -333,8 +331,6 @@ export class CartService {
         console.error('CartService: cartAddItem: err', err);
       }
     }
-
-    console.log('cartAddItem response: ', response);
     return response;
   }
 

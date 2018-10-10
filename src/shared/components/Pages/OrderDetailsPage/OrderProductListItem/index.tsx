@@ -11,7 +11,6 @@ import {OrderDetailsContext} from '../context';
 import {TAppCurrency} from "../../../../reducers/Common/Init";
 
 interface OrderProductListItemProps extends WithStyles<typeof styles>, IOrderDetailsItem {
-  currency: TAppCurrency;
 }
 
 export const OrderProductListItemBase: React.SFC<OrderProductListItemProps> = (props): JSX.Element => {
@@ -19,23 +18,25 @@ export const OrderProductListItemBase: React.SFC<OrderProductListItemProps> = (p
 
   return (
     <OrderDetailsContext.Consumer>
-      {({ selectItemHandler, currency, selectedItems }) => (
-        <TableRow key={sku}>
-          <TableCell>
-            <Checkbox
-              checked={selectedItems[sku]}
-              onChange={selectItemHandler}
-              value={sku}
-              color="primary"
-            />
-            {sku}
-          </TableCell>
-          <TableCell>{name}</TableCell>
-          <TableCell><AppPrice value={sumPrice} specificCurrency={currency} /></TableCell>
-          <TableCell>{quantity}</TableCell>
-          <TableCell><AppPrice value={sumPriceToPayAggregation} specificCurrency={currency} /></TableCell>
-        </TableRow>
-      )}
+      {({ selectItemHandler, currency, selectedItems }) => {
+        return (
+          <TableRow key={sku}>
+            <TableCell>
+              <Checkbox
+                checked={!!selectedItems[sku]}
+                onChange={selectItemHandler}
+                value={sku}
+                color="primary"
+              />
+              {sku}
+            </TableCell>
+            <TableCell>{name}</TableCell>
+            <TableCell><AppPrice value={sumPrice} specificCurrency={currency} /></TableCell>
+            <TableCell>{quantity}</TableCell>
+            <TableCell><AppPrice value={sumPriceToPayAggregation} specificCurrency={currency} /></TableCell>
+          </TableRow>
+        );
+      }}
     </OrderDetailsContext.Consumer>
   );
 };

@@ -41,6 +41,7 @@ import {addItemToCartAction, addMultipleItemsToCartAction} from "../../../action
 import {ICartCreatePayload} from "../../../services/Common/Cart";
 import {getCartId} from "../../../reducers/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
+import {items} from "../../../services/Pages/Home.fixtures";
 
 
 export const pageTitle = "Orders History";
@@ -120,54 +121,43 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   public reorderSelectedClickHandler = (event: any): any => {
-    console.log('reorderSelectedClickHandler clicked');
     const items = [...this.state.selectedItemsData];
-    console.log('reorderSelectedClickHandler items', items);
-    console.log('reorderSelectedClickHandler this.state.selectedItemsData', this.state.selectedItemsData);
     if (!items) {
       return false;
     }
-
     this.props.addMultipleItemsToCart(items, this.props.cartId, this.props.payloadForCreateCart);
-
-
+    return true;
   }
-
-  private getAsyncProcessArrayFunction = (items: TCartAddItemCollection) => {
-
-    /*const cartId = this.props.cartId;
-    const payloadForCreateCart = this.props.payloadForCreateCart;
-    const addItemToCart = this.props.addItemToCart;
-
-    async function processArray() {
-      for (const item of items) {
-        await addItemToCart(
-          createCartItemAddToCart(item.sku, item.quantity),
-          cartId,
-          payloadForCreateCart
-        );
-      }
-    }
-
-    return processArray;*/
-
-  }
-
 
   public isReorderSelectedDisabled = (): boolean => {
-    const result = this.state.selectedItemsData;
     return Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length);
   }
 
   public reorderAllClickHandler = (event: any): any => {
-    console.log('reorderAllClickHandler clicked');
+    const allSelectedItemsData = this.props.order.items.map((item: IOrderDetailsItem): ICartAddItem => ({
+      sku: item.sku,
+      quantity: item.quantity
+    }));
+
+    const allSelectedItems: IOrderDetailsSelectedItems = {};
+    for (const item of allSelectedItemsData) {
+      allSelectedItems[item.sku] = true;
+    }
+
+    this.setState( (prevState: OrderDetailsPageState) => {
+      return ({
+        ...prevState,
+        selectedItems: allSelectedItems,
+        selectedItemsData: allSelectedItemsData,
+      });
+    });
+
+    this.props.addMultipleItemsToCart(allSelectedItemsData, this.props.cartId, this.props.payloadForCreateCart);
+    return true;
   }
 
   public isReorderAllDisabled = (): boolean => {
-    if (this.props.order.items.length) {
-      return false;
-    }
-    return true;
+    return Boolean(!this.props.order.items.length);
   }
 
   private getSelectedItemsData = (selectedItems: IOrderDetailsSelectedItems): TCartAddItemCollection => {
