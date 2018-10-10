@@ -60,13 +60,21 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   };
 
   public componentDidMount = () => {
-    const result = this.initRequestData();
-    console.log('componentDidMount: initRequestData: result: ', result);
+    const requestOrderCondition = (
+      !this.props.isOrderExist
+      ||(this.props.isOrderExist && this.props.orderIdParam !== this.props.order.id)
+    );
+    console.log('componentDidMount: requestOrderCondition', requestOrderCondition);
+    if (requestOrderCondition) {
+      const result = this.initRequestData();
+      console.log('componentDidMount: initRequestData: result: ', result);
+    }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    console.log('componentDidUpdate: prevProps: ', prevProps);
-    if (this.props.orderIdParam !== prevProps.orderIdParam) {
+    const requestOrderCondition = (!this.props.isLoading && !this.props.isOrderExist);
+    console.log('componentDidUpdate: requestCondition: ', requestOrderCondition);
+    if (requestOrderCondition) {
       const result = this.initRequestData();
       console.log('componentDidUpdate: initRequestData: result: ', result);
     }
@@ -81,8 +89,14 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   private initRequestData = () => {
-    console.log('initRequestData: common condition', (!this.props.isInitiated && this.props.isAppDataSet && this.props.orderIdParam));
-    if (!this.props.isInitiated && this.props.isAppDataSet && this.props.orderIdParam) {
+    const requestCondition = (
+      this.props.isAppDataSet
+      && this.props.orderIdParam
+    );
+
+    console.log('initRequestData: common requestCondition', requestCondition);
+
+    if (requestCondition) {
       this.props.getOrderData(this.props.orderIdParam);
       return true;
     }
