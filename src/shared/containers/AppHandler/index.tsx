@@ -23,7 +23,7 @@ interface AppHandlerProps extends IComponent {
   isLoading: boolean;
   locale: TAppLocale;
   initApplicationData: Function;
-  setAuth: Function,
+  setAuth: Function;
   isAppDataSet: boolean;
 }
 

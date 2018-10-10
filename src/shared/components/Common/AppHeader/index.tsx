@@ -3,12 +3,12 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
+import BookmarkBorderOutlined from '@material-ui/icons/BookmarkBorderOutlined';
 import { NavLink } from 'react-router-dom';
 
 import {AppLogo} from '../AppLogo';
 import CatalogSearch from '../CatalogSearch';
 import {styles} from './styles';
-import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {isUserAuthenticated} from '../../../reducers/Pages/Login';
 import {RouteProps} from "react-router";
@@ -23,6 +23,7 @@ import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
 import {Preloader} from "../Preloader/index";
+import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -81,9 +82,9 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
             </Grid>
 
             <Grid item sm={5}>
-              { location.pathname === config.WEB_PATH || location.pathname === `${config.WEB_PATH}login`
-                ? <CatalogSearch />
-                : null
+              { location.pathname === pathHomePage
+                ? null
+                : <CatalogSearch />
               }
             </Grid>
             <Grid item sm={4}
@@ -92,14 +93,14 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
                   justify="flex-end"
                   alignItems="center"
             >
-              <NavLink to={isUserLoggedIn ? `${config.WEB_PATH}`: `${config.WEB_PATH}login`}>
+              <NavLink to={isUserLoggedIn ? pathHomePage: pathLoginPage}>
                 <SprykerButton
                   title={isUserLoggedIn ? 'Logout' : 'Register/Login'}
                   onClick={isUserLoggedIn ? this.handleLogout : null}
                 />
               </NavLink>
 
-              <NavLink to={`${config.WEB_PATH}cart`}>
+              <NavLink to={pathCartPage}>
                 <SprykerButton
                   title="Cart"
                   iconComponent={(
@@ -119,6 +120,17 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
                 vertical="top"
                 horizontal="right"
               />
+              { /* TODO: Add fetching data on click !!!*/ }
+              {isUserLoggedIn
+                ?  <NavLink to={pathOrderHistoryPage}>
+                    <SprykerButton
+                      title={'Orders History'}
+                      IconType={BookmarkBorderOutlined}
+                    />
+                  </NavLink>
+                : null
+              }
+
             </Grid>
 
           </Grid>

@@ -13,6 +13,7 @@ export interface IReduxState {
   pending?: boolean;
   fulfilled?: boolean;
   rejected?: boolean;
+  initiated?: boolean;
 }
 
 export interface IRouterState {

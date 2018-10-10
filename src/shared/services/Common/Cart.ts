@@ -1,7 +1,7 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {cartCreateFixture, cartUpdateQuantityFixture} from './cartFixture';
+import {cartCreateFixture, cartUpdateQuantityFixture} from '../fixtures/cartFixture';
 import {getTestDataPromise} from "../apiFixture/index";
 import {TProductQuantity, TProductSKU} from "../../interfaces/product";
 import {TCartId} from "../../interfaces/cart";
@@ -17,6 +17,7 @@ import {
   cartCreateRejectedStateAction, cartUpdateItemFulfilledStateAction, cartUpdateItemPendingStateAction,
   cartUpdateItemRejectedStateAction
 } from "../../actions/Common/Cart";
+import {cartAuthenticateErrorText} from "../../constants/messages/errors";
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -28,8 +29,6 @@ export interface ICartAddItem {
   sku: TProductSKU;
   quantity: TProductQuantity;
 }
-
-export const authenticateErrorText = 'You should register or login to add item to the cart';
 
 export class CartService {
 
@@ -58,7 +57,7 @@ export class CartService {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
           if (!token) {
-            throw new Error(authenticateErrorText);
+            throw new Error(cartAuthenticateErrorText);
           }
           setAuthToken(token);
           response = await api.post('carts', body, { withCredentials: true });
@@ -125,7 +124,7 @@ export class CartService {
           const endpoint = `carts/${cartId}/items`;
           const token = await RefreshTokenService.getActualToken(dispatch);
           if (!token) {
-            throw new Error(authenticateErrorText);
+            throw new Error(cartAuthenticateErrorText);
           }
           setAuthToken(token);
           response = await api.post(endpoint, body, { withCredentials: true });
@@ -229,7 +228,7 @@ export class CartService {
           const endpoint = `carts/${cartId}/items/${sku}`;
           const token = await RefreshTokenService.getActualToken(dispatch);
           if (!token) {
-            throw new Error(authenticateErrorText);
+            throw new Error(cartAuthenticateErrorText);
           }
           setAuthToken(token);
           response = await api.patch(endpoint, body, { withCredentials: true });

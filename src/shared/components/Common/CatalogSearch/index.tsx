@@ -1,5 +1,4 @@
 import * as React from "react";
-import { toast } from 'react-toastify';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -11,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {RouteProps} from "react-router";
 
-import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/product';
@@ -22,6 +20,7 @@ import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../..
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {AppPrice} from "../AppPrice/index";
+import {pathProductPage, pathProductPageBase, pathSearchPage} from "../../../routes/contentRoutes";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -134,14 +133,14 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
     this.props.getProductData(suggestion.abstract_sku);
-    this.props.changeLocation(`${config.WEB_PATH}product/${suggestion.abstract_sku}`);
+    this.props.changeLocation(`${pathProductPageBase}/${suggestion.abstract_sku}`);
   }
 
   private handleFullSearch = (e: any) => {
     e.preventDefault();
     if (!this.props.isLoading) {
-      this.props.getSearchResult({q: this.state.value, currency: this.props.currency, include: ''});
-      this.props.changeLocation(`${config.WEB_PATH}search`);
+      this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
+      this.props.changeLocation(`${pathSearchPage}`);
     }
   }
 
