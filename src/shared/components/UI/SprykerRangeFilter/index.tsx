@@ -37,7 +37,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
 
     return (
       <FormControl className={classes.root}>
-        <Grid container alignItems="center" justify="space-between">
+        <Grid container alignItems="center">
           <span className={classes.rangeFilterName}>{attributeName.includes('price') ? 'price' : attributeName}:</span>
           <div>
             <span className={classes.padRight}>from</span>
