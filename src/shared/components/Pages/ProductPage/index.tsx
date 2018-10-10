@@ -71,6 +71,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   addItemToCart: Function;
   getProductData: Function;
   getWishlists: Function,
+  addToWishlist: Function,
   cartCreated: boolean;
   cartId: TCartId;
   payloadForCreateCart: ICartCreatePayload;
@@ -111,6 +112,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     /*if (this.props.product) {
       this.setInitialData();
     }*/
+
+    if (!this.props.wishlistsInitial) {
+      this.props.getWishlists();
+    }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
@@ -124,10 +129,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       && !this.props.isRejected
     ) {
       this.props.getProductData(this.props.locationProductSKU);
-    }
-
-    if (this.props.product && !prevState.wishlistsInitial) {
-      this.props.getWishlists();
     }
   }
 
@@ -314,6 +315,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     const {classes, wishlists} = this.props;
     console.info('state: ', this.state);
 
+    const wishlistMenu = wishlists.map((wishlist: IWishlist) => ({name: wishlist.name, value: wishlist.id}));
+
     return (
       <AppMain>
         { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
@@ -387,7 +390,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                           nameAttr="wishlists"
                           value={this.state.selectedWishlist}
                           handleChange={this.handleWishlistChange}
-                          menuItems={[]}
+                          menuItems={wishlistMenu}
                         />
                       }
                     </Grid>
@@ -419,7 +422,6 @@ export const ConnectedProductPage = reduxify(
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const productProps: ProductState = state.pageProduct ? state.pageProduct : null;
     const cartCreated: boolean = isCartCreated(state, ownProps);
-    const cartLoading: boolean = isCartLoading(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
@@ -447,10 +449,12 @@ export const ConnectedProductPage = reduxify(
     });
   },
   (dispatch: Function) => ({
+    dispatch,
     addItemToCart: (
       payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
     ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
     getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
     getWishlists: () => dispatch(getWishlistsAction()),
+    addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
   })
 )(ProductPage);

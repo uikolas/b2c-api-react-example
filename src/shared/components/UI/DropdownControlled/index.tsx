@@ -74,7 +74,7 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
             name={nameAttr}
             variant="filled"
           >
-            <MenuItem value={menuItemFirst.value}><em>{menuItemFirst.name}</em></MenuItem>
+            {/*<MenuItem value={menuItemFirst.value}><em>{menuItemFirst.name}</em></MenuItem>*/}
             {menuItems.map((item) => {
               return (
                 <MenuItem
@@ -82,7 +82,7 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
                   value={item.value}
                 >
                   {item.name}
-                  </MenuItem>
+                </MenuItem>
               );
             })}
           </Select>
