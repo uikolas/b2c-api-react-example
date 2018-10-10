@@ -64,7 +64,9 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    this.initRequestData();
+    if (this.props.orderIdParam !== prevProps.orderIdParam) {
+      this.initRequestData();
+    }
   }
 
   public selectItemHandler = (event: any): any => {
@@ -76,11 +78,9 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   private initRequestData = () => {
-    if (!this.props.isInitiated && this.props.isAppDataSet) {
-      if (this.props.orderIdParam) {
-        this.props.getOrderData(this.props.orderIdParam);
-        return true;
-      }
+    if (!this.props.isInitiated && this.props.isAppDataSet && this.props.orderIdParam) {
+      this.props.getOrderData(this.props.orderIdParam);
+      return true;
     }
     return false;
   }
