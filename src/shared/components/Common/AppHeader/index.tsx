@@ -23,7 +23,7 @@ import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
 import {Preloader} from "../Preloader/index";
-import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage, pa} from "../../../routes/contentRoutes";
+import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage, pathWishlistPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -45,9 +45,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     isCartNotificationOpen: false,
   };
 
-
-
-  public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
+  public componentDidUpdate (prevProps: AppHeaderProps, prevState: AppHeaderState) {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
       this.handleOpenCartNotification();
     }
@@ -95,14 +93,14 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
             >
               { isUserLoggedIn
                 ? (
-                  <NavLink to={`${config.WEB_PATH}wishlists`}>
+                  <NavLink to={pathWishlistPage}>
                     <SprykerButton
                       title="Wishlist"
                     />
                   </NavLink>)
                 : null
               }
-              <NavLink to={isUserLoggedIn ? `${config.WEB_PATH}`: `${config.WEB_PATH}login`}>
+              <NavLink to={isUserLoggedIn ? pathHomePage : pathLoginPage}>
                 <SprykerButton
                   title={isUserLoggedIn ? 'Logout' : 'Register/Login'}
                   onClick={isUserLoggedIn ? this.handleLogout : null}

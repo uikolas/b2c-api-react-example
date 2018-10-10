@@ -45,12 +45,12 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
       handleChange,
       menuItems,
       menuItemFirst = {
-        value: defaultItemValueDropdown,
+        value: '',
         name: 'please select',
       }
     } = this.props;
 
-    if (!nameAttr || !value || !handleChange || !menuItems) {
+    if (!nameAttr || !handleChange || !menuItems) {
       return null;
     }
     const inputId = `${nameAttr}-controlled-open-select`;
@@ -73,8 +73,9 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
             id={inputId}
             name={nameAttr}
             variant="filled"
+            displayEmpty
           >
-            {/*<MenuItem value={menuItemFirst.value}><em>{menuItemFirst.name}</em></MenuItem>*/}
+            <MenuItem value={menuItemFirst.value} disabled><em>{menuItemFirst.name}</em></MenuItem>
             {menuItems.map((item) => {
               return (
                 <MenuItem

@@ -2,6 +2,18 @@ import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
 import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
+import {CartService, ICartAddItem, ICartCreatePayload} from "../Common/Cart";
+import {
+  cartAddItemFulfilledStateAction,
+  cartAddItemPendingStateAction,
+  cartAddItemRejectedStateAction
+} from "../../actions/Common/Cart";
+import {cartCreateFixture} from "../fixtures/cartFixture";
+import {cartAuthenticateErrorText} from "../../constants/messages/errors";
+import {TCartId} from "../../interfaces/cart";
+import {parseAddToCartResponse} from "../cartHelper";
+import {API_WITH_FIXTURES} from "../../constants/Environment";
+import {getTestDataPromise} from "../apiFixture";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
@@ -204,18 +216,15 @@ export class WishlistService {
       const response: any = await api.post(`wishlists/${wishlistId}/wishlist-items`, body, { withCredentials: true });
 
       if (response.ok) {
-        let items: IWishlistItem[] = [];
-        const wishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
+        const wishlistResponse: any = await api.get(`wishlists/${wishlistId}`, {include: ''}, { withCredentials: true });
+        const wishlist: IWishlist = WishlistService.parseWishlistResponse(wishlistResponse.data.data);
 
-        if (response.data.included) {
-          items = WishlistService.parseWishlistItems(response.data.included);
-        }
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           wishlist,
-          items,
         });
-        return response.data.data;
+        toast.success(`This product have added in wishlist ${wishlist.name}.`);
+        return wishlist;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
@@ -245,6 +254,7 @@ export class WishlistService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
+          wishlistId,
           sku,
         });
         return response.ok;
@@ -271,7 +281,7 @@ export class WishlistService {
     const wishlist: IWishlist = {
       id: data.id,
       name: data.attributes.name,
-      numberOfItems: data.attributes.numberOfItems,
+      numberOfItems: data.attributes.numberOfItems || 0,
       createdAt: data.attributes.createdAt,
       updatedAt: data.attributes.updatedAt,
     };

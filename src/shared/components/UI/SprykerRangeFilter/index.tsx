@@ -19,7 +19,11 @@ export interface SprykerRangeState {
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
 
   private handleChangeValues = (param: string) => (event: any) => {
-    this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: +event.target.value});
+    const newValue =  +event.target.value;
+    if ((param === 'min' && newValue < this.props.min) || (param === 'max' && newValue > this.props.max)) {
+      return;
+    }
+    this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: newValue});
   }
 
   public render() {

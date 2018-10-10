@@ -83,3 +83,9 @@ export const updateItemInCartAction = function (payload: ICartAddItem, cartId: T
     CartService.cartUpdateItem(dispatch, payload, cartId);
   };
 };
+
+export const multiItemsCartAction = function (cartId: TCartId, payloadCartCreate: ICartCreatePayload, listItems: string[]) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.moveItemstoCart(dispatch, cartId, payloadCartCreate, listItems);
+  };
+};

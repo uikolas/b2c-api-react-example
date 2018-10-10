@@ -256,4 +256,41 @@ export class CartService {
       return null;
     }
   }
+
+  public static async moveItemstoCart(dispatch: Function,
+                                      cartId: TCartId | null,
+                                      payloadCartCreate: ICartCreatePayload,
+                                      productsList: string[]): Promise<any> {
+
+    try {
+      const id = cartId || await CartService.cartCreate(dispatch, payloadCartCreate);
+      const endpoint = `carts/${id}/items?include=`;
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      setAuthToken(token);
+
+      const requests: Array<Promise<any>> = [];
+
+      productsList.forEach((sku: string) => {
+        const body = {
+          data: {
+            type: "items",
+            attributes: {
+              sku,
+              quantity: 1,
+            },
+          }
+        };
+
+        const req = api.post(endpoint, body, { withCredentials: true });
+        requests.push(req);
+      });
+
+      await Promise.all(requests);
+
+    } catch (err) {
+      dispatch(cartAddItemRejectedStateAction(err.message));
+      toast.error('Unexpected Error: ' + err.message);
+      return null;
+    }
+  }
 }

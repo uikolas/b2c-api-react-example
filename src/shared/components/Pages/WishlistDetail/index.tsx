@@ -21,13 +21,14 @@ import {reduxify} from '../../../lib/redux-helper';
 
 import {deleteItemAction} from '../../../actions/Pages/Wishlist';
 import {getProductDataAction} from '../../../actions/Pages/Product';
-import {addItemToCartAction} from "../../../actions/Common/Cart";
+import {addItemToCartAction, multiItemsCartAction} from "../../../actions/Common/Cart";
 
 import {AppMain} from '../../Common/AppMain';
 import {AppPrice} from '../../Common/AppPrice';
 
 import {IWishlist, IWishlistItem} from "../../../interfaces/wishlist";
 import {TCartId} from '../../../interfaces/cart';
+import {priceTypeNameOriginal, priceTypeNameDefault} from '../../../interfaces/product';
 
 import {getAppCurrency, getPayloadForCreateCart, TAppCurrency} from "../../../reducers/Common/Init";
 import {WishlistState} from "../../../reducers/Pages/Wishlist";
@@ -90,7 +91,14 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
   }
 
   public moveAllProductsToCart = (e: any) => {
+    const availableProducts: string[] = [];
+    this.props.products.forEach((product: IWishlistItem) => {
+      if (product.availability) {
+        availableProducts.push(product.sku);
+      }
+    });
 
+    // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
   }
 
   public render() {
@@ -154,8 +162,8 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
           </TableCell>
           <TableCell>
             <div className={classes.vertical}>
-              <span><AppPrice value={prices.original} currency={currency} /></span>
-              <span><AppPrice value={prices.default} currency={currency} /></span>
+              <AppPrice value={prices.original} currency={currency} priceType={priceTypeNameOriginal} />
+              <AppPrice value={prices.default} currency={currency} priceType={priceTypeNameDefault} />
             </div>
           </TableCell>
           <TableCell padding="dense">
@@ -165,7 +173,7 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
             <IconButton
               color="primary"
               onClick={this.moveToCart(item.sku)}
-              disabled={isLoading || cartLoading}
+              disabled={!item.availability || isLoading || cartLoading}
             >
               <CartIcon />
             </IconButton>

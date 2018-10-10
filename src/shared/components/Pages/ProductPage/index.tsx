@@ -8,8 +8,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {isPageProductStateLoading, isPageProductStateRejected, ProductState} from '../../../reducers/Pages/Product';
-import {WishlistState} from '../../../reducers/Pages/Wishlist';
+
 import {
   getProduct, isPageProductStateInitiated, isPageProductStateLoading,
   isPageProductStateRejected
@@ -121,7 +120,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     selectedWishlist: '',
   };
 
-  public componentDidMount = () => {
+  public componentDidMount () {
     if (this.props.product) {
       this.setInitialData();
     }
@@ -131,7 +130,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
   }
 
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
+  public componentDidUpdate(prevProps: any, prevState: any) {
     if (this.props.product && !prevState.productType) {
       this.setInitialData();
     }
@@ -324,11 +323,11 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private handleAddToWishlist = (e: any) => {
-
+    this.props.addToWishlist(this.state.selectedWishlist, this.state.sku);
   }
 
   public render(): JSX.Element {
-    const {classes, wishlists} = this.props;
+    const {classes, wishlists, wishlistsInitial} = this.props;
     console.info('state: ', this.state);
 
     const wishlistMenu = wishlists.map((wishlist: IWishlist) => ({name: wishlist.name, value: wishlist.id}));
@@ -398,18 +397,20 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                         extraClasses={classes.buyBtn}
                         onClick={this.handleAddToWishlist}
                         IconType={FavoriteIcon}
-                        disabled={this.state.productType !== concreteProductType}
+                        disabled={!wishlistsInitial || this.state.productType !== concreteProductType || !this.state.selectedWishlist}
                       />
                     </Grid>
                     <Grid item xs={12} sm={6} >
-                      {
-                        <DropdownControlled
-                          nameAttr="wishlists"
-                          value={this.state.selectedWishlist}
-                          handleChange={this.handleWishlistChange}
-                          menuItems={wishlistMenu}
-                        />
-                      }
+                      <DropdownControlled
+                        nameAttr="wishlists"
+                        value={this.state.selectedWishlist}
+                        handleChange={this.handleWishlistChange}
+                        menuItems={wishlistMenu}
+                        menuItemFirst={{
+                          value: '',
+                          name: 'Select wishlist',
+                        }}
+                      />
                     </Grid>
                   </Grid>
 

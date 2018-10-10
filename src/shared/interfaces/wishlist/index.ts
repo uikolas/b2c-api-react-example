@@ -12,7 +12,7 @@ export interface IWishlistItem {
 export interface IWishlist {
   id: string,
   name: string,
-  numberOfItems: number | null,
+  numberOfItems: number,
   createdAt: string,
   updatedAt: string,
 }
