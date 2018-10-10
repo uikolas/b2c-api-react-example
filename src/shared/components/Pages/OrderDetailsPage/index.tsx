@@ -25,7 +25,10 @@ import {
   isOrderDetailsStateRejected,
 } from "../../../reducers/Pages/OrderDetails";
 import {getOrderDetailsAction} from "../../../actions/Pages/Order";
-import {IOrderDetailsParsed, TOrderId} from "../../../interfaces/order/index";
+import {
+  IOrderDetailsParsed, IOrderDetailsSelectedItems,
+  TOrderId
+} from "../../../interfaces/order/index";
 import {OrderDetailsGeneralInfo} from "./OrderDetailsGeneralInfo/index";
 import {OrderProductList} from "./OrderProductsList/index";
 import {OrderDetailsContext} from './context';
@@ -50,13 +53,13 @@ interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
 }
 
 interface OrderDetailsPageState {
-
+  selectedItems: IOrderDetailsSelectedItems;
 }
 
 export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps, OrderDetailsPageState> {
 
   public state: OrderDetailsPageState = {
-
+    selectedItems: {},
   };
 
   public componentDidMount = () => {
@@ -64,39 +67,41 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
       !this.props.isOrderExist
       ||(this.props.isOrderExist && this.props.orderIdParam !== this.props.order.id)
     );
-    console.log('componentDidMount: requestOrderCondition', requestOrderCondition);
     if (requestOrderCondition) {
-      const result = this.initRequestData();
-      console.log('componentDidMount: initRequestData: result: ', result);
+      this.initRequestData();
     }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     const requestOrderCondition = (!this.props.isLoading && !this.props.isOrderExist);
-    console.log('componentDidUpdate: requestCondition: ', requestOrderCondition);
     if (requestOrderCondition) {
-      const result = this.initRequestData();
-      console.log('componentDidUpdate: initRequestData: result: ', result);
+      this.initRequestData();
     }
+    console.log('*** selectedItems ***', this.state.selectedItems);
   }
 
   public selectItemHandler = (event: any): any => {
-    console.log('selectItemHandler: event: ', event);
-    const value = event.currentTarget.value;
-    if (!value) {
+    const key = event.target.value;
+
+    if (!key) {
       throw new Error(emptyValueErrorText);
+      return;
     }
+
+    this.setState( (prevState: OrderDetailsPageState) => {
+      return ({
+        ...prevState,
+        selectedItems: {
+          ...prevState.selectedItems,
+          [key]: !prevState.selectedItems[key],
+        },
+      });
+    });
   }
 
   private initRequestData = () => {
-    const requestCondition = (
-      this.props.isAppDataSet
-      && this.props.orderIdParam
-    );
-
-    console.log('initRequestData: common requestCondition', requestCondition);
-
-    if (requestCondition) {
+    const requestOrderCondition = (this.props.isAppDataSet && this.props.orderIdParam);
+    if (requestOrderCondition) {
       this.props.getOrderData(this.props.orderIdParam);
       return true;
     }
@@ -117,6 +122,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
               value={{
                 selectItemHandler: this.selectItemHandler,
                 currency,
+                selectedItems: this.state.selectedItems
               }}
             >
               <div className={classes.root} >

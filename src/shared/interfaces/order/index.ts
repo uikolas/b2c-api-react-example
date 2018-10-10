@@ -73,3 +73,7 @@ export interface IOrderDetailsItem {
   sumPrice: TProductPrice;
   sumPriceToPayAggregation: TProductPrice;
 }
+
+export type IOrderDetailsSelectedItems = {
+  [sku: string]: boolean
+};

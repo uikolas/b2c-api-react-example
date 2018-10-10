@@ -2,9 +2,10 @@ import * as React from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import {styles} from './styles';
-import {IOrderDetailsItem, TOrderId} from "../../../../interfaces/order/index";
+import {IOrderDetailsItem} from "../../../../interfaces/order/index";
 import {AppPrice} from "../../../Common/AppPrice/index";
 import {OrderDetailsContext} from '../context';
 import {TAppCurrency} from "../../../../reducers/Common/Init";
@@ -18,9 +19,17 @@ export const OrderProductListItemBase: React.SFC<OrderProductListItemProps> = (p
 
   return (
     <OrderDetailsContext.Consumer>
-      {({ selectItemHandler, currency }) => (
+      {({ selectItemHandler, currency, selectedItems }) => (
         <TableRow key={sku}>
-          <TableCell>{sku}</TableCell>
+          <TableCell>
+            <Checkbox
+              checked={selectedItems[sku]}
+              onChange={selectItemHandler}
+              value={sku}
+              color="primary"
+            />
+            {sku}
+          </TableCell>
           <TableCell>{name}</TableCell>
           <TableCell><AppPrice value={sumPrice} specificCurrency={currency} /></TableCell>
           <TableCell>{quantity}</TableCell>
