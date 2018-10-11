@@ -307,6 +307,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.info('props: ', this.props);
     const {classes, isLoading} = this.props;
     console.info('state: ', this.state);
+    const images = this.getImageData(this.state.images);
 
     return (
       <AppMain>
