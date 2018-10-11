@@ -144,8 +144,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.log('prevProps ', prevProps);
     console.log('prevState ', prevState);
     console.log('this.props.locationProductSKU ', this.props.locationProductSKU);
+    console.log('this.props.isProductExist ', this.props.isProductExist);
     if (this.props.product) {
       console.log('this.props.product.abstractProduct.sku ', this.props.product.abstractProduct.sku);
+    }
+    if (prevProps.product) {
+      console.log('prevProps.product.abstractProduct.sku ', prevProps.product.abstractProduct.sku);
     }
 
     if (this.props.isProductExist
@@ -158,6 +162,17 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     ) {
       console.log('FFFF setInitialData');
       this.setInitialData();
+    }
+
+    if (this.props.isProductExist
+      && this.props.locationProductSKU
+      && prevProps.product
+      && prevProps.product.abstractProduct.sku !== this.props.product.abstractProduct.sku
+      && this.props.isAppDataSet
+      && !this.props.isLoading
+      && !this.props.isRejected
+    ) {
+      this.props.getProductData(this.props.locationProductSKU);
     }
 
     if (!this.props.isProductExist
