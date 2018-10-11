@@ -9,7 +9,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {reduxify} from '../../../lib/redux-helper';
 import {
   getProduct, isPageProductStateInitiated, isPageProductStateLoading,
-  isPageProductStateRejected
+  isPageProductStateRejected, isProductDetailsPresent
 } from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
@@ -76,6 +76,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isRejected: boolean;
   isInitiated: boolean;
   locationProductSKU?: TRouterMatchParam;
+  isProductExist: boolean;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -107,8 +108,16 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (this.props.product) {
+    /*if (this.props.product) {
       this.setInitialData();
+    }*/
+    const requestProductCondition = (
+      !this.props.isProductExist
+      ||(this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku)
+    );
+    console.log('componentDidMount requestProductCondition ', requestProductCondition);
+    if (requestProductCondition) {
+       this.initRequestData();
     }
   }
 
@@ -116,13 +125,27 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (this.props.product && !prevState.productType) {
       this.setInitialData();
     }
-    if (!this.props.product
-      && this.props.locationProductSKU
-      && this.props.isAppDataSet
+
+    const requestProductCondition = (!this.props.isLoading && !this.props.isProductExist);
+    if (requestProductCondition) {
+      this.initRequestData();
+    }
+    console.log('componentDidUpdate this.props.isProductExist ', this.props.isProductExist);
+    console.log('componentDidUpdate requestProductCondition ', requestProductCondition);
+    /*if (!this.props.product
       && !this.props.isInitiated
     ) {
       this.props.getProductData(this.props.locationProductSKU);
+    }*/
+  }
+
+  private initRequestData = () => {
+    const requestProductCondition = (this.props.isAppDataSet && this.props.locationProductSKU);
+    if (requestProductCondition) {
+      this.props.getProductData(this.props.locationProductSKU);
+      return true;
     }
+    return false;
   }
 
   public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
@@ -386,6 +409,7 @@ export const ConnectedProductPage = reduxify(
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
+    const isProductExist = isProductDetailsPresent(state, ownProps);
 
     return ({
       location,
@@ -399,6 +423,7 @@ export const ConnectedProductPage = reduxify(
       isLoading,
       isRejected,
       locationProductSKU,
+      isProductExist,
     });
   },
   (dispatch: Function) => ({
