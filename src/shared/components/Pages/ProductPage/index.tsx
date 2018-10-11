@@ -128,7 +128,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       this.setInitialData();
     }
 
-    if (!this.props.wishlistsInitial) {
+    if (!this.props.isLoading && !this.props.wishlistsInitial) {
       this.props.getWishlists();
     }
   }
@@ -141,6 +141,14 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       if (this.props.product && prevProps.locationProductSKU !== this.props.locationProductSKU) {
         this.props.getProductData(this.props.locationProductSKU);
       }
+    }
+
+    if (!this.props.isLoading
+        && !this.props.isRejected
+        && this.props.isAppDataSet
+        && !this.props.wishlistsInitial
+    ) {
+      this.props.getWishlists();
     }
 
     if (!this.props.product
