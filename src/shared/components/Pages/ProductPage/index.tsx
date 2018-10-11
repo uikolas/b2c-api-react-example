@@ -149,7 +149,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
 
     if (this.props.isProductExist
-      && prevProps
+      && prevProps.product
       && prevProps.product.abstractProduct.sku !== this.props.product.abstractProduct.sku
       && this.props.isAppDataSet
       && !this.props.isLoading
