@@ -11,6 +11,7 @@ interface SprykerButtonProps extends WithStyles<typeof styles> {
   onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
   IconType?: any;
   iconComponent?: any;
+  value?: string | number;
 }
 
 export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Element => {
@@ -22,6 +23,7 @@ export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Ele
     IconType,
     iconComponent,
     disabled,
+    value,
   } = props;
 
   return (
@@ -30,6 +32,7 @@ export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Ele
       component="button"
       disabled={!!disabled}
       className={`${classes.button} ${extraClasses}`}
+      value={value}
       onClick={
         onClick
           ? onClick

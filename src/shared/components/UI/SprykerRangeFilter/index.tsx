@@ -19,7 +19,11 @@ export interface SprykerRangeState {
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
 
   private handleChangeValues = (param: string) => (event: any) => {
-    this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: +event.target.value});
+    const newValue =  +event.target.value;
+    if ((param === 'min' && newValue < this.props.min) || (param === 'max' && newValue > this.props.max)) {
+      return;
+    }
+    this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: newValue});
   }
 
   public render() {
@@ -33,7 +37,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
 
     return (
       <FormControl className={classes.root}>
-        <Grid container alignItems="center" justify="space-between">
+        <Grid container alignItems="center">
           <span className={classes.rangeFilterName}>{attributeName.includes('price') ? 'price' : attributeName}:</span>
           <div>
             <span className={classes.padRight}>from</span>

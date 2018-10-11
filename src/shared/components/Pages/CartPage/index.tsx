@@ -19,14 +19,13 @@ import {ICartState, ICartItem, getCartId, isCartLoading} from '../../../reducers
 import {SprykerButton} from '../../../components/UI/SprykerButton';
 import {cartDeleteItemAction, updateItemInCartAction} from '../../../actions/Common/Cart';
 import {styles} from './styles';
-import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
+import {ICartTotals, TCartId, ICartItemCalculation, ICartAddItem} from "../../../interfaces/cart";
 import {NavLink} from "react-router-dom";
-import config from "../../../config";
-import {ICartAddItem} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
 import {AppMain} from "../../Common/AppMain/index";
 import {TProductSKU} from "../../../interfaces/product/index";
 import {AppPrice} from "../../Common/AppPrice/index";
+import {pathSearchPage} from "../../../routes/contentRoutes";
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -186,7 +185,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           <Typography variant="subheading" color="primary">GrandTotal: {totals && <AppPrice value={totals.grandTotal}/>}</Typography>
         </Grid>
         <Grid item xs={12} container justify="center" className={classes.footer}>
-          <NavLink to={`${config.WEB_PATH}search`}>
+          <NavLink to={pathSearchPage}>
             <SprykerButton title="Back to search result" />
           </NavLink>
         </Grid>

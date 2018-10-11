@@ -1,5 +1,4 @@
 import * as React from "react";
-import { toast } from 'react-toastify';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -9,19 +8,19 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 import {RouteProps} from "react-router";
 
-import config from '../../../config';
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/product';
-import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
 import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../../actions/Pages/Search';
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
 import {AppPrice} from "../AppPrice/index";
+import {pathProductPage, pathProductPageBase, pathSearchPage} from "../../../routes/contentRoutes";
 
 interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -134,14 +133,14 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
 
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
     this.props.getProductData(suggestion.abstract_sku);
-    this.props.changeLocation(`${config.WEB_PATH}product/${suggestion.abstract_sku}`);
+    this.props.changeLocation(`${pathProductPageBase}/${suggestion.abstract_sku}`);
   }
 
   private handleFullSearch = (e: any) => {
     e.preventDefault();
     if (!this.props.isLoading) {
-      this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
-      this.props.changeLocation(`${config.WEB_PATH}search`);
+      this.props.getSearchResult({q: this.state.value, currency: this.props.currency, include: ''});
+      this.props.changeLocation(`${pathSearchPage}`);
     }
   }
 
@@ -181,7 +180,9 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
             </Paper>
           )}
         />
-        <SprykerButton title={buttonTitle} onClick={this.handleFullSearch} disabled={isLoading} />
+        <Button color="primary" onClick={this.handleFullSearch} disabled={isLoading}>
+          {buttonTitle}
+        </Button>
         {
           this.props.isLoading
             ? <div className={classes.pendingProgress}><CircularProgress variant="indeterminate" size={34} /></div>

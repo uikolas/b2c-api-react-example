@@ -13,7 +13,7 @@ import {
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction
 } from "../../actions/Common/Init";
-import {initFixture} from "./initFixture";
+import {initFixture} from "../fixtures/initFixture";
 import {parseStoreResponse} from "../initHelper/store";
 
 export class InitAppService {
@@ -35,11 +35,9 @@ export class InitAppService {
       } else {
         response = await api.get('stores', null);
       }
-      console.log('getInitData response: ', response);
 
       if (response.ok) {
         const responseParsed = parseStoreResponse(response.data);
-        console.log('getInitData responseParsed: ', responseParsed);
         dispatch(initApplicationDataFulfilledStateAction(responseParsed));
         return response.data;
       } else {
