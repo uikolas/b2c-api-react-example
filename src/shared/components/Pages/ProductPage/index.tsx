@@ -9,7 +9,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {reduxify} from '../../../lib/redux-helper';
 import {
   getProduct, isPageProductStateInitiated, isPageProductStateLoading,
-  isPageProductStateRejected
+  isPageProductStateRejected, isProductDetailsPresent
 } from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
@@ -57,6 +57,7 @@ import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getRouterLocation, getRouterMatchParam, TRouterMatchParam} from "../../../selectors/Common/router";
 import {cartAuthenticateErrorText} from "../../../constants/messages/errors";
+import {API_WITH_FIXTURES} from "../../../constants/Environment/index";
 
 export const buyBtnTitle = "Add to cart";
 const quantitySelectedInitial = 1;
@@ -76,6 +77,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isRejected: boolean;
   isInitiated: boolean;
   locationProductSKU?: TRouterMatchParam;
+  isProductExist: boolean;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -107,22 +109,67 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (this.props.product) {
+    if (this.props.isProductExist) {
       this.setInitialData();
+    }
+
+    if (this.props.isProductExist
+      && this.props.locationProductSKU
+      && this.props.isAppDataSet
+      && !this.props.isLoading
+      && !this.props.isRejected
+      && this.props.locationProductSKU !== this.props.product.abstractProduct.sku
+    ) {
+      this.props.getProductData(this.props.locationProductSKU);
     }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (this.props.product && !prevState.productType) {
+   /* if (
+      (this.props.isProductExist && !prevState.productType)
+      || (this.props.isProductExist)this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
+      this.setInitialData();
+    }*/
+    // Set initial data of the product
+    /*if ( this.props.isProductExist && (!prevState.productType || this.props.locationProductSKU !== this.props.product.abstractProduct.sku) ) {
+      this.setInitialData();
+    }*/
+
+    if ( this.props.isProductExist && !prevState.productType ) {
       this.setInitialData();
     }
-    if (!this.props.product
-      && this.props.locationProductSKU
+   /* if (this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
+      this.setInitialData();
+    }*/
+   console.log('prevProps ', prevProps);
+    console.log('prevState ', prevState);
+    console.log('this.props.locationProductSKU ', this.props.locationProductSKU);
+    if (this.props.product) {
+      console.log('this.props.product.abstractProduct.sku ', this.props.product.abstractProduct.sku);
+    }
+
+    if (this.props.isProductExist
+      && this.props.product
+      && this.props.locationProductSKU !== this.props.product.abstractProduct.sku
       && this.props.isAppDataSet
-      && !this.props.isInitiated
+      && !this.props.isLoading
+      && !this.props.isRejected
+      && !API_WITH_FIXTURES
+    ) {
+      console.log('FFFF setInitialData');
+      this.setInitialData();
+    }
+
+    if (!this.props.isProductExist
+        && this.props.locationProductSKU
+        && this.props.isAppDataSet
+        && !this.props.isLoading
+        && !this.props.isRejected
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
+
+
   }
 
   public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
@@ -225,6 +272,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private setInitialData = (): void => {
+    console.log('setInitialData works');
     let productData: IProductPropFullData | null;
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
     const isOneConcreteProduct = (concreteProductsIds.length === 1);
@@ -386,6 +434,7 @@ export const ConnectedProductPage = reduxify(
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
+    const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
 
     return ({
       location,
@@ -399,6 +448,7 @@ export const ConnectedProductPage = reduxify(
       isLoading,
       isRejected,
       locationProductSKU,
+      isProductExist,
     });
   },
   (dispatch: Function) => ({
