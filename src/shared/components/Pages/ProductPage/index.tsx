@@ -108,21 +108,20 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    /*if (this.props.product) {
-      this.setInitialData();
-    }*/
     const requestProductCondition = (
       !this.props.isProductExist
       ||(this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku)
     );
-    console.log('componentDidMount requestProductCondition ', requestProductCondition);
     if (requestProductCondition) {
        this.initRequestData();
+    }
+    if (this.props.isProductExist && !prevState.productType) {
+      this.setInitialData();
     }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (this.props.product && !prevState.productType) {
+    if (this.props.isProductExist && !prevState.productType) {
       this.setInitialData();
     }
 
@@ -130,22 +129,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (requestProductCondition) {
       this.initRequestData();
     }
-    console.log('componentDidUpdate this.props.isProductExist ', this.props.isProductExist);
-    console.log('componentDidUpdate requestProductCondition ', requestProductCondition);
-    /*if (!this.props.product
-      && !this.props.isInitiated
-    ) {
-      this.props.getProductData(this.props.locationProductSKU);
-    }*/
-  }
-
-  private initRequestData = () => {
-    const requestProductCondition = (this.props.isAppDataSet && this.props.locationProductSKU);
-    if (requestProductCondition) {
-      this.props.getProductData(this.props.locationProductSKU);
-      return true;
-    }
-    return false;
   }
 
   public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
@@ -245,6 +228,15 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       quantity: data ? data.quantity : defaultValues.quantity,
       productType: data ? data.productType : absentProductType,
     };
+  }
+
+  private initRequestData = () => {
+    const requestProductCondition = (this.props.isAppDataSet && this.props.locationProductSKU);
+    if (requestProductCondition) {
+      this.props.getProductData(this.props.locationProductSKU);
+      return true;
+    }
+    return false;
   }
 
   private setInitialData = (): void => {
