@@ -116,10 +116,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    /*if ( this.props.product && !prevState.productType ) {
-      this.setInitialData();
-    }*/
-
     if (this.props.isFulfilled) {
       if (this.props.product && !prevProps.product && this.props.locationProductSKU) {
         this.setInitialData();
@@ -311,8 +307,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.info('props: ', this.props);
     const {classes, isLoading} = this.props;
     console.info('state: ', this.state);
-    const images = this.getImageData(this.state.images);
-    console.info('public render() images: ', images);
 
     return (
       <AppMain>

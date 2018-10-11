@@ -21,7 +21,7 @@ export const oldPriceTitle = "Old price: ";
 
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
   const { classes, name = "No name", sku = "No SKU", price = "No price", oldPrice } = props;
-  console.log('oldPrice', oldPrice);
+
   return (
     <div className={classes.root}>
       <Typography variant="title" color="inherit" gutterBottom={true}>
