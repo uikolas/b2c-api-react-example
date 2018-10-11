@@ -1,7 +1,9 @@
 
 import {
   IOrderCollectionParsed,
-  IOrderCollectionResponse,
+  IOrderCollectionResponse, IOrderDetailsItem,
+  IOrderDetailsParsed,
+  IOrderDetailsResponse,
   IOrderItem,
   IOrderItemResponse,
 } from "../../interfaces/order/index";
@@ -23,6 +25,43 @@ export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse)
 
   const response = {
     items,
+  };
+  return response;
+};
+
+export const parseGetOrderDetailsResponse = (data: IOrderDetailsResponse): IOrderDetailsParsed | null => {
+  if (!data) {
+    return null;
+  }
+
+  const attributes = data.attributes;
+  type TAccumulator = {[key: string]: IOrderDetailsItem};
+  const accumulator: TAccumulator = {};
+
+  // Group items with the same key(sku)
+  const itemsParsed = attributes.items.reduce((acc: TAccumulator, item: IOrderDetailsItem) => {
+
+    if (acc[item.sku]) {
+      const prev = acc[item.sku];
+      acc[item.sku].sku = item.sku;
+      acc[item.sku].quantity = prev.quantity + item.quantity;
+      acc[item.sku].name = item.name;
+      acc[item.sku].sumPrice = prev.sumPrice + item.sumPrice;
+      acc[item.sku].sumPriceToPayAggregation = prev.sumPriceToPayAggregation + item.sumPriceToPayAggregation;
+
+    } else {
+      acc[item.sku] = item;
+    }
+    return acc;
+  }, accumulator);
+
+  const response = {
+    id: data.id,
+    dateCreated: attributes.createdAt,
+    currency: attributes.currencyIsoCode,
+    totals: attributes.totals,
+    expenses: attributes.expenses,
+    items: Object.values(itemsParsed),
   };
   return response;
 };

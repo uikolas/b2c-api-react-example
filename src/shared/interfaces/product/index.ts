@@ -15,7 +15,7 @@ export const defaultItemValueDropdown = " ";
 // Types
 export type TProductType = TAbstractProductType | TConcreteProductType | TAbsentProductType;
 export type TProductDescription = string;
-export type TProductSKU = string | number;
+export type TProductSKU = string;
 export type TProductName = string;
 export type TProductPrice = number;
 export type TProductQuantity = number;

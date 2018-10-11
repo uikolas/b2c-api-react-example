@@ -2,7 +2,7 @@ import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
 import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
-import {CartService, ICartAddItem, ICartCreatePayload} from "../Common/Cart";
+import {CartService, ICartCreatePayload} from "../Common/Cart";
 import {
   cartAddItemFulfilledStateAction,
   cartAddItemPendingStateAction,
