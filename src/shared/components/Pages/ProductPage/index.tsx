@@ -141,7 +141,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
    /* if (this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
       this.setInitialData();
     }*/
-   console.log('prevProps ', prevProps);
+    console.log('prevProps ', prevProps);
     console.log('prevState ', prevState);
     console.log('this.props.locationProductSKU ', this.props.locationProductSKU);
     if (this.props.product) {
@@ -149,8 +149,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
 
     if (this.props.isProductExist
-      && this.props.product
-      && this.props.locationProductSKU !== this.props.product.abstractProduct.sku
+      && this.prevProps
+      && this.prevProps.product.abstractProduct.sku !== this.props.product.abstractProduct.sku
       && this.props.isAppDataSet
       && !this.props.isLoading
       && !this.props.isRejected
