@@ -23,7 +23,7 @@ import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
 import {Preloader} from "../Preloader/index";
-import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage, pathWishlistPage} from "../../../routes/contentRoutes";
+import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage, pathCustomerPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -93,7 +93,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
             >
               { isUserLoggedIn
                 ? (
-                  <NavLink to={pathWishlistPage}>
+                  <NavLink to={`${pathCustomerPage}/wishlists`}>
                     <SprykerButton
                       title="Wishlist"
                     />

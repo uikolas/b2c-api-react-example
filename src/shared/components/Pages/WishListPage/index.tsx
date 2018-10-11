@@ -29,11 +29,10 @@ import {
   updateWishlistAction,
   getDetailWishlistAction,
 } from '../../../actions/Pages/Wishlist';
-import {AppMain} from '../../Common/AppMain';
 import {IWishlist} from "../../../interfaces/wishlist";
 import {WishlistState} from "../../../reducers/Pages/Wishlist";
 import {styles} from './styles';
-import config from "../../../config";
+import {pathCustomerPage} from "../../../routes/contentRoutes";
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -141,7 +140,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
               </form>
             )
             : <NavLink
-                to={`${config.WEB_PATH}wishlist/${item.name}`}
+                to={`${pathCustomerPage}/wishlist/${item.name}`}
                 onClick={this.setCurrentWishlist(item.id)}
               >
                 {item.name}
@@ -179,48 +178,46 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     ));
 
     return (
-      <AppMain>
-        <Grid container>
+      <Grid container>
 
-          <Grid item xs={12} container justify="center">
-            <Typography
-              variant="headline"
-              children="Manage wishlists"
-            />
-          </Grid>
-
-          <Grid item xs={12} container justify="center">
-            <Paper elevation={4} className={classes.paperContainer}>
-              <form noValidate autoComplete="off">
-                <TextField
-                  className={classes.newList}
-                  value={this.state.name}
-                  onChange={this.handleChangeName}
-                />
-                <Button variant="contained" color="primary" onClick={this.addWishlist}>
-                  Add new wishlist
-                </Button>
-              </form>
-              <Divider />
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.headerCell}>Name</TableCell>
-                    <TableCell className={classes.headerCell}># of items</TableCell>
-                    <TableCell className={classes.headerCell}>Date of creation</TableCell>
-                    <TableCell numeric></TableCell>
-                    <TableCell numeric></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows}
-                </TableBody>
-              </Table>
-            </Paper>
-          </Grid>
-
+        <Grid item xs={12} container justify="center">
+          <Typography
+            variant="headline"
+            children="Manage wishlists"
+          />
         </Grid>
-      </AppMain>
+
+        <Grid item xs={12} container justify="center">
+          <Paper elevation={4} className={classes.paperContainer}>
+            <form noValidate autoComplete="off">
+              <TextField
+                className={classes.newList}
+                value={this.state.name}
+                onChange={this.handleChangeName}
+              />
+              <Button variant="contained" color="primary" onClick={this.addWishlist}>
+                Add new wishlist
+              </Button>
+            </form>
+            <Divider />
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.headerCell}>Name</TableCell>
+                  <TableCell className={classes.headerCell}># of items</TableCell>
+                  <TableCell className={classes.headerCell}>Date of creation</TableCell>
+                  <TableCell numeric></TableCell>
+                  <TableCell numeric></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+
+      </Grid>
     );
   }
 }

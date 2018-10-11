@@ -11,6 +11,7 @@ import {ConnectedOrderHistoryPage} from "../components/Pages/OrderHistoryPage/in
 import {ConnectedOrderDetailsPage} from "../components/Pages/OrderDetailsPage/index";
 import {ConnectedWishlistPage} from '../components/Pages/WishListPage';
 import {ConnectedWishlistDetailPage} from '../components/Pages/WishlistDetail';
+import {ConnectedCustomerPage} from '../components/Pages/CustomerPage';
 import config from '../config';
 
 export const pathHomePage = `${config.WEB_PATH}`;
@@ -23,7 +24,7 @@ export const pathOrderHistoryPage = `${config.WEB_PATH}order`;
 export const pathOrderDetailsPageBase = `${config.WEB_PATH}order/details`;
 export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
 export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
-export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
+export const pathCustomerPage = `${config.WEB_PATH}customer`;
 export const pathNotFoundPage = `${config.WEB_PATH}*`;
 
 export const getContentRoutes = function() {
@@ -37,7 +38,7 @@ export const getContentRoutes = function() {
       <Route path={pathOrderDetailsPage} component={ConnectedOrderDetailsPage} />
       <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
       <Route path={pathWishlistPage} component={ConnectedWishlistPage} />
-      <Route path={pathWishlistDetailPage} component={ConnectedWishlistDetailPage} />
+      <Route path={pathCustomerPage} component={ConnectedCustomerPage} />
       <Route path={pathNotFoundPage} component={NotFound} />
     </Switch>
   );
