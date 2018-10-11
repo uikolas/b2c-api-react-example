@@ -108,22 +108,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    const requestProductCondition = (
-      this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku
-    );
-
-    if (requestProductCondition) {
+    if (this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
        this.initRequestData();
     }
-    console.log('componentDidMount requestProductCondition ', requestProductCondition);
-    console.log('componentDidMount locationProductSKU ', this.props.locationProductSKU);
-    //console.log('componentDidMount this.props.product.abstractProduct.sku ', this.props.product.abstractProduct.sku);
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    const requestProductCondition = Boolean(!this.props.isLoading && !this.props.isProductExist);
-    console.log('componentDidUpdate requestProductCondition ', requestProductCondition);
-    if (requestProductCondition) {
+    if (!this.props.isLoading && !this.props.isProductExist) {
       this.initRequestData();
     }
     if (this.props.isProductExist && !prevState.productType) {
@@ -232,10 +223,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private initRequestData = () => {
-    const requestProductCondition = Boolean(this.props.isAppDataSet && this.props.locationProductSKU);
-    console.log('initRequestData requestProductCondition ', requestProductCondition);
-    if (requestProductCondition) {
-
+    if (this.props.isAppDataSet && this.props.locationProductSKU) {
       this.props.getProductData(this.props.locationProductSKU);
       return true;
     }

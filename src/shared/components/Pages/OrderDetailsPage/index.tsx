@@ -81,18 +81,13 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   };
 
   public componentDidMount = () => {
-    const requestOrderCondition = (
-      !this.props.isOrderExist
-      ||(this.props.isOrderExist && this.props.orderIdParam !== this.props.order.id)
-    );
-    if (requestOrderCondition) {
+    if (!this.props.isOrderExist || (this.props.isOrderExist && this.props.orderIdParam !== this.props.order.id)) {
       this.initRequestData();
     }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    const requestOrderCondition = (!this.props.isLoading && !this.props.isOrderExist);
-    if (requestOrderCondition) {
+    if (!this.props.isLoading && !this.props.isOrderExist) {
       this.initRequestData();
     }
   }
@@ -174,8 +169,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   private initRequestData = () => {
-    const requestOrderCondition = (this.props.isAppDataSet && this.props.orderIdParam);
-    if (requestOrderCondition) {
+    if (this.props.isAppDataSet && this.props.orderIdParam) {
       this.props.getOrderData(this.props.orderIdParam);
       return true;
     }
