@@ -109,26 +109,27 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public componentDidMount = () => {
     const requestProductCondition = (
-      !this.props.isProductExist
-      ||(this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku)
+      this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku
     );
+
     if (requestProductCondition) {
        this.initRequestData();
     }
-    if (this.props.isProductExist) {
-      this.setInitialData();
-    }
+    console.log('componentDidMount requestProductCondition ', requestProductCondition);
+    console.log('componentDidMount locationProductSKU ', this.props.locationProductSKU);
+    //console.log('componentDidMount this.props.product.abstractProduct.sku ', this.props.product.abstractProduct.sku);
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
+    const requestProductCondition = Boolean(!this.props.isLoading && !this.props.isProductExist);
+    console.log('componentDidUpdate requestProductCondition ', requestProductCondition);
+    if (requestProductCondition) {
+      this.initRequestData();
+    }
     if (this.props.isProductExist && !prevState.productType) {
       this.setInitialData();
     }
 
-    const requestProductCondition = (!this.props.isLoading && !this.props.isProductExist);
-    if (requestProductCondition) {
-      this.initRequestData();
-    }
   }
 
   public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
@@ -231,8 +232,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private initRequestData = () => {
-    const requestProductCondition = (this.props.isAppDataSet && this.props.locationProductSKU);
+    const requestProductCondition = Boolean(this.props.isAppDataSet && this.props.locationProductSKU);
+    console.log('initRequestData requestProductCondition ', requestProductCondition);
     if (requestProductCondition) {
+
       this.props.getProductData(this.props.locationProductSKU);
       return true;
     }
