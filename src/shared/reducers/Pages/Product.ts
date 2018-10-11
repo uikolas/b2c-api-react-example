@@ -65,6 +65,10 @@ export function isPageProductStateRejected(state: any, props: any): boolean {
   return (isStateExist(state, props) && state.pageProduct.rejected && state.pageProduct.rejected === true);
 }
 
+export function isPageProductStateFulfilled(state: any, props: any): boolean {
+  return (isStateExist(state, props) && state.pageProduct.fulfilled && state.pageProduct.fulfilled === true);
+}
+
 export function getProduct(state: any, props: any): IProductDataParsed | null {
   if (isPageProductStateRejected(state, props)) {
     return null;

@@ -8,7 +8,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {
-  getProduct, isPageProductStateInitiated, isPageProductStateLoading,
+  getProduct, isPageProductStateFulfilled, isPageProductStateInitiated, isPageProductStateLoading,
   isPageProductStateRejected, isProductDetailsPresent
 } from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
@@ -75,6 +75,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   payloadForCreateCart: ICartCreatePayload;
   isLoading: boolean;
   isRejected: boolean;
+  isFulfilled: boolean;
   isInitiated: boolean;
   locationProductSKU?: TRouterMatchParam;
   isProductExist: boolean;
@@ -109,73 +110,26 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (this.props.isProductExist) {
+    if (this.props.product) {
       this.setInitialData();
-    }
-
-    if (this.props.isProductExist
-      && this.props.locationProductSKU
-      && this.props.isAppDataSet
-      && !this.props.isLoading
-      && !this.props.isRejected
-      && this.props.locationProductSKU !== this.props.product.abstractProduct.sku
-    ) {
-      this.props.getProductData(this.props.locationProductSKU);
     }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-   /* if (
-      (this.props.isProductExist && !prevState.productType)
-      || (this.props.isProductExist)this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
-      this.setInitialData();
-    }*/
-    // Set initial data of the product
-    /*if ( this.props.isProductExist && (!prevState.productType || this.props.locationProductSKU !== this.props.product.abstractProduct.sku) ) {
+    /*if ( this.props.product && !prevState.productType ) {
       this.setInitialData();
     }*/
 
-    if ( this.props.isProductExist && !prevState.productType ) {
-      this.setInitialData();
-    }
-   /* if (this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
-      this.setInitialData();
-    }*/
-    console.log('prevProps ', prevProps);
-    console.log('prevState ', prevState);
-    console.log('this.props.locationProductSKU ', this.props.locationProductSKU);
-    console.log('this.props.isProductExist ', this.props.isProductExist);
-    if (this.props.product) {
-      console.log('this.props.product.abstractProduct.sku ', this.props.product.abstractProduct.sku);
-    }
-    if (prevProps.product) {
-      console.log('prevProps.product.abstractProduct.sku ', prevProps.product.abstractProduct.sku);
+    if (this.props.isFulfilled) {
+      if (this.props.product && !prevProps.product && this.props.locationProductSKU) {
+        this.setInitialData();
+      }
+      if (this.props.product && prevProps.locationProductSKU !== this.props.locationProductSKU) {
+        this.props.getProductData(this.props.locationProductSKU);
+      }
     }
 
-    if (this.props.isProductExist
-      && prevProps.product
-      && prevProps.product.abstractProduct.sku !== this.props.product.abstractProduct.sku
-      && this.props.isAppDataSet
-      && !this.props.isLoading
-      && !this.props.isRejected
-      && !API_WITH_FIXTURES
-    ) {
-      console.log('FFFF setInitialData');
-      this.setInitialData();
-    }
-
-    if (this.props.isProductExist
-      && this.props.locationProductSKU
-      && prevProps.product
-      && prevProps.product.abstractProduct.sku !== this.props.product.abstractProduct.sku
-      && this.props.isAppDataSet
-      && !this.props.isLoading
-      && !this.props.isRejected
-    ) {
-      this.props.getProductData(this.props.locationProductSKU);
-    }
-
-    if (!this.props.isProductExist
+    if (!this.props.product
         && this.props.locationProductSKU
         && this.props.isAppDataSet
         && !this.props.isLoading
@@ -183,7 +137,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
-
 
   }
 
@@ -287,7 +240,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private setInitialData = (): void => {
-    console.log('setInitialData works');
+    console.log('%%% setInitialData works %%%');
     let productData: IProductPropFullData | null;
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
     const isOneConcreteProduct = (concreteProductsIds.length === 1);
@@ -358,6 +311,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.info('props: ', this.props);
     const {classes, isLoading} = this.props;
     console.info('state: ', this.state);
+    const images = this.getImageData(this.state.images);
+    console.info('public render() images: ', images);
 
     return (
       <AppMain>
@@ -367,14 +322,17 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
             <div className={classes.root} >
               <Grid container justify="center" >
                 <Grid item xs={12} sm={6} className={classes.sliderParent}>
-                  <ImageSlider images={this.getImageData(this.state.images)} />
+                  <ImageSlider images={images} />
                 </Grid>
                 <Grid item xs={12} sm={6} >
                   <ProductGeneralInfo
                     name={this.state.name}
                     sku={this.state.sku}
                     price={<AppPrice value={this.state.priceDefaultGross}/>}
-                    oldPrice={<AppPrice value={this.state.priceOriginalGross} priceType={priceTypeNameOriginal}/>}
+                    oldPrice={this.state.priceOriginalGross
+                      ? <AppPrice value={this.state.priceOriginalGross} priceType={priceTypeNameOriginal}/>
+                      : null
+                    }
                   />
 
                   { this.state.superAttributes
@@ -447,6 +405,7 @@ export const ConnectedProductPage = reduxify(
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
+    const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
     const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
@@ -462,6 +421,7 @@ export const ConnectedProductPage = reduxify(
       isInitiated,
       isLoading,
       isRejected,
+      isFulfilled,
       locationProductSKU,
       isProductExist,
     });
