@@ -341,8 +341,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public render(): JSX.Element {
     const {classes, wishlists, wishlistsInitial} = this.props;
     console.info('state: ', this.state);
+    console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
     const wishlistMenu = wishlists.map((wishlist: IWishlist) => ({name: wishlist.name, value: wishlist.id}));
+
 
     return (
       <AppMain>
