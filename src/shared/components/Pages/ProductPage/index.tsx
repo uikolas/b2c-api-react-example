@@ -9,7 +9,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import {reduxify} from '../../../lib/redux-helper';
 import {
   getProduct, isPageProductStateInitiated, isPageProductStateLoading,
-  isPageProductStateRejected, isProductDetailsPresent
+  isPageProductStateRejected
 } from '../../../reducers/Pages/Product';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
@@ -76,7 +76,6 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isRejected: boolean;
   isInitiated: boolean;
   locationProductSKU?: TRouterMatchParam;
-  isProductExist: boolean;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -108,22 +107,22 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount = () => {
-    if (this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
-       this.initRequestData();
+    if (this.props.product) {
+      this.setInitialData();
     }
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (!this.props.isLoading && !this.props.isProductExist) {
-      this.initRequestData();
-    }
-    /*if (this.props.isProductExist && !prevState.productType) {
-      this.setInitialData();
-    }*/
-    if (this.props.isProductExist && this.props.locationProductSKU !== this.props.product.abstractProduct.sku) {
+    if (this.props.product && !prevState.productType) {
       this.setInitialData();
     }
-
+    if (!this.props.product
+      && this.props.locationProductSKU
+      && this.props.isAppDataSet
+      && !this.props.isInitiated
+    ) {
+      this.props.getProductData(this.props.locationProductSKU);
+    }
   }
 
   public handleSuperAttributesChange = (event: any, child: React.ReactNode): void => {
@@ -157,13 +156,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
         return;
       }
       return ({
-          ...prevState,
-          superAttrSelected: {
-            ...prevState.superAttrSelected,
-            [key]: value,
-          },
-          quantitySelected: quantitySelectedInitial,
-          ...productData,
+        ...prevState,
+        superAttrSelected: {
+          ...prevState.superAttrSelected,
+          [key]: value,
+        },
+        quantitySelected: quantitySelectedInitial,
+        ...productData,
       });
     });
   }
@@ -175,8 +174,8 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
         return;
       }
       return ({
-          ...prevState,
-          quantitySelected: value,
+        ...prevState,
+        quantitySelected: value,
       });
     });
   }
@@ -225,14 +224,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     };
   }
 
-  private initRequestData = () => {
-    if (this.props.isAppDataSet && this.props.locationProductSKU) {
-      this.props.getProductData(this.props.locationProductSKU);
-      return true;
-    }
-    return false;
-  }
-
   private setInitialData = (): void => {
     let productData: IProductPropFullData | null;
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
@@ -248,12 +239,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     this.setState( (prevState: ProductPageState) => {
       return ({
-          ...prevState,
-          superAttributes: this.props.product.superAttributes,
-          attributeMap: this.props.product.attributeMap,
-          superAttrSelected: selectedAttrNames,
-          ...productData,
-        });
+        ...prevState,
+        superAttributes: this.props.product.superAttributes,
+        attributeMap: this.props.product.attributeMap,
+        superAttrSelected: selectedAttrNames,
+        ...productData,
+      });
     });
   }
 
@@ -395,7 +386,6 @@ export const ConnectedProductPage = reduxify(
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
-    const isProductExist = isProductDetailsPresent(state, ownProps);
 
     return ({
       location,
@@ -409,7 +399,6 @@ export const ConnectedProductPage = reduxify(
       isLoading,
       isRejected,
       locationProductSKU,
-      isProductExist,
     });
   },
   (dispatch: Function) => ({
