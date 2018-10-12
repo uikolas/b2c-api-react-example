@@ -24,7 +24,7 @@ import {pathCustomerPage} from '../../../routes/contentRoutes';
 
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
-  location: Location,
+  location: Location;
 }
 
 interface CustomerPageState {
