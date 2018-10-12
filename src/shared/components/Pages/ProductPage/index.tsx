@@ -130,14 +130,34 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount () {
-    if (this.props.product) {
+    console.log("%c ++++ ProductPage componentDidMount ++++", 'background: #3d5afe; color: #ffea00');
+    /*if (this.props.product) {
       this.setInitialData();
+    } */
+
+
+    // First load
+    if (this.props.locationProductSKU
+      && this.props.isAppDataSet
+      && !this.props.isLoading
+      && !this.props.isRejected
+    ) {
+      console.log("%c ---- componentDidMount First load of the APP: getProductData ----", 'background: #222; color: #bada55');
+      console.log("%c this.props.product " , 'background: #673ab7; color: #bffa55', this.props.product);
+      console.log("%c this.props.locationProductSKU " , 'background: #673ab7; color: #bffa55', this.props.locationProductSKU);
+      console.log("%c this.props.isAppDataSet " , 'background: #673ab7; color: #bffa55', this.props.isAppDataSet);
+      console.log("%c this.props.isLoading " , 'background: #673ab7; color: #bffa55', this.props.isLoading);
+      console.log("%c this.props.isRejected " , 'background: #673ab7; color: #bffa55', this.props.isRejected);
+
+      this.props.getProductData(this.props.locationProductSKU);
     }
+
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    console.log("%c ++++ componentDidUpdate ++++", 'background: #ab003c; color: #ffea00');
+    console.log("%c ++++ ProductPage componentDidUpdate ++++", 'background: #ab003c; color: #ffea00');
     if (this.props.isFulfilled) {
+      console.log("%c ---- isFulfilled ----", 'background: #4caf50; color: #bada55', this.props.isFulfilled);
       if (this.props.product && !prevProps.product && this.props.locationProductSKU) {
         this.setInitialData();
       }
@@ -155,11 +175,11 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
         && !this.props.isRejected
     ) {
       console.log("%c ---- First load of the APP: getProductData ----", 'background: #222; color: #bada55');
-      console.log("%c !this.props.product " , 'background: #673ab7; color: #bffa55', this.props.product);
+      console.log("%c this.props.product " , 'background: #673ab7; color: #bffa55', this.props.product);
       console.log("%c this.props.locationProductSKU " , 'background: #673ab7; color: #bffa55', this.props.locationProductSKU);
       console.log("%c this.props.isAppDataSet " , 'background: #673ab7; color: #bffa55', this.props.isAppDataSet);
-      console.log("%c !this.props.isLoading " , 'background: #673ab7; color: #bffa55', this.props.isLoading);
-      console.log("%c !this.props.isRejected " , 'background: #673ab7; color: #bffa55', this.props.isRejected);
+      console.log("%c this.props.isLoading " , 'background: #673ab7; color: #bffa55', this.props.isLoading);
+      console.log("%c this.props.isRejected " , 'background: #673ab7; color: #bffa55', this.props.isRejected);
 
       this.props.getProductData(this.props.locationProductSKU);
     }
@@ -308,7 +328,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private setInitialData = (): boolean => {
-    console.log('%%% setInitialData works %%%');
     let productData: IProductPropFullData | null;
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
     const isOneConcreteProduct = (concreteProductsIds.length === 1);
@@ -318,6 +337,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       productData = this.getProductDataObject(this.props.product.abstractProduct);
     }
 
+    console.log("%c %%% setInitialData productData %%%", 'background: #d32f2f; color: #ffcdd2', productData);
     // Parsing superAttributes to set initial data for this.state.superAttrSelected
     const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
 

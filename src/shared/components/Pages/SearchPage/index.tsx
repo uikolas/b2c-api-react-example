@@ -44,6 +44,7 @@ type IQuery = {
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
+  changeLocation: Function;
 }
 
 type RangeType = {min: number, max: number};
@@ -148,8 +149,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public renderProduct = (sku: string, name: string) => {
-    this.props.dispatch(getProductDataAction(sku));
-    this.props.dispatch(push(`${pathProductPageBase}/${sku}`));
+    // this.props.dispatch(getProductDataAction(sku));
+    this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   }
 
   public selectCategory = (category: string | number) => (e: any) => {
@@ -427,5 +428,8 @@ export const ConnectedSearchPage = reduxify(
         currency,
       }
     );
-  }
+  },
+  (dispatch: Function) => ({
+    changeLocation: (location: string) => dispatch(push(location)),
+  })
 )(SearchPage);
