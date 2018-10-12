@@ -39,6 +39,7 @@ import {createCartItemAddToCart} from "../../../services/cartHelper";
 
 import config from '../../../config';
 import {styles} from './styles';
+import {pathProductPageBase} from "../../../routes/contentRoutes";
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -50,6 +51,7 @@ interface WishlistPageProps extends WithStyles<typeof styles> {
   cartId: TCartId,
   payloadForCreateCart: ICartCreatePayload,
   cartItemsLength: number,
+  changeLocation: Function;
 }
 
 
@@ -73,8 +75,9 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
   }
 
   public renderProduct = (sku: string, name: string) => (e: any) => {
-    this.props.dispatch(getProductDataAction(sku.split('_')[0]));
-    this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
+    // this.props.dispatch(getProductDataAction(sku.split('_')[0]));
+    // this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
+    this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
   }
 
   public handleDeleteItem = (sku: string) => (e: any) => {
@@ -260,5 +263,9 @@ export const ConnectedWishlistDetailPage = reduxify(
         cartLoading,
       }
     );
-  }
+  },
+  (dispatch: Function) => ({
+    dispatch,
+    changeLocation: (location: string) => dispatch(push(location)),
+  })
 )(WishlistDetailPage);
