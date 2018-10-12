@@ -11,6 +11,9 @@ export const styles = (theme: Theme) => createStyles({
   buyBtnArea: {
 
   },
+  wishlistBtnArea: {
+    marginTop: theme.spacing.unit * 3,
+  },
   buyBtnParent: {
     display: "flex",
     flexDirection: "column",

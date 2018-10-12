@@ -23,7 +23,7 @@ import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
 import {Preloader} from "../Preloader/index";
-import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage} from "../../../routes/contentRoutes";
+import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage, pathWishlistPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -45,9 +45,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     isCartNotificationOpen: false,
   };
 
-
-
-  public componentDidUpdate = (prevProps: AppHeaderProps, prevState: AppHeaderState) => {
+  public componentDidUpdate (prevProps: AppHeaderProps, prevState: AppHeaderState) {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
       this.handleOpenCartNotification();
     }
@@ -81,19 +79,28 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
               <AppLogo />
             </Grid>
 
-            <Grid item sm={5}>
+            <Grid item sm={4}>
               { location.pathname === pathHomePage
                 ? null
                 : <CatalogSearch />
               }
             </Grid>
-            <Grid item sm={4}
+            <Grid item sm={5}
                   container
                   direction="row"
                   justify="flex-end"
                   alignItems="center"
             >
-              <NavLink to={isUserLoggedIn ? pathHomePage: pathLoginPage}>
+              { isUserLoggedIn
+                ? (
+                  <NavLink to={pathWishlistPage}>
+                    <SprykerButton
+                      title="Wishlist"
+                    />
+                  </NavLink>)
+                : null
+              }
+              <NavLink to={isUserLoggedIn ? pathHomePage : pathLoginPage}>
                 <SprykerButton
                   title={isUserLoggedIn ? 'Logout' : 'Register/Login'}
                   onClick={isUserLoggedIn ? this.handleLogout : null}

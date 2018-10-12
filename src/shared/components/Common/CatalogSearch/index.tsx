@@ -8,12 +8,12 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from '@material-ui/core/Button';
 import {RouteProps} from "react-router";
 
 import {reduxify} from '../../../lib/redux-helper';
 import {SearchState} from '../../../reducers/Pages/Search';
 import {IProductCard} from '../../../interfaces/product';
-import {SprykerButton} from '../../UI/SprykerButton';
 
 import {styles} from './styles';
 import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../../actions/Pages/Search';
@@ -139,7 +139,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   private handleFullSearch = (e: any) => {
     e.preventDefault();
     if (!this.props.isLoading) {
-      this.props.getSearchResult({q: this.state.value, currency: this.props.currency});
+      this.props.getSearchResult({q: this.state.value, currency: this.props.currency, include: ''});
       this.props.changeLocation(`${pathSearchPage}`);
     }
   }
@@ -180,7 +180,9 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
             </Paper>
           )}
         />
-        <SprykerButton title={buttonTitle} onClick={this.handleFullSearch} disabled={isLoading} />
+        <Button color="primary" onClick={this.handleFullSearch} disabled={isLoading}>
+          {buttonTitle}
+        </Button>
         {
           this.props.isLoading
             ? <div className={classes.pendingProgress}><CircularProgress variant="indeterminate" size={34} /></div>

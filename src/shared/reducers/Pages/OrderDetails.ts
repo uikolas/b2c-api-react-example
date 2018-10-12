@@ -7,18 +7,18 @@ import {
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {IOrderDetailsParsed} from "../../interfaces/order/index";
 
-
-export interface IOrderData extends IOrderDetailsParsed {
-
-}
-
 export interface IOrderDetailsState extends IReduxState {
-  data: IOrderData;
+  data: IOrderDetailsParsed;
 }
 
 export const initialState: IOrderDetailsState = {
   data: {
-    orderId: null,
+    id: null,
+    dateCreated: null,
+    currency: null,
+    totals: null,
+    expenses: null,
+    items: null,
   },
 };
 
@@ -68,12 +68,12 @@ const handlePending = (orderDetailsState: IOrderDetailsState, payload: any) => {
 };
 
 // selectors
-/*export function getOrdersCollectionFromStore(state: any, props: any): TOrderCollection {
-  return isOrderHistoryItems(state, props) ? state.orderDetails.data.items : null;
-}*/
+export function getOrderDetailsFromStore(state: any, props: any): IOrderDetailsParsed {
+  return isOrderDetailsPresent(state, props) ? state.orderDetails.data : null;
+}
 
 export function isOrderDetailsPresent(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.orderDetails.data.orderId);
+  return Boolean(isStateExist(state, props) && state.orderDetails.data.id);
 }
 
 export function isOrderDetailsStateRejected(state: any, props: any): boolean {

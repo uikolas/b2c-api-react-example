@@ -84,7 +84,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     };
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     this.props.dispatch(getCategoriesAction());
   }
 
@@ -93,7 +93,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public updateRangeFilters = (name: string, {min, max}: RangeType ) => {
-    console.info(min, max);
     this.setState((prevState: SearchPageState) => ({activeRangeFilters: {...prevState.activeRangeFilters, [name]:  {min, max}}}));
   }
 
@@ -105,13 +104,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
+      include: '',
       ...this.state.activeFilters,
     };
 
-    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    // });
+    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -125,6 +125,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
+      include: '',
       page: value,
       ...this.state.activeFilters,
     };
@@ -138,10 +139,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
 
 
-    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    // });
+    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -158,15 +159,16 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
+      include: '',
       category,
       ...this.state.activeFilters,
     };
 
 
-    // Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-    //   query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-    //   query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    // });
+    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    });
 
     this.props.dispatch(sendSearchAction(query));
   }
@@ -198,8 +200,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         <Grid item xs={4} key={filter.name}>
           <SprykerRange
             attributeName={filter.name}
-            min={filter.min} max={filter.max}
-            currentValue={this.state.activeRangeFilters[filter.name] || {min: filter.min, max: filter.max}}
+            min={filter.min / 100} max={filter.max / 100}
+            currentValue={this.state.activeRangeFilters[filter.name] || {min: filter.min / 100, max: filter.max / 100}}
             handleChange={this.updateRangeFilters}
           />
         </Grid>
