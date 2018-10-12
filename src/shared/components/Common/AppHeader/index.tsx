@@ -23,7 +23,7 @@ import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
 import {Preloader} from "../Preloader/index";
-import {pathCartPage, pathHomePage, pathLoginPage, pathOrderHistoryPage, pathCustomerPage} from "../../../routes/contentRoutes";
+import {pathCartPage, pathHomePage, pathLoginPage, pathCustomerPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -129,7 +129,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
               />
               { /* TODO: Add fetching data on click !!!*/ }
               {isUserLoggedIn
-                ?  <NavLink to={pathOrderHistoryPage}>
+                ?  <NavLink to={`${pathCustomerPage}/order`}>
                     <SprykerButton
                       title={'Orders History'}
                       IconType={BookmarkBorderOutlined}
