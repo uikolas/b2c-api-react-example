@@ -430,6 +430,7 @@ export const ConnectedSearchPage = reduxify(
     );
   },
   (dispatch: Function) => ({
+    dispatch,
     changeLocation: (location: string) => dispatch(push(location)),
   })
 )(SearchPage);

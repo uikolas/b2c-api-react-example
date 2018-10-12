@@ -131,37 +131,28 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public componentDidMount () {
     console.log("%c ++++ ProductPage componentDidMount ++++", 'background: #3d5afe; color: #ffea00');
-    /*if (this.props.product) {
+    if (this.props.product) {
+      console.log("%c ---- First load of the App: setInitialData in componentDidMount ----", 'background: #4caf50; color: #bada55');
       this.setInitialData();
-    } */
-
-
-    // First load
-    if (this.props.locationProductSKU
-      && this.props.isAppDataSet
-      && !this.props.isLoading
-      && !this.props.isRejected
-    ) {
-      console.log("%c ---- componentDidMount First load of the APP: getProductData ----", 'background: #222; color: #bada55');
-      console.log("%c this.props.product " , 'background: #673ab7; color: #bffa55', this.props.product);
-      console.log("%c this.props.locationProductSKU " , 'background: #673ab7; color: #bffa55', this.props.locationProductSKU);
-      console.log("%c this.props.isAppDataSet " , 'background: #673ab7; color: #bffa55', this.props.isAppDataSet);
-      console.log("%c this.props.isLoading " , 'background: #673ab7; color: #bffa55', this.props.isLoading);
-      console.log("%c this.props.isRejected " , 'background: #673ab7; color: #bffa55', this.props.isRejected);
-
-      this.props.getProductData(this.props.locationProductSKU);
     }
-
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     console.log("%c ++++ ProductPage componentDidUpdate ++++", 'background: #ab003c; color: #ffea00');
-    if (this.props.isFulfilled) {
-      console.log("%c ---- isFulfilled ----", 'background: #4caf50; color: #bada55', this.props.isFulfilled);
-      if (this.props.product && !prevProps.product && this.props.locationProductSKU) {
+    if (this.props.product && this.props.isFulfilled && this.props.locationProductSKU) {
+      if (!prevProps.product ) {
+        // First load of the App
+        console.log("%c ---- First load of the App: setInitialData in componentDidUpdate ----", 'background: #4caf50; color: #bada55');
+        this.setInitialData();
+      } else if(prevProps.product.abstractProduct.sku !== this.props.locationProductSKU) {
+        // Update product in the App
+        console.log("%c ---- Update product in the App: setInitialData in componentDidUpdate ----", 'background: #9c27b0; color: #f3e5f5');
+        console.log("prevProps.product.abstractProduct.sku", prevProps.product.abstractProduct.sku);
+        console.log("this.props.locationProductSKU", this.props.locationProductSKU);
         this.setInitialData();
       }
-      if (this.props.product && prevProps.locationProductSKU !== this.props.locationProductSKU) {
+
+      if (prevProps.locationProductSKU !== this.props.locationProductSKU) {
         console.log("%c ---- Updating product of the APP: getProductData ----", 'background: #4caf50; color: #bada55');
         this.props.getProductData(this.props.locationProductSKU);
       }
