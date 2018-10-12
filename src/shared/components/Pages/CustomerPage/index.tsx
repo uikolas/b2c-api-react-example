@@ -94,8 +94,8 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
               <Route path={pathCustomerPage} exact render={() => 'Customer'} />
               <Route path={`${pathCustomerPage}/wishlists`} component={ConnectedWishlistPage} />
               <Route path={`${pathCustomerPage}/wishlist/:name`} component={ConnectedWishlistDetailPage} />
-              <Route path={`${pathCustomerPage}/order`} component={ConnectedOrderHistoryPage} />
-              <Route path={`${pathCustomerPage}/order/:orederId`} component={ConnectedOrderDetailsPage} />
+              <Route path={`${pathCustomerPage}/order`} exact component={ConnectedOrderHistoryPage} />
+              <Route path={`${pathCustomerPage}/order/details/:orderId`} component={ConnectedOrderDetailsPage} />
               <Route path={`${pathCustomerPage}/profile`} render={() => 'Profile page'} />
             </Switch>
           </Grid>

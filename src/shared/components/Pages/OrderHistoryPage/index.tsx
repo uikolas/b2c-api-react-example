@@ -24,7 +24,7 @@ import {TOrderCollection} from "../../../interfaces/order/index";
 import {noOrderText} from "../../../constants/messages/orders";
 import {OrderList} from "./OrderList/index";
 import {OrderHistoryContext} from './context';
-import {pathOrderDetailsPage, pathOrderDetailsPageBase} from "../../../routes/contentRoutes";
+import {pathCustomerPage} from "../../../routes/contentRoutes";
 
 
 export const pageTitle = "Orders History";
@@ -66,7 +66,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
     if (!value) {
       throw new Error('value is empty!');
     }
-    this.props.routerPush(`${pathOrderDetailsPageBase}/${value}`);
+    this.props.routerPush(`${pathCustomerPage}/order/details/${value}`);
   }
 
   private initRequestData = () => {
