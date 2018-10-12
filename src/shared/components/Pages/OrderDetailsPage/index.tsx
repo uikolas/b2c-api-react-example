@@ -87,7 +87,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (!this.props.isLoading && !this.props.isOrderExist) {
+    if (!this.props.isRejected && !this.props.isOrderExist) {
       this.initRequestData();
     }
   }
@@ -169,6 +169,9 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   private initRequestData = () => {
+    if (this.props.isLoading) {
+      return;
+    }
     if (this.props.isAppDataSet && this.props.orderIdParam) {
       this.props.getOrderData(this.props.orderIdParam);
       return true;

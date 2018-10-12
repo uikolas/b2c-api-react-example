@@ -140,7 +140,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (this.props.isLoading || !this.props.isAppDataSet ) {
+    if (this.props.isRejected ||this.props.isLoading || !this.props.isAppDataSet ) {
       console.log("%c ---- componentDidUpdate RETURN ----", 'background: #4caf50; color: #cada55');
       return;
     }
