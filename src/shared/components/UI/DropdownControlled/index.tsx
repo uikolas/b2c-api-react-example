@@ -20,7 +20,7 @@ interface DropdownControlledProps extends WithStyles<typeof styles> {
   handleChange: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
   menuItems: Array<IMenuItemsDropdown>;
   menuItemFirst?: IMenuItemsDropdown;
-  isHiddenMenuItemFirst? : boolean;
+  isHiddenMenuItemFirst?: boolean;
 }
 
 interface DropdownControlledState {
@@ -56,11 +56,17 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
     if (!nameAttr || !handleChange || !menuItems) {
       return null;
     }
-    const getMenuItemFirst = () => (
-      isHiddenMenuItemFirst
-        ? null
-        : <MenuItem value={menuItemFirst.value} selected ><em>{menuItemFirst.name}</em></MenuItem>
-    );
+    const getMenuItemFirst = () => {
+      return (
+        <MenuItem
+          value={menuItemFirst.value}
+          selected={!isHiddenMenuItemFirst}
+          disabled={!!isHiddenMenuItemFirst}
+        >
+          <em>{menuItemFirst.name}</em>
+        </MenuItem>
+      );
+    };
     const inputId = `${nameAttr}-controlled-open-select`;
 
     return (

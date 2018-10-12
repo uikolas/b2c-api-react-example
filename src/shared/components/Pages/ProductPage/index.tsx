@@ -473,10 +473,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                                 handleChange={this.handleWishListChange}
                                 menuItems={createWishListMenuVariants(this.props.wishLists)}
                                 menuItemFirst={{
-                                  value: '',
+                                  value: defaultItemValueDropdown,
                                   name: 'Select wishlist',
                                 }}
-                                isHiddenMenuItemFirst
+                                isHiddenMenuItemFirst={true}
                               />
                               : null
                             }
