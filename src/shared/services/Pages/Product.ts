@@ -4,7 +4,7 @@ import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {
   fixtureError,
   fixtureFull,
-  fixtureOneProduct,
+  fixtureOneProduct, fixtureProductImages,
   fixtureProductPrices,
   fixtureSuperFull
 } from '../fixtures/productFixtureWithSuperAttr';
@@ -25,12 +25,18 @@ export class ProductService {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: fixtureSuperFull,
+          data: fixtureProductImages,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        response = await api.get(`abstract-products/${sku}`, {include:
-            'abstract-product-image-sets,abstract-product-prices,abstract-product-availabilities,concrete-products,concrete-product-image-sets,concrete-product-prices,concrete-product-availabilities'
+        response = await api.get(`abstract-products/${sku}`, {
+          include: 'abstract-product-image-sets,' +
+            'abstract-product-prices,' +
+            'abstract-product-availabilities,' +
+            'concrete-products,' +
+            'concrete-product-image-sets,' +
+            'concrete-product-prices,' +
+            'concrete-product-availabilities'
         });
       }
       if (response.ok) {

@@ -261,10 +261,12 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
     const defaultValues = this.props.product.abstractProduct;
+    console.log('*** getProductDataObject: images: ', data ? data.images : defaultValues.images);
+    console.log('*** getProductDataObject: data: ', Boolean(data));
     return {
       sku: data ? data.sku : null,
       name: data ? data.name : defaultValues.name,
-      images: data ? data.images : defaultValues.images,
+      images: data ? [...data.images] : [...defaultValues.images],
       availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
@@ -391,7 +393,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.info('state: ', this.state);
     console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
-
+    console.log('*** render images ', images)
     return (
       <AppMain>
         { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
