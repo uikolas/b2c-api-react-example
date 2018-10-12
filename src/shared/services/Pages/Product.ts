@@ -25,7 +25,7 @@ export class ProductService {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: fixtureProductPrices,
+          data: fixtureSuperFull,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
