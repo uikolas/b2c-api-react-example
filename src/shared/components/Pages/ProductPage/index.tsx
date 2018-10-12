@@ -320,7 +320,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       productData = this.getProductDataObject(this.props.product.abstractProduct);
     }
 
-    console.log("%c %%% setInitialData productData %%%", 'background: #d32f2f; color: #ffcdd2', productData);
     // Parsing superAttributes to set initial data for this.state.superAttrSelected
     const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
 
@@ -405,7 +404,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.info('state: ', this.state);
     console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
-    console.log('*** render images ', images)
+
     return (
       <AppMain>
         { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
@@ -414,7 +413,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
             <div className={classes.root} >
               <Grid container justify="center" >
                 <Grid item xs={12} sm={6} className={classes.sliderParent}>
-                  <ImageSlider images={images} />
+                  <ImageSlider images={images} uniqueKey={this.state.sku} />
                 </Grid>
                 <Grid item xs={12} sm={6} >
                   <ProductGeneralInfo
