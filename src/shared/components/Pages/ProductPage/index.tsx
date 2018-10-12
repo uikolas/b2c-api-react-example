@@ -140,7 +140,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (this.props.isRejected ||this.props.isLoading || !this.props.isAppDataSet ) {
+    if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet ) {
       console.log("%c ---- componentDidUpdate RETURN ----", 'background: #4caf50; color: #cada55');
       return;
     }
@@ -275,8 +275,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
     const defaultValues = this.props.product.abstractProduct;
-    console.log('*** getProductDataObject: images: ', data ? data.images : defaultValues.images);
-    console.log('*** getProductDataObject: data: ', Boolean(data));
     return {
       sku: data ? data.sku : null,
       name: data ? data.name : defaultValues.name,
@@ -315,7 +313,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   private setInitialData = (): boolean => {
     let productData: IProductPropFullData | null;
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
-    const isOneConcreteProduct = (concreteProductsIds.length === 1);
+    const isOneConcreteProduct = Boolean(concreteProductsIds.length === 1);
     if (isOneConcreteProduct) {
       productData = this.getProductDataObject(this.props.product.concreteProducts[concreteProductsIds[0]]);
     } else {
