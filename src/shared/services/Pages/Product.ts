@@ -44,8 +44,12 @@ export class ProductService {
         dispatch(getProductDataFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        dispatch(getProductDataRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
+        let errorMessage = response.problem;
+        if (response.data.errors[0].detail) {
+          errorMessage = response.data.errors[0].detail;
+        }
+        dispatch(getProductDataRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
