@@ -143,6 +143,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       if (this.props.product && prevProps.locationProductSKU !== this.props.locationProductSKU) {
         this.props.getProductData(this.props.locationProductSKU);
       }
+      this.setInitialWishList();
     }
 
     if (!this.props.product
@@ -153,8 +154,6 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
-
-    this.setInitialWishList();
 
     if (this.props.product
       && this.props.isUserLoggedIn
@@ -525,7 +524,7 @@ export const ConnectedProductPage = reduxify(
     const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
     const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
     const wishLists = getWishlistsCollectionFromStore(state, ownProps);
-    const isWishListsFetched = isWishlistsCollectionInitiated(state, ownProps);
+    const isWishListsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
 
     return ({
       location,

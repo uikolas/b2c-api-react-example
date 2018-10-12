@@ -148,6 +148,6 @@ export function getWishlistsCollectionFromStore(state: any, props: any): IWishli
   return isWishlistsCollectionExist(state, props) ? state.pageWishlist.data.wishlists : null;
 }
 
-export function isWishlistsCollectionInitiated(state: any, props: any): IWishlist[] | null {
-  return isStateExist(state, props) ? state.pageWishlist.data.isInitial : null;
+export function isWishlistsCollectionInitiated(state: any, props: any): boolean {
+  return isStateExist(state, props) ? state.pageWishlist.data.isInitial : false;
 }
