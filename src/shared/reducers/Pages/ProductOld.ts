@@ -7,8 +7,6 @@ import {
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {IProductDataParsed} from "../../interfaces/product/index";
 
-import produce from "immer";
-
 export interface IProductState extends IReduxState {
   data: {
     selectedProduct: IProductDataParsed | null,
@@ -21,49 +19,34 @@ export const initialState: IProductState = {
   },
 };
 
-/*export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
-  console.info(action);
-  const res = produce<IProductState>(state, draft => {
-    switch (action.type) {
-      case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
-        draft.error = action.error;
-        draft.pending = false;
-        draft.fulfilled = false;
-        draft.rejected = true;
-        draft.initiated = true;
-        break;
-      case `${PAGES_PRODUCT_REQUEST}_PENDING`:
-        draft.data = {selectedProduct: null};
-        draft.error = false;
-        draft.pending = true;
-        draft.fulfilled = false;
-        draft.rejected = false;
-        draft.initiated = true;
-        break;
-      case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
-        draft.data = {selectedProduct: action.payload};
-        draft.error = false;
-        draft.pending = false;
-        draft.fulfilled = true;
-        draft.rejected = false;
-        draft.initiated = true;
-        break;
-      default:
-        break;
-    }
-  });
-  console.info(res);
-
-  return res;
-};*/
 
 export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
+     /* return {
+        ...state,
+        ...getReducerPartRejected(action.error),
+      };*/
       return handleRejected(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
+      /*return {
+        ...state,
+        data: {
+          ...state.data,
+          selectedProduct: null,
+        },
+        ...getReducerPartPending(),
+      };*/
       return handlePending(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
+    /*  return {
+        ...state,
+        data: {
+          ...state.data,
+          selectedProduct: action.payload,
+        },
+        ...getReducerPartFulfilled(),
+      };*/
       return handleFulfilled(state, action.payload);
     default:
       return state;

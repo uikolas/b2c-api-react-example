@@ -4,7 +4,7 @@ import {API_WITH_FIXTURES} from '../../constants/Environment';
 import {
   fixtureError,
   fixtureFull,
-  fixtureOneProduct,
+  fixtureOneProduct, fixtureProductImages,
   fixtureProductPrices,
   fixtureSuperFull
 } from '../fixtures/productFixtureWithSuperAttr';
@@ -25,12 +25,18 @@ export class ProductService {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
-          data: fixtureProductPrices,
+          data: fixtureProductImages,
         };
         console.log('+++API_WITH_FIXTURES response: ', response);
       } else {
-        response = await api.get(`abstract-products/${sku}`, {include:
-            'abstract-product-image-sets,abstract-product-prices,abstract-product-availabilities,concrete-products,concrete-product-image-sets,concrete-product-prices,concrete-product-availabilities'
+        response = await api.get(`abstract-products/${sku}`, {
+          include: 'abstract-product-image-sets,' +
+            'abstract-product-prices,' +
+            'abstract-product-availabilities,' +
+            'concrete-products,' +
+            'concrete-product-image-sets,' +
+            'concrete-product-prices,' +
+            'concrete-product-availabilities'
         });
       }
       if (response.ok) {
@@ -38,8 +44,12 @@ export class ProductService {
         dispatch(getProductDataFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        dispatch(getProductDataRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
+        let errorMessage = response.problem;
+        if (response.data.errors[0].detail) {
+          errorMessage = response.data.errors[0].detail;
+        }
+        dispatch(getProductDataRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 

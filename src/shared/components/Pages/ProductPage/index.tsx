@@ -13,7 +13,10 @@ import {
   getProduct, isPageProductStateFulfilled, isPageProductStateInitiated, isPageProductStateLoading,
   isPageProductStateRejected, isProductDetailsPresent
 } from '../../../reducers/Pages/Product';
-import {isPageWishlistStateLoading, WishlistState} from '../../../reducers/Pages/Wishlist';
+import {
+  getWishlistsCollectionFromStore, isPageWishlistStateLoading, isWishlistsCollectionInitiated,
+  WishlistState
+} from '../../../reducers/Pages/Wishlist';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -58,15 +61,17 @@ import {
 } from '../../../actions/Pages/Wishlist';
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
-import {IWishlist} from "../../../interfaces/wishlist";
+import {IWishlist, TWishListName} from "../../../interfaces/wishlist";
 import {ICartAddItem, TCartId} from "../../../interfaces/cart/index";
 import {AppPrice} from "../../Common/AppPrice/index";
 import {getProductDataAction} from "../../../actions/Pages/Product";
 import {getRouterLocation, getRouterMatchParam, TRouterMatchParam} from "../../../selectors/Common/router";
 import {cartAuthenticateErrorText} from "../../../constants/messages/errors";
 import {ICartCreatePayload} from "../../../services/Common/Cart";
+import {createWishListMenuVariants} from "../../../services/wishlistHelper/list";
 
 export const buyBtnTitle = "Add to cart";
+export const wishlistBtnTitle = "Add to Wishlist";
 const quantitySelectedInitial = 1;
 
 interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
@@ -77,7 +82,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appStore: TAppStore;
   addItemToCart: Function;
   getProductData: Function;
-  getWishlists: Function;
+  getWishLists: Function;
   addToWishlist: Function;
   cartCreated: boolean;
   cartId: TCartId;
@@ -87,10 +92,10 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isFulfilled: boolean;
   isInitiated: boolean;
   locationProductSKU?: TRouterMatchParam;
-  wishlistsInitial?: boolean;
-  wishlists?: Array<IWishlist>;
+  isWishListsFetched: boolean;
+  wishLists: Array<IWishlist>;
   isProductExist: boolean;
-  isWishlistLoading: boolean;
+  isWishListLoading: boolean;
 
 }
 
@@ -98,7 +103,7 @@ interface ProductPageState extends IProductPropFullData, ISuperAttributes {
   attributeMap: IProductAttributeMap | null;
   superAttrSelected: IProductAttributes;
   quantitySelected: TProductQuantity;
-  selectedWishlist: string;
+  wishListSelected: TWishListName | null;
 }
 
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
@@ -121,46 +126,45 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     priceDefaultNet: null,
     attributes: null,
     quantity: null,
-    selectedWishlist: '',
+    wishListSelected: null,
   };
 
   public componentDidMount () {
+    console.log("%c ++++ ProductPage componentDidMount ++++", 'background: #3d5afe; color: #ffea00');
     if (this.props.product) {
       this.setInitialData();
-    }
-/*
-    if (!this.props.isLoading && !this.props.wishlistsInitial) {
-      this.props.getWishlists();
-    }*/
-  }
-
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (this.props.isFulfilled) {
-      if (this.props.product && !prevProps.product && this.props.locationProductSKU) {
-        this.setInitialData();
-      }
-      if (this.props.product && prevProps.locationProductSKU !== this.props.locationProductSKU) {
-        this.props.getProductData(this.props.locationProductSKU);
-      }
-    }
-
-    if (!this.props.product
-        && this.props.locationProductSKU
-        && this.props.isAppDataSet
-        && !this.props.isLoading
-        && !this.props.isRejected
-    ) {
+    } else if(!this.props.isLoading && this.props.isAppDataSet ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
 
-    if (this.props.product
-      && !this.props.isWishlistLoading
-      && this.props.isAppDataSet
-      && !this.props.wishlistsInitial
-    ) {
-      this.props.getWishlists();
+  }
+
+  public componentDidUpdate = (prevProps: any, prevState: any) => {
+    if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet ) {
+      console.log("%c ---- componentDidUpdate RETURN ----", 'background: #4caf50; color: #cada55');
+      return;
     }
 
+    // First load of the App
+    if(!this.props.isFulfilled && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)) {
+      console.log("%c ---- First load of the App in componentDidUpdate getProductData ----", 'background: #4caf50; color: #bada55');
+      this.props.getProductData(this.props.locationProductSKU);
+      return;
+    }
+
+    // Update of the product
+    if(this.props.product.abstractProduct.sku !== this.props.locationProductSKU) {
+      console.log("%c ---- Update of the product App in componentDidUpdate ----", 'background: #4caf50; color: #bada55');
+      this.props.getProductData(this.props.locationProductSKU);
+      return;
+    }
+
+    if(!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU) {
+      this.setInitialData();
+    }
+
+    this.setInitialWishList();
+    this.initRequestWishListsData();
 
   }
 
@@ -191,7 +195,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
 
     this.setState( (prevState: ProductPageState) => {
-      if (this.state.superAttrSelected[key] === value) {
+      if (prevState.superAttrSelected[key] === value) {
         return;
       }
       return ({
@@ -209,7 +213,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   public handleProductQuantityChange = (event: any, child: React.ReactNode): void => {
     const value = event.target.value;
     this.setState( (prevState: ProductPageState) => {
-      if (this.state.quantitySelected === value) {
+      if (prevState.quantitySelected === value) {
         return;
       }
       return ({
@@ -219,15 +223,15 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     });
   }
 
-  public handleWishlistChange = (event: any): void => {
+  public handleWishListChange = (event: any): void => {
     const value = event.target.value;
     this.setState( (prevState: ProductPageState) => {
-      if (this.state.selectedWishlist === value) {
+      if (this.state.wishListSelected === value) {
         return;
       }
       return ({
         ...prevState,
-        selectedWishlist: value,
+        wishListSelected: value,
       });
     });
   }
@@ -257,12 +261,24 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     return null;
   }
 
+  private initRequestWishListsData = (): boolean => {
+    if (this.props.product
+      && this.props.isUserLoggedIn
+      && !this.props.isWishListLoading
+      && !this.props.isWishListsFetched
+    ) {
+      this.props.getWishLists();
+      return true;
+    }
+    return false;
+  }
+
   private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
     const defaultValues = this.props.product.abstractProduct;
     return {
       sku: data ? data.sku : null,
       name: data ? data.name : defaultValues.name,
-      images: data ? data.images : defaultValues.images,
+      images: data ? [...data.images] : [...defaultValues.images],
       availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
@@ -276,17 +292,35 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     };
   }
 
-  private setInitialData = (): void => {
-    console.log('%%% setInitialData works %%%');
+  private setInitialWishList = (): boolean => {
+    const wishListSelected = this.getFirstWishList();
+
+    if (!wishListSelected) {
+      return false;
+    }
+    this.setState( (prevState: ProductPageState) => {
+      if (prevState.wishListSelected === wishListSelected) {
+        return;
+      }
+      return ({
+        ...prevState,
+        wishListSelected,
+      });
+    });
+    return true;
+  }
+
+  private setInitialData = (): boolean => {
     let productData: IProductPropFullData | null;
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
-    const isOneConcreteProduct = (concreteProductsIds.length === 1);
+    const isOneConcreteProduct = Boolean(concreteProductsIds.length === 1);
     if (isOneConcreteProduct) {
       productData = this.getProductDataObject(this.props.product.concreteProducts[concreteProductsIds[0]]);
     } else {
       productData = this.getProductDataObject(this.props.product.abstractProduct);
     }
 
+    console.log("%c %%% setInitialData productData %%%", 'background: #d32f2f; color: #ffcdd2', productData);
     // Parsing superAttributes to set initial data for this.state.superAttrSelected
     const selectedAttrNames = getInitialSuperAttrSelected(this.props.product.superAttributes);
 
@@ -299,6 +333,14 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
         ...productData,
       });
     });
+    return true;
+  }
+
+  private getFirstWishList = (): TWishListName | null => {
+    if (!this.props.isWishListsFetched) {
+      return null;
+    }
+    return (this.props.wishLists.length > 0) ? this.props.wishLists[0].id : null;
   }
 
   private getIdProductConcrete = (key: string, value: string) => {
@@ -345,17 +387,25 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   private handleAddToWishlist = (e: any) => {
-    this.props.addToWishlist(this.state.selectedWishlist, this.state.sku);
+    this.props.addToWishlist(this.state.wishListSelected, this.state.sku);
+  }
+
+  private isAddToWishListBtnDisabled = () => {
+    if (!this.props.isWishListsFetched
+      || this.state.productType !== concreteProductType
+      || !this.state.wishListSelected
+    ) {
+      return true;
+    }
+    return false;
   }
 
   public render(): JSX.Element {
-    const {classes, wishlists, wishlistsInitial} = this.props;
+    const {classes} = this.props;
     console.info('state: ', this.state);
     console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
-    const wishlistMenu = wishlists.map((wishlist: IWishlist) => ({name: wishlist.name, value: wishlist.id}));
-
-
+    console.log('*** render images ', images)
     return (
       <AppMain>
         { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
@@ -417,29 +467,39 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                     </Grid>
                   </Grid>
 
-                  <Grid container justify="center" className={classes.wishlistBtnArea}>
-                    <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
-                      <SprykerButton
-                        title="Add to Wishlist"
-                        extraClasses={classes.buyBtn}
-                        onClick={this.handleAddToWishlist}
-                        IconType={FavoriteIcon}
-                        disabled={!wishlistsInitial || this.state.productType !== concreteProductType || !this.state.selectedWishlist}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6} >
-                      <DropdownControlled
-                        nameAttr="wishlists"
-                        value={this.state.selectedWishlist}
-                        handleChange={this.handleWishlistChange}
-                        menuItems={wishlistMenu}
-                        menuItemFirst={{
-                          value: '',
-                          name: 'Select wishlist',
-                        }}
-                      />
-                    </Grid>
-                  </Grid>
+                  {this.props.isUserLoggedIn
+                    ? ( <Grid container justify="center" className={classes.wishlistBtnArea}>
+                          <Grid item xs={12} sm={6} className={classes.buyBtnParent} >
+                            <SprykerButton
+                              title={wishlistBtnTitle}
+                              extraClasses={classes.buyBtn}
+                              onClick={this.handleAddToWishlist}
+                              IconType={FavoriteIcon}
+                              disabled={this.isAddToWishListBtnDisabled()}
+                            />
+                          </Grid>
+                          <Grid item xs={12} sm={6} >
+
+                            {this.state.wishListSelected
+                              ? <DropdownControlled
+                                nameAttr="wishlists"
+                                value={this.state.wishListSelected}
+                                handleChange={this.handleWishListChange}
+                                menuItems={createWishListMenuVariants(this.props.wishLists)}
+                                menuItemFirst={{
+                                  value: defaultItemValueDropdown,
+                                  name: 'Select wishlist',
+                                }}
+                                isHiddenMenuItemFirst={true}
+                              />
+                              : null
+                            }
+
+                          </Grid>
+                      </Grid>
+                    )
+                    : null
+                  }
 
                 </Grid>
               </Grid>
@@ -475,9 +535,10 @@ export const ConnectedProductPage = reduxify(
     const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
-    const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
     const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
-    const isWishlistLoading: boolean = isPageWishlistStateLoading(state, ownProps);
+    const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
+    const wishLists = getWishlistsCollectionFromStore(state, ownProps);
+    const isWishListsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
 
     return ({
       location,
@@ -492,10 +553,10 @@ export const ConnectedProductPage = reduxify(
       isRejected,
       isFulfilled,
       locationProductSKU,
-      wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
-      wishlistsInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : ownProps.isInitial,
+      wishLists,
+      isWishListsFetched,
       isProductExist,
-      isWishlistLoading,
+      isWishListLoading,
     });
   },
   (dispatch: Function) => ({
@@ -504,7 +565,7 @@ export const ConnectedProductPage = reduxify(
       payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
     ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
     getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
-    getWishlists: () => dispatch(getWishlistsAction()),
+    getWishLists: () => dispatch(getWishlistsAction()),
     addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
   })
 )(ProductPage);
