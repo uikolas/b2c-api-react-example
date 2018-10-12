@@ -43,9 +43,9 @@ export const buttonTitle = 'Search';
 export class CatalogSearchBase extends React.Component<CatalogProps, CatalogState> {
   public state: CatalogState = {
     value: '',
-  }
+  };
 
-  public timer: any
+  public timer: any;
 
   private renderInputComponent = (inputProps: any) => {
     const { classes, ref, ...other } = inputProps;
@@ -102,14 +102,14 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   public handleSuggestionsFetchRequested = ({ value }: {value: string}) => {
     const { value: currentValue } = this.state;
 
-    if (!this.props.isLoading && value != currentValue) {
+    if (!this.props.isLoading && value !== currentValue) {
       clearTimeout(this.timer);
 
       this.timer = setTimeout(() => {
         if (this.state.value === value) {
           this.props.getSuggestions(value);
         }
-      }, 350);
+      }, 500);
     }
   }
 
@@ -124,14 +124,18 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
       this.props.dispatch(clearSuggestions(newValue));
     }
 
-    this.setState({
-      value: newValue,
-    });
+    if (!this.props.isLoading && (newValue.trim().length - this.state.value.length < 2)) {
+      this.setState({
+        value: newValue,
+      });
+    }
   }
 
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
+    event.preventDefault();
+    event.stopPropagation();
     this.props.getProductData(suggestion.abstract_sku);
     this.props.changeLocation(`${pathProductPageBase}/${suggestion.abstract_sku}`);
   }

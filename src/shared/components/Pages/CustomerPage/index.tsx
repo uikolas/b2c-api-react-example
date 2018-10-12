@@ -79,13 +79,6 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
                     Wishlist
                   </NavLink>
                 </MenuItem>
-                <MenuItem
-                  selected={location.pathname === `${pathCustomerPage}/shopping`}
-                >
-                  <NavLink to={`${pathCustomerPage}/shopping`}>
-                    Shopping list
-                  </NavLink>
-                </MenuItem>
               </MenuList>
             </Paper>
           </Grid>

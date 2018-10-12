@@ -1,3 +1,4 @@
+import produce from 'immer';
 import {
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
@@ -8,7 +9,6 @@ import {
   IReduxState,
 } from '../../../typings/app';
 import {ISearchPageData} from "../../interfaces/searchPageData";
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
@@ -32,72 +32,70 @@ export const initialState: SearchState = {
   },
 };
 
-export const pageSearch = function (state: SearchState = initialState, action: any): SearchState {
-  switch (action.type) {
-    case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
-      return {
-        ...state,
-        ...getReducerPartPending(),
-      };
-    case `${CATEGORIES_REQUEST}_PENDING`:
-      return state;
-    case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          suggestions: action.products,
-          searchTerm: action.searchTerm,
-          currency: action.currency || state.data.currency,
-        },
-        ...getReducerPartFulfilled(),
-      };
-    case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
-    case `${CATEGORIES_REQUEST}_REJECTED`:
-      return {
-        ...state,
-        ...getReducerPartRejected(action.error),
-      };
-    case `${PAGES_SEARCH_REQUEST}_PENDING`:
-      return {
-        ...state,
-        ...getReducerPartPending(),
-      };
-    case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          items: action.items,
-          filters: action.filters,
-          rangeFilters: action.rangeFilters,
-          sortParams: action.sortParams,
-          pagination: action.pagination,
-        },
-        ...getReducerPartFulfilled(),
-      };
-    case `${CATEGORIES_REQUEST}_FULFILLED`:
-      return {
-        ...state,
-        data: {
-          ...state.data,
-          categories: action.categories,
-        },
-      };
-    case `${PAGES_SEARCH_REQUEST}_REJECTED`:
-      return {
-        ...state,
-        ...getReducerPartRejected(action.error),
-      };
-    case PAGES_SEARCH_REQUEST_CLEAR:
-      return {
-        ...state,
-        data: {...state.data, suggestions: [], searchTerm: action.searchTerm}
-      };
-    default:
-      return state;
-  }
-};
+export const pageSearch = produce<SearchState>(
+  (draft: SearchState, action: any) => {
+    switch (action.type) {
+      case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
+      case `${PAGES_SEARCH_REQUEST}_PENDING`:
+        draft.error = false;
+        draft.pending = true;
+        draft.fulfilled = false;
+        draft.rejected = false;
+        draft.initiated = true;
+        break;
+      case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
+        draft.data.suggestions = action.products;
+        draft.data.searchTerm = action.searchTerm;
+        draft.data.currency = action.currency || draft.data.currency;
+        draft.error = false;
+        draft.pending = false;
+        draft.fulfilled = true;
+        draft.rejected = false;
+        draft.initiated = true;
+        break;
+      case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
+      case `${CATEGORIES_REQUEST}_REJECTED`:
+      case `${PAGES_SEARCH_REQUEST}_REJECTED`:
+        draft.error = action.error;
+        draft.pending = false;
+        draft.fulfilled = false;
+        draft.rejected = true;
+        break;
+      case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
+        draft.data.items = action.items;
+        draft.data.filters = action.filters;
+        draft.data.rangeFilters = action.rangeFilters;
+        draft.data.sortParams = action.sortParams;
+        draft.data.pagination = action.pagination;
+        draft.error = false;
+        draft.pending = false;
+        draft.fulfilled = true;
+        draft.rejected = false;
+        draft.initiated = true;
+        break;
+      case `${CATEGORIES_REQUEST}_FULFILLED`:
+        draft.data.categories = action.categories;
+        draft.error = false;
+        draft.pending = false;
+        draft.fulfilled = true;
+        draft.rejected = false;
+        draft.initiated = true;
+        break;
+      case PAGES_SEARCH_REQUEST_CLEAR:
+        draft.data.suggestions = [];
+        draft.data.searchTerm = action.searchTerm;
+        draft.error = false;
+        draft.pending = false;
+        draft.fulfilled = true;
+        draft.rejected = false;
+        draft.initiated = true;
+        break;
+      default:
+        break;
+    }
+  },
+  initialState,
+);
 
 // selectors
 export function isPageSearchStateLoading(state: any, props: any): boolean {
