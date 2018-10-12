@@ -25,7 +25,7 @@ import {noOrderText} from "../../../constants/messages/orders";
 import {OrderList} from "./OrderList/index";
 import {OrderHistoryContext} from './context';
 import {pathCustomerPage} from "../../../routes/contentRoutes";
-
+import {emptyValueErrorText} from "../../../constants/messages/errors";
 
 export const pageTitle = "Orders History";
 
@@ -62,9 +62,8 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
 
   public viewClickHandler = (event: any): any => {
     const value = event.currentTarget.value;
-    console.log('viewClickHandler: value ', value);
     if (!value) {
-      throw new Error('value is empty!');
+      throw new Error(emptyValueErrorText);
     }
     this.props.routerPush(`${pathCustomerPage}/order/details/${value}`);
   }

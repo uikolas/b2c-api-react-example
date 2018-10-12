@@ -19,9 +19,8 @@ import {ICartState, ICartItem, getCartId, isCartLoading} from '../../../reducers
 import {SprykerButton} from '../../../components/UI/SprykerButton';
 import {cartDeleteItemAction, updateItemInCartAction} from '../../../actions/Common/Cart';
 import {styles} from './styles';
-import {ICartTotals, TCartId, ICartItemCalculation} from "../../../interfaces/cart";
+import {ICartTotals, TCartId, ICartItemCalculation, ICartAddItem} from "../../../interfaces/cart";
 import {NavLink} from "react-router-dom";
-import {ICartAddItem} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper/item";
 import {AppMain} from "../../Common/AppMain/index";
 import {TProductSKU} from "../../../interfaces/product/index";

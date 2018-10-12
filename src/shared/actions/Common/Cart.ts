@@ -4,8 +4,8 @@ import {
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
-import {CartService, ICartAddItem, ICartCreatePayload} from "../../services/Common/Cart";
-import {ICartDataResponse, TCartId} from "../../interfaces/cart/index";
+import {CartService, ICartCreatePayload} from "../../services/Common/Cart";
+import {ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId} from "../../interfaces/cart/index";
 import {TProductSKU} from "../../interfaces/product/index";
 
 
@@ -89,3 +89,13 @@ export const multiItemsCartAction = function (cartId: TCartId, payloadCartCreate
     CartService.moveItemstoCart(dispatch, cartId, payloadCartCreate, listItems);
   };
 };
+export const addMultipleItemsToCartAction = function(
+  payload: TCartAddItemCollection,
+  cartId: TCartId,
+  payloadCartCreate: ICartCreatePayload
+) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.cartMultipleItems(dispatch, payload, cartId, payloadCartCreate);
+  };
+};
+

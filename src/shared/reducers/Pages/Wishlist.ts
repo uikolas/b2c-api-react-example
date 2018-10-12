@@ -133,5 +133,5 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
 };
 
 export function isPageWishlistStateLoading(state: any, props: any): boolean {
-  return (state.pageWishlist && state.pageWishlist.pending);
+  return (state.pageWishlist && state.pageWishlist.pending && state.pageWishlist.pending === true);
 }
