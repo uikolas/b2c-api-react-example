@@ -7,48 +7,85 @@ import {
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {IProductDataParsed} from "../../interfaces/product/index";
 
-export interface ProductState extends IReduxState {
+export interface IProductState extends IReduxState {
   data: {
     selectedProduct: IProductDataParsed | null,
   };
 }
 
-export const initialState: ProductState = {
+export const initialState: IProductState = {
   data: {
     selectedProduct: null,
   },
 };
 
 
-export const pageProduct = function (state: ProductState = initialState, action: any): ProductState {
+export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
-      return {
+     /* return {
         ...state,
         ...getReducerPartRejected(action.error),
-      };
+      };*/
+      return handleRejected(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
-      return {
+      /*return {
         ...state,
         data: {
           ...state.data,
           selectedProduct: null,
         },
         ...getReducerPartPending(),
-      };
+      };*/
+      return handlePending(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
-      return {
+    /*  return {
         ...state,
         data: {
           ...state.data,
           selectedProduct: action.payload,
         },
         ...getReducerPartFulfilled(),
-      };
+      };*/
+      return handleFulfilled(state, action.payload);
     default:
       return state;
   }
 };
+
+// handlers
+const handleFulfilled = (productState: IProductState, payload: IProductDataParsed | null) => {
+  return {
+    ...productState,
+    data: {
+      ...productState.data,
+      selectedProduct: {...payload},
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleRejected = (productState: IProductState, payload: any) => {
+  return {
+    ...productState,
+    data: {
+      ...productState.data,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
+
+const handlePending = (productState: IProductState, payload: any) => {
+  return {
+    ...productState,
+    data: {
+      ...productState.data,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
+// selectors
 export function isPageProductStateInitiated(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageProduct.initiated && state.pageProduct.initiated === true);
 }

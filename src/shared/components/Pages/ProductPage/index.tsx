@@ -136,11 +136,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
+    console.log("%c ++++ componentDidUpdate ++++", 'background: #ab003c; color: #ffea00');
     if (this.props.isFulfilled) {
       if (this.props.product && !prevProps.product && this.props.locationProductSKU) {
         this.setInitialData();
       }
       if (this.props.product && prevProps.locationProductSKU !== this.props.locationProductSKU) {
+        console.log("%c ---- Updating product of the APP: getProductData ----", 'background: #4caf50; color: #bada55');
         this.props.getProductData(this.props.locationProductSKU);
       }
       this.setInitialWishList();
@@ -152,6 +154,13 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
         && !this.props.isLoading
         && !this.props.isRejected
     ) {
+      console.log("%c ---- First load of the APP: getProductData ----", 'background: #222; color: #bada55');
+      console.log("%c !this.props.product " , 'background: #673ab7; color: #bffa55', this.props.product);
+      console.log("%c this.props.locationProductSKU " , 'background: #673ab7; color: #bffa55', this.props.locationProductSKU);
+      console.log("%c this.props.isAppDataSet " , 'background: #673ab7; color: #bffa55', this.props.isAppDataSet);
+      console.log("%c !this.props.isLoading " , 'background: #673ab7; color: #bffa55', this.props.isLoading);
+      console.log("%c !this.props.isRejected " , 'background: #673ab7; color: #bffa55', this.props.isRejected);
+
       this.props.getProductData(this.props.locationProductSKU);
     }
 
