@@ -293,6 +293,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     });
     return true;
   }
+
   private setInitialData = (): boolean => {
     console.log('%%% setInitialData works %%%');
     let productData: IProductPropFullData | null;

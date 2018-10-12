@@ -18,7 +18,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
   }
   const { data, included }: any = response;
 
-  const result: any = {
+  let result: any = {
     attributeMap: data.attributes.attributeMap,
     superAttributes: parseSuperAttributes(data.attributes.attributeMap),
     abstractProduct: {
@@ -56,6 +56,19 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
     } else if (row.type === 'abstract-product-prices') {
       result.abstractProduct.price = row.attributes.price;
       result.abstractProduct.prices = row.attributes.prices;
+      if (row.attributes.prices && row.attributes.prices.length) {
+        row.attributes.prices.forEach((priceData: any) => {
+          if (priceData.priceTypeName === priceTypeNameDefault) {
+            result.abstractProduct.priceDefaultGross = priceData.grossAmount;
+            result.abstractProduct.priceDefaultNet = priceData.netAmount;
+          }
+          if (priceData.priceTypeName === priceTypeNameOriginal) {
+            result.abstractProduct.priceOriginalGross = priceData.grossAmount;
+            result.abstractProduct.priceOriginaltNet = priceData.netAmount;
+          }
+        });
+      }
+
     } else if (row.type === 'abstract-product-availabilities') {
       result.abstractProduct.availability = row.attributes.availability;
       result.abstractProduct.quantity = row.attributes.quantity;
