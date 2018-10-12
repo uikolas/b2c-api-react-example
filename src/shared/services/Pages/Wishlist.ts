@@ -9,19 +9,40 @@ import {
   cartAddItemRejectedStateAction
 } from "../../actions/Common/Cart";
 import {cartCreateFixture} from "../fixtures/cartFixture";
-import {cartAuthenticateErrorText} from "../../constants/messages/errors";
+import {wishlistAuthenticateErrorText} from "../../constants/messages/errors";
 import {TCartId} from "../../interfaces/cart";
 import {parseAddToCartResponse} from "../cartHelper";
 import {API_WITH_FIXTURES} from "../../constants/Environment";
 import {getTestDataPromise} from "../apiFixture";
+import {getWishlistFixture} from "../fixtures/wishlistFixture";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
     try {
-      const token = await RefreshTokenService.getActualToken(dispatch);
-      setAuthToken(token);
 
-      const response: any = await api.get('wishlists', {}, { withCredentials: true });
+
+      let response: any;
+      // TODO: this is only for development reasons - remove after finish
+      if(API_WITH_FIXTURES) {
+        const result = {
+          ok: true,
+          problem: 'Test API_WITH_FIXTURES',
+          data: getWishlistFixture,
+        };
+        response = await getTestDataPromise(result);
+        console.log('+++API_WITH_FIXTURES response: ', response);
+      } else {
+        try {
+          const token = await RefreshTokenService.getActualToken(dispatch);
+          if (!token) {
+            throw new Error(wishlistAuthenticateErrorText);
+          }
+          setAuthToken(token);
+          response = await api.get('wishlists', {}, { withCredentials: true });
+        } catch (err) {
+          console.error('WishlistService: getLists: err', err);
+        }
+      }
 
       if (response.ok) {
         const wishlists: IWishlist[] = response.data.data.map((list: any) => WishlistService.parseWishlistResponse(list));
@@ -30,6 +51,7 @@ export class WishlistService {
           type: ACTION_TYPE + '_FULFILLED',
           wishlists,
         });
+        //getWishlistFixture
         return response.data.data;
       } else {
         dispatch({

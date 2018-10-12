@@ -13,7 +13,7 @@ import {
   getProduct, isPageProductStateFulfilled, isPageProductStateInitiated, isPageProductStateLoading,
   isPageProductStateRejected, isProductDetailsPresent
 } from '../../../reducers/Pages/Product';
-import {WishlistState} from '../../../reducers/Pages/Wishlist';
+import {isPageWishlistStateLoading, WishlistState} from '../../../reducers/Pages/Wishlist';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -90,6 +90,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   wishlistsInitial?: boolean;
   wishlists?: Array<IWishlist>;
   isProductExist: boolean;
+  isWishlistLoading: boolean;
 
 }
 
@@ -127,10 +128,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (this.props.product) {
       this.setInitialData();
     }
-
-    if (!this.props.wishlistsInitial) {
+/*
+    if (!this.props.isLoading && !this.props.wishlistsInitial) {
       this.props.getWishlists();
-    }
+    }*/
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
@@ -151,6 +152,15 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     ) {
       this.props.getProductData(this.props.locationProductSKU);
     }
+
+    if (this.props.product
+      && !this.props.isWishlistLoading
+      && this.props.isAppDataSet
+      && !this.props.wishlistsInitial
+    ) {
+      this.props.getWishlists();
+    }
+
 
   }
 
@@ -467,6 +477,7 @@ export const ConnectedProductPage = reduxify(
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
     const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
+    const isWishlistLoading: boolean = isPageWishlistStateLoading(state, ownProps);
 
     return ({
       location,
@@ -484,6 +495,7 @@ export const ConnectedProductPage = reduxify(
       wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
       wishlistsInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : ownProps.isInitial,
       isProductExist,
+      isWishlistLoading,
     });
   },
   (dispatch: Function) => ({
