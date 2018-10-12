@@ -132,6 +132,22 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
   }
 };
 
+function isStateExist(state: any, props: any): boolean {
+  return Boolean(state.pageWishlist);
+}
+
 export function isPageWishlistStateLoading(state: any, props: any): boolean {
   return (state.pageWishlist && state.pageWishlist.pending && state.pageWishlist.pending === true);
+}
+
+export function isWishlistsCollectionExist(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageWishlist.data.wishlists);
+}
+
+export function getWishlistsCollectionFromStore(state: any, props: any): IWishlist[] | null {
+  return isWishlistsCollectionExist(state, props) ? state.pageWishlist.data.wishlists : null;
+}
+
+export function isWishlistsCollectionInitiated(state: any, props: any): IWishlist[] | null {
+  return isStateExist(state, props) ? state.pageWishlist.data.isInitial : null;
 }

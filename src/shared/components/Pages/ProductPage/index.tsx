@@ -13,7 +13,10 @@ import {
   getProduct, isPageProductStateFulfilled, isPageProductStateInitiated, isPageProductStateLoading,
   isPageProductStateRejected, isProductDetailsPresent
 } from '../../../reducers/Pages/Product';
-import {isPageWishlistStateLoading, WishlistState} from '../../../reducers/Pages/Wishlist';
+import {
+  getWishlistsCollectionFromStore, isPageWishlistStateLoading, isWishlistsCollectionInitiated,
+  WishlistState
+} from '../../../reducers/Pages/Wishlist';
 import {AppMain} from '../../Common/AppMain';
 import {ImageSlider} from '../../Common/ImageSlider';
 import {ProductGeneralInfo} from './ProductGeneralInfo';
@@ -79,7 +82,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appStore: TAppStore;
   addItemToCart: Function;
   getProductData: Function;
-  getWishlists: Function;
+  getWishLists: Function;
   addToWishlist: Function;
   cartCreated: boolean;
   cartId: TCartId;
@@ -90,9 +93,9 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   isInitiated: boolean;
   locationProductSKU?: TRouterMatchParam;
   isWishListsFetched: boolean;
-  wishlists?: Array<IWishlist>;
+  wishLists: Array<IWishlist>;
   isProductExist: boolean;
-  isWishlistLoading: boolean;
+  isWishListLoading: boolean;
 
 }
 
@@ -155,11 +158,11 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
     if (this.props.product
       && this.props.isUserLoggedIn
-      && !this.props.isWishlistLoading
+      && !this.props.isWishListLoading
       && this.props.isAppDataSet
       && !this.props.isWishListsFetched
     ) {
-      this.props.getWishlists();
+      this.props.getWishLists();
     }
 
   }
@@ -324,7 +327,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     if (!this.props.isWishListsFetched) {
       return null;
     }
-    return (this.props.wishlists.length > 0) ? this.props.wishlists[0].id : null;
+    return (this.props.wishLists.length > 0) ? this.props.wishLists[0].id : null;
   }
 
   private getIdProductConcrete = (key: string, value: string) => {
@@ -469,7 +472,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                                 nameAttr="wishlists"
                                 value={this.state.wishListSelected}
                                 handleChange={this.handleWishListChange}
-                                menuItems={createWishListMenuVariants(this.props.wishlists)}
+                                menuItems={createWishListMenuVariants(this.props.wishLists)}
                                 menuItemFirst={{
                                   value: '',
                                   name: 'Select wishlist',
@@ -519,9 +522,10 @@ export const ConnectedProductPage = reduxify(
     const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
-    const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
     const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
-    const isWishlistLoading: boolean = isPageWishlistStateLoading(state, ownProps);
+    const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
+    const wishLists = getWishlistsCollectionFromStore(state, ownProps);
+    const isWishListsFetched = isWishlistsCollectionInitiated(state, ownProps);
 
     return ({
       location,
@@ -536,10 +540,10 @@ export const ConnectedProductPage = reduxify(
       isRejected,
       isFulfilled,
       locationProductSKU,
-      wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
-      isWishListsFetched: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : ownProps.isInitial,
+      wishLists,
+      isWishListsFetched,
       isProductExist,
-      isWishlistLoading,
+      isWishListLoading,
     });
   },
   (dispatch: Function) => ({
@@ -548,7 +552,7 @@ export const ConnectedProductPage = reduxify(
       payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload
     ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
     getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
-    getWishlists: () => dispatch(getWishlistsAction()),
+    getWishLists: () => dispatch(getWishlistsAction()),
     addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
   })
 )(ProductPage);
