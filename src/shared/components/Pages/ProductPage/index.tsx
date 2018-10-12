@@ -164,14 +164,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
 
     this.setInitialWishList();
-
-    if (this.props.product
-      && this.props.isUserLoggedIn
-      && !this.props.isWishListLoading
-      && !this.props.isWishListsFetched
-    ) {
-      this.props.getWishLists();
-    }
+    this.initRequestWishListsData();
 
   }
 
@@ -266,6 +259,18 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
       });
     }
     return null;
+  }
+
+  private initRequestWishListsData = (): boolean => {
+    if (this.props.product
+      && this.props.isUserLoggedIn
+      && !this.props.isWishListLoading
+      && !this.props.isWishListsFetched
+    ) {
+      this.props.getWishLists();
+      return true;
+    }
+    return false;
   }
 
   private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
