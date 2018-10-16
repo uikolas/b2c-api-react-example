@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {reduxify} from '../../../lib/redux-helper';
-
 import {styles} from './styles';
 import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
 import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
@@ -23,7 +22,7 @@ import {TOrderCollection} from "../../../interfaces/order/index";
 import {noOrderText} from "../../../constants/messages/orders";
 import {OrderList} from "./OrderList/index";
 import {OrderHistoryContext} from './context';
-import {pathOrderDetailsPageBase} from "../../../routes/contentRoutes";
+import {pathCustomerPage} from "../../../routes/contentRoutes";
 import {emptyValueErrorText} from "../../../constants/messages/errors";
 
 export const pageTitle = "Orders History";
@@ -52,20 +51,13 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   };
 
   public componentDidMount = () => {
-    this.initRequestData();
+
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    this.initRequestData();
+
   }
 
-  public viewClickHandler = (event: any): any => {
-    const value = event.currentTarget.value;
-    if (!value) {
-      throw new Error(emptyValueErrorText);
-    }
-    this.props.routerPush(`${pathOrderDetailsPageBase}/${value}`);
-  }
 
   private initRequestData = () => {
     if (!this.props.isInitiated && this.props.isAppDataSet) {
