@@ -461,6 +461,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
                           value={this.state.quantitySelected}
                           handleChange={this.handleProductQuantityChange}
                           menuItems={createQuantityVariants(this.state.quantity)}
+                          isHiddenMenuItemFirst={true}
                         />
                       }
                     </Grid>
