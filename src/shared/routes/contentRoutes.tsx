@@ -27,9 +27,9 @@ export const pathOrderHistoryPage = `${pathCustomerPage}/order`;
 export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
 export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
 
-export const pathUserProfilePage = `${pathCustomerPage}/profile`;
+export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
-export const pathUserAddressesPage = `${pathCustomerPage}/addresses`;
+export const pathCustomerAddressesPage = `${pathCustomerPage}/addresses`;
 
 export const pathNotFoundPage = `${config.WEB_PATH}*`;
 

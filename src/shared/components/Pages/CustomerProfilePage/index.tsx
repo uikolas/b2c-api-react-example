@@ -6,104 +6,65 @@ import Typography from '@material-ui/core/Typography';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {styles} from './styles';
-import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
-import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
-import {
-  getOrdersCollectionFromStore,
-  isOrderHistoryFulfilled,
-  isOrderHistoryInitiated,
-  isOrderHistoryItems,
-  isOrderHistoryLoading,
-  isOrderHistoryStateRejected
-} from "../../../reducers/Pages/OrderHistory";
 import {isAppInitiated} from "../../../reducers/Common/Init";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {TOrderCollection} from "../../../interfaces/order/index";
-import {noOrderText} from "../../../constants/messages/orders";
-import {OrderList} from "./OrderList/index";
-import {OrderHistoryContext} from './context';
-import {pathCustomerPage} from "../../../routes/contentRoutes";
-import {emptyValueErrorText} from "../../../constants/messages/errors";
+import {getRouterLocation} from "../../../selectors/Common/router";
 
-export const pageTitle = "Orders History";
+export const pageTitle = "Profile";
 
-interface OrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
-  getOrdersCollection: Function;
+interface CustomerProfilePageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   isRejected: boolean;
   isFulfilled: boolean;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
-  isInitiated: boolean;
-  isHasOrders: boolean;
-  orders: TOrderCollection;
-  routerPush: Function;
 }
 
-interface OrderHistoryPageState {
+interface CustomerProfilePageState {
 
 }
 
-export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps, OrderHistoryPageState> {
+export class CustomerProfilePageBase extends React.Component<CustomerProfilePageProps, CustomerProfilePageState> {
 
-  public state: OrderHistoryPageState = {
+  public state: CustomerProfilePageState = {
 
   };
 
   public componentDidMount = () => {
-
+    console.log("%c ---- componentDidMount ----", 'background: #4caf50; color: #bada55');
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-
+    console.log("%c ---- componentDidUpdate ----", 'background: #4cab50; color: #cada55');
   }
 
 
   private initRequestData = () => {
-    if (!this.props.isInitiated && this.props.isAppDataSet) {
-      this.props.getOrdersCollection();
-      return true;
-    }
-    return false;
+    console.log("%c *** initRequestData ***", 'background: #2cab50; color: #cada55');
   }
 
   public render(): JSX.Element {
-    console.info('props: ', this.props);
-    console.info('state: ', this.state);
-    const {classes, isHasOrders, isFulfilled, orders} = this.props;
+    console.info('CustomerProfilePage props: ', this.props);
+    console.info('CustomerProfilePage state: ', this.state);
+    const {classes, isFulfilled} = this.props;
 
     return (
       <div>
         { (isFulfilled === false)
           ? null
           : (
-            <OrderHistoryContext.Provider
-              value={{
-                viewClickHandler: this.viewClickHandler,
-              }}
-            >
+            <div className={classes.root} >
+              <Grid container justify="center" >
+                <Grid item xs={12}>
+                  <Typography align="center" variant="headline" gutterBottom={true}>
+                    {pageTitle}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container justify="center" >
 
-                <div className={classes.root} >
-                  <Grid container justify="center" >
-                    <Grid item xs={12}>
-                      <Typography align="center" variant="headline" gutterBottom={true}>
-                        {pageTitle}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid container justify="center" >
-                    {isHasOrders
-                      ? <Grid item xs={12}>
-                          <OrderList items={orders} />
-                        </Grid>
-                      : <Typography variant="title" color="inherit" gutterBottom={true}>
-                        {noOrderText}
-                      </Typography>
-                    }
-
-                  </Grid>
-                </div>
-            </OrderHistoryContext.Provider>
+              </Grid>
+            </div>
           )
         }
       </div>
@@ -111,20 +72,20 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   }
 }
 
-export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
+export const CustomerProfilePage = withStyles(styles)(CustomerProfilePageBase);
 
-export const ConnectedOrderHistoryPage = reduxify(
+export const ConnectedCustomerProfilePage = reduxify(
   (state: any, ownProps: any) => {
     const location = getRouterLocation(state, ownProps);
-    const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
+    /*const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
     const isRejected: boolean = isOrderHistoryStateRejected(state, ownProps);
     const isFulfilled = isOrderHistoryFulfilled(state, ownProps);
-    const isInitiated = isOrderHistoryInitiated(state, ownProps);
+    */
+    const isLoading: boolean = false;
+    const isRejected: boolean = false;
+    const isFulfilled = true;
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const isHasOrders = isOrderHistoryItems(state, ownProps);
-    const orders = getOrdersCollectionFromStore(state, ownProps);
-    const routerPush = getRouterHistoryPush(state, ownProps);
 
     return ({
       location,
@@ -133,13 +94,9 @@ export const ConnectedOrderHistoryPage = reduxify(
       isFulfilled,
       isAppDataSet,
       isUserLoggedIn,
-      isInitiated,
-      isHasOrders,
-      orders,
-      routerPush,
     });
   },
-  (dispatch: Function) => ({
+  /*(dispatch: Function) => ({
     getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-  })
-)(OrderHistoryPage);
+  })*/
+)(CustomerProfilePage);

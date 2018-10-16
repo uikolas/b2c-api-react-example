@@ -24,11 +24,12 @@ import {
   pathCustomerPage,
   pathOrderDetailsPage,
   pathOrderHistoryPage,
-  pathUserAddressesPage,
-  pathUserProfilePage,
+  pathCustomerAddressesPage,
+  pathCustomerProfilePage,
   pathWishListPage,
   pathWishListsPage,
 } from '../../../routes/contentRoutes';
+import {ConnectedCustomerProfilePage} from "../CustomerProfilePage/index";
 
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
@@ -60,16 +61,16 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
             <Paper>
               <MenuList>
                 <MenuItem
-                  selected={location.pathname === pathUserProfilePage}
+                  selected={location.pathname === pathCustomerProfilePage}
                 >
-                  <NavLink to={pathUserProfilePage}>
+                  <NavLink to={pathCustomerProfilePage}>
                     Profile
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname === pathUserAddressesPage}
+                  selected={location.pathname === pathCustomerAddressesPage}
                 >
-                  <NavLink to={pathUserAddressesPage}>
+                  <NavLink to={pathCustomerAddressesPage}>
                     Addresses
                   </NavLink>
                 </MenuItem>
@@ -97,7 +98,7 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
               <Route path={pathWishListPage} component={ConnectedWishlistDetailPage} />
               <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
               <Route path={pathOrderDetailsPage} component={ConnectedOrderDetailsPage} />
-              <Route path={pathUserProfilePage} render={() => 'Profile page'} />
+              <Route path={pathCustomerProfilePage} component={ConnectedCustomerProfilePage} />
             </Switch>
           </Grid>
         </Grid>
