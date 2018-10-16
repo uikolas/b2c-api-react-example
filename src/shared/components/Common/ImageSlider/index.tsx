@@ -11,21 +11,24 @@ export interface IImageSlide {
 }
 interface ImageSliderProps extends WithStyles<typeof styles> {
   images: Array<IImageSlide>;
+  uniqueKey?: string | number;
 }
 
 export const ImageSliderBase: React.SFC<ImageSliderProps> = (props): JSX.Element => {
-  const { classes, images } = props;
+  const { classes, images, uniqueKey } = props;
   if (!images) {
     return null;
   }
-  const isMultipleImages = images.length > 1;
+  const isMultipleImages = Boolean(images.length > 1);
+  // Carousel key - it is a workaround - https://github.com/leandrowd/react-responsive-carousel/issues/213
   return (
     <Carousel
+      key={uniqueKey ? uniqueKey : JSON.stringify(images)}
       showArrows={isMultipleImages}
       className={classes.slider}
       infiniteLoop={true}
       showIndicators={false}
-      showThumbs={isMultipleImages}
+      showThumbs={!!isMultipleImages}
       showStatus={isMultipleImages}
     >
       { (images)

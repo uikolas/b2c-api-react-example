@@ -52,8 +52,12 @@ export class OrderService {
         dispatch(ordersCollectionFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        dispatch(ordersCollectionRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
+        let errorMessage = response.problem;
+        if (response.data.errors[0].detail) {
+          errorMessage = response.data.errors[0].detail;
+        }
+        dispatch(ordersCollectionRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
@@ -99,8 +103,12 @@ export class OrderService {
         dispatch(orderDetailsFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        dispatch(orderDetailsRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
+        let errorMessage = response.problem;
+        if (response.data.errors[0].detail) {
+          errorMessage = response.data.errors[0].detail;
+        }
+        dispatch(orderDetailsRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 

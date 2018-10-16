@@ -136,7 +136,7 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.getProductData(suggestion.abstract_sku);
+    // this.props.getProductData(suggestion.abstract_sku);
     this.props.changeLocation(`${pathProductPageBase}/${suggestion.abstract_sku}`);
   }
 

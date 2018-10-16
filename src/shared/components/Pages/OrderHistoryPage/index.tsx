@@ -102,14 +102,9 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
                   </Grid>
                   <Grid container justify="center" >
                     {isHasOrders
-                      ? <React.Fragment>
-                        <Grid item xs={12} sm={3}>
-
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
+                      ? <Grid item xs={12}>
                           <OrderList items={orders} />
                         </Grid>
-                      </React.Fragment>
                       : <Typography variant="title" color="inherit" gutterBottom={true}>
                         {noOrderText}
                       </Typography>

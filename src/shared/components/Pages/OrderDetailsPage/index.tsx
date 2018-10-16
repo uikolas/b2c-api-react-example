@@ -87,7 +87,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    if (!this.props.isLoading && !this.props.isOrderExist) {
+    if (!this.props.isRejected && !this.props.isOrderExist) {
       this.initRequestData();
     }
   }
@@ -169,6 +169,9 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
   }
 
   private initRequestData = () => {
+    if (this.props.isLoading) {
+      return;
+    }
     if (this.props.isAppDataSet && this.props.orderIdParam) {
       this.props.getOrderData(this.props.orderIdParam);
       return true;
@@ -203,11 +206,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                 </Grid>
                 <Grid container justify="center" >
                   {isOrderExist
-                    ? <React.Fragment>
-                      <Grid item xs={12} sm={3}>
-
-                      </Grid>
-                      <Grid item xs={12} sm={9}>
+                    ? <Grid item xs={12}>
                         <OrderDetailsGeneralInfo
                           orderId={order.id}
                           date={order.dateCreated}
@@ -241,7 +240,6 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                           />
                         </Grid>
                       </Grid>
-                    </React.Fragment>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>
                       {emptyOrderText}
                     </Typography>
