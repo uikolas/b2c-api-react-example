@@ -11,11 +11,29 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit,
   },
-  btnBackOuter: {
-    justifyContent: "flex-end",
-    display: "flex",
+  textField: {
+
   },
-  value: {
-    display: "inline"
+  controlsGroup: {
+    paddingBottom: theme.spacing.unit,
+    paddingTop: theme.spacing.unit,
+  },
+  control: {
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+  },
+  label: {
+
+  },
+  menu: {
+    width: 200,
+  },
+  btnSubmitOuter: {
+    textAlign: 'right',
+  },
+  form: {
+
+  },
+  input: {
   },
 });

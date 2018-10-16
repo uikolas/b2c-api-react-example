@@ -1,68 +1,174 @@
 import * as React from "react";
+import {ChangeEvent, FormEvent} from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ArrowBack from '@material-ui/icons/ArrowBack';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 import {styles} from './styles';
-import {TOrderDate, TOrderId} from "../../../../interfaces/order/index";
 import {SprykerButton} from "../../../UI/SprykerButton/index";
-import {AppDate} from "../../../Common/AppDate/index";
+import {submitBtnTitle} from "../../../../constants/buttons/index";
+import {
+  TCustomerFirstName,
+  TCustomerLastName,
+  TCustomerSalutation,
+  TSalutationVariant
+} from "../../../../interfaces/customer/index";
+import {salutationVariants} from "../../../../constants/customer/index";
 
 
-interface OrderDetailsGeneralInfoProps extends WithStyles<typeof styles> {
-  orderId: TOrderId;
-  date: TOrderDate;
-  btnBackHandler: Function;
+interface UpdateProfileProps extends WithStyles<typeof styles> {
+  submitHandler: (event: FormEvent<HTMLFormElement>) => void;
+  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  changeSalutationHandler: (event: React.ChangeEvent<HTMLInputElement>)=> void;
+  firstName: TCustomerFirstName;
+  lastName: TCustomerLastName;
+  salutation: TCustomerSalutation;
+  email: TCustomerSalutation;
 }
 
-export const sectionTitle = "Order Details";
-export const orderIdTitle = "Order Id: ";
-export const orderDateTitle = "Order Date: ";
-export const btnBackTitle = "Back";
+export const sectionTitle = "Update Profile";
 
-export const OrderDetailsGeneralInfoBase: React.SFC<OrderDetailsGeneralInfoProps> = (props): JSX.Element => {
-  const { classes, btnBackHandler, orderId, date} = props;
+export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Element => {
+  const {
+    classes,
+    submitHandler,
+    inputChangeHandler,
+    changeSalutationHandler,
+    firstName,
+    lastName,
+    salutation,
+    email,
+  } = props;
 
   return (
-    <React.Fragment>
-      <Grid container justify="space-between" className={classes.section}>
-        <Grid item xs={12} sm={8}>
-          <Typography variant="title" color="inherit" gutterBottom={true}>
-            {sectionTitle}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.btnBackOuter}>
-          <SprykerButton
-            title={btnBackTitle}
-            onClick={btnBackHandler}
-            IconType={ArrowBack}
-          />
-        </Grid>
+    <Grid container justify="flex-start" className={classes.section}>
+      <Grid item xs={12}>
+        <Typography variant="title" color="inherit" gutterBottom={true}>
+          {sectionTitle}
+        </Typography>
+        <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={submitHandler}
+          id="updateProfile"
+          name="updateProfile"
+        >
+
+          <Grid container justify="flex-start" className={classes.controlsGroup}>
+            <Grid item xs={12} sm={2} className={classes.control}>
+              <TextField
+              required
+              id="update-salutation"
+              select
+              label="Salutation"
+              name="salutation"
+              className={classes.textField}
+              value={salutation}
+              onChange={changeSalutationHandler}
+              fullWidth
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+                className: classes.label,
+              }}
+            >
+              {salutationVariants.map((option: TSalutationVariant) => (
+                <MenuItem
+                  key={option.value}
+                  value={option.value}
+
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+            </Grid>
+
+            <Grid item xs={12} sm={5} className={classes.control}>
+              <TextField
+              required
+              id="update-first-name"
+              label="First Name"
+              name="firstName"
+              type="text"
+              value={firstName}
+              className={classes.textField}
+              margin="normal"
+              onChange={inputChangeHandler}
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                className: classes.input,
+              }}
+            />
+            </Grid>
+
+            <Grid item xs={12} sm={5} className={classes.control}>
+              <TextField
+              required
+              id="update-last-name"
+              label="Last Name"
+              name="lastName"
+              type="text"
+              value={lastName}
+              onChange={inputChangeHandler}
+              className={classes.textField}
+              margin="normal"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                className: classes.input,
+              }}
+            />
+            </Grid>
+          </Grid>
+
+          <Grid container justify="flex-start" className={classes.controlsGroup}>
+            <Grid item xs={12} sm={12} className={classes.control}>
+              <TextField
+                required
+                id="update-email"
+                label="Email"
+                name="email"
+                type="email"
+                value={email}
+                onChange={inputChangeHandler}
+                className={classes.textField}
+                margin="normal"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  className: classes.input,
+                }}
+              />
+            </Grid>
+          </Grid>
+
+        </form>
       </Grid>
-
-      <Grid container justify="flex-start" className={classes.section}>
-        <Grid item xs={12}>
-
-          <Typography variant="subheading" component="div">
-            {orderIdTitle}
-            <Typography variant="title" color="inherit" gutterBottom={true} className={classes.value}>
-              {orderId}
-            </Typography>
-          </Typography>
-
-          <Typography variant="subheading" component="div">
-            {orderDateTitle}
-            <Typography variant="title" color="inherit" gutterBottom={true} className={classes.value}>
-              <AppDate value={date} />
-            </Typography>
-          </Typography>
-
-        </Grid>
+      <Grid item xs={12} className={classes.btnSubmitOuter}>
+        <SprykerButton
+          title={submitBtnTitle}
+          onClick={submitHandler}
+        />
       </Grid>
-    </React.Fragment>
+    </Grid>
   );
 };
 
-export const OrderDetailsGeneralInfo = withStyles(styles)(OrderDetailsGeneralInfoBase);
+export const UpdateProfile = withStyles(styles)(UpdateProfileBase);
 
