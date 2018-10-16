@@ -17,7 +17,10 @@ import {
   TCustomerEmail, TCustomerFirstName, TCustomerInputValue, TCustomerLastName, TCustomerPassword,
   TCustomerSalutation
 } from "../../../interfaces/customer/index";
-import {emptyRequiredFieldsErrorText, inputSaveErrorText} from "../../../constants/messages/errors";
+import {
+  emptyRequiredFieldsErrorText, inputSaveErrorText,
+  passwordsNotEqualErrorText
+} from "../../../constants/messages/errors";
 import {ChangePassword} from "./ChangePassword/index";
 
 export const pageTitle = "Profile";
@@ -31,20 +34,20 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
 }
 
 interface ICustomerProfilePageState {
-  profile: ICustomerDataProfile;
-  password: ICustomerChangePassword;
+  profileData: ICustomerDataProfile;
+  passwordData: ICustomerChangePassword;
 }
 
 export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
 
   public state: ICustomerProfilePageState = {
-    profile: {
+    profileData: {
       salutation: 'Dr',
       firstName: 'firstName',
       lastName: 'lastName',
       email: 'email@email.com',
     },
-    password: {
+    passwordData: {
       newPassword: '',
       oldPassword: '111111',
       confirmPassword: '',
@@ -62,7 +65,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   public handleProfileInputChange =  (event: any) => {
     const { name, value }: {name: (keyof ICustomerDataProfile), value: TCustomerInputValue} = event.target;
     const cleanValue = value.trim();
-    if (!this.state.profile.hasOwnProperty(name)) {
+    if (!this.state.profileData.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
       return;
     }
@@ -70,15 +73,15 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     this.setState( (prevState: ICustomerProfilePageState) => {
 
       const key: (keyof ICustomerDataProfile) = name;
-      const prevValue: TCustomerInputValue = prevState.profile[key];
+      const prevValue: TCustomerInputValue = prevState.profileData[key];
       if (prevValue === cleanValue) {
         return;
       }
 
       return ({
         ...prevState,
-        profile: {
-          ...prevState.profile,
+        profileData: {
+          ...prevState.profileData,
           [name]: cleanValue,
         },
       });
@@ -89,7 +92,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   public handlePasswordInputChange =  (event: any) => {
     const { name, value }: {name: (keyof ICustomerChangePassword), value: TCustomerInputValue} = event.target;
     const cleanValue = value.trim();
-    if (!this.state.password.hasOwnProperty(name)) {
+    if (!this.state.passwordData.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
       return;
     }
@@ -97,15 +100,15 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     this.setState( (prevState: ICustomerProfilePageState) => {
 
       const key: (keyof ICustomerChangePassword) = name;
-      const prevValue: TCustomerInputValue = prevState.password[key];
+      const prevValue: TCustomerInputValue = prevState.passwordData[key];
       if (prevValue === cleanValue) {
         return;
       }
 
       return ({
         ...prevState,
-        password: {
-          ...prevState.password,
+        passwordData: {
+          ...prevState.passwordData,
           [name]: cleanValue,
         },
       });
@@ -122,13 +125,13 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     }
 
     this.setState( (prevState: ICustomerProfilePageState) => {
-      if (prevState.profile.salutation === value) {
+      if (prevState.profileData.salutation === value) {
         return;
       }
       return ({
         ...prevState,
-        profile: {
-          ...prevState.profile,
+        profileData: {
+          ...prevState.profileData,
           salutation: value,
         },
       });
@@ -139,17 +142,17 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     event.preventDefault();
     console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
 
-    const {profile} = this.state;
-    if( !profile
-      || !profile.firstName
-      || !profile.lastName
-      || !profile.email
-      || !profile.salutation
+    const {profileData, profileData: {firstName, lastName, salutation, email}} = this.state;
+    if( !profileData
+      || !firstName
+      || !lastName
+      || !email
+      || !salutation
     ) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
-    console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profile);
+    console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
 
   }
 
@@ -157,16 +160,22 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     event.preventDefault();
     console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
 
-    const {password} = this.state;
-    if( !password
-      || !password.oldPassword
-      || !password.newPassword
-      || !password.confirmPassword
+    const {passwordData, passwordData: {oldPassword, newPassword, confirmPassword}} = this.state;
+    if( !passwordData
+      || !oldPassword
+      || !newPassword
+      || !confirmPassword
     ) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
-    console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', password);
+
+    if (newPassword !== confirmPassword) {
+      toast.warn(passwordsNotEqualErrorText);
+      return null;
+    }
+
+    console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
 
   }
 
@@ -178,6 +187,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     console.info('CustomerProfilePage props: ', this.props);
     console.info('CustomerProfilePage state: ', this.state);
     const {classes, isFulfilled} = this.props;
+    const {profileData, passwordData} = this.state;
 
     return (
       <div>
@@ -198,18 +208,18 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
                   submitHandler={this.handleSubmitUpdateProfile}
                   inputChangeHandler={this.handleProfileInputChange}
                   changeSalutationHandler={this.handleChangeSalutation}
-                  firstName={this.state.profile.firstName}
-                  lastName={this.state.profile.lastName}
-                  salutation={this.state.profile.salutation}
-                  email={this.state.profile.email}
+                  firstName={profileData.firstName}
+                  lastName={profileData.lastName}
+                  salutation={profileData.salutation}
+                  email={profileData.email}
                 />
 
                 <ChangePassword
                   submitHandler={this.handleSubmitPassword}
                   inputChangeHandler={this.handlePasswordInputChange}
-                  oldPassword={this.state.password.oldPassword}
-                  newPassword={this.state.password.newPassword}
-                  confirmPassword={this.state.password.confirmPassword}
+                  oldPassword={passwordData.oldPassword}
+                  newPassword={passwordData.newPassword}
+                  confirmPassword={passwordData.confirmPassword}
                 />
 
               </Grid>
