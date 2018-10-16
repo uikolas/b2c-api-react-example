@@ -6,21 +6,23 @@ import Typography from '@material-ui/core/Typography';
 import { toast } from 'react-toastify';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {styles} from './styles';
+import {pageStyles} from './styles';
 import {isAppInitiated} from "../../../reducers/Common/Init";
 import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {getRouterLocation} from "../../../selectors/Common/router";
 import {UpdateProfile} from "./UpdateProfile/index";
 import {
+  ICustomerChangePassword,
   ICustomerDataProfile,
   TCustomerEmail, TCustomerFirstName, TCustomerInputValue, TCustomerLastName, TCustomerPassword,
   TCustomerSalutation
 } from "../../../interfaces/customer/index";
 import {emptyRequiredFieldsErrorText, inputSaveErrorText} from "../../../constants/messages/errors";
+import {ChangePassword} from "./ChangePassword/index";
 
 export const pageTitle = "Profile";
 
-interface ICustomerProfilePageProps extends WithStyles<typeof styles>, RouteProps {
+interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, RouteProps {
   isLoading: boolean;
   isRejected: boolean;
   isFulfilled: boolean;
@@ -30,9 +32,7 @@ interface ICustomerProfilePageProps extends WithStyles<typeof styles>, RouteProp
 
 interface ICustomerProfilePageState {
   profile: ICustomerDataProfile;
-  newPassword: TCustomerPassword | null;
-  oldPassword: TCustomerPassword | null;
-  confirmPassword: TCustomerPassword | null;
+  password: ICustomerChangePassword;
 }
 
 export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
@@ -44,9 +44,11 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       lastName: 'lastName',
       email: 'email@email.com',
     },
-    newPassword: '',
-    oldPassword: '111111',
-    confirmPassword: '',
+    password: {
+      newPassword: '',
+      oldPassword: '111111',
+      confirmPassword: '',
+    },
   };
 
   public componentDidMount = () => {
@@ -84,6 +86,33 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   }
 
+  public handlePasswordInputChange =  (event: any) => {
+    const { name, value }: {name: (keyof ICustomerChangePassword), value: TCustomerInputValue} = event.target;
+    const cleanValue = value.trim();
+    if (!this.state.password.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+      return;
+    }
+
+    this.setState( (prevState: ICustomerProfilePageState) => {
+
+      const key: (keyof ICustomerChangePassword) = name;
+      const prevValue: TCustomerInputValue = prevState.password[key];
+      if (prevValue === cleanValue) {
+        return;
+      }
+
+      return ({
+        ...prevState,
+        password: {
+          ...prevState.password,
+          [name]: cleanValue,
+        },
+      });
+    });
+
+  }
+
   public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
     console.log("%c *** handleChangeSalutation *** event", 'background: #3d5afe; color: #ffea00');
     const {value}: {value: string} = event.target;
@@ -110,7 +139,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     event.preventDefault();
     console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
 
-    const profile = this.state.profile;
+    const {profile} = this.state;
     if( !profile
       || !profile.firstName
       || !profile.lastName
@@ -121,6 +150,23 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       return null;
     }
     console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profile);
+
+  }
+
+  public handleSubmitPassword = (event: any): void => {
+    event.preventDefault();
+    console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
+
+    const {password} = this.state;
+    if( !password
+      || !password.oldPassword
+      || !password.newPassword
+      || !password.confirmPassword
+    ) {
+      toast.warn(emptyRequiredFieldsErrorText);
+      return null;
+    }
+    console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', password);
 
   }
 
@@ -158,6 +204,14 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
                   email={this.state.profile.email}
                 />
 
+                <ChangePassword
+                  submitHandler={this.handleSubmitPassword}
+                  inputChangeHandler={this.handlePasswordInputChange}
+                  oldPassword={this.state.password.oldPassword}
+                  newPassword={this.state.password.newPassword}
+                  confirmPassword={this.state.password.confirmPassword}
+                />
+
               </Grid>
             </div>
           )
@@ -167,7 +221,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   }
 }
 
-export const CustomerProfilePage = withStyles(styles)(CustomerProfilePageBase);
+export const CustomerProfilePage = withStyles(pageStyles)(CustomerProfilePageBase);
 
 export const ConnectedCustomerProfilePage = reduxify(
   (state: any, ownProps: any) => {

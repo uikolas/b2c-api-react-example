@@ -23,3 +23,9 @@ export interface ICustomerDataProfile {
   lastName: TCustomerLastName;
   email: TCustomerEmail;
 }
+
+export interface ICustomerChangePassword {
+  newPassword: TCustomerPassword;
+  oldPassword: TCustomerPassword;
+  confirmPassword: TCustomerPassword;
+}

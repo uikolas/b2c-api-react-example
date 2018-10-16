@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
-import {styles} from './styles';
+import {pageStyles} from '../styles';
 import {SprykerButton} from "../../../UI/SprykerButton/index";
 import {submitBtnTitle} from "../../../../constants/buttons/index";
 import {
@@ -18,7 +18,7 @@ import {
 import {salutationVariants} from "../../../../constants/customer/index";
 
 
-interface UpdateProfileProps extends WithStyles<typeof styles> {
+interface UpdateProfileProps extends WithStyles<typeof pageStyles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   changeSalutationHandler: (event: React.ChangeEvent<HTMLInputElement>)=> void;
@@ -60,25 +60,25 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
           <Grid container justify="flex-start" className={classes.controlsGroup}>
             <Grid item xs={12} sm={2} className={classes.control}>
               <TextField
-              required
-              id="update-salutation"
-              select
-              label="Salutation"
-              name="salutation"
-              className={classes.textField}
-              value={salutation}
-              onChange={changeSalutationHandler}
-              fullWidth
-              SelectProps={{
-                MenuProps: {
-                  className: classes.menu,
-                },
-              }}
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-                className: classes.label,
-              }}
+                required
+                id="update-salutation"
+                select
+                label="Salutation"
+                name="salutation"
+                className={classes.textField}
+                value={salutation}
+                onChange={changeSalutationHandler}
+                fullWidth
+                SelectProps={{
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                  className: classes.label,
+                }}
             >
               {salutationVariants.map((option: TSalutationVariant) => (
                 <MenuItem
@@ -94,44 +94,44 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
 
             <Grid item xs={12} sm={5} className={classes.control}>
               <TextField
-              required
-              id="update-first-name"
-              label="First Name"
-              name="firstName"
-              type="text"
-              value={firstName}
-              className={classes.textField}
-              margin="normal"
-              onChange={inputChangeHandler}
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                className: classes.input,
-              }}
-            />
+                required
+                id="update-first-name"
+                label="First Name"
+                name="firstName"
+                type="text"
+                value={firstName}
+                className={classes.textField}
+                margin="normal"
+                onChange={inputChangeHandler}
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  className: classes.input,
+                }}
+              />
             </Grid>
 
             <Grid item xs={12} sm={5} className={classes.control}>
               <TextField
-              required
-              id="update-last-name"
-              label="Last Name"
-              name="lastName"
-              type="text"
-              value={lastName}
-              onChange={inputChangeHandler}
-              className={classes.textField}
-              margin="normal"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                className: classes.input,
-              }}
-            />
+                required
+                id="update-last-name"
+                label="Last Name"
+                name="lastName"
+                type="text"
+                value={lastName}
+                onChange={inputChangeHandler}
+                className={classes.textField}
+                margin="normal"
+                fullWidth
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                InputProps={{
+                  className: classes.input,
+                }}
+              />
             </Grid>
           </Grid>
 
@@ -158,17 +158,19 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
             </Grid>
           </Grid>
 
+          <Grid item xs={12} className={`${classes.btnSubmitOuter} ${classes.controlsGroup}`}>
+            <SprykerButton
+              title={submitBtnTitle}
+              btnType={'submit'}
+            />
+          </Grid>
+
         </form>
       </Grid>
-      <Grid item xs={12} className={classes.btnSubmitOuter}>
-        <SprykerButton
-          title={submitBtnTitle}
-          onClick={submitHandler}
-        />
-      </Grid>
+
     </Grid>
   );
 };
 
-export const UpdateProfile = withStyles(styles)(UpdateProfileBase);
+export const UpdateProfile = withStyles(pageStyles)(UpdateProfileBase);
 
