@@ -15,7 +15,7 @@ interface ImageSliderProps extends WithStyles<typeof styles> {
 }
 
 export const ImageSliderBase: React.SFC<ImageSliderProps> = (props): JSX.Element => {
-  const { classes, images } = props;
+  const { classes, images, uniqueKey } = props;
   if (!images) {
     return null;
   }
