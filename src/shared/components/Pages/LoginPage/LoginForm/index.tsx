@@ -5,14 +5,15 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 import {formStyles} from '../styles';
+import {TCustomerPassword, TCustomerUsername} from "../../../../interfaces/customer/index";
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
 }
 
 interface LoginFormState {
-  username: string;
-  password: string;
+  username: TCustomerUsername;
+  password: TCustomerPassword;
   isSubmitting: boolean;
   isSubmitted: boolean;
 }
