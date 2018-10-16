@@ -185,7 +185,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
     const {classes, isOrderExist, isFulfilled, routerGoBack, currency, order} = this.props;
 
     return (
-      <AppMain>
+      <div>
         { (isFulfilled === false)
           ? null
           : (
@@ -251,7 +251,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
 
           )
         }
-      </AppMain>
+      </div>
     );
   }
 }

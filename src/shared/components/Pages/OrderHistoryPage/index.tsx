@@ -82,7 +82,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
     const {classes, isHasOrders, isFulfilled, orders} = this.props;
 
     return (
-      <AppMain>
+      <div>
         { (isFulfilled === false)
           ? null
           : (
@@ -115,7 +115,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
             </OrderHistoryContext.Provider>
           )
         }
-      </AppMain>
+      </div>
     );
   }
 }
