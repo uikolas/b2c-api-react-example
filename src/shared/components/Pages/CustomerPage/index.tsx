@@ -20,7 +20,15 @@ import {ConnectedWishlistPage} from '../WishListPage';
 import {ConnectedWishlistDetailPage} from '../WishlistDetail';
 import {ConnectedOrderHistoryPage} from '../OrderHistoryPage';
 import {ConnectedOrderDetailsPage} from '../OrderDetailsPage';
-import {pathCustomerPage} from '../../../routes/contentRoutes';
+import {
+  pathCustomerPage,
+  pathOrderDetailsPage,
+  pathOrderHistoryPage,
+  pathUserAddressesPage,
+  pathUserProfilePage,
+  pathWishListPage,
+  pathWishListsPage,
+} from '../../../routes/contentRoutes';
 
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
@@ -52,30 +60,30 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
             <Paper>
               <MenuList>
                 <MenuItem
-                  selected={location.pathname === `${pathCustomerPage}/profile`}
+                  selected={location.pathname === pathUserProfilePage}
                 >
-                  <NavLink to={`${pathCustomerPage}/profile`}>
+                  <NavLink to={pathUserProfilePage}>
                     Profile
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname === `${pathCustomerPage}/addresses`}
+                  selected={location.pathname === pathUserAddressesPage}
                 >
-                  <NavLink to={`${pathCustomerPage}/addresses`}>
+                  <NavLink to={pathUserAddressesPage}>
                     Addresses
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname.includes(`${pathCustomerPage}/order`)}
+                  selected={location.pathname.includes(pathOrderHistoryPage)}
                 >
-                  <NavLink to={`${pathCustomerPage}/order`}>
+                  <NavLink to={pathOrderHistoryPage}>
                     Orders history
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname.includes(`${pathCustomerPage}/wishlist`)}
+                  selected={location.pathname.includes(pathWishListsPage)}
                 >
-                  <NavLink to={`${pathCustomerPage}/wishlists`}>
+                  <NavLink to={pathWishListsPage}>
                     Wishlist
                   </NavLink>
                 </MenuItem>
@@ -85,11 +93,11 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
           <Grid item xs={9}>
             <Switch>
               <Route path={pathCustomerPage} exact render={() => 'Customer'} />
-              <Route path={`${pathCustomerPage}/wishlists`} component={ConnectedWishlistPage} />
-              <Route path={`${pathCustomerPage}/wishlist/:name`} component={ConnectedWishlistDetailPage} />
-              <Route path={`${pathCustomerPage}/order`} exact component={ConnectedOrderHistoryPage} />
-              <Route path={`${pathCustomerPage}/order/details/:orderId`} component={ConnectedOrderDetailsPage} />
-              <Route path={`${pathCustomerPage}/profile`} render={() => 'Profile page'} />
+              <Route path={pathWishListsPage} component={ConnectedWishlistPage} />
+              <Route path={pathWishListPage} component={ConnectedWishlistDetailPage} />
+              <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
+              <Route path={pathOrderDetailsPage} component={ConnectedOrderDetailsPage} />
+              <Route path={pathUserProfilePage} render={() => 'Profile page'} />
             </Switch>
           </Grid>
         </Grid>

@@ -16,7 +16,21 @@ export const pathProductPageBase = `${config.WEB_PATH}product`;
 export const pathProductPage = `${pathProductPageBase}/:productId`;
 export const pathLoginPage = `${config.WEB_PATH}login`;
 export const pathCartPage = `${config.WEB_PATH}cart`;
+
 export const pathCustomerPage = `${config.WEB_PATH}customer`;
+
+export const pathWishListsPage = `${pathCustomerPage}/wishlists`;
+export const pathWishListPageBase = `${pathCustomerPage}/wishlist`;
+export const pathWishListPage = `${pathWishListPageBase}/:name`;
+
+export const pathOrderHistoryPage = `${pathCustomerPage}/order`;
+export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
+export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
+
+export const pathUserProfilePage = `${pathCustomerPage}/profile`;
+
+export const pathUserAddressesPage = `${pathCustomerPage}/addresses`;
+
 export const pathNotFoundPage = `${config.WEB_PATH}*`;
 
 export const getContentRoutes = function() {
