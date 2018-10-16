@@ -1,5 +1,6 @@
-import api from '../api';
 import { toast } from 'react-toastify';
+import jwtDecoder from 'jwt-decode';
+import api from '../api';
 import {API_WITH_FIXTURES} from "../../constants/Environment/index";
 import {fixtureLogin} from "../fixtures/loginFixture";
 import {getTestDataPromise} from "../apiFixture/index";
@@ -61,17 +62,18 @@ export class PagesLoginService {
           data: fixtureLogin.data,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         response = await api.post('access-tokens', body, { withCredentials: true });
       }
 
-      console.info('loginRequest result', response);
-
       if (response.ok) {
+        const {sub}: {sub: string} = jwtDecoder(response.data.data.attributes.accessToken);
+
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data.data.attributes,
+          customerRef: JSON.parse(sub).customer_reference,
         });
         toast.success('You are now logged in');
         return response.data.data.attributes;

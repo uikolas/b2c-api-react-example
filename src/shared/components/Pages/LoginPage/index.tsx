@@ -15,7 +15,6 @@ import {styles} from './styles';
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
-  customer?: any;
   isAuth?: boolean;
   refreshToken?: string;
   handleSubmitRegisterForm: Function;
@@ -66,7 +65,6 @@ export const ConnectedLogin = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customer : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
       }

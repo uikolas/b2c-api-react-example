@@ -29,7 +29,7 @@ export const initApplicationDataAction = function (payload: IInitApplicationData
   };
 };
 
-export const setAuthFromStorageAction = (payload: {expiresIn: string, accessToken: string, refreshToken: string}) => ({
+export const setAuthFromStorageAction = (payload: {expiresIn: string, accessToken: string, refreshToken: string, customerRef: string}) => ({
   type: SET_AUTH_FROM_STORAGE + '_FULFILLED',
   payload,
 });

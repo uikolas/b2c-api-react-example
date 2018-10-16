@@ -20,6 +20,7 @@ import {ConnectedWishlistPage} from '../WishListPage';
 import {ConnectedWishlistDetailPage} from '../WishlistDetail';
 import {ConnectedOrderHistoryPage} from '../OrderHistoryPage';
 import {ConnectedOrderDetailsPage} from '../OrderDetailsPage';
+import {CustomerAddressPage} from '../CustomerAddressesPage';
 import {
   pathCustomerPage,
   pathOrderDetailsPage,
@@ -94,6 +95,7 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
           <Grid item xs={9}>
             <Switch>
               <Route path={pathCustomerPage} exact render={() => 'Customer'} />
+              <Route path={pathCustomerAddressesPage} component={CustomerAddressPage} />
               <Route path={pathWishListsPage} component={ConnectedWishlistPage} />
               <Route path={pathWishListPage} component={ConnectedWishlistDetailPage} />
               <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
