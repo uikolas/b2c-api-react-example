@@ -7,12 +7,19 @@ export const pageStyles = (theme: Theme) => createStyles({
     width: "100%",
     maxWidth: "1400px",
     margin: "auto",
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
   },
   section: {
     borderBottom: `1px solid ${theme.palette.grey.A100}`,
     paddingBottom: theme.spacing.unit * 2,
     paddingTop: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+  },
+  sectionTitle: {
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
   },
   textField: {
 

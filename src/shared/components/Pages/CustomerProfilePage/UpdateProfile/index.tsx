@@ -45,7 +45,7 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
   return (
     <Grid container justify="flex-start" className={classes.section}>
       <Grid item xs={12}>
-        <Typography variant="title" color="inherit" gutterBottom={true}>
+        <Typography variant="title" color="inherit" gutterBottom={true} className={classes.sectionTitle}>
           {sectionTitle}
         </Typography>
         <form

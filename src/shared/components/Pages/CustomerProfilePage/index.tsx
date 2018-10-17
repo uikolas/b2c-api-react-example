@@ -1,4 +1,5 @@
 import * as React from "react";
+import {ChangeEvent, FormEvent} from "react";
 import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -22,6 +23,7 @@ import {
   passwordsNotEqualErrorText
 } from "../../../constants/messages/errors";
 import {ChangePassword} from "./ChangePassword/index";
+import {AccountActions} from "./AccountActions/index";
 
 export const pageTitle = "Profile";
 
@@ -36,6 +38,16 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
 interface ICustomerProfilePageState {
   profileData: ICustomerDataProfile;
   passwordData: ICustomerChangePassword;
+}
+
+interface IProfileFieldInput {
+  name: (keyof ICustomerDataProfile);
+  value: TCustomerInputValue;
+}
+
+interface IPasswordFieldInput {
+  name: (keyof ICustomerChangePassword);
+  value: TCustomerInputValue;
 }
 
 export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
@@ -62,8 +74,8 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     console.log("%c ---- componentDidUpdate ----", 'background: #4cab50; color: #cada55');
   }
 
-  public handleProfileInputChange =  (event: any) => {
-    const { name, value }: {name: (keyof ICustomerDataProfile), value: TCustomerInputValue} = event.target;
+  public handleProfileInputChange =  (event: {target: IProfileFieldInput}): void => {
+    const { name, value }: IProfileFieldInput = event.target;
     const cleanValue = value.trim();
     if (!this.state.profileData.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
@@ -89,8 +101,8 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   }
 
-  public handlePasswordInputChange =  (event: any) => {
-    const { name, value }: {name: (keyof ICustomerChangePassword), value: TCustomerInputValue} = event.target;
+  public handlePasswordInputChange =  (event: {target: IPasswordFieldInput}): void => {
+    const { name, value }: IPasswordFieldInput = event.target;
     const cleanValue = value.trim();
     if (!this.state.passwordData.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
@@ -138,7 +150,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     });
   }
 
-  public handleSubmitUpdateProfile = (event: any): void => {
+  public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
 
@@ -156,7 +168,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   }
 
-  public handleSubmitPassword = (event: any): void => {
+  public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
 
@@ -176,6 +188,12 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     }
 
     console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
+
+  }
+
+  public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    console.log("%c *** handleDeleteAccount ***", 'background: #1d5cce; color: #ffea00');
 
   }
 
@@ -220,6 +238,10 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
                   oldPassword={passwordData.oldPassword}
                   newPassword={passwordData.newPassword}
                   confirmPassword={passwordData.confirmPassword}
+                />
+
+                <AccountActions
+                  submitDeleteHandler={this.handleSubmitDeleteAccount}
                 />
 
               </Grid>
