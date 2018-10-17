@@ -34,7 +34,7 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
   return (
     <Grid container justify="flex-start" className={classes.section}>
       <Grid item xs={12}>
-        <Typography variant="title" color="inherit" gutterBottom={true}>
+        <Typography variant="title" color="inherit" gutterBottom={true} className={classes.sectionTitle}>
           {sectionTitle}
         </Typography>
         <form
