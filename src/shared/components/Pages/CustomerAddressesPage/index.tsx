@@ -24,13 +24,16 @@ import {IAddressItem} from '../../../interfaces/addresses';
 import {getAddressesAction, addAddressAction} from '../../../actions/Pages/Addresses';
 
 import {isAppInitiated} from "../../../reducers/Common/Init";
-import {isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {ILoginState} from "../../../reducers/Pages/Login";
 import {getRouterLocation, getRouterHistoryPush} from "../../../selectors/Common/router";
 
-interface CustomerAddressPageProps extends WithStyles<typeof styles>, RouteProps {
+interface CustomerAddressPageProps extends WithStyles<typeof styles> {
+  location: string;
+  customer: string;
   dispatch: Function;
   getAddressesList: Function;
   addAddress: Function;
+  routerPush: Function;
 }
 
 interface CustomerAddressPageState {
@@ -44,7 +47,7 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
   };
 
   public componentDidMount() {
-    this.props.getAddressesList('DE--8');
+    this.props.getAddressesList(this.props.customer);
   }
 
   public handleAddAddress = () => {
@@ -79,7 +82,7 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
 
         <Grid item xs={12} container justify="center">
           <Paper elevation={4} className={classes.paperContainer}>
-            <Button variant="contained" color="primary" onClick={this.handleAddAddress}>
+            <Button variant="contained" color="primary" className={classes.addButton} onClick={this.handleAddAddress}>
               Add new address
             </Button>
             <Divider />
@@ -94,7 +97,7 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
                 </TableRow>
               </TableHead>
               <TableBody>
-
+                {[]}
               </TableBody>
             </Table>
           </Paper>
@@ -110,10 +113,13 @@ export const CustomerAddress = withStyles(styles)(CustomerAddressBase);
 export const CustomerAddressPage = reduxify(
   (state: any, ownProps: any) => {
     const location = getRouterLocation(state, ownProps);
-
+    const routerPush = getRouterHistoryPush(state, ownProps);
+    const customerProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
 
     return ({
+      customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customerRef,
       location,
+      routerPush,
     });
   },
   (dispatch: Function) => ({

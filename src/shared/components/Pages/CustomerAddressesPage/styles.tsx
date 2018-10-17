@@ -6,6 +6,9 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px`,
   },
+  addButton: {
+    margin: theme.spacing.unit * 2,
+  },
   newList: {
     width: '70%',
     margin: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 2}px`,
