@@ -1,6 +1,7 @@
 import produce from 'immer';
 import {
   CUSTOMER_DATA_REQUEST,
+  CUSTOMER_DATA_UPDATE,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
 import {
   IReduxState,
@@ -24,10 +25,13 @@ export const initialState: ICustomerDataState = {
 export const pageCustomerProfile = function(state: ICustomerDataState = initialState, action: any): ICustomerDataState {
   switch (action.type) {
     case `${CUSTOMER_DATA_REQUEST}_REJECTED`:
+    case `${CUSTOMER_DATA_UPDATE}_REJECTED`:
       return handleRejected(state, action.payload);
     case `${CUSTOMER_DATA_REQUEST}_PENDING`:
-      return handlePending(state, action.payload);
+    case `${CUSTOMER_DATA_UPDATE}_PENDING`:
+      return handlePending(state);
     case `${CUSTOMER_DATA_REQUEST}_FULFILLED`:
+    case `${CUSTOMER_DATA_UPDATE}_FULFILLED`:
       return handleFulfilled(state, action.payload);
     default:
       return state;
@@ -56,7 +60,8 @@ const handleRejected = (customerState: ICustomerDataState, payload: any) => {
   };
 };
 
-const handlePending = (customerState: ICustomerDataState, payload: any) => {
+const handlePending = (customerState: ICustomerDataState) => {
+  console.log('handlePending customerState.data ', customerState.data);
   return {
     ...customerState,
     data: {
@@ -103,7 +108,7 @@ export function isPageCustomerProfileFulfilled(state: any, props: any): boolean 
 }
 
 export function getCustomerProfile(state: any, props: any): ICustomerDataParsed | null {
-  if (isPageCustomerProfileRejected(state, props) || !isCustomerProfilePresent(state, props)) {
+  if (!isCustomerProfilePresent(state, props)) {
     return null;
   }
 

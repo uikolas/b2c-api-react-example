@@ -6,12 +6,10 @@ interface ICustomerDataResponse {
 }
 
 export const parseCustomerDataResponse = (response: ICustomerDataResponse): ICustomerDataParsed => {
-  console.log('parseCustomerDataResponse response', response);
-
   if (!response) {
     return null;
   }
-  const { data, data: {attributes, id} }: any = response;
+  const { data: {attributes, id} }: any = response;
 
   let result: ICustomerDataParsed = {
     id,

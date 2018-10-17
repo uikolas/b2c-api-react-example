@@ -24,7 +24,7 @@ import {
 } from "../../../constants/messages/errors";
 import {ChangePassword} from "./ChangePassword/index";
 import {AccountActions} from "./AccountActions/index";
-import {getCustomerProfileAction} from "../../../actions/Pages/CustomerProfile";
+import {getCustomerProfileAction, updateCustomerProfileAction} from "../../../actions/Pages/CustomerProfile";
 import {
   getCustomerProfile,
   isCustomerProfilePresent,
@@ -43,6 +43,7 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   isUserLoggedIn: boolean;
   customerReference: TCustomerReference;
   getCustomerData: Function;
+  updateCustomerData: Function;
   customerData: ICustomerDataParsed;
 }
 
@@ -99,7 +100,6 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     }
 
     this.setState( (prevState: ICustomerProfilePageState) => {
-
       const key: (keyof ICustomerProfile) = name;
       const prevValue: TCustomerInputValue = prevState[key];
       if (prevValue === cleanValue) {
@@ -111,22 +111,28 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
         [name]: cleanValue,
       });
     });
-
   }
 
   public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+    if (this.props.isLoading) {
+      return;
+    }
     console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
-    const firstName = this.getCustomerCurrentDataField(keyFirstName);
-    const lastName = this.getCustomerCurrentDataField(keyLastName);
-    const salutation = this.getCustomerCurrentDataField(keySalutation);
-    const email = this.getCustomerCurrentDataField(keyEmail);
+    const firstName = this.getCurrentDataField(keyFirstName);
+    const lastName = this.getCurrentDataField(keyLastName);
+    const salutation = this.getCurrentDataField(keySalutation);
+    const email = this.getCurrentDataField(keyEmail);
 
     if(!firstName || !lastName || !email || !salutation) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
     const profileData = {firstName, lastName, salutation, email};
+    this.props.updateCustomerData(
+      this.props.customerReference,
+      profileData
+    );
     console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
 
   }
@@ -135,9 +141,9 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     event.preventDefault();
     console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
 
-    const oldPassword = this.getCustomerCurrentDataField(keyOldPassword);
-    const newPassword = this.getCustomerCurrentDataField(keyNewPassword);
-    const confirmPassword = this.getCustomerCurrentDataField(keyConfirmPassword);
+    const oldPassword = this.getCurrentDataField(keyOldPassword);
+    const newPassword = this.getCurrentDataField(keyNewPassword);
+    const confirmPassword = this.getCurrentDataField(keyConfirmPassword);
     if( !oldPassword || !newPassword || !confirmPassword) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
@@ -158,9 +164,10 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   }
 
-  private getCustomerCurrentDataField = (fieldName: (keyof ICustomerProfilePageState)) => {
+  private getCurrentDataField = (fieldName: (keyof ICustomerProfilePageState)) => {
+    const emptyValue = '';
     if (!this.props.isCustomerDataExist || !fieldName) {
-      return null;
+      return emptyValue;
     }
 
     const key: (keyof ICustomerProfilePageState) = fieldName;
@@ -172,10 +179,9 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     } else if (propsValue) {
       return propsValue;
     } else {
-      return '';
+      return emptyValue;
     }
   }
-
 
   private initRequestData = () => {
     if (this.props.isLoading) {
@@ -197,44 +203,39 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
     return (
       <div>
-        { (isFulfilled === false)
-          ? null
-          : (
-            <div className={classes.root} >
-              <Grid container justify="center" >
-                <Grid item xs={12}>
-                  <Typography align="center" variant="headline" gutterBottom={true}>
-                    {pageTitle}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid container justify="center" >
+        <div className={classes.root} >
+          <Grid container justify="center" >
+            <Grid item xs={12}>
+              <Typography align="center" variant="headline" gutterBottom={true}>
+                {pageTitle}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container justify="center" >
 
-                <UpdateProfile
-                  submitHandler={this.handleSubmitUpdateProfile}
-                  inputChangeHandler={this.handleProfileInputChange}
-                  firstName={this.getCustomerCurrentDataField(keyFirstName)}
-                  lastName={this.getCustomerCurrentDataField(keyLastName)}
-                  salutation={this.getCustomerCurrentDataField(keySalutation)}
-                  email={this.getCustomerCurrentDataField(keyEmail)}
-                />
+            <UpdateProfile
+              submitHandler={this.handleSubmitUpdateProfile}
+              inputChangeHandler={this.handleProfileInputChange}
+              firstName={this.getCurrentDataField(keyFirstName)}
+              lastName={this.getCurrentDataField(keyLastName)}
+              salutation={this.getCurrentDataField(keySalutation)}
+              email={this.getCurrentDataField(keyEmail)}
+            />
 
-                <ChangePassword
-                  submitHandler={this.handleSubmitPassword}
-                  inputChangeHandler={this.handleProfileInputChange}
-                  oldPassword={this.getCustomerCurrentDataField(keyOldPassword)}
-                  newPassword={this.getCustomerCurrentDataField(keyNewPassword)}
-                  confirmPassword={this.getCustomerCurrentDataField(keyConfirmPassword)}
-                />
+            <ChangePassword
+              submitHandler={this.handleSubmitPassword}
+              inputChangeHandler={this.handleProfileInputChange}
+              oldPassword={this.getCurrentDataField(keyOldPassword)}
+              newPassword={this.getCurrentDataField(keyNewPassword)}
+              confirmPassword={this.getCurrentDataField(keyConfirmPassword)}
+            />
 
-                <AccountActions
-                  submitDeleteHandler={this.handleSubmitDeleteAccount}
-                />
+            <AccountActions
+              submitDeleteHandler={this.handleSubmitDeleteAccount}
+            />
 
-              </Grid>
-            </div>
-          )
-        }
+          </Grid>
+        </div>
       </div>
     );
   }
@@ -254,6 +255,9 @@ export const ConnectedCustomerProfilePage = reduxify(
     const customerReference = getCustomerReference(state, ownProps);
     const customerData = getCustomerProfile(state, ownProps);
 
+    console.log('isCustomerDataExist ', isCustomerDataExist);
+    console.log('customerData ', customerData);
+
     return ({
       location,
       isLoading,
@@ -268,5 +272,8 @@ export const ConnectedCustomerProfilePage = reduxify(
   },
   (dispatch: Function) => ({
     getCustomerData: (customerReference: TCustomerReference) => dispatch(getCustomerProfileAction(customerReference)),
+    updateCustomerData: (customerReference: TCustomerReference, payload: ICustomerProfile) => dispatch(
+      updateCustomerProfileAction(customerReference, payload)
+    ),
   })
 )(CustomerProfilePage);
