@@ -13,12 +13,14 @@ export class AddressesService {
       const response: any = await api.get(`customers/${customerId}/addresses`, {}, { withCredentials: true });
 
       if (response.ok) {
-        console.info(response.data.data);
+        const addresses = response.data.data.map((address: any): IAddressItem => ({id: address.id, ...address.attributes}));
+        console.info(addresses);
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
+          addresses,
         });
-        return response.data.data;
+        return addresses;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
@@ -56,6 +58,7 @@ export class AddressesService {
         console.info(response.data.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
+          address: {id: response.data.data.id, ...response.data.data.attributes}
 
         });
         return response.data.data;

@@ -1,7 +1,5 @@
 import * as React from "react";
-import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import { push } from 'react-router-redux';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -23,13 +21,17 @@ import {styles} from './styles';
 import {IAddressItem} from '../../../interfaces/addresses';
 import {getAddressesAction, addAddressAction} from '../../../actions/Pages/Addresses';
 
-import {isAppInitiated} from "../../../reducers/Common/Init";
+import {IAddressesState} from "../../../reducers/Pages/Addresses";
 import {ILoginState} from "../../../reducers/Pages/Login";
 import {getRouterLocation, getRouterHistoryPush} from "../../../selectors/Common/router";
+import {pathCustomerAddressesPage, pathAddressFormPage} from "../../../routes/contentRoutes";
 
 interface CustomerAddressPageProps extends WithStyles<typeof styles> {
   location: string;
   customer: string;
+  addresses: Array<IAddressItem>;
+  currentAddress: IAddressItem;
+  isLoading: boolean;
   dispatch: Function;
   getAddressesList: Function;
   addAddress: Function;
@@ -47,28 +49,64 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
   };
 
   public componentDidMount() {
-    this.props.getAddressesList(this.props.customer);
+    if (this.props.customer) {
+      this.props.getAddressesList(this.props.customer);
+    }
   }
 
   public handleAddAddress = () => {
-   // this.props.dispatch(push('/'));
-    const payload = {
-      salutation: 'Mr',
-      firstName: 'Fname',
-      lastName: 'Lname',
-      address1: 'XXX',
-      address2: 'street',
-      address3: '162',
-      zipCode: '61000',
-      city: 'Kh',
-      country: 'Ukr',
-    };
-    this.props.addAddress(payload, 'DE--8');
+    this.props.routerPush(`${pathCustomerAddressesPage}/new`);
+   //  const payload = {
+   //    salutation: 'Mr',
+   //    firstName: 'Ffff',
+   //    lastName: 'Llll',
+   //    address1: 'XXXYY',
+   //    address2: 'street',
+   //    address3: '2b',
+   //    zipCode: '61000',
+   //    city: 'Kharkov',
+   //    country: 'Ukraine',
+   //  };
+   //  this.props.addAddress(payload, this.props.customer);
   }
 
 
   public render(): JSX.Element {
-    const {classes} = this.props;
+    const {classes, addresses, isLoading} = this.props;
+
+    const rows: any[] = addresses.map((item: any) => (
+      <TableRow
+        hover
+        key={item.id}
+      >
+        <TableCell component="th" scope="row">
+          <div className={classes.customerName}>{`${item.salutation} ${item.firstName} ${item.lastName}`}</div>
+          <div>{`${item.company || ''}`}</div>
+          <div>{`${item.address1} ${item.address2} ${item.address3}`}</div>
+          <div>{`${item.zipCode} ${item.city}, ${item.country}`}</div>
+          <div>{`${item.phone || ''}`}</div>
+        </TableCell>
+
+        <TableCell padding="checkbox">
+          <IconButton
+            color="primary"
+           // onClick={this.setUpdatedWishlist(item.id, item.name)}
+            disabled={isLoading}
+          >
+            <EditIcon />
+          </IconButton>
+        </TableCell>
+        <TableCell padding="checkbox">
+          <IconButton
+            color="primary"
+           // onClick={this.handleDeleteWishlist(item.id)}
+            disabled={isLoading}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+    ));
 
     return (
       <Grid container>
@@ -87,17 +125,8 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
             </Button>
             <Divider />
             <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.headerCell}>Name</TableCell>
-                  <TableCell className={classes.headerCell}># of items</TableCell>
-                  <TableCell className={classes.headerCell}>Date of creation</TableCell>
-                  <TableCell numeric></TableCell>
-                  <TableCell numeric></TableCell>
-                </TableRow>
-              </TableHead>
               <TableBody>
-                {[]}
+                {rows}
               </TableBody>
             </Table>
           </Paper>
@@ -115,9 +144,13 @@ export const CustomerAddressPage = reduxify(
     const location = getRouterLocation(state, ownProps);
     const routerPush = getRouterHistoryPush(state, ownProps);
     const customerProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
+    const addressesProps: IAddressesState = state.pageAddresses ? state.pageAddresses : null;
 
     return ({
-      customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customerRef,
+      customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customer,
+      addresses: addressesProps && addressesProps.data ? addressesProps.data.addresses : ownProps.addresses,
+      currentAddress: addressesProps && addressesProps.data ? addressesProps.data.currentAddress : ownProps.currentAddress,
+      isLoading: addressesProps ? addressesProps.pending : ownProps.isLoading,
       location,
       routerPush,
     });

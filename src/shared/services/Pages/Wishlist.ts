@@ -2,16 +2,8 @@ import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
 import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
-import {CartService, ICartCreatePayload} from "../Common/Cart";
-import {
-  cartAddItemFulfilledStateAction,
-  cartAddItemPendingStateAction,
-  cartAddItemRejectedStateAction
-} from "../../actions/Common/Cart";
-import {cartCreateFixture} from "../fixtures/cartFixture";
+
 import {wishlistAuthenticateErrorText} from "../../constants/messages/errors";
-import {TCartId} from "../../interfaces/cart";
-import {parseAddToCartResponse} from "../cartHelper";
 import {API_WITH_FIXTURES} from "../../constants/Environment";
 import {getTestDataPromise} from "../apiFixture";
 import {getWishlistFixture} from "../fixtures/wishlistFixture";

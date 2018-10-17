@@ -9,6 +9,11 @@ export const styles = (theme: Theme) => createStyles({
   addButton: {
     margin: theme.spacing.unit * 2,
   },
+  customerName: {
+    fontWeight: 500,
+    fontSize: '0.86rem',
+    marginTop: theme.spacing.unit,
+  },
   newList: {
     width: '70%',
     margin: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 2}px`,
@@ -19,5 +24,12 @@ export const styles = (theme: Theme) => createStyles({
   },
   updateCell: {
     display: 'flex'
+  },
+  addressForm: {
+    margin:  `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
+  },
+  textField: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   }
 });
