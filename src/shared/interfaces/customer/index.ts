@@ -4,6 +4,11 @@ export type TCustomerLastName = string;
 export type TCustomerEmail = string;
 export type TCustomerPassword = string;
 export type TCustomerUsername = string;
+export type TCustomerId = string;
+export type TCustomerReference = string;
+export type TCustomerTime = string;
+export type TCustomerDateOfBirth = string;
+export type TCustomerGender = string;
 
 export type TCustomerInputValue = TCustomerFirstName
   | TCustomerLastName
@@ -28,4 +33,16 @@ export interface ICustomerChangePassword {
   newPassword: TCustomerPassword;
   oldPassword: TCustomerPassword;
   confirmPassword: TCustomerPassword;
+}
+
+export interface ICustomerDataParsed {
+  id: TCustomerId;
+  salutation: TCustomerSalutation;
+  firstName: TCustomerFirstName;
+  lastName: TCustomerLastName;
+  createdAt: TCustomerTime;
+  updatedAt: TCustomerTime;
+  email: TCustomerEmail;
+  gender: TCustomerGender | null;
+  dateOfBirth: TCustomerDateOfBirth | null;
 }

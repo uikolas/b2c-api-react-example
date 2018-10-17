@@ -12,6 +12,7 @@ import {
 } from '../../../typings/app';
 import {TAccessToken} from "../../interfaces/login/index";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {TCustomerReference} from "../../interfaces/customer/index";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -116,6 +117,14 @@ export function getLoginCustomer(state: any, props: any): any | null {
   return (
     isUserAuthenticated(state, props) && state.pagesLogin.data && state.pagesLogin.data.customer
       ? state.pagesLogin.data.customer
+      : null
+  );
+}
+
+export function getCustomerReference(state: any, props: any): TCustomerReference | null {
+  return (
+    isUserAuthenticated(state, props) && state.pagesLogin.data.customerRef
+      ? state.pagesLogin.data.customerRef
       : null
   );
 }

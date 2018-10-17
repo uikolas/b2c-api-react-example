@@ -7,6 +7,7 @@ import {cart, isCartLoading} from './Common/Cart';
 import {init, isAppLoading} from './Common/Init';
 import {orderHistory, isOrderHistoryLoading} from "./Pages/OrderHistory";
 import {isOrderDetailsLoading, orderDetails} from "./Pages/OrderDetails";
+import {isPageCustomerProfileLoading, pageCustomerProfile} from "./Pages/CustomerProfile";
 
 export const reducers = {
   pagesHome,
@@ -18,6 +19,7 @@ export const reducers = {
   init,
   orderHistory,
   orderDetails,
+  pageCustomerProfile,
 };
 
 export function isStateLoading(state: any, props: any): boolean {
@@ -31,5 +33,6 @@ export function isStateLoading(state: any, props: any): boolean {
     || isPageWishlistStateLoading(state, props)
     || isOrderHistoryLoading(state, props)
     || isOrderDetailsLoading(state, props)
+    || isPageCustomerProfileLoading(state, props)
   );
 }

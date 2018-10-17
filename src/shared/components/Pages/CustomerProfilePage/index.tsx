@@ -9,13 +9,13 @@ import { toast } from 'react-toastify';
 import {reduxify} from '../../../lib/redux-helper';
 import {pageStyles} from './styles';
 import {isAppInitiated} from "../../../reducers/Common/Init";
-import {isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {getCustomerReference, isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {getRouterLocation} from "../../../selectors/Common/router";
 import {UpdateProfile} from "./UpdateProfile/index";
 import {
-  ICustomerChangePassword,
+  ICustomerChangePassword, ICustomerDataParsed,
   ICustomerDataProfile,
-  TCustomerEmail, TCustomerFirstName, TCustomerInputValue, TCustomerLastName, TCustomerPassword,
+  TCustomerEmail, TCustomerFirstName, TCustomerInputValue, TCustomerLastName, TCustomerPassword, TCustomerReference,
   TCustomerSalutation
 } from "../../../interfaces/customer/index";
 import {
@@ -24,6 +24,13 @@ import {
 } from "../../../constants/messages/errors";
 import {ChangePassword} from "./ChangePassword/index";
 import {AccountActions} from "./AccountActions/index";
+import {getCustomerProfileAction} from "../../../actions/Pages/CustomerProfile";
+import {
+  getCustomerProfile,
+  isCustomerProfilePresent,
+  isPageCustomerProfileFulfilled, isPageCustomerProfileLoading,
+  isPageCustomerProfileRejected
+} from "../../../reducers/Pages/CustomerProfile";
 
 export const pageTitle = "Profile";
 
@@ -31,8 +38,12 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   isLoading: boolean;
   isRejected: boolean;
   isFulfilled: boolean;
+  isCustomerDataExist: boolean;
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
+  customerReference: TCustomerReference;
+  getCustomerData: Function;
+  customerData: ICustomerDataParsed;
 }
 
 interface ICustomerProfilePageState {
@@ -54,24 +65,43 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   public state: ICustomerProfilePageState = {
     profileData: {
-      salutation: 'Dr',
-      firstName: 'firstName',
-      lastName: 'lastName',
-      email: 'email@email.com',
+      salutation: '',
+      firstName: '',
+      lastName: '',
+      email: '',
     },
     passwordData: {
       newPassword: '',
-      oldPassword: '111111',
+      oldPassword: '',
       confirmPassword: '',
     },
   };
 
   public componentDidMount = () => {
-    console.log("%c ---- componentDidMount ----", 'background: #4caf50; color: #bada55');
+    console.log("%c ---- componentDidMount ----", 'background: #1a5bfe; color: #bada55');
+    if (!this.props.isCustomerDataExist) {
+      this.initRequestData();
+    }
+
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     console.log("%c ---- componentDidUpdate ----", 'background: #4cab50; color: #cada55');
+    if (!this.props.isRejected && !this.props.isCustomerDataExist) {
+      this.initRequestData();
+    }
+  }
+
+  private initRequestData = () => {
+    if (this.props.isLoading) {
+      return;
+    }
+    if (this.props.isAppDataSet && this.props.customerReference) {
+      console.log("%c *** initRequestData ***", 'background: #3d5afe; color: #ffea00');
+      this.props.getCustomerData(this.props.customerReference);
+      return true;
+    }
+    return false;
   }
 
   public handleProfileInputChange =  (event: {target: IProfileFieldInput}): void => {
@@ -197,14 +227,14 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   }
 
-  private initRequestData = () => {
-    console.log("%c *** initRequestData ***", 'background: #2cab50; color: #cada55');
+  private getCustomerDataField = (fieldName: (keyof ICustomerDataProfile) | (keyof ICustomerChangePassword)) => {
+    return ;
   }
 
   public render(): JSX.Element {
     console.info('CustomerProfilePage props: ', this.props);
     console.info('CustomerProfilePage state: ', this.state);
-    const {classes, isFulfilled} = this.props;
+    const {classes, isFulfilled, customerData} = this.props;
     const {profileData, passwordData} = this.state;
 
     return (
@@ -226,10 +256,10 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
                   submitHandler={this.handleSubmitUpdateProfile}
                   inputChangeHandler={this.handleProfileInputChange}
                   changeSalutationHandler={this.handleChangeSalutation}
-                  firstName={profileData.firstName}
-                  lastName={profileData.lastName}
-                  salutation={profileData.salutation}
-                  email={profileData.email}
+                  firstName={profileData.firstName ? profileData.firstName : customerData.firstName}
+                  lastName={profileData.lastName ? profileData.lastName : customerData.lastName}
+                  salutation={profileData.salutation ? profileData.salutation : customerData.salutation}
+                  email={profileData.email ? profileData.email : customerData.email}
                 />
 
                 <ChangePassword
@@ -258,26 +288,28 @@ export const CustomerProfilePage = withStyles(pageStyles)(CustomerProfilePageBas
 export const ConnectedCustomerProfilePage = reduxify(
   (state: any, ownProps: any) => {
     const location = getRouterLocation(state, ownProps);
-    /*const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
-    const isRejected: boolean = isOrderHistoryStateRejected(state, ownProps);
-    const isFulfilled = isOrderHistoryFulfilled(state, ownProps);
-    */
-    const isLoading: boolean = false;
-    const isRejected: boolean = false;
-    const isFulfilled = true;
-    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const isLoading = isPageCustomerProfileLoading(state, ownProps);
+    const isRejected = isPageCustomerProfileRejected(state, ownProps);
+    const isFulfilled = isPageCustomerProfileFulfilled(state, ownProps);
+    const isCustomerDataExist = isCustomerProfilePresent(state, ownProps);
+    const isAppDataSet = isAppInitiated(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
+    const customerReference = getCustomerReference(state, ownProps);
+    const customerData = getCustomerProfile(state, ownProps);
 
     return ({
       location,
       isLoading,
       isRejected,
       isFulfilled,
+      isCustomerDataExist,
       isAppDataSet,
       isUserLoggedIn,
+      customerReference,
+      customerData,
     });
   },
-  /*(dispatch: Function) => ({
-    getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-  })*/
+  (dispatch: Function) => ({
+    getCustomerData: (customerReference: TCustomerReference) => dispatch(getCustomerProfileAction(customerReference)),
+  })
 )(CustomerProfilePage);

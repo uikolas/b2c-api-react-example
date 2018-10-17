@@ -5,3 +5,4 @@ export const wishlistAuthenticateErrorText = 'You should register or login to se
 export const inputSaveErrorText = 'Can\'t handle this value or field name';
 export const emptyRequiredFieldsErrorText = 'Not all fields are filled';
 export const passwordsNotEqualErrorText = 'The passwords must match';
+export const CustomerProfileAuthenticateErrorText = 'You should register or login to see your Profile';
