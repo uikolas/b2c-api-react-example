@@ -22,14 +22,11 @@ export type TSalutationVariant = {
   label: string,
 };
 
-export interface ICustomerDataProfile {
+export interface ICustomerProfile {
   salutation: TCustomerSalutation;
   firstName: TCustomerFirstName;
   lastName: TCustomerLastName;
   email: TCustomerEmail;
-}
-
-export interface ICustomerChangePassword {
   newPassword: TCustomerPassword;
   oldPassword: TCustomerPassword;
   confirmPassword: TCustomerPassword;
@@ -40,9 +37,11 @@ export interface ICustomerDataParsed {
   salutation: TCustomerSalutation;
   firstName: TCustomerFirstName;
   lastName: TCustomerLastName;
+  email: TCustomerEmail;
   createdAt: TCustomerTime;
   updatedAt: TCustomerTime;
-  email: TCustomerEmail;
   gender: TCustomerGender | null;
   dateOfBirth: TCustomerDateOfBirth | null;
+
+  [propName: string]: string | number | null;
 }

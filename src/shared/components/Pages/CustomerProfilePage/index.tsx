@@ -13,10 +13,10 @@ import {getCustomerReference, isUserAuthenticated} from "../../../reducers/Pages
 import {getRouterLocation} from "../../../selectors/Common/router";
 import {UpdateProfile} from "./UpdateProfile/index";
 import {
-  ICustomerChangePassword, ICustomerDataParsed,
-  ICustomerDataProfile,
-  TCustomerEmail, TCustomerFirstName, TCustomerInputValue, TCustomerLastName, TCustomerPassword, TCustomerReference,
-  TCustomerSalutation
+  ICustomerDataParsed,
+  ICustomerProfile,
+  TCustomerInputValue,
+  TCustomerReference,
 } from "../../../interfaces/customer/index";
 import {
   emptyRequiredFieldsErrorText, inputSaveErrorText,
@@ -46,35 +46,33 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   customerData: ICustomerDataParsed;
 }
 
-interface ICustomerProfilePageState {
-  profileData: ICustomerDataProfile;
-  passwordData: ICustomerChangePassword;
+interface ICustomerProfilePageState extends ICustomerProfile {
+
 }
 
 interface IProfileFieldInput {
-  name: (keyof ICustomerDataProfile);
+  name: (keyof ICustomerProfile);
   value: TCustomerInputValue;
 }
 
-interface IPasswordFieldInput {
-  name: (keyof ICustomerChangePassword);
-  value: TCustomerInputValue;
-}
+const keySalutation = 'salutation';
+const keyFirstName = 'firstName';
+const keyLastName = 'lastName';
+const keyEmail = 'email';
+const keyNewPassword = 'newPassword';
+const keyOldPassword = 'oldPassword';
+const keyConfirmPassword = 'confirmPassword';
 
 export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
 
   public state: ICustomerProfilePageState = {
-    profileData: {
-      salutation: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-    },
-    passwordData: {
-      newPassword: '',
-      oldPassword: '',
-      confirmPassword: '',
-    },
+    salutation: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    newPassword: '',
+    oldPassword: '',
+    confirmPassword: '',
   };
 
   public componentDidMount = () => {
@@ -92,6 +90,93 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     }
   }
 
+  public handleProfileInputChange =  (event: {target: IProfileFieldInput}): void => {
+    const { name, value }: IProfileFieldInput = event.target;
+    const cleanValue = value.trim();
+    if (!this.state.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+      return;
+    }
+
+    this.setState( (prevState: ICustomerProfilePageState) => {
+
+      const key: (keyof ICustomerProfile) = name;
+      const prevValue: TCustomerInputValue = prevState[key];
+      if (prevValue === cleanValue) {
+        return;
+      }
+
+      return ({
+        ...prevState,
+        [name]: cleanValue,
+      });
+    });
+
+  }
+
+  public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
+    const firstName = this.getCustomerCurrentDataField(keyFirstName);
+    const lastName = this.getCustomerCurrentDataField(keyLastName);
+    const salutation = this.getCustomerCurrentDataField(keySalutation);
+    const email = this.getCustomerCurrentDataField(keyEmail);
+
+    if(!firstName || !lastName || !email || !salutation) {
+      toast.warn(emptyRequiredFieldsErrorText);
+      return null;
+    }
+    const profileData = {firstName, lastName, salutation, email};
+    console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
+
+  }
+
+  public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
+
+    const oldPassword = this.getCustomerCurrentDataField(keyOldPassword);
+    const newPassword = this.getCustomerCurrentDataField(keyNewPassword);
+    const confirmPassword = this.getCustomerCurrentDataField(keyConfirmPassword);
+    if( !oldPassword || !newPassword || !confirmPassword) {
+      toast.warn(emptyRequiredFieldsErrorText);
+      return null;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.warn(passwordsNotEqualErrorText);
+      return null;
+    }
+    const passwordData = {oldPassword, newPassword, confirmPassword};
+    console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
+
+  }
+
+  public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    console.log("%c *** handleDeleteAccount ***", 'background: #1d5cce; color: #ffea00');
+
+  }
+
+  private getCustomerCurrentDataField = (fieldName: (keyof ICustomerProfilePageState)) => {
+    if (!this.props.isCustomerDataExist || !fieldName) {
+      return null;
+    }
+
+    const key: (keyof ICustomerProfilePageState) = fieldName;
+    const stateValue = this.state[key];
+    const propsValue: any = this.props.customerData[key];
+
+    if (stateValue) {
+      return stateValue;
+    } else if (propsValue) {
+      return propsValue;
+    } else {
+      return '';
+    }
+  }
+
+
   private initRequestData = () => {
     if (this.props.isLoading) {
       return;
@@ -104,138 +189,11 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     return false;
   }
 
-  public handleProfileInputChange =  (event: {target: IProfileFieldInput}): void => {
-    const { name, value }: IProfileFieldInput = event.target;
-    const cleanValue = value.trim();
-    if (!this.state.profileData.hasOwnProperty(name)) {
-      throw new Error(inputSaveErrorText);
-      return;
-    }
-
-    this.setState( (prevState: ICustomerProfilePageState) => {
-
-      const key: (keyof ICustomerDataProfile) = name;
-      const prevValue: TCustomerInputValue = prevState.profileData[key];
-      if (prevValue === cleanValue) {
-        return;
-      }
-
-      return ({
-        ...prevState,
-        profileData: {
-          ...prevState.profileData,
-          [name]: cleanValue,
-        },
-      });
-    });
-
-  }
-
-  public handlePasswordInputChange =  (event: {target: IPasswordFieldInput}): void => {
-    const { name, value }: IPasswordFieldInput = event.target;
-    const cleanValue = value.trim();
-    if (!this.state.passwordData.hasOwnProperty(name)) {
-      throw new Error(inputSaveErrorText);
-      return;
-    }
-
-    this.setState( (prevState: ICustomerProfilePageState) => {
-
-      const key: (keyof ICustomerChangePassword) = name;
-      const prevValue: TCustomerInputValue = prevState.passwordData[key];
-      if (prevValue === cleanValue) {
-        return;
-      }
-
-      return ({
-        ...prevState,
-        passwordData: {
-          ...prevState.passwordData,
-          [name]: cleanValue,
-        },
-      });
-    });
-
-  }
-
-  public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log("%c *** handleChangeSalutation *** event", 'background: #3d5afe; color: #ffea00');
-    const {value}: {value: string} = event.target;
-    const cleanValue = value.trim();
-    if(!cleanValue) {
-      return;
-    }
-
-    this.setState( (prevState: ICustomerProfilePageState) => {
-      if (prevState.profileData.salutation === value) {
-        return;
-      }
-      return ({
-        ...prevState,
-        profileData: {
-          ...prevState.profileData,
-          salutation: value,
-        },
-      });
-    });
-  }
-
-  public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
-
-    const {profileData, profileData: {firstName, lastName, salutation, email}} = this.state;
-    if( !profileData
-      || !firstName
-      || !lastName
-      || !email
-      || !salutation
-    ) {
-      toast.warn(emptyRequiredFieldsErrorText);
-      return null;
-    }
-    console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
-
-  }
-
-  public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
-
-    const {passwordData, passwordData: {oldPassword, newPassword, confirmPassword}} = this.state;
-    if( !passwordData
-      || !oldPassword
-      || !newPassword
-      || !confirmPassword
-    ) {
-      toast.warn(emptyRequiredFieldsErrorText);
-      return null;
-    }
-
-    if (newPassword !== confirmPassword) {
-      toast.warn(passwordsNotEqualErrorText);
-      return null;
-    }
-
-    console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
-
-  }
-
-  public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    console.log("%c *** handleDeleteAccount ***", 'background: #1d5cce; color: #ffea00');
-
-  }
-
-  private getCustomerDataField = (fieldName: (keyof ICustomerDataProfile) | (keyof ICustomerChangePassword)) => {
-    return ;
-  }
 
   public render(): JSX.Element {
     console.info('CustomerProfilePage props: ', this.props);
     console.info('CustomerProfilePage state: ', this.state);
-    const {classes, isFulfilled, customerData} = this.props;
-    const {profileData, passwordData} = this.state;
+    const {classes, isFulfilled} = this.props;
 
     return (
       <div>
@@ -255,19 +213,18 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
                 <UpdateProfile
                   submitHandler={this.handleSubmitUpdateProfile}
                   inputChangeHandler={this.handleProfileInputChange}
-                  changeSalutationHandler={this.handleChangeSalutation}
-                  firstName={profileData.firstName ? profileData.firstName : customerData.firstName}
-                  lastName={profileData.lastName ? profileData.lastName : customerData.lastName}
-                  salutation={profileData.salutation ? profileData.salutation : customerData.salutation}
-                  email={profileData.email ? profileData.email : customerData.email}
+                  firstName={this.getCustomerCurrentDataField(keyFirstName)}
+                  lastName={this.getCustomerCurrentDataField(keyLastName)}
+                  salutation={this.getCustomerCurrentDataField(keySalutation)}
+                  email={this.getCustomerCurrentDataField(keyEmail)}
                 />
 
                 <ChangePassword
                   submitHandler={this.handleSubmitPassword}
-                  inputChangeHandler={this.handlePasswordInputChange}
-                  oldPassword={passwordData.oldPassword}
-                  newPassword={passwordData.newPassword}
-                  confirmPassword={passwordData.confirmPassword}
+                  inputChangeHandler={this.handleProfileInputChange}
+                  oldPassword={this.getCustomerCurrentDataField(keyOldPassword)}
+                  newPassword={this.getCustomerCurrentDataField(keyNewPassword)}
+                  confirmPassword={this.getCustomerCurrentDataField(keyConfirmPassword)}
                 />
 
                 <AccountActions

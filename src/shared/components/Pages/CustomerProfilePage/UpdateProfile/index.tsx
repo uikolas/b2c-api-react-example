@@ -21,7 +21,6 @@ import {salutationVariants} from "../../../../constants/customer/index";
 interface UpdateProfileProps extends WithStyles<typeof pageStyles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  changeSalutationHandler: (event: React.ChangeEvent<HTMLInputElement>)=> void;
   firstName: TCustomerFirstName;
   lastName: TCustomerLastName;
   salutation: TCustomerSalutation;
@@ -35,7 +34,6 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
     classes,
     submitHandler,
     inputChangeHandler,
-    changeSalutationHandler,
     firstName,
     lastName,
     salutation,
@@ -67,7 +65,7 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
                 name="salutation"
                 className={classes.textField}
                 value={salutation}
-                onChange={changeSalutationHandler}
+                onChange={inputChangeHandler}
                 fullWidth
                 SelectProps={{
                   MenuProps: {
