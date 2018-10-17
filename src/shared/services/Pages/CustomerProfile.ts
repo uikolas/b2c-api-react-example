@@ -3,7 +3,8 @@ import { toast } from 'react-toastify';
 import {
   getCustomerProfileFulfilledStateAction,
   getCustomerProfilePendingStateAction,
-  getCustomerProfileRejectedStateAction, updateCustomerProfileFulfilledStateAction,
+  getCustomerProfileRejectedStateAction,
+  updateCustomerProfileFulfilledStateAction,
   updateCustomerProfilePendingStateAction,
   updateCustomerProfileRejectedStateAction
 } from "../../actions/Pages/CustomerProfile";
@@ -15,6 +16,8 @@ import {getParsedAPIError} from "../apiHelper/index";
 
 
 export class CustomerProfileService {
+
+  private static getCustomersEndpoint = (customerReference: TCustomerReference) => (`/customers/${customerReference}`);
 
   // Retrieve customer data.
   public static async getProfileData(dispatch: Function, customerReference: TCustomerReference): Promise<any> {
@@ -28,7 +31,11 @@ export class CustomerProfileService {
           throw new Error(CustomerProfileAuthenticateErrorText);
         }
         setAuthToken(token);
-        response = await api.get(`/customers/${customerReference}`, {include: ''}, { withCredentials: true });
+        response = await api.get(
+          CustomerProfileService.getCustomersEndpoint(customerReference),
+          {include: ''},
+          { withCredentials: true }
+        );
       } catch (err) {
         console.error('CustomerProfileService: getProfileData: err', err);
       }
@@ -74,7 +81,11 @@ export class CustomerProfileService {
           throw new Error(CustomerProfileAuthenticateErrorText);
         }
         setAuthToken(token);
-        response = await api.patch(`/customers/${customerReference}`, body, { withCredentials: true });
+        response = await api.patch(
+          CustomerProfileService.getCustomersEndpoint(customerReference),
+          body,
+          { withCredentials: true }
+        );
       } catch (err) {
         console.error('CustomerProfileService: updateProfileData: err', err);
       }
@@ -92,7 +103,7 @@ export class CustomerProfileService {
       }
 
     } catch (error) {
-      console.error('updateProfileData catch search', error);
+      console.error('updateProfileData error', error);
       dispatch(updateCustomerProfileRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
