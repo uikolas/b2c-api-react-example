@@ -31,6 +31,7 @@ import {
   pathWishListsPage,
 } from '../../../routes/contentRoutes';
 import {ConnectedCustomerProfilePage} from "../CustomerProfilePage/index";
+import {getRouterLocation} from "../../../selectors/Common/router";
 
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
@@ -58,7 +59,7 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
     return (
       <AppMain>
         <Grid container>
-          <Grid item xs={3} container direction="column" justify="center">
+          <Grid item xs={3} container direction="column" justify="flex-start" className={classes.pageMenu}>
             <Paper>
               <MenuList>
                 <MenuItem
@@ -113,11 +114,12 @@ export const CustomerPage = withStyles(styles)(CustomerPageBase);
 
 export const ConnectedCustomerPage = reduxify(
   (state: any, ownProps: any) => {
+    const location = getRouterLocation(state, ownProps);
     const routerProps: RouteProps = state.routing ? state.routing : {};
 
     return (
       {
-        location: routerProps.location ? routerProps.location : ownProps.location,
+        location,
       }
     );
   }

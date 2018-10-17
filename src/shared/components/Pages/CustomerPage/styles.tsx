@@ -18,5 +18,8 @@ export const styles = (theme: Theme) => createStyles({
   footerBlock: {
     minHeight: "200px",
     backgroundColor: "#7979ce",
-  }
+  },
+  pageMenu: {
+    paddingTop: theme.spacing.unit * 7,
+  },
 });
