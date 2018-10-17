@@ -37,15 +37,15 @@ import {pathCustomerPage} from "../../../routes/contentRoutes";
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
   wishlists: IWishlist[];
-  isLoading: boolean,
-  isInitial: boolean,
+  isLoading: boolean;
+  isInitial: boolean;
 }
 
 
 interface WishlistPageState {
   name: string;
-  updatedName: string,
-  updatedList: string,
+  updatedName: string;
+  updatedList: string;
 }
 
 export const pageTitle = 'Search results for ';

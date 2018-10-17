@@ -15,7 +15,7 @@ import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} 
 
 export interface ILoginState extends IReduxState {
   data: {
-    customer?: any,
+    customerRef?: string,
     isAuth?: boolean,
     tokenType?: string,
     expiresIn?: string,
@@ -26,7 +26,7 @@ export interface ILoginState extends IReduxState {
 
 export const initialState: ILoginState = {
   data: {
-    customer: null,
+    customerRef: '',
     isAuth: false,
     tokenType: '',
     expiresIn: '',
@@ -46,7 +46,6 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
     case `${PAGES_CUSTOMER_REGISTER}_FULFILLED`:
       return {
         data: {
-          customer: action.payload,
           isAuth: false,
         },
         ...getReducerPartFulfilled(),
@@ -68,11 +67,13 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       localStorage.setItem('tokenExpire', (Math.floor(Date.now() / 1000) + action.payload.expiresIn - 120).toString(10));
       localStorage.setItem('accessToken', action.payload.accessToken);
       localStorage.setItem('refreshToken', action.payload.refreshToken);
+      localStorage.setItem('customerRef', action.customerRef);
       return {
         ...state,
         data: {
           ...state.data,
           isAuth: true,
+          customerRef: action.customerRef,
           ...action.payload,
         },
         ...getReducerPartFulfilled(),
