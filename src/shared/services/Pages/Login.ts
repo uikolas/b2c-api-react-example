@@ -3,7 +3,6 @@ import api from '../api';
 import {saveLoginDataToLocalStorageAction} from "../../actions/Pages/CustomerProfile";
 import {
   parseLoginDataResponse,
-  saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage,
 } from "../customerHelper/loginDataResponse";
 import {
   loginCustomerFulfilledStateAction,
@@ -12,6 +11,7 @@ import {
 } from "../../actions/Pages/Login";
 import {ApiServiceAbstract} from "../apiHelper/ApiServiceAbstract";
 import {ICustomerLoginData} from "../../interfaces/customer/index";
+import {saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage} from "../localStorageHelper/index";
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
