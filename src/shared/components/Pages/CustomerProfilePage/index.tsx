@@ -328,8 +328,6 @@ export const ConnectedCustomerProfilePage = reduxify(
     const passwordUpdated = isCustomerPasswordUpdated(state, ownProps);
     const routerPush = getRouterHistoryPush(state, ownProps);
 
-    console.log('isCustomerDataExist ', isCustomerDataExist);
-    console.log('customerData ', customerData);
     if (customerData) {
       customerData.email = customerEmail;
     }

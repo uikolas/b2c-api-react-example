@@ -72,23 +72,18 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       };
     case `${PAGES_LOGIN_REQUEST}_FULFILLED`:
     case `${REFRESH_TOKEN_REQUEST}_FULFILLED`:
-      localStorage.setItem('tokenExpire', (Math.floor(Date.now() / 1000) + action.payload.expiresIn - 120).toString(10));
-      localStorage.setItem('accessToken', action.payload.accessToken);
-      localStorage.setItem('refreshToken', action.payload.refreshToken);
-      localStorage.setItem('customerRef', action.customerRef);
       return {
         ...state,
         data: {
           ...state.data,
           isAuth: true,
-          customerRef: action.customerRef,
+          customerRef: action.payload.customerRef,
           ...action.payload,
         },
         ...getReducerPartFulfilled(),
       };
     case `${LOGIN_DATA_SET_TO_STORAGE}_FULFILLED`:
       const customerUsername = action.payload.email ? action.payload.email : null;
-      localStorage.setItem('customerUsername', customerUsername);
       return {
         ...state,
         data: {

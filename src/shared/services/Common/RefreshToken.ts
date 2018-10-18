@@ -2,6 +2,7 @@ import api from '../api';
 import { toast } from 'react-toastify';
 
 import { REFRESH_TOKEN_REQUEST } from '../../constants/ActionTypes/Pages/Login';
+import {parseLoginDataResponse, saveAccessDataToLocalStorage} from "../customerHelper/loginDataResponse";
 
 export class RefreshTokenService {
   public static async getActualToken(dispatch: Function): Promise<any> {
@@ -46,12 +47,13 @@ export class RefreshTokenService {
     const response: any = await api.post('refresh-tokens', body, { withCredentials: true });
 
     if (response.ok) {
+      const responseParsed = parseLoginDataResponse(response.data);
+      saveAccessDataToLocalStorage(responseParsed);
       dispatch({
-        type: REFRESH_TOKEN_REQUEST + '_FULFILLED',
-        payload: response.data.data.attributes,
+        type: REFRESH_TOKEN_REQUEST + '_FULFILLED'
       });
 
-      return response.data.data.attributes.refreshToken;
+      return responseParsed.refreshToken;
     } else {
       console.error('Refresh token', response.problem);
       dispatch({

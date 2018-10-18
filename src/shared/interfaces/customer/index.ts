@@ -79,4 +79,5 @@ export interface ICustomerLoginDataParsed {
   expiresIn: number;
   refreshToken: TAccessToken;
   tokenType: string;
+  customerRef: TCustomerReference;
 }
