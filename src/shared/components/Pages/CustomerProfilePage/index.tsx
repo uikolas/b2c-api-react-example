@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FormEvent} from "react";
+import {FormEvent, SyntheticEvent, MouseEvent} from "react";
 import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -34,6 +34,7 @@ import {
   isPageCustomerProfileFulfilled, isPageCustomerProfileLoading,
   isPageCustomerProfileRejected
 } from "../../../reducers/Pages/CustomerProfile";
+import {SprykerDialog} from "../../UI/SprykerDialog/index";
 
 export const pageTitle = "Profile";
 
@@ -53,7 +54,9 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   passwordUpdated: boolean;
 }
 
-interface ICustomerProfilePageState extends ICustomerProfile {
+interface ICustomerProfilePageState {
+  inputs: ICustomerProfile;
+  isDeleteProfileDialogOpen: boolean;
 }
 
 interface IProfileFieldInput {
@@ -69,16 +72,21 @@ const keyNewPassword = 'newPassword';
 const keyOldPassword = 'password';
 const keyConfirmPassword = 'confirmPassword';
 
+const deleteProfileContent = 'Are you sure you want to delete your account?';
+
 export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
 
   public state: ICustomerProfilePageState = {
-    salutation: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    newPassword: '',
-    password: '',
-    confirmPassword: '',
+    inputs: {
+      salutation: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      newPassword: '',
+      password: '',
+      confirmPassword: '',
+    },
+    isDeleteProfileDialogOpen: false,
   };
 
   public componentDidMount = () => {
@@ -103,21 +111,24 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   public handleProfileInputChange =  (event: {target: IProfileFieldInput}): void => {
     const { name, value }: IProfileFieldInput = event.target;
     const cleanValue = value.trim();
-    if (!this.state.hasOwnProperty(name)) {
+    if (!this.state.inputs.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
       return;
     }
 
     this.setState( (prevState: ICustomerProfilePageState) => {
       const key: (keyof ICustomerProfile) = name;
-      const prevValue: TCustomerInputValue = prevState[key];
+      const prevValue: TCustomerInputValue = prevState.inputs[key];
       if (prevValue === cleanValue) {
         return;
       }
 
       return ({
         ...prevState,
-        [name]: cleanValue,
+        inputs: {
+          ...prevState.inputs,
+          [name]: cleanValue,
+        },
       });
     });
   }
@@ -172,17 +183,31 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.log("%c *** handleDeleteAccount ***", 'background: #1d5cce; color: #ffea00');
-
+    this.setState(prev => ({isDeleteProfileDialogOpen: true}));
   }
 
-  private getCurrentDataField = (fieldName: (keyof ICustomerProfilePageState)) => {
+  public handleDeleteProfileDialogShowing = (event: SyntheticEvent<{}>): void => {
+    this.setState(prev => ({isDeleteProfileDialogOpen: !prev.isDeleteProfileDialogOpen}));
+  }
+
+  public handleDeleteProfileDialogAgree = (event: MouseEvent<HTMLElement>): void => {
+    console.log("%c *** handleDeleteProfileDialogAgree ***", 'background: #2c1cae; color: #ffea00');
+    this.setState(prev => ({isDeleteProfileDialogOpen: false}));
+  }
+
+  public handleDeleteProfileDialogDisagree = (event: MouseEvent<HTMLElement>): void => {
+    console.log("%c *** handleDeleteProfileDialogDisagree ***", 'background: #2c1cae; color: #ffea00');
+    this.setState(prev => ({isDeleteProfileDialogOpen: false}));
+  }
+
+  private getCurrentDataField = (fieldName: (keyof ICustomerProfile)) => {
     const emptyValue = '';
     if (!this.props.isCustomerDataExist || !fieldName) {
       return emptyValue;
     }
 
-    const key: (keyof ICustomerProfilePageState) = fieldName;
-    const stateValue = this.state[key];
+    const key: (keyof ICustomerProfile) = fieldName;
+    const stateValue = this.state.inputs[key];
     const propsValue: any = this.props.customerData[key];
 
     if (stateValue) {
@@ -202,9 +227,12 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     this.setState( (prevState: ICustomerProfilePageState) => {
       return ({
         ...prevState,
-        newPassword: '',
-        password: '',
-        confirmPassword: ''
+        inputs: {
+          ...prevState.inputs,
+          newPassword: '',
+          password: '',
+          confirmPassword: '',
+        },
       });
     });
   }
@@ -225,7 +253,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   public render(): JSX.Element {
     console.info('CustomerProfilePage props: ', this.props);
     console.info('CustomerProfilePage state: ', this.state);
-    const {classes, isFulfilled} = this.props;
+    const {classes} = this.props;
 
     return (
       <div>
@@ -258,6 +286,14 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
             <AccountActions
               submitDeleteHandler={this.handleSubmitDeleteAccount}
+            />
+
+            <SprykerDialog
+              handleShow={this.handleDeleteProfileDialogShowing}
+              content={deleteProfileContent}
+              isOpen={this.state.isDeleteProfileDialogOpen}
+              handleAgree={this.handleDeleteProfileDialogAgree}
+              handleDisagree={this.handleDeleteProfileDialogDisagree}
             />
 
           </Grid>
