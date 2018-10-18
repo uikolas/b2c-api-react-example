@@ -3,7 +3,6 @@ import {FormEvent} from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 
 import {pageStyles} from '../styles';
 import {SprykerButton} from "../../../UI/SprykerButton/index";

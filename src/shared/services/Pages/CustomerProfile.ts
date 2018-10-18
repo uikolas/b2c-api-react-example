@@ -1,9 +1,12 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {
+  deleteCustomerFulfilledStateAction,
+  deleteCustomerPendingStateAction, deleteCustomerRejectedStateAction,
   getCustomerProfileFulfilledStateAction,
   getCustomerProfilePendingStateAction,
-  getCustomerProfileRejectedStateAction, updateCustomerPasswordAction, updateCustomerPasswordFulfilledStateAction,
+  getCustomerProfileRejectedStateAction,
+  updateCustomerPasswordFulfilledStateAction,
   updateCustomerPasswordPendingStateAction,
   updateCustomerPasswordRejectedStateAction,
   updateCustomerProfileFulfilledStateAction,
@@ -11,13 +14,15 @@ import {
   updateCustomerProfileRejectedStateAction
 } from "../../actions/Pages/CustomerProfile";
 import {
-  ICustomerProfile, ICustomerProfileIdentity, ICustomerProfilePassword,
+  ICustomerProfileIdentity,
+  ICustomerProfilePassword,
   TCustomerReference
 } from "../../interfaces/customer/index";
 import {parseCustomerDataResponse} from "../customerHelper/customerDataResponse";
 import {RefreshTokenService} from "../Common/RefreshToken";
 import {CustomerProfileAuthenticateErrorText} from "../../constants/messages/errors";
 import {ApiServiceAbstract} from "../apiHelper/ApiServiceAbstract";
+import {logout} from "../../actions/Pages/Login";
 
 
 export class CustomerProfileService extends ApiServiceAbstract {
@@ -158,6 +163,45 @@ export class CustomerProfileService extends ApiServiceAbstract {
     } catch (error) {
       console.error('updatePasswordData error', error);
       dispatch(updateCustomerPasswordRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error);
+      return null;
+    }
+  }
+
+  // Delete Customer Profile - Anonymize customers.
+  public static async deleteCustomerEntity(dispatch: Function, customerReference: TCustomerReference): Promise<any> {
+    try {
+      dispatch(deleteCustomerPendingStateAction());
+
+      let response: any;
+
+      try {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(CustomerProfileAuthenticateErrorText);
+        }
+        setAuthToken(token);
+        response = await api.delete(`customers/${customerReference}`, null, { withCredentials: true });
+      } catch (err) {
+        console.error('CustomerProfileService: deleteCustomerEntity: err', err);
+      }
+
+      if (response.ok) {
+        const responseParsed: any = response.data;
+        dispatch(logout());
+        dispatch(deleteCustomerFulfilledStateAction());
+        toast.success('Your account was deleted!');
+        return responseParsed;
+      } else {
+        const errorMessage = this.getParsedAPIError(response);
+        dispatch(deleteCustomerRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
+        return null;
+      }
+
+    } catch (error) {
+      console.error('deleteCustomerEntity error', error);
+      dispatch(deleteCustomerRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
     }

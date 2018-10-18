@@ -3,6 +3,7 @@ import {
   CUSTOMER_DATA_UPDATE,
   LOGIN_DATA_SET_TO_STORAGE,
   CUSTOMER_PASSWORD_UPDATE,
+  CUSTOMER_DELETE_ENTITY,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
 import { CustomerProfileService } from '../../services/Pages/CustomerProfile';
 import {
@@ -79,5 +80,25 @@ export const updateCustomerPasswordFulfilledStateAction = () => ({
 export const updateCustomerPasswordAction = function (payload: ICustomerProfilePassword) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.updatePasswordData(dispatch, payload);
+  };
+};
+
+// Delete Customer Entity
+export const deleteCustomerPendingStateAction = () => ({
+  type: CUSTOMER_DELETE_ENTITY + '_PENDING',
+});
+
+export const deleteCustomerRejectedStateAction = (message: string) => ({
+  type: CUSTOMER_DELETE_ENTITY + '_REJECTED',
+  payload: {error: message},
+});
+
+export const deleteCustomerFulfilledStateAction = () => ({
+  type: CUSTOMER_DELETE_ENTITY + '_FULFILLED',
+});
+
+export const deleteCustomerAction = function (customerReference: TCustomerReference) {
+  return (dispatch: Function, getState: Function) => {
+    CustomerProfileService.deleteCustomerEntity(dispatch, customerReference);
   };
 };

@@ -3,6 +3,7 @@ import {
   CUSTOMER_DATA_REQUEST,
   CUSTOMER_DATA_UPDATE,
   CUSTOMER_PASSWORD_UPDATE,
+  CUSTOMER_DELETE_ENTITY
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
 import {
   IReduxState,
@@ -43,6 +44,12 @@ export const pageCustomerProfile = function(state: ICustomerDataState = initialS
       return handleUpdatePasswordRejected(state, action.payload);
     case `${CUSTOMER_PASSWORD_UPDATE}_PENDING`:
       return handleUpdatePasswordPending(state);
+    case `${CUSTOMER_DELETE_ENTITY}_FULFILLED`:
+      return handleDeleteCustomerFulfilled(state);
+    case `${CUSTOMER_DELETE_ENTITY}_REJECTED`:
+      return handleDeleteCustomerRejected(state, action.payload);
+    case `${CUSTOMER_DELETE_ENTITY}_PENDING`:
+      return handleDeleteCustomerPending(state);
     default:
       return state;
   }
@@ -80,6 +87,8 @@ const handlePending = (customerState: ICustomerDataState) => {
   };
 };
 
+// Update customer password.
+
 const handleUpdatePasswordFulfilled = (customerState: ICustomerDataState) => {
   return {
     ...customerState,
@@ -108,6 +117,38 @@ const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload
     data: {
       ...customerState.data,
       isPasswordUpdated: false,
+    },
+    ...getReducerPartRejected(payload.error),
+  };
+};
+
+// Delete customer.
+
+const handleDeleteCustomerFulfilled = (customerState: ICustomerDataState) => {
+  return {
+    ...customerState,
+    data: {
+      ...initialState.data,
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleDeleteCustomerPending = (customerState: ICustomerDataState) => {
+  return {
+    ...customerState,
+    data: {
+      ...customerState.data,
+    },
+    ...getReducerPartPending(),
+  };
+};
+
+const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+  return {
+    ...customerState,
+    data: {
+      ...customerState.data,
     },
     ...getReducerPartRejected(payload.error),
   };

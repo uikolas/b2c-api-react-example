@@ -10,31 +10,41 @@ import {reduxify} from '../../../lib/redux-helper';
 import {pageStyles} from './styles';
 import {isAppInitiated} from "../../../reducers/Common/Init";
 import {getCustomerReference, getCustomerUsername, isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {getRouterLocation} from "../../../selectors/Common/router";
+import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
 import {UpdateProfile} from "./UpdateProfile/index";
 import {
   ICustomerDataParsed,
-  ICustomerProfile, ICustomerProfileIdentity, ICustomerProfilePassword, ILoginDataToLocalStorage, TCustomerEmail,
+  ICustomerProfile,
+  ICustomerProfileIdentity,
+  ICustomerProfilePassword,
+  ILoginDataToLocalStorage,
   TCustomerInputValue,
   TCustomerReference,
 } from "../../../interfaces/customer/index";
 import {
-  emptyRequiredFieldsErrorText, inputSaveErrorText,
+  emptyRequiredFieldsErrorText,
+  inputSaveErrorText,
   passwordsNotEqualErrorText
 } from "../../../constants/messages/errors";
 import {ChangePassword} from "./ChangePassword/index";
 import {AccountActions} from "./AccountActions/index";
 import {
-  getCustomerProfileAction, saveLoginDataToLocalStorageAction, updateCustomerPasswordAction,
+  deleteCustomerAction,
+  getCustomerProfileAction,
+  saveLoginDataToLocalStorageAction,
+  updateCustomerPasswordAction,
   updateCustomerProfileAction
 } from "../../../actions/Pages/CustomerProfile";
 import {
-  getCustomerProfile, isCustomerPasswordUpdated,
+  getCustomerProfile,
+  isCustomerPasswordUpdated,
   isCustomerProfilePresent,
-  isPageCustomerProfileFulfilled, isPageCustomerProfileLoading,
+  isPageCustomerProfileFulfilled,
+  isPageCustomerProfileLoading,
   isPageCustomerProfileRejected
 } from "../../../reducers/Pages/CustomerProfile";
 import {SprykerDialog} from "../../UI/SprykerDialog/index";
+import {pathLoginPage} from "../../../routes/contentRoutes";
 
 export const pageTitle = "Profile";
 
@@ -52,6 +62,8 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   updateCustomerPassword: Function;
   customerData: ICustomerDataParsed;
   passwordUpdated: boolean;
+  deleteCustomerEntity: Function;
+  routerPush: Function;
 }
 
 interface ICustomerProfilePageState {
@@ -135,7 +147,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 
   public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    if (this.props.isLoading) {
+    if (this.props.isLoading || !this.props.customerReference) {
       return;
     }
     const firstName = this.getCurrentDataField(keyFirstName);
@@ -154,14 +166,10 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       toast.warn("We can\'t show your updated email. To see it logout and login again!" );
       this.props.saveLoginDataToLocalStorage({email});
     }
-    console.info("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
-
   }
 
   public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.info("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
-
     const password = this.getCurrentDataField(keyOldPassword);
     const newPassword = this.getCurrentDataField(keyNewPassword);
     const confirmPassword = this.getCurrentDataField(keyConfirmPassword);
@@ -176,13 +184,10 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     }
     const passwordData = {password, newPassword, confirmPassword};
     this.props.updateCustomerPassword(passwordData);
-    console.info("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
-
   }
 
   public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log("%c *** handleDeleteAccount ***", 'background: #1d5cce; color: #ffea00');
     this.setState(prev => ({isDeleteProfileDialogOpen: true}));
   }
 
@@ -191,13 +196,16 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   }
 
   public handleDeleteProfileDialogAgree = (event: MouseEvent<HTMLElement>): void => {
-    console.log("%c *** handleDeleteProfileDialogAgree ***", 'background: #2c1cae; color: #ffea00');
-    this.setState(prev => ({isDeleteProfileDialogOpen: false}));
+    if (this.props.isLoading || !this.props.customerReference) {
+      return;
+    }
+    this.props.deleteCustomerEntity(this.props.customerReference);
+    this.handleDeleteProfileDialogShowing(event);
+    this.props.routerPush(`${pathLoginPage}`);
   }
 
   public handleDeleteProfileDialogDisagree = (event: MouseEvent<HTMLElement>): void => {
-    console.log("%c *** handleDeleteProfileDialogDisagree ***", 'background: #2c1cae; color: #ffea00');
-    this.setState(prev => ({isDeleteProfileDialogOpen: false}));
+    this.handleDeleteProfileDialogShowing(event);
   }
 
   private getCurrentDataField = (fieldName: (keyof ICustomerProfile)) => {
@@ -318,6 +326,7 @@ export const ConnectedCustomerProfilePage = reduxify(
     const customerData = getCustomerProfile(state, ownProps);
     const customerEmail = getCustomerUsername(state, ownProps);
     const passwordUpdated = isCustomerPasswordUpdated(state, ownProps);
+    const routerPush = getRouterHistoryPush(state, ownProps);
 
     console.log('isCustomerDataExist ', isCustomerDataExist);
     console.log('customerData ', customerData);
@@ -336,6 +345,7 @@ export const ConnectedCustomerProfilePage = reduxify(
       customerReference,
       customerData,
       passwordUpdated,
+      routerPush,
     });
   },
   (dispatch: Function) => ({
@@ -347,5 +357,6 @@ export const ConnectedCustomerProfilePage = reduxify(
       saveLoginDataToLocalStorageAction(payload)
     ),
     updateCustomerPassword: (payload: ICustomerProfilePassword) => dispatch(updateCustomerPasswordAction(payload)),
+    deleteCustomerEntity: (customerReference: TCustomerReference) => dispatch(deleteCustomerAction(customerReference)),
   })
 )(CustomerProfilePage);
