@@ -126,7 +126,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
       try {
         const body: any = {
           data: {
-            type: 'password',
+            type: 'customer-password',
             attributes: payload,
           },
         };

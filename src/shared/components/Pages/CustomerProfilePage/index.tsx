@@ -195,10 +195,6 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   }
 
   private clearPasswords =  (): void => {
-    if (this.state.newPassword || this.state.password || this.state.confirmPassword) {
-
-    }
-
     if (this.props.isLoading) {
       return;
     }
