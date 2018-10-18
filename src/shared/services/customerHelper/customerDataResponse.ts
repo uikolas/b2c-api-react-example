@@ -20,7 +20,7 @@ export const parseCustomerDataResponse = (response: ICustomerDataResponse): ICus
     salutation: attributes.salutation,
     updatedAt: attributes.updatedAt,
     gender: attributes.gender,
-    email: 'test_email',
+    email: '',
   };
 
   return result;

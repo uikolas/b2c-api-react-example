@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChangeEvent, FormEvent} from "react";
+import {FormEvent} from "react";
 import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -9,14 +9,14 @@ import { toast } from 'react-toastify';
 import {reduxify} from '../../../lib/redux-helper';
 import {pageStyles} from './styles';
 import {isAppInitiated} from "../../../reducers/Common/Init";
-import {getCustomerReference, isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {getCustomerReference, getCustomerUsername, isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {getRouterLocation} from "../../../selectors/Common/router";
 import {UpdateProfile} from "./UpdateProfile/index";
 import {
   ICustomerDataParsed,
-  ICustomerProfile,
+  ICustomerProfile, ILoginDataToLocalStorage, TCustomerEmail,
   TCustomerInputValue,
-  TCustomerReference,
+  TCustomerReference, TCustomerUsername,
 } from "../../../interfaces/customer/index";
 import {
   emptyRequiredFieldsErrorText, inputSaveErrorText,
@@ -24,7 +24,10 @@ import {
 } from "../../../constants/messages/errors";
 import {ChangePassword} from "./ChangePassword/index";
 import {AccountActions} from "./AccountActions/index";
-import {getCustomerProfileAction, updateCustomerProfileAction} from "../../../actions/Pages/CustomerProfile";
+import {
+  getCustomerProfileAction, saveLoginDataToLocalStorageAction,
+  updateCustomerProfileAction
+} from "../../../actions/Pages/CustomerProfile";
 import {
   getCustomerProfile,
   isCustomerProfilePresent,
@@ -44,6 +47,7 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   customerReference: TCustomerReference;
   getCustomerData: Function;
   updateCustomerData: Function;
+  saveLoginDataToLocalStorage: Function;
   customerData: ICustomerDataParsed;
 }
 
@@ -133,6 +137,11 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       this.props.customerReference,
       profileData
     );
+    // TODO: remove after fixing an email bug
+    if (email !== this.props.customerData.email) {
+      toast.warn("We can\'t show your updated email. To see it logout and login again!" );
+      this.props.saveLoginDataToLocalStorage({email});
+    }
     console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
 
   }
@@ -254,9 +263,13 @@ export const ConnectedCustomerProfilePage = reduxify(
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const customerReference = getCustomerReference(state, ownProps);
     const customerData = getCustomerProfile(state, ownProps);
+    const customerEmail = getCustomerUsername(state, ownProps);
 
     console.log('isCustomerDataExist ', isCustomerDataExist);
     console.log('customerData ', customerData);
+    if (customerData) {
+      customerData.email = customerEmail;
+    }
 
     return ({
       location,
@@ -274,6 +287,9 @@ export const ConnectedCustomerProfilePage = reduxify(
     getCustomerData: (customerReference: TCustomerReference) => dispatch(getCustomerProfileAction(customerReference)),
     updateCustomerData: (customerReference: TCustomerReference, payload: ICustomerProfile) => dispatch(
       updateCustomerProfileAction(customerReference, payload)
+    ),
+    saveLoginDataToLocalStorage: (payload: ILoginDataToLocalStorage) => dispatch(
+      saveLoginDataToLocalStorageAction(payload)
     ),
   })
 )(CustomerProfilePage);

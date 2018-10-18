@@ -5,27 +5,27 @@ import {
   REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {PagesLoginService} from '../../services/Pages/Login';
+import {saveLoginDataToLocalStorageAction} from "./CustomerProfile";
 
-
-export const loginPendingState = {
+export const loginPendingState = () => ({
   type: PAGES_LOGIN_REQUEST + '_PENDING',
-};
+});
 
-export const registerPendingState = {
+export const registerPendingState = () => ({
   type: PAGES_CUSTOMER_REGISTER + '_PENDING',
-};
+});
 
 export const sendLoginAction = function (payload: any) {
   return (dispatch: Function, getState: Function) => {
-    PagesLoginService.loginRequest(PAGES_LOGIN_REQUEST, dispatch, payload);
     dispatch(loginPendingState);
+    PagesLoginService.loginRequest(PAGES_LOGIN_REQUEST, dispatch, payload);
   };
 };
 
 export const customerRegisterAction = function (payload: any) {
   return (dispatch: Function, getState: Function) => {
-    PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
     dispatch(registerPendingState);
+    PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
   };
 };
 

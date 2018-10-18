@@ -1,9 +1,13 @@
 import {
   CUSTOMER_DATA_REQUEST,
-  CUSTOMER_DATA_UPDATE,
+  CUSTOMER_DATA_UPDATE, LOGIN_DATA_SET_TO_STORAGE,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
 import { CustomerProfileService } from '../../services/Pages/CustomerProfile';
-import {ICustomerDataParsed, ICustomerProfile} from "../../interfaces/customer";
+import {
+  ICustomerDataParsed, ICustomerLoginData, ICustomerProfile, ILoginDataToLocalStorage, TCustomerEmail,
+  TCustomerReference,
+  TCustomerUsername
+} from "../../interfaces/customer";
 
 // Retrieve customer data.
 export const getCustomerProfilePendingStateAction = () => ({
@@ -20,7 +24,7 @@ export const getCustomerProfileFulfilledStateAction = (payload: ICustomerDataPar
   payload,
 });
 
-export const getCustomerProfileAction = function (customerReference: string) {
+export const getCustomerProfileAction = function (customerReference: TCustomerReference) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.getProfileData(dispatch, customerReference);
   };
@@ -41,8 +45,13 @@ export const updateCustomerProfileFulfilledStateAction = (payload: ICustomerData
   payload,
 });
 
-export const updateCustomerProfileAction = function (customerReference: string, payload: ICustomerProfile) {
+export const updateCustomerProfileAction = function (customerReference: TCustomerReference, payload: ICustomerProfile) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.updateProfileData(dispatch, customerReference, payload);
   };
 };
+
+export const saveLoginDataToLocalStorageAction = (payload: ILoginDataToLocalStorage) => ({
+  type: LOGIN_DATA_SET_TO_STORAGE + '_FULFILLED',
+  payload,
+});

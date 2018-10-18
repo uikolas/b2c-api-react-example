@@ -4,6 +4,8 @@ import api from '../api';
 import {API_WITH_FIXTURES} from "../../constants/Environment/index";
 import {fixtureLogin} from "../fixtures/loginFixture";
 import {getTestDataPromise} from "../apiFixture/index";
+import {saveLoginDataToLocalStorageAction} from "../../actions/Pages/CustomerProfile";
+import {parseLoginDataResponse} from "../customerHelper/loginDataResponse";
 
 export class PagesLoginService {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
@@ -17,6 +19,7 @@ export class PagesLoginService {
       const response: any = await api.post('customers', body, { withCredentials: true });
 
       if (response.ok) {
+        dispatch(saveLoginDataToLocalStorageAction({email: payload.email}));
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data,
@@ -53,30 +56,19 @@ export class PagesLoginService {
         }
       };
 
-      let response: any;
-      // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: fixtureLogin.data,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        response = await api.post('access-tokens', body, { withCredentials: true });
-      }
-
+      const response: any = await api.post('access-tokens', body, { withCredentials: true });
       if (response.ok) {
-        const {sub}: {sub: string} = jwtDecoder(response.data.data.attributes.accessToken);
+        const responseParsed = parseLoginDataResponse(response.data);
+        const {sub}: {sub: string} = jwtDecoder(responseParsed.accessToken);
+        dispatch(saveLoginDataToLocalStorageAction({email: payload.username}));
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data.data.attributes,
+          payload: responseParsed,
           customerRef: JSON.parse(sub).customer_reference,
         });
         toast.success('You are now logged in');
-        return response.data.data.attributes;
+        return responseParsed;
       } else {
         console.error('login', response.problem);
         dispatch({

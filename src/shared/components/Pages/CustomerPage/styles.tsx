@@ -22,4 +22,7 @@ export const styles = (theme: Theme) => createStyles({
   pageMenu: {
     paddingTop: theme.spacing.unit * 7,
   },
+  link: {
+    width: "100%",
+  }
 });

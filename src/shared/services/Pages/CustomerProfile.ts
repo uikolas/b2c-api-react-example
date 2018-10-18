@@ -12,10 +12,10 @@ import {ICustomerProfile, TCustomerReference} from "../../interfaces/customer/in
 import {parseCustomerDataResponse} from "../customerHelper/customerDataResponse";
 import {RefreshTokenService} from "../Common/RefreshToken";
 import {CustomerProfileAuthenticateErrorText} from "../../constants/messages/errors";
-import {getParsedAPIError} from "../apiHelper/index";
+import {ApiServiceAbstract} from "../apiHelper/ApiServiceAbstract";
 
 
-export class CustomerProfileService {
+export class CustomerProfileService extends ApiServiceAbstract {
 
   private static getCustomersEndpoint = (customerReference: TCustomerReference) => (`/customers/${customerReference}`);
 
@@ -32,7 +32,7 @@ export class CustomerProfileService {
         }
         setAuthToken(token);
         response = await api.get(
-          CustomerProfileService.getCustomersEndpoint(customerReference),
+          this.getCustomersEndpoint(customerReference),
           {include: ''},
           { withCredentials: true }
         );
@@ -45,7 +45,7 @@ export class CustomerProfileService {
         dispatch(getCustomerProfileFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        const errorMessage = getParsedAPIError(response);
+        const errorMessage = this.getParsedAPIError(response);
         dispatch(getCustomerProfileRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;
@@ -72,8 +72,9 @@ export class CustomerProfileService {
           data: {
             type: 'customers',
             id: customerReference,
-            attributes: payload
-          }
+            attributes: payload,
+            include: '',
+          },
         };
 
         const token = await RefreshTokenService.getActualToken(dispatch);
@@ -82,7 +83,7 @@ export class CustomerProfileService {
         }
         setAuthToken(token);
         response = await api.patch(
-          CustomerProfileService.getCustomersEndpoint(customerReference),
+          this.getCustomersEndpoint(customerReference),
           body,
           { withCredentials: true }
         );
@@ -96,7 +97,7 @@ export class CustomerProfileService {
         toast.success('Your Profile Data was successfully updated!');
         return responseParsed;
       } else {
-        const errorMessage = getParsedAPIError(response);
+        const errorMessage = this.getParsedAPIError(response);
         dispatch(updateCustomerProfileRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;

@@ -65,28 +65,28 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
                 <MenuItem
                   selected={location.pathname === pathCustomerProfilePage}
                 >
-                  <NavLink to={pathCustomerProfilePage}>
+                  <NavLink to={pathCustomerProfilePage} className={classes.link}>
                     Profile
                   </NavLink>
                 </MenuItem>
                 <MenuItem
                   selected={location.pathname === pathCustomerAddressesPage}
                 >
-                  <NavLink to={pathCustomerAddressesPage}>
+                  <NavLink to={pathCustomerAddressesPage} className={classes.link}>
                     Addresses
                   </NavLink>
                 </MenuItem>
                 <MenuItem
                   selected={location.pathname.includes(pathOrderHistoryPage)}
                 >
-                  <NavLink to={pathOrderHistoryPage}>
+                  <NavLink to={pathOrderHistoryPage} className={classes.link}>
                     Orders history
                   </NavLink>
                 </MenuItem>
                 <MenuItem
                   selected={location.pathname.includes(pathWishListsPage)}
                 >
-                  <NavLink to={pathWishListsPage}>
+                  <NavLink to={pathWishListsPage} className={classes.link}>
                     Wishlist
                   </NavLink>
                 </MenuItem>
