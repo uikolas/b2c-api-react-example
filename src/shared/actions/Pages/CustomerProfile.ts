@@ -1,12 +1,16 @@
 import {
   CUSTOMER_DATA_REQUEST,
-  CUSTOMER_DATA_UPDATE, LOGIN_DATA_SET_TO_STORAGE,
+  CUSTOMER_DATA_UPDATE,
+  LOGIN_DATA_SET_TO_STORAGE,
+  CUSTOMER_PASSWORD_UPDATE,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
 import { CustomerProfileService } from '../../services/Pages/CustomerProfile';
 import {
-  ICustomerDataParsed, ICustomerLoginData, ICustomerProfile, ILoginDataToLocalStorage, TCustomerEmail,
+  ICustomerDataParsed,
+  ICustomerProfileIdentity,
+  ICustomerProfilePassword,
+  ILoginDataToLocalStorage,
   TCustomerReference,
-  TCustomerUsername
 } from "../../interfaces/customer";
 
 // Retrieve customer data.
@@ -45,13 +49,35 @@ export const updateCustomerProfileFulfilledStateAction = (payload: ICustomerData
   payload,
 });
 
-export const updateCustomerProfileAction = function (customerReference: TCustomerReference, payload: ICustomerProfile) {
+export const updateCustomerProfileAction = function (customerReference: TCustomerReference,
+                                                     payload: ICustomerProfileIdentity) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.updateProfileData(dispatch, customerReference, payload);
   };
 };
 
+// Save login data to LocalStorage
 export const saveLoginDataToLocalStorageAction = (payload: ILoginDataToLocalStorage) => ({
   type: LOGIN_DATA_SET_TO_STORAGE + '_FULFILLED',
   payload,
 });
+
+// Update customer password.
+export const updateCustomerPasswordPendingStateAction = () => ({
+  type: CUSTOMER_PASSWORD_UPDATE + '_PENDING',
+});
+
+export const updateCustomerPasswordRejectedStateAction = (message: string) => ({
+  type: CUSTOMER_PASSWORD_UPDATE + '_REJECTED',
+  payload: {error: message},
+});
+
+export const updateCustomerPasswordFulfilledStateAction = () => ({
+  type: CUSTOMER_PASSWORD_UPDATE + '_FULFILLED',
+});
+
+export const updateCustomerPasswordAction = function (payload: ICustomerProfilePassword) {
+  return (dispatch: Function, getState: Function) => {
+    CustomerProfileService.updatePasswordData(dispatch, payload);
+  };
+};

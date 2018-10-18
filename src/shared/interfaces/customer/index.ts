@@ -25,14 +25,20 @@ export type TSalutationVariant = {
   label: string,
 };
 
-export interface ICustomerProfile {
+export interface ICustomerProfileIdentity {
   salutation: TCustomerSalutation;
   firstName: TCustomerFirstName;
   lastName: TCustomerLastName;
   email: TCustomerEmail;
+}
+
+export interface ICustomerProfilePassword {
   newPassword: TCustomerPassword;
-  oldPassword: TCustomerPassword;
+  password: TCustomerPassword;
   confirmPassword: TCustomerPassword;
+}
+
+export interface ICustomerProfile extends ICustomerProfileIdentity, ICustomerProfilePassword {
 }
 
 export interface ICustomerDataParsed {

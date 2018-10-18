@@ -14,7 +14,7 @@ import {TCustomerPassword} from "../../../../interfaces/customer/index";
 interface ChangePasswordProps extends WithStyles<typeof pageStyles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  oldPassword: TCustomerPassword;
+  password: TCustomerPassword;
   newPassword: TCustomerPassword;
   confirmPassword: TCustomerPassword;
 }
@@ -26,7 +26,7 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
     classes,
     submitHandler,
     inputChangeHandler,
-    oldPassword,
+    password,
     newPassword,
     confirmPassword,
   } = props;
@@ -51,11 +51,11 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
             <Grid item xs={12} className={classes.control}>
               <TextField
                 required
-                id="old-password"
-                label="Old Password"
-                name="oldPassword"
+                id="password"
+                label="password"
+                name="password"
                 type="password"
-                value={oldPassword}
+                value={password}
                 className={classes.textField}
                 margin="normal"
                 onChange={inputChangeHandler}

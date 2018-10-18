@@ -14,9 +14,9 @@ import {getRouterLocation} from "../../../selectors/Common/router";
 import {UpdateProfile} from "./UpdateProfile/index";
 import {
   ICustomerDataParsed,
-  ICustomerProfile, ILoginDataToLocalStorage, TCustomerEmail,
+  ICustomerProfile, ICustomerProfileIdentity, ICustomerProfilePassword, ILoginDataToLocalStorage, TCustomerEmail,
   TCustomerInputValue,
-  TCustomerReference, TCustomerUsername,
+  TCustomerReference,
 } from "../../../interfaces/customer/index";
 import {
   emptyRequiredFieldsErrorText, inputSaveErrorText,
@@ -25,11 +25,11 @@ import {
 import {ChangePassword} from "./ChangePassword/index";
 import {AccountActions} from "./AccountActions/index";
 import {
-  getCustomerProfileAction, saveLoginDataToLocalStorageAction,
+  getCustomerProfileAction, saveLoginDataToLocalStorageAction, updateCustomerPasswordAction,
   updateCustomerProfileAction
 } from "../../../actions/Pages/CustomerProfile";
 import {
-  getCustomerProfile,
+  getCustomerProfile, isCustomerPasswordUpdated,
   isCustomerProfilePresent,
   isPageCustomerProfileFulfilled, isPageCustomerProfileLoading,
   isPageCustomerProfileRejected
@@ -48,11 +48,12 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   getCustomerData: Function;
   updateCustomerData: Function;
   saveLoginDataToLocalStorage: Function;
+  updateCustomerPassword: Function;
   customerData: ICustomerDataParsed;
+  passwordUpdated: boolean;
 }
 
 interface ICustomerProfilePageState extends ICustomerProfile {
-
 }
 
 interface IProfileFieldInput {
@@ -65,7 +66,7 @@ const keyFirstName = 'firstName';
 const keyLastName = 'lastName';
 const keyEmail = 'email';
 const keyNewPassword = 'newPassword';
-const keyOldPassword = 'oldPassword';
+const keyOldPassword = 'password';
 const keyConfirmPassword = 'confirmPassword';
 
 export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
@@ -76,12 +77,12 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     lastName: '',
     email: '',
     newPassword: '',
-    oldPassword: '',
+    password: '',
     confirmPassword: '',
   };
 
   public componentDidMount = () => {
-    console.log("%c ---- componentDidMount ----", 'background: #1a5bfe; color: #bada55');
+    console.info("%c ---- componentDidMount ----", 'background: #1a5bfe; color: #bada55');
     if (!this.props.isCustomerDataExist) {
       this.initRequestData();
     }
@@ -89,9 +90,13 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    console.log("%c ---- componentDidUpdate ----", 'background: #4cab50; color: #cada55');
+    console.info("%c ---- componentDidUpdate ----", 'background: #4cab50; color: #cada55');
     if (!this.props.isRejected && !this.props.isCustomerDataExist) {
       this.initRequestData();
+    }
+
+    if (this.props.passwordUpdated === true && this.props.passwordUpdated !== prevProps.passwordUpdated) {
+      this.clearPasswords();
     }
   }
 
@@ -122,7 +127,6 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     if (this.props.isLoading) {
       return;
     }
-    console.log("%c *** handleSubmitUpdateProfile ***", 'background: #3d5afe; color: #ffea00');
     const firstName = this.getCurrentDataField(keyFirstName);
     const lastName = this.getCurrentDataField(keyLastName);
     const salutation = this.getCurrentDataField(keySalutation);
@@ -133,27 +137,24 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       return null;
     }
     const profileData = {firstName, lastName, salutation, email};
-    this.props.updateCustomerData(
-      this.props.customerReference,
-      profileData
-    );
+    this.props.updateCustomerData(this.props.customerReference, profileData);
     // TODO: remove after fixing an email bug
     if (email !== this.props.customerData.email) {
       toast.warn("We can\'t show your updated email. To see it logout and login again!" );
       this.props.saveLoginDataToLocalStorage({email});
     }
-    console.log("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
+    console.info("%c *** handleSubmitUpdateProfile DATA***", 'background: #3d5afe; color: #ffea00', profileData);
 
   }
 
   public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
+    console.info("%c *** handleSubmitPassword ***", 'background: #3d5afe; color: #ffea00');
 
-    const oldPassword = this.getCurrentDataField(keyOldPassword);
+    const password = this.getCurrentDataField(keyOldPassword);
     const newPassword = this.getCurrentDataField(keyNewPassword);
     const confirmPassword = this.getCurrentDataField(keyConfirmPassword);
-    if( !oldPassword || !newPassword || !confirmPassword) {
+    if( !password || !newPassword || !confirmPassword) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
@@ -162,8 +163,9 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       toast.warn(passwordsNotEqualErrorText);
       return null;
     }
-    const passwordData = {oldPassword, newPassword, confirmPassword};
-    console.log("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
+    const passwordData = {password, newPassword, confirmPassword};
+    this.props.updateCustomerPassword(passwordData);
+    console.info("%c *** handleSubmitPassword DATA***", 'background: #3d5afe; color: #ffea00', passwordData);
 
   }
 
@@ -190,6 +192,25 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     } else {
       return emptyValue;
     }
+  }
+
+  private clearPasswords =  (): void => {
+    if (this.state.newPassword || this.state.password || this.state.confirmPassword) {
+
+    }
+
+    if (this.props.isLoading) {
+      return;
+    }
+
+    this.setState( (prevState: ICustomerProfilePageState) => {
+      return ({
+        ...prevState,
+        newPassword: '',
+        password: '',
+        confirmPassword: ''
+      });
+    });
   }
 
   private initRequestData = () => {
@@ -234,7 +255,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
             <ChangePassword
               submitHandler={this.handleSubmitPassword}
               inputChangeHandler={this.handleProfileInputChange}
-              oldPassword={this.getCurrentDataField(keyOldPassword)}
+              password={this.getCurrentDataField(keyOldPassword)}
               newPassword={this.getCurrentDataField(keyNewPassword)}
               confirmPassword={this.getCurrentDataField(keyConfirmPassword)}
             />
@@ -264,6 +285,7 @@ export const ConnectedCustomerProfilePage = reduxify(
     const customerReference = getCustomerReference(state, ownProps);
     const customerData = getCustomerProfile(state, ownProps);
     const customerEmail = getCustomerUsername(state, ownProps);
+    const passwordUpdated = isCustomerPasswordUpdated(state, ownProps);
 
     console.log('isCustomerDataExist ', isCustomerDataExist);
     console.log('customerData ', customerData);
@@ -281,15 +303,17 @@ export const ConnectedCustomerProfilePage = reduxify(
       isUserLoggedIn,
       customerReference,
       customerData,
+      passwordUpdated,
     });
   },
   (dispatch: Function) => ({
     getCustomerData: (customerReference: TCustomerReference) => dispatch(getCustomerProfileAction(customerReference)),
-    updateCustomerData: (customerReference: TCustomerReference, payload: ICustomerProfile) => dispatch(
+    updateCustomerData: (customerReference: TCustomerReference, payload: ICustomerProfileIdentity) => dispatch(
       updateCustomerProfileAction(customerReference, payload)
     ),
     saveLoginDataToLocalStorage: (payload: ILoginDataToLocalStorage) => dispatch(
       saveLoginDataToLocalStorageAction(payload)
     ),
+    updateCustomerPassword: (payload: ICustomerProfilePassword) => dispatch(updateCustomerPasswordAction(payload)),
   })
 )(CustomerProfilePage);

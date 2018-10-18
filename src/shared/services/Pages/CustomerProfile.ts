@@ -3,12 +3,17 @@ import { toast } from 'react-toastify';
 import {
   getCustomerProfileFulfilledStateAction,
   getCustomerProfilePendingStateAction,
-  getCustomerProfileRejectedStateAction,
+  getCustomerProfileRejectedStateAction, updateCustomerPasswordAction, updateCustomerPasswordFulfilledStateAction,
+  updateCustomerPasswordPendingStateAction,
+  updateCustomerPasswordRejectedStateAction,
   updateCustomerProfileFulfilledStateAction,
   updateCustomerProfilePendingStateAction,
   updateCustomerProfileRejectedStateAction
 } from "../../actions/Pages/CustomerProfile";
-import {ICustomerProfile, TCustomerReference} from "../../interfaces/customer/index";
+import {
+  ICustomerProfile, ICustomerProfileIdentity, ICustomerProfilePassword,
+  TCustomerReference
+} from "../../interfaces/customer/index";
 import {parseCustomerDataResponse} from "../customerHelper/customerDataResponse";
 import {RefreshTokenService} from "../Common/RefreshToken";
 import {CustomerProfileAuthenticateErrorText} from "../../constants/messages/errors";
@@ -62,7 +67,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
   // Update customer data
   public static async updateProfileData(dispatch: Function,
                                         customerReference: TCustomerReference,
-                                        payload: ICustomerProfile): Promise<any> {
+                                        payload: ICustomerProfileIdentity): Promise<any> {
     try {
       dispatch(updateCustomerProfilePendingStateAction());
       let response: any;
@@ -106,6 +111,53 @@ export class CustomerProfileService extends ApiServiceAbstract {
     } catch (error) {
       console.error('updateProfileData error', error);
       dispatch(updateCustomerProfileRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error);
+      return null;
+    }
+  }
+
+  // Update customer password.
+  public static async updatePasswordData(dispatch: Function, payload: ICustomerProfilePassword): Promise<any> {
+    try {
+      dispatch(updateCustomerPasswordPendingStateAction());
+
+      let response: any;
+
+      try {
+        const body: any = {
+          data: {
+            type: 'password',
+            attributes: payload,
+          },
+        };
+
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(CustomerProfileAuthenticateErrorText);
+        }
+        setAuthToken(token);
+        response = await api.patch('customer-password', body, { withCredentials: true });
+      } catch (err) {
+        console.error('CustomerProfileService: updatePasswordData: err', err);
+      }
+
+      if (response.ok) {
+        console.log('updatePasswordData response ', response);
+
+        const responseParsed: any = response.data;
+        dispatch(updateCustomerPasswordFulfilledStateAction());
+        toast.success('Your Password was successfully updated!');
+        return responseParsed;
+      } else {
+        const errorMessage = this.getParsedAPIError(response);
+        dispatch(updateCustomerPasswordRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
+        return null;
+      }
+
+    } catch (error) {
+      console.error('updatePasswordData error', error);
+      dispatch(updateCustomerPasswordRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
     }
