@@ -55,12 +55,12 @@ export class AddressesService {
       const response: any = await api.post(`customers/${customerId}/addresses`, body, { withCredentials: true });
 
       if (response.ok) {
-        console.info(response.data.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           address: {id: response.data.data.id, ...response.data.data.attributes}
 
         });
+        toast.success('New address added successfull');
         return response.data.data;
       } else {
         dispatch({
@@ -81,17 +81,17 @@ export class AddressesService {
     }
   }
 
-  public static async deleteWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<any> {
+  public static async deleteAddress(ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(`wishlists/${wishlistId}`, {}, { withCredentials: true });
+      const response: any = await api.delete(`customers/${customerId}/addresses/${addressId}`, {}, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlistId,
+          addressId,
         });
         return response.ok;
       } else {
@@ -113,24 +113,28 @@ export class AddressesService {
     }
   }
 
-  public static async updateWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string, name: string): Promise<any> {
+  public static async updateAddress(ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: any): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
       const body: any = {
         data: {
-          type: 'wishlists',
-          attributes: {name}
+          type: 'addresses',
+          id: addressId,
+          attributes: payload
         }
       };
 
-      const response: any = await api.patch(`wishlists/${wishlistId}`, body, { withCredentials: true });
+      const response: any = await api.patch(`customers/${customerId}/addresses/${addressId}`, body, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
+          addressId,
+          data: response.data.data.attributes,
         });
+        toast.success('Address updated successfull');
         return response.data.data;
       } else {
         dispatch({

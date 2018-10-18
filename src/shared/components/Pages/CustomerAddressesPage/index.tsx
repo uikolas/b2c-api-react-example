@@ -3,28 +3,26 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
+import Chip from '@material-ui/core/Chip';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import SaveIcon from '@material-ui/icons/Save';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {styles} from './styles';
 import {IAddressItem} from '../../../interfaces/addresses';
-import {getAddressesAction, addAddressAction} from '../../../actions/Pages/Addresses';
+import {getAddressesAction, deleteAddressAction, setCurrentAddressAction} from '../../../actions/Pages/Addresses';
 
 import {IAddressesState} from "../../../reducers/Pages/Addresses";
 import {ILoginState} from "../../../reducers/Pages/Login";
 import {getRouterLocation, getRouterHistoryPush} from "../../../selectors/Common/router";
-import {pathCustomerAddressesPage, pathAddressFormPage} from "../../../routes/contentRoutes";
+import {pathCustomerAddressesPage} from "../../../routes/contentRoutes";
 
 interface CustomerAddressPageProps extends WithStyles<typeof styles> {
   location: string;
@@ -32,9 +30,10 @@ interface CustomerAddressPageProps extends WithStyles<typeof styles> {
   addresses: Array<IAddressItem>;
   currentAddress: IAddressItem;
   isLoading: boolean;
+  isInitial: boolean;
   dispatch: Function;
   getAddressesList: Function;
-  addAddress: Function;
+  deleteAddress: Function;
   routerPush: Function;
 }
 
@@ -56,23 +55,15 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
 
   public handleAddAddress = () => {
     this.props.routerPush(`${pathCustomerAddressesPage}/new`);
-   //  const payload = {
-   //    salutation: 'Mr',
-   //    firstName: 'Ffff',
-   //    lastName: 'Llll',
-   //    address1: 'XXXYY',
-   //    address2: 'street',
-   //    address3: '2b',
-   //    zipCode: '61000',
-   //    city: 'Kharkov',
-   //    country: 'Ukraine',
-   //  };
-   //  this.props.addAddress(payload, this.props.customer);
   }
 
+  public setUpdatedAddress = (addressId: string) => (e: any) => {
+    this.props.dispatch(setCurrentAddressAction(addressId))
+    this.props.routerPush(`${pathCustomerAddressesPage}/update`);
+  }
 
   public render(): JSX.Element {
-    const {classes, addresses, isLoading} = this.props;
+    const {classes, addresses, isLoading, deleteAddress} = this.props;
 
     const rows: any[] = addresses.map((item: any) => (
       <TableRow
@@ -85,12 +76,34 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
           <div>{`${item.address1} ${item.address2} ${item.address3}`}</div>
           <div>{`${item.zipCode} ${item.city}, ${item.country}`}</div>
           <div>{`${item.phone || ''}`}</div>
+          <div className={classes.chips}>
+            {
+              item.isDefaultShipping
+                ? <Chip
+                    label="Shipping address"
+                    color="primary"
+                    variant="outlined"
+                    className={classes.marginRight}
+                  />
+                : null
+            }
+            {
+              item.isDefaultBilling
+                ? <Chip
+                  label="Billing address"
+                  color="primary"
+                  variant="outlined"
+                />
+                : null
+            }
+
+          </div>
         </TableCell>
 
         <TableCell padding="checkbox">
           <IconButton
             color="primary"
-           // onClick={this.setUpdatedWishlist(item.id, item.name)}
+            onClick={this.setUpdatedAddress(item.id)}
             disabled={isLoading}
           >
             <EditIcon />
@@ -99,7 +112,7 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
         <TableCell padding="checkbox">
           <IconButton
             color="primary"
-           // onClick={this.handleDeleteWishlist(item.id)}
+            onClick={() => deleteAddress(item.id, this.props.customer)}
             disabled={isLoading}
           >
             <DeleteIcon />
@@ -150,6 +163,7 @@ export const CustomerAddressPage = reduxify(
       customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customer,
       addresses: addressesProps && addressesProps.data ? addressesProps.data.addresses : ownProps.addresses,
       currentAddress: addressesProps && addressesProps.data ? addressesProps.data.currentAddress : ownProps.currentAddress,
+      isInitial: addressesProps && addressesProps.data ? addressesProps.data.isInitial : ownProps.isInitial,
       isLoading: addressesProps ? addressesProps.pending : ownProps.isLoading,
       location,
       routerPush,
@@ -158,6 +172,6 @@ export const CustomerAddressPage = reduxify(
   (dispatch: Function) => ({
     dispatch,
     getAddressesList: (customerId: string) => dispatch(getAddressesAction(customerId)),
-    addAddress: (payload: IAddressItem, customerId: string) => dispatch(addAddressAction(payload, customerId)),
+    deleteAddress: (addressId: string, customerId: string) => dispatch(deleteAddressAction(addressId, customerId)),
   })
 )(CustomerAddress);

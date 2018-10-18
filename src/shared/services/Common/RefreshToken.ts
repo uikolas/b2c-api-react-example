@@ -1,3 +1,4 @@
+import jwtDecoder from 'jwt-decode';
 import api from '../api';
 import { toast } from 'react-toastify';
 
@@ -46,9 +47,11 @@ export class RefreshTokenService {
     const response: any = await api.post('refresh-tokens', body, { withCredentials: true });
 
     if (response.ok) {
+      const {sub}: {sub: string} = jwtDecoder(response.data.data.attributes.accessToken);
       dispatch({
         type: REFRESH_TOKEN_REQUEST + '_FULFILLED',
         payload: response.data.data.attributes,
+        customerRef: JSON.parse(sub).customer_reference,
       });
 
       return response.data.data.attributes.refreshToken;

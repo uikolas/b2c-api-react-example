@@ -3,9 +3,11 @@ import {
   ADDRESSES_LIST,
   DELETE_ADDRESS,
   UPDATE_ADDRESS,
+  SET_CURRENT_ADDRESS,
 } from '../../constants/ActionTypes/Pages/Addresses';
 import {IAddressItem} from '../../interfaces/addresses';
 import {AddressesService} from '../../services/Pages/Addresses';
+import {PAGES_CUSTOMER_LOGOUT} from "../../constants/ActionTypes/Pages/Login";
 
 
 export const getAllListPendingState = {
@@ -35,5 +37,26 @@ export const addAddressAction = function (payload: IAddressItem, customerId: str
   return (dispatch: Function, getState: Function) => {
     dispatch(addAddressPendingState);
     AddressesService.addAddress(ADD_ADDRESS, dispatch, payload, customerId);
+  };
+};
+
+export const deleteAddressAction = function (addressId: string, customerId: string) {
+  return (dispatch: Function, getState: Function) => {
+    dispatch(deleteAddressPendingState);
+    AddressesService.deleteAddress(DELETE_ADDRESS, dispatch, addressId, customerId);
+  };
+};
+
+export const updateAddressAction = function (addressId: string, customerId: string, payload: any) {
+  return (dispatch: Function, getState: Function) => {
+    dispatch(updateAddressPendingState);
+    AddressesService.updateAddress(UPDATE_ADDRESS, dispatch, addressId, customerId, payload);
+  };
+};
+
+export const setCurrentAddressAction = function (addressId: string) {
+  return {
+    type: SET_CURRENT_ADDRESS,
+    addressId,
   };
 };

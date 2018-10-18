@@ -4,6 +4,7 @@ import {
   ADD_ADDRESS,
   UPDATE_ADDRESS,
   DELETE_ADDRESS,
+  SET_CURRENT_ADDRESS,
 } from '../../constants/ActionTypes/Pages/Addresses';
 import {
   IReduxState,
@@ -52,6 +53,7 @@ export const pageAddresses = produce<IAddressesState>(
         break;
       case `${ADDRESSES_LIST}_FULFILLED`:
         draft.data.addresses = action.addresses;
+        draft.data.currentAddress = null;
         draft.data.isInitial = true;
         draft.error = false;
         draft.pending = false;
@@ -90,6 +92,15 @@ export const pageAddresses = produce<IAddressesState>(
         draft.fulfilled = true;
         draft.rejected = false;
         draft.initiated = true;
+        break;
+      }
+      case SET_CURRENT_ADDRESS: {
+        if (action.addressId) {
+          const currentAddress: IAddressItem = draft.data.addresses.find((address: IAddressItem) => address.id === action.addressId);
+          draft.data.currentAddress = currentAddress;
+        } else {
+          draft.data.currentAddress = null;
+        }
         break;
       }
       default:
