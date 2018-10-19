@@ -21,5 +21,5 @@ export const styles = (theme: Theme) => createStyles({
   },
   attributes: {
     textTransform: 'capitalize',
-  }
+  },
 });

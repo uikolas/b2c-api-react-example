@@ -1,5 +1,5 @@
-import {IInitData} from "../../reducers/Common/Init";
-import {PRICE_MODE_DEFAULT} from "../../constants/Environment/index";
+import { IInitData } from '../../reducers/Common/Init';
+import { PRICE_MODE_DEFAULT } from '../../constants/Environment';
 
 export const parseStoreResponse = (data: any): IInitData => {
 

@@ -30,9 +30,9 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: 'capitalize',
     marginRight: theme.spacing.unit,
     fontSize: '1.2rem',
-    color: theme.palette.primary.light
+    color: theme.palette.primary.light,
   },
   padRight: {
     marginRight: theme.spacing.unit,
-  }
+  },
 });

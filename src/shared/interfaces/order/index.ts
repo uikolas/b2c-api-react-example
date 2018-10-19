@@ -1,6 +1,6 @@
-import {TAppCurrency} from "../../reducers/Common/Init";
-import {TProductName, TProductPrice, TProductQuantity, TProductSKU} from "../product/index";
-import {IAbstractTotals, TCanceledTotal} from "../abstract/totals";
+import { TAppCurrency } from '../../reducers/Common/Init';
+import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '../product';
+import { IAbstractTotals, TCanceledTotal } from '../abstract/totals';
 
 type TOrderCreatedAt = string;
 export type TOrderDate = string;

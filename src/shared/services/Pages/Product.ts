@@ -1,19 +1,13 @@
 import api from '../api';
 import { toast } from 'react-toastify';
-import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {
-  fixtureError,
-  fixtureFull,
-  fixtureOneProduct, fixtureProductImages,
-  fixtureProductPrices,
-  fixtureSuperFull
-} from '../fixtures/productFixtureWithSuperAttr';
-import {parseProductResponse} from "../productHelper";
+import { API_WITH_FIXTURES } from '../../constants/Environment';
+import { fixtureProductImages } from '../fixtures/productFixtureWithSuperAttr';
+import { parseProductResponse } from '../productHelper';
 import {
   getProductDataFulfilledStateAction,
   getProductDataItemPendingStateAction,
-  getProductDataRejectedStateAction
-} from "../../actions/Pages/Product";
+  getProductDataRejectedStateAction,
+} from '../../actions/Pages/Product';
 
 export class ProductService {
   public static async getAbstractData(dispatch: Function, sku: string): Promise<any> {
@@ -21,7 +15,7 @@ export class ProductService {
       dispatch(getProductDataItemPendingStateAction());
       let response: any;
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         response = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -36,7 +30,7 @@ export class ProductService {
             'concrete-products,' +
             'concrete-product-image-sets,' +
             'concrete-product-prices,' +
-            'concrete-product-availabilities'
+            'concrete-product-availabilities',
         });
       }
       if (response.ok) {

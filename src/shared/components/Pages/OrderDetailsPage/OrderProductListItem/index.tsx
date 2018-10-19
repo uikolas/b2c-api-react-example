@@ -1,14 +1,13 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import {styles} from './styles';
-import {IOrderDetailsItem} from "../../../../interfaces/order/index";
-import {AppPrice} from "../../../Common/AppPrice/index";
-import {OrderDetailsContext} from '../context';
-import {TAppCurrency} from "../../../../reducers/Common/Init";
+import { styles } from './styles';
+import { IOrderDetailsItem } from '../../../../interfaces/order';
+import { AppPrice } from '../../../Common/AppPrice';
+import { OrderDetailsContext } from '../context';
 
 interface OrderProductListItemProps extends WithStyles<typeof styles>, IOrderDetailsItem {
 }
@@ -18,25 +17,25 @@ export const OrderProductListItemBase: React.SFC<OrderProductListItemProps> = (p
 
   return (
     <OrderDetailsContext.Consumer>
-      {({ selectItemHandler, currency, selectedItems }) => {
+      { ({selectItemHandler, currency, selectedItems}) => {
         return (
-          <TableRow key={sku}>
+          <TableRow key={ sku }>
             <TableCell>
               <Checkbox
-                checked={!!selectedItems[sku]}
-                onChange={selectItemHandler}
-                value={sku}
+                checked={ !!selectedItems[sku] }
+                onChange={ selectItemHandler }
+                value={ sku }
                 color="primary"
               />
-              {sku}
+              { sku }
             </TableCell>
-            <TableCell>{name}</TableCell>
-            <TableCell><AppPrice value={sumPrice} specificCurrency={currency} /></TableCell>
-            <TableCell>{quantity}</TableCell>
-            <TableCell><AppPrice value={sumPriceToPayAggregation} specificCurrency={currency} /></TableCell>
+            <TableCell>{ name }</TableCell>
+            <TableCell><AppPrice value={ sumPrice } specificCurrency={ currency }/></TableCell>
+            <TableCell>{ quantity }</TableCell>
+            <TableCell><AppPrice value={ sumPriceToPayAggregation } specificCurrency={ currency }/></TableCell>
           </TableRow>
         );
-      }}
+      } }
     </OrderDetailsContext.Consumer>
   );
 };

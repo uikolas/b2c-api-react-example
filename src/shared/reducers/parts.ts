@@ -1,11 +1,11 @@
-import {IReduxState} from "../../typings/app";
+import { IReduxState } from '../../typings/app';
 
 export const getReducerPartFulfilled = (): IReduxState => ({
-    error: false,
-    pending: false,
-    fulfilled: true,
-    rejected: false,
-    initiated: true,
+  error: false,
+  pending: false,
+  fulfilled: true,
+  rejected: false,
+  initiated: true,
 });
 
 export const getReducerPartPending = (): IReduxState => ({

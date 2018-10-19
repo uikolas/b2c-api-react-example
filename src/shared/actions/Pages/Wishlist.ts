@@ -1,13 +1,13 @@
 import {
-  WISHLIST_ALL_LISTS,
-  ADD_WISHLIST,
-  DELETE_WISHLIST,
-  UPDATE_WISHLIST,
-  DETAIL_WISHLIST,
   ADD_ITEM_WISHLIST,
+  ADD_WISHLIST,
   DELETE_ITEM_WISHLIST,
+  DELETE_WISHLIST,
+  DETAIL_WISHLIST,
+  UPDATE_WISHLIST,
+  WISHLIST_ALL_LISTS,
 } from '../../constants/ActionTypes/Pages/Wishlist';
-import {WishlistService} from '../../services/Pages/Wishlist';
+import { WishlistService } from '../../services/Pages/Wishlist';
 
 
 export const getAllListPendingState = {
@@ -38,49 +38,49 @@ export const addItemPendingState = {
   type: ADD_ITEM_WISHLIST + '_PENDING',
 };
 
-export const getWishlistsAction = function () {
+export const getWishlistsAction = function() {
   return (dispatch: Function, getState: Function) => {
     dispatch(getAllListPendingState);
     WishlistService.getLists(WISHLIST_ALL_LISTS, dispatch);
   };
 };
 
-export const addWishlistAction = function (name: string) {
+export const addWishlistAction = function(name: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(addWishlistPendingState);
     WishlistService.addWishlist(ADD_WISHLIST, dispatch, name);
   };
 };
 
-export const updateWishlistAction = function (wishlistId: string, name: string) {
+export const updateWishlistAction = function(wishlistId: string, name: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(updateWishlistPendingState);
     WishlistService.updateWishlist(UPDATE_WISHLIST, dispatch, wishlistId, name);
   };
 };
 
-export const deleteWishlistAction = function (wishlistId: string) {
+export const deleteWishlistAction = function(wishlistId: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(deleteWishlistPendingState);
     WishlistService.deleteWishlist(DELETE_WISHLIST, dispatch, wishlistId);
   };
 };
 
-export const getDetailWishlistAction = function (wishlistId: string) {
+export const getDetailWishlistAction = function(wishlistId: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(detailWishlistPendingState);
     WishlistService.getWishlist(DETAIL_WISHLIST, dispatch, wishlistId);
   };
 };
 
-export const deleteItemAction = function (wishlistId: string, sku: string) {
+export const deleteItemAction = function(wishlistId: string, sku: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(deleteItemPendingState);
     WishlistService.deleteItemWishlist(DELETE_ITEM_WISHLIST, dispatch, wishlistId, sku);
   };
 };
 
-export const addItemAction = function (wishlistId: string, sku: string) {
+export const addItemAction = function(wishlistId: string, sku: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(addItemPendingState);
     WishlistService.addItemWishlist(ADD_ITEM_WISHLIST, dispatch, wishlistId, sku);

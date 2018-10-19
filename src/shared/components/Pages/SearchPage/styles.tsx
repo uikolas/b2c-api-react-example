@@ -6,9 +6,9 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: theme.spacing.unit * 2,
   },
   searchTerm: {
-    fontStyle: "italic",
-    fontWeight: "bold",
-    display: "inline",
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    display: 'inline',
   },
   categoryList: {
     width: '95%',
@@ -21,11 +21,11 @@ export const styles = (theme: Theme) => createStyles({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    margin: "0 auto",
+    margin: '0 auto',
   },
   formControl: {
     width: '90%',
-    marginLeft: '5%'
+    marginLeft: '5%',
   },
   pagesContainer: {
     marginBottom: theme.spacing.unit * 2,
@@ -36,5 +36,5 @@ export const styles = (theme: Theme) => createStyles({
   },
   nestedList: {
     marginLeft: theme.spacing.unit * 2,
-  }
+  },
 });

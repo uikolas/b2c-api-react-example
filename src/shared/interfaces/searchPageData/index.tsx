@@ -1,6 +1,5 @@
-
-import {IProductCard} from "../product";
-import {TAppCurrency} from "../../reducers/Common/Init";
+import { IProductCard } from '../product';
+import { TAppCurrency } from '../../reducers/Common/Init';
 
 interface FilterValue {
   value: any;
@@ -30,7 +29,7 @@ interface Pagination {
   currentItemsPerPage: number;
 }
 
-interface Category {
+export interface Category {
   nodeId?: number | string;
   order?: number | string;
   name?: string;

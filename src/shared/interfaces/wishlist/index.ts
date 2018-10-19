@@ -1,4 +1,4 @@
-import {IProductCardPrice, IProductAttributes} from '../product';
+import { IProductAttributes, IProductCardPrice } from '../product';
 
 export type TWishListName = string;
 

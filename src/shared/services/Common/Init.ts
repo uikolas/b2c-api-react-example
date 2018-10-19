@@ -1,20 +1,15 @@
 import api from '../api';
 import { toast } from 'react-toastify';
-import {
-  API_WITH_FIXTURES,
-  PRICE_MODE_DEFAULT,
-  CURRENCY_DEFAULT,
-  STORE_DEFAULT,
-} from '../../constants/Environment';
-import {getTestDataPromise} from "../apiFixture/index";
+import { API_WITH_FIXTURES } from '../../constants/Environment';
+import { getTestDataPromise } from '../apiFixture';
 import {
   IInitApplicationDataPayload,
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
-  initApplicationDataRejectedStateAction
-} from "../../actions/Common/Init";
-import {initFixture} from "../fixtures/initFixture";
-import {parseStoreResponse} from "../initHelper/store";
+  initApplicationDataRejectedStateAction,
+} from '../../actions/Common/Init';
+import { initFixture } from '../fixtures/initFixture';
+import { parseStoreResponse } from '../initHelper/store';
 
 export class InitAppService {
 
@@ -24,7 +19,7 @@ export class InitAppService {
       dispatch(initApplicationDataPendingStateAction());
 
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',

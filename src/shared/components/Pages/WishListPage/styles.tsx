@@ -15,6 +15,6 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.85rem',
   },
   updateCell: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });

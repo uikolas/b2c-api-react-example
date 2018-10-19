@@ -9,8 +9,8 @@ export const styles = (theme: Theme) => createStyles({
     top: 0,
     left: 'calc(50% - 6px)',
     boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), ' +
-    '0px 2px 2px 0px rgba(0, 0, 0, 0.14), ' +
-    '0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
+      '0px 2px 2px 0px rgba(0, 0, 0, 0.14), ' +
+      '0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
   },
 });
 
@@ -19,7 +19,7 @@ export const formStyles = (theme: Theme) => createStyles({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-    marginTop: theme.spacing.unit*2,
+    marginTop: theme.spacing.unit * 2,
     width: '50%',
     minWidth: '300px',
   },
@@ -27,8 +27,7 @@ export const formStyles = (theme: Theme) => createStyles({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
-  input: {
-  },
+  input: {},
   button: {
     margin: theme.spacing.unit,
     marginTop: theme.spacing.unit * 4,

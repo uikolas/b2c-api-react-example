@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
-import {styles} from './styles';
+import { styles } from './styles';
 
 interface SprykerButtonProps extends WithStyles<typeof styles> {
   title: string;
@@ -32,9 +32,9 @@ export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Ele
     <Button
       variant="contained"
       component="button"
-      disabled={!!disabled}
-      className={`${classes.button} ${extraClasses}`}
-      value={value}
+      disabled={ !!disabled }
+      className={ `${classes.button} ${extraClasses}` }
+      value={ value }
       onClick={
         onClick
           ? onClick
@@ -42,9 +42,9 @@ export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Ele
       }
       type={btnType ? btnType : 'button'}
     >
-      {title}
-      {IconType ? <IconType className={classes.icon}/> : null}
-      {iconComponent ? iconComponent : null}
+      { title }
+      { IconType ? <IconType className={ classes.icon }/> : null }
+      { iconComponent ? iconComponent : null }
     </Button>
   );
 };

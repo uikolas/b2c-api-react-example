@@ -1,4 +1,4 @@
-import {parseGetOrdersCollectionResponse} from './response';
+import { parseGetOrdersCollectionResponse } from './response';
 
 export {
   parseGetOrdersCollectionResponse,
