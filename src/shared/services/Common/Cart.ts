@@ -1,23 +1,25 @@
-import api, {setAuthToken} from '../api';
+import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {cartCreateFixture, cartUpdateQuantityFixture} from '../fixtures/cartFixture';
-import {getTestDataPromise} from "../apiFixture/index";
-import {TProductQuantity, TProductSKU} from "../../interfaces/product";
-import {ICartAddItem, TCartAddItemCollection, TCartId} from "../../interfaces/cart";
-import {parseAddToCartResponse} from "../cartHelper";
-import {parseCartCreateResponse} from "../cartHelper/response";
-import {RefreshTokenService} from './RefreshToken';
+import { API_WITH_FIXTURES } from '../../constants/Environment';
+import { cartCreateFixture, cartUpdateQuantityFixture } from '../fixtures/cartFixture';
+import { getTestDataPromise } from '../apiFixture';
+import { TProductSKU } from '../../interfaces/product';
+import { ICartAddItem, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
+import { parseAddToCartResponse } from '../cartHelper';
+import { parseCartCreateResponse } from '../cartHelper/response';
+import { RefreshTokenService } from './RefreshToken';
 import {
   cartAddItemFulfilledStateAction,
   cartAddItemPendingStateAction,
   cartAddItemRejectedStateAction,
   cartCreateFulfilledStateAction,
   cartCreatePendingStateAction,
-  cartCreateRejectedStateAction, cartUpdateItemFulfilledStateAction, cartUpdateItemPendingStateAction,
-  cartUpdateItemRejectedStateAction
-} from "../../actions/Common/Cart";
-import {cartAuthenticateErrorText} from "../../constants/messages/errors";
+  cartCreateRejectedStateAction,
+  cartUpdateItemFulfilledStateAction,
+  cartUpdateItemPendingStateAction,
+  cartUpdateItemRejectedStateAction,
+} from '../../actions/Common/Cart';
+import { cartAuthenticateErrorText } from '../../constants/messages/errors';
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -33,14 +35,14 @@ export class CartService {
 
       const body = {
         data: {
-          type: "carts",
+          type: 'carts',
           attributes: payload,
-        }
+        },
       };
 
       let response: any;
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -55,7 +57,7 @@ export class CartService {
             throw new Error(cartAuthenticateErrorText);
           }
           setAuthToken(token);
-          response = await api.post('carts', body, { withCredentials: true });
+          response = await api.post('carts', body, {withCredentials: true});
         } catch (err) {
           console.error('CartService: cartCreate: err', err);
         }
@@ -98,15 +100,15 @@ export class CartService {
 
       const body = {
         data: {
-          type: "items",
+          type: 'items',
           attributes: payload,
-        }
+        },
       };
 
       let response: any;
 
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -122,7 +124,7 @@ export class CartService {
             throw new Error(cartAuthenticateErrorText);
           }
           setAuthToken(token);
-          response = await api.post(endpoint, body, { withCredentials: true });
+          response = await api.post(endpoint, body, {withCredentials: true});
         } catch (err) {
           console.error('CartService: cartAddItem: err', err);
         }
@@ -152,7 +154,7 @@ export class CartService {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
-      const response: any = await api.delete(`carts/${cartId}/items/${itemId}`, {}, { withCredentials: true });
+      const response: any = await api.delete(`carts/${cartId}/items/${itemId}`, {}, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -194,23 +196,23 @@ export class CartService {
   }
 
   // Update cart item quantity.
-  public static async cartUpdateItem( dispatch: Function,
-                                      payload: ICartAddItem,
-                                      cartId: TCartId | null): Promise<any> {
+  public static async cartUpdateItem(dispatch: Function,
+                                     payload: ICartAddItem,
+                                     cartId: TCartId | null): Promise<any> {
     try {
       dispatch(cartUpdateItemPendingStateAction());
 
       const body = {
         data: {
-          type: "items",
+          type: 'items',
           attributes: payload,
-        }
+        },
       };
       const {sku} = payload;
       let response: any;
 
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -226,7 +228,7 @@ export class CartService {
             throw new Error(cartAuthenticateErrorText);
           }
           setAuthToken(token);
-          response = await api.patch(endpoint, body, { withCredentials: true });
+          response = await api.patch(endpoint, body, {withCredentials: true});
         } catch (err) {
           console.error('CartService: cartUpdateItem: err', err);
         }
@@ -268,15 +270,15 @@ export class CartService {
       productsList.forEach((sku: string) => {
         const body = {
           data: {
-            type: "items",
+            type: 'items',
             attributes: {
               sku,
               quantity: 1,
             },
-          }
+          },
         };
 
-        const req = api.post(endpoint, body, { withCredentials: true });
+        const req = api.post(endpoint, body, {withCredentials: true});
         requests.push(req);
       });
 
@@ -312,11 +314,11 @@ export class CartService {
 
       for (const item of payload) {
         if (!globalResponse) {
-          dispatch(cartAddItemRejectedStateAction("Error in processing adding products in sequence"));
+          dispatch(cartAddItemRejectedStateAction('Error in processing adding products in sequence'));
           return false;
         }
         dispatch(cartAddItemPendingStateAction());
-        const processResult =  await this.addingItemProcess(dispatch, item, cartId);
+        const processResult = await this.addingItemProcess(dispatch, item, cartId);
         if (processResult.ok) {
           const responseParsed = parseAddToCartResponse(processResult.data);
           dispatch(cartAddItemFulfilledStateAction(responseParsed));
@@ -340,15 +342,15 @@ export class CartService {
                                          cartId: TCartId): Promise<any> {
     const body = {
       data: {
-        type: "items",
+        type: 'items',
         attributes: payload,
-      }
+      },
     };
 
     let response: any;
 
     // TODO: this is only for development reasons - remove after finish
-    if(API_WITH_FIXTURES) {
+    if (API_WITH_FIXTURES) {
       const result = {
         ok: true,
         problem: 'Test API_WITH_FIXTURES',
@@ -363,7 +365,7 @@ export class CartService {
           throw new Error(cartAuthenticateErrorText);
         }
         setAuthToken(token);
-        response = await api.post(endpoint, body, { withCredentials: true });
+        response = await api.post(endpoint, body, {withCredentials: true});
       } catch (err) {
         console.error('CartService: cartAddItem: err', err);
       }

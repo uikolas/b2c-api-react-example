@@ -1,3 +1,4 @@
+import produce from 'immer';
 import {
   PAGES_PRODUCT_REQUEST,
 } from '../../constants/ActionTypes/Pages/Product';
@@ -7,7 +8,6 @@ import {
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {IProductDataParsed} from "../../interfaces/product/index";
 
-import produce from "immer";
 
 export interface IProductState extends IReduxState {
   data: {
@@ -24,6 +24,7 @@ export const initialState: IProductState = {
 /*export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
   console.info(action);
   const res = produce<IProductState>(state, draft => {
+>>>>>>> main-dev
     switch (action.type) {
       case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
         draft.error = action.error;

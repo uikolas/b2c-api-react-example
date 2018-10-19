@@ -20,10 +20,8 @@ import { push } from 'react-router-redux';
 import {reduxify} from '../../../lib/redux-helper';
 
 import {deleteItemAction} from '../../../actions/Pages/Wishlist';
-import {getProductDataAction} from '../../../actions/Pages/Product';
 import {addItemToCartAction, multiItemsCartAction} from "../../../actions/Common/Cart";
 
-import {AppMain} from '../../Common/AppMain';
 import {AppPrice} from '../../Common/AppPrice';
 
 import {IWishlist, IWishlistItem} from "../../../interfaces/wishlist";
@@ -37,7 +35,6 @@ import {getCartId, getTotalItemsQuantity, isCartLoading} from "../../../reducers
 import {ICartCreatePayload} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
 
-import config from '../../../config';
 import {styles} from './styles';
 import {pathProductPageBase} from "../../../routes/contentRoutes";
 
@@ -195,46 +192,44 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
     });
 
     return (
-      <AppMain>
-        <Grid container>
+      <Grid container>
 
-          <Grid item xs={12} container justify="space-around">
-            <Typography
-              variant="headline"
-              children={wishlist ? `Wishlist ${wishlist.name}` : ''}
-            />
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={this.moveAllProductsToCart}
-              disabled={isLoading || cartLoading}
-            >
-              Add all available products to cart
-            </Button>
-          </Grid>
-
-          <Grid item xs={12} container justify="center">
-            <Paper elevation={4} className={classes.paperContainer}>
-              <Table>
-                <TableHead>
-                  <TableRow key="table-header">
-                    <TableCell></TableCell>
-                    <TableCell className={classes.headerCell}>Product</TableCell>
-                    <TableCell className={classes.headerCell}>Price</TableCell>
-                    <TableCell className={classes.headerCell}>Availability</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows}
-                </TableBody>
-              </Table>
-            </Paper>
-          </Grid>
-
+        <Grid item xs={12} container justify="space-around">
+          <Typography
+            variant="headline"
+            children={wishlist ? `Wishlist ${wishlist.name}` : ''}
+          />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={this.moveAllProductsToCart}
+            disabled={isLoading || cartLoading}
+          >
+            Add all available products to cart
+          </Button>
         </Grid>
-      </AppMain>
+
+        <Grid item xs={12} container justify="center">
+          <Paper elevation={4} className={classes.paperContainer}>
+            <Table>
+              <TableHead>
+                <TableRow key="table-header">
+                  <TableCell></TableCell>
+                  <TableCell className={classes.headerCell}>Product</TableCell>
+                  <TableCell className={classes.headerCell}>Price</TableCell>
+                  <TableCell className={classes.headerCell}>Availability</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+
+      </Grid>
     );
   }
 }

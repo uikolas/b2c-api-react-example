@@ -1,11 +1,7 @@
-import {
-  ORDERS_COLLECTION_REQUEST,
-} from '../../constants/ActionTypes/Pages/Order';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {IOrderCollectionParsed, TOrderCollection} from "../../interfaces/order/index";
+import { ORDERS_COLLECTION_REQUEST } from '../../constants/ActionTypes/Pages/Order';
+import { IReduxState } from '../../../typings/app';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { IOrderCollectionParsed, TOrderCollection } from '../../interfaces/order';
 
 
 export interface IOrdersData extends IOrderCollectionParsed {
@@ -22,7 +18,7 @@ export const initialState: IOrderHistoryState = {
   },
 };
 
-export const orderHistory = function (state: IOrderHistoryState = initialState, action: any): IOrderHistoryState {
+export const orderHistory = function(state: IOrderHistoryState = initialState, action: any): IOrderHistoryState {
   switch (action.type) {
     case `${ORDERS_COLLECTION_REQUEST}_PENDING`:
       return handlePending(state, action.payload);

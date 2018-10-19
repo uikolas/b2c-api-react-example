@@ -1,8 +1,8 @@
-import {IMenuItemsDropdown} from "../../components/UI/DropdownControlled";
-import {IWishlist} from "../../interfaces/wishlist/index";
+import { IMenuItemsDropdown } from '../../components/UI/DropdownControlled';
+import { IWishlist } from '../../interfaces/wishlist';
 
-export const createWishListMenuVariants = (wishlists:  Array<IWishlist> | null)
-                                          :  Array<IMenuItemsDropdown> | boolean => {
+export const createWishListMenuVariants = (wishlists: Array<IWishlist> | null)
+  : Array<IMenuItemsDropdown> | boolean => {
   if (!wishlists) {
     return null;
   }

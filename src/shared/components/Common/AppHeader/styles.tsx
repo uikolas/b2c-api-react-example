@@ -3,16 +3,21 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   appBar: {
-    minHeight: "65px",
+    minHeight: '65px',
   },
   button: {
     marginLeft: theme.spacing.unit,
   },
   cartNotification: {
-    top: "70px",
-    right: "21px",
+    top: '70px',
+    right: '21px',
   },
   preloader: {
-    top: "70px",
+    top: '70px',
   },
+  customerBtn: {
+    margin: theme.spacing.unit,
+    width: '44px',
+    height: '44px',
+  }
 });

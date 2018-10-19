@@ -1,32 +1,28 @@
 import {
-  CART_CREATE,
   CART_ADD_ITEM,
-  CART_DELETE_ITEM, CART_UPDATE_ITEM,
+  CART_CREATE,
+  CART_DELETE_ITEM,
+  CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
+import { IReduxState } from '../../../typings/app';
 import {
-  IReduxState,
-} from '../../../typings/app';
-import {
-  TProductSKU,
-  TProductQuantity,
+  TProductAvailability,
+  TProductImageSRC,
   TProductName,
   TProductPrice,
-  TProductImageSRC, TProductAvailability,
-} from "../../interfaces/product";
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {
-  ICartItemCalculation,
-  ICartDataResponse,
-  TCartId,
-} from "../../interfaces/cart";
+  TProductQuantity,
+  TProductSKU,
+} from '../../interfaces/product';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
 
 export interface ICartItem {
-  sku: TProductSKU| null;
-  name: TProductName| null;
-  image: TProductImageSRC| null;
-  quantity: TProductQuantity| null;
+  sku: TProductSKU | null;
+  name: TProductName | null;
+  image: TProductImageSRC | null;
+  quantity: TProductQuantity | null;
   amount: TProductPrice | null;
-  calculations: ICartItemCalculation| null;
+  calculations: ICartItemCalculation | null;
   groupKey: string | null;
   availability: TProductAvailability | null;
   availableQuantity: TProductQuantity | null;
@@ -53,7 +49,7 @@ export const initialState: ICartState = {
   },
 };
 
-export const cart = function (state: ICartState = initialState, action: any): ICartState {
+export const cart = function(state: ICartState = initialState, action: any): ICartState {
   switch (action.type) {
     case `${CART_ADD_ITEM}_PENDING`:
     case `${CART_UPDATE_ITEM}_PENDING`:

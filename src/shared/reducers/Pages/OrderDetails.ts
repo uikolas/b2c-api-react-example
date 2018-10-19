@@ -1,11 +1,7 @@
-import {
-  ORDER_DETAILS_REQUEST,
-} from '../../constants/ActionTypes/Pages/Order';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {IOrderDetailsParsed} from "../../interfaces/order/index";
+import { ORDER_DETAILS_REQUEST } from '../../constants/ActionTypes/Pages/Order';
+import { IReduxState } from '../../../typings/app';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { IOrderDetailsParsed } from '../../interfaces/order';
 
 export interface IOrderDetailsState extends IReduxState {
   data: IOrderDetailsParsed;
@@ -22,7 +18,7 @@ export const initialState: IOrderDetailsState = {
   },
 };
 
-export const orderDetails = function (state: IOrderDetailsState = initialState, action: any): IOrderDetailsState {
+export const orderDetails = function(state: IOrderDetailsState = initialState, action: any): IOrderDetailsState {
   switch (action.type) {
     case `${ORDER_DETAILS_REQUEST}_PENDING`:
       return handlePending(state, action.payload);

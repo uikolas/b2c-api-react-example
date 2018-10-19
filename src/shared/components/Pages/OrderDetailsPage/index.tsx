@@ -185,7 +185,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
     const {classes, isOrderExist, isFulfilled, routerGoBack, currency, order} = this.props;
 
     return (
-      <AppMain>
+      <div>
         { (isFulfilled === false)
           ? null
           : (
@@ -206,11 +206,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                 </Grid>
                 <Grid container justify="center" >
                   {isOrderExist
-                    ? <React.Fragment>
-                      <Grid item xs={12} sm={3}>
-
-                      </Grid>
-                      <Grid item xs={12} sm={9}>
+                    ? <Grid item xs={12}>
                         <OrderDetailsGeneralInfo
                           orderId={order.id}
                           date={order.dateCreated}
@@ -244,7 +240,6 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                           />
                         </Grid>
                       </Grid>
-                    </React.Fragment>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>
                       {emptyOrderText}
                     </Typography>
@@ -256,7 +251,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
 
           )
         }
-      </AppMain>
+      </div>
     );
   }
 }
