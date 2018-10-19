@@ -77,6 +77,9 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
   }
 
   public addWishlist = () => {
+    if (!this.state.name.trim()) {
+      return;
+    }
     this.props.dispatch(addWishlistAction(this.state.name));
     this.setState({name: ''});
   }

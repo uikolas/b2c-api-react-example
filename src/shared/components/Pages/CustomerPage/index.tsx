@@ -97,7 +97,7 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
           </Grid>
           <Grid item xs={9}>
             <Switch>
-              <Route path={pathCustomerPage} exact render={() => 'Customer'} />
+              <Route path={pathCustomerPage} exact component={ConnectedCustomerProfilePage} />
               <Route path={pathCustomerAddressesPage} exact component={CustomerAddressPage} />
               <Route path={pathAddressFormPage} component={AddressFormPage} />
               <Route path={pathWishListsPage} component={ConnectedWishlistPage} />

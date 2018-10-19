@@ -133,7 +133,7 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
         <Grid item xs={12} container justify="center">
           <Typography
             variant="headline"
-            children={`${currentAddress ? 'Add' : 'Edit'} Address Information`}
+            children={`${currentAddress ? 'Edit' : 'Add'} Address Information`}
           />
         </Grid>
 

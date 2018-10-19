@@ -233,7 +233,7 @@
     "build:web:prod": "cross-env NODE_ENV=production npm run build:web",
     "dist:dev": "npm run cpy:local:dev && npm run build:web",
     "start:docker": "npm run cpy:local:docker && sudo docker-compose up --build",
-    "dist:prod": "npm run cpy:prod && npm run build:web:prod && npm start",
+    "dist:prod": "npm run cpy:prod && npm run build:web:prod",
     "dist": "npm run build:web:prod",
     "dev": "cross-env NODE_ENV=webpack-dev-server node server.js",
     "serve": "npm run cpy:local:serve && npm run dev",
