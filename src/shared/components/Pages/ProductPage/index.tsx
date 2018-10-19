@@ -293,8 +293,10 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   private setInitialWishList = (): boolean => {
+    if (this.state.wishListSelected) {
+      return false;
+    }
     const wishListSelected = this.getFirstWishList();
-
     if (!wishListSelected) {
       return false;
     }
@@ -404,6 +406,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     console.info('state: ', this.state);
     console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
+    console.info('render this.state.wishListSelected ', this.state.wishListSelected);
 
     return (
       <AppMain>
