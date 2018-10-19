@@ -77,9 +77,9 @@ export const updateCustomerPasswordFulfilledStateAction = () => ({
   type: CUSTOMER_PASSWORD_UPDATE + '_FULFILLED',
 });
 
-export const updateCustomerPasswordAction = function (payload: ICustomerProfilePassword) {
+export const updateCustomerPasswordAction = function (customerReference: TCustomerReference, payload: ICustomerProfilePassword) {
   return (dispatch: Function, getState: Function) => {
-    CustomerProfileService.updatePasswordData(dispatch, payload);
+    CustomerProfileService.updatePasswordData(dispatch, customerReference, payload);
   };
 };
 

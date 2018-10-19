@@ -122,7 +122,9 @@ export class CustomerProfileService extends ApiServiceAbstract {
   }
 
   // Update customer password.
-  public static async updatePasswordData(dispatch: Function, payload: ICustomerProfilePassword): Promise<any> {
+  public static async updatePasswordData(dispatch: Function,
+                                         customerReference: TCustomerReference,
+                                         payload: ICustomerProfilePassword): Promise<any> {
     try {
       dispatch(updateCustomerPasswordPendingStateAction());
 
@@ -141,14 +143,12 @@ export class CustomerProfileService extends ApiServiceAbstract {
           throw new Error(CustomerProfileAuthenticateErrorText);
         }
         setAuthToken(token);
-        response = await api.patch('customer-password', body, { withCredentials: true });
+        response = await api.patch(`customer-password/${customerReference}`, body, { withCredentials: true });
       } catch (err) {
         console.error('CustomerProfileService: updatePasswordData: err', err);
       }
 
       if (response.ok) {
-        console.log('updatePasswordData response ', response);
-
         const responseParsed: any = response.data;
         dispatch(updateCustomerPasswordFulfilledStateAction());
         toast.success('Your Password was successfully updated!');

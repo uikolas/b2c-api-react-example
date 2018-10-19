@@ -173,7 +173,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     const password = this.getCurrentDataField(keyOldPassword);
     const newPassword = this.getCurrentDataField(keyNewPassword);
     const confirmPassword = this.getCurrentDataField(keyConfirmPassword);
-    if( !password || !newPassword || !confirmPassword) {
+    if( !password || !newPassword || !confirmPassword || !this.props.customerReference) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
@@ -183,7 +183,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       return null;
     }
     const passwordData = {password, newPassword, confirmPassword};
-    this.props.updateCustomerPassword(passwordData);
+    this.props.updateCustomerPassword(this.props.customerReference, passwordData);
   }
 
   public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
@@ -352,7 +352,9 @@ export const ConnectedCustomerProfilePage = reduxify(
       updateCustomerProfileAction(customerReference, payload)
     ),
     saveLoginDataToStore: (payload: ILoginDataToLocalStorage) => dispatch(saveLoginDataToStoreAction(payload)),
-    updateCustomerPassword: (payload: ICustomerProfilePassword) => dispatch(updateCustomerPasswordAction(payload)),
+    updateCustomerPassword: (customerReference: TCustomerReference, payload: ICustomerProfilePassword) => dispatch(
+      updateCustomerPasswordAction(customerReference, payload)
+    ),
     deleteCustomerEntity: (customerReference: TCustomerReference) => dispatch(deleteCustomerAction(customerReference)),
   })
 )(CustomerProfilePage);
