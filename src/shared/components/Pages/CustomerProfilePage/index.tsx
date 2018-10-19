@@ -45,7 +45,7 @@ import {
 } from "../../../reducers/Pages/CustomerProfile";
 import {SprykerDialog} from "../../UI/SprykerDialog/index";
 import {pathLoginPage} from "../../../routes/contentRoutes";
-import {saveCustomerUsernameToLocalStorage} from "../../../helpers/localStorageHelper/index";
+import {saveCustomerUsernameToLocalStorage} from "../../../helpers/localStorage/index";
 
 export const pageTitle = "Profile";
 

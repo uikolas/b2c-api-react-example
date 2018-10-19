@@ -52,13 +52,13 @@ import {
   getAvailabilityDisplay,
   getInitialSuperAttrSelected,
   ISuperAttribute,
-} from '../../../helpers/productHelper';
+} from '../../../helpers/product';
 import { addItemToCartAction } from '../../../actions/Common/Cart';
 import { getCartId, isCartCreated } from '../../../reducers/Common/Cart';
 import { getPayloadForCreateCart, isAppInitiated, TAppPriceMode, TAppStore } from '../../../reducers/Common/Init';
 import { addItemAction, getWishlistsAction } from '../../../actions/Pages/Wishlist';
 import { isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { createCartItemAddToCart } from '../../../helpers/cartHelper';
+import { createCartItemAddToCart } from '../../../helpers/cart';
 import { IWishlist, TWishListName } from '../../../interfaces/wishlist';
 import { ICartAddItem, TCartId } from '../../../interfaces/cart';
 import { AppPrice } from '../../Common/AppPrice';
@@ -66,7 +66,7 @@ import { getProductDataAction } from '../../../actions/Pages/Product';
 import { getRouterLocation, getRouterMatchParam, TRouterMatchParam } from '../../../selectors/Common/router';
 import { cartAuthenticateErrorText } from '../../../constants/messages/errors';
 import { ICartCreatePayload } from '../../../services/Common/Cart';
-import { createWishListMenuVariants } from '../../../helpers/wishlistHelper/list';
+import { createWishListMenuVariants } from '../../../helpers/wishlist/list';
 
 export const buyBtnTitle = 'Add to cart';
 export const wishlistBtnTitle = 'Add to Wishlist';

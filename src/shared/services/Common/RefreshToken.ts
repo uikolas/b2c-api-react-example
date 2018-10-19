@@ -2,8 +2,8 @@ import api from '../api';
 import { toast } from 'react-toastify';
 
 import { REFRESH_TOKEN_REQUEST } from '../../constants/ActionTypes/Pages/Login';
-import {parseLoginDataResponse} from "../../helpers/customerHelper/loginDataResponse";
-import {saveAccessDataToLocalStorage} from "../../helpers/localStorageHelper/index";
+import {parseLoginDataResponse} from "../../helpers/customer/loginDataResponse";
+import {saveAccessDataToLocalStorage} from "../../helpers/localStorage/index";
 
 
 export class RefreshTokenService {

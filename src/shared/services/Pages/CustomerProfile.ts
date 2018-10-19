@@ -18,10 +18,10 @@ import {
   ICustomerProfilePassword,
   TCustomerReference
 } from "../../interfaces/customer/index";
-import {parseCustomerDataResponse} from "../../helpers/customerHelper/customerDataResponse";
+import {parseCustomerDataResponse} from "../../helpers/customer/customerDataResponse";
 import {RefreshTokenService} from "../Common/RefreshToken";
 import {CustomerProfileAuthenticateErrorText} from "../../constants/messages/errors";
-import {ApiServiceAbstract} from "../apiHelper/ApiServiceAbstract";
+import {ApiServiceAbstract} from "../apiAbstractions/ApiServiceAbstract";
 import {logout} from "../../actions/Pages/Login";
 
 

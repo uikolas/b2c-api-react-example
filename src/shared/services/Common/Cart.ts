@@ -5,8 +5,8 @@ import { cartCreateFixture, cartUpdateQuantityFixture } from '../fixtures/cartFi
 import { getTestDataPromise } from '../fixtures/apiFixture';
 import { TProductSKU } from '../../interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
-import { parseAddToCartResponse } from '../../helpers/cartHelper';
-import { parseCartCreateResponse } from '../../helpers/cartHelper/response';
+import { parseAddToCartResponse } from '../../helpers/cart';
+import { parseCartCreateResponse } from '../../helpers/cart/response';
 import { RefreshTokenService } from './RefreshToken';
 import {
   cartAddItemFulfilledStateAction,

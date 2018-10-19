@@ -9,7 +9,7 @@ import {
   initApplicationDataRejectedStateAction,
 } from '../../actions/Common/Init';
 import { initFixture } from '../fixtures/initFixture';
-import { parseStoreResponse } from '../../helpers/initHelper/store';
+import { parseStoreResponse } from '../../helpers/init/store';
 
 export class InitAppService {
 

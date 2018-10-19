@@ -21,7 +21,7 @@ import { cartDeleteItemAction, updateItemInCartAction } from '../../../actions/C
 import { styles } from './styles';
 import { ICartAddItem, ICartTotals, TCartId } from '../../../interfaces/cart';
 import { NavLink } from 'react-router-dom';
-import { createCartItemAddToCart } from '../../../helpers/cartHelper/item';
+import { createCartItemAddToCart } from '../../../helpers/cart/item';
 import { AppMain } from '../../Common/AppMain';
 import { TProductSKU } from '../../../interfaces/product';
 import { AppPrice } from '../../Common/AppPrice';

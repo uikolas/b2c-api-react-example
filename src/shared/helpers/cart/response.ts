@@ -1,5 +1,5 @@
 import { ICartDataResponse } from '../../interfaces/cart';
-import { parseImageSets } from '../productHelper/imageSetsParser';
+import { parseImageSets } from '../product/imageSetsParser';
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
   return {
