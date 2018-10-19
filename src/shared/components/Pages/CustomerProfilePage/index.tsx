@@ -253,7 +253,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       return;
     }
     if (this.props.isAppDataSet && this.props.customerReference) {
-      console.log("%c *** initRequestData ***", 'background: #3d5afe; color: #ffea00');
+      console.info("%c *** initRequestData ***", 'background: #3d5afe; color: #ffea00');
       this.props.getCustomerData(this.props.customerReference);
       return true;
     }

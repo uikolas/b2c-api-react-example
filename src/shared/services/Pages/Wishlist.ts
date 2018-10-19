@@ -22,7 +22,7 @@ export class WishlistService {
           data: getWishlistFixture,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);

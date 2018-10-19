@@ -26,7 +26,7 @@ export class InitAppService {
           data: initFixture,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         response = await api.get('stores', null);
       }

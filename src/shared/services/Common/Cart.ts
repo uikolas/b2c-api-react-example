@@ -49,7 +49,7 @@ export class CartService {
           data: cartCreateFixture.data,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
@@ -63,7 +63,7 @@ export class CartService {
         }
       }
 
-      console.log('cartCreate response: ', response);
+      console.info('cartCreate response: ', response);
       if (response.ok) {
         const responseParsed = parseCartCreateResponse(response.data);
         dispatch(cartCreateFulfilledStateAction(responseParsed));
@@ -115,7 +115,7 @@ export class CartService {
           data: cartCreateFixture.data,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         try {
           const endpoint = `carts/${cartId}/items`;
@@ -130,11 +130,11 @@ export class CartService {
         }
       }
 
-      console.log('cartAddItem response: ', response);
+      console.info('cartAddItem response: ', response);
 
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
-        console.log('cartAddItem responseParsed: ', responseParsed);
+        console.info('cartAddItem responseParsed: ', responseParsed);
         dispatch(cartAddItemFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
@@ -219,7 +219,7 @@ export class CartService {
           data: cartUpdateQuantityFixture.data,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         try {
           const endpoint = `carts/${cartId}/items/${sku}`;
@@ -234,11 +234,11 @@ export class CartService {
         }
       }
 
-      console.log('cartUpdateItem response: ', response);
+      console.info('cartUpdateItem response: ', response);
 
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
-        console.log('cartUpdateItem responseParsed: ', responseParsed);
+        console.info('cartUpdateItem responseParsed: ', responseParsed);
         dispatch(cartUpdateItemFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {

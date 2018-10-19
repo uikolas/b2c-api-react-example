@@ -33,7 +33,7 @@ export class OrderService {
           data: orderHistoryFixtureFull,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
@@ -47,7 +47,7 @@ export class OrderService {
         }
       }
 
-      console.log('OrderService: getOrdersCollection: response: ', response);
+      console.info('OrderService: getOrdersCollection: response: ', response);
       if (response.ok) {
         const responseParsed = parseGetOrdersCollectionResponse(response.data);
         dispatch(ordersCollectionFulfilledStateAction(responseParsed));
@@ -83,7 +83,7 @@ export class OrderService {
           data: orderDetailsFixtureFull,
         };
         response = await getTestDataPromise(result);
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         try {
           const token = await RefreshTokenService.getActualToken(dispatch);
@@ -98,7 +98,7 @@ export class OrderService {
         }
       }
 
-      console.log('OrderService: getOrderDetails: response: ', response);
+      console.info('OrderService: getOrderDetails: response: ', response);
       if (response.ok) {
         const responseParsed = parseGetOrderDetailsResponse(response.data.data);
         dispatch(orderDetailsFulfilledStateAction(responseParsed));

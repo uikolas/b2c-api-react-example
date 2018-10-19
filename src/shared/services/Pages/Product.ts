@@ -21,7 +21,7 @@ export class ProductService {
           problem: 'Test API_WITH_FIXTURES',
           data: fixtureProductImages,
         };
-        console.log('+++API_WITH_FIXTURES response: ', response);
+        console.info('+++API_WITH_FIXTURES response: ', response);
       } else {
         response = await api.get(`abstract-products/${sku}`, {
           include: 'abstract-product-image-sets,' +

@@ -128,7 +128,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
   };
 
   public componentDidMount() {
-    console.log('%c ++++ ProductPage componentDidMount ++++', 'background: #3d5afe; color: #ffea00');
+    console.info('%c ++++ ProductPage componentDidMount ++++', 'background: #3d5afe; color: #ffea00');
     if (this.props.product) {
       this.setInitialData();
     } else {
@@ -141,20 +141,20 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
-      console.log('%c ---- componentDidUpdate RETURN ----', 'background: #4caf50; color: #cada55');
+      console.info('%c ---- componentDidUpdate RETURN ----', 'background: #4caf50; color: #cada55');
       return;
     }
 
     // First load of the App
     if (!this.props.isFulfilled && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)) {
-      console.log('%c ---- First load of the App in componentDidUpdate getProductData ----', 'background: #4caf50; color: #bada55');
+      console.info('%c ---- First load of the App in componentDidUpdate getProductData ----', 'background: #4caf50; color: #bada55');
       this.props.getProductData(this.props.locationProductSKU);
       return;
     }
 
     // Update of the product
     if (this.props.product.abstractProduct.sku !== this.props.locationProductSKU) {
-      console.log('%c ---- Update of the product App in componentDidUpdate ----', 'background: #4caf50; color: #bada55');
+      console.info('%c ---- Update of the product App in componentDidUpdate ----', 'background: #4caf50; color: #bada55');
       this.props.getProductData(this.props.locationProductSKU);
       return;
     }
