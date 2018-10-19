@@ -15,6 +15,7 @@ export const saveAccessDataToLocalStorage = (payload: ICustomerLoginDataParsed):
   return true;
 };
 
+// TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
 export const saveCustomerUsernameToLocalStorage = (payload: ILoginDataToLocalStorage): boolean => {
   if (!payload) {
     return false;

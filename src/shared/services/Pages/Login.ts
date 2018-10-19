@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import api from '../api';
-import {saveLoginDataToLocalStorageAction} from "../../actions/Pages/CustomerProfile";
+import {saveLoginDataToStoreAction} from "../../actions/Pages/CustomerProfile";
 import {
   parseLoginDataResponse,
 } from "../customerHelper/loginDataResponse";
@@ -25,8 +25,9 @@ export class PagesLoginService extends ApiServiceAbstract {
       const response: any = await api.post('customers', body, { withCredentials: true });
 
       if (response.ok) {
-        dispatch(saveLoginDataToLocalStorageAction({email: payload.email}));
-        saveCustomerUsernameToLocalStorage({email: payload.username});
+        dispatch(saveLoginDataToStoreAction({email: payload.email}));
+        // TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
+        saveCustomerUsernameToLocalStorage({email: payload.email});
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payload: response.data,
@@ -70,8 +71,11 @@ export class PagesLoginService extends ApiServiceAbstract {
       response = await api.post('access-tokens', body, { withCredentials: true });
       if (response.ok) {
         const responseParsed = parseLoginDataResponse(response.data);
-        dispatch(saveLoginDataToLocalStorageAction({email: payload.username}));
+        dispatch(saveLoginDataToStoreAction({email: payload.username}));
+
+        // TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
         saveCustomerUsernameToLocalStorage({email: payload.username});
+
         saveAccessDataToLocalStorage(responseParsed);
         dispatch(loginCustomerFulfilledStateAction(responseParsed));
         toast.success('You are now logged in');

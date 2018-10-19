@@ -31,7 +31,7 @@ import {AccountActions} from "./AccountActions/index";
 import {
   deleteCustomerAction,
   getCustomerProfileAction,
-  saveLoginDataToLocalStorageAction,
+  saveLoginDataToStoreAction,
   updateCustomerPasswordAction,
   updateCustomerProfileAction
 } from "../../../actions/Pages/CustomerProfile";
@@ -58,7 +58,7 @@ interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, Route
   customerReference: TCustomerReference;
   getCustomerData: Function;
   updateCustomerData: Function;
-  saveLoginDataToLocalStorage: Function;
+  saveLoginDataToStore: Function;
   updateCustomerPassword: Function;
   customerData: ICustomerDataParsed;
   passwordUpdated: boolean;
@@ -164,7 +164,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     // TODO: remove after fixing an email bug
     if (email !== this.props.customerData.email) {
       toast.warn("We can\'t show your updated email. To see it logout and login again!" );
-      this.props.saveLoginDataToLocalStorage({email});
+      this.props.saveLoginDataToStore({email});
     }
   }
 
@@ -351,9 +351,7 @@ export const ConnectedCustomerProfilePage = reduxify(
     updateCustomerData: (customerReference: TCustomerReference, payload: ICustomerProfileIdentity) => dispatch(
       updateCustomerProfileAction(customerReference, payload)
     ),
-    saveLoginDataToLocalStorage: (payload: ILoginDataToLocalStorage) => dispatch(
-      saveLoginDataToLocalStorageAction(payload)
-    ),
+    saveLoginDataToStore: (payload: ILoginDataToLocalStorage) => dispatch(saveLoginDataToStoreAction(payload)),
     updateCustomerPassword: (payload: ICustomerProfilePassword) => dispatch(updateCustomerPasswordAction(payload)),
     deleteCustomerEntity: (customerReference: TCustomerReference) => dispatch(deleteCustomerAction(customerReference)),
   })

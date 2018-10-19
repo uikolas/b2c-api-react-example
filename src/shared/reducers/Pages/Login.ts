@@ -13,7 +13,7 @@ import {
 import {TAccessToken} from "../../interfaces/login/index";
 import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
 import {TCustomerEmail, TCustomerReference, TCustomerUsername} from "../../interfaces/customer/index";
-import {LOGIN_DATA_SET_TO_STORAGE} from "../../constants/ActionTypes/Pages/CustomerProfile";
+import {LOGIN_DATA_SET_TO_STORE} from "../../constants/ActionTypes/Pages/CustomerProfile";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -82,7 +82,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         },
         ...getReducerPartFulfilled(),
       };
-    case `${LOGIN_DATA_SET_TO_STORAGE}_FULFILLED`:
+    case `${LOGIN_DATA_SET_TO_STORE}_FULFILLED`:
       const customerUsername = action.payload.email ? action.payload.email : null;
       return {
         ...state,

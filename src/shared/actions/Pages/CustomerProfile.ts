@@ -1,7 +1,7 @@
 import {
   CUSTOMER_DATA_REQUEST,
   CUSTOMER_DATA_UPDATE,
-  LOGIN_DATA_SET_TO_STORAGE,
+  LOGIN_DATA_SET_TO_STORE,
   CUSTOMER_PASSWORD_UPDATE,
   CUSTOMER_DELETE_ENTITY,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
@@ -58,8 +58,8 @@ export const updateCustomerProfileAction = function (customerReference: TCustome
 };
 
 // Save login data to LocalStorage
-export const saveLoginDataToLocalStorageAction = (payload: ILoginDataToLocalStorage) => ({
-  type: LOGIN_DATA_SET_TO_STORAGE + '_FULFILLED',
+export const saveLoginDataToStoreAction = (payload: ILoginDataToLocalStorage) => ({
+  type: LOGIN_DATA_SET_TO_STORE + '_FULFILLED',
   payload,
 });
 
