@@ -299,13 +299,18 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
               submitDeleteHandler={this.handleSubmitDeleteAccount}
             />
 
-            <SprykerDialog
-              handleShow={this.handleDeleteProfileDialogShowing}
-              content={deleteProfileContent}
-              isOpen={this.state.isDeleteProfileDialogOpen}
-              handleAgree={this.handleDeleteProfileDialogAgree}
-              handleDisagree={this.handleDeleteProfileDialogDisagree}
-            />
+            { this.state.isDeleteProfileDialogOpen
+              ? (
+                <SprykerDialog
+                  handleShow={this.handleDeleteProfileDialogShowing}
+                  content={deleteProfileContent}
+                  isOpen={this.state.isDeleteProfileDialogOpen}
+                  handleAgree={this.handleDeleteProfileDialogAgree}
+                  handleDisagree={this.handleDeleteProfileDialogDisagree}
+                />
+              )
+              : null
+            }
 
           </Grid>
         </div>
