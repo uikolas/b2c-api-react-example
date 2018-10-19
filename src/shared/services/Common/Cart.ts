@@ -1,8 +1,5 @@
 import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import { API_WITH_FIXTURES } from '../../constants/Environment';
-import { cartCreateFixture, cartUpdateQuantityFixture } from '../fixtures/cartFixture';
-import { getTestDataPromise } from '../fixtures/apiFixture';
 import { TProductSKU } from '../../interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
 import { parseAddToCartResponse } from '../../helpers/cart';
@@ -41,26 +38,15 @@ export class CartService {
       };
 
       let response: any;
-      // TODO: this is only for development reasons - remove after finish
-      if (API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: cartCreateFixture.data,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        try {
-          const token = await RefreshTokenService.getActualToken(dispatch);
-          if (!token) {
-            throw new Error(cartAuthenticateErrorText);
-          }
-          setAuthToken(token);
-          response = await api.post('carts', body, {withCredentials: true});
-        } catch (err) {
-          console.error('CartService: cartCreate: err', err);
+      try {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(cartAuthenticateErrorText);
         }
+        setAuthToken(token);
+        response = await api.post('carts', body, {withCredentials: true});
+      } catch (err) {
+        console.error('CartService: cartCreate: err', err);
       }
 
       console.info('cartCreate response: ', response);
@@ -107,27 +93,16 @@ export class CartService {
 
       let response: any;
 
-      // TODO: this is only for development reasons - remove after finish
-      if (API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: cartCreateFixture.data,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        try {
-          const endpoint = `carts/${cartId}/items`;
-          const token = await RefreshTokenService.getActualToken(dispatch);
-          if (!token) {
-            throw new Error(cartAuthenticateErrorText);
-          }
-          setAuthToken(token);
-          response = await api.post(endpoint, body, {withCredentials: true});
-        } catch (err) {
-          console.error('CartService: cartAddItem: err', err);
+      try {
+        const endpoint = `carts/${cartId}/items`;
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(cartAuthenticateErrorText);
         }
+        setAuthToken(token);
+        response = await api.post(endpoint, body, {withCredentials: true});
+      } catch (err) {
+        console.error('CartService: cartAddItem: err', err);
       }
 
       console.info('cartAddItem response: ', response);
@@ -211,27 +186,16 @@ export class CartService {
       const {sku} = payload;
       let response: any;
 
-      // TODO: this is only for development reasons - remove after finish
-      if (API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: cartUpdateQuantityFixture.data,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        try {
-          const endpoint = `carts/${cartId}/items/${sku}`;
-          const token = await RefreshTokenService.getActualToken(dispatch);
-          if (!token) {
-            throw new Error(cartAuthenticateErrorText);
-          }
-          setAuthToken(token);
-          response = await api.patch(endpoint, body, {withCredentials: true});
-        } catch (err) {
-          console.error('CartService: cartUpdateItem: err', err);
+      try {
+        const endpoint = `carts/${cartId}/items/${sku}`;
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(cartAuthenticateErrorText);
         }
+        setAuthToken(token);
+        response = await api.patch(endpoint, body, {withCredentials: true});
+      } catch (err) {
+        console.error('CartService: cartUpdateItem: err', err);
       }
 
       console.info('cartUpdateItem response: ', response);
@@ -349,26 +313,16 @@ export class CartService {
 
     let response: any;
 
-    // TODO: this is only for development reasons - remove after finish
-    if (API_WITH_FIXTURES) {
-      const result = {
-        ok: true,
-        problem: 'Test API_WITH_FIXTURES',
-        data: cartCreateFixture.data,
-      };
-      response = await getTestDataPromise(result);
-    } else {
-      try {
-        const endpoint = `carts/${cartId}/items`;
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(cartAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.post(endpoint, body, {withCredentials: true});
-      } catch (err) {
-        console.error('CartService: cartAddItem: err', err);
+    try {
+      const endpoint = `carts/${cartId}/items`;
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      if (!token) {
+        throw new Error(cartAuthenticateErrorText);
       }
+      setAuthToken(token);
+      response = await api.post(endpoint, body, {withCredentials: true});
+    } catch (err) {
+      console.error('CartService: cartAddItem: err', err);
     }
     return response;
   }

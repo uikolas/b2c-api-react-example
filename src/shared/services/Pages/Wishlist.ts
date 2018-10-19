@@ -2,38 +2,22 @@ import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
 import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
-
 import {wishlistAuthenticateErrorText} from "../../constants/messages/errors";
-import {API_WITH_FIXTURES} from "../../constants/Environment";
-import {getWishlistFixture} from "../fixtures/wishlistFixture";
-import {getTestDataPromise} from "../fixtures/apiFixture/index";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
     try {
 
-
       let response: any;
-      // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: getWishlistFixture,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        try {
-          const token = await RefreshTokenService.getActualToken(dispatch);
-          if (!token) {
-            throw new Error(wishlistAuthenticateErrorText);
-          }
-          setAuthToken(token);
-          response = await api.get('wishlists', {}, { withCredentials: true });
-        } catch (err) {
-          console.error('WishlistService: getLists: err', err);
+      try {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(wishlistAuthenticateErrorText);
         }
+        setAuthToken(token);
+        response = await api.get('wishlists', {}, { withCredentials: true });
+      } catch (err) {
+        console.error('WishlistService: getLists: err', err);
       }
 
       if (response.ok) {
@@ -43,7 +27,7 @@ export class WishlistService {
           type: ACTION_TYPE + '_FULFILLED',
           wishlists,
         });
-        //getWishlistFixture
+
         return response.data.data;
       } else {
         dispatch({

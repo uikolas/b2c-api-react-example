@@ -1,6 +1,5 @@
 import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import { API_WITH_FIXTURES } from '../../constants/Environment';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import {
   orderDetailsFulfilledStateAction,
@@ -10,11 +9,8 @@ import {
   ordersCollectionPendingStateAction,
   ordersCollectionRejectedStateAction,
 } from '../../actions/Pages/Order';
-import { getTestDataPromise } from '../fixtures/apiFixture';
 import { orderAuthenticateErrorText } from '../../constants/messages/errors';
-import { orderHistoryFixtureFull } from '../fixtures/OrderHistoryFixture';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../../helpers/order/response';
-import { orderDetailsFixtureFull } from '../fixtures/orderDetailsFixture';
 import { TOrderId } from '../../interfaces/order';
 
 export class OrderService {
@@ -25,26 +21,15 @@ export class OrderService {
       dispatch(ordersCollectionPendingStateAction());
 
       let response: any;
-      // TODO: this is only for development reasons - remove after finish
-      if (API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: orderHistoryFixtureFull,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        try {
-          const token = await RefreshTokenService.getActualToken(dispatch);
-          if (!token) {
-            throw new Error(orderAuthenticateErrorText);
-          }
-          setAuthToken(token);
-          response = await api.get('orders', null, {withCredentials: true});
-        } catch (err) {
-          console.error('OrderService: getOrdersCollection: err', err);
+      try {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(orderAuthenticateErrorText);
         }
+        setAuthToken(token);
+        response = await api.get('orders', null, {withCredentials: true});
+      } catch (err) {
+        console.error('OrderService: getOrdersCollection: err', err);
       }
 
       console.info('OrderService: getOrdersCollection: response: ', response);
@@ -75,27 +60,16 @@ export class OrderService {
       dispatch(orderDetailsPendingStateAction());
 
       let response: any;
-      // TODO: this is only for development reasons - remove after finish
-      if (API_WITH_FIXTURES) {
-        const result = {
-          ok: true,
-          problem: 'Test API_WITH_FIXTURES',
-          data: orderDetailsFixtureFull,
-        };
-        response = await getTestDataPromise(result);
-        console.info('+++API_WITH_FIXTURES response: ', response);
-      } else {
-        try {
-          const token = await RefreshTokenService.getActualToken(dispatch);
-          if (!token) {
-            throw new Error(orderAuthenticateErrorText);
-          }
-          setAuthToken(token);
-          const endpoint = `orders/${orderId}`;
-          response = await api.get(endpoint, null, {withCredentials: true});
-        } catch (err) {
-          console.error('OrderService: getOrderDetails: err', err);
+      try {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        if (!token) {
+          throw new Error(orderAuthenticateErrorText);
         }
+        setAuthToken(token);
+        const endpoint = `orders/${orderId}`;
+        response = await api.get(endpoint, null, {withCredentials: true});
+      } catch (err) {
+        console.error('OrderService: getOrderDetails: err', err);
       }
 
       console.info('OrderService: getOrderDetails: response: ', response);
