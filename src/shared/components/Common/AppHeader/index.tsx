@@ -3,7 +3,8 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
-import BookmarkBorderOutlined from '@material-ui/icons/BookmarkBorderOutlined';
+import Button from '@material-ui/core/Button';
+import PersonIcon from '@material-ui/icons/PersonOutline';
 import { NavLink } from 'react-router-dom';
 
 import {AppLogo} from '../AppLogo';
@@ -79,7 +80,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
               <AppLogo />
             </Grid>
 
-            <Grid item sm={4}>
+            <Grid item sm={4} container alignItems="center">
               { location.pathname === pathHomePage
                 ? null
                 : <CatalogSearch />
@@ -129,11 +130,10 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
               />
               { /* TODO: Add fetching data on click !!!*/ }
               {isUserLoggedIn
-                ?  <NavLink to={`${pathCustomerPage}/order`}>
-                    <SprykerButton
-                      title={'Orders History'}
-                      IconType={BookmarkBorderOutlined}
-                    />
+                ?  <NavLink to={pathCustomerPage}>
+                    <Button variant="fab" className={classes.customerBtn}>
+                      <PersonIcon />
+                    </Button>
                   </NavLink>
                 : null
               }

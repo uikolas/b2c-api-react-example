@@ -20,10 +20,8 @@ import { push } from 'react-router-redux';
 import {reduxify} from '../../../lib/redux-helper';
 
 import {deleteItemAction} from '../../../actions/Pages/Wishlist';
-import {getProductDataAction} from '../../../actions/Pages/Product';
 import {addItemToCartAction, multiItemsCartAction} from "../../../actions/Common/Cart";
 
-import {AppMain} from '../../Common/AppMain';
 import {AppPrice} from '../../Common/AppPrice';
 
 import {IWishlist, IWishlistItem} from "../../../interfaces/wishlist";
@@ -37,7 +35,6 @@ import {getCartId, getTotalItemsQuantity, isCartLoading} from "../../../reducers
 import {ICartCreatePayload} from "../../../services/Common/Cart";
 import {createCartItemAddToCart} from "../../../services/cartHelper";
 
-import config from '../../../config';
 import {styles} from './styles';
 import {pathProductPageBase} from "../../../routes/contentRoutes";
 

@@ -15,4 +15,9 @@ export const styles = (theme: Theme) => createStyles({
   preloader: {
     top: "70px",
   },
+  customerBtn: {
+    margin: theme.spacing.unit,
+    width: '44px',
+    height: '44px',
+  }
 });
