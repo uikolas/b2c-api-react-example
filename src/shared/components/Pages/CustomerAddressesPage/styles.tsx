@@ -9,15 +9,27 @@ export const styles = (theme: Theme) => createStyles({
   addButton: {
     margin: theme.spacing.unit * 2,
   },
-  newList: {
-    width: '70%',
-    margin: `${theme.spacing.unit * 3}px ${theme.spacing.unit * 2}px`,
+  customerName: {
+    fontWeight: 500,
+    fontSize: '0.86rem',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit / 2,
   },
-  headerCell: {
-    color: theme.palette.common.black,
-    fontSize: '0.85rem',
+  chips: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit / 2,
   },
-  updateCell: {
-    display: 'flex'
+  marginRight: {
+    marginRight: theme.spacing.unit,
+  },
+  addressForm: {
+    margin:  `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
+  },
+  textField: {
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+  buttons: {
+    margin: theme.spacing.unit,
   }
 });

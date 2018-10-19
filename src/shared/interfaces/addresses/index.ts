@@ -1,5 +1,6 @@
 
 export interface IAddressItem {
+  id?: string;
   salutation: string;
   firstName: string;
   lastName: string;

@@ -30,6 +30,7 @@ export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
 export const pathCustomerAddressesPage = `${pathCustomerPage}/addresses`;
+export const pathAddressFormPage = `${pathCustomerAddressesPage}/:action`;
 
 export const pathNotFoundPage = `${config.WEB_PATH}*`;
 

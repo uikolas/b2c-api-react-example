@@ -3,6 +3,7 @@ import {isPageLoginStateLoading, pagesLogin} from './Pages/Login';
 import {isPageSearchStateLoading, pageSearch} from './Pages/Search';
 import {isPageProductStateLoading, pageProduct} from './Pages/Product';
 import {isPageWishlistStateLoading, pageWishlist} from './Pages/Wishlist';
+import {isPageAddressesStateLoading, pageAddresses} from './Pages/Addresses';
 import {cart, isCartLoading} from './Common/Cart';
 import {init, isAppLoading} from './Common/Init';
 import {orderHistory, isOrderHistoryLoading} from "./Pages/OrderHistory";
@@ -15,6 +16,7 @@ export const reducers = {
   pageSearch,
   pageProduct,
   pageWishlist,
+  pageAddresses,
   cart,
   init,
   orderHistory,
@@ -34,5 +36,6 @@ export function isStateLoading(state: any, props: any): boolean {
     || isOrderHistoryLoading(state, props)
     || isOrderDetailsLoading(state, props)
     || isPageCustomerProfileLoading(state, props)
+    || isPageAddressesStateLoading(state, props)
   );
 }
