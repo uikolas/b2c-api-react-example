@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
-import {sendLoginAction, customerRegisterAction} from '../../../actions/Pages/Login';
+import {customerRegisterAction} from '../../../actions/Pages/Login';
 import {RouteProps} from "react-router";
 
 import {AppMain} from '../../Common/AppMain';
@@ -80,7 +80,7 @@ export const ForgotPasswordPage = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customer : ownProps.customer,
+        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customerRef : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
       }
@@ -89,8 +89,6 @@ export const ForgotPasswordPage = reduxify(
   (dispatch: Function, ownProps: any) => {
     return {
       dispatch,
-      handleSubmitRegisterForm: (data: any): void => dispatch(customerRegisterAction(data)),
-      handleSubmitLoginForm: (data: any): void => dispatch(sendLoginAction(data)),
     };
   }
 )(ForgotPassword);

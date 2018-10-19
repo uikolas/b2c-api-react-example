@@ -72,7 +72,7 @@ export const ConnectedLogin = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
-        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customer : ownProps.customer,
+        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customerRef : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
       }
