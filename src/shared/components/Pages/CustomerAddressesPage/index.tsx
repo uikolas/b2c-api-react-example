@@ -58,7 +58,7 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
   }
 
   public setUpdatedAddress = (addressId: string) => (e: any) => {
-    this.props.dispatch(setCurrentAddressAction(addressId))
+    this.props.dispatch(setCurrentAddressAction(addressId));
     this.props.routerPush(`${pathCustomerAddressesPage}/update`);
   }
 

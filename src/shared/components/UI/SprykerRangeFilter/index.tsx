@@ -10,7 +10,7 @@ interface SprykerRangeProps extends WithStyles<typeof styles> {
   handleChange?: Function;
   min?: number;
   max?: number;
-  currentValue?: {min: number, max: number},
+  currentValue?: {min: number, max: number};
 }
 
 export interface SprykerRangeState {

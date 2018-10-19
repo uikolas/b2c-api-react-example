@@ -86,7 +86,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
 
   public handleUpdateWishlist = (e: any) => {
     this.props.dispatch(updateWishlistAction(this.state.updatedList, this.state.updatedName));
-    this.setState({updatedList: '', updatedName: ''})
+    this.setState({updatedList: '', updatedName: ''});
   }
 
   public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
