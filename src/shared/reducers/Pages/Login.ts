@@ -77,7 +77,6 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
         data: {
           ...state.data,
           isAuth: true,
-          customerRef: action.payload.customerRef,
           ...action.payload,
         },
         ...getReducerPartFulfilled(),

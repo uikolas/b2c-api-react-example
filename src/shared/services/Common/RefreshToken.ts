@@ -51,7 +51,8 @@ export class RefreshTokenService {
       const responseParsed = parseLoginDataResponse(response.data);
       saveAccessDataToLocalStorage(responseParsed);
       dispatch({
-        type: REFRESH_TOKEN_REQUEST + '_FULFILLED'
+        type: REFRESH_TOKEN_REQUEST + '_FULFILLED',
+        payload: responseParsed,
       });
 
       return responseParsed.refreshToken;
