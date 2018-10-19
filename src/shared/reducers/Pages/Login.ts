@@ -1,17 +1,13 @@
 import {
+  PAGES_CUSTOMER_LOGOUT,
   PAGES_CUSTOMER_REGISTER,
   PAGES_LOGIN_REQUEST,
-  PAGES_CUSTOMER_LOGOUT,
   REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
-import {
-  SET_AUTH_FROM_STORAGE,
-} from '../../constants/ActionTypes/Common/Init';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {TAccessToken} from "../../interfaces/login/index";
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import { SET_AUTH_FROM_STORAGE } from '../../constants/ActionTypes/Common/Init';
+import { IReduxState } from '../../../typings/app';
+import { TAccessToken } from '../../interfaces/login';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -35,7 +31,7 @@ export const initialState: ILoginState = {
   },
 };
 
-export const pagesLogin = function (state: ILoginState = initialState, action: any): ILoginState {
+export const pagesLogin = function(state: ILoginState = initialState, action: any): ILoginState {
   switch (action.type) {
     case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
@@ -90,7 +86,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       localStorage.clear();
       return {
         ...state,
-        data: initialState.data
+        data: initialState.data,
       };
     default:
       return state;
@@ -106,8 +102,8 @@ export function isUserAuthenticated(state: any, props: any): boolean {
 export function getAccessToken(state: any, props: any): TAccessToken | null {
   return (
     isUserAuthenticated(state, props) && state.pagesLogin.data.accessToken
-    ? state.pagesLogin.data.accessToken
-    : null
+      ? state.pagesLogin.data.accessToken
+      : null
   );
 }
 

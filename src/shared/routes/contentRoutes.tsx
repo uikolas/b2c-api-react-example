@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
-import {ConnectedHomePage} from '../components/Pages/Home';
-import {NotFound} from '../components/Pages/NotFound';
-import {ConnectedLogin} from '../components/Pages/LoginPage';
-import {ConnectedSearchPage} from '../components/Pages/SearchPage';
-import {ConnectedProductPage} from '../components/Pages/ProductPage';
-import {ConnectedCartPage} from '../components/Pages/CartPage';
-import {ConnectedOrderHistoryPage} from "../components/Pages/OrderHistoryPage/index";
-import {ConnectedOrderDetailsPage} from "../components/Pages/OrderDetailsPage/index";
-import {ConnectedWishlistPage} from '../components/Pages/WishListPage';
-import {ConnectedWishlistDetailPage} from '../components/Pages/WishlistDetail';
+import { ConnectedHomePage } from '../components/Pages/Home';
+import { NotFound } from '../components/Pages/NotFound';
+import { ConnectedLogin } from '../components/Pages/LoginPage';
+import { ConnectedSearchPage } from '../components/Pages/SearchPage';
+import { ConnectedProductPage } from '../components/Pages/ProductPage';
+import { ConnectedCartPage } from '../components/Pages/CartPage';
+import { ConnectedOrderHistoryPage } from '../components/Pages/OrderHistoryPage';
+import { ConnectedOrderDetailsPage } from '../components/Pages/OrderDetailsPage';
+import { ConnectedWishlistPage } from '../components/Pages/WishListPage';
+import { ConnectedWishlistDetailPage } from '../components/Pages/WishlistDetail';
 import config from '../config';
 
 export const pathHomePage = `${config.WEB_PATH}`;
@@ -29,16 +29,16 @@ export const pathNotFoundPage = `${config.WEB_PATH}*`;
 export const getContentRoutes = function() {
   return (
     <Switch>
-      <Route path={pathHomePage} exact component={ConnectedHomePage}/>
-      <Route path={pathSearchPage} component={ConnectedSearchPage} />
-      <Route path={pathProductPage} component={ConnectedProductPage} />
-      <Route path={pathLoginPage} component={ConnectedLogin} />
-      <Route path={pathCartPage} component={ConnectedCartPage} />
-      <Route path={pathOrderDetailsPage} component={ConnectedOrderDetailsPage} />
-      <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
-      <Route path={pathWishlistPage} component={ConnectedWishlistPage} />
-      <Route path={pathWishlistDetailPage} component={ConnectedWishlistDetailPage} />
-      <Route path={pathNotFoundPage} component={NotFound} />
+      <Route path={ pathHomePage } exact component={ ConnectedHomePage }/>
+      <Route path={ pathSearchPage } component={ ConnectedSearchPage }/>
+      <Route path={ pathProductPage } component={ ConnectedProductPage }/>
+      <Route path={ pathLoginPage } component={ ConnectedLogin }/>
+      <Route path={ pathCartPage } component={ ConnectedCartPage }/>
+      <Route path={ pathOrderDetailsPage } component={ ConnectedOrderDetailsPage }/>
+      <Route path={ pathOrderHistoryPage } exact component={ ConnectedOrderHistoryPage }/>
+      <Route path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
+      <Route path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
+      <Route path={ pathNotFoundPage } component={ NotFound }/>
     </Switch>
   );
 };

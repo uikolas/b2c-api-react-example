@@ -1,5 +1,5 @@
-import {parseStoreResponse} from './store';
+import { parseStoreResponse } from './store';
 
 export {
-  parseStoreResponse
+  parseStoreResponse,
 };

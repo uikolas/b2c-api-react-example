@@ -1,17 +1,15 @@
 import {
-  WISHLIST_ALL_LISTS,
-  ADD_WISHLIST,
-  DELETE_WISHLIST,
-  UPDATE_WISHLIST,
-  DETAIL_WISHLIST,
   ADD_ITEM_WISHLIST,
+  ADD_WISHLIST,
   DELETE_ITEM_WISHLIST,
+  DELETE_WISHLIST,
+  DETAIL_WISHLIST,
+  UPDATE_WISHLIST,
+  WISHLIST_ALL_LISTS,
 } from '../../constants/ActionTypes/Pages/Wishlist';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {IWishlist, IWishlistItem} from '../../interfaces/wishlist';
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import { IReduxState } from '../../../typings/app';
+import { IWishlist, IWishlistItem } from '../../interfaces/wishlist';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 
 export interface WishlistState extends IReduxState {
   data: {
@@ -32,7 +30,7 @@ export const initialState: WishlistState = {
 };
 
 
-export const pageWishlist = function (state: WishlistState = initialState, action: any): WishlistState {
+export const pageWishlist = function(state: WishlistState = initialState, action: any): WishlistState {
   switch (action.type) {
     case `${WISHLIST_ALL_LISTS}_PENDING`:
     case `${ADD_WISHLIST}_PENDING`:
@@ -106,7 +104,7 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
     case `${ADD_ITEM_WISHLIST}_FULFILLED`: {
       const wishlists: IWishlist[] = state.data.wishlists.map((wishlist: IWishlist) => wishlist.id === action.wishlist.id
         ? action.wishlist
-        : wishlist
+        : wishlist,
       );
       return {
         ...state,
@@ -118,7 +116,7 @@ export const pageWishlist = function (state: WishlistState = initialState, actio
       const currentItems: IWishlistItem[] = state.data.currentItems.filter((item: IWishlistItem) => item.sku !== action.sku);
       const wishlists: IWishlist[] = state.data.wishlists.map((wishlist: IWishlist) => wishlist.id === action.wishlistId
         ? {...wishlist, numberOfItems: currentItems.length}
-        : wishlist
+        : wishlist,
       );
       return {
         ...state,

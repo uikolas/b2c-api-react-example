@@ -1,14 +1,12 @@
 import {
+  CATEGORIES_REQUEST,
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
   PAGES_SUGGESTION_REQUEST,
-  CATEGORIES_REQUEST,
 } from '../../constants/ActionTypes/Pages/Search';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {ISearchPageData} from "../../interfaces/searchPageData";
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import { IReduxState } from '../../../typings/app';
+import { ISearchPageData } from '../../interfaces/searchPageData';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
@@ -32,7 +30,7 @@ export const initialState: SearchState = {
   },
 };
 
-export const pageSearch = function (state: SearchState = initialState, action: any): SearchState {
+export const pageSearch = function(state: SearchState = initialState, action: any): SearchState {
   switch (action.type) {
     case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
       return {
@@ -46,6 +44,14 @@ export const pageSearch = function (state: SearchState = initialState, action: a
         ...state,
         data: {
           ...state.data,
+          categories: action.categories || [
+            {name: 'test'},
+            {name: 'test'},
+            {name: 'test'},
+            {name: 'test'},
+            {name: 'test'},
+            {name: 'test'},
+          ],
           suggestions: action.products,
           searchTerm: action.searchTerm,
           currency: action.currency || state.data.currency,
@@ -92,7 +98,7 @@ export const pageSearch = function (state: SearchState = initialState, action: a
     case PAGES_SEARCH_REQUEST_CLEAR:
       return {
         ...state,
-        data: {...state.data, suggestions: [], searchTerm: action.searchTerm}
+        data: {...state.data, suggestions: [], searchTerm: action.searchTerm},
       };
     default:
       return state;

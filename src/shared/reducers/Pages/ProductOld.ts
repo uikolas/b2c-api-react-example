@@ -1,11 +1,7 @@
-import {
-  PAGES_PRODUCT_REQUEST,
-} from '../../constants/ActionTypes/Pages/Product';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {IProductDataParsed} from "../../interfaces/product/index";
+import { PAGES_PRODUCT_REQUEST } from '../../constants/ActionTypes/Pages/Product';
+import { IReduxState } from '../../../typings/app';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { IProductDataParsed } from '../../interfaces/product';
 
 export interface IProductState extends IReduxState {
   data: {
@@ -20,13 +16,13 @@ export const initialState: IProductState = {
 };
 
 
-export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
+export const pageProduct = function(state: IProductState = initialState, action: any): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
-     /* return {
-        ...state,
-        ...getReducerPartRejected(action.error),
-      };*/
+      /* return {
+         ...state,
+         ...getReducerPartRejected(action.error),
+       };*/
       return handleRejected(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
       /*return {
@@ -39,14 +35,14 @@ export const pageProduct = function (state: IProductState = initialState, action
       };*/
       return handlePending(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
-    /*  return {
-        ...state,
-        data: {
-          ...state.data,
-          selectedProduct: action.payload,
-        },
-        ...getReducerPartFulfilled(),
-      };*/
+      /*  return {
+          ...state,
+          data: {
+            ...state.data,
+            selectedProduct: action.payload,
+          },
+          ...getReducerPartFulfilled(),
+        };*/
       return handleFulfilled(state, action.payload);
     default:
       return state;

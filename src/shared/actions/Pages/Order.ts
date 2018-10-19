@@ -1,9 +1,6 @@
-import {
-  ORDERS_COLLECTION_REQUEST,
-  ORDER_DETAILS_REQUEST,
-} from '../../constants/ActionTypes/Pages/Order';
-import {OrderService} from "../../services/Pages/Order";
-import {IOrderCollectionParsed, IOrderDetailsParsed, TOrderId} from "../../interfaces/order/index";
+import { ORDER_DETAILS_REQUEST, ORDERS_COLLECTION_REQUEST } from '../../constants/ActionTypes/Pages/Order';
+import { OrderService } from '../../services/Pages/Order';
+import { IOrderCollectionParsed, IOrderDetailsParsed, TOrderId } from '../../interfaces/order';
 
 /**
  *  Order History
@@ -23,7 +20,7 @@ export const ordersCollectionFulfilledStateAction = (payload: IOrderCollectionPa
   payload,
 });
 
-export const getOrdersCollectionAction = function () {
+export const getOrdersCollectionAction = function() {
   return (dispatch: Function, getState: Function) => {
     OrderService.getOrdersCollection(dispatch);
   };
@@ -47,7 +44,7 @@ export const orderDetailsFulfilledStateAction = (payload: IOrderDetailsParsed) =
   payload,
 });
 
-export const getOrderDetailsAction = function (orderId: TOrderId) {
+export const getOrderDetailsAction = function(orderId: TOrderId) {
   return (dispatch: Function, getState: Function) => {
     OrderService.getOrderDetails(dispatch, orderId);
   };

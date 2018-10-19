@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -8,16 +8,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import {IProductCard} from '../../../interfaces/product';
-import {styles} from './styles';
-import {AppPrice} from "../AppPrice";
+import { IProductCard } from '../../../interfaces/product';
+import { styles } from './styles';
+import { AppPrice } from '../AppPrice';
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
   onSelectProduct?: Function;
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const { classes, images, abstract_name, abstractName, price, prices, abstract_sku, abstractSku } = props;
+  const {classes, images, abstract_name, abstractName, price, prices, abstract_sku, abstractSku} = props;
   const name = abstract_name || abstractName || 'No name';
   const sku = abstract_sku || abstractSku;
 
@@ -29,38 +29,40 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
         actualPrice = data.ORIGINAL;
       }
     });
-  } else if (prices && prices.length === 1) {
-    const priceType: string = prices[0].priceTypeName;
-    actualPrice = prices[0][priceType];
   } else {
-    actualPrice = price || 0;
+    if (prices && prices.length === 1) {
+      const priceType: string = prices[0].priceTypeName;
+      actualPrice = prices[0][priceType];
+    } else {
+      actualPrice = price || 0;
+    }
   }
 
-  const priceToShow = <AppPrice value={actualPrice}/>;
+  const priceToShow = <AppPrice value={ actualPrice }/>;
 
   const handleProductClick = (e: any) => {
     e.preventDefault();
     props.onSelectProduct(sku, name);
-  }
+  };
 
   return (
-    <Card className={classes.card} raised={true}>
-      <CardActionArea onClick={handleProductClick}>
+    <Card className={ classes.card } raised={ true }>
+      <CardActionArea onClick={ handleProductClick }>
         { images && images.length
           ? <CardMedia
             component="img"
-            className={classes.media}
-            image={images.length ? (images[0].external_url_small || images[0].externalUrlSmall || '') : ''}
-            title={name}
+            className={ classes.media }
+            image={ images.length ? (images[0].external_url_small || images[0].externalUrlSmall || '') : '' }
+            title={ name }
           />
           : null
         }
         <CardContent>
           <Typography gutterBottom variant="title" data-type="productName">
-            {name}
+            { name }
           </Typography>
           <Typography gutterBottom variant="subheading" color="primary" data-type="priceToShow">
-            {priceToShow}
+            { priceToShow }
           </Typography>
         </CardContent>
       </CardActionArea>

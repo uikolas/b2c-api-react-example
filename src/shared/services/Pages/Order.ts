@@ -1,20 +1,21 @@
-import api, {setAuthToken} from '../api';
+import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import {API_WITH_FIXTURES} from '../../constants/Environment';
-import {RefreshTokenService} from '../Common/RefreshToken';
+import { API_WITH_FIXTURES } from '../../constants/Environment';
+import { RefreshTokenService } from '../Common/RefreshToken';
 import {
   orderDetailsFulfilledStateAction,
-  orderDetailsPendingStateAction, orderDetailsRejectedStateAction,
+  orderDetailsPendingStateAction,
+  orderDetailsRejectedStateAction,
   ordersCollectionFulfilledStateAction,
   ordersCollectionPendingStateAction,
-  ordersCollectionRejectedStateAction
-} from "../../actions/Pages/Order";
-import {getTestDataPromise} from "../apiFixture/index";
-import {orderAuthenticateErrorText} from "../../constants/messages/errors";
-import {orderHistoryFixtureEmpty, orderHistoryFixtureFull} from "../fixtures/OrderHistoryFixture";
-import {parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse} from "../orderHelper/response";
-import {orderDetailsFixtureFull} from "../fixtures/orderDetailsFixture";
-import {TOrderId} from "../../interfaces/order/index";
+  ordersCollectionRejectedStateAction,
+} from '../../actions/Pages/Order';
+import { getTestDataPromise } from '../apiFixture';
+import { orderAuthenticateErrorText } from '../../constants/messages/errors';
+import { orderHistoryFixtureFull } from '../fixtures/OrderHistoryFixture';
+import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../orderHelper/response';
+import { orderDetailsFixtureFull } from '../fixtures/orderDetailsFixture';
+import { TOrderId } from '../../interfaces/order';
 
 export class OrderService {
 
@@ -25,7 +26,7 @@ export class OrderService {
 
       let response: any;
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -40,7 +41,7 @@ export class OrderService {
             throw new Error(orderAuthenticateErrorText);
           }
           setAuthToken(token);
-          response = await api.get('orders', null, { withCredentials: true });
+          response = await api.get('orders', null, {withCredentials: true});
         } catch (err) {
           console.error('OrderService: getOrdersCollection: err', err);
         }
@@ -75,7 +76,7 @@ export class OrderService {
 
       let response: any;
       // TODO: this is only for development reasons - remove after finish
-      if(API_WITH_FIXTURES) {
+      if (API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -91,7 +92,7 @@ export class OrderService {
           }
           setAuthToken(token);
           const endpoint = `orders/${orderId}`;
-          response = await api.get(endpoint, null, { withCredentials: true });
+          response = await api.get(endpoint, null, {withCredentials: true});
         } catch (err) {
           console.error('OrderService: getOrderDetails: err', err);
         }

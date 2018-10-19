@@ -1,6 +1,6 @@
-import * as React from "react";
-import {TAppCurrency} from "../../../reducers/Common/Init";
-import {IOrderDetailsSelectedItems} from "../../../interfaces/order/index";
+import * as React from 'react';
+import { TAppCurrency } from '../../../reducers/Common/Init';
+import { IOrderDetailsSelectedItems } from '../../../interfaces/order';
 
 type TOrderDetailsContext = {
   selectItemHandler(event: any): any,

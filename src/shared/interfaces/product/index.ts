@@ -1,4 +1,4 @@
-import {ISuperAttribute} from "../../services/productHelper/superAttributes";
+import { ISuperAttribute } from '../../services/productHelper/superAttributes';
 
 // Constants
 export const concreteProductType = 'concreteProduct';
@@ -10,7 +10,7 @@ export type TAbstractProductType = 'abstractProduct';
 export const absentProductType = 'absentProduct';
 export type TAbsentProductType = 'absentProduct';
 
-export const defaultItemValueDropdown = " ";
+export const defaultItemValueDropdown = ' ';
 
 // Types
 export type TProductType = TAbstractProductType | TConcreteProductType | TAbsentProductType;

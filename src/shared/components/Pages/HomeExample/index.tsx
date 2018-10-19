@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {Location} from 'history';
+import { Location } from 'history';
 
-import {reduxify} from '../../../lib/redux-helper';
-import {IHomeState} from '../../../reducers/Pages/Home';
-import {getDataAction} from '../../../actions/Pages/Home';
+import { reduxify } from '../../../lib/redux-helper';
+import { IHomeState } from '../../../reducers/Pages/Home';
+import { getDataAction } from '../../../actions/Pages/Home';
 
 
-export const title = "Home";
+export const title = 'Home';
 
 export interface IProps {
   dispatch?: Function;
@@ -27,13 +27,15 @@ export class Home extends React.PureComponent<IProps, any> {
     console.error('Home->componentDidCatch->error', error);
     console.error('Home->componentDidCatch->info', info);
   }
+
   public render() {
     return (
       <React.Fragment>
-        <div>{title}</div>
-        {this.props.items ? this.props.items.map(
-          (item: any, index: number) => (<span id={item._id} key={item._id}>{item.company} {item.balance}</span>)
-        ) : null}
+        <div>{ title }</div>
+        { this.props.items ? this.props.items.map(
+          (item: any, index: number) => (
+            <span id={ item._id } key={ item._id }>{ item.company } { item.balance }</span>),
+        ) : null }
       </React.Fragment>
     );
   }
@@ -51,5 +53,5 @@ export const ConnectedHome = reduxify(
           pagesHomeProps.data.items_count : ownProps.itemsCount,
       }
     );
-  }
+  },
 )(Home);

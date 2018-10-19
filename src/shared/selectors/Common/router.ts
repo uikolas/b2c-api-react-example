@@ -1,4 +1,4 @@
-import {Location, History} from 'history';
+import { Location } from 'history';
 
 export type TRouterMatchParam = string | number | null;
 
@@ -15,7 +15,7 @@ export function getRouterMatchParam(state: any, props: any, paramName: string | 
 }
 
 export function getRouterHistoryPush(state: any, props: any): Function | null {
-  if (!props.history || !props.history.push ) {
+  if (!props.history || !props.history.push) {
     return null;
   }
 
@@ -23,7 +23,7 @@ export function getRouterHistoryPush(state: any, props: any): Function | null {
 }
 
 export function getRouterHistoryBack(state: any, props: any): Function | null {
-  if (!props.history || !props.history.goBack ) {
+  if (!props.history || !props.history.goBack) {
     return null;
   }
 

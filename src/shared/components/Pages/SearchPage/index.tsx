@@ -1,7 +1,5 @@
-import * as React from "react";
-import {Location} from 'history';
-import { toast } from 'react-toastify';
-import {RouteProps} from "react-router";
+import * as React from 'react';
+import { RouteProps } from 'react-router';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -19,21 +17,19 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { push } from 'react-router-redux';
 
-import {reduxify} from '../../../lib/redux-helper';
-import {SearchState} from '../../../reducers/Pages/Search';
-import {SprykerFilterElement} from '../../../components/UI/SprykerFilter';
-import {SprykerRange} from '../../../components/UI/SprykerRangeFilter';
+import { reduxify } from '../../../lib/redux-helper';
+import { SearchState } from '../../../reducers/Pages/Search';
+import { SprykerFilterElement } from '../../../components/UI/SprykerFilter';
+import { SprykerRange } from '../../../components/UI/SprykerRangeFilter';
+import { getCategoriesAction, sendSearchAction } from '../../../actions/Pages/Search';
 
-import {getProductDataAction} from '../../../actions/Pages/Product';
-import {sendSearchAction, getCategoriesAction} from '../../../actions/Pages/Search';
+import { AppMain } from '../../Common/AppMain';
+import { ProductCard } from '../../Common/ProductCard';
+import { ISearchPageData, RangeFacets, ValueFacets } from '../../../interfaces/searchPageData';
 
-import {AppMain} from '../../Common/AppMain';
-import {ProductCard} from '../../Common/ProductCard';
-import {ISearchPageData, ValueFacets, RangeFacets} from "../../../interfaces/searchPageData";
-
-import {styles} from './styles';
-import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
-import {pathProductPage, pathProductPageBase} from "../../../routes/contentRoutes";
+import { styles } from './styles';
+import { getAppCurrency, TAppCurrency } from '../../../reducers/Common/Init';
+import { pathProductPageBase } from '../../../routes/contentRoutes';
 
 type IQuery = {
   q?: string,
@@ -59,7 +55,7 @@ interface SearchPageState {
 export const pageTitle = 'Search results for ';
 
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
-  constructor(props : SearchPageProps){
+  constructor(props: SearchPageProps) {
     super(props);
 
     const activeFilters: {[key: string]: string[]} = {};
@@ -73,7 +69,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     props.rangeFilters.forEach((filter: RangeFacets) => {
       if (filter.activeMin && filter.activeMax) {
-        activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax}
+        activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax};
       }
     });
 
@@ -91,11 +87,16 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
     this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
-  }
+  };
 
-  public updateRangeFilters = (name: string, {min, max}: RangeType ) => {
-    this.setState((prevState: SearchPageState) => ({activeRangeFilters: {...prevState.activeRangeFilters, [name]:  {min, max}}}));
-  }
+  public updateRangeFilters = (name: string, {min, max}: RangeType) => {
+    this.setState((prevState: SearchPageState) => ({
+      activeRangeFilters: {
+        ...prevState.activeRangeFilters,
+        [name]: {min, max},
+      },
+    }));
+  };
 
   public updateSearch = (e: any) => {
     e.preventDefault();
@@ -115,11 +116,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
-  }
+  };
 
   public handleSetSorting = (e: any) => {
-    this.setState({sort: e.target.value})
-  }
+    this.setState({sort: e.target.value});
+  };
 
   public handlePagination = (e: any, value: number | string) => {
     const query: IQuery = {
@@ -146,12 +147,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
-  }
+  };
 
   public renderProduct = (sku: string, name: string) => {
     // this.props.dispatch(getProductDataAction(sku));
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
-  }
+  };
 
   public selectCategory = (category: string | number) => (e: any) => {
     this.setState({selectedCategory: category});
@@ -172,10 +173,21 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
-  }
+  };
 
   public render() {
-    const { classes, items, searchTerm, currency, filters, rangeFilters, isLoading, sortParams, pagination, categories } = this.props;
+    const {
+      classes,
+      items,
+      searchTerm,
+      currency,
+      filters,
+      rangeFilters,
+      isLoading,
+      sortParams,
+      pagination,
+      categories,
+    } = this.props;
 
     const renderFilters: any[] = [];
 
@@ -183,14 +195,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       filters.forEach((filter: any) => {
         if (Array.isArray(filter.values) && filter.values.length) {
           renderFilters.push(
-            <Grid item xs={3} key={filter.name}>
+            <Grid item xs={ 3 } key={ filter.name }>
               <SprykerFilterElement
-                attributeName={filter.name}
-                menuItems={filter.values}
-                activeValues={this.state.activeFilters[filter.name] || []}
-                handleChange={this.updateActiveFilters}
+                attributeName={ filter.name }
+                menuItems={ filter.values }
+                activeValues={ this.state.activeFilters[filter.name] || [] }
+                handleChange={ this.updateActiveFilters }
               />
-            </Grid>
+            </Grid>,
           );
         }
       });
@@ -198,12 +210,15 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     const renderRangeFilters: any[] = rangeFilters && rangeFilters.length
       ? rangeFilters.map((filter: any) => (
-        <Grid item xs={4} key={filter.name}>
+        <Grid item xs={ 4 } key={ filter.name }>
           <SprykerRange
-            attributeName={filter.name}
-            min={filter.min / 100} max={filter.max / 100}
-            currentValue={this.state.activeRangeFilters[filter.name] || {min: filter.min / 100, max: filter.max / 100}}
-            handleChange={this.updateRangeFilters}
+            attributeName={ filter.name }
+            min={ filter.min / 100 } max={ filter.max / 100 }
+            currentValue={ this.state.activeRangeFilters[filter.name] || {
+              min: filter.min / 100,
+              max: filter.max / 100,
+            } }
+            handleChange={ this.updateRangeFilters }
           />
         </Grid>
       ))
@@ -215,11 +230,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       pages.push(
         <BottomNavigationAction
           showLabel
-          icon={<ChevronLeft />}
+          icon={ <ChevronLeft/> }
           value="prev"
           key="prev"
-          className={classes.pageNumber}
-        />
+          className={ classes.pageNumber }
+        />,
       );
     }
 
@@ -232,10 +247,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       pages.push(
         <BottomNavigationAction
           showLabel
-          label={i}
-          value={i}
-          key={`page-${i}`}
-          className={classes.pageNumber}
+          label={ i }
+          value={ i }
+          key={ `page-${i}` }
+          className={ classes.pageNumber }
         />);
     }
 
@@ -243,11 +258,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       pages.push(
         <BottomNavigationAction
           showLabel
-          icon={<ChevronRight />}
+          icon={ <ChevronRight/> }
           value="next"
           key="next"
-          className={classes.pageNumber}
-        />
+          className={ classes.pageNumber }
+        />,
       );
     }
 
@@ -255,20 +270,21 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       const pureListItem = (data: any) => (
         <ListItem
           button
-          key={`category-${data.nodeId}`}
-          onClick={this.selectCategory(data.nodeId)}
-          selected={this.state.selectedCategory === data.nodeId}
+          key={ `category-${data.nodeId}` }
+          onClick={ this.selectCategory(data.nodeId) }
+          selected={ this.state.selectedCategory === data.nodeId }
         >
-          <ListItemText primary={data.name} />
+          <ListItemText primary={ data.name }/>
         </ListItem>
       );
 
       const nestedList = (data: any) => (
-        <li key={`category-${data.nodeId}`}>
-          <ListItem button onClick={this.selectCategory(data.nodeId)} selected={this.state.selectedCategory === data.nodeId}>
-            <ListItemText primary={data.name} />
+        <li key={ `category-${data.nodeId}` }>
+          <ListItem button onClick={ this.selectCategory(data.nodeId) }
+                    selected={ this.state.selectedCategory === data.nodeId }>
+            <ListItemText primary={ data.name }/>
           </ListItem>
-          <List dense className={classes.nestedList}>
+          <List dense className={ classes.nestedList }>
             {
               data.children.map((child: any) => {
                 return Array.isArray(child.children) && child.children.length
@@ -293,51 +309,52 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 justify="center"
                 alignItems="center"
           >
-            {searchTerm
-              ? <Typography variant="title" color="inherit" align="center" className={classes.pageHeader} id="pageTitle">
-                  {pageTitle}
-                  <Typography variant="title" component="span" className={classes.searchTerm} id="searchTerm" >
-                    {searchTerm}
-                  </Typography>
+            { searchTerm
+              ? <Typography variant="title" color="inherit" align="center" className={ classes.pageHeader }
+                            id="pageTitle">
+                { pageTitle }
+                <Typography variant="title" component="span" className={ classes.searchTerm } id="searchTerm">
+                  { searchTerm }
                 </Typography>
+              </Typography>
               : null
             }
           </Grid>
 
           <Grid container>
-            <Grid item xs={3}>
+            <Grid item xs={ 3 }>
               <List
                 component="nav"
-                subheader={<ListSubheader component="div">Categories</ListSubheader>}
-                className={classes.categoryList}
+                subheader={ <ListSubheader component="div">Categories</ListSubheader> }
+                className={ classes.categoryList }
               >
-                {categoryList}
+                { categoryList }
               </List>
             </Grid>
-            <Grid item xs={9} container>
-              {renderFilters}
+            <Grid item xs={ 9 } container>
+              { renderFilters }
 
-              <Grid item xs={12} container>
-                {renderRangeFilters}
+              <Grid item xs={ 12 } container>
+                { renderRangeFilters }
               </Grid>
 
-              <Grid item xs={12} container className={classes.buttonsRow}>
+              <Grid item xs={ 12 } container className={ classes.buttonsRow }>
                 <Grid
                   item
-                  xs={3}
+                  xs={ 3 }
                 >
-                  <Button variant="contained" color="primary" onClick={this.updateSearch}>
+                  <Button variant="contained" color="primary" onClick={ this.updateSearch }>
                     Filter
                   </Button>
                 </Grid>
                 <Grid
                   item
-                  xs={6}
+                  xs={ 6 }
                 >
-                  <FormControl className={classes.formControl}>
+                  <FormControl className={ classes.formControl }>
                     <Select
-                      value={this.state.sort}
-                      onChange={this.handleSetSorting}
+                      value={ this.state.sort }
+                      onChange={ this.handleSetSorting }
                       name="sort"
                       displayEmpty
                     >
@@ -345,57 +362,58 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                         Sorting...
                       </MenuItem>
                       {
-                        sortParams && sortParams.map((param) => <MenuItem value={param} key={`sort-${param}`}>{param}</MenuItem>)
+                        sortParams && sortParams.map((param) => <MenuItem value={ param }
+                                                                          key={ `sort-${param}` }>{ param }</MenuItem>)
                       }
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={3}>
-                  <Button variant="contained" color="primary" onClick={this.updateSearch}>
+                <Grid item xs={ 3 }>
+                  <Button variant="contained" color="primary" onClick={ this.updateSearch }>
                     Sort
                   </Button>
                 </Grid>
               </Grid>
               <Grid
                 item
-                xs={12}
+                xs={ 12 }
                 container
-                spacing={32}
+                spacing={ 32 }
               >
                 {
                   items && items.length > 0
                     ? items.map((item: any) => (
-                      <Grid item xs={12} sm={6} md={3}
-                            key={item.abstract_sku || item.abstractSku}
+                      <Grid item xs={ 12 } sm={ 6 } md={ 3 }
+                            key={ item.abstract_sku || item.abstractSku }
                       >
                         <ProductCard
-                          currency={currency}
-                          images={item.images}
-                          price={item.price}
-                          prices={item.prices}
-                          abstract_name={item.abstract_name || item.abstractName}
-                          abstract_sku={item.abstract_sku || item.abstractSku}
-                          onSelectProduct={this.renderProduct}
+                          currency={ currency }
+                          images={ item.images }
+                          price={ item.price }
+                          prices={ item.prices }
+                          abstract_name={ item.abstract_name || item.abstractName }
+                          abstract_sku={ item.abstract_sku || item.abstractSku }
+                          onSelectProduct={ this.renderProduct }
                         />
                       </Grid>
                     ))
-                    : <Paper elevation={1} className={classes.empty} id="emptyResult" >
+                    : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
                       <Typography variant="headline" component="h3">
                         Nothing to show.
                       </Typography>
                       <Typography component="p">
-                        {isLoading ? 'Waiting results' : 'Try another search'}
+                        { isLoading ? 'Waiting results' : 'Try another search' }
                       </Typography>
                     </Paper>
                 }
               </Grid>
-              <Grid item xs={12} container justify="center" alignItems="center">
+              <Grid item xs={ 12 } container justify="center" alignItems="center">
                 <BottomNavigation
-                  value={pagination.currentPage}
-                  onChange={this.handlePagination}
-                  className={classes.pagesContainer}
+                  value={ pagination.currentPage }
+                  onChange={ this.handlePagination }
+                  className={ classes.pagesContainer }
                 >
-                  {pages}
+                  { pages }
                 </BottomNavigation>
               </Grid>
             </Grid>
@@ -432,5 +450,5 @@ export const ConnectedSearchPage = reduxify(
   (dispatch: Function) => ({
     dispatch,
     changeLocation: (location: string) => dispatch(push(location)),
-  })
+  }),
 )(SearchPage);

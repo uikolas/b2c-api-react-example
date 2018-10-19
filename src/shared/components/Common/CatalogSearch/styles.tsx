@@ -11,9 +11,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   container: {
     position: 'relative',
-    flexGrow: 0.9,
+    flexGrow: .9,
+  },
+  suggestionsContainer: {
+    display: 'none',
   },
   suggestionsContainerOpen: {
+    display: 'block',
     position: 'absolute',
     zIndex: 1,
     marginTop: theme.spacing.unit,
@@ -39,7 +43,9 @@ export const styles = (theme: Theme) => createStyles({
   menuItem: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    textDecoration: 'none',
+    flexGrow: 1,
   },
   pendingProgress: {
     position: 'absolute',

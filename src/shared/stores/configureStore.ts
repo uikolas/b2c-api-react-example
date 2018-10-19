@@ -1,24 +1,24 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import {createLogger} from 'redux-logger';
-import { routerMiddleware, routerReducer} from 'react-router-redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { History } from 'history';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import {reducers} from '../reducers';
+import { reducers } from '../reducers';
 
 
-export const configureStore = function (history: History, initialState?: any) {
+export const configureStore = function(history: History, initialState?: any) {
   const middlewares = [
     thunk,
     routerMiddleware(history),
   ];
-  if(process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     const logger = createLogger({
       actionTransformer: (action) => ({
         ...action,
         type: String(action.type),
-      })
+      }),
     });
     // Logger must be the last middleware in chain, otherwise it will log thunk and promise, not actual actions
     middlewares.push(logger);
@@ -26,7 +26,7 @@ export const configureStore = function (history: History, initialState?: any) {
   // Add the reducer to your store on the `router` key
   const reducer = combineReducers({
     ...reducers,
-    routing: routerReducer
+    routing: routerReducer,
   });
   // Apply our middleware for navigating
   const middleware = process.env.NODE_ENV !== 'production' ?
@@ -35,7 +35,7 @@ export const configureStore = function (history: History, initialState?: any) {
   const store = createStore(
     reducer,
     initialState,
-    middleware
+    middleware,
   );
   return store;
 };

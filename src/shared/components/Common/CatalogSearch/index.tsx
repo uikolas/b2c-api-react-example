@@ -1,151 +1,164 @@
-import * as React from "react";
+import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import { push } from 'react-router-redux';
+import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
-import {RouteProps} from "react-router";
 
-import {reduxify} from '../../../lib/redux-helper';
-import {SearchState} from '../../../reducers/Pages/Search';
-import {IProductCard} from '../../../interfaces/product';
-
-import {styles} from './styles';
-import {sendSearchAction, sendSuggestionAction, clearSuggestions} from '../../../actions/Pages/Search';
-import {getProductDataAction} from "../../../actions/Pages/Product";
-import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
-import {AppPrice} from "../AppPrice/index";
-import {pathProductPage, pathProductPageBase, pathSearchPage} from "../../../routes/contentRoutes";
-
-interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
-  dispatch?: Function;
-  suggestions?: Array<IProductCard>;
-  searchTerm?: string;
-  currency: TAppCurrency;
-  isLoading?: boolean;
-  getSuggestions?: Function;
-  getSearchResult?: Function;
-  getProductData?: Function;
-  changeLocation?: Function;
-}
-
-interface CatalogState {
-  value: string;
-}
+import { pathProductPageBase, pathSearchPage } from '../../../routes/contentRoutes';
+import { AppPrice } from '../AppPrice';
+import { styles } from './styles';
+import { CatalogProps as Props, CatalogState as State } from './types';
+import { connect } from './connect';
 
 export const buttonTitle = 'Search';
 
-export class CatalogSearchBase extends React.Component<CatalogProps, CatalogState> {
-  public state: CatalogState = {
+@connect
+export class CatalogSearchBase extends React.Component<Props, State> {
+  public state: State = {
     value: '',
-  }
+  };
 
-  public timer: any
+  public timer: any;
+
+  // Action handlers
+
+  private getSuggestionValue = (suggestion: any): string => suggestion.abstract_name;
+
+  private handleSuggestionsFetchRequested = ({value}: {value: string}) => {
+    const {value: currentValue} = this.state;
+
+    if (!this.props.isLoading && value !== currentValue) {
+      clearTimeout(this.timer);
+
+      this.timer = setTimeout(() => {
+        if (this.state.value === value) {
+          this.props.sendSuggestionAction(value);
+        }
+      }, 350);
+    }
+  };
+
+  private handleSuggestionsClearRequested = () => {
+    // if (!this.props.isLoading) {
+    //   this.props.clearSuggestions(this.state.value);
+    // }
+  };
+
+  private handleChange = (event: any, {newValue}: any) => {
+    if (newValue.trim().length < 3) {
+      this.props.clearSuggestions(newValue);
+    }
+
+    this.setState({
+      value: newValue,
+    });
+  };
+
+  private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
+
+  private handleFullSearch = (e: any) => {
+    e.preventDefault();
+    if (!this.props.isLoading) {
+      this.props.sendSearchAction({q: this.state.value, currency: this.props.currency, include: ''});
+
+      this.props.push(pathSearchPage);
+    }
+  };
+
+  /* Render Helpers */
 
   private renderInputComponent = (inputProps: any) => {
-    const { classes, ref, ...other } = inputProps;
+    const {classes, ref, ...other} = inputProps;
 
     return (
       <TextField
         type="text"
         fullWidth
-        InputProps={{
+        InputProps={ {
           inputRef: node => {
             ref(node);
           },
           classes: {
             input: classes.input,
           },
-        }}
-        {...other}
+        } }
+        { ...other }
       />
     );
-  }
+  };
 
-  private renderSuggestion = (suggestion: any, { query, isHighlighted }: any) => {
+  private renderSuggestion = (suggestion: any, {query, isHighlighted}: any) => {
     const matches = match(suggestion.abstract_name, query);
     const parts = parse(suggestion.abstract_name, matches);
 
     return (
-      <MenuItem className={this.props.classes.menuItem} selected={isHighlighted} component="div">
-        <span>
-        {parts.map((part, index: number) => {
-          return part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          );
-        })}
-        </span>
-        <img
-          width={30} height={30}
-          src={suggestion.images.length ? suggestion.images[0].external_url_small : ''} alt={suggestion.abstract_name}
-        />
-        <span><AppPrice value={suggestion.price}/></span>
-      </MenuItem>
+      <NavLink to={ `${pathProductPageBase}/${suggestion.abstract_sku}` } className={ this.props.classes.menuItem }>
+        <MenuItem selected={ isHighlighted } component="div" style={ {flexGrow: 1} }>
+          <span>
+            { parts.map((part, index: number) => {
+              return part.highlight ? (
+                <span key={ String(index) } style={ {fontWeight: 500} }>
+                  { part.text }
+                </span>
+              ) : (
+                <strong key={ String(index) } style={ {fontWeight: 300} }>
+                  { part.text }
+                </strong>
+              );
+            }) }
+          </span>
+          <img
+            width={ 30 } height={ 30 }
+            src={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
+            alt={ suggestion.abstract_name }
+          />
+          <span><AppPrice value={ suggestion.price }/></span>
+        </MenuItem>
+      </NavLink>
     );
-  }
+  };
 
-  private getSuggestionValue(suggestion: any): string {
-    return suggestion.abstract_name;
-  }
+  private renderSuggestionsContainer = (options: any) => {
+    const {categories} = this.props;
 
-  public handleSuggestionsFetchRequested = ({ value }: {value: string}) => {
-    const { value: currentValue } = this.state;
+    return (
+      <div { ...options.containerProps }>
+        <Paper square>
+          <div style={ {display: 'flex'} }>
+            {
+              categories.length ? (
+                <div style={ {padding: '0 5px', flexGrow: 1} }>
+                  <p><strong>Categories</strong></p>
+                  <div>
+                    { /*todo replace div with routerLinks*/ }
+                    { categories.map((category, index: number) => <div key={ index }>{ category.name }</div>) }
+                  </div>
+                </div>
+              ) : null
+            }
+            <div style={ {padding: '0 5px', flexGrow: 1} }>
+              <p><strong>Products</strong></p>
+              <div>
+                { /*todo replace div with routerLinks*/ }
+                { options.children }
+              </div>
+            </div>
+          </div>
+        </Paper>
+      </div>
+    );
+  };
 
-    if (!this.props.isLoading && value != currentValue) {
-      clearTimeout(this.timer);
-
-      this.timer = setTimeout(() => {
-        if (this.state.value === value) {
-          this.props.getSuggestions(value);
-        }
-      }, 350);
-    }
-  }
-
-  private handleSuggestionsClearRequested = () => {
-    // if (!this.props.isLoading) {
-    //   this.props.dispatch(clearSuggestions(this.state.value));
-    // }
-  }
-
-  private  handleChange = (event: any, { newValue }: any) => {
-    if (newValue.trim().length < 3) {
-      this.props.dispatch(clearSuggestions(newValue));
-    }
-
-    this.setState({
-      value: newValue,
-    });
-  }
-
-  private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
-
-  private onSuggestionSelected = (event: any, { suggestion }: {suggestion: any}) => {
-    //this.props.getProductData(suggestion.abstract_sku);
-    this.props.changeLocation(`${pathProductPageBase}/${suggestion.abstract_sku}`);
-  }
-
-  private handleFullSearch = (e: any) => {
-    e.preventDefault();
-    if (!this.props.isLoading) {
-      this.props.getSearchResult({q: this.state.value, currency: this.props.currency, include: ''});
-      this.props.changeLocation(`${pathSearchPage}`);
-    }
-  }
+  /* RENDER */
 
   public render() {
-    const { classes, suggestions, location, isLoading } = this.props;
+    const {classes, suggestions, isLoading} = this.props;
 
     const autosuggestProps = {
       suggestions,
@@ -154,38 +167,34 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
       onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
       getSuggestionValue: this.getSuggestionValue,
       renderSuggestion: this.renderSuggestion,
+      renderSuggestionsContainer: this.renderSuggestionsContainer,
       shouldRenderSuggestions: this.shouldRenderSuggestions,
-      onSuggestionSelected: this.onSuggestionSelected,
     };
 
     return (
-      <div className={classes.root} id="CatalogSearch">
+      <div className={ classes.root } id="CatalogSearch">
         <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
+          { ...autosuggestProps }
+          inputProps={ {
             classes,
             placeholder: 'Search ...',
             value: this.state.value,
             onChange: this.handleChange,
-          }}
-          theme={{
+          } }
+          theme={ {
             container: classes.container,
+            suggestionsContainer: classes.suggestionsContainer,
             suggestionsContainerOpen: classes.suggestionsContainerOpen,
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
-          }}
-          renderSuggestionsContainer={(options: any) => (
-            <Paper {...options.containerProps} square>
-              {options.children}
-            </Paper>
-          )}
+          } }
         />
-        <Button color="primary" onClick={this.handleFullSearch} disabled={isLoading}>
-          {buttonTitle}
+        <Button color="primary" onClick={ this.handleFullSearch } disabled={ isLoading }>
+          { buttonTitle }
         </Button>
         {
           this.props.isLoading
-            ? <div className={classes.pendingProgress}><CircularProgress variant="indeterminate" size={34} /></div>
+            ? <div className={ classes.pendingProgress }><CircularProgress variant="indeterminate" size={ 34 }/></div>
             : null
         }
       </div>
@@ -193,30 +202,6 @@ export class CatalogSearchBase extends React.Component<CatalogProps, CatalogStat
   }
 }
 
-const CatalogSearch = withStyles(styles)(CatalogSearchBase);
-
-const CatalogSearchComponent = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
-    const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
-    const currency: TAppCurrency = getAppCurrency(state, ownProps);
-    return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
-        searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
-        isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
-        currency,
-      }
-    );
-  },
-  (dispatch: Function) => ({
-    dispatch,
-    getSuggestions: (query: string) => dispatch(sendSuggestionAction(query)),
-    getSearchResult: (params: any) => dispatch(sendSearchAction(params)),
-    getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
-    changeLocation: (location: string) => dispatch(push(location)),
-  })
-)(CatalogSearch);
+const CatalogSearchComponent = withStyles(styles)(CatalogSearchBase);
 
 export default CatalogSearchComponent;

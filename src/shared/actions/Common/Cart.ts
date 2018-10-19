@@ -4,16 +4,16 @@ import {
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
 } from '../../constants/ActionTypes/Common/Cart';
-import {CartService, ICartCreatePayload} from "../../services/Common/Cart";
-import {ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId} from "../../interfaces/cart/index";
-import {TProductSKU} from "../../interfaces/product/index";
+import { CartService, ICartCreatePayload } from '../../services/Common/Cart';
+import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
+import { TProductSKU } from '../../interfaces/product';
 
 
 export const addItemToCartAction = function(
-                                            payload: ICartAddItem,
-                                            cartId: TCartId,
-                                            payloadCartCreate: ICartCreatePayload
-                                          ) {
+  payload: ICartAddItem,
+  cartId: TCartId,
+  payloadCartCreate: ICartCreatePayload,
+) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartAddItem(dispatch, payload, cartId, payloadCartCreate);
   };
@@ -51,13 +51,13 @@ export const cartCreateFulfilledStateAction = (payload: ICartDataResponse) => ({
   payload,
 });
 
-export const cartCreateAction = function (payload: ICartCreatePayload) {
+export const cartCreateAction = function(payload: ICartCreatePayload) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartCreate(dispatch, payload);
   };
 };
 
-export const cartDeleteItemAction = function (cartId: TCartId, itemId: TProductSKU) {
+export const cartDeleteItemAction = function(cartId: TCartId, itemId: TProductSKU) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartDeleteItem(CART_DELETE_ITEM, dispatch, cartId, itemId);
     dispatch(cartDeleteItemPendingStateAction);
@@ -78,13 +78,13 @@ export const cartUpdateItemFulfilledStateAction = (payload: ICartDataResponse) =
   payload,
 });
 
-export const updateItemInCartAction = function (payload: ICartAddItem, cartId: TCartId) {
+export const updateItemInCartAction = function(payload: ICartAddItem, cartId: TCartId) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartUpdateItem(dispatch, payload, cartId);
   };
 };
 
-export const multiItemsCartAction = function (cartId: TCartId, payloadCartCreate: ICartCreatePayload, listItems: string[]) {
+export const multiItemsCartAction = function(cartId: TCartId, payloadCartCreate: ICartCreatePayload, listItems: string[]) {
   return (dispatch: Function, getState: Function) => {
     CartService.moveItemstoCart(dispatch, cartId, payloadCartCreate, listItems);
   };
@@ -92,7 +92,7 @@ export const multiItemsCartAction = function (cartId: TCartId, payloadCartCreate
 export const addMultipleItemsToCartAction = function(
   payload: TCartAddItemCollection,
   cartId: TCartId,
-  payloadCartCreate: ICartCreatePayload
+  payloadCartCreate: ICartCreatePayload,
 ) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartMultipleItems(dispatch, payload, cartId, payloadCartCreate);

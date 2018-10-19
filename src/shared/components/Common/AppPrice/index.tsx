@@ -1,10 +1,10 @@
-import * as React from "react";
-import {FormattedNumber} from 'react-intl';
+import * as React from 'react';
+import { FormattedNumber } from 'react-intl';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import {reduxify} from '../../../lib/redux-helper';
-import {getAppCurrency, TAppCurrency} from "../../../reducers/Common/Init";
-import {priceTypeNameDefault, priceTypeNameOriginal, TPriceTypeName} from "../../../interfaces/product/index";
-import {styles} from './styles';
+import { reduxify } from '../../../lib/redux-helper';
+import { getAppCurrency, TAppCurrency } from '../../../reducers/Common/Init';
+import { priceTypeNameOriginal, TPriceTypeName } from '../../../interfaces/product';
+import { styles } from './styles';
 
 interface AppPriceProps extends WithStyles<typeof styles> {
   currency: TAppCurrency;
@@ -14,7 +14,7 @@ interface AppPriceProps extends WithStyles<typeof styles> {
 }
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
-  const { classes, currency, value, specificCurrency, priceType } = props;
+  const {classes, currency, value, specificCurrency, priceType} = props;
   const valueFormatted = value ? (value / 100) : 0;
   let priceClassName = '';
   if (priceType === priceTypeNameOriginal) {
@@ -23,11 +23,11 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
 
   return (
     value
-      ? <span className={priceClassName}>
+      ? <span className={ priceClassName }>
           <FormattedNumber
-            value={valueFormatted}
+            value={ valueFormatted }
             style="currency"
-            currency={specificCurrency ? specificCurrency : currency}
+            currency={ specificCurrency ? specificCurrency : currency }
           />
       </span>
       : null
@@ -40,7 +40,7 @@ export const AppPrice = reduxify(
   (state: any, ownProps: any) => {
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return ({
-        currency,
+      currency,
     });
-  }
+  },
 )(AppPriceStyled);

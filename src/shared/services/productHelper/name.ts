@@ -1,9 +1,9 @@
-import {IProductAttributes, TProductName} from "../../interfaces/product";
+import { IProductAttributes, TProductName } from '../../interfaces/product';
 
 export const displayProductNameWithSuperAttr = (
-                                    name: TProductName,
-                                    superAttrSelected: IProductAttributes
-                                  ): string => {
+  name: TProductName,
+  superAttrSelected: IProductAttributes,
+): string => {
   let addName: string = '';
   if (!superAttrSelected) {
     return name;

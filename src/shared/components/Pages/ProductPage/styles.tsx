@@ -1,27 +1,25 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import {blueGrey, teal, grey} from '@material-ui/core/colors';
+import { blueGrey, grey, teal } from '@material-ui/core/colors';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    width: "100%",
-    maxWidth: "1400px",
-    margin: "auto",
+    width: '100%',
+    maxWidth: '1400px',
+    margin: 'auto',
   },
-  buyBtnArea: {
-
-  },
+  buyBtnArea: {},
   wishlistBtnArea: {
     marginTop: theme.spacing.unit * 3,
   },
   buyBtnParent: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "flex-start",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   buyBtn: {
-    minWidth: "300px",
+    minWidth: '300px',
     fontSize: 18,
     color: blueGrey[50],
     backgroundColor: teal[500],
@@ -39,9 +37,8 @@ export const styles = (theme: Theme) => createStyles({
     },
     '&:disabled': {
       backgroundColor: grey[600],
-      cursor: 'not-allowed'
+      cursor: 'not-allowed',
     },
   },
-  sliderParent: {
-  },
+  sliderParent: {},
 });

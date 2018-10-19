@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import {formStyles} from '../styles';
+import { formStyles } from '../styles';
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
@@ -26,9 +26,9 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
     isSubmitted: false,
   };
 
-  public handleSubmit = (event: any): void  => {
+  public handleSubmit = (event: any): void => {
     event.preventDefault();
-    if(!this.state.username || !this.state.password) {
+    if (!this.state.username || !this.state.password) {
       return null;
     }
     const payload = {
@@ -36,13 +36,13 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
       password: this.state.password,
     };
     this.props.handleSubmit(payload);
-  }
+  };
 
   public handleChange = (name: string) => (event: any) => {
     this.setState({
-      ...this.state, [name]: event.target.value
+      ...this.state, [name]: event.target.value,
     });
-  }
+  };
 
   public render() {
     const {classes} = this.props;
@@ -51,24 +51,25 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
         <Typography variant="title" color="inherit" noWrap>
           Login
         </Typography>
-        <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit} id="LoginForm">
+        <form className={ classes.container } noValidate autoComplete="off" onSubmit={ this.handleSubmit }
+              id="LoginForm">
           <TextField
             required
             id="login-email"
             label="Email"
             name="username"
-            onChange={this.handleChange('username')}
+            onChange={ this.handleChange('username') }
             type="email"
             defaultValue=""
-            className={classes.textField}
+            className={ classes.textField }
             margin="normal"
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               shrink: true,
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               className: classes.input,
-            }}
+            } }
           />
 
           <TextField
@@ -76,21 +77,21 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
             id="login-password"
             label="Password"
             name="password"
-            onChange={this.handleChange('password')}
+            onChange={ this.handleChange('password') }
             type="password"
             defaultValue=""
-            className={classes.textField}
+            className={ classes.textField }
             margin="normal"
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               shrink: true,
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               className: classes.input,
-            }}
+            } }
           />
 
-          <Button type="submit" variant="contained" className={classes.button}>
+          <Button type="submit" variant="contained" className={ classes.button }>
             Login
           </Button>
 

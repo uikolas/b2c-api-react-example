@@ -1,6 +1,5 @@
-import * as React from "react";
-import {FormattedDate} from 'react-intl';
-import {RouteProps} from "react-router";
+import * as React from 'react';
+import { RouteProps } from 'react-router';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,29 +16,26 @@ import CartIcon from '@material-ui/icons/AddShoppingCart';
 
 import { push } from 'react-router-redux';
 
-import {reduxify} from '../../../lib/redux-helper';
+import { reduxify } from '../../../lib/redux-helper';
 
-import {deleteItemAction} from '../../../actions/Pages/Wishlist';
-import {getProductDataAction} from '../../../actions/Pages/Product';
-import {addItemToCartAction, multiItemsCartAction} from "../../../actions/Common/Cart";
+import { deleteItemAction } from '../../../actions/Pages/Wishlist';
+import { addItemToCartAction } from '../../../actions/Common/Cart';
 
-import {AppMain} from '../../Common/AppMain';
-import {AppPrice} from '../../Common/AppPrice';
+import { AppMain } from '../../Common/AppMain';
+import { AppPrice } from '../../Common/AppPrice';
 
-import {IWishlist, IWishlistItem} from "../../../interfaces/wishlist";
-import {TCartId} from '../../../interfaces/cart';
-import {priceTypeNameOriginal, priceTypeNameDefault} from '../../../interfaces/product';
+import { IWishlist, IWishlistItem } from '../../../interfaces/wishlist';
+import { TCartId } from '../../../interfaces/cart';
+import { priceTypeNameDefault, priceTypeNameOriginal } from '../../../interfaces/product';
 
-import {getAppCurrency, getPayloadForCreateCart, TAppCurrency} from "../../../reducers/Common/Init";
-import {WishlistState} from "../../../reducers/Pages/Wishlist";
-import {getCartId, getTotalItemsQuantity, isCartLoading} from "../../../reducers/Common/Cart";
+import { getAppCurrency, getPayloadForCreateCart, TAppCurrency } from '../../../reducers/Common/Init';
+import { WishlistState } from '../../../reducers/Pages/Wishlist';
+import { getCartId, getTotalItemsQuantity, isCartLoading } from '../../../reducers/Common/Cart';
 
-import {ICartCreatePayload} from "../../../services/Common/Cart";
-import {createCartItemAddToCart} from "../../../services/cartHelper";
-
-import config from '../../../config';
-import {styles} from './styles';
-import {pathProductPageBase} from "../../../routes/contentRoutes";
+import { ICartCreatePayload } from '../../../services/Common/Cart';
+import { createCartItemAddToCart } from '../../../services/cartHelper';
+import { styles } from './styles';
+import { pathProductPageBase } from '../../../routes/contentRoutes';
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -65,9 +61,9 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
 
   public state: WishlistPageState = {
     movedItem: '',
-  }
+  };
 
-  public componentDidUpdate(prevProps: WishlistPageProps, prevState: WishlistPageState ) {
+  public componentDidUpdate(prevProps: WishlistPageProps, prevState: WishlistPageState) {
     if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
       this.props.dispatch(deleteItemAction(this.props.wishlist.id, prevState.movedItem));
       this.setState({movedItem: ''});
@@ -78,20 +74,20 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
     // this.props.dispatch(getProductDataAction(sku.split('_')[0]));
     // this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
     this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
-  }
+  };
 
   public handleDeleteItem = (sku: string) => (e: any) => {
     this.props.dispatch(deleteItemAction(this.props.wishlist.id, sku));
-  }
+  };
 
   public moveToCart = (sku: string) => (e: any) => {
     this.setState({movedItem: sku});
     this.props.dispatch(addItemToCartAction(
       createCartItemAddToCart(sku, 1),
       this.props.cartId,
-      this.props.payloadForCreateCart
+      this.props.payloadForCreateCart,
     ));
-  }
+  };
 
   public moveAllProductsToCart = (e: any) => {
     const availableProducts: string[] = [];
@@ -102,31 +98,33 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
     });
 
     // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
-  }
+  };
 
   public render() {
-    const { classes, wishlist, products, isLoading, cartLoading, currency } = this.props;
+    const {classes, wishlist, products, isLoading, cartLoading, currency} = this.props;
 
     if (!products.length && isLoading) {
       return null;
-    } else if (!products.length && !isLoading) {
-      return (
-        <Grid container>
-          <Grid item xs={12} container justify="center">
-            <Typography
-              variant="headline"
-              children={wishlist ? `Wishlist ${wishlist.name}` : ''}
-              paragraph
-            />
+    } else {
+      if (!products.length && !isLoading) {
+        return (
+          <Grid container>
+            <Grid item xs={ 12 } container justify="center">
+              <Typography
+                variant="headline"
+                children={ wishlist ? `Wishlist ${wishlist.name}` : '' }
+                paragraph
+              />
+            </Grid>
+            <Grid item xs={ 12 } container justify="center">
+              <Typography
+                variant="title"
+                children={ wishlist ? 'Currently there are no items in your wishlist.' : '' }
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} container justify="center">
-            <Typography
-              variant="title"
-              children={wishlist ? 'Currently there are no items in your wishlist.' : ''}
-            />
-          </Grid>
-        </Grid>
-      );
+        );
+      }
     }
 
     const rows: any[] = products.map((item: IWishlistItem) => {
@@ -135,59 +133,61 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
       item.prices.forEach((price: any) => {
         if (price.priceTypeName.toLowerCase() === 'default') {
           prices.default = price.grossAmount / 100 + '';
-        } else if (price.priceTypeName.toLowerCase() === 'original') {
-          prices.original = price.grossAmount / 100 + '';
+        } else {
+          if (price.priceTypeName.toLowerCase() === 'original') {
+            prices.original = price.grossAmount / 100 + '';
+          }
         }
       });
 
       return (
         <TableRow
           hover
-          key={item.sku}
+          key={ item.sku }
         >
           <TableCell component="th" scope="row">
-            <img src={item.image} height={52} />
+            <img src={ item.image } height={ 52 }/>
           </TableCell>
           <TableCell>
-            <div className={classes.vertical}>
-              <span className={classes.name} onClick={this.renderProduct(item.sku, item.name)}>
-                {item.name}
+            <div className={ classes.vertical }>
+              <span className={ classes.name } onClick={ this.renderProduct(item.sku, item.name) }>
+                { item.name }
               </span>
-              <span>{item.sku}</span>
+              <span>{ item.sku }</span>
               {
                 item.attributes.map((attr: any, idx: number) => (
-                  <span className={classes.attributes} key={`attr-${item.sku}-${idx}`}>
-                    {`${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}`}
+                  <span className={ classes.attributes } key={ `attr-${item.sku}-${idx}` }>
+                    { `${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}` }
                   </span>
                 ))
               }
             </div>
           </TableCell>
           <TableCell>
-            <div className={classes.vertical}>
-              <AppPrice value={prices.original} currency={currency} priceType={priceTypeNameOriginal} />
-              <AppPrice value={prices.default} currency={currency} priceType={priceTypeNameDefault} />
+            <div className={ classes.vertical }>
+              <AppPrice value={ prices.original } currency={ currency } priceType={ priceTypeNameOriginal }/>
+              <AppPrice value={ prices.default } currency={ currency } priceType={ priceTypeNameDefault }/>
             </div>
           </TableCell>
           <TableCell padding="dense">
-            {item.availability ? 'Available' : 'Not available'}
+            { item.availability ? 'Available' : 'Not available' }
           </TableCell>
           <TableCell padding="checkbox">
             <IconButton
               color="primary"
-              onClick={this.moveToCart(item.sku)}
-              disabled={!item.availability || isLoading || cartLoading}
+              onClick={ this.moveToCart(item.sku) }
+              disabled={ !item.availability || isLoading || cartLoading }
             >
-              <CartIcon />
+              <CartIcon/>
             </IconButton>
           </TableCell>
           <TableCell padding="none">
             <IconButton
               color="primary"
-              onClick={this.handleDeleteItem(item.sku)}
-              disabled={isLoading || cartLoading}
+              onClick={ this.handleDeleteItem(item.sku) }
+              disabled={ isLoading || cartLoading }
             >
-              <DeleteIcon />
+              <DeleteIcon/>
             </IconButton>
           </TableCell>
         </TableRow>
@@ -198,36 +198,36 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
       <AppMain>
         <Grid container>
 
-          <Grid item xs={12} container justify="space-around">
+          <Grid item xs={ 12 } container justify="space-around">
             <Typography
               variant="headline"
-              children={wishlist ? `Wishlist ${wishlist.name}` : ''}
+              children={ wishlist ? `Wishlist ${wishlist.name}` : '' }
             />
             <Button
               color="primary"
               variant="contained"
-              onClick={this.moveAllProductsToCart}
-              disabled={isLoading || cartLoading}
+              onClick={ this.moveAllProductsToCart }
+              disabled={ isLoading || cartLoading }
             >
               Add all available products to cart
             </Button>
           </Grid>
 
-          <Grid item xs={12} container justify="center">
-            <Paper elevation={4} className={classes.paperContainer}>
+          <Grid item xs={ 12 } container justify="center">
+            <Paper elevation={ 4 } className={ classes.paperContainer }>
               <Table>
                 <TableHead>
                   <TableRow key="table-header">
                     <TableCell></TableCell>
-                    <TableCell className={classes.headerCell}>Product</TableCell>
-                    <TableCell className={classes.headerCell}>Price</TableCell>
-                    <TableCell className={classes.headerCell}>Availability</TableCell>
+                    <TableCell className={ classes.headerCell }>Product</TableCell>
+                    <TableCell className={ classes.headerCell }>Price</TableCell>
+                    <TableCell className={ classes.headerCell }>Availability</TableCell>
                     <TableCell></TableCell>
                     <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows}
+                  { rows }
                 </TableBody>
               </Table>
             </Paper>
@@ -267,5 +267,5 @@ export const ConnectedWishlistDetailPage = reduxify(
   (dispatch: Function) => ({
     dispatch,
     changeLocation: (location: string) => dispatch(push(location)),
-  })
+  }),
 )(WishlistDetailPage);

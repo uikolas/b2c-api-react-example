@@ -1,37 +1,34 @@
-import * as React from "react";
-import {RouteProps} from "react-router";
+import * as React from 'react';
+import { RouteProps } from 'react-router';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 
-import {reduxify} from '../../../lib/redux-helper';
-import {SearchState} from '../../../reducers/Pages/Search';
-import CatalogSearch from '../../Common/CatalogSearch';
-import {sendSearchAction} from '../../../actions/Pages/Search';
+import { reduxify } from '../../../lib/redux-helper';
+import { SearchState } from '../../../reducers/Pages/Search';
+import CatalogSearchComponent from '../../Common/CatalogSearch';
 
-import {AppMain} from '../../Common/AppMain';
+import { AppMain } from '../../Common/AppMain';
 
-import {styles} from './styles';
+import { styles } from './styles';
 
 
 interface HomePageProps extends WithStyles<typeof styles> {
 
 }
 
-interface HomePageState {}
+interface HomePageState {
+}
 
 export const pageTitle = 'Search results for ';
 
 export class HomePageBase extends React.Component<HomePageProps, HomePageState> {
 
-  public state: HomePageState = {
-
-  };
+  public state: HomePageState = {};
 
   public render() {
     const {classes} = this.props;
-    console.log('this.props', this.props);
+    console.info('this.props', this.props);
 
     return (
       <AppMain>
@@ -39,19 +36,19 @@ export class HomePageBase extends React.Component<HomePageProps, HomePageState> 
         <Grid container
               justify="center"
               alignItems="center"
-              className={classes.heroBlock}
+              className={ classes.heroBlock }
         >
-          <Grid item xs={12} sm={6}>
-            <CatalogSearch />
+          <Grid item xs={ 12 } sm={ 6 }>
+            <CatalogSearchComponent/>
           </Grid>
         </Grid>
 
         <Grid container
               justify="center"
               alignItems="center"
-              className={classes.contentBlock}
+              className={ classes.contentBlock }
         >
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={ 12 } sm={ 6 }>
             <Typography variant="title" color="textPrimary" align="center">
               Content block
             </Typography>
@@ -62,16 +59,15 @@ export class HomePageBase extends React.Component<HomePageProps, HomePageState> 
         <Grid container
               justify="center"
               alignItems="center"
-              className={classes.footerBlock}
+              className={ classes.footerBlock }
         >
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={ 12 } sm={ 6 }>
             <Typography variant="title" color="textPrimary" align="center">
               Footer
             </Typography>
           </Grid>
 
         </Grid>
-
 
 
       </AppMain>
@@ -90,5 +86,5 @@ export const ConnectedHomePage = reduxify(
         location: routerProps.location ? routerProps.location : ownProps.location,
       }
     );
-  }
+  },
 )(HomePage);

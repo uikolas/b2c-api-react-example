@@ -1,10 +1,10 @@
 import {
+  CATEGORIES_REQUEST,
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
   PAGES_SUGGESTION_REQUEST,
-  CATEGORIES_REQUEST,
 } from '../../constants/ActionTypes/Pages/Search';
-import {CatalogService} from '../../services/Common/Catalog';
+import { CatalogService } from '../../services/Common/Catalog';
 
 
 export const suggestPendingState = {
@@ -19,21 +19,21 @@ export const categoriesPendingState = {
   type: CATEGORIES_REQUEST + '_PENDING',
 };
 
-export const sendSuggestionAction = function (query: string) {
+export const sendSuggestionAction = function(query: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(suggestPendingState);
     CatalogService.catalogSuggestion(PAGES_SUGGESTION_REQUEST, dispatch, query);
   };
 };
 
-export const sendSearchAction = function (params: any) {
+export const sendSearchAction = function(params: any) {
   return (dispatch: Function, getState: Function) => {
     dispatch(searchPendingState);
     CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
   };
 };
 
-export const getCategoriesAction = function () {
+export const getCategoriesAction = function() {
   return (dispatch: Function, getState: Function) => {
     dispatch(categoriesPendingState);
     CatalogService.getCategoriesTree(CATEGORIES_REQUEST, dispatch);

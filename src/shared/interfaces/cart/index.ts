@@ -1,7 +1,7 @@
-import {ICartItem} from "../../reducers/Common/Cart";
-import {TAppCurrency} from "../../reducers/Common/Init";
-import {IAbstractTotals} from "../abstract/totals";
-import {TProductQuantity, TProductSKU} from "../product/index";
+import { ICartItem } from '../../reducers/Common/Cart';
+import { TAppCurrency } from '../../reducers/Common/Init';
+import { IAbstractTotals } from '../abstract/totals';
+import { TProductQuantity, TProductSKU } from '../product';
 
 export type TCartId = string;
 export type TCartPriceMode = string;

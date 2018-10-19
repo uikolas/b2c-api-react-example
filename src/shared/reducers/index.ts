@@ -1,12 +1,12 @@
-import {isPageHomeStateLoading, pagesHome} from './Pages/Home';
-import {isPageLoginStateLoading, pagesLogin} from './Pages/Login';
-import {isPageSearchStateLoading, pageSearch} from './Pages/Search';
-import {isPageProductStateLoading, pageProduct} from './Pages/Product';
-import {isPageWishlistStateLoading, pageWishlist} from './Pages/Wishlist';
-import {cart, isCartLoading} from './Common/Cart';
-import {init, isAppLoading} from './Common/Init';
-import {orderHistory, isOrderHistoryLoading} from "./Pages/OrderHistory";
-import {isOrderDetailsLoading, orderDetails} from "./Pages/OrderDetails";
+import { isPageHomeStateLoading, pagesHome } from './Pages/Home';
+import { isPageLoginStateLoading, pagesLogin } from './Pages/Login';
+import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
+import { isPageProductStateLoading, pageProduct } from './Pages/Product';
+import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
+import { cart, isCartLoading } from './Common/Cart';
+import { init, isAppLoading } from './Common/Init';
+import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
+import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
 
 export const reducers = {
   pagesHome,
@@ -30,6 +30,6 @@ export function isStateLoading(state: any, props: any): boolean {
     || isAppLoading(state, props)
     || isPageWishlistStateLoading(state, props)
     || isOrderHistoryLoading(state, props)
-    || isOrderDetailsLoading(state, props)
+    || isOrderDetailsLoading(state, props),
   );
 }

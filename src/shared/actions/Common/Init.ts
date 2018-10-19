@@ -1,9 +1,6 @@
-import {
- INIT_APP_ACTION_TYPE,
-  SET_AUTH_FROM_STORAGE,
-} from '../../constants/ActionTypes/Common/Init';
-import {InitAppService} from "../../services/Common/Init";
-import {IInitData} from "../../reducers/Common/Init";
+import { INIT_APP_ACTION_TYPE, SET_AUTH_FROM_STORAGE } from '../../constants/ActionTypes/Common/Init';
+import { InitAppService } from '../../services/Common/Init';
+import { IInitData } from '../../reducers/Common/Init';
 
 export interface IInitApplicationDataPayload {
 
@@ -23,7 +20,7 @@ export const initApplicationDataFulfilledStateAction = (payload: IInitData) => (
   payload,
 });
 
-export const initApplicationDataAction = function (payload: IInitApplicationDataPayload) {
+export const initApplicationDataAction = function(payload: IInitApplicationDataPayload) {
   return (dispatch: Function, getState: Function) => {
     InitAppService.getInitData(dispatch, payload);
   };

@@ -1,12 +1,12 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
-import {styles} from './styles';
-import {defaultItemValueDropdown} from "../../../interfaces/product/";
+import { styles } from './styles';
+import { defaultItemValueDropdown } from '../../../interfaces/product/';
 
 export interface IMenuItemsDropdown {
   value: string | number;
@@ -35,7 +35,7 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
 
   private handleChangeShowing = (): void => {
     this.setState(prev => ({isOpen: !prev.isOpen}));
-  }
+  };
 
   public render() {
     const {
@@ -59,47 +59,47 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
     const getMenuItemFirst = () => {
       return (
         <MenuItem
-          value={menuItemFirst.value}
-          selected={!isHiddenMenuItemFirst}
-          disabled={!!isHiddenMenuItemFirst}
+          value={ menuItemFirst.value }
+          selected={ !isHiddenMenuItemFirst }
+          disabled={ !!isHiddenMenuItemFirst }
         >
-          <em>{menuItemFirst.name}</em>
+          <em>{ menuItemFirst.name }</em>
         </MenuItem>
       );
     };
     const inputId = `${nameAttr}-controlled-open-select`;
 
     return (
-      <div className={classes.root}>
+      <div className={ classes.root }>
         { nameToShow
-          ?  <Button className={classes.button} onClick={this.handleChangeShowing}>
-              {nameToShow}
-            </Button>
+          ? <Button className={ classes.button } onClick={ this.handleChangeShowing }>
+            { nameToShow }
+          </Button>
           : null
         }
-        <FormControl className={classes.formControl}>
+        <FormControl className={ classes.formControl }>
           <Select
-            open={this.state.isOpen}
-            onClose={this.handleChangeShowing}
-            onOpen={this.handleChangeShowing}
-            value={value}
-            onChange={handleChange}
-            id={inputId}
-            name={nameAttr}
+            open={ this.state.isOpen }
+            onClose={ this.handleChangeShowing }
+            onOpen={ this.handleChangeShowing }
+            value={ value }
+            onChange={ handleChange }
+            id={ inputId }
+            name={ nameAttr }
             variant="filled"
             displayEmpty
           >
-            {getMenuItemFirst()}
-            {menuItems.map((item) => {
+            { getMenuItemFirst() }
+            { menuItems.map((item) => {
               return (
                 <MenuItem
-                  key={item.value}
-                  value={item.value}
+                  key={ item.value }
+                  value={ item.value }
                 >
-                  {item.name}
+                  { item.name }
                 </MenuItem>
               );
-            })}
+            }) }
           </Select>
         </FormControl>
       </div>
