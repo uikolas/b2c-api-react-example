@@ -103,18 +103,6 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
 
     if (!wishlists.length && isLoading) {
       return null;
-    } else if (!wishlists.length && !isLoading && isInitial) {
-      return (
-        <Grid container>
-          <Grid item xs={12} container justify="center">
-            <Typography
-              variant="headline"
-              children="You haven`t yet wishlists."
-              paragraph
-            />
-          </Grid>
-        </Grid>
-      );
     }
 
     const rows: any[] = wishlists.map((item: any) => (
