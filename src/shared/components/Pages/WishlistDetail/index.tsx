@@ -195,46 +195,44 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
     });
 
     return (
-      <AppMain>
-        <Grid container>
+      <Grid container>
 
-          <Grid item xs={12} container justify="space-around">
-            <Typography
-              variant="headline"
-              children={wishlist ? `Wishlist ${wishlist.name}` : ''}
-            />
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={this.moveAllProductsToCart}
-              disabled={isLoading || cartLoading}
-            >
-              Add all available products to cart
-            </Button>
-          </Grid>
-
-          <Grid item xs={12} container justify="center">
-            <Paper elevation={4} className={classes.paperContainer}>
-              <Table>
-                <TableHead>
-                  <TableRow key="table-header">
-                    <TableCell></TableCell>
-                    <TableCell className={classes.headerCell}>Product</TableCell>
-                    <TableCell className={classes.headerCell}>Price</TableCell>
-                    <TableCell className={classes.headerCell}>Availability</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows}
-                </TableBody>
-              </Table>
-            </Paper>
-          </Grid>
-
+        <Grid item xs={12} container justify="space-around">
+          <Typography
+            variant="headline"
+            children={wishlist ? `Wishlist ${wishlist.name}` : ''}
+          />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={this.moveAllProductsToCart}
+            disabled={isLoading || cartLoading}
+          >
+            Add all available products to cart
+          </Button>
         </Grid>
-      </AppMain>
+
+        <Grid item xs={12} container justify="center">
+          <Paper elevation={4} className={classes.paperContainer}>
+            <Table>
+              <TableHead>
+                <TableRow key="table-header">
+                  <TableCell></TableCell>
+                  <TableCell className={classes.headerCell}>Product</TableCell>
+                  <TableCell className={classes.headerCell}>Price</TableCell>
+                  <TableCell className={classes.headerCell}>Availability</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+
+      </Grid>
     );
   }
 }

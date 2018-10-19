@@ -27,5 +27,5 @@ export const styles = (theme: Theme) => createStyles({
   menuItem: {
     display: 'flex',
     justifyContent: 'space-between',
-  }
+  },
 });

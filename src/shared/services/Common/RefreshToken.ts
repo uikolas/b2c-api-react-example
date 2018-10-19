@@ -2,6 +2,8 @@ import api from '../api';
 import { toast } from 'react-toastify';
 
 import { REFRESH_TOKEN_REQUEST } from '../../constants/ActionTypes/Pages/Login';
+import {parseLoginDataResponse} from "../customerHelper/loginDataResponse";
+import {saveAccessDataToLocalStorage} from "../localStorageHelper/index";
 
 export class RefreshTokenService {
   public static async getActualToken(dispatch: Function): Promise<any> {
@@ -17,7 +19,7 @@ export class RefreshTokenService {
 
     if (now > +tokenExpire) {
       try {
-        const newToken = await RefreshTokenService.refreshTokenRequest(dispatch, refreshToken)
+        const newToken = await RefreshTokenService.refreshTokenRequest(dispatch, refreshToken);
         return newToken;
       } catch (error) {
         console.error('Refresh token', error);
@@ -36,22 +38,24 @@ export class RefreshTokenService {
   public static async refreshTokenRequest(dispatch: Function, refreshToken: string): Promise<any> {
     const body = {
       data: {
-        type: "refresh-tokens",
+        type: 'refresh-tokens',
         attributes: {refreshToken},
-      }
+      },
     };
 
-    dispatch({ type: REFRESH_TOKEN_REQUEST + '_PENDING' });
+    dispatch({type: REFRESH_TOKEN_REQUEST + '_PENDING'});
 
-    const response: any = await api.post('refresh-tokens', body, { withCredentials: true });
+    const response: any = await api.post('refresh-tokens', body, {withCredentials: true});
 
     if (response.ok) {
+      const responseParsed = parseLoginDataResponse(response.data);
+      saveAccessDataToLocalStorage(responseParsed);
       dispatch({
         type: REFRESH_TOKEN_REQUEST + '_FULFILLED',
-        payload: response.data.data.attributes,
+        payload: responseParsed,
       });
 
-      return response.data.data.attributes.refreshToken;
+      return responseParsed.refreshToken;
     } else {
       console.error('Refresh token', response.problem);
       dispatch({

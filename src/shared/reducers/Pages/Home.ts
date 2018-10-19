@@ -1,9 +1,5 @@
-import {
-  PAGES_HOME_GET_DATA_REQUEST,
-} from '../../constants/ActionTypes/Pages/Home';
-import {
-  IReduxState,
-} from '../../../typings/app';
+import { PAGES_HOME_GET_DATA_REQUEST } from '../../constants/ActionTypes/Pages/Home';
+import { IReduxState } from '../../../typings/app';
 
 
 export interface IHomeState extends IReduxState {
@@ -18,7 +14,7 @@ export const initialState: IHomeState = {
 };
 
 
-export const pagesHome = function (state: IHomeState = initialState, action: any): IHomeState {
+export const pagesHome = function(state: IHomeState = initialState, action: any): IHomeState {
   switch (action.type) {
     case `${PAGES_HOME_GET_DATA_REQUEST}_PENDING`:
       // console.info('pagesHomeGetDataAction', state);

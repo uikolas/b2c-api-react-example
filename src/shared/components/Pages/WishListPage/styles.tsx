@@ -3,8 +3,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   paperContainer: {
-    width: '70%',
-    marginTop: theme.spacing.unit * 4,
+    width: '100%',
+    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px`,
   },
   newList: {
     width: '70%',
@@ -15,6 +15,6 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: '0.85rem',
   },
   updateCell: {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });

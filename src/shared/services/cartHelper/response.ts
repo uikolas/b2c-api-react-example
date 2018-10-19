@@ -1,5 +1,5 @@
-import {ICartDataResponse} from "../../interfaces/cart/index";
-import {parseImageSets} from "../productHelper/imageSetsParser";
+import { ICartDataResponse } from '../../interfaces/cart';
+import { parseImageSets } from '../productHelper/imageSetsParser';
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
   return {
@@ -22,17 +22,23 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
     if (row.type === 'concrete-product-image-sets' && !result[row.id].images) {
       const images = parseImageSets(row.attributes.imageSets);
       result[row.id].image = images[0].externalUrlSmall ? images[0].externalUrlSmall : null;
-    } else if (row.type === 'items' && !result[row.id].sku) {
-      result[row.id].sku = row.id;
-      result[row.id].quantity = row.attributes.quantity;
-      result[row.id].amount = row.attributes.amount;
-      result[row.id].calculations = row.attributes.calculations;
-      result[row.id].groupKey = row.attributes.groupKey;
-    } else if (row.type === 'concrete-products' && !result[row.id].name) {
-      result[row.id].name = row.attributes.name;
-    } else if (row.type === 'concrete-product-availabilities' && !result[row.id].availability) {
-      result[row.id].availability = row.attributes.availability;
-      result[row.id].availableQuantity = row.attributes.quantity;
+    } else {
+      if (row.type === 'items' && !result[row.id].sku) {
+        result[row.id].sku = row.id;
+        result[row.id].quantity = row.attributes.quantity;
+        result[row.id].amount = row.attributes.amount;
+        result[row.id].calculations = row.attributes.calculations;
+        result[row.id].groupKey = row.attributes.groupKey;
+      } else {
+        if (row.type === 'concrete-products' && !result[row.id].name) {
+          result[row.id].name = row.attributes.name;
+        } else {
+          if (row.type === 'concrete-product-availabilities' && !result[row.id].availability) {
+            result[row.id].availability = row.attributes.availability;
+            result[row.id].availableQuantity = row.attributes.quantity;
+          }
+        }
+      }
     }
   });
 

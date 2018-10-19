@@ -7,7 +7,7 @@ import createHistory from 'history/createBrowserHistory';
 import 'normalize.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import {Root} from '../../shared/containers/Root';
+import { Root } from '../../shared/containers/Root';
 
 
 injectTapEventPlugin();
@@ -17,6 +17,6 @@ const history = createHistory();
 
 export const App = () => (
   <BrowserRouter>
-    <Root history={history} />
+    <Root history={ history }/>
   </BrowserRouter>
 );

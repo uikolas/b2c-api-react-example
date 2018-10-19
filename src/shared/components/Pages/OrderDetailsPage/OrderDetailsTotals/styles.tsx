@@ -8,6 +8,6 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: theme.spacing.unit * 2,
   },
   bold: {
-    fontWeight: "bold"
-  }
+    fontWeight: 'bold',
+  },
 });

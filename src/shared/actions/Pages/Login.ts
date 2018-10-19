@@ -5,30 +5,40 @@ import {
   REFRESH_TOKEN_REQUEST,
 } from '../../constants/ActionTypes/Pages/Login';
 import {PagesLoginService} from '../../services/Pages/Login';
+import {ICustomerLoginData, ICustomerLoginDataParsed} from "../../interfaces/customer/index";
 
-
-export const loginPendingState = {
-  type: PAGES_LOGIN_REQUEST + '_PENDING',
-};
-
-export const registerPendingState = {
+export const registerPendingState = () => ({
   type: PAGES_CUSTOMER_REGISTER + '_PENDING',
-};
-
-export const sendLoginAction = function (payload: any) {
-  return (dispatch: Function, getState: Function) => {
-    PagesLoginService.loginRequest(PAGES_LOGIN_REQUEST, dispatch, payload);
-    dispatch(loginPendingState);
-  };
-};
+});
 
 export const customerRegisterAction = function (payload: any) {
   return (dispatch: Function, getState: Function) => {
-    PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
     dispatch(registerPendingState);
+    PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
   };
 };
 
 export const logout = function () {
   return { type: PAGES_CUSTOMER_LOGOUT };
+};
+
+// Login Customer Entity
+export const loginCustomerPendingStateAction = () => ({
+  type: PAGES_LOGIN_REQUEST + '_PENDING',
+});
+
+export const loginCustomerRejectedStateAction = (message: string) => ({
+  type: PAGES_LOGIN_REQUEST + '_REJECTED',
+  payload: {error: message},
+});
+
+export const loginCustomerFulfilledStateAction = (payload: ICustomerLoginDataParsed) => ({
+  type: PAGES_LOGIN_REQUEST + '_FULFILLED',
+  payload,
+});
+
+export const loginCustomerAction = function (payload: ICustomerLoginData) {
+  return (dispatch: Function, getState: Function) => {
+    PagesLoginService.loginRequest(dispatch, payload);
+  };
 };

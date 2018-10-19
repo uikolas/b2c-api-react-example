@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Badge from '@material-ui/core/Badge';
 
-import {styles} from './styles';
-import {TProductQuantity} from "../../../interfaces/product/index";
+import { styles } from './styles';
+import { TProductQuantity } from '../../../interfaces/product';
 
 interface ShoppingCartProps extends WithStyles<typeof styles> {
   cartItemsQuantity: TProductQuantity;
@@ -14,16 +14,16 @@ interface ShoppingCartProps extends WithStyles<typeof styles> {
 export const ShoppingCartBase: React.SFC<ShoppingCartProps> = ({cartItemsQuantity, cartProductsQuantity, classes}) => {
 
   const shoppingCart = (
-    <ShoppingCartIcon className={classes.icon} />
+    <ShoppingCartIcon className={ classes.icon }/>
   );
 
   const shoppingCartWithQuantity = (
     <Badge
-      badgeContent={cartItemsQuantity}
+      badgeContent={ cartItemsQuantity }
       color="primary"
-      classes={{ badge: classes.badge }}
+      classes={ {badge: classes.badge} }
     >
-      {shoppingCart}
+      { shoppingCart }
     </Badge>
   );
 

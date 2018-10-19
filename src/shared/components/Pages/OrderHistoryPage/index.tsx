@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {reduxify} from '../../../lib/redux-helper';
-import {AppMain} from '../../Common/AppMain';
 
 import {styles} from './styles';
 import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
@@ -26,7 +25,6 @@ import {OrderList} from "./OrderList/index";
 import {OrderHistoryContext} from './context';
 import {pathOrderDetailsPageBase} from "../../../routes/contentRoutes";
 import {emptyValueErrorText} from "../../../constants/messages/errors";
-
 
 export const pageTitle = "Orders History";
 
@@ -83,7 +81,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
     const {classes, isHasOrders, isFulfilled, orders} = this.props;
 
     return (
-      <AppMain>
+      <div>
         { (isFulfilled === false)
           ? null
           : (
@@ -103,14 +101,9 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
                   </Grid>
                   <Grid container justify="center" >
                     {isHasOrders
-                      ? <React.Fragment>
-                        <Grid item xs={12} sm={3}>
-
-                        </Grid>
-                        <Grid item xs={12} sm={9}>
+                      ? <Grid item xs={12}>
                           <OrderList items={orders} />
                         </Grid>
-                      </React.Fragment>
                       : <Typography variant="title" color="inherit" gutterBottom={true}>
                         {noOrderText}
                       </Typography>
@@ -121,7 +114,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
             </OrderHistoryContext.Provider>
           )
         }
-      </AppMain>
+      </div>
     );
   }
 }

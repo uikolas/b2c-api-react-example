@@ -1,12 +1,12 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import {lightGreen} from '@material-ui/core/colors';
+import { lightGreen } from '@material-ui/core/colors';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    width: "100%",
-    maxWidth: "1400px",
-    margin: "auto",
+    width: '100%',
+    maxWidth: '1400px',
+    margin: 'auto',
   },
   reorderBtn: {
     minWidth: 220,
@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing.unit,
   },
   btnOuter: {
-    display: "flex",
-    justifyContent: "flex-end",
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 });

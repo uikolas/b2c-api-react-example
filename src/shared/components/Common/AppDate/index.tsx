@@ -1,8 +1,8 @@
-import * as React from "react";
-import {reduxify} from '../../../lib/redux-helper';
-import {FormattedDate} from 'react-intl';
-import {getAppTimeZone, TAppTimeZone} from "../../../reducers/Common/Init";
-import {TOrderDate} from "../../../interfaces/order/index";
+import * as React from 'react';
+import { reduxify } from '../../../lib/redux-helper';
+import { FormattedDate } from 'react-intl';
+import { getAppTimeZone, TAppTimeZone } from '../../../reducers/Common/Init';
+import { TOrderDate } from '../../../interfaces/order';
 
 interface AppDateProps {
   value: TOrderDate;
@@ -14,13 +14,13 @@ export const AppDateBase: React.SFC<AppDateProps> = (props) => {
 
   const date = new Date(value);
   const dateUtcUnix = Date.UTC(
-    date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()
+    date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(),
   );
 
   return (
     value
-      ? <FormattedDate value={dateUtcUnix}
-                       timeZone={timeZone}
+      ? <FormattedDate value={ dateUtcUnix }
+                       timeZone={ timeZone }
                        year="numeric"
                        month="short"
                        day="2-digit"
@@ -37,5 +37,5 @@ export const AppDate = reduxify(
     return ({
       timeZone,
     });
-  }
+  },
 )(AppDateBase);

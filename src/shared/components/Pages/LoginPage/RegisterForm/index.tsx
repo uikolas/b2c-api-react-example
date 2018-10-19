@@ -10,25 +10,26 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 
 import {formStyles} from '../styles';
+import {
+  TCustomerEmail, TCustomerFirstName, TCustomerLastName,
+  TCustomerPassword, TCustomerSalutation, TSalutationVariant
+} from "../../../../interfaces/customer/index";
+import {salutationVariants} from "../../../../constants/customer/index";
+import {emptyRequiredFieldsErrorText} from "../../../../constants/messages/errors";
 
 interface RegisterFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
 }
 
 interface RegisterFormState {
-  salutation: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  passwordConfirmation: string;
+  salutation: TCustomerSalutation;
+  firstName: TCustomerFirstName;
+  lastName: TCustomerLastName;
+  email: TCustomerEmail;
+  password: TCustomerPassword;
+  passwordConfirmation: TCustomerPassword;
   acceptedTerms: boolean;
 }
-
-type Salutation = {
-  value: string,
-  label: string,
-};
 
 export class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormState> {
 
@@ -41,25 +42,6 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
     passwordConfirmation: '',
     acceptedTerms: false,
   };
-
-  private salutations: Array<Salutation> = [
-    {
-      value: 'Mr',
-      label: 'Mr.',
-    },
-    {
-      value: 'Ms',
-      label: 'Ms.',
-    },
-    {
-      value: 'Mrs',
-      label: 'Mrs.',
-    },
-    {
-      value: 'Dr',
-      label: 'Dr.',
-    }
-  ];
 
   public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if(!event.target.value) {
@@ -95,7 +77,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
       || !this.state.passwordConfirmation
       || !this.state.acceptedTerms
     ) {
-      toast.warn('Not all fields are filled');
+      toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
 
@@ -143,7 +125,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
               shrink: true,
             }}
           >
-            {this.salutations.map((option: Salutation) => (
+            {salutationVariants.map((option: TSalutationVariant) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>

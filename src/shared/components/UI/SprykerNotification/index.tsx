@@ -1,11 +1,10 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import {SnackbarOrigin} from '@material-ui/core/Snackbar';
 
-import {styles} from './styles';
+import { styles } from './styles';
 
 interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOrigin {
   message: string;
@@ -23,33 +22,33 @@ export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (pro
     isOpen,
     onClickClose,
     horizontal,
-    vertical
+    vertical,
   } = props;
 
   return (
     <Snackbar
-      anchorOrigin={{ vertical, horizontal }}
-      open={isOpen}
-      onClose={onClickClose}
-      ContentProps={{
+      anchorOrigin={ {vertical, horizontal} }
+      open={ isOpen }
+      onClose={ onClickClose }
+      ContentProps={ {
         'aria-describedby': 'message-id',
-      }}
-      message={<span id="message-id">{message}</span>}
-      className={`${classes.root} ${extraClasses}`}
-      autoHideDuration={1000}
-      action={[
+      } }
+      message={ <span id="message-id">{ message }</span> }
+      className={ `${classes.root} ${extraClasses}` }
+      autoHideDuration={ 1000 }
+      action={ [
         <IconButton
           key="close"
           aria-label="Close"
           color="inherit"
-          className={classes.close}
-          onClick={onClickClose}
+          className={ classes.close }
+          onClick={ onClickClose }
         >
-          <CloseIcon />
+          <CloseIcon/>
         </IconButton>,
-      ]}
+      ] }
     />
   );
-}
+};
 
 export const SprykerNotification = withStyles(styles)(SprykerNotificationBase);

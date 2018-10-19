@@ -1,4 +1,4 @@
-import {IProductCardImages} from "../../interfaces/product";
+import { IProductCardImages } from '../../interfaces/product';
 
 export const parseImageSets = (imageSets: any): Array<IProductCardImages> | null => {
 

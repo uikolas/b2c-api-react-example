@@ -9,12 +9,8 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     margin: '2%',
   },
-  tableWrapper: {
-
-  },
-  table: {
-
-  },
+  tableWrapper: {},
+  table: {},
   delIcon: {
     fontSize: 32,
     color: theme.palette.secondary.light,

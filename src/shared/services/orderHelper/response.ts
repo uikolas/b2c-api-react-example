@@ -1,12 +1,12 @@
-
 import {
   IOrderCollectionParsed,
-  IOrderCollectionResponse, IOrderDetailsItem,
+  IOrderCollectionResponse,
+  IOrderDetailsItem,
   IOrderDetailsParsed,
   IOrderDetailsResponse,
   IOrderItem,
   IOrderItemResponse,
-} from "../../interfaces/order/index";
+} from '../../interfaces/order';
 
 
 export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse): IOrderCollectionParsed | null => {

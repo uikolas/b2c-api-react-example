@@ -8,6 +8,6 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing.unit,
   },
   value: {
-    display: "inline"
-  }
+    display: 'inline',
+  },
 });

@@ -1,6 +1,4 @@
-import {
-  APP_LOCALE_DEFAULT
-} from '../../constants/Environment';
+import { APP_LOCALE_DEFAULT } from '../../constants/Environment';
 
 interface IAvailabilityValues {
   yes: string;
@@ -22,7 +20,7 @@ export const getAvailabilityDisplay = (availability: boolean, locale: string = A
     fallback: {
       yes: 'Available',
       not: 'Not available',
-    }
+    },
   };
 
   if (availabilityMap[locale]) {
