@@ -45,6 +45,7 @@ import {
 } from "../../../reducers/Pages/CustomerProfile";
 import {SprykerDialog} from "../../UI/SprykerDialog/index";
 import {pathLoginPage} from "../../../routes/contentRoutes";
+import {saveCustomerUsernameToLocalStorage} from "../../../services/localStorageHelper/index";
 
 export const pageTitle = "Profile";
 
@@ -165,6 +166,8 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     if (email !== this.props.customerData.email) {
       toast.warn("We can\'t show your updated email. To see it logout and login again!" );
       this.props.saveLoginDataToStore({email});
+      // TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
+      saveCustomerUsernameToLocalStorage({email});
     }
   }
 
