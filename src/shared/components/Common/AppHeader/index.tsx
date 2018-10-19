@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,27 +6,24 @@ import Grid from '@material-ui/core/Grid';
 import BookmarkBorderOutlined from '@material-ui/icons/BookmarkBorderOutlined';
 import { NavLink } from 'react-router-dom';
 
-import { AppLogo } from '../AppLogo';
+import {AppLogo} from '../AppLogo';
 import CatalogSearch from '../CatalogSearch';
-import { styles } from './styles';
-import { reduxify } from '../../../lib/redux-helper';
-import { isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { RouteProps } from 'react-router';
-import { getSearchTerm, getSuggestions } from '../../../reducers/Pages/Search';
-import { getTotalItemsQuantity, getTotalProductsQuantity } from '../../../reducers/Common/Cart';
-import { IProductCard, TProductQuantity } from '../../../interfaces/product';
-import { SprykerButton } from '../../UI/SprykerButton';
-import { logout } from '../../../actions/Pages/Login';
-import { ShoppingCart } from '../ShoppingCart';
-import { SprykerNotification } from '../../UI/SprykerNotification';
-import { Preloader } from '../Preloader';
+import {styles} from './styles';
+import {reduxify} from '../../../lib/redux-helper';
+import {isUserAuthenticated} from '../../../reducers/Pages/Login';
+import {RouteProps} from "react-router";
+import {getSearchTerm, getSuggestions} from '../../../reducers/Pages/Search';
 import {
-  pathCartPage,
-  pathHomePage,
-  pathLoginPage,
-  pathOrderHistoryPage,
-  pathWishlistPage,
-} from '../../../routes/contentRoutes';
+  getTotalItemsQuantity,
+  getTotalProductsQuantity,
+} from '../../../reducers/Common/Cart';
+import {IProductCard, TProductQuantity} from '../../../interfaces/product';
+import {SprykerButton} from '../../UI/SprykerButton';
+import {logout} from '../../../actions/Pages/Login';
+import {ShoppingCart} from '../ShoppingCart';
+import {SprykerNotification} from '../../UI/SprykerNotification';
+import {Preloader} from "../Preloader/index";
+import {pathCartPage, pathHomePage, pathLoginPage, pathCustomerPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
@@ -48,7 +45,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     isCartNotificationOpen: false,
   };
 
-  public componentDidUpdate(prevProps: AppHeaderProps, prevState: AppHeaderState) {
+  public componentDidUpdate (prevProps: AppHeaderProps, prevState: AppHeaderState) {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
       this.handleOpenCartNotification();
     }
@@ -56,39 +53,39 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
 
   public handleLogout = () => {
     this.props.dispatch(logout());
-  };
+  }
 
   public handleCloseCartNotification = (event?: any, reason?: string): void => {
-    this.setState({isCartNotificationOpen: false});
-  };
+    this.setState({ isCartNotificationOpen: false });
+  }
 
   public handleOpenCartNotification = (event?: any): void => {
-    this.setState({isCartNotificationOpen: true});
-  };
+    this.setState({ isCartNotificationOpen: true });
+  }
 
   public render(): JSX.Element {
-    const {classes, location, isUserLoggedIn, cartItemsQuantity, cartProductsQuantity, isLoading} = this.props;
+    const { classes, location, isUserLoggedIn, cartItemsQuantity, cartProductsQuantity, isLoading } = this.props;
 
     return (
-      <AppBar position="fixed" color="default" className={ classes.appBar }>
+      <AppBar position="fixed" color="default" className={classes.appBar}>
         <Toolbar>
           <Grid container direction="row">
 
-            <Grid item sm={ 3 }
+            <Grid item sm={3}
                   direction="row"
                   container
                   justify="flex-start"
                   alignItems="center">
-              <AppLogo/>
+              <AppLogo />
             </Grid>
 
-            <Grid item sm={ 4 }>
+            <Grid item sm={4}>
               { location.pathname === pathHomePage
                 ? null
-                : <CatalogSearch/>
+                : <CatalogSearch />
               }
             </Grid>
-            <Grid item sm={ 5 }
+            <Grid item sm={5}
                   container
                   direction="row"
                   justify="flex-end"
@@ -96,48 +93,48 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
             >
               { isUserLoggedIn
                 ? (
-                  <NavLink to={ pathWishlistPage }>
+                  <NavLink to={`${pathCustomerPage}/wishlists`}>
                     <SprykerButton
                       title="Wishlist"
                     />
                   </NavLink>)
                 : null
               }
-              <NavLink to={ isUserLoggedIn ? pathHomePage : pathLoginPage }>
+              <NavLink to={isUserLoggedIn ? pathHomePage : pathLoginPage}>
                 <SprykerButton
-                  title={ isUserLoggedIn ? 'Logout' : 'Register/Login' }
-                  onClick={ isUserLoggedIn ? this.handleLogout : null }
+                  title={isUserLoggedIn ? 'Logout' : 'Register/Login'}
+                  onClick={isUserLoggedIn ? this.handleLogout : null}
                 />
               </NavLink>
 
-              <NavLink to={ pathCartPage }>
+              <NavLink to={pathCartPage}>
                 <SprykerButton
                   title="Cart"
-                  iconComponent={ (
+                  iconComponent={(
                     <ShoppingCart
-                      cartItemsQuantity={ cartItemsQuantity }
-                      cartProductsQuantity={ cartProductsQuantity }
+                      cartItemsQuantity={cartItemsQuantity}
+                      cartProductsQuantity={cartProductsQuantity}
                     />
-                  ) }
+                  )}
                 />
               </NavLink>
               <SprykerNotification
                 message="Your product was added to your cart"
-                extraClasses={ classes.cartNotification }
-                isOpen={ this.state.isCartNotificationOpen }
-                onClickClose={ this.handleCloseCartNotification }
-                onClickOpen={ this.handleOpenCartNotification }
+                extraClasses={classes.cartNotification}
+                isOpen={this.state.isCartNotificationOpen}
+                onClickClose={this.handleCloseCartNotification}
+                onClickOpen={this.handleOpenCartNotification}
                 vertical="top"
                 horizontal="right"
               />
               { /* TODO: Add fetching data on click !!!*/ }
-              { isUserLoggedIn
-                ? <NavLink to={ pathOrderHistoryPage }>
-                  <SprykerButton
-                    title={ 'Orders History' }
-                    IconType={ BookmarkBorderOutlined }
-                  />
-                </NavLink>
+              {isUserLoggedIn
+                ?  <NavLink to={`${pathCustomerPage}/order`}>
+                    <SprykerButton
+                      title={'Orders History'}
+                      IconType={BookmarkBorderOutlined}
+                    />
+                  </NavLink>
                 : null
               }
 
@@ -146,7 +143,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
           </Grid>
 
         </Toolbar>
-        { isLoading ? <Preloader extraClasses={ classes.preloader }/> : null }
+        {isLoading ? <Preloader extraClasses={classes.preloader}/> : null}
       </AppBar>
     );
   }
@@ -164,12 +161,12 @@ export const AppHeader = reduxify(
     const suggestions = getSuggestions(state, ownProps);
 
     return ({
-      location: routerProps.location ? routerProps.location : ownProps.location,
-      suggestions,
-      searchTerm,
-      cartItemsQuantity,
-      cartProductsQuantity,
-      isUserLoggedIn,
+        location: routerProps.location ? routerProps.location : ownProps.location,
+        suggestions,
+        searchTerm,
+        cartItemsQuantity,
+        cartProductsQuantity,
+        isUserLoggedIn,
     });
-  },
+  }
 )(DecoratedHeader);

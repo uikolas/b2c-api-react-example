@@ -1,11 +1,12 @@
-import api, { setAuthToken } from '../api';
+import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../Common/RefreshToken';
-import { IWishlist, IWishlistItem } from '../../interfaces/wishlist';
-import { wishlistAuthenticateErrorText } from '../../constants/messages/errors';
-import { API_WITH_FIXTURES } from '../../constants/Environment';
-import { getTestDataPromise } from '../apiFixture';
-import { getWishlistFixture } from '../fixtures/wishlistFixture';
+import {RefreshTokenService} from '../Common/RefreshToken';
+import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
+
+import {wishlistAuthenticateErrorText} from "../../constants/messages/errors";
+import {API_WITH_FIXTURES} from "../../constants/Environment";
+import {getTestDataPromise} from "../apiFixture";
+import {getWishlistFixture} from "../fixtures/wishlistFixture";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
@@ -14,7 +15,7 @@ export class WishlistService {
 
       let response: any;
       // TODO: this is only for development reasons - remove after finish
-      if (API_WITH_FIXTURES) {
+      if(API_WITH_FIXTURES) {
         const result = {
           ok: true,
           problem: 'Test API_WITH_FIXTURES',
@@ -29,7 +30,7 @@ export class WishlistService {
             throw new Error(wishlistAuthenticateErrorText);
           }
           setAuthToken(token);
-          response = await api.get('wishlists', {}, {withCredentials: true});
+          response = await api.get('wishlists', {}, { withCredentials: true });
         } catch (err) {
           console.error('WishlistService: getLists: err', err);
         }
@@ -68,7 +69,7 @@ export class WishlistService {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.get(`wishlists/${wishlistId}`, {}, {withCredentials: true});
+      const response: any = await api.get(`wishlists/${wishlistId}`, {}, { withCredentials: true });
 
       if (response.ok) {
         let items: IWishlistItem[] = [];
@@ -81,7 +82,7 @@ export class WishlistService {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           wishlist,
-          items,
+          items
         });
         return response.data.data;
       } else {
@@ -111,16 +112,16 @@ export class WishlistService {
       const body: any = {
         data: {
           type: 'wishlists',
-          attributes: {name},
-        },
+          attributes: {name}
+        }
       };
 
-      const response: any = await api.post('wishlists', body, {withCredentials: true});
+      const response: any = await api.post('wishlists', body, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlist: WishlistService.parseWishlistResponse(response.data.data),
+          wishlist: WishlistService.parseWishlistResponse(response.data.data)
         });
         return response.data.data;
       } else {
@@ -147,7 +148,7 @@ export class WishlistService {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(`wishlists/${wishlistId}`, {}, {withCredentials: true});
+      const response: any = await api.delete(`wishlists/${wishlistId}`, {}, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
@@ -182,11 +183,11 @@ export class WishlistService {
       const body: any = {
         data: {
           type: 'wishlists',
-          attributes: {name},
-        },
+          attributes: {name}
+        }
       };
 
-      const response: any = await api.patch(`wishlists/${wishlistId}`, body, {withCredentials: true});
+      const response: any = await api.patch(`wishlists/${wishlistId}`, body, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
@@ -222,14 +223,14 @@ export class WishlistService {
       const body: any = {
         data: {
           type: 'wishlists',
-          attributes: {sku},
-        },
+          attributes: {sku}
+        }
       };
 
-      const response: any = await api.post(`wishlists/${wishlistId}/wishlist-items`, body, {withCredentials: true});
+      const response: any = await api.post(`wishlists/${wishlistId}/wishlist-items`, body, { withCredentials: true });
 
       if (response.ok) {
-        const wishlistResponse: any = await api.get(`wishlists/${wishlistId}`, {include: ''}, {withCredentials: true});
+        const wishlistResponse: any = await api.get(`wishlists/${wishlistId}`, {include: ''}, { withCredentials: true });
         const wishlist: IWishlist = WishlistService.parseWishlistResponse(wishlistResponse.data.data);
 
         dispatch({
@@ -262,7 +263,7 @@ export class WishlistService {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(`wishlists/${wishlistId}/wishlist-items/${sku}`, {}, {withCredentials: true});
+      const response: any = await api.delete(`wishlists/${wishlistId}/wishlist-items/${sku}`, {}, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
@@ -314,24 +315,18 @@ export class WishlistService {
         if (row.attributes.imageSets && row.attributes.imageSets.length && row.attributes.imageSets[0].images && row.attributes.imageSets[0].images.length) {
           items[row.id].image = row.attributes.imageSets[0].images[0].externalUrlSmall;
         }
-      } else {
-        if (row.type === 'concrete-products') {
-          items[row.id].sku = row.attributes.sku;
-          items[row.id].name = row.attributes.name;
-          Object.keys(row.attributes.attributes).forEach((attr: string) => {
-            if (row.attributes.superAttributesDefinition.includes(attr)) {
-              items[row.id].attributes.push({[attr]: row.attributes.attributes[attr]});
-            }
-          });
-        } else {
-          if (row.type === 'concrete-product-prices') {
-            items[row.id].prices = row.attributes.prices;
-          } else {
-            if (row.type === 'concrete-product-availabilities') {
-              items[row.id].availability = row.attributes.availability;
-            }
+      } else if (row.type === 'concrete-products') {
+        items[row.id].sku = row.attributes.sku;
+        items[row.id].name = row.attributes.name;
+        Object.keys(row.attributes.attributes).forEach((attr: string) => {
+          if (row.attributes.superAttributesDefinition.includes(attr)) {
+            items[row.id].attributes.push({[attr]: row.attributes.attributes[attr]});
           }
-        }
+        });
+      } else if (row.type === 'concrete-product-prices') {
+        items[row.id].prices = row.attributes.prices;
+      } else if (row.type === 'concrete-product-availabilities') {
+        items[row.id].availability = row.attributes.availability;
       }
     });
 

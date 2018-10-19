@@ -36,12 +36,14 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     const accessToken: string = localStorage.getItem('accessToken');
     const expiresIn: string = localStorage.getItem('tokenExpire');
     const refreshToken: string = localStorage.getItem('refreshToken');
+    const customerRef: string = localStorage.getItem('customerRef');
 
     if (accessToken && expiresIn && refreshToken) {
       this.props.setAuth({
         accessToken,
         expiresIn,
         refreshToken,
+        customerRef,
       });
     }
 

@@ -1,34 +1,32 @@
-import * as React from 'react';
-import { RouteProps } from 'react-router';
+import * as React from "react";
+import {RouteProps} from "react-router";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { reduxify } from '../../../lib/redux-helper';
-import { AppMain } from '../../Common/AppMain';
+import {reduxify} from '../../../lib/redux-helper';
 
-import { styles } from './styles';
-import { getRouterHistoryPush, getRouterLocation } from '../../../selectors/Common/router';
-import { getOrdersCollectionAction } from '../../../actions/Pages/Order';
+import {styles} from './styles';
+import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
+import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
 import {
   getOrdersCollectionFromStore,
   isOrderHistoryFulfilled,
   isOrderHistoryInitiated,
   isOrderHistoryItems,
   isOrderHistoryLoading,
-  isOrderHistoryStateRejected,
-} from '../../../reducers/Pages/OrderHistory';
-import { isAppInitiated } from '../../../reducers/Common/Init';
-import { isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { TOrderCollection } from '../../../interfaces/order';
-import { noOrderText } from '../../../constants/messages/orders';
-import { OrderList } from './OrderList';
-import { OrderHistoryContext } from './context';
-import { pathOrderDetailsPageBase } from '../../../routes/contentRoutes';
-import { emptyValueErrorText } from '../../../constants/messages/errors';
+  isOrderHistoryStateRejected
+} from "../../../reducers/Pages/OrderHistory";
+import {isAppInitiated} from "../../../reducers/Common/Init";
+import {isUserAuthenticated} from "../../../reducers/Pages/Login";
+import {TOrderCollection} from "../../../interfaces/order/index";
+import {noOrderText} from "../../../constants/messages/orders";
+import {OrderList} from "./OrderList/index";
+import {OrderHistoryContext} from './context';
+import {pathOrderDetailsPageBase} from "../../../routes/contentRoutes";
+import {emptyValueErrorText} from "../../../constants/messages/errors";
 
-
-export const pageTitle = 'Orders History';
+export const pageTitle = "Orders History";
 
 interface OrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
   getOrdersCollection: Function;
@@ -49,15 +47,17 @@ interface OrderHistoryPageState {
 
 export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps, OrderHistoryPageState> {
 
-  public state: OrderHistoryPageState = {};
+  public state: OrderHistoryPageState = {
+
+  };
 
   public componentDidMount = () => {
     this.initRequestData();
-  };
+  }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
     this.initRequestData();
-  };
+  }
 
   public viewClickHandler = (event: any): any => {
     const value = event.currentTarget.value;
@@ -65,7 +65,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
       throw new Error(emptyValueErrorText);
     }
     this.props.routerPush(`${pathOrderDetailsPageBase}/${value}`);
-  };
+  }
 
   private initRequestData = () => {
     if (!this.props.isInitiated && this.props.isAppDataSet) {
@@ -73,7 +73,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
       return true;
     }
     return false;
-  };
+  }
 
   public render(): JSX.Element {
     console.info('props: ', this.props);
@@ -81,45 +81,40 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
     const {classes, isHasOrders, isFulfilled, orders} = this.props;
 
     return (
-      <AppMain>
+      <div>
         { (isFulfilled === false)
           ? null
           : (
             <OrderHistoryContext.Provider
-              value={ {
+              value={{
                 viewClickHandler: this.viewClickHandler,
-              } }
+              }}
             >
 
-              <div className={ classes.root }>
-                <Grid container justify="center">
-                  <Grid item xs={ 12 }>
-                    <Typography align="center" variant="headline" gutterBottom={ true }>
-                      { pageTitle }
-                    </Typography>
+                <div className={classes.root} >
+                  <Grid container justify="center" >
+                    <Grid item xs={12}>
+                      <Typography align="center" variant="headline" gutterBottom={true}>
+                        {pageTitle}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid container justify="center">
-                  { isHasOrders
-                    ? <React.Fragment>
-                      <Grid item xs={ 12 } sm={ 3 }>
+                  <Grid container justify="center" >
+                    {isHasOrders
+                      ? <Grid item xs={12}>
+                          <OrderList items={orders} />
+                        </Grid>
+                      : <Typography variant="title" color="inherit" gutterBottom={true}>
+                        {noOrderText}
+                      </Typography>
+                    }
 
-                      </Grid>
-                      <Grid item xs={ 12 } sm={ 9 }>
-                        <OrderList items={ orders }/>
-                      </Grid>
-                    </React.Fragment>
-                    : <Typography variant="title" color="inherit" gutterBottom={ true }>
-                      { noOrderText }
-                    </Typography>
-                  }
-
-                </Grid>
-              </div>
+                  </Grid>
+                </div>
             </OrderHistoryContext.Provider>
           )
         }
-      </AppMain>
+      </div>
     );
   }
 }
@@ -154,5 +149,5 @@ export const ConnectedOrderHistoryPage = reduxify(
   },
   (dispatch: Function) => ({
     getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-  }),
+  })
 )(OrderHistoryPage);

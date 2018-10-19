@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { FormattedDate } from 'react-intl';
-import { RouteProps } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import * as React from "react";
+import {FormattedDate} from 'react-intl';
+import {RouteProps} from "react-router";
+import {NavLink} from "react-router-dom";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -19,32 +19,33 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 
-import { reduxify } from '../../../lib/redux-helper';
+import { push } from 'react-router-redux';
+
+import {reduxify} from '../../../lib/redux-helper';
 import {
+  getWishlistsAction,
   addWishlistAction,
   deleteWishlistAction,
-  getDetailWishlistAction,
-  getWishlistsAction,
   updateWishlistAction,
+  getDetailWishlistAction,
 } from '../../../actions/Pages/Wishlist';
-import { AppMain } from '../../Common/AppMain';
-import { IWishlist } from '../../../interfaces/wishlist';
-import { WishlistState } from '../../../reducers/Pages/Wishlist';
-import { styles } from './styles';
-import config from '../../../config';
+import {IWishlist} from "../../../interfaces/wishlist";
+import {WishlistState} from "../../../reducers/Pages/Wishlist";
+import {styles} from './styles';
+import {pathCustomerPage} from "../../../routes/contentRoutes";
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
   wishlists: IWishlist[];
-  isLoading: boolean,
-  isInitial: boolean,
+  isLoading: boolean;
+  isInitial: boolean;
 }
 
 
 interface WishlistPageState {
   name: string;
-  updatedName: string,
-  updatedList: string,
+  updatedName: string;
+  updatedList: string;
 }
 
 export const pageTitle = 'Search results for ';
@@ -55,7 +56,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     name: '',
     updatedName: '',
     updatedList: '',
-  };
+  }
 
   public componentDidMount() {
     if (!this.props.isInitial) {
@@ -67,91 +68,77 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     this.setState({
       name: event.target.value,
     });
-  };
+  }
 
   public handleChangeUpdatedName = (event: any) => {
     this.setState({
       updatedName: event.target.value,
     });
-  };
+  }
 
   public addWishlist = () => {
     this.props.dispatch(addWishlistAction(this.state.name));
     this.setState({name: ''});
-  };
+  }
 
   public handleUpdateWishlist = (e: any) => {
     this.props.dispatch(updateWishlistAction(this.state.updatedList, this.state.updatedName));
-    this.setState({updatedList: '', updatedName: ''});
-  };
+    this.setState({updatedList: '', updatedName: ''})
+  }
 
   public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
     this.props.dispatch(deleteWishlistAction(wishlistId));
-  };
+  }
 
   private setUpdatedWishlist = (id: string, name: string) => (e: any) => {
     this.setState({updatedList: id, updatedName: name});
-  };
+  }
 
-  public setCurrentWishlist = (wishlistId: string) => (e: any) => {
+  public setCurrentWishlist = (wishlistId: string) =>  (e: any) => {
     this.props.dispatch(getDetailWishlistAction(wishlistId));
-  };
+  }
 
   public render() {
-    const {classes, wishlists, isLoading, isInitial} = this.props;
+    const { classes, wishlists, isLoading, isInitial } = this.props;
 
     if (!wishlists.length && isLoading) {
       return null;
-    } else {
-      if (!wishlists.length && !isLoading && isInitial) {
-        return (
-          <Grid container>
-            <Grid item xs={ 12 } container justify="center">
-              <Typography
-                variant="headline"
-                children="You haven`t yet wishlists."
-                paragraph
-              />
-            </Grid>
-          </Grid>
-        );
-      }
     }
 
     const rows: any[] = wishlists.map((item: any) => (
       <TableRow
         hover
-        key={ item.id }
+        key={item.id}
       >
         <TableCell component="th" scope="row">
-          { this.state.updatedList && this.state.updatedList === item.id
+          {this.state.updatedList && this.state.updatedList === item.id
             ? (
-              <form noValidate autoComplete="off" className={ classes.updateCell }>
+              <form noValidate autoComplete="off" className={classes.updateCell}>
                 <TextField
-                  value={ this.state.updatedName }
-                  onChange={ this.handleChangeUpdatedName }
+                  value={this.state.updatedName}
+                  onChange={this.handleChangeUpdatedName}
                 />
                 <IconButton
                   color="primary"
-                  onClick={ this.handleUpdateWishlist }
-                  disabled={ isLoading }
+                  onClick={this.handleUpdateWishlist}
+                  disabled={isLoading}
                 >
-                  <SaveIcon/>
+                  <SaveIcon />
                 </IconButton>
               </form>
             )
             : <NavLink
-              to={ `${config.WEB_PATH}wishlist/${item.name}` }
-              onClick={ this.setCurrentWishlist(item.id) }
-            >
-              { item.name }
-            </NavLink>
+                to={`${pathCustomerPage}/wishlist/${item.name}`}
+                onClick={this.setCurrentWishlist(item.id)}
+              >
+                {item.name}
+              </NavLink>
           }
         </TableCell>
-        <TableCell>{ item.numberOfItems }</TableCell>
+        <TableCell>{item.numberOfItems}</TableCell>
         <TableCell>
           <FormattedDate
-            value={ new Date(item.createdAt) }
+            value={new Date(item.createdAt)}
             year='numeric'
             month='short'
             day='2-digit'
@@ -160,67 +147,65 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
         <TableCell padding="checkbox">
           <IconButton
             color="primary"
-            onClick={ this.setUpdatedWishlist(item.id, item.name) }
-            disabled={ isLoading }
+            onClick={this.setUpdatedWishlist(item.id, item.name)}
+            disabled={isLoading}
           >
-            <EditIcon/>
+            <EditIcon />
           </IconButton>
         </TableCell>
         <TableCell padding="checkbox">
           <IconButton
             color="primary"
-            onClick={ this.handleDeleteWishlist(item.id) }
-            disabled={ isLoading }
+            onClick={this.handleDeleteWishlist(item.id)}
+            disabled={isLoading}
           >
-            <DeleteIcon/>
+            <DeleteIcon />
           </IconButton>
         </TableCell>
       </TableRow>
     ));
 
     return (
-      <AppMain>
-        <Grid container>
+      <Grid container>
 
-          <Grid item xs={ 12 } container justify="center">
-            <Typography
-              variant="headline"
-              children="Manage wishlists"
-            />
-          </Grid>
-
-          <Grid item xs={ 12 } container justify="center">
-            <Paper elevation={ 4 } className={ classes.paperContainer }>
-              <form noValidate autoComplete="off">
-                <TextField
-                  className={ classes.newList }
-                  value={ this.state.name }
-                  onChange={ this.handleChangeName }
-                />
-                <Button variant="contained" color="primary" onClick={ this.addWishlist }>
-                  Add new wishlist
-                </Button>
-              </form>
-              <Divider/>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={ classes.headerCell }>Name</TableCell>
-                    <TableCell className={ classes.headerCell }># of items</TableCell>
-                    <TableCell className={ classes.headerCell }>Date of creation</TableCell>
-                    <TableCell numeric></TableCell>
-                    <TableCell numeric></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  { rows }
-                </TableBody>
-              </Table>
-            </Paper>
-          </Grid>
-
+        <Grid item xs={12} container justify="center">
+          <Typography
+            variant="headline"
+            children="Manage wishlists"
+          />
         </Grid>
-      </AppMain>
+
+        <Grid item xs={12} container justify="center">
+          <Paper elevation={4} className={classes.paperContainer}>
+            <form noValidate autoComplete="off">
+              <TextField
+                className={classes.newList}
+                value={this.state.name}
+                onChange={this.handleChangeName}
+              />
+              <Button variant="contained" color="primary" onClick={this.addWishlist}>
+                Add new wishlist
+              </Button>
+            </form>
+            <Divider />
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.headerCell}>Name</TableCell>
+                  <TableCell className={classes.headerCell}># of items</TableCell>
+                  <TableCell className={classes.headerCell}>Date of creation</TableCell>
+                  <TableCell numeric></TableCell>
+                  <TableCell numeric></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows}
+              </TableBody>
+            </Table>
+          </Paper>
+        </Grid>
+
+      </Grid>
     );
   }
 }
@@ -239,5 +224,5 @@ export const ConnectedWishlistPage = reduxify(
         isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
       }
     );
-  },
+  }
 )(WishlistPage);

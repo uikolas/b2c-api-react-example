@@ -1,7 +1,13 @@
-import { PAGES_PRODUCT_REQUEST } from '../../constants/ActionTypes/Pages/Product';
-import { IReduxState } from '../../../typings/app';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { IProductDataParsed } from '../../interfaces/product';
+import produce from 'immer';
+import {
+  PAGES_PRODUCT_REQUEST,
+} from '../../constants/ActionTypes/Pages/Product';
+import {
+  IReduxState,
+} from '../../../typings/app';
+import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
+import {IProductDataParsed} from "../../interfaces/product/index";
+
 
 export interface IProductState extends IReduxState {
   data: {
@@ -18,6 +24,7 @@ export const initialState: IProductState = {
 /*export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
   console.info(action);
   const res = produce<IProductState>(state, draft => {
+>>>>>>> main-dev
     switch (action.type) {
       case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
         draft.error = action.error;
@@ -51,7 +58,7 @@ export const initialState: IProductState = {
   return res;
 };*/
 
-export const pageProduct = function(state: IProductState = initialState, action: any): IProductState {
+export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
       return handleRejected(state, action.payload);
