@@ -13,7 +13,7 @@ import {
 import { getTestDataPromise } from '../fixtures/apiFixture';
 import { orderAuthenticateErrorText } from '../../constants/messages/errors';
 import { orderHistoryFixtureFull } from '../fixtures/OrderHistoryFixture';
-import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../../helpers/orderHelper/response';
+import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../../helpers/order/response';
 import { orderDetailsFixtureFull } from '../fixtures/orderDetailsFixture';
 import { TOrderId } from '../../interfaces/order';
 
