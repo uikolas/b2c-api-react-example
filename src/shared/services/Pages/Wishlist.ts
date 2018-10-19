@@ -5,8 +5,8 @@ import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
 
 import {wishlistAuthenticateErrorText} from "../../constants/messages/errors";
 import {API_WITH_FIXTURES} from "../../constants/Environment";
-import {getTestDataPromise} from "../apiFixture";
 import {getWishlistFixture} from "../fixtures/wishlistFixture";
+import {getTestDataPromise} from "../fixtures/apiFixture/index";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {

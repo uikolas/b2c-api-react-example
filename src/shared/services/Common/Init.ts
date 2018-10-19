@@ -1,7 +1,7 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import { API_WITH_FIXTURES } from '../../constants/Environment';
-import { getTestDataPromise } from '../apiFixture';
+import { getTestDataPromise } from '../fixtures/apiFixture';
 import {
   IInitApplicationDataPayload,
   initApplicationDataFulfilledStateAction,
@@ -9,7 +9,7 @@ import {
   initApplicationDataRejectedStateAction,
 } from '../../actions/Common/Init';
 import { initFixture } from '../fixtures/initFixture';
-import { parseStoreResponse } from '../initHelper/store';
+import { parseStoreResponse } from '../../helpers/initHelper/store';
 
 export class InitAppService {
 

@@ -2,7 +2,7 @@ import api from '../api';
 import { toast } from 'react-toastify';
 import { API_WITH_FIXTURES } from '../../constants/Environment';
 import { fixtureProductImages } from '../fixtures/productFixtureWithSuperAttr';
-import { parseProductResponse } from '../productHelper';
+import { parseProductResponse } from '../../helpers/productHelper';
 import {
   getProductDataFulfilledStateAction,
   getProductDataItemPendingStateAction,

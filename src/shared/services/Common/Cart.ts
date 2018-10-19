@@ -2,11 +2,11 @@ import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
 import { API_WITH_FIXTURES } from '../../constants/Environment';
 import { cartCreateFixture, cartUpdateQuantityFixture } from '../fixtures/cartFixture';
-import { getTestDataPromise } from '../apiFixture';
+import { getTestDataPromise } from '../fixtures/apiFixture';
 import { TProductSKU } from '../../interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
-import { parseAddToCartResponse } from '../cartHelper';
-import { parseCartCreateResponse } from '../cartHelper/response';
+import { parseAddToCartResponse } from '../../helpers/cartHelper';
+import { parseCartCreateResponse } from '../../helpers/cartHelper/response';
 import { RefreshTokenService } from './RefreshToken';
 import {
   cartAddItemFulfilledStateAction,

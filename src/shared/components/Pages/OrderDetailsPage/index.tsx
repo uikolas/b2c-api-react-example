@@ -40,7 +40,7 @@ import {ICartAddItem, TCartAddItemCollection, TCartId} from "../../../interfaces
 import {addItemToCartAction, addMultipleItemsToCartAction} from "../../../actions/Common/Cart";
 import {ICartCreatePayload} from "../../../services/Common/Cart";
 import {getCartId} from "../../../reducers/Common/Cart";
-import {createCartItemAddToCart} from "../../../services/cartHelper/item";
+import {createCartItemAddToCart} from "../../../helpers/cartHelper/item";
 import {items} from "../../../services/Pages/Home.fixtures";
 
 

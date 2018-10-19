@@ -10,10 +10,10 @@ import {
   ordersCollectionPendingStateAction,
   ordersCollectionRejectedStateAction,
 } from '../../actions/Pages/Order';
-import { getTestDataPromise } from '../apiFixture';
+import { getTestDataPromise } from '../fixtures/apiFixture';
 import { orderAuthenticateErrorText } from '../../constants/messages/errors';
 import { orderHistoryFixtureFull } from '../fixtures/OrderHistoryFixture';
-import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../orderHelper/response';
+import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../../helpers/orderHelper/response';
 import { orderDetailsFixtureFull } from '../fixtures/orderDetailsFixture';
 import { TOrderId } from '../../interfaces/order';
 

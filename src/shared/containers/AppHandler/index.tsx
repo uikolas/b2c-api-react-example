@@ -10,7 +10,7 @@ import { AppHeader } from '../../components/Common/AppHeader';
 import { isStateLoading } from '../../reducers';
 import { reduxify } from '../../lib/redux-helper';
 import { getAppLocale, isAppInitiated, TAppLocale } from '../../reducers/Common/Init';
-import { getLocaleData } from '../../services/localeHelper';
+import { getLocaleData } from '../../helpers/localeHelper';
 import { APP_LOCALE_DEFAULT } from '../../constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from '../../actions/Common/Init';
 

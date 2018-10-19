@@ -1,4 +1,4 @@
-import { parseImageSets, parseSuperAttributes } from '.';
+import { parseImageSets, parseSuperAttributes } from './';
 import {
   abstractProductType,
   concreteProductType,

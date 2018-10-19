@@ -33,7 +33,7 @@ import {WishlistState} from "../../../reducers/Pages/Wishlist";
 import {getCartId, getTotalItemsQuantity, isCartLoading} from "../../../reducers/Common/Cart";
 
 import {ICartCreatePayload} from "../../../services/Common/Cart";
-import {createCartItemAddToCart} from "../../../services/cartHelper";
+import {createCartItemAddToCart} from "../../../helpers/cartHelper";
 
 import {styles} from './styles';
 import {pathProductPageBase} from "../../../routes/contentRoutes";

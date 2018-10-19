@@ -18,7 +18,7 @@ import {
   ICustomerProfilePassword,
   TCustomerReference
 } from "../../interfaces/customer/index";
-import {parseCustomerDataResponse} from "../customerHelper/customerDataResponse";
+import {parseCustomerDataResponse} from "../../helpers/customerHelper/customerDataResponse";
 import {RefreshTokenService} from "../Common/RefreshToken";
 import {CustomerProfileAuthenticateErrorText} from "../../constants/messages/errors";
 import {ApiServiceAbstract} from "../apiHelper/ApiServiceAbstract";
