@@ -4,31 +4,14 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import {reduxify} from '../../../lib/redux-helper';
-import {AppMain} from '../../Common/AppMain';
 import {styles} from './styles';
-import {
-  getRouterHistoryBack,
-  getRouterLocation,
-  getRouterMatchParam,
-  TRouterMatchParam
-} from "../../../selectors/Common/router";
+import {TRouterMatchParam} from "../../../selectors/Common/router";
 import {emptyOrderText} from "../../../constants/messages/orders";
-import {isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {getAppCurrency, getPayloadForCreateCart, isAppInitiated, TAppCurrency} from "../../../reducers/Common/Init";
-import {
-  getOrderDetailsFromStore,
-  isOrderDetailsFulfilled,
-  isOrderDetailsInitiated,
-  isOrderDetailsLoading,
-  isOrderDetailsPresent,
-  isOrderDetailsStateRejected,
-} from "../../../reducers/Pages/OrderDetails";
-import {getOrderDetailsAction} from "../../../actions/Pages/Order";
+import {TAppCurrency} from "../../../reducers/Common/Init";
 import {
   IOrderDetailsItem,
-  IOrderDetailsParsed, IOrderDetailsSelectedItems,
-  TOrderId
+  IOrderDetailsParsed,
+  IOrderDetailsSelectedItems,
 } from "../../../interfaces/order/index";
 import {OrderDetailsGeneralInfo} from "./OrderDetailsGeneralInfo/index";
 import {OrderProductList} from "./OrderProductsList/index";
@@ -37,12 +20,7 @@ import {emptyValueErrorText} from "../../../constants/messages/errors";
 import {OrderDetailsTotals} from "./OrderDetailsTotals/index";
 import {SprykerButton} from "../../UI/SprykerButton/index";
 import {ICartAddItem, TCartAddItemCollection, TCartId} from "../../../interfaces/cart/index";
-import {addItemToCartAction, addMultipleItemsToCartAction} from "../../../actions/Common/Cart";
 import {ICartCreatePayload} from "../../../services/Common/Cart";
-import {getCartId} from "../../../reducers/Common/Cart";
-import {createCartItemAddToCart} from "../../../helpers/cart/item";
-import {items} from "../../../services/Pages/Home.fixtures";
-
 
 export const pageTitle = "Orders History";
 
@@ -257,46 +235,3 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
 }
 
 export const OrderDetailsPage = withStyles(styles)(OrderDetailsPageBase);
-
-export const ConnectedOrderDetailsPage = reduxify(
-  (state: any, ownProps: any) => {
-    const location = getRouterLocation(state, ownProps);
-    const isLoading = isOrderDetailsLoading(state, ownProps);
-    const isRejected = isOrderDetailsStateRejected(state, ownProps);
-    const isFulfilled = isOrderDetailsFulfilled(state, ownProps);
-    const isInitiated = isOrderDetailsInitiated(state, ownProps);
-    const isAppDataSet = isAppInitiated(state, ownProps);
-    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const isOrderExist = isOrderDetailsPresent(state, ownProps);
-    const order = getOrderDetailsFromStore(state, ownProps);
-    const orderIdParam = getRouterMatchParam(state, ownProps, 'orderId');
-    const routerGoBack = getRouterHistoryBack(state, ownProps);
-    const currency = getAppCurrency(state, ownProps);
-
-    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
-    const cartId: TCartId = getCartId(state, ownProps);
-
-    return ({
-      location,
-      isLoading,
-      isRejected,
-      isFulfilled,
-      isAppDataSet,
-      isUserLoggedIn,
-      isInitiated,
-      isOrderExist,
-      orderIdParam,
-      order,
-      routerGoBack,
-      currency,
-      payloadForCreateCart,
-      cartId,
-    });
-  },
-  (dispatch: Function) => ({
-    getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId)),
-    addMultipleItemsToCart: (
-      payload: TCartAddItemCollection, cartId: TCartId, payloadCartCreate: ICartCreatePayload
-    ) => dispatch(addMultipleItemsToCartAction(payload, cartId, payloadCartCreate)),
-  })
-)(OrderDetailsPage);

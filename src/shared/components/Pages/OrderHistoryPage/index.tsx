@@ -4,21 +4,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import {reduxify} from '../../../lib/redux-helper';
-
 import {styles} from './styles';
-import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
-import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
-import {
-  getOrdersCollectionFromStore,
-  isOrderHistoryFulfilled,
-  isOrderHistoryInitiated,
-  isOrderHistoryItems,
-  isOrderHistoryLoading,
-  isOrderHistoryStateRejected
-} from "../../../reducers/Pages/OrderHistory";
-import {isAppInitiated} from "../../../reducers/Common/Init";
-import {isUserAuthenticated} from "../../../reducers/Pages/Login";
 import {TOrderCollection} from "../../../interfaces/order/index";
 import {noOrderText} from "../../../constants/messages/orders";
 import {OrderList} from "./OrderList/index";
@@ -120,34 +106,3 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
 }
 
 export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
-
-export const ConnectedOrderHistoryPage = reduxify(
-  (state: any, ownProps: any) => {
-    const location = getRouterLocation(state, ownProps);
-    const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
-    const isRejected: boolean = isOrderHistoryStateRejected(state, ownProps);
-    const isFulfilled = isOrderHistoryFulfilled(state, ownProps);
-    const isInitiated = isOrderHistoryInitiated(state, ownProps);
-    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const isHasOrders = isOrderHistoryItems(state, ownProps);
-    const orders = getOrdersCollectionFromStore(state, ownProps);
-    const routerPush = getRouterHistoryPush(state, ownProps);
-
-    return ({
-      location,
-      isLoading,
-      isRejected,
-      isFulfilled,
-      isAppDataSet,
-      isUserLoggedIn,
-      isInitiated,
-      isHasOrders,
-      orders,
-      routerPush,
-    });
-  },
-  (dispatch: Function) => ({
-    getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-  })
-)(OrderHistoryPage);
