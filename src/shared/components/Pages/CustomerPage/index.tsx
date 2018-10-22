@@ -10,18 +10,14 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import {reduxify} from '../../../lib/redux-helper';
-
-
 import {AppMain} from '../../Common/AppMain';
-
 import {styles} from './styles';
-
 import {ConnectedWishlistPage} from '../WishListPage';
 import {ConnectedWishlistDetailPage} from '../WishlistDetail';
-import {ConnectedOrderHistoryPage} from '../OrderHistoryPage';
-import {ConnectedOrderDetailsPage} from '../OrderDetailsPage';
 import {CustomerAddressPage} from '../CustomerAddressesPage';
 import {AddressFormPage} from '../CustomerAddressesPage/AddressForm';
+import {ConnectedOrderDetailsPage} from "../OrderDetailsPage/reduxified";
+import {ConnectedOrderHistoryPage} from "../OrderHistoryPage/reduxified";
 import {
   pathCustomerPage,
   pathOrderDetailsPage,
