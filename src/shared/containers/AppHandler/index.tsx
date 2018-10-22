@@ -3,6 +3,7 @@ import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { addLocaleData, IntlProvider } from 'react-intl';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { IComponent } from '../../../typings/app';
 import { getContentRoutes } from '../../routes/contentRoutes';
@@ -13,10 +14,9 @@ import { getAppLocale, isAppInitiated, TAppLocale } from '../../reducers/Common/
 import { getLocaleData } from '../../helpers/locale';
 import { APP_LOCALE_DEFAULT } from '../../constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from '../../actions/Common/Init';
+import {sprykerTheme} from "../../theme/index";
 
 const styles = require('./style.scss');
-// console.info('primary', styles.primary); // -> #BF4040
-// console.info('secondary', styles.secondary); // -> #1F4F7F
 const className = styles.appHandler;
 
 interface AppHandlerProps extends IComponent {
@@ -58,7 +58,8 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     addLocaleData(getLocaleData(locale));
 
     return (
-      <IntlProvider locale={ locale } key={ locale }>
+      <MuiThemeProvider theme={sprykerTheme}>
+        <IntlProvider locale={ locale } key={ locale }>
         <div className={ className }>
           <CssBaseline/>
           <AppHeader isLoading={ isLoading }/>
@@ -75,6 +76,7 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
           />
         </div>
       </IntlProvider>
+      </MuiThemeProvider>
     );
   }
 }
