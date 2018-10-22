@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RouteProps } from 'react-router';
+import { push } from 'react-router-redux';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,21 +16,20 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
-import { push } from 'react-router-redux';
 
-import { reduxify } from '../../../lib/redux-helper';
-import { SearchState } from '../../../reducers/Pages/Search';
-import { SprykerFilterElement } from '../../../components/UI/SprykerFilter';
-import { SprykerRange } from '../../../components/UI/SprykerRangeFilter';
-import { getCategoriesAction, sendSearchAction } from '../../../actions/Pages/Search';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { SearchState } from 'src/shared/reducers/Pages/Search';
+import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
+import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
+import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
 
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
-import { ISearchPageData, RangeFacets, ValueFacets } from '../../../interfaces/searchPageData';
+import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
 
 import { styles } from './styles';
-import { getAppCurrency, TAppCurrency } from '../../../reducers/Common/Init';
-import { pathProductPageBase } from '../../../routes/contentRoutes';
+import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
 
 type IQuery = {
   q?: string,
@@ -437,6 +437,7 @@ export const ConnectedSearchPage = reduxify(
         items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : ownProps.items,
         searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
         filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
+        // tslint:disable:max-line-length
         rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
         sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
         pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
@@ -452,3 +453,5 @@ export const ConnectedSearchPage = reduxify(
     changeLocation: (location: string) => dispatch(push(location)),
   }),
 )(SearchPage);
+
+export default ConnectedSearchPage;

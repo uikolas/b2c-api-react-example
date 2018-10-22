@@ -6,7 +6,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import {reduxify} from '../../../lib/redux-helper';
@@ -127,3 +127,5 @@ export const ConnectedCustomerPage = reduxify(
     );
   }
 )(CustomerPage);
+
+export default ConnectedCustomerPage;

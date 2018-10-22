@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RouteProps } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Table from '@material-ui/core/Table';
@@ -14,18 +15,17 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { reduxify } from '../../../lib/redux-helper';
-import { getCartId, ICartItem, ICartState } from '../../../reducers/Common/Cart';
-import { SprykerButton } from '../../../components/UI/SprykerButton';
-import { cartDeleteItemAction, updateItemInCartAction } from '../../../actions/Common/Cart';
-import { styles } from './styles';
-import { ICartAddItem, ICartTotals, TCartId } from '../../../interfaces/cart';
-import { NavLink } from 'react-router-dom';
-import { createCartItemAddToCart } from '../../../helpers/cart/item';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { getCartId, ICartItem, ICartState } from 'src/shared/reducers/Common/Cart';
+import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
+import { cartDeleteItemAction, updateItemInCartAction } from 'src/shared/actions/Common/Cart';
+import { ICartAddItem, ICartTotals, TCartId } from 'src/shared/interfaces/cart';
+import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
+import { pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { TProductSKU } from 'src/shared/interfaces/product';
 import { AppMain } from '../../Common/AppMain';
-import { TProductSKU } from '../../../interfaces/product';
 import { AppPrice } from '../../Common/AppPrice';
-import { pathSearchPage } from '../../../routes/contentRoutes';
+import { styles } from './styles';
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -238,3 +238,5 @@ export const ConnectedCartPage = reduxify(
     ) => dispatch(cartDeleteItemAction(cartId, itemId)),
   }),
 )(CartPage);
+
+export default ConnectedCartPage;

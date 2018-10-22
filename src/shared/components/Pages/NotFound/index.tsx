@@ -19,3 +19,5 @@ export class NotFound extends React.PureComponent<any, any> {
     );
   }
 }
+
+export default NotFound;

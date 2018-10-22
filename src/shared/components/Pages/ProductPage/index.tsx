@@ -146,6 +146,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     }
 
     // First load of the App
+    // tslint:disable:max-line-length
     if (!this.props.isFulfilled && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)) {
       console.info('%c ---- First load of the App in componentDidUpdate getProductData ----', 'background: #4caf50; color: #bada55');
       this.props.getProductData(this.props.locationProductSKU);
@@ -572,3 +573,5 @@ export const ConnectedProductPage = reduxify(
     addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
   }),
 )(ProductPage);
+
+export default ConnectedProductPage;
