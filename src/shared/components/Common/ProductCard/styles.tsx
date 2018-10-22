@@ -3,7 +3,6 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   card: {
-    maxWidth: 350,
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
@@ -12,8 +11,14 @@ export const styles = (theme: Theme) => createStyles({
   media: {
     // ⚠️ object-fit is not supported by IE11.
     objectFit: 'contain',
-    height: '12rem',
+    //height: '12rem',
     paddingTop: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
+  },
+  actionArea: {
+    maxWidth: theme.appFixedDimensions.card.actionAreaWidth,
+    minHeight: theme.appFixedDimensions.card.actionAreaHeight,
+    borderRadius: theme.appFixedDimensions.borderRadius,
+    backgroundColor: theme.appColors.lightGrey,
   },
 });
