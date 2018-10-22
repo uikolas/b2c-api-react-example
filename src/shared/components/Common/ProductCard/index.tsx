@@ -47,7 +47,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
 
   return (
     <Card className={ classes.card } raised={ true }>
-      <CardActionArea onClick={ handleProductClick }>
+      <CardActionArea onClick={ handleProductClick } className={ classes.actionArea }>
         { images && images.length
           ? <CardMedia
             component="img"
@@ -57,20 +57,15 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
           />
           : null
         }
-        <CardContent>
-          <Typography gutterBottom variant="title" data-type="productName">
-            { name }
-          </Typography>
-          <Typography gutterBottom variant="subheading" color="primary" data-type="priceToShow">
-            { priceToShow }
-          </Typography>
-        </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="secondary">
-          Learn More
-        </Button>
-      </CardActions>
+      <CardContent>
+        <Typography gutterBottom variant="title" data-type="productName">
+          { name }
+        </Typography>
+        <Typography gutterBottom variant="subheading" color="primary" data-type="priceToShow">
+          { priceToShow }
+        </Typography>
+      </CardContent>
     </Card>
   );
 };
