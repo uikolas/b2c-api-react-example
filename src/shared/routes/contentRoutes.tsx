@@ -11,7 +11,8 @@ import {ConnectedOrderHistoryPage} from "../components/Pages/OrderHistoryPage/in
 import {ConnectedOrderDetailsPage} from "../components/Pages/OrderDetailsPage/index";
 import {ConnectedWishlistPage} from '../components/Pages/WishListPage';
 import {ConnectedWishlistDetailPage} from '../components/Pages/WishlistDetail';
-import {ForgotPasswordPage} from '../components/Pages/ForgotPasswordPage';
+import {ForgotPasswordPage} from '../components/Pages/LoginPage/ForgotPasswordPage';
+import {ResetPasswordPage} from '../components/Pages/LoginPage/ResetPassword';
 import {ConnectedCustomerPage} from '../components/Pages/CustomerPage';
 import config from '../config';
 
@@ -33,7 +34,9 @@ export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
 export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
 export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
 export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
+
 export const pathForgotPassword = `${config.WEB_PATH}password/forgotten`;
+export const pathResetPassword = `${config.WEB_PATH}password/reset`;
 
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
@@ -50,11 +53,10 @@ export const getContentRoutes = function() {
       <Route path={pathProductPage} component={ConnectedProductPage} />
       <Route path={pathLoginPage} component={ConnectedLogin} />
       <Route path={pathCartPage} component={ConnectedCartPage} />
-      <Route path={pathOrderDetailsPage} component={ConnectedOrderDetailsPage} />
-      <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
       <Route path={pathWishlistPage} component={ConnectedWishlistPage} />
       <Route path={pathWishlistDetailPage} component={ConnectedWishlistDetailPage} />
       <Route path={pathForgotPassword} component={ForgotPasswordPage} />
+      <Route path={pathResetPassword} component={ResetPasswordPage} />
       <Route path={pathCustomerPage} component={ConnectedCustomerPage} />
       <Route path={pathNotFoundPage} component={NotFound} />
     </Switch>

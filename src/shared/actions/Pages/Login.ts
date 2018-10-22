@@ -3,6 +3,8 @@ import {
   PAGES_CUSTOMER_REGISTER,
   PAGES_CUSTOMER_LOGOUT,
   REFRESH_TOKEN_REQUEST,
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
 } from '../../constants/ActionTypes/Pages/Login';
 import {PagesLoginService} from '../../services/Pages/Login';
 import {ICustomerLoginData, ICustomerLoginDataParsed} from "../../interfaces/customer/index";
@@ -40,5 +42,19 @@ export const loginCustomerFulfilledStateAction = (payload: ICustomerLoginDataPar
 export const loginCustomerAction = function (payload: ICustomerLoginData) {
   return (dispatch: Function, getState: Function) => {
     PagesLoginService.loginRequest(dispatch, payload);
+  };
+};
+
+export const forgotPasswordAction = function(email: string) {
+  return (dispatch: Function, getState: Function) => {
+    dispatch({type: FORGOT_PASSWORD + '_PENDING'});
+    PagesLoginService.forgotPassword(FORGOT_PASSWORD, dispatch, email);
+  };
+};
+
+export const resetPasswordAction = function(payload: any) {
+  return (dispatch: Function, getState: Function) => {
+    dispatch({type: RESET_PASSWORD + '_PENDING'});
+    PagesLoginService.resetPassword(RESET_PASSWORD, dispatch, payload);
   };
 };

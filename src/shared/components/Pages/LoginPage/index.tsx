@@ -7,7 +7,7 @@ import {NavLink} from "react-router-dom";
 import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {loginCustomerAction, customerRegisterAction} from '../../../actions/Pages/Login';
-import {pathForgotPassword} from '../../../routes/contentRoutes';
+import {pathForgotPassword, pathResetPassword} from '../../../routes/contentRoutes';
 
 import {AppMain} from '../../Common/AppMain';
 import {LoginForm} from './LoginForm';
@@ -46,9 +46,11 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
               alignItems="center">
           <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
           />
-          <NavLink to={pathForgotPassword}>
-            Forgot Password
-          </NavLink>
+          <div className={classes.link}>
+            <NavLink to={pathForgotPassword}>
+              Forgot Password
+            </NavLink>
+          </div>
         </Grid>
         <div className={classes.divider} id="divider" ></div>
         <Grid item xs={12} sm={6}
