@@ -14,7 +14,7 @@ import { getAppLocale, isAppInitiated, TAppLocale } from '../../reducers/Common/
 import { getLocaleData } from '../../helpers/locale';
 import { APP_LOCALE_DEFAULT } from '../../constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from '../../actions/Common/Init';
-import {sprykerTheme} from "../../theme/index";
+import {sprykerTheme} from "../../theme/sprykerTheme";
 
 const styles = require('./style.scss');
 const className = styles.appHandler;

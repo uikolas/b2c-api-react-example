@@ -70,7 +70,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
     return (
       <AppBar position="fixed" color="default" className={classes.appBar}>
         <Toolbar>
-          <Grid container direction="row">
+          <Grid container direction="row" className={classes.layout}>
 
             <Grid item sm={3}
                   direction="row"

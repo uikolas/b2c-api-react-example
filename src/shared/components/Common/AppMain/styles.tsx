@@ -3,11 +3,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   layout: {
-    width: theme.appContainerWidth,
-    marginTop: `calc(${65}px + ${theme.spacing.unit * 4}px)`,
-    marginLeft: "auto",
-    marginRight: "auto",
-    position: 'relative',
+    ...theme.appContainerStyles,
+    marginTop: `calc(${theme.appFixedDimensions.headerHeight}px + ${theme.spacing.unit * 4}px)`,
   },
   container: {
     position: 'relative',
