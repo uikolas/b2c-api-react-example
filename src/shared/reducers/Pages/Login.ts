@@ -3,6 +3,8 @@ import {
   PAGES_LOGIN_REQUEST,
   PAGES_CUSTOMER_LOGOUT,
   REFRESH_TOKEN_REQUEST,
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
 } from '../../constants/ActionTypes/Pages/Login';
 import {
   SET_AUTH_FROM_STORAGE,
@@ -61,11 +63,15 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
     case `${PAGES_CUSTOMER_REGISTER}_REJECTED`:
     case `${PAGES_LOGIN_REQUEST}_REJECTED`:
     case `${REFRESH_TOKEN_REQUEST}_REJECTED`:
+    case `${FORGOT_PASSWORD}_REJECTED`:
+    case `${RESET_PASSWORD}_REJECTED`:
       return {
         ...state,
         ...getReducerPartRejected(action.error),
       };
     case `${PAGES_LOGIN_REQUEST}_PENDING`:
+    case `${FORGOT_PASSWORD}_PENDING`:
+    case `${RESET_PASSWORD}_PENDING`:
       return {
         ...state,
         ...getReducerPartPending(),

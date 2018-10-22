@@ -12,6 +12,9 @@ export const styles = (theme: Theme) => createStyles({
       '0px 2px 2px 0px rgba(0, 0, 0, 0.14), ' +
       '0px 3px 1px -2px rgba(0, 0, 0, 0.12)',
   },
+  link: {
+    margin: theme.spacing.unit * 2,
+  }
 });
 
 
@@ -27,6 +30,10 @@ export const formStyles = (theme: Theme) => createStyles({
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
   },
+  email: {
+    marginLeft: '5%',
+    width: '90%',
+  },
   input: {},
   button: {
     margin: theme.spacing.unit,
@@ -36,4 +43,11 @@ export const formStyles = (theme: Theme) => createStyles({
   menu: {
     width: 200,
   },
+  forgot: {
+    width: '75%',
+    padding: theme.spacing.unit * 2,
+  },
+  passwordButtons: {
+    margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit}px 0px`,
+  }
 });

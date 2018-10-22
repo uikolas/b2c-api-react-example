@@ -1,11 +1,13 @@
 import * as React from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import {RouteProps} from "react-router";
+import {NavLink} from "react-router-dom";
 
 import {reduxify} from '../../../lib/redux-helper';
 import {ILoginState} from '../../../reducers/Pages/Login';
 import {loginCustomerAction, customerRegisterAction} from '../../../actions/Pages/Login';
-import {RouteProps} from "react-router";
+import {pathForgotPassword, pathResetPassword} from '../../../routes/contentRoutes';
 
 import {AppMain} from '../../Common/AppMain';
 import {LoginForm} from './LoginForm';
@@ -16,6 +18,7 @@ import {ICustomerLoginData} from "../../../interfaces/customer/index";
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;
+  customer?: any;
   isAuth?: boolean;
   refreshToken?: string;
   handleSubmitRegisterForm: Function;
@@ -43,6 +46,11 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
               alignItems="center">
           <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
           />
+          <div className={classes.link}>
+            <NavLink to={pathForgotPassword}>
+              Forgot Password
+            </NavLink>
+          </div>
         </Grid>
         <div className={classes.divider} id="divider" ></div>
         <Grid item xs={12} sm={6}
@@ -66,6 +74,7 @@ export const ConnectedLogin = reduxify(
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
+        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customerRef : ownProps.customer,
         isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
         refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
       }
