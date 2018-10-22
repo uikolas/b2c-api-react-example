@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router';
 import {ConnectedHomePage} from '../components/Pages/Home';
 import {NotFound} from '../components/Pages/NotFound';
 import {ConnectedLogin} from '../components/Pages/LoginPage';
-import {ConnectedSearchPage} from '../components/Pages/SearchPage';
+import {ConnectedSearchPage} from '../components/Pages/SearchPage/reduxified';
 import {ConnectedProductPage} from '../components/Pages/ProductPage';
 import {ConnectedCartPage} from '../components/Pages/CartPage';
 import {ConnectedCustomerPage} from '../components/Pages/CustomerPage';
