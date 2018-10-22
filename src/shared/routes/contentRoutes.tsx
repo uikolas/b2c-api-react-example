@@ -7,8 +7,6 @@ import {ConnectedLogin} from '../components/Pages/LoginPage';
 import {ConnectedSearchPage} from '../components/Pages/SearchPage/reduxified';
 import {ConnectedProductPage} from '../components/Pages/ProductPage';
 import {ConnectedCartPage} from '../components/Pages/CartPage';
-import {ConnectedOrderHistoryPage} from "../components/Pages/OrderHistoryPage/index";
-import {ConnectedOrderDetailsPage} from "../components/Pages/OrderDetailsPage/index";
 import {ConnectedWishlistPage} from '../components/Pages/WishListPage';
 import {ConnectedWishlistDetailPage} from '../components/Pages/WishlistDetail';
 import {ForgotPasswordPage} from '../components/Pages/LoginPage/ForgotPasswordPage';
