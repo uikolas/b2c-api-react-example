@@ -24,6 +24,7 @@ export type TProductAvailability = boolean;
 export type TProductAttributes = object;
 export type TProductImageSRC = string;
 export type TProductAttributeMap = object;
+export type TProductLabel = string;
 
 export const priceTypeNameDefault = 'DEFAULT';
 export type TPriceTypeNameDefault = 'DEFAULT';
@@ -105,4 +106,9 @@ export interface IProductDataParsed {
   concreteProducts: {
     [key: string]: IProductPropFullData
   };
+}
+
+export interface IProductLabel {
+  type: TProductLabel;
+  text: string;
 }
