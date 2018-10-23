@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => createStyles({
     bottom: 0,
     margin: "auto",
     maxWidth: "90%",
-    maxHeight: "100%",
+    maxHeight: '90%',
   },
   actionArea: {
     maxWidth: theme.appFixedDimensions.card.actionAreaWidth,
@@ -47,16 +47,10 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   productCurrentPrice: {
-    fontSize: "1.25rem",
-    fontWeight: 600,
     display: "inline",
     paddingRight: theme.spacing.unit,
   },
   productOldPrice: {
-    fontSize: "0.85rem",
-    letterSpacing: "0.2px",
-    color: theme.appColors.oldPrice,
-    textDecoration: "line-through",
     display: "inline",
   },
 });

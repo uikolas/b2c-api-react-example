@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-import {IProductCard, IProductLabel} from '../../../interfaces/product';
+import {IProductCard, IProductLabel, priceTypeNameDefault, priceTypeNameOriginal} from '../../../interfaces/product';
 import { styles } from './styles';
 import { AppPrice } from '../AppPrice';
 import {ProductLabel} from "src/shared/components/Common/ProductLabel/index";
@@ -22,9 +22,12 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
   const name = abstract_name || abstractName || 'No name';
   const sku = abstract_sku || abstractSku;
 
-  let actualPrice = 0;
+  let actualPriceGross = 0;
+  let actualPriceNet = 0;
+  let oldPriceGross = 0;
+  let oldPriceNet = 0;
 
-  if (prices && prices.length > 1) {
+  /*if (prices && prices.length > 1) {
     prices.forEach((data) => {
       if (data.priceTypeName === 'ORIGINAL') {
         actualPrice = data.ORIGINAL;
@@ -37,11 +40,22 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
     } else {
       actualPrice = price || 0;
     }
+  }*/
+
+  if (prices && prices.length > 0) {
+    prices.forEach((data) => {
+      if (data.priceTypeName === priceTypeNameDefault) {
+        actualPriceGross = data.grossAmount;
+        actualPriceNet = data.netAmount;
+      }
+      if (data.priceTypeName === priceTypeNameOriginal) {
+        oldPriceGross = data.grossAmount;
+        oldPriceNet = data.netAmount;
+      }
+    });
   }
 
-  const priceToShow = <AppPrice value={ actualPrice }/>;
   const image = (images && images.length) ? (images[0].external_url_small || images[0].externalUrlSmall || '') : false;
-
   // TODO: Get label programmatically
   const label: IProductLabel = {
     type: 'sale',
@@ -79,14 +93,14 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
             data-type="priceToShow"
             className={classes.productCurrentPrice}
           >
-            { priceToShow }
+            <AppPrice value={ actualPriceGross } />
           </Typography>
           <Typography
             component="span"
             color="textPrimary"
             className={classes.productOldPrice}
           >
-            { priceToShow }
+            <AppPrice value={ oldPriceGross } priceType={ priceTypeNameOriginal }/>
           </Typography>
         </div>
       </CardContent>

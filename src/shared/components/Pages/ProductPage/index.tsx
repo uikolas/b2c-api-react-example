@@ -279,7 +279,9 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     return {
       sku: data ? data.sku : null,
       name: data ? data.name : defaultValues.name,
-      images: data ? [...data.images] : [...defaultValues.images],
+      images: data
+        ? (data.images && data.images.length ? [...data.images] : null)
+        : (defaultValues.images.length ? [...defaultValues.images] : null),
       availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
