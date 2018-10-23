@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
-import { push } from 'react-router-redux';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,19 +15,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
-import { reduxify } from 'src/shared/lib/redux-helper';
-import { SearchState } from 'src/shared/reducers/Pages/Search';
-import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
-import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
-import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
-
+import { SprykerFilterElement } from '../../../components/UI/SprykerFilter';
+import { SprykerRange } from '../../../components/UI/SprykerRangeFilter';
+import { getCategoriesAction, sendSearchAction } from '../../../actions/Pages/Search';
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
-import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
-
+import { ISearchPageData, RangeFacets, ValueFacets } from '../../../interfaces/searchPageData';
 import { styles } from './styles';
-import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
+import { TAppCurrency } from '../../../reducers/Common/Init';
+import { pathProductPageBase } from '../../../routes/contentRoutes';
 
 type IQuery = {
   q?: string,
@@ -383,7 +377,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 {
                   items && items.length > 0
                     ? items.map((item: any) => (
-                      <Grid item xs={ 12 } sm={ 6 } md={ 3 }
+                      <Grid item xs={ 12 } sm={ 6 } md={ 4 }
                             key={ item.abstract_sku || item.abstractSku }
                       >
                         <ProductCard
@@ -425,33 +419,3 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 }
 
 export const SearchPage = withStyles(styles)(SearchPageBase);
-
-export const ConnectedSearchPage = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
-    const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
-    const currency: TAppCurrency = getAppCurrency(state, ownProps);
-    return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : ownProps.items,
-        searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
-        filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
-        // tslint:disable:max-line-length
-        rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
-        sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
-        pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
-        categories: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categories : ownProps.categories,
-        // isAuth: pagesLoginProps && pagesLoginProps.data.isAuth ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-        isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
-        currency,
-      }
-    );
-  },
-  (dispatch: Function) => ({
-    dispatch,
-    changeLocation: (location: string) => dispatch(push(location)),
-  }),
-)(SearchPage);
-
-export default ConnectedSearchPage;

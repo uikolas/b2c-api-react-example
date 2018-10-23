@@ -3,7 +3,10 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   appBar: {
-    minHeight: '65px',
+    minHeight: theme.appFixedDimensions.headerHeight,
+  },
+  layout: {
+    ...theme.appContainerStyles,
   },
   button: {
     marginLeft: theme.spacing.unit,

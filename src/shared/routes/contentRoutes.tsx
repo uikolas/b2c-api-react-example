@@ -8,6 +8,13 @@ import { LoadableProductPage } from '../components/Pages/ProductPage/loadable';
 import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
 import { LoadableCustomerPage } from '../components/Pages/CustomerPage/loadable';
 import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
+
+import {ConnectedSearchPage} from '../components/Pages/SearchPage/reduxified';
+import {ConnectedWishlistPage} from '../components/Pages/WishListPage';
+import {ConnectedWishlistDetailPage} from '../components/Pages/WishlistDetail';
+import {ForgotPasswordPage} from '../components/Pages/LoginPage/ForgotPasswordPage';
+import {ResetPasswordPage} from '../components/Pages/LoginPage/ResetPassword';
+
 import config from '../config';
 
 export const pathHomePage = `${config.WEB_PATH}`;
@@ -26,6 +33,11 @@ export const pathWishListPage = `${pathWishListPageBase}/:name`;
 export const pathOrderHistoryPage = `${pathCustomerPage}/order`;
 export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
 export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
+export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
+export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
+
+export const pathForgotPassword = `${config.WEB_PATH}password/forgotten`;
+export const pathResetPassword = `${config.WEB_PATH}password/reset`;
 
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
@@ -44,6 +56,17 @@ export const getContentRoutes = function() {
       <Route path={ pathCartPage } component={ LoadableCartPage }/>
       <Route path={ pathCustomerPage } component={ LoadableCustomerPage }/>
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
+      <Route path={pathHomePage} exact component={ConnectedHomePage}/>
+      <Route path={pathSearchPage} component={ConnectedSearchPage} />
+      <Route path={pathProductPage} component={ConnectedProductPage} />
+      <Route path={pathLoginPage} component={ConnectedLogin} />
+      <Route path={pathCartPage} component={ConnectedCartPage} />
+      <Route path={pathWishlistPage} component={ConnectedWishlistPage} />
+      <Route path={pathWishlistDetailPage} component={ConnectedWishlistDetailPage} />
+      <Route path={pathForgotPassword} component={ForgotPasswordPage} />
+      <Route path={pathResetPassword} component={ResetPasswordPage} />
+      <Route path={pathCustomerPage} component={ConnectedCustomerPage} />
+      <Route path={pathNotFoundPage} component={NotFound} />
     </Switch>
   );
 };
