@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -6,17 +6,15 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import {reduxify} from '../../../../lib/redux-helper';
-import {resetPasswordAction} from '../../../../actions/Pages/Login';
-import {RouteProps} from "react-router";
-
-import {AppMain} from '../../../Common/AppMain';
-
+import {reduxify} from 'src/shared/lib/redux-helper';
+import {resetPasswordAction} from 'src/shared/actions/Pages/Login';
+import {AppMain} from 'src/shared/components/Common/AppMain';
+import {getRouterMatchParam, TRouterMatchParam} from 'src/shared/selectors/Common/router';
 import {formStyles} from '../styles';
 
-interface ResetPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
+interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
   dispatch?: Function;
-  sendResetRequest: Function;
+  restoreKey?: TRouterMatchParam;
 }
 
 interface ResetPasswordPageState {
@@ -46,12 +44,12 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
     }
 
     const payload = {
-      restorePasswordKey: '',
+      restorePasswordKey: this.props.restoreKey,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
     };
 
-    this.props.sendResetRequest(payload);
+    this.props.dispatch(resetPasswordAction(payload));
   }
 
   public render() {
@@ -112,17 +110,11 @@ const ResetPassword = withStyles(formStyles)(ResetPasswordPageBase);
 
 export const ResetPasswordPage = reduxify(
   (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
+    const restoreKey = getRouterMatchParam(state, ownProps, 'restoreKey');
     return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-      }
+      { restoreKey }
     );
   },
-  (dispatch: Function, ownProps: any) => {
-    return {
-      dispatch,
-      sendResetRequest: (payload: any) => dispatch(resetPasswordAction(payload)),
-    };
-  }
 )(ResetPassword);
+
+export default ResetPasswordPage;

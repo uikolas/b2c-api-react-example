@@ -3,6 +3,8 @@ import { Route, Switch } from 'react-router';
 
 import { ConnectedHomePage } from '../components/Pages/Home';
 import { LoadableLoginPage } from '../components/Pages/LoginPage/loadable';
+import { LoadablePasswordForgotPage } from '../components/Pages/LoginPage/ForgotPasswordPage/loadable';
+import { LoadablePasswordResetPage } from '../components/Pages/LoginPage/ResetPassword/loadable';
 import { LoadableSearchPage } from '../components/Pages/SearchPage/loadable';
 import { LoadableProductPage } from '../components/Pages/ProductPage/loadable';
 import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
@@ -11,8 +13,6 @@ import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
 
 import { ConnectedWishlistPage } from '../components/Pages/WishListPage';
 import { ConnectedWishlistDetailPage } from '../components/Pages/WishlistDetail';
-import { ForgotPasswordPage } from '../components/Pages/LoginPage/ForgotPasswordPage';
-import { ResetPasswordPage } from '../components/Pages/LoginPage/ResetPassword';
 
 import config from '../config';
 
@@ -36,7 +36,7 @@ export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
 export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
 
 export const pathForgotPassword = `${config.WEB_PATH}password/forgotten`;
-export const pathResetPassword = `${config.WEB_PATH}password/reset`;
+export const pathResetPassword = `${config.WEB_PATH}password/reset/:restoreKey`;
 
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
@@ -54,12 +54,13 @@ export const getContentRoutes = function() {
       <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
       <Route path={ pathCartPage } component={ LoadableCartPage }/>
       <Route path={ pathCustomerPage } component={ LoadableCustomerPage }/>
-      <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
+      <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
+      <Route path={ pathResetPassword } component={ LoadablePasswordResetPage }/>
 
       <Route path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
       <Route path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
-      <Route path={ pathForgotPassword } component={ ForgotPasswordPage }/>
-      <Route path={ pathResetPassword } component={ ResetPasswordPage }/>
+
+      <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
     </Switch>
   );
 };

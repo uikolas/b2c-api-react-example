@@ -107,3 +107,5 @@ export const ForgotPasswordPage = reduxify(
     };
   }
 )(ForgotPassword);
+
+export default ForgotPasswordPage;
