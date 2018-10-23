@@ -47,9 +47,12 @@ interface SearchPageState {
   activeRangeFilters: {[name: string]: RangeType};
   sort: string;
   selectedCategory: number | string;
+  itemsPerPage: number;
 }
 
 export const pageTitle = 'Search results for ';
+
+export const itemsPerPages: number[] = [12, 24, 36];
 
 @connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
@@ -76,6 +79,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       activeRangeFilters,
       sort: '',
       selectedCategory: 0,
+      itemsPerPage: props.pagination.currentItemsPerPage,
     };
   }
 
@@ -105,6 +109,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       currency: this.props.currency,
       sort: this.state.sort,
       include: '',
+      ipp: this.state.itemsPerPage,
       ...this.state.activeFilters,
     };
 
@@ -120,12 +125,17 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({sort: e.target.value});
   };
 
+  public handleSetItemsPerPage = (e: any) => {
+    this.setState({itemsPerPage: e.target.value});
+  };
+
   public handlePagination = (e: any, value: number | string) => {
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
       include: '',
+      ipp: this.state.itemsPerPage,
       page: value,
       ...this.state.activeFilters,
     };
@@ -152,7 +162,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public selectCategory = (category: string | number) => (e: any) => {
+  public selectCategory = (category: string | number, name: string) => (e: any) => {
     this.setState({selectedCategory: category});
 
     const query: IQuery = {
@@ -160,6 +170,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       currency: this.props.currency,
       sort: this.state.sort,
       include: '',
+      ipp: this.state.itemsPerPage,
       category,
       ...this.state.activeFilters,
     };
@@ -269,7 +280,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         <ListItem
           button
           key={ `category-${data.nodeId}` }
-          onClick={ this.selectCategory(data.nodeId) }
+          onClick={ this.selectCategory(data.nodeId, data.name) }
           selected={ this.state.selectedCategory === data.nodeId }
         >
           <ListItemText primary={ data.name }/>
@@ -278,7 +289,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
       const nestedList = (data: any) => (
         <li key={ `category-${data.nodeId}` }>
-          <ListItem button onClick={ this.selectCategory(data.nodeId) }
+          <ListItem button onClick={ this.selectCategory(data.nodeId, data.name) }
                     selected={ this.state.selectedCategory === data.nodeId }>
             <ListItemText primary={ data.name }/>
           </ListItem>
@@ -349,6 +360,21 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   item
                   xs={ 6 }
                 >
+                  <FormControl>
+                    <Select
+                      value={ this.state.itemsPerPage }
+                      onChange={ this.handleSetItemsPerPage }
+                      name="pages"
+                    >
+                      {
+                        itemsPerPages.map((qty: number) => (
+                          <MenuItem value={ qty } key={ `pages-${qty}` }>
+                            { qty }
+                          </MenuItem>
+                        ))
+                      }
+                    </Select>
+                  </FormControl>
                   <FormControl className={ classes.formControl }>
                     <Select
                       value={ this.state.sort }

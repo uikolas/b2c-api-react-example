@@ -26,7 +26,7 @@ export const initialState: SearchState = {
       numFound: 0,
       currentPage: 0,
       maxPage: 0,
-      currentItemsPerPage: 0,
+      currentItemsPerPage: 12,
     },
     categories: [],
   },
