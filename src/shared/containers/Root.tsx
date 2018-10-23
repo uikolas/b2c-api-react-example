@@ -10,6 +10,7 @@ import { configureStore } from '../stores/configureStore';
 export const Root = ({history}: {history: History}) => {
   const store: Store<any> = configureStore(history);
   const routes = getRoutes();
+
   return (
     <Provider store={ store }>
       { /* ConnectedRouter will use the store from Provider automatically */ }

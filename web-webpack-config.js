@@ -183,7 +183,7 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, `src`, `web`, `index.ejs`),
-      inject: false,
+      inject: true,
       title: process.env.APP_TITLE || '',
       filename: `index.html`,
       hash: true,
@@ -194,6 +194,7 @@ const config = {
       showErrors: true,
       devServer: webpackDevServer ? 'http://' + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT : '',
       xhtml: false,
+      chunksSortMode: 'none',
     }),
     ...(
       webpackDevServer ? [
@@ -211,7 +212,9 @@ const config = {
       ...commonExtensions,
       ...webExtensions,
     ],
-    alias: {},
+    alias: {
+      src: path.resolve(__dirname, 'src'),
+    },
   },
   module: {
     rules: [

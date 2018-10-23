@@ -23,7 +23,7 @@ import {SprykerButton} from '../../UI/SprykerButton';
 import {logout} from '../../../actions/Pages/Login';
 import {ShoppingCart} from '../ShoppingCart';
 import {SprykerNotification} from '../../UI/SprykerNotification';
-import {Preloader} from "../Preloader/index";
+import {Preloader} from "../Preloader";
 import {pathCartPage, pathHomePage, pathLoginPage, pathCustomerPage} from "../../../routes/contentRoutes";
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
