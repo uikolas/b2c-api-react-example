@@ -7,18 +7,50 @@ export const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     margin: 'auto',
     height: '100%',
+    boxShadow: "none",
   },
   media: {
-    // ⚠️ object-fit is not supported by IE11.
-    objectFit: 'contain',
-    //height: '12rem',
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    margin: "auto",
+    maxWidth: "90%",
+    maxHeight: '90%',
   },
   actionArea: {
     maxWidth: theme.appFixedDimensions.card.actionAreaWidth,
     minHeight: theme.appFixedDimensions.card.actionAreaHeight,
     borderRadius: theme.appFixedDimensions.borderRadius,
-    backgroundColor: theme.appColors.lightGrey,
+    position: "relative",
+
+  },
+  actionAreaOverlay: {
+    position: "absolute",
+    background: "rgba(0, 0, 0, 0.10)",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 350,
+  },
+  cardContent: {
+    padding: theme.spacing.unit + theme.spacing.unit/2,
+    letterSpacing: "0.5px",
+  },
+  productName: {
+    fontSize: "1rem",
+    color: theme.appColors.black,
+  },
+  productPrice: {
+
+  },
+  productCurrentPrice: {
+    display: "inline",
+    paddingRight: theme.spacing.unit,
+  },
+  productOldPrice: {
+    display: "inline",
   },
 });

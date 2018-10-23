@@ -3,7 +3,7 @@ import { FormattedNumber } from 'react-intl';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { reduxify } from '../../../lib/redux-helper';
 import { getAppCurrency, TAppCurrency } from '../../../reducers/Common/Init';
-import { priceTypeNameOriginal, TPriceTypeName } from '../../../interfaces/product';
+import {priceTypeNameDefault, priceTypeNameOriginal, TPriceTypeName} from '../../../interfaces/product';
 import { styles } from './styles';
 
 interface AppPriceProps extends WithStyles<typeof styles> {
@@ -19,6 +19,8 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
   let priceClassName = '';
   if (priceType === priceTypeNameOriginal) {
     priceClassName = classes.strikethrough;
+  } else {
+    priceClassName = classes.defaultPrice;
   }
 
   return (
