@@ -2,15 +2,13 @@ import * as React from 'react';
 import { RouteProps } from 'react-router';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import {RouteProps} from "react-router";
-import {NavLink} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { ILoginState } from 'src/shared/reducers/Pages/Login';
 import { customerRegisterAction, loginCustomerAction } from 'src/shared/actions/Pages/Login';
 import { ICustomerLoginData } from 'src/shared/interfaces/customer';
-import { loginCustomerAction, customerRegisterAction } from '../../../actions/Pages/Login';
-import { pathForgotPassword, pathResetPassword } from '../../../routes/contentRoutes';
+import { pathForgotPassword } from 'src/shared/routes/contentRoutes';
 
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
@@ -46,8 +44,8 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
               alignItems="center">
           <LoginForm handleSubmit={ this.props.handleSubmitLoginForm }
           />
-          <div className={classes.link}>
-            <NavLink to={pathForgotPassword}>
+          <div className={ classes.link }>
+            <NavLink to={ pathForgotPassword }>
               Forgot Password
             </NavLink>
           </div>

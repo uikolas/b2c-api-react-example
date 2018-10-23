@@ -15,16 +15,19 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
-import { SprykerFilterElement } from '../../../components/UI/SprykerFilter';
-import { SprykerRange } from '../../../components/UI/SprykerRangeFilter';
-import { getCategoriesAction, sendSearchAction } from '../../../actions/Pages/Search';
+import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
+import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
+import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
+import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import { TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
+
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
-import { ISearchPageData, RangeFacets, ValueFacets } from '../../../interfaces/searchPageData';
-import { styles } from './styles';
-import { TAppCurrency } from '../../../reducers/Common/Init';
-import { pathProductPageBase } from '../../../routes/contentRoutes';
 
+import { connect } from './connect';
+
+import { styles } from './styles';
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -48,6 +51,7 @@ interface SearchPageState {
 
 export const pageTitle = 'Search results for ';
 
+@connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
   constructor(props: SearchPageProps) {
     super(props);
@@ -419,3 +423,5 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 }
 
 export const SearchPage = withStyles(styles)(SearchPageBase);
+
+export default SearchPage;
