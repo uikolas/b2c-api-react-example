@@ -56,7 +56,6 @@ export const getContentRoutes = function() {
       <Route path={ pathCustomerPage } component={ LoadableCustomerPage }/>
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
 
-      <Route path={ pathHomePage } exact component={ ConnectedHomePage }/>
       <Route path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
       <Route path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
       <Route path={ pathForgotPassword } component={ ForgotPasswordPage }/>
