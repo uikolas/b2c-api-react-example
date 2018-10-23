@@ -29,6 +29,7 @@ import { connect } from './connect';
 
 import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
+import {IProductLabel} from "src/shared/interfaces/product/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -300,6 +301,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         : pureListItem(category);
     });
 
+    // TODO: Get label programmatically
+    const label: IProductLabel = {
+      type: 'sale',
+      text: 'Sale',
+    };
+
 
     return (
       <AppMain>
@@ -389,9 +396,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                         images={ item.images }
                         price={ item.price }
                         prices={ item.prices }
-                        abstract_name={ item.abstract_name || item.abstractName }
-                        abstract_sku={ item.abstract_sku || item.abstractSku }
+                        name={ item.abstract_name || item.abstractName }
+                        sku={ item.abstract_sku || item.abstractSku }
                         onSelectProduct={ this.renderProduct }
+                        label={label}
                       />
                     </Grid>
                   ))

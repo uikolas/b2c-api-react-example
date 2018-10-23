@@ -38,35 +38,28 @@ export type TPriceTypeDefaultGross = number | null;
 export type TPriceTypeDefaultNet = number | null;
 
 // Interfaces
-export interface IProductCardPrice {
-  priceTypeName?: string;
-  grossAmount?: number;
-  DEFAULT?: number;
-  ORIGINAL?: number;
-  [key: string]: any;
-}
 
 export interface IProductPricesItem {
-  grossAmount: number | null;
-  netAmount: number | null;
+  grossAmount: TPriceTypeOriginalGross | TPriceTypeDefaultGross;
+  netAmount: TPriceTypeOriginalNet | TPriceTypeDefaultNet;
   priceTypeName: TPriceTypeName;
 }
 
 export interface IProductCardImages {
-  external_url_small?: string;
-  external_url_large?: string;
-  externalUrlLarge?: string;
-  externalUrlSmall?: string;
+  external_url_small?: TProductImageSRC;
+  external_url_large?: TProductImageSRC;
+  externalUrlLarge?: TProductImageSRC;
+  externalUrlSmall?: TProductImageSRC;
 }
 
 export interface IProductCard {
   images?: Array<IProductCardImages>;
-  price?: number;
-  abstract_name?: string;
-  abstractName?: string;
-  abstract_sku?: string;
-  abstractSku?: string;
-  prices?: Array<IProductCardPrice>;
+  price?: TProductPrice;
+  abstract_name?: TProductName;
+  abstractName?: TProductName;
+  abstract_sku?: TProductSKU;
+  abstractSku?: TProductSKU;
+  prices?: Array<IProductPricesItem>;
 }
 
 export interface IProductAttributeMap {

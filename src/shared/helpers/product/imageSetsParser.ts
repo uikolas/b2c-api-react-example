@@ -1,4 +1,4 @@
-import { IProductCardImages } from '../../interfaces/product';
+import {IProductCardImages, TProductImageSRC} from '../../interfaces/product';
 
 export const parseImageSets = (imageSets: any): Array<IProductCardImages> | null => {
 
@@ -13,6 +13,19 @@ export const parseImageSets = (imageSets: any): Array<IProductCardImages> | null
       result.push(imgs);
     });
   });
+
+  return result;
+};
+
+export const getOneProductImage = (images: Array<IProductCardImages>): TProductImageSRC | null  => {
+
+  if (!Array.isArray(images)) {
+    return null;
+  }
+
+  const result = (images && images.length)
+                  ? (images[0].external_url_small || images[0].externalUrlSmall || null)
+                  : null;
 
   return result;
 };

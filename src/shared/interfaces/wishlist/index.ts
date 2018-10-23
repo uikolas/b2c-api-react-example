@@ -1,4 +1,4 @@
-import { IProductAttributes, IProductCardPrice } from '../product';
+import { IProductAttributes, IProductPricesItem } from '../product';
 
 export type TWishListName = string;
 
@@ -7,7 +7,7 @@ export interface IWishlistItem {
   name: string;
   image: string;
   attributes: Array<IProductAttributes>;
-  prices: Array<IProductCardPrice>;
+  prices: Array<IProductPricesItem>;
   availability: boolean;
 }
 
