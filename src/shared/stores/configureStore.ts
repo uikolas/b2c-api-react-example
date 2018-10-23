@@ -21,7 +21,7 @@ export const configureStore = function(history: History, initialState?: any) {
       }),
     });
     // Logger must be the last middleware in chain, otherwise it will log thunk and promise, not actual actions
-    middlewares.push(logger);
+    // middlewares.push(logger);
   }
   // Add the reducer to your store on the `router` key
   const reducer = combineReducers({

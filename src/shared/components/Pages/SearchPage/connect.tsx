@@ -4,7 +4,6 @@ import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { SearchState } from 'src/shared/reducers/Pages/Search';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { SearchPage } from './index';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
@@ -31,4 +30,4 @@ export const connect = reduxify(
     dispatch,
     changeLocation: (location: string) => dispatch(push(location)),
   }),
-)(SearchPage);
+);
