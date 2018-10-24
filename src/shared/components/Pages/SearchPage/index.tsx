@@ -79,7 +79,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.state = {
       activeFilters,
       activeRangeFilters,
-      sort: '',
+      sort: props.currentSort,
       selectedCategory: 0,
       itemsPerPage: props.pagination.currentItemsPerPage,
     };
@@ -167,7 +167,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public renderProduct = (sku: string, name: string) => {
-    // this.props.dispatch(getProductDataAction(sku));
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
@@ -192,38 +191,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.props.dispatch(sendSearchAction(query));
 
-    let categoryPath: string = '';
-    this.props.categories.forEach((category: any) => {
-      const parent = category.name;
-
-      if (category.id === categoryId) {
-        categoryPath = `/${parent}`;
-        return;
-      }
-
-      if (Array.isArray(category.children) && category.children.length) {
-        category.children.forEach((child: any) => {
-          const subCategory = child.name;
-          if (child.id === categoryId) {
-            categoryPath = `/${parent}/${category.name}`;
-            return;
-          }
-
-          if (Array.isArray(child.children) && child.children.length) {
-            child.children.forEach((cat: any) => {
-              if (cat.id === categoryId) {
-                categoryPath = `/${parent}/${subCategory}/${child.name}`;
-                return;
-              }
-            });
-          }
-        });
-      }
-    });
-
-    console.info(pathSearchPage + categoryPath);
-
-    this.props.changeLocation(pathSearchPage + categoryPath);
+    this.props.changeLocation(`${pathSearchPage}/${categoryId}`);
   };
 
   public render() {
@@ -237,7 +205,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       isLoading,
       sortParams,
       pagination,
-      categories,
+      category,
     } = this.props;
 
     const renderFilters: any[] = [];
@@ -317,39 +285,71 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       );
     }
 
-    const categoryList = categories.map((category) => {
-      const pureListItem = (data: any) => (
-        <ListItem
-          button
-          key={ `category-${data.nodeId}` }
-          onClick={ this.selectCategory(data.nodeId) }
-          selected={ this.state.selectedCategory === data.nodeId }
-        >
-          <ListItemText primary={ data.name }/>
-        </ListItem>
-      );
+    const categoryList = category.map((category) => {
+      // const pureListItem = (data: any) => (
+      //   <ListItem
+      //     button
+      //     key={ `category-${data.nodeId}` }
+      //     onClick={ this.selectCategory(data.nodeId) }
+      //     selected={ this.state.selectedCategory === data.nodeId }
+      //   >
+      //     <ListItemText primary={ data.name }/>
+      //   </ListItem>
+      // );
+      //
+      // const nestedList = (data: any) => (
+      //   <li key={ `category-${data.nodeId}` }>
+      //     <ListItem button onClick={ this.selectCategory(data.nodeId) }
+      //               selected={ this.state.selectedCategory === data.nodeId }>
+      //       <ListItemText primary={ data.name }/>
+      //     </ListItem>
+      //     <List dense className={ classes.nestedList }>
+      //       {
+      //         data.children.map((child: any) => {
+      //           return Array.isArray(child.children) && child.children.length
+      //             ? nestedList(child)
+      //             : pureListItem(child);
+      //         })
+      //       }
+      //     </List>
+      //   </li>
+      // );
 
-      const nestedList = (data: any) => (
-        <li key={ `category-${data.nodeId}` }>
-          <ListItem button onClick={ this.selectCategory(data.nodeId) }
-                    selected={ this.state.selectedCategory === data.nodeId }>
-            <ListItemText primary={ data.name }/>
+      let name: string;
+
+      const searchName = (leaf: any) => {
+        if (leaf.nodeId === category.value) {
+          name = leaf.name;
+          return true;
+        }
+
+        if (Array.isArray(leaf.children) && leaf.children.length) {
+          return leaf.children.some((child: any) => searchName(child));
+        }
+
+        return false;
+      };
+
+      this.props.categoriesTree.some(searchName);
+
+      if (!name) {
+        return null;
+      }
+
+      return (
+          <ListItem
+            button
+            key={ `category-${category.value}` }
+            onClick={ this.selectCategory(category.value) }
+            selected={ this.state.selectedCategory === category.value }
+          >
+            <ListItemText primary={ `${name} (${category.doc_count})` }/>
           </ListItem>
-          <List dense className={ classes.nestedList }>
-            {
-              data.children.map((child: any) => {
-                return Array.isArray(child.children) && child.children.length
-                  ? nestedList(child)
-                  : pureListItem(child);
-              })
-            }
-          </List>
-        </li>
       );
 
-      return Array.isArray(category.children) && category.children.length
-        ? nestedList(category)
-        : pureListItem(category);
+      // return Array.isArray(category.children) && category.children.length
+      //   ? nestedList(category)
+      //   : pureListItem(category);
     });
 
     // TODO: Get label programmatically
@@ -407,6 +407,21 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 item
                 xs={ 6 }
               >
+                <FormControl>
+                  <Select
+                    value={ this.state.itemsPerPage }
+                    onChange={ this.handleSetItemsPerPage }
+                    name="pages"
+                  >
+                    {
+                      itemsPerPages.map((qty: number) => (
+                        <MenuItem value={ qty } key={ `pages-${qty}` }>
+                          { qty }
+                        </MenuItem>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
                 <FormControl className={ classes.formControl }>
                   <Select
                     value={ this.state.sort }

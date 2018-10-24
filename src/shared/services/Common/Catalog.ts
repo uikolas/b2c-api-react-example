@@ -10,10 +10,24 @@ export class CatalogService {
 
       if (response.ok) {
         const pagination = response.data.data[0].attributes.pagination;
+        const filters: any[] = [];
+        let category: any = [];
+        let currentSort: any = null;
+
+        response.data.data[0].attributes.valueFacets.forEach((filter: any) => {
+          if (filter.name === 'category') {
+            category = filter.values;
+          } else {
+            filters.push(filter);
+          }
+        });
+
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           items: response.data.data[0].attributes.products,
-          filters: response.data.data[0].attributes.valueFacets,
+          filters,
+          category,
+          currentSort: response.data.data[0].attributes.sort.currentSortParam,
           rangeFilters: response.data.data[0].attributes.rangeFacets,
           sortParams: response.data.data[0].attributes.sort.sortParamNames,
           pagination: {

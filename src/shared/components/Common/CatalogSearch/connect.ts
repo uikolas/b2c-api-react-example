@@ -17,9 +17,9 @@ const mapStateToProps = (state: any, ownProps: any) => {
   return (
     {
       location: routerProps.location ? routerProps.location : ownProps.location,
-      categories: searchProps && searchProps.data.categories ? searchProps.data.categories : ownProps.categories,
-      suggestions: searchProps && searchProps.data.suggestions ? searchProps.data.suggestions : ownProps.suggestions,
-      searchTerm: searchProps && searchProps.data.searchTerm ? searchProps.data.searchTerm : ownProps.searchTerm,
+      categories: searchProps && searchProps.data ? searchProps.data.categories : ownProps.categories,
+      suggestions: searchProps && searchProps.data ? searchProps.data.suggestions : ownProps.suggestions,
+      searchTerm: searchProps && searchProps.data ? searchProps.data.searchTerm : ownProps.searchTerm,
       isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
       currency,
     }
