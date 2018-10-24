@@ -22,6 +22,7 @@ export class CatalogService {
             maxPage: pagination.maxPage,
             currentItemsPerPage: pagination.currentItemsPerPage,
           },
+          spellingSuggestion: response.data.data[0].attributes.spellingSuggestion,
         });
         return response.data;
       } else {

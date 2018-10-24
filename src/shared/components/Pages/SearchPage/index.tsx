@@ -18,7 +18,7 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
 import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
 import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
-import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import {ISearchPageData, RangeFacets, TSpellingSuggestion, ValueFacets} from 'src/shared/interfaces/searchPageData';
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
 
@@ -41,6 +41,7 @@ type IQuery = {
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
+  spellingSuggestion: TSpellingSuggestion;
 }
 
 type RangeType = {min: number, max: number};
@@ -190,6 +191,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       sortParams,
       pagination,
       categories,
+      spellingSuggestion,
     } = this.props;
 
     const renderFilters: any[] = [];
@@ -309,8 +311,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       type: 'sale',
       text: 'Sale',
     };
-
-    const spellingSuggestion = 'Test once more';
 
     const PageIntroComponent = ({className, suggestion}: {className: string, suggestion: string | null}) => {
       if(!suggestion) {
