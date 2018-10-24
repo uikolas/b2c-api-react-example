@@ -47,13 +47,11 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
       return {
         ...state,
-        data: {
-          ...state.data,
-        },
         ...getReducerPartPending(),
       };
     case `${PAGES_CUSTOMER_REGISTER}_FULFILLED`:
       return {
+        ...state,
         data: {
           ...state.data,
           isAuth: false,
@@ -110,6 +108,12 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       return {
         ...state,
         data: initialState.data
+      };
+    case `${FORGOT_PASSWORD}_FULFILLED`:
+    case `${RESET_PASSWORD}_FULFILLED`:
+      return {
+        ...state,
+        ...getReducerPartFulfilled(),
       };
     default:
       return state;
