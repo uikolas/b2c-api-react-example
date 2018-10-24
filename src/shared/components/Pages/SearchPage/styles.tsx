@@ -2,9 +2,6 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  categoryList: {
-    width: '95%',
-  },
   buttonsRow: {
     marginBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 2,
@@ -31,5 +28,14 @@ export const styles = (theme: Theme) => createStyles({
   },
   spellingSuggestion: {
     color: theme.appColors.blue,
+  },
+  categoryItem: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  categoryItemText: {
+    lineHeight: 2.29,
+    letterSpacing: 0.4,
+    fontSize: "0.88rem",
   },
 });

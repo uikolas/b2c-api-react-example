@@ -32,6 +32,7 @@ import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
+import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -347,8 +348,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             key={ `category-${category.value}` }
             onClick={ this.selectCategory(category.value) }
             selected={ this.state.selectedCategory === category.value }
+            className={classes.categoryItem}
+            disableGutters
           >
-            <ListItemText primary={ `${name} (${category.doc_count})` }/>
+            <ListItemText
+              disableTypography
+              classes={{root: classes.categoryItemText}}
+              primary={ `${name} (${category.doc_count})` }
+            />
           </ListItem>
       );
 
@@ -372,116 +379,120 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         />
 
         <Grid container>
-          <Grid item xs={ 3 }>
-            <List
-              component="nav"
-              subheader={ <ListSubheader component="div">Categories</ListSubheader> }
-              className={ classes.categoryList }
-            >
-              { categoryList }
-            </List>
+          <Grid item xs={ 12 } sm={ 3 } md={ 3 }>
+            <CategoriesList categoryList={categoryList} />
           </Grid>
-          <Grid item xs={ 9 } container>
-            { renderFilters }
 
-            <Grid item xs={ 12 } container>
-              { renderRangeFilters }
-            </Grid>
+          <Grid item xs={ 12 } sm={ 9 } md={ 9 }>
+            <Grid container>
 
-            <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-              <Grid
-                item
-                xs={ 3 }
-              >
-                <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                  Filter
-                </Button>
+              <Grid item xs={ 12 }>
+                { renderFilters }
               </Grid>
-              <Grid
-                item
-                xs={ 6 }
-              >
-                <FormControl>
-                  <Select
-                    value={ this.state.itemsPerPage }
-                    onChange={ this.handleSetItemsPerPage }
-                    name="pages"
-                  >
-                    {
-                      itemsPerPages.map((qty: number) => (
-                        <MenuItem value={ qty } key={ `pages-${qty}` }>
-                          { qty }
-                        </MenuItem>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
-                <FormControl className={ classes.formControl }>
-                  <Select
-                    value={ this.state.sort }
-                    onChange={ this.handleSetSorting }
-                    name="sort"
-                    displayEmpty
-                  >
-                    <MenuItem value="" disabled>
-                      Sorting...
-                    </MenuItem>
-                    {
-                      sortParams && sortParams.map((param) => <MenuItem value={ param }
-                                                                        key={ `sort-${param}` }>{ param }</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
+
+              <Grid item xs={ 12 }>
+                { renderRangeFilters }
               </Grid>
-              <Grid item xs={ 3 }>
-                <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                  Sort
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              xs={ 12 }
-              container
-              spacing={ sprykerTheme.appFixedDimensions.gridSpacing }
-            >
-              {
-                items && items.length > 0
-                  ? items.map((item: any) => (
-                    <Grid item xs={ 12 } sm={ 6 } md={ 4 }
-                          key={ item.abstract_sku || item.abstractSku }
+
+              <Grid item xs={ 12 } container className={ classes.buttonsRow }>
+                <Grid
+                  item
+                  xs={ 3 }
+                >
+                  <Button variant="contained" color="primary" onClick={ this.updateSearch }>
+                    Filter
+                  </Button>
+                </Grid>
+                <Grid
+                  item
+                  xs={ 6 }
+                >
+                  <FormControl>
+                    <Select
+                      value={ this.state.itemsPerPage }
+                      onChange={ this.handleSetItemsPerPage }
+                      name="pages"
                     >
-                      <ProductCard
-                        currency={ currency }
-                        images={ item.images }
-                        price={ item.price }
-                        prices={ item.prices }
-                        name={ item.abstract_name || item.abstractName }
-                        sku={ item.abstract_sku || item.abstractSku }
-                        onSelectProduct={ this.renderProduct }
-                        label={label}
-                      />
-                    </Grid>
-                  ))
-                  : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
-                    <Typography variant="headline" component="h3">
-                      Nothing to show.
-                    </Typography>
-                    <Typography component="p">
-                      { isLoading ? 'Waiting results' : 'Try another search' }
-                    </Typography>
-                  </Paper>
-              }
-            </Grid>
-            <Grid item xs={ 12 } container justify="center" alignItems="center">
-              <BottomNavigation
-                value={ pagination.currentPage }
-                onChange={ this.handlePagination }
-                className={ classes.pagesContainer }
+                      {
+                        itemsPerPages.map((qty: number) => (
+                          <MenuItem value={ qty } key={ `pages-${qty}` }>
+                            { qty }
+                          </MenuItem>
+                        ))
+                      }
+                    </Select>
+                  </FormControl>
+                  <FormControl className={ classes.formControl }>
+                    <Select
+                      value={ this.state.sort }
+                      onChange={ this.handleSetSorting }
+                      name="sort"
+                      displayEmpty
+                    >
+                      <MenuItem value="" disabled>
+                        Sorting...
+                      </MenuItem>
+                      {
+                        sortParams && sortParams.map((param) => <MenuItem value={ param }
+                                                                          key={ `sort-${param}` }>{ param }</MenuItem>)
+                      }
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={ 3 }>
+                  <Button variant="contained" color="primary" onClick={ this.updateSearch }>
+                    Sort
+                  </Button>
+                </Grid>
+              </Grid>
+
+              <Grid
+                item
+                xs={ 12 }
+                container
+                spacing={ sprykerTheme.appFixedDimensions.gridSpacing }
               >
-                { pages }
-              </BottomNavigation>
+                {
+                  items && items.length > 0
+                    ? items.map((item: any) => (
+                      <Grid item xs={ 12 } sm={ 6 } md={ 4 }
+                            key={ item.abstract_sku || item.abstractSku }
+                      >
+                        <ProductCard
+                          currency={ currency }
+                          images={ item.images }
+                          price={ item.price }
+                          prices={ item.prices }
+                          name={ item.abstract_name || item.abstractName }
+                          sku={ item.abstract_sku || item.abstractSku }
+                          onSelectProduct={ this.renderProduct }
+                          label={label}
+                        />
+                      </Grid>
+                    ))
+                    : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
+                      <Typography variant="headline" component="h3">
+                        Nothing to show.
+                      </Typography>
+                      <Typography component="p">
+                        { isLoading ? 'Waiting results' : 'Try another search' }
+                      </Typography>
+                    </Paper>
+                }
+              </Grid>
+
+              <Grid item xs={ 12 } container justify="center" alignItems="center">
+                <BottomNavigation
+                  value={ pagination.currentPage }
+                  onChange={ this.handlePagination }
+                  className={ classes.pagesContainer }
+                >
+                  { pages }
+                </BottomNavigation>
+              </Grid>
+
             </Grid>
+
           </Grid>
         </Grid>
       </AppMain>
