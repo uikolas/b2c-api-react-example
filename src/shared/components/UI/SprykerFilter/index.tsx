@@ -12,7 +12,7 @@ export interface IMenuItemsDropdown {
   doc_count: string | number;
 }
 
-interface SprykerFilterProps extends WithStyles<typeof styles> {
+export interface SprykerFilterProps extends WithStyles<typeof styles> {
   attributeName?: string;
   handleChange?: Function;
   menuItems?: Array<IMenuItemsDropdown>;
