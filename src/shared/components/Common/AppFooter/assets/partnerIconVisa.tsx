@@ -8,7 +8,7 @@ const path = 'M13.021.081h2.627l-1.644 9.707h-2.61L13.02.081zm10.491.31l-.354 2.
 
 export const PartnerIconVisa: React.SFC = () => (
   <svg width="33" height="10" viewBox="0 0 33 10">
-    <path fill="#111" fillRule="evenodd" d={path} opacity=".497"/>
+    <path fill="#111" fillRule="evenodd" d={ path } opacity=".497"/>
   </svg>
 );
 

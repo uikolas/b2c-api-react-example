@@ -11,7 +11,7 @@ export const styles = () => createStyles({
     padding: 0,
   },
   linkItem: {
-    marginBottom: 16
+    marginBottom: 16,
   },
   link: {
     textDecoration: 'none',

@@ -10,13 +10,13 @@ import { PartnerIconPaypal } from '../../assets/partnerIconPaypal';
 import { LogosProps as Props } from './types';
 import { styles } from './styles';
 
-export const LogosComponent: React.SFC<Props> = ({ classes }) => (
+export const LogosComponent: React.SFC<Props> = ({classes}) => (
   <ul className={ classes.logosList }>
-    <li className={ classes.logosListItem }><PartnerIconVisa /></li>
-    <li className={ classes.logosListItem }><PartnerIconDhl /></li>
-    <li className={ classes.logosListItem }><PartnerIconHermes /></li>
-    <li className={ classes.logosListItem }><PartnerIconMasterCard /></li>
-    <li className={ classes.logosListItem }><PartnerIconPaypal /></li>
+    <li className={ classes.logosListItem }><PartnerIconVisa/></li>
+    <li className={ classes.logosListItem }><PartnerIconDhl/></li>
+    <li className={ classes.logosListItem }><PartnerIconHermes/></li>
+    <li className={ classes.logosListItem }><PartnerIconMasterCard/></li>
+    <li className={ classes.logosListItem }><PartnerIconPaypal/></li>
   </ul>
 );
 
