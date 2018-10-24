@@ -47,7 +47,10 @@ export interface ISearchPageData {
   searchTerm?: string;
   currency?: TAppCurrency;
   sortParams?: Array<string>;
+  currentSort?: string;
   pagination: Pagination;
-  categories: Array<Category>;
+  categoriesTree: Array<Category>;
+  category: Array<FilterValue>;
+  categories: Array<{[name: string]: string}>;
   spellingSuggestion: TSpellingSuggestion | null;
 }

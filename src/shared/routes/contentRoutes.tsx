@@ -18,6 +18,7 @@ import config from '../config';
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
+
 export const pathProductPageBase = `${config.WEB_PATH}product`;
 export const pathProductPage = `${pathProductPageBase}/:productId`;
 export const pathLoginPage = `${config.WEB_PATH}login`;
@@ -36,7 +37,7 @@ export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
 export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
 
 export const pathForgotPassword = `${config.WEB_PATH}password/forgotten`;
-export const pathResetPassword = `${config.WEB_PATH}password/reset/:restoreKey`;
+export const pathResetPassword = `${config.WEB_PATH}password/reset`;
 
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
@@ -50,12 +51,13 @@ export const getContentRoutes = function() {
     <Switch>
       <Route path={ pathHomePage } exact component={ ConnectedHomePage }/>
       <Route path={ pathSearchPage } component={ LoadableSearchPage }/>
+      {/*<Route path={ `${pathSearchPage}/:category/:subCategory/:subLevel` } component={ LoadableSearchPage }/>*/}
       <Route path={ pathProductPage } component={ LoadableProductPage }/>
       <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
       <Route path={ pathCartPage } component={ LoadableCartPage }/>
       <Route path={ pathCustomerPage } component={ LoadableCustomerPage }/>
       <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
-      <Route path={ pathResetPassword } component={ LoadablePasswordResetPage }/>
+      <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
 
       <Route path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
       <Route path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>

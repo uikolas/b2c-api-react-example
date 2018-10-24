@@ -22,12 +22,15 @@ export const initialState: SearchState = {
     filters: [],
     rangeFilters: [],
     sortParams: [],
+    currentSort: '',
     pagination: {
       numFound: 0,
       currentPage: 0,
       maxPage: 0,
-      currentItemsPerPage: 0,
+      currentItemsPerPage: 12,
     },
+    category: [],
+    categoriesTree: [],
     categories: [],
     spellingSuggestion: null,
   },
@@ -46,6 +49,7 @@ export const pageSearch = produce<SearchState>(
         break;
       case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
         draft.data.suggestions = action.products;
+        draft.data.categories = action.categories;
         draft.data.searchTerm = action.searchTerm;
         draft.data.currency = action.currency || draft.data.currency;
         draft.data.spellingSuggestion = null;
@@ -67,8 +71,10 @@ export const pageSearch = produce<SearchState>(
         console.log('action', action);
         draft.data.items = action.items;
         draft.data.filters = action.filters;
+        draft.data.category = action.category;
         draft.data.rangeFilters = action.rangeFilters;
         draft.data.sortParams = action.sortParams;
+        draft.data.currentSort = action.currentSort;
         draft.data.pagination = action.pagination;
         draft.data.spellingSuggestion = action.spellingSuggestion || null;
         draft.error = false;
@@ -78,7 +84,7 @@ export const pageSearch = produce<SearchState>(
         draft.initiated = true;
         break;
       case `${CATEGORIES_REQUEST}_FULFILLED`:
-        draft.data.categories = action.categories;
+        draft.data.categoriesTree = action.categories;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
