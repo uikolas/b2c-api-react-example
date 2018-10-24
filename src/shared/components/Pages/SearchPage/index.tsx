@@ -41,7 +41,6 @@ type IQuery = {
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
-  spellingSuggestion: TSpellingSuggestion;
 }
 
 type RangeType = {min: number, max: number};
