@@ -68,7 +68,6 @@ export const pageSearch = produce<SearchState>(
         draft.rejected = true;
         break;
       case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
-        console.log('action', action);
         draft.data.items = action.items;
         draft.data.filters = action.filters;
         draft.data.category = action.category;

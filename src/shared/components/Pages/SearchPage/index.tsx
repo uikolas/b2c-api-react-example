@@ -31,6 +31,7 @@ import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
+import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -55,7 +56,6 @@ interface SearchPageState {
 
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'All products';
-export const pageIntroText = 'Did you mean ';
 
 export const itemsPerPages: number[] = [12, 24, 36];
 
@@ -289,7 +289,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       );
     }
 
-    const categoryList = category.map((category) => {
+    const categoryList = (Array.isArray(category) && category.length)
+      ? category.map((category) => {
       // const pureListItem = (data: any) => (
       //   <ListItem
       //     button
@@ -354,7 +355,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       // return Array.isArray(category.children) && category.children.length
       //   ? nestedList(category)
       //   : pureListItem(category);
-    });
+    })
+      : null;
 
     // TODO: Get label programmatically
     const label: IProductLabel = {
@@ -362,23 +364,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       text: 'Sale',
     };
 
-    const PageIntroComponent = ({className, suggestion}: {className: string, suggestion: string | null}) => {
-      if(!suggestion) {
-        return null;
-      }
-      return (
-        <React.Fragment>
-          {pageIntroText}
-          <span className={className}>{suggestion}</span> ?
-        </React.Fragment>
-      );
-    };
-
     return (
       <AppMain>
         <AppPageTitle
           title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
-          intro={<PageIntroComponent className={classes.spellingSuggestion} suggestion={spellingSuggestion} />}
+          intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
         />
 
         <Grid container>

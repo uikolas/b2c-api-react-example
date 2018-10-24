@@ -7,7 +7,7 @@ import { styles } from './styles';
 
 interface AppPageTitleProps extends WithStyles<typeof styles> {
   title?: string;
-  intro?: any;
+  intro?: string | JSX.Element | null;
 }
 
 export const AppPageTitleBase: React.SFC<AppPageTitleProps> = (props) => {
