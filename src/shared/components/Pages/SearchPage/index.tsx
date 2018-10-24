@@ -28,6 +28,8 @@ import { ProductCard } from '../../Common/ProductCard';
 import { connect } from './connect';
 
 import { styles } from './styles';
+import {sprykerTheme} from "src/shared/theme/sprykerTheme";
+import {IProductLabel} from "src/shared/interfaces/product/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -350,140 +352,130 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         : pureListItem(category);
     });
 
+    // TODO: Get label programmatically
+    const label: IProductLabel = {
+      type: 'sale',
+      text: 'Sale',
+    };
+
 
     return (
-      <React.Fragment>
-        <AppMain>
-          <Grid container
-                justify="center"
-                alignItems="center"
-          >
-            { searchTerm
-              ? <Typography variant="title" color="inherit" align="center" className={ classes.pageHeader }
-                            id="pageTitle">
-                { pageTitle }
-                <Typography variant="title" component="span" className={ classes.searchTerm } id="searchTerm">
-                  { searchTerm }
-                </Typography>
+      <AppMain>
+        <Grid container
+              justify="center"
+              alignItems="center"
+        >
+          { searchTerm
+            ? <Typography variant="title" color="inherit" align="center" className={ classes.pageHeader }
+                          id="pageTitle">
+              { pageTitle }
+              <Typography variant="title" component="span" className={ classes.searchTerm } id="searchTerm">
+                { searchTerm }
               </Typography>
-              : null
-            }
+            </Typography>
+            : null
+          }
+        </Grid>
+
+        <Grid container>
+          <Grid item xs={ 3 }>
+            <List
+              component="nav"
+              subheader={ <ListSubheader component="div">Categories</ListSubheader> }
+              className={ classes.categoryList }
+            >
+              { categoryList }
+            </List>
           </Grid>
+          <Grid item xs={ 9 } container>
+            { renderFilters }
 
-          <Grid container>
-            <Grid item xs={ 3 }>
-              <List
-                component="nav"
-                subheader={ <ListSubheader component="div">Categories</ListSubheader> }
-                className={ classes.categoryList }
-              >
-                { categoryList }
-              </List>
+            <Grid item xs={ 12 } container>
+              { renderRangeFilters }
             </Grid>
-            <Grid item xs={ 9 } container>
-              { renderFilters }
 
-              <Grid item xs={ 12 } container>
-                { renderRangeFilters }
-              </Grid>
-
-              <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-                <Grid
-                  item
-                  xs={ 3 }
-                >
-                  <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                    Filter
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={ 6 }
-                >
-                  <FormControl>
-                    <Select
-                      value={ this.state.itemsPerPage }
-                      onChange={ this.handleSetItemsPerPage }
-                      name="pages"
-                    >
-                      {
-                        itemsPerPages.map((qty: number) => (
-                          <MenuItem value={ qty } key={ `pages-${qty}` }>
-                            { qty }
-                          </MenuItem>
-                        ))
-                      }
-                    </Select>
-                  </FormControl>
-                  <FormControl className={ classes.formControl }>
-                    <Select
-                      value={ this.state.sort }
-                      onChange={ this.handleSetSorting }
-                      name="sort"
-                      displayEmpty
-                    >
-                      <MenuItem value="" disabled>
-                        Sorting...
-                      </MenuItem>
-                      {
-                        sortParams && sortParams.map((param) => <MenuItem value={ param }
-                                                                          key={ `sort-${param}` }>{ param }</MenuItem>)
-                      }
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={ 3 }>
-                  <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                    Sort
-                  </Button>
-                </Grid>
+            <Grid item xs={ 12 } container className={ classes.buttonsRow }>
+              <Grid
+                item
+                xs={ 3 }
+              >
+                <Button variant="contained" color="primary" onClick={ this.updateSearch }>
+                  Filter
+                </Button>
               </Grid>
               <Grid
                 item
-                xs={ 12 }
-                container
-                spacing={ 32 }
+                xs={ 6 }
               >
-                {
-                  items && items.length > 0
-                    ? items.map((item: any) => (
-                      <Grid item xs={ 12 } sm={ 6 } md={ 4 }
-                            key={ item.abstract_sku || item.abstractSku }
-                      >
-                        <ProductCard
-                          currency={ currency }
-                          images={ item.images }
-                          price={ item.price }
-                          prices={ item.prices }
-                          abstract_name={ item.abstract_name || item.abstractName }
-                          abstract_sku={ item.abstract_sku || item.abstractSku }
-                          onSelectProduct={ this.renderProduct }
-                        />
-                      </Grid>
-                    ))
-                    : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
-                      <Typography variant="headline" component="h3">
-                        Nothing to show.
-                      </Typography>
-                      <Typography component="p">
-                        { isLoading ? 'Waiting results' : 'Try another search' }
-                      </Typography>
-                    </Paper>
-                }
+                <FormControl className={ classes.formControl }>
+                  <Select
+                    value={ this.state.sort }
+                    onChange={ this.handleSetSorting }
+                    name="sort"
+                    displayEmpty
+                  >
+                    <MenuItem value="" disabled>
+                      Sorting...
+                    </MenuItem>
+                    {
+                      sortParams && sortParams.map((param) => <MenuItem value={ param }
+                                                                        key={ `sort-${param}` }>{ param }</MenuItem>)
+                    }
+                  </Select>
+                </FormControl>
               </Grid>
-              <Grid item xs={ 12 } container justify="center" alignItems="center">
-                <BottomNavigation
-                  value={ pagination.currentPage }
-                  onChange={ this.handlePagination }
-                  className={ classes.pagesContainer }
-                >
-                  { pages }
-                </BottomNavigation>
+              <Grid item xs={ 3 }>
+                <Button variant="contained" color="primary" onClick={ this.updateSearch }>
+                  Sort
+                </Button>
               </Grid>
             </Grid>
+            <Grid
+              item
+              xs={ 12 }
+              container
+              spacing={ sprykerTheme.appFixedDimensions.gridSpacing }
+            >
+              {
+                items && items.length > 0
+                  ? items.map((item: any) => (
+                    <Grid item xs={ 12 } sm={ 6 } md={ 4 }
+                          key={ item.abstract_sku || item.abstractSku }
+                    >
+                      <ProductCard
+                        currency={ currency }
+                        images={ item.images }
+                        price={ item.price }
+                        prices={ item.prices }
+                        name={ item.abstract_name || item.abstractName }
+                        sku={ item.abstract_sku || item.abstractSku }
+                        onSelectProduct={ this.renderProduct }
+                        label={label}
+                      />
+                    </Grid>
+                  ))
+                  : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
+                    <Typography variant="headline" component="h3">
+                      Nothing to show.
+                    </Typography>
+                    <Typography component="p">
+                      { isLoading ? 'Waiting results' : 'Try another search' }
+                    </Typography>
+                  </Paper>
+              }
+            </Grid>
+            <Grid item xs={ 12 } container justify="center" alignItems="center">
+              <BottomNavigation
+                value={ pagination.currentPage }
+                onChange={ this.handlePagination }
+                className={ classes.pagesContainer }
+              >
+                { pages }
+              </BottomNavigation>
+            </Grid>
           </Grid>
-        </AppMain>
-      </React.Fragment>
+        </Grid>
+      </AppMain>
     );
   }
 }
