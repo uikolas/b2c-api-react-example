@@ -57,8 +57,6 @@ export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'All products';
 export const pageIntroText = 'Did you mean ';
 
-export const itemsPerPages: number[] = [12, 24, 36];
-
 @connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
   constructor(props: SearchPageProps) {
@@ -83,7 +81,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       activeFilters,
       activeRangeFilters,
       sort: props.currentSort,
-      selectedCategory: 0,
+      selectedCategory: props.currentCategory,
       itemsPerPage: props.pagination.currentItemsPerPage,
     };
   }
@@ -194,7 +192,33 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.props.dispatch(sendSearchAction(query));
 
-    this.props.changeLocation(`${pathSearchPage}/${categoryId}`);
+    let name: string = '';
+
+    const searchName = (leaf: any) => {
+      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
+      name += path;
+
+      if (leaf.nodeId === categoryId) {
+        return true;
+      }
+
+      if (Array.isArray(leaf.children) && leaf.children.length) {
+        const result = leaf.children.some(searchName);
+
+        if (!result) {
+          name = name.replace(path, '');
+        }
+
+        return result;
+      }
+
+      name = name.replace(path, '');
+      return false;
+    };
+
+    this.props.categoriesTree.some(searchName);
+
+    this.props.changeLocation(`${pathSearchPage}${name}`);
   };
 
   public render() {
@@ -249,18 +273,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     const pages: any[] = [];
 
-    if (+pagination.currentPage > 1) {
-      pages.push(
-        <BottomNavigationAction
-          showLabel
-          icon={ <ChevronLeft/> }
-          value="prev"
-          key="prev"
-          className={ classes.pageNumber }
-        />,
-      );
-    }
-
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
     const end = pagination.maxPage > 5
       ? pagination.currentPage <= 5 ? 5 : pagination.currentPage
@@ -277,48 +289,27 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         />);
     }
 
-    if (+pagination.currentPage < pagination.maxPage) {
-      pages.push(
-        <BottomNavigationAction
-          showLabel
-          icon={ <ChevronRight/> }
-          value="next"
-          key="next"
-          className={ classes.pageNumber }
-        />,
-      );
-    }
+    pages.push(
+      <BottomNavigationAction
+        showLabel
+        icon={ <ChevronRight/> }
+        value="next"
+        key="next"
+        className={ classes.pageNumber }
+      />,
+    );
+
+    pages.unshift(
+      <BottomNavigationAction
+        showLabel
+        icon={ <ChevronLeft/> }
+        value="prev"
+        key="prev"
+        className={ classes.pageNumber }
+      />,
+    );
 
     const categoryList = category.map((category) => {
-      // const pureListItem = (data: any) => (
-      //   <ListItem
-      //     button
-      //     key={ `category-${data.nodeId}` }
-      //     onClick={ this.selectCategory(data.nodeId) }
-      //     selected={ this.state.selectedCategory === data.nodeId }
-      //   >
-      //     <ListItemText primary={ data.name }/>
-      //   </ListItem>
-      // );
-      //
-      // const nestedList = (data: any) => (
-      //   <li key={ `category-${data.nodeId}` }>
-      //     <ListItem button onClick={ this.selectCategory(data.nodeId) }
-      //               selected={ this.state.selectedCategory === data.nodeId }>
-      //       <ListItemText primary={ data.name }/>
-      //     </ListItem>
-      //     <List dense className={ classes.nestedList }>
-      //       {
-      //         data.children.map((child: any) => {
-      //           return Array.isArray(child.children) && child.children.length
-      //             ? nestedList(child)
-      //             : pureListItem(child);
-      //         })
-      //       }
-      //     </List>
-      //   </li>
-      // );
-
       let name: string;
 
       const searchName = (leaf: any) => {
@@ -328,7 +319,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         }
 
         if (Array.isArray(leaf.children) && leaf.children.length) {
-          return leaf.children.some((child: any) => searchName(child));
+          return leaf.children.some(searchName);
         }
 
         return false;
@@ -350,10 +341,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             <ListItemText primary={ `${name} (${category.doc_count})` }/>
           </ListItem>
       );
-
-      // return Array.isArray(category.children) && category.children.length
-      //   ? nestedList(category)
-      //   : pureListItem(category);
     });
 
     // TODO: Get label programmatically
@@ -418,7 +405,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                     name="pages"
                   >
                     {
-                      itemsPerPages.map((qty: number) => (
+                      pagination.validItemsPerPageOptions.map((qty: number) => (
                         <MenuItem value={ qty } key={ `pages-${qty}` }>
                           { qty }
                         </MenuItem>
