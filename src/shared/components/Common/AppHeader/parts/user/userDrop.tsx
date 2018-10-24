@@ -32,13 +32,6 @@ export const UserDropComponent: React.SFC<Props> = ({classes, isUserLoggedIn, lo
       { isUserLoggedIn ? (
         <>
           <Button
-            variant="outlined"
-            color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ `${pathCustomerPage}/wishlists` } /> }
-          >
-            Wishlist
-          </Button>
-          <Button
             variant="contained"
             color="primary"
             component={ ({innerRef, ...props}) => <Link { ...props } to={ pathHomePage }/> }
