@@ -13,7 +13,7 @@ export const LinksComponent: React.SFC<Props> = ({ classes, title, links, extern
       { links.map(link => (
         <li key={link.name + link.path} className={ classes.linkItem }>
           { external ? (
-            <a href={ link.path } className={ classes.link }>
+            <a href={ link.path } className={ classes.link } target="_blank">
               { link.name }
             </a>
           ) : (

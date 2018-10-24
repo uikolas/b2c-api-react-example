@@ -3,27 +3,27 @@ import { link } from './parts/Links/types';
 export const categoriesLinks: link[] = [
   {
     name: 'Computers',
-    path: '',
+    path: '/',
   },
   {
     name: 'Notebooks',
-    path: '',
+    path: '/',
   },
   {
     name: 'PCs & Workstations',
-    path: '',
+    path: '/',
   },
   {
     name: 'Tablets',
-    path: '',
+    path: '/',
   },
   {
     name: 'Sale %',
-    path: '',
+    path: '/',
   },
   {
     name: 'New',
-    path: '',
+    path: '/',
   },
 ];
 
