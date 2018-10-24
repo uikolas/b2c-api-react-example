@@ -50,7 +50,8 @@ export const getContentRoutes = function() {
   return (
     <Switch>
       <Route path={ pathHomePage } exact component={ ConnectedHomePage }/>
-      <Route path={ pathSearchPage } component={ LoadableSearchPage }/>
+      <Route path={ pathSearchPage } exact component={ LoadableSearchPage }/>
+      <Route path={ `${pathSearchPage}/:category/:subCategory/:subLevel` } component={ LoadableSearchPage }/>
       <Route path={ pathProductPage } component={ LoadableProductPage }/>
       <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
       <Route path={ pathCartPage } component={ LoadableCartPage }/>

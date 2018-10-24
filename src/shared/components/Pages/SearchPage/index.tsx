@@ -20,7 +20,7 @@ import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
 import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
 import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
+import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
@@ -113,6 +113,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
+    if (this.state.selectedCategory) {
+      query.category = this.state.selectedCategory;
+    }
+
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
       query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
       query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
@@ -148,6 +152,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       query.page = this.props.pagination.currentPage + 1;
     }
 
+    if (this.state.selectedCategory) {
+      query.category = this.state.selectedCategory;
+    }
 
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
       query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
@@ -162,8 +169,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public selectCategory = (category: string | number, name: string) => (e: any) => {
-    this.setState({selectedCategory: category});
+  public selectCategory = (categoryId: string | number) => (e: any) => {
+    this.setState({selectedCategory: categoryId});
 
     const query: IQuery = {
       q: this.props.searchTerm,
@@ -171,7 +178,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       sort: this.state.sort,
       include: '',
       ipp: this.state.itemsPerPage,
-      category,
+      category: categoryId,
       ...this.state.activeFilters,
     };
 
@@ -182,6 +189,39 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
+
+    let categoryPath: string = '';
+    this.props.categories.forEach((category: any) => {
+      const parent = category.name;
+
+      if (category.id === categoryId) {
+        categoryPath = `/${parent}`;
+        return;
+      }
+
+      if (Array.isArray(category.children) && category.children.length) {
+        category.children.forEach((child: any) => {
+          const subCategory = child.name;
+          if (child.id === categoryId) {
+            categoryPath = `/${parent}/${category.name}`;
+            return;
+          }
+
+          if (Array.isArray(child.children) && child.children.length) {
+            child.children.forEach((cat: any) => {
+              if (cat.id === categoryId) {
+                categoryPath = `/${parent}/${subCategory}/${child.name}`;
+                return;
+              }
+            });
+          }
+        });
+      }
+    });
+
+    console.info(pathSearchPage + categoryPath);
+
+    this.props.changeLocation(pathSearchPage + categoryPath);
   };
 
   public render() {
@@ -280,7 +320,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         <ListItem
           button
           key={ `category-${data.nodeId}` }
-          onClick={ this.selectCategory(data.nodeId, data.name) }
+          onClick={ this.selectCategory(data.nodeId) }
           selected={ this.state.selectedCategory === data.nodeId }
         >
           <ListItemText primary={ data.name }/>
@@ -289,7 +329,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
       const nestedList = (data: any) => (
         <li key={ `category-${data.nodeId}` }>
-          <ListItem button onClick={ this.selectCategory(data.nodeId, data.name) }
+          <ListItem button onClick={ this.selectCategory(data.nodeId) }
                     selected={ this.state.selectedCategory === data.nodeId }>
             <ListItemText primary={ data.name }/>
           </ListItem>
