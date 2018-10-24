@@ -29,6 +29,7 @@ interface Pagination {
   currentPage: number;
   maxPage: number;
   currentItemsPerPage: number;
+  validItemsPerPageOptions: number[];
 }
 
 export interface Category {
@@ -52,5 +53,6 @@ export interface ISearchPageData {
   categoriesTree: Array<Category>;
   category: Array<FilterValue>;
   categories: Array<{[name: string]: string}>;
+  currentCategory: string;
   spellingSuggestion: TSpellingSuggestion | null;
 }

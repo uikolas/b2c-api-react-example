@@ -16,9 +16,9 @@ const title = 'Filter your results';
 export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) => {
   const { classes, } = props;
 
-  if (!Array.isArray(categoryList) || !categoryList.length) {
+  /*if (!Array.isArray(categoryList) || !categoryList.length) {
     return null;
-  }
+  }*/
 
   return (
     <Grid container

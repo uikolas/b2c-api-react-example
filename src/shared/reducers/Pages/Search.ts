@@ -23,11 +23,13 @@ export const initialState: SearchState = {
     rangeFilters: [],
     sortParams: [],
     currentSort: '',
+    currentCategory: '',
     pagination: {
       numFound: 0,
       currentPage: 0,
       maxPage: 0,
       currentItemsPerPage: 12,
+      validItemsPerPageOptions: [12],
     },
     category: [],
     categoriesTree: [],
@@ -75,6 +77,7 @@ export const pageSearch = produce<SearchState>(
         draft.data.sortParams = action.sortParams;
         draft.data.currentSort = action.currentSort;
         draft.data.pagination = action.pagination;
+        draft.data.currentCategory = action.currentCategory;
         draft.data.spellingSuggestion = action.spellingSuggestion || null;
         draft.error = false;
         draft.pending = false;
