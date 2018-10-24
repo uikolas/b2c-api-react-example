@@ -5,6 +5,7 @@ export const styles = (theme: Theme) => createStyles({
   root: {
     borderBottom: `1px solid ${theme.appColors.blockDivider}`,
     paddingBottom: theme.spacing.unit * 5,
+    marginBottom: theme.spacing.unit * 6,
   },
   pageHeader: {
     fontSize: "2.13rem",
