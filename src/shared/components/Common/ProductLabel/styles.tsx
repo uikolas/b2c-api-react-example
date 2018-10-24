@@ -21,9 +21,9 @@ export const styles = (theme: Theme) => createStyles({
     lineHeight: 1,
   },
   saleLabel: {
-    background: theme.appColors.saleLabel,
+    background: theme.appColors.blue,
   },
   newLabel: {
-    background: theme.appColors.newLabel,
+    background: theme.appColors.orange,
   },
 });

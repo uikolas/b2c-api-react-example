@@ -30,6 +30,7 @@ import { connect } from './connect';
 import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
+import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -51,7 +52,9 @@ interface SearchPageState {
   selectedCategory: number | string;
 }
 
-export const pageTitle = 'Search results for ';
+export const pageTitle = 'Results for ';
+export const pageTitleDefault = 'All products';
+export const pageIntroText = 'Did you mean ';
 
 @connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
@@ -307,24 +310,26 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       text: 'Sale',
     };
 
+    const spellingSuggestion = 'Test once more';
+
+    const PageIntroComponent = ({className, suggestion}: {className: string, suggestion: string | null}) => {
+      if(!suggestion) {
+        return null;
+      }
+      return (
+        <React.Fragment>
+          {pageIntroText}
+          <span className={className}>{suggestion}</span> ?
+        </React.Fragment>
+      );
+    };
 
     return (
       <AppMain>
-        <Grid container
-              justify="center"
-              alignItems="center"
-        >
-          { searchTerm
-            ? <Typography variant="title" color="inherit" align="center" className={ classes.pageHeader }
-                          id="pageTitle">
-              { pageTitle }
-              <Typography variant="title" component="span" className={ classes.searchTerm } id="searchTerm">
-                { searchTerm }
-              </Typography>
-            </Typography>
-            : null
-          }
-        </Grid>
+        <AppPageTitle
+          title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
+          intro={<PageIntroComponent className={classes.spellingSuggestion} suggestion={spellingSuggestion} />}
+        />
 
         <Grid container>
           <Grid item xs={ 3 }>

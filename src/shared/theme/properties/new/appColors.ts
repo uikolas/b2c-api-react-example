@@ -6,10 +6,10 @@ export interface IAppColors {
   black: TAppColor;
   grey: TAppColor;
   lightGrey: TAppColor;
+  blue: TAppColor;
+  orange: TAppColor;
 
-  oldPrice: TAppColor;
-  saleLabel: TAppColor;
-  newLabel: TAppColor;
+  blockDivider: TAppColor;
 }
 
 export const appColors: IAppColors = {
@@ -17,8 +17,8 @@ export const appColors: IAppColors = {
   black: "#111111",
   grey: "#787878",
   lightGrey: "#f2f2f2",
+  blue: "#3589ea",
+  orange: "#ea7a35",
 
-  oldPrice: "#787878",
-  saleLabel: "#3589ea",
-  newLabel: "#ea7a35",
+  blockDivider: "#e2e2e2",
 };

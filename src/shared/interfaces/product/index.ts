@@ -24,7 +24,7 @@ export type TProductAvailability = boolean;
 export type TProductAttributes = object;
 export type TProductImageSRC = string;
 export type TProductAttributeMap = object;
-export type TProductLabel = string;
+export type TProductLabel = 'sale' | 'new';
 
 export const priceTypeNameDefault = 'DEFAULT';
 export type TPriceTypeNameDefault = 'DEFAULT';
