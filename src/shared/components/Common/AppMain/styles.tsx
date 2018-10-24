@@ -4,10 +4,10 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   layout: {
     ...theme.appContainerStyles,
-    marginTop: `calc(${theme.appFixedDimensions.headerHeight}px + ${theme.spacing.unit * 4}px)`,
+    marginTop: theme.appFixedDimensions.headerHeight,
   },
   container: {
     position: 'relative',
-    paddingTop: theme.spacing.unit * 6,
+    paddingTop: theme.spacing.unit * 5,
   },
 });

@@ -1,6 +1,8 @@
 import { IProductCard } from '../product';
 import { TAppCurrency } from '../../reducers/Common/Init';
 
+export type TSpellingSuggestion = string;
+
 interface FilterValue {
   value: any;
   doc_count: number;
@@ -50,4 +52,5 @@ export interface ISearchPageData {
   categoriesTree: Array<Category>;
   category: Array<FilterValue>;
   categories: Array<{[name: string]: string}>;
+  spellingSuggestion: TSpellingSuggestion | null;
 }

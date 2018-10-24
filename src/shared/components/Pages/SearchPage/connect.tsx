@@ -2,13 +2,15 @@ import * as React from 'react';
 import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { SearchState } from 'src/shared/reducers/Pages/Search';
+import {getSpellingSuggestion, SearchState} from 'src/shared/reducers/Pages/Search';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import {TSpellingSuggestion} from "src/shared/interfaces/searchPageData/index";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
   const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
+  const spellingSuggestion: TSpellingSuggestion = getSpellingSuggestion(state, ownProps);
 
   return ({
     location: routerProps.location ? routerProps.location : ownProps.location,
@@ -23,6 +25,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : ownProps.category,
     isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
     currency,
+    spellingSuggestion,
   });
 };
 

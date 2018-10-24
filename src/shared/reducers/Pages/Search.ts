@@ -8,7 +8,7 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {ISearchPageData} from "../../interfaces/searchPageData";
+import {ISearchPageData, TSpellingSuggestion} from "../../interfaces/searchPageData";
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
@@ -32,6 +32,7 @@ export const initialState: SearchState = {
     category: [],
     categoriesTree: [],
     categories: [],
+    spellingSuggestion: null,
   },
 };
 
@@ -51,6 +52,7 @@ export const pageSearch = produce<SearchState>(
         draft.data.categories = action.categories;
         draft.data.searchTerm = action.searchTerm;
         draft.data.currency = action.currency || draft.data.currency;
+        draft.data.spellingSuggestion = null;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -66,6 +68,7 @@ export const pageSearch = produce<SearchState>(
         draft.rejected = true;
         break;
       case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
+        console.log('action', action);
         draft.data.items = action.items;
         draft.data.filters = action.filters;
         draft.data.category = action.category;
@@ -73,6 +76,7 @@ export const pageSearch = produce<SearchState>(
         draft.data.sortParams = action.sortParams;
         draft.data.currentSort = action.currentSort;
         draft.data.pagination = action.pagination;
+        draft.data.spellingSuggestion = action.spellingSuggestion || null;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -90,6 +94,7 @@ export const pageSearch = produce<SearchState>(
       case PAGES_SEARCH_REQUEST_CLEAR:
         draft.data.suggestions = [];
         draft.data.searchTerm = action.searchTerm;
+        draft.data.spellingSuggestion = null;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -120,6 +125,14 @@ export function getSuggestions(state: any, props: any): string | null {
   return (
     state.pageSearch.data && state.pageSearch.data.suggestions
       ? state.pageSearch.data.suggestions
+      : null
+  );
+}
+
+export function getSpellingSuggestion(state: any, props: any): TSpellingSuggestion | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.spellingSuggestion
+      ? state.pageSearch.data.spellingSuggestion
       : null
   );
 }

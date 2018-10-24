@@ -18,7 +18,7 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
 import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
 import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
-import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import {ISearchPageData, RangeFacets, TSpellingSuggestion, ValueFacets} from 'src/shared/interfaces/searchPageData';
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 
@@ -30,6 +30,7 @@ import { connect } from './connect';
 import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
+import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -40,6 +41,7 @@ type IQuery = {
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
+  spellingSuggestion: TSpellingSuggestion;
 }
 
 type RangeType = {min: number, max: number};
@@ -52,7 +54,9 @@ interface SearchPageState {
   itemsPerPage: number;
 }
 
-export const pageTitle = 'Search results for ';
+export const pageTitle = 'Results for ';
+export const pageTitleDefault = 'All products';
+export const pageIntroText = 'Did you mean ';
 
 export const itemsPerPages: number[] = [12, 24, 36];
 
@@ -206,6 +210,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       sortParams,
       pagination,
       category,
+      spellingSuggestion,
     } = this.props;
 
     const renderFilters: any[] = [];
@@ -358,24 +363,24 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       text: 'Sale',
     };
 
+    const PageIntroComponent = ({className, suggestion}: {className: string, suggestion: string | null}) => {
+      if(!suggestion) {
+        return null;
+      }
+      return (
+        <React.Fragment>
+          {pageIntroText}
+          <span className={className}>{suggestion}</span> ?
+        </React.Fragment>
+      );
+    };
 
     return (
       <AppMain>
-        <Grid container
-              justify="center"
-              alignItems="center"
-        >
-          { searchTerm
-            ? <Typography variant="title" color="inherit" align="center" className={ classes.pageHeader }
-                          id="pageTitle">
-              { pageTitle }
-              <Typography variant="title" component="span" className={ classes.searchTerm } id="searchTerm">
-                { searchTerm }
-              </Typography>
-            </Typography>
-            : null
-          }
-        </Grid>
+        <AppPageTitle
+          title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
+          intro={<PageIntroComponent className={classes.spellingSuggestion} suggestion={spellingSuggestion} />}
+        />
 
         <Grid container>
           <Grid item xs={ 3 }>

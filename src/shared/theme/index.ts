@@ -1,10 +1,9 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import {ThemeOptions} from "@material-ui/core/styles/createMuiTheme";
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import {IAppContainerStyles} from "./properties/new/appContainerStyles";
-import {IAppTypography} from "./properties/overwritten/appTypography";
-import {IAppFixedDimensions} from "./properties/new/appFixedDimensions";
-import {IAppColors} from "./properties/new/appColors";
+import { Theme, ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+import { IAppContainerStyles } from './properties/new/appContainerStyles';
+import { IAppTypography } from './properties/overwritten/appTypography';
+import { IAppFixedDimensions } from './properties/new/appFixedDimensions';
+import { IAppColors } from './properties/new/appColors';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
