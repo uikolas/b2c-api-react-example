@@ -16,9 +16,13 @@ export interface SearchState extends IReduxState {
 
 export const initialState: SearchState = {
   data: {
-    suggestions: [],
+    flyoutSearch: {
+      searchTerm: '',
+      suggestions: [],
+      categories: [],
+      completion: [],
+    },
     items: [],
-    searchTerm: '',
     filters: [],
     rangeFilters: [],
     sortParams: [],
@@ -33,7 +37,6 @@ export const initialState: SearchState = {
     },
     category: [],
     categoriesTree: [],
-    categories: [],
     spellingSuggestion: null,
   },
 };
@@ -50,11 +53,10 @@ export const pageSearch = produce<SearchState>(
         draft.initiated = true;
         break;
       case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
-        draft.data.suggestions = action.products;
-        draft.data.categories = action.categories;
-        draft.data.searchTerm = action.searchTerm;
-        draft.data.currency = action.currency || draft.data.currency;
-        draft.data.spellingSuggestion = null;
+        draft.data.flyoutSearch.suggestions = action.products;
+        draft.data.flyoutSearch.categories = action.categories;
+        draft.data.flyoutSearch.searchTerm = action.searchTerm;
+        draft.data.flyoutSearch.completion = action.completion;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -94,8 +96,10 @@ export const pageSearch = produce<SearchState>(
         draft.initiated = true;
         break;
       case PAGES_SEARCH_REQUEST_CLEAR:
-        draft.data.suggestions = [];
-        draft.data.searchTerm = action.searchTerm;
+        draft.data.flyoutSearch.searchTerm = action.searchTerm;
+        draft.data.flyoutSearch.suggestions = [];
+        draft.data.flyoutSearch.categories = [];
+        draft.data.flyoutSearch.completion = [];
         draft.data.spellingSuggestion = null;
         draft.error = false;
         draft.pending = false;

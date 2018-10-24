@@ -66,8 +66,11 @@ export class CatalogService {
   public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
-      let response: any;
-      response = await api.get('catalog-search-suggestions', {q: query, include: ''}, {withCredentials: true});
+      const response: any = await api.get(
+        'catalog-search-suggestions',
+        {q: query, include: 'abstract-product-prices'},
+        {withCredentials: true}
+      );
 
       if (response.ok) {
         dispatch({
@@ -76,6 +79,7 @@ export class CatalogService {
           categories: response.data.data[0].attributes.categories,
           searchTerm: query,
           currency: response.data.data[0].attributes.currency || '',
+          completion: response.data.data[0].attributes.completion,
         });
         return response.data;
       } else {
