@@ -8,31 +8,31 @@ import { categoriesLinks, socialMediaLinks } from './footer-links';
 import { AppFooterProps as Props } from './types';
 import { styles } from './styles';
 
-export const AppFooterComponent: React.SFC<Props> = ({ classes }) => (
+export const AppFooterComponent: React.SFC<Props> = ({classes}) => (
   <div className={ classes.footer }>
-    <Grid container direction="row" justify="space-between" className={classes.footerContainer}>
-      <Grid item sm={2}>
-        <Logo />
+    <Grid container direction="row" justify="space-between" className={ classes.footerContainer }>
+      <Grid item sm={ 2 }>
+        <Logo/>
       </Grid>
 
-      <Grid item sm={2}>
+      <Grid item sm={ 2 }>
         <Links title="Categories" links={ categoriesLinks }/>
       </Grid>
 
-      <Grid item sm={2}>
+      <Grid item sm={ 2 }>
         <Links title="Social Media" links={ socialMediaLinks } external/>
       </Grid>
 
       <Grid
         item
-        sm={2}
+        sm={ 2 }
         container
         direction="column"
         justify="flex-end"
         alignItems="flex-end"
       >
         <Grid item>
-          <Logos />
+          <Logos/>
         </Grid>
       </Grid>
     </Grid>

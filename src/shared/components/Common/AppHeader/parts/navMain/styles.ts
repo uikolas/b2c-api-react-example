@@ -2,18 +2,15 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  logoContainer: {
-    display: 'flex',
-    alignItems: 'center',
+  mainNav: {
+    textTransform: 'uppercase',
   },
-  logo: {
-    display: 'block',
-    marginRight: 8,
-  },
-  logoCopy: {
+  mainNavLink: {
     color: theme.appColors.black,
-    fontSize: '14px',
-    lineHeight: '18px',
-    opacity: .4,
+    marginRight: 32,
+    textDecoration: 'none',
+    '&:hover': {
+      color: theme.appColors.saleLabel,
+    },
   },
 });

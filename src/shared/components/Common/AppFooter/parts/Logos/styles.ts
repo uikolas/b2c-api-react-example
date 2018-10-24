@@ -11,5 +11,5 @@ export const styles = (theme: Theme) => createStyles({
   },
   logosListItem: {
     margin: '0 14px',
-  }
+  },
 });
