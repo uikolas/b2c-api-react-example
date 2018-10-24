@@ -23,6 +23,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
     categoriesTree: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categoriesTree : ownProps.categoriesTree,
     category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : ownProps.category,
+    currentCategory: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentCategory : ownProps.currentCategory,
     isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
     currency,
     spellingSuggestion,
