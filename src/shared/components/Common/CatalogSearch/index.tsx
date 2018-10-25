@@ -5,12 +5,15 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
 
-import { pathProductPageBase, pathSearchPage } from '../../../routes/contentRoutes';
+import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppPrice } from '../AppPrice';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
@@ -60,8 +63,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     });
   };
 
-  private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
-
   private handleFullSearch = (e: any) => {
     e.preventDefault();
     if (!this.props.isLoading) {
@@ -71,7 +72,14 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     }
   };
 
+  private handleSearchCompletion = (e: any) => {
+    this.props.sendSearchAction({q: e.currentTarget.dataset.query, currency: this.props.currency, include: ''});
+   // this.props.push(pathSearchPage);
+  };
+
   /* Render Helpers */
+
+  private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
   private renderInputComponent = (inputProps: any) => {
     const {classes, ref, ...other} = inputProps;
@@ -96,11 +104,21 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   private renderSuggestion = (suggestion: any, {query, isHighlighted}: any) => {
     const matches = match(suggestion.abstract_name, query);
     const parts = parse(suggestion.abstract_name, matches);
+    const { classes } = this.props;
 
     return (
-      <NavLink to={ `${pathProductPageBase}/${suggestion.abstract_sku}` } className={ this.props.classes.menuItem }>
-        <MenuItem selected={ isHighlighted } component="div" style={ {flexGrow: 1} }>
-          <span>
+      <NavLink to={ `${pathProductPageBase}/${suggestion.abstract_sku}` }>
+        <MenuItem selected={ isHighlighted } component="div" className={classes.menuItem}>
+          <div className={classes.imgWrapper}>
+            <img
+              height={ 60 }
+              src={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
+              alt={ suggestion.abstract_name }
+            />
+            <div className={ classes.actionAreaOverlay }></div>
+          </div>
+          <div className={ classes.description }>
+            <span>
             { parts.map((part, index: number) => {
               return part.highlight ? (
                 <span key={ String(index) } style={ {fontWeight: 500} }>
@@ -112,43 +130,96 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 </strong>
               );
             }) }
-          </span>
-          <img
-            width={ 30 } height={ 30 }
-            src={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
-            alt={ suggestion.abstract_name }
-          />
-          <span><AppPrice value={ suggestion.price }/></span>
+            </span>
+
+            <span><AppPrice value={ suggestion.price }/></span>
+          </div>
         </MenuItem>
       </NavLink>
     );
   };
 
   private renderSuggestionsContainer = (options: any) => {
-    const {categories} = this.props;
+    const {categories, completion, classes} = this.props;
+    let suggestQuery = options.query;
+
+    if (completion.length && completion[0].startsWith(suggestQuery)) {
+      suggestQuery = completion[0];
+    }
+    const matches = match(suggestQuery, options.query);
+    const parts = parse(suggestQuery, matches);
+
+    console.info(matches);
+    console.info(parts);
+    console.info(options.children);
+
+
+    const completions: any[] = [];
+    const renderedCategories: any[] = [];
+
+    for (let i = 0; i < 4; i++) {
+      if (completion[i]) {
+        completions.push(
+          <NavLink to={pathSearchPage}
+            data-query={completion[i]}
+            key={`completion-${i}`}
+            className={classes.completion}
+            onClick={this.handleSearchCompletion}
+          >
+            <SearchIcon/>
+            <span>{completion[i]}</span>
+          </NavLink>
+        );
+      }
+    }
+
+    for (let i = 0; i < 4; i++) {
+      if (categories[i]) {
+        renderedCategories.push(
+          <NavLink to={pathSearchPage}
+                   data-query={categories[i].name}
+                   key={`category-${i}`}
+                   className={classes.completion}
+                   onClick={this.handleSearchCompletion}
+          >
+            <div className={classes.completion}>{ categories[i].name }</div>
+          </NavLink>
+        );
+      }
+    }
 
     return (
       <div { ...options.containerProps }>
         <Paper square>
-          <div style={ {display: 'flex'} }>
-            {
-              categories.length ? (
-                <div style={ {padding: '0 5px', flexGrow: 1} }>
-                  <p><strong>Categories</strong></p>
-                  <div>
-                    { /*todo replace div with routerLinks*/ }
-                    { categories.map((category, index: number) => <div key={ index }>{ category.name }</div>) }
-                  </div>
-                </div>
-              ) : null
-            }
-            <div style={ {padding: '0 5px', flexGrow: 1} }>
-              <p><strong>Products</strong></p>
-              <div>
-                { /*todo replace div with routerLinks*/ }
-                { options.children }
-              </div>
+          <Typography paragraph variant="headline">
+            {options.query}
+          </Typography>
+          <div style={{marginLeft: '10%'}}>
+            <div>
+              {completions}
             </div>
+            <Typography variant="title" className={classes.marginTop}>
+              Categories
+            </Typography>
+            <Divider/>
+            <div className={classes.marginTop}>
+              {renderedCategories}
+            </div>
+            <Typography variant="title" className={classes.marginTop}>
+              Suggested Products
+            </Typography>
+            <Divider/>
+            <div className={classes.marginTop}>
+              {
+                options.children
+              }
+            </div>
+            <NavLink to={pathSearchPage}
+                     data-query={options.query}
+                     onClick={this.handleSearchCompletion}
+            >
+              <strong>See all suggested products</strong>
+            </NavLink>
           </div>
         </Paper>
       </div>

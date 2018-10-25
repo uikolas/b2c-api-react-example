@@ -1,16 +1,12 @@
 import { WithStyles } from '@material-ui/core';
 import { RouteProps } from 'react-router';
 import { styles } from './styles';
-import { Category } from '../../../interfaces/searchPageData';
-import { IProductCard } from '../../../interfaces/product';
-import { TAppCurrency } from '../../../reducers/Common/Init';
+import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
+import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 
-export interface CatalogProps extends WithStyles<typeof styles>, RouteProps {
+export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, FlyoutSearch {
   // connect
-  suggestions?: Array<IProductCard>;
-  searchTerm?: string;
-  categories?: Array<Category>;
-  currency: TAppCurrency;
+  currency?: TAppCurrency;
   isLoading?: boolean;
 
   sendSuggestionAction?(query: string): void;

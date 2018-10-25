@@ -9,7 +9,7 @@ import { sendSearchAction, sendSuggestionAction, clearSuggestions } from 'src/sh
 import { getProductDataAction } from 'src/shared/actions/Pages/Product';
 
 const mapStateToProps = (state: any, ownProps: any) => {
-  const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.flyoutSearch ? state.pageSearch.flyoutSearch : null;
+  const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.data ? state.pageSearch.data.flyoutSearch : null;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
 
   return (
@@ -17,6 +17,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
       categories: searchProps ? searchProps.categories : ownProps.categories,
       suggestions: searchProps ? searchProps.suggestions : ownProps.suggestions,
       searchTerm: searchProps ? searchProps.searchTerm : ownProps.searchTerm,
+      completion: searchProps ? searchProps.completion : ownProps.completion,
       // isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
       currency,
     }

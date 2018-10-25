@@ -27,7 +27,7 @@ export const styles = (theme: Theme) => createStyles({
     overflowY: 'auto',
   },
   suggestion: {
-    display: 'flex',
+    display: 'block',
   },
   suggestionsList: {
     margin: 0,
@@ -42,13 +42,45 @@ export const styles = (theme: Theme) => createStyles({
   },
   menuItem: {
     width: '100%',
+    height: '80px',
     display: 'flex',
-    justifyContent: 'space-between',
-    textDecoration: 'none',
-    flexGrow: 1,
+    alignItems: 'center',
+    marginTop: theme.spacing.unit / 2,
+    marginBottom: theme.spacing.unit / 2,
   },
   pendingProgress: {
     position: 'absolute',
     left: '40%',
+  },
+  completion: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing.unit / 2,
+  },
+  marginTop: {
+    marginTop: theme.spacing.unit,
+  },
+  description: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  imgWrapper: {
+    display: 'flex',
+    position: 'relative',
+    width: '80px',
+    height: '80px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing.unit,
+  },
+  actionAreaOverlay: {
+    position: "absolute",
+    background: "rgba(0, 0, 0, 0.10)",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 350,
   },
 });

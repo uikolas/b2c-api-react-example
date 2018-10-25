@@ -75,7 +75,7 @@ export class CatalogService {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          products: response.data.data[0].attributes.products,
+          products: response.data.data[0].attributes.products.slice(0, 3),
           categories: response.data.data[0].attributes.categories,
           searchTerm: query,
           currency: response.data.data[0].attributes.currency || '',
