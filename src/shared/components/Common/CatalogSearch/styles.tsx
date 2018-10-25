@@ -11,7 +11,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   container: {
     position: 'relative',
-    flexGrow: .9,
+    flexGrow: 1,
   },
   suggestionsContainer: {
     display: 'none',
@@ -37,8 +37,31 @@ export const styles = (theme: Theme) => createStyles({
   divider: {
     height: theme.spacing.unit * 2,
   },
-  input: {
+  inputRoot: {
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    paddingLeft: 5,
+  },
+  inputOutline: {
+    border: '1px solid #d9d9d9',
     backgroundColor: theme.palette.common.white,
+    zIndex: 1,
+  },
+  input: {
+    fontSize: 16,
+    lineHeight: '20px',
+    fontWeight: 'bold',
+    color: theme.appColors.grey,
+    padding: 13,
+    zIndex: 2,
+  },
+  inputIconContainer: {
+    position: 'relative',
+    zIndex: 2,
+    margin: 0,
+  },
+  inputIcon: {
+    fill: `${theme.appColors.grey} !important`,
   },
   menuItem: {
     width: '100%',

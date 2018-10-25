@@ -8,7 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Button from '@material-ui/core/Button';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
 
 import { pathProductPageBase, pathSearchPage } from '../../../routes/contentRoutes';
 import { AppPrice } from '../AppPrice';
@@ -64,7 +66,8 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   private handleFullSearch = (e: any) => {
     e.preventDefault();
-    if (!this.props.isLoading) {
+    const { value } = this.state;
+    if (!this.props.isLoading && value.length > 3) {
       this.props.sendSearchAction({q: this.state.value, currency: this.props.currency, include: ''});
 
       this.props.push(pathSearchPage);
@@ -77,19 +80,33 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     const {classes, ref, ...other} = inputProps;
 
     return (
-      <TextField
-        type="text"
-        fullWidth
-        InputProps={ {
-          inputRef: node => {
-            ref(node);
-          },
-          classes: {
-            input: classes.input,
-          },
-        } }
-        { ...other }
-      />
+      <form action="/" method="GET" onSubmit={this.handleFullSearch}>
+        <TextField
+          type="text"
+          variant="outlined"
+          fullWidth
+          InputProps={ {
+            inputRef: node => ref(node),
+            classes: {
+              root: classes.inputRoot,
+              formControl: classes.formControl,
+              notchedOutline: classes.inputOutline,
+              input: classes.input,
+            },
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                classes={{ root: classes.inputIconContainer }}
+              >
+                <IconButton onClick={this.handleFullSearch} aria-label="Search" type="submit">
+                  <SearchIcon classes={{ root: classes.inputIcon }} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          } }
+          { ...other }
+        />
+      </form>
     );
   };
 
@@ -177,7 +194,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
           { ...autosuggestProps }
           inputProps={ {
             classes,
-            placeholder: 'Search ...',
+            placeholder: 'What are you looking for?',
             value: this.state.value,
             onChange: this.handleChange,
           } }
@@ -189,9 +206,9 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             suggestion: classes.suggestion,
           } }
         />
-        <Button color="primary" onClick={ this.handleFullSearch } disabled={ isLoading }>
-          { buttonTitle }
-        </Button>
+        {/*<Button color="primary" onClick={ this.handleFullSearch } disabled={ isLoading }>*/}
+          {/*{ buttonTitle }*/}
+        {/*</Button>*/}
         {
           this.props.isLoading
             ? <div className={ classes.pendingProgress }><CircularProgress variant="indeterminate" size={ 34 }/></div>
