@@ -16,3 +16,4 @@ export type ClickEvent = React.MouseEvent<HTMLElement>;
 export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export type WithRouter<RouterState = AnyObject> = Partial<RouteComponentProps<RouterState>>;
+
