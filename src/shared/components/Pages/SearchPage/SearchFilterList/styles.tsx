@@ -6,13 +6,12 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   title: {
-    fontSize: "1.0rem",
+    fontSize: theme.appFixedDimensions.fontSize.medium,
     fontWeight: "bold",
     letterSpacing: 0.6,
     marginBottom: theme.spacing.unit * 2,
   },
-  list: {
-    paddingBottom: 0,
-    paddingTop: 0,
+  filter: {
+
   },
 });

@@ -8,6 +8,11 @@ export interface IAppFixedDimensions {
   };
   borderRadius: React.CSSProperties['borderRadius'];
   gridSpacing: GridSpacing;
+  fontSize: {
+    small: React.CSSProperties['fontSize'];
+    medium: React.CSSProperties['fontSize'];
+    big: React.CSSProperties['fontSize'];
+  };
 }
 
 export const appFixedDimensions: IAppFixedDimensions = {
@@ -18,4 +23,10 @@ export const appFixedDimensions: IAppFixedDimensions = {
   },
   borderRadius: 4,
   gridSpacing: 24,
+  fontSize: {
+    small: "0.87rem",
+    medium: "1.0rem",
+    big: "1.25rem",
+  },
+
 };

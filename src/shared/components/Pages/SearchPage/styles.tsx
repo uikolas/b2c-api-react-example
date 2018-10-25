@@ -36,6 +36,6 @@ export const styles = (theme: Theme) => createStyles({
   categoryItemText: {
     lineHeight: 2.29,
     letterSpacing: 0.4,
-    fontSize: "0.88rem",
+    fontSize: theme.appFixedDimensions.fontSize.small,
   },
 });
