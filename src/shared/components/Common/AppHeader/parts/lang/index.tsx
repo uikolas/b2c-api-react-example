@@ -15,8 +15,8 @@ const availableLanguages: language[] = [
     code: 'en',
   },
   {
-    name: 'Russian',
-    code: 'ru',
+    name: 'Deutsch',
+    code: 'de',
   },
 ];
 

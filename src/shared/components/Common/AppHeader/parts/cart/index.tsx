@@ -1,29 +1,83 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Popover from '@material-ui/core/Popover/Popover';
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { CartProps as Props } from './types';
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { PopoverDrop } from 'src/shared/components/Common/AppHeader/parts/popoverDrop';
+import { CartDrop } from './parts/cartDrop';
+import { CartProps as Props, CartState as State } from './types';
+import { connect } from './connect';
 import { styles } from './styles';
 
-const badgeVal: number = 0;
+@(withRouter as any)
+@connect
+export class CartComponent extends React.PureComponent<Props, State> {
+  public state: State = {
+    anchorEl: null,
+  };
 
-export const CartComponent: React.SFC<Props> = ({classes}) => (
-  <div>
-    <IconButton aria-label="Cart">
-      <Badge
-        badgeContent={2}
-        classes={{
-          colorPrimary: classes.badge,
-          badge: badgeVal === 0 && classes.hideBadge,
-        }}
-        color="primary"
-      >
-        <ShoppingCartIcon />
-      </Badge>
-    </IconButton>
-  </div>
-);
+  public componentDidUpdate(prevProps: any) {
+    if (this.props.location !== prevProps.location) {
+      this.closePopover();
+    }
+  }
+
+  private openPopover = ({currentTarget}: ClickEvent) => {
+    const { cartItemsQuantity } = this.props;
+    this.setState(() => ({anchorEl: cartItemsQuantity !== 0 ? currentTarget : null}));
+  };
+  private closePopover = () => this.setState(() => ({anchorEl: null}));
+
+  public render() {
+    const {anchorEl} = this.state;
+    const {classes, cartItemsQuantity} = this.props;
+    const open = Boolean(anchorEl);
+    const popoverProps = {
+      open,
+      anchorEl,
+      elevation: 0,
+      onClose: this.closePopover,
+    };
+    const cartButton = (
+      <IconButton aria-label="cart" onClick={ this.openPopover }>
+        <Badge
+          badgeContent={ cartItemsQuantity }
+          classes={ {
+            colorPrimary: classes.badge,
+            badge: cartItemsQuantity === 0 && classes.hideBadge,
+          } }
+          color="primary"
+        >
+          <ShoppingCartIcon/>
+        </Badge>
+      </IconButton>
+    );
+
+    return (
+      <div>
+        {cartItemsQuantity === 0 ? (
+          <Tooltip disableFocusListener placement="top" title="Cart is empty">
+            {cartButton}
+          </Tooltip>
+        ) : cartButton}
+
+        <Popover
+          { ...popoverProps }
+          anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
+          transformOrigin={ {vertical: 'top', horizontal: 'center'} }
+        >
+          <PopoverDrop>
+            <CartDrop/>
+          </PopoverDrop>
+        </Popover>
+      </div>
+    );
+  }
+}
 
 export const Cart = withStyles(styles)(CartComponent);

@@ -1,20 +1,29 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Popover from '@material-ui/core/Popover';
 import Person from '@material-ui/icons/Person';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { PopoverDrop } from '../popoverDrop';
 import { UserDrop } from './userDrop';
 import { UserProps as Props, UserState as State } from './types';
 import { styles } from './styles';
 
+@(withRouter as any)
 export class UserComponent extends React.PureComponent<Props, State> {
   public state: State = {
     anchorEl: null,
   };
 
-  private openPopover = ({currentTarget}: React.MouseEvent<HTMLElement>) => {
+  public componentDidUpdate(prevProps: any) {
+    if (this.props.location !== prevProps.location) {
+      this.closePopover();
+    }
+  }
+
+  private openPopover = ({currentTarget}: ClickEvent) => {
     this.setState(() => ({anchorEl: currentTarget}));
   };
   private closePopover = () => this.setState(() => ({anchorEl: null}));
