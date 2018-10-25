@@ -9,6 +9,7 @@ import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/ind
 import {RangeType} from "src/shared/components/Pages/SearchPage/types";
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
+import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
 
 
 interface SearchFilterListProps extends WithStyles<typeof styles> {
@@ -33,16 +34,9 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     updateRangeHandler,
   } = props;
 
-  const ItemWrapper = ({item, keyValue}: {item: JSX.Element, keyValue: string}): JSX.Element => {
-    return (
-      <Grid item xs={4} key={keyValue}>
-        {item}
-      </Grid>
-    );
-  };
-
   let filterItems: any[] | null = [];
   let rangeItems: any[] | null = [];
+  const numberToPrice = (value: number): number => (value / 100);
 
   if (!Array.isArray(filters) || !filters.length) {
     filterItems = null;
@@ -50,8 +44,8 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     filters.forEach((filter: ValueFacets) => {
       if (Array.isArray(filter.values) && filter.values.length) {
         filterItems.push(
-          <ItemWrapper
-            item={ <SprykerFilterElement
+          <FilterWrapper
+            filter={ <SprykerFilterElement
                       attributeName={ filter.name }
                       menuItems={ filter.values }
                       activeValues={ activeValuesFilters[filter.name] || [] }
@@ -70,22 +64,26 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
   if (!Array.isArray(ranges) || !ranges.length) {
     rangeItems = null;
   } else {
-    rangeItems = ranges.map((filter: RangeFacets) => (
-      <ItemWrapper
-        item={ <SprykerRange
-                  attributeName={ filter.name }
-                  min={ filter.min / 100 }
-                  max={ filter.max / 100 }
-                  currentValue={ activeValuesRanges[filter.name] || {
-                    min: filter.min / 100,
-                    max: filter.max / 100,
-                  } }
-                  handleChange={ updateRangeHandler }
-        />}
-        keyValue={filter.name}
-        key={filter.name}
-      />
-    ));
+    rangeItems = ranges.map((filter: RangeFacets) => {
+      const titleParts = filter.name.split("-");
+      const title = (titleParts.length > 1) ? titleParts[0] : filter.name;
+
+      return (
+        <SprykerRange
+          key={filter.name}
+          attributeName={ filter.name}
+          title={title.charAt(0).toUpperCase() + title.slice(1)}
+          min={ numberToPrice(filter.min) }
+          max={ numberToPrice(filter.max) }
+          currentValue={ activeValuesRanges[filter.name] || {
+            min: numberToPrice(filter.min),
+            max: numberToPrice(filter.max),
+          } }
+          handleChange={ updateRangeHandler }
+          Wrapper={FilterWrapper}
+        />
+      );
+    });
   }
 
   return (

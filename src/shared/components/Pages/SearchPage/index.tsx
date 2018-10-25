@@ -27,6 +27,7 @@ import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
 import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
 import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
+import {TRangeInputName} from "src/shared/interfaces/serach/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -89,7 +90,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
   };
 
-  public updateRangeFilters = (name: string, {min, max}: RangeType) => {
+  public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
     this.setState((prevState: SearchPageState) => ({
       activeRangeFilters: {
         ...prevState.activeRangeFilters,
