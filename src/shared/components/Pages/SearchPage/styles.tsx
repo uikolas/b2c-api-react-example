@@ -29,13 +29,5 @@ export const styles = (theme: Theme) => createStyles({
   spellingSuggestion: {
     color: theme.appColors.blue,
   },
-  categoryItem: {
-    paddingTop: 0,
-    paddingBottom: 0,
-  },
-  categoryItemText: {
-    lineHeight: 2.29,
-    letterSpacing: 0.4,
-    fontSize: theme.appFixedDimensions.fontSize.small,
-  },
+
 });
