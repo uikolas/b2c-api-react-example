@@ -1,8 +1,9 @@
-export const cartAuthenticateErrorText = 'You should register or login to add item to the cart';
-export const orderAuthenticateErrorText = 'You should register or login to see your history of orders';
+export const cartAuthenticateErrorText = 'You should login to add item to the cart';
+export const orderAuthenticateErrorText = 'You should login to see your history of orders';
 export const emptyValueErrorText = 'Selected value is empty!';
-export const wishlistAuthenticateErrorText = 'You should register or login to see your history of orders';
+export const wishlistAuthenticateErrorText = 'You should login to see your history of orders';
 export const inputSaveErrorText = 'Can\'t handle this value or field name';
 export const emptyRequiredFieldsErrorText = 'Not all fields are filled';
 export const passwordsNotEqualErrorText = 'The passwords must match';
-export const CustomerProfileAuthenticateErrorText = 'You should register or login to see your Profile';
+export const CustomerProfileAuthenticateErrorText = 'You should login to see your Profile';
+export const unexpectedServerError = 'Sorry, we have an unexpected server error';
