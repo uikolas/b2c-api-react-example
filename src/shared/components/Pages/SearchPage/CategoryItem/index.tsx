@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { styles } from './styles';
 import {SearchPageContext} from '../context';
-import {TCategoryId} from "src/shared/interfaces/serach/index";
+import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 
 interface CategoryItemProps extends WithStyles<typeof styles> {
   categoryValue: TCategoryId;

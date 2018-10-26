@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TCategoryId} from "src/shared/interfaces/serach/index";
+import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 
 type TSearchPageContext = {
   selectCategoryHandler: (categoryId: TCategoryId) => any;

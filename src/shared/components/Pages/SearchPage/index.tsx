@@ -25,8 +25,9 @@ import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
 import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
 import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
-import {TCategoryId, TRangeInputName} from "src/shared/interfaces/serach/index";
 import {SearchPageContext} from './context';
+import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 
 type IQuery = {
   q?: string,

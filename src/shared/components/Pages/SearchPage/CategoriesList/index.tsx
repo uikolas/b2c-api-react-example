@@ -7,7 +7,7 @@ import List from '@material-ui/core/List';
 import { styles } from './styles';
 import {Category, FilterValue} from "src/shared/interfaces/searchPageData/index";
 import {CategoryItem} from "src/shared/components/Pages/SearchPage/CategoryItem/index";
-import {TCategoryId} from "src/shared/interfaces/serach/index";
+import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 
 interface CategoriesListProps extends WithStyles<typeof styles> {
   categories: Array<FilterValue>;

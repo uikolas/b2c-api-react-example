@@ -1,9 +1,11 @@
 import * as React from 'react';
+import {ChangeEvent} from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import {RangeInput} from "src/shared/components/UI/SprykerRangeFilter/RangeInput/index";
-import {ChangeEvent} from "react";
-import {TRangeInputName} from "src/shared/interfaces/serach/index";
+
+
+export type TRangeInputName = 'min' | 'max';
 
 interface SprykerRangeProps extends WithStyles<typeof styles> {
   title: string;
