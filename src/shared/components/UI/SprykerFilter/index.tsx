@@ -4,6 +4,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
+import { ChevronLeft } from '@material-ui/icons';
 
 import { styles } from './styles';
 
@@ -12,11 +13,12 @@ export interface IMenuItemsDropdown {
   doc_count: string | number;
 }
 
-interface SprykerFilterProps extends WithStyles<typeof styles> {
+export interface SprykerFilterProps extends WithStyles<typeof styles> {
   attributeName?: string;
   handleChange?: Function;
   menuItems?: Array<IMenuItemsDropdown>;
   activeValues?: Array<string>;
+  extraClassName?: string;
 }
 
 interface SprykerFilterState {
@@ -48,10 +50,11 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
       attributeName,
       menuItems,
       activeValues,
+      extraClassName,
     } = this.props;
 
     return (
-      <div className={ classes.root }>
+      <div className={extraClassName ? `${classes.root} ${extraClassName}` : classes.root}>
         <FormControl className={ classes.formControl }>
           <Select
             multiple
@@ -66,7 +69,12 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
             onOpen={ this.handleChangeShowing }
             value={ activeValues }
             onChange={ this.handleChangeValues }
-            variant="filled"
+            disableUnderline= {true}
+            IconComponent={ChevronLeft}
+            classes = {{
+              icon: classes.icon,
+              select: classes.input,
+            }}
           >
             { menuItems.map((item) => (
               <MenuItem
@@ -74,8 +82,8 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
                 value={ item.value }
                 className={ classes.menuItem }
               >
-                <span>{ item.value }</span>
-                <span>{ item.doc_count }</span>
+                <span className={ classes.menuItemName }>{ item.value }</span>
+                <span>({ item.doc_count })</span>
               </MenuItem>))
             }
           </Select>

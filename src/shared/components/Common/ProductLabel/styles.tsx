@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => createStyles({
     minWidth: 33,
   },
   labelText: {
-    fontSize: "0.87rem",
+    fontSize: theme.appFixedDimensions.fontSize.small,
     color: theme.appColors.white,
     padding: 7,
     letterSpacing: 0.6,
