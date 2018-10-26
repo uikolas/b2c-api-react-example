@@ -1,6 +1,7 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Chip from '@material-ui/core/Chip';
+import { CloseOutlined } from '@material-ui/icons';
 
 import { styles } from './styles';
 import {SearchPageContext} from '../context';
@@ -35,6 +36,8 @@ export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) =>
           variant="outlined"
           className={classes.chip}
           onDelete={ deleteActiveFilterHandler(filterName, filterValue) }
+          deleteIcon={<CloseOutlined className={classes.close} />}
+          classes={{label: classes.label}}
         />
       ) }
     </SearchPageContext.Consumer>
