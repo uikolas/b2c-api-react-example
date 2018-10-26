@@ -3,7 +3,6 @@ import {
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
   PAGES_SUGGESTION_REQUEST,
-  CATEGORIES_REQUEST,
 } from '../../constants/ActionTypes/Pages/Search';
 import {
   IReduxState,
@@ -37,7 +36,6 @@ export const initialState: SearchState = {
       validItemsPerPageOptions: [12],
     },
     category: [],
-    categoriesTree: [],
     spellingSuggestion: null,
   },
 };
@@ -61,9 +59,7 @@ export const pageSearch = produce<SearchState>(
         draft.data.flyoutSearch.categories = action.categories;
         draft.data.flyoutSearch.completion = action.completion;
         draft.data.flyoutSearch.pending = false;
-        draft.data.searchTerm = action.searchTerm;
         break;
-      case `${CATEGORIES_REQUEST}_REJECTED`:
       case `${PAGES_SEARCH_REQUEST}_REJECTED`:
         draft.error = action.error;
         draft.pending = false;
@@ -84,14 +80,6 @@ export const pageSearch = produce<SearchState>(
         draft.data.pagination = action.pagination;
         draft.data.currentCategory = action.currentCategory;
         draft.data.spellingSuggestion = action.spellingSuggestion || null;
-        draft.error = false;
-        draft.pending = false;
-        draft.fulfilled = true;
-        draft.rejected = false;
-        draft.initiated = true;
-        break;
-      case `${CATEGORIES_REQUEST}_FULFILLED`:
-        draft.data.categoriesTree = action.categories;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;

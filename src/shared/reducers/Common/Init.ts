@@ -1,4 +1,4 @@
-import { INIT_APP_ACTION_TYPE } from '../../constants/ActionTypes/Common/Init';
+import { INIT_APP_ACTION_TYPE, CATEGORIES_TREE_REQUEST } from '../../constants/ActionTypes/Common/Init';
 import { IReduxState } from '../../../typings/app';
 
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
@@ -10,6 +10,13 @@ export type TAppStore = string | null;
 export type TAppLocale = string | null;
 export type TAppTimeZone = string | null;
 
+export interface ICategory {
+  nodeId?: number | string;
+  order?: number | string;
+  name?: string;
+  children?: Array<ICategory> | object;
+}
+
 export interface IInitData {
   ok?: boolean;
   priceMode: TAppPriceMode;
@@ -17,6 +24,7 @@ export interface IInitData {
   store: TAppStore;
   locale: TAppLocale;
   timeZone: TAppTimeZone;
+  categoriesTree?: Array<ICategory>;
 }
 
 export interface IInitState extends IReduxState {
@@ -31,17 +39,30 @@ export const initialState: IInitState = {
     store: null,
     locale: null,
     timeZone: null,
+    categoriesTree: [],
   },
 };
 
 export const init = function(state: IInitState = initialState, action: any): IInitState {
   switch (action.type) {
     case `${INIT_APP_ACTION_TYPE}_PENDING`:
+    case `${CATEGORIES_TREE_REQUEST}_PENDING`:
       return handleInitAppPending(state, action.payload);
     case `${INIT_APP_ACTION_TYPE}_FULFILLED`:
       return handleInitAppFulfilled(state, action.payload);
     case `${INIT_APP_ACTION_TYPE}_REJECTED`:
+    case `${CATEGORIES_TREE_REQUEST}_REJECTED`:
       return handleInitAppRejected(state, action.payload);
+    case `${CATEGORIES_TREE_REQUEST}_FULFILLED`:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          ok: true,
+          categoriesTree: action.categories,
+        },
+        ...getReducerPartFulfilled(),
+      };
     default:
       return state;
   }
@@ -124,4 +145,8 @@ export function getPayloadForCreateCart(state: any, props: any): ICartCreatePayl
       }
       : null
   );
+}
+
+export function getCategoriesTree(state: any, props: any): ICategory[] {
+  return state.init.data.categoriesTree;
 }

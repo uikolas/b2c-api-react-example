@@ -32,13 +32,6 @@ interface Pagination {
   validItemsPerPageOptions: number[];
 }
 
-export interface Category {
-  nodeId?: number | string;
-  order?: number | string;
-  name?: string;
-  children?: Array<Category> | object;
-}
-
 export interface FlyoutSearch {
   suggestions?: Array<IProductCard>;
   categories?: Array<{[name: string]: string}>;
@@ -57,7 +50,6 @@ export interface ISearchPageData {
   sortParams?: Array<string>;
   currentSort?: string;
   pagination: Pagination;
-  categoriesTree: Array<Category>;
   category: Array<FilterValue>;
   currentCategory: string;
   spellingSuggestion: TSpellingSuggestion | null;

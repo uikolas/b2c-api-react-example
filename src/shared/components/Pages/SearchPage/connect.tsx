@@ -3,13 +3,14 @@ import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {getSpellingSuggestion, SearchState} from 'src/shared/reducers/Pages/Search';
-import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { getAppCurrency, getCategoriesTree, TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
 import {TSpellingSuggestion} from "src/shared/interfaces/searchPageData/index";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
   const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
+  const categoriesTree: ICategory[] = getCategoriesTree(state, ownProps);
   const spellingSuggestion: TSpellingSuggestion = getSpellingSuggestion(state, ownProps);
 
   return ({
@@ -21,11 +22,11 @@ const mapStateToProps = (state: any, ownProps: any) => {
     sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
     currentSort: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentSort : ownProps.currentSort,
     pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
-    categoriesTree: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categoriesTree : ownProps.categoriesTree,
     category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : ownProps.category,
     currentCategory: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentCategory : ownProps.currentCategory,
     isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
     currency,
+    categoriesTree,
     spellingSuggestion,
   });
 };

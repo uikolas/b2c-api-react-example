@@ -5,13 +5,14 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
 import { styles } from './styles';
-import {Category, FilterValue} from "src/shared/interfaces/searchPageData/index";
+import {FilterValue} from "src/shared/interfaces/searchPageData/index";
 import {CategoryItem} from "src/shared/components/Pages/SearchPage/CategoryItem/index";
 import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {ICategory} from 'src/shared/reducers/Common/Init';
 
 interface CategoriesListProps extends WithStyles<typeof styles> {
   categories: Array<FilterValue>;
-  categoriesTree: Array<Category>;
+  categoriesTree: Array<ICategory>;
   selectedCategory: TCategoryId;
 }
 

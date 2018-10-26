@@ -11,9 +11,9 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
-import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
+import { sendSearchAction } from 'src/shared/actions/Pages/Search';
 import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
-import { TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
@@ -39,6 +39,7 @@ type IQuery = {
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
+  categoriesTree: ICategory[];
 }
 
 type RangeType = {min: number, max: number};
@@ -81,10 +82,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       selectedCategory: props.currentCategory,
       itemsPerPage: props.pagination.currentItemsPerPage,
     };
-  }
-
-  public componentDidMount() {
-    this.props.dispatch(getCategoriesAction());
   }
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
@@ -344,8 +341,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                           Sorting...
                         </MenuItem>
                         {
-                          sortParams && sortParams.map((param) => <MenuItem value={ param }
-                                                                            key={ `sort-${param}` }>{ param }</MenuItem>)
+                          sortParams && sortParams.map((param) => (
+                            <MenuItem value={ param } key={ `sort-${param}` }>
+                              { param }
+                            </MenuItem>
+                          ))
                         }
                       </Select>
                     </FormControl>
