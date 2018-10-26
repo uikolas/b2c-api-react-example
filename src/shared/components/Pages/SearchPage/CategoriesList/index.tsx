@@ -32,7 +32,6 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
 
   const categoryList = categories.map((category: FilterValue) => {
     let name: string;
-
     const searchName = (leaf: any) => {
       if (leaf.nodeId === category.value) {
         name = leaf.name;
@@ -43,7 +42,6 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
       }
       return false;
     };
-
     categoriesTree.some(searchName);
     if (!name) {
       return null;
