@@ -10,14 +10,28 @@ export const styles = (theme: Theme) => createStyles({
     padding: '26px 0',
   },
   headerSearchContainer: {
-    width: '50%',
-    minWidth: 200,
+    [theme.breakpoints.up('sm')]: {
+      width: '50%',
+      minWidth: 200,
+    }
   },
   headerContainer: {
     ...theme.appContainerStyles,
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  headerTopContainer: {
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  },
+  logoContainer: {
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: 10,
+    },
   },
   headerBottom: {
     padding: '8px 0',

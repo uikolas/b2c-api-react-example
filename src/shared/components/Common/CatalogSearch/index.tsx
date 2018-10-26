@@ -67,7 +67,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   private handleFullSearch = (e: any) => {
     e.preventDefault();
     const { value } = this.state;
-    if (!this.props.isLoading && value.length > 3) {
+    if (!this.props.isLoading && value.length > 2) {
       this.props.sendSearchAction({q: this.state.value, currency: this.props.currency, include: ''});
 
       this.props.push(pathSearchPage);

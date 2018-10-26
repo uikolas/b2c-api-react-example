@@ -1,5 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { merge } from 'src/shared/helpers/common';
 import CatalogSearch from '../CatalogSearch';
 import { Logo } from './parts/logo';
 import { MainNav } from './parts/navMain';
@@ -10,8 +11,10 @@ import { styles } from './styles';
 export const AppHeaderComponent: React.SFC<Props> = ({classes}) => (
   <div className={ classes.header }>
     <div className={ classes.headerTop }>
-      <div className={ classes.headerContainer }>
-        <Logo/>
+      <div className={ merge([classes.headerContainer, classes.headerTopContainer]) }>
+        <div className={ classes.logoContainer }>
+          <Logo/>
+        </div>
 
         <div className={ classes.headerSearchContainer }>
           <CatalogSearch/>
@@ -22,7 +25,7 @@ export const AppHeaderComponent: React.SFC<Props> = ({classes}) => (
       <div className={ classes.headerContainer }>
         <MainNav/>
 
-        <AddNav />
+        <AddNav/>
       </div>
     </div>
   </div>
