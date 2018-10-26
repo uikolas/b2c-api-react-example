@@ -61,7 +61,6 @@ export const pageSearch = produce<SearchState>(
         draft.data.flyoutSearch.categories = action.categories;
         draft.data.flyoutSearch.completion = action.completion;
         draft.data.flyoutSearch.pending = false;
-        draft.data.searchTerm = action.searchTerm;
         break;
       case `${CATEGORIES_REQUEST}_REJECTED`:
       case `${PAGES_SEARCH_REQUEST}_REJECTED`:

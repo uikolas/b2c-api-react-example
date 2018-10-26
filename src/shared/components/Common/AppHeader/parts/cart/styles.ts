@@ -4,7 +4,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   badge: {
     transition: 'transform .3s ease-in-out',
-    background: theme.appColors.saleLabel,
+    background: theme.appColors.blue,
     width: 'auto',
     minWidth: 18,
     right: 'auto',

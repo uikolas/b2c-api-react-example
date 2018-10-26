@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
+    position: 'relative',
   },
   container: {
     position: 'relative',
@@ -22,13 +23,12 @@ export const styles = (theme: Theme) => createStyles({
   suggestionsContainerOpen: {
     display: 'block',
     position: 'absolute',
-    zIndex: 1,
+    zIndex: 5,
     marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0,
+    left: '5%',
     maxHeight: '60vh',
     overflowY: 'auto',
-    width: '30vw',
+    width: '90%',
   },
   suggestion: {
     display: 'block',
@@ -76,6 +76,7 @@ export const styles = (theme: Theme) => createStyles({
   pendingProgress: {
     position: 'absolute',
     left: '40%',
+    zIndex: 10,
   },
   completion: {
     display: 'flex',

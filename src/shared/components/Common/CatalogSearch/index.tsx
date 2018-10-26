@@ -20,6 +20,7 @@ import { AppPrice } from '../AppPrice';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
+import {priceTypeNameOriginal} from "src/shared/interfaces/product";
 
 export const buttonTitle = 'Search';
 
@@ -79,6 +80,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     const query = e.currentTarget.dataset.query.trim();
     this.setState({value: query});
     this.props.sendSearchAction({q: query, currency: this.props.currency, include: ''});
+    this.props.clearSuggestions(query);
   };
 
   /* Render Helpers */
@@ -150,7 +152,21 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             }) }
             </span>
 
-            <span><AppPrice value={ suggestion.price }/></span>
+            <AppPrice
+              value={ suggestion.prices && suggestion.prices.length
+                ? suggestion.prices[0].grossAmount
+                : suggestion.price }
+              priceType={ suggestion.prices && suggestion.prices.length ? suggestion.prices[0].priceTypeName : '' }
+            />
+
+            {
+              suggestion.prices && suggestion.prices.length > 1
+                ? <AppPrice
+                    value={ suggestion.prices[1].grossAmount }
+                    priceType={ suggestion.prices[1].priceTypeName }
+                  />
+                : null
+            }
           </div>
         </MenuItem>
       </NavLink>
@@ -296,7 +312,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         {/*</Button>*/}
         {
           this.props.isLoading
-            ? <div className={ classes.pendingProgress }><CircularProgress variant="indeterminate" size={ 34 }/></div>
+            ? <div className={ classes.pendingProgress }><CircularProgress size={ 34 } color="primary"/></div>
             : null
         }
       </div>
