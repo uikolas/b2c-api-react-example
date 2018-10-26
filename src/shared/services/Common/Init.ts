@@ -5,6 +5,10 @@ import {
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction,
+  categoriesPendingState,
+  categoriesRejectedState,
+  categoriesFulfilledState,
+  getCategoriesAction,
 } from '../../actions/Common/Init';
 import { parseStoreResponse } from '../../helpers/init/store';
 
@@ -19,6 +23,8 @@ export class InitAppService {
       if (response.ok) {
         const responseParsed = parseStoreResponse(response.data);
         dispatch(initApplicationDataFulfilledStateAction(responseParsed));
+
+        dispatch(getCategoriesAction());
         return response.data;
       } else {
         dispatch(initApplicationDataRejectedStateAction(response.problem));
@@ -29,6 +35,28 @@ export class InitAppService {
     } catch (error) {
       dispatch(initApplicationDataRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async getCategoriesTree(dispatch: Function): Promise<any> {
+    try {
+      dispatch(categoriesPendingState());
+      const response: any = await api.get('category-trees', {}, {withCredentials: true});
+
+      if (response.ok) {
+        dispatch(categoriesFulfilledState(response.data.data[0].attributes.categoryNodesStorage));
+        return response.data.data[0];
+      } else {
+        dispatch(categoriesRejectedState(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      console.error('Categories catch:', error);
+      dispatch(categoriesRejectedState(error.message));
+      toast.error('Unexpected Error: ' + error);
       return null;
     }
   }

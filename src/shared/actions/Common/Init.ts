@@ -1,4 +1,4 @@
-import { INIT_APP_ACTION_TYPE, SET_AUTH_FROM_STORAGE } from '../../constants/ActionTypes/Common/Init';
+import { INIT_APP_ACTION_TYPE, SET_AUTH_FROM_STORAGE, CATEGORIES_TREE_REQUEST } from '../../constants/ActionTypes/Common/Init';
 import { InitAppService } from '../../services/Common/Init';
 import { IInitData } from '../../reducers/Common/Init';
 
@@ -20,6 +20,21 @@ export const initApplicationDataFulfilledStateAction = (payload: IInitData) => (
   payload,
 });
 
+export const categoriesPendingState = () => ({
+  type: CATEGORIES_TREE_REQUEST + '_PENDING',
+});
+
+export const categoriesRejectedState = (message: string) => ({
+  type: CATEGORIES_TREE_REQUEST + '_REJECTED',
+  payload: {error: message},
+});
+
+export const categoriesFulfilledState = (categories: any[]) => ({
+  type: CATEGORIES_TREE_REQUEST + '_FULFILLED',
+  categories,
+});
+
+
 export const initApplicationDataAction = function(payload: IInitApplicationDataPayload) {
   return (dispatch: Function, getState: Function) => {
     InitAppService.getInitData(dispatch, payload);
@@ -30,3 +45,10 @@ export const setAuthFromStorageAction = (payload: {expiresIn: string, accessToke
   type: SET_AUTH_FROM_STORAGE + '_FULFILLED',
   payload,
 });
+
+export const getCategoriesAction = function() {
+  return (dispatch: Function, getState: Function) => {
+    InitAppService.getCategoriesTree(dispatch);
+  };
+};
+
