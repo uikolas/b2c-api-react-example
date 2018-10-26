@@ -11,6 +11,7 @@ import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
 import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 
 interface SearchFilterListProps extends WithStyles<typeof styles> {
@@ -92,9 +93,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <Typography component="h2" color="inherit" className={classes.title}>
-          {title}
-        </Typography>
+        <AppPageSubTitle title={title} />
       </Grid>
 
       <Grid container alignItems="flex-start" spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>

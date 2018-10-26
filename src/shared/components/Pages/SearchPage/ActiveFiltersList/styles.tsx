@@ -5,9 +5,6 @@ export const styles = (theme: Theme) => createStyles({
   root: {
 
   },
-  title: {
-
-  },
   list: {
 
   },

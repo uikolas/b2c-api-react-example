@@ -8,6 +8,7 @@ import { styles } from './styles';
 import {Category, FilterValue} from "src/shared/interfaces/searchPageData/index";
 import {CategoryItem} from "src/shared/components/Pages/SearchPage/CategoryItem/index";
 import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 interface CategoriesListProps extends WithStyles<typeof styles> {
   categories: Array<FilterValue>;
@@ -65,9 +66,7 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <Typography component="h2" color="inherit" className={classes.title}>
-          {title}
-        </Typography>
+        <AppPageSubTitle title={title} />
         <List component="nav" className={ classes.list }>
           { categoryList }
         </List>

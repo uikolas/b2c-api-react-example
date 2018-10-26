@@ -6,13 +6,13 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {IFilterItem, TActiveFilters, TFilterItemValue} from "src/shared/components/Pages/SearchPage/types";
 import {ActiveFilterItem} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/index";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 interface ActiveFiltersListProps extends WithStyles<typeof styles> {
   activeValuesFilters: TActiveFilters;
 }
 
 const title = 'Active Filters';
-
 
 export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) => {
   const {classes, activeValuesFilters } = props;
@@ -27,11 +27,7 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
       }));
       itemsGlobalCollection.push(...itemsLocalCollection);
     }
-
   }
-
-  console.log('itemsGlobalCollection ', itemsGlobalCollection);
-
   if (!itemsGlobalCollection.length) {
     return null;
   }
@@ -43,9 +39,7 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <Typography component="h2" color="inherit" className={classes.title}>
-          {title}
-        </Typography>
+        <AppPageSubTitle title={title} />
       </Grid>
 
       <Grid container
