@@ -52,6 +52,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
                       activeValues={ activeValuesFilters[filter.name] || [] }
                       handleChange={ updateFilterHandler }
                       extraClassName={classes.filter}
+                      isShowSelected={false}
                     />
             }
             keyValue={filter.name}

@@ -8,14 +8,14 @@ import {TFilterItemName, TFilterItemValue} from "src/shared/components/Pages/Sea
 import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
 
 interface ActiveFilterItemProps extends WithStyles<typeof styles> {
-  label: TFilterItemValue;
+  filterValue: TFilterItemValue;
   filterName: TFilterItemName;
 }
 
 export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) => {
   const {
     classes,
-    label,
+    filterValue,
     filterName,
   } = props;
 
@@ -27,15 +27,14 @@ export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) =>
   }
 
   return (
-    // handleDelete
 
-    // onDelete={ this.handleDelete(item) }
     <SearchPageContext.Consumer>
-      {({selectCategoryHandler}) => (
+      {({deleteActiveFilterHandler}) => (
         <Chip
-          label={`${(title)}: ${label}`}
+          label={`${(title)}: ${filterValue}`}
           variant="outlined"
           className={classes.chip}
+          onDelete={ deleteActiveFilterHandler(filterName, filterValue) }
         />
       ) }
     </SearchPageContext.Consumer>

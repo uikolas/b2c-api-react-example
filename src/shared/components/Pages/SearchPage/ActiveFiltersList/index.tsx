@@ -56,7 +56,7 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
        {itemsGlobalCollection.map((item: IFilterItem) => (
          <ActiveFilterItem
            key={`${item.name}-${item.value}`}
-           label={item.value}
+           filterValue={item.value}
            filterName={item.name}
          />)
        )}

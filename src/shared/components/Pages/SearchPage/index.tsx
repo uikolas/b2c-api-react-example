@@ -26,7 +26,10 @@ import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/in
 import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
 import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
 import {SearchPageContext} from './context';
-import {TActiveFilters, TActiveRangeFilters, TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {
+  TActiveFilters, TActiveRangeFilters, TCategoryId, TFilterItemName,
+  TFilterItemValue
+} from "src/shared/components/Pages/SearchPage/types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
 
@@ -218,6 +221,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathSearchPage}${name}`);
   };
 
+  public deleteActiveFilterHandler = (filterName: TFilterItemName,
+                                      filterValue: TFilterItemValue): any => (event: React.MouseEvent<HTMLElement>) => {
+    const values = [...this.state.activeFilters[filterName]].filter((val: TFilterItemValue) => val !== filterValue);
+    this.updateActiveFilters(filterName, values);
+  };
+
   public render() {
     const {
       classes,
@@ -294,6 +303,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
           <SearchPageContext.Provider
             value={{
               selectCategoryHandler: this.selectCategory,
+              deleteActiveFilterHandler: this.deleteActiveFilterHandler,
             }}
           >
 
