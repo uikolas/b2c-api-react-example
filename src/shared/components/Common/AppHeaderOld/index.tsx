@@ -151,7 +151,7 @@ export class AppHeaderBase extends React.Component<AppHeaderProps, AppHeaderStat
 
 const DecoratedHeader = withStyles(styles)(AppHeaderBase);
 
-export const AppHeader = reduxify(
+export const AppHeaderOld = reduxify(
   (state: any, ownProps: any) => {
     const routerProps: RouteProps = state.routing ? state.routing : {};
     const cartItemsQuantity: TProductQuantity = getTotalItemsQuantity(state, ownProps);

@@ -34,6 +34,11 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   headerBottom: {
+    position: 'relative',
     padding: '8px 0',
   },
+  preloader: {
+    top: '100%',
+    padding: 0,
+  }
 });

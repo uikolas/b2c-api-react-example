@@ -2,13 +2,14 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { merge } from 'src/shared/helpers/common';
 import CatalogSearch from '../CatalogSearch';
+import { Preloader } from '../Preloader';
 import { Logo } from './parts/logo';
 import { MainNav } from './parts/navMain';
 import { AddNav } from './parts/navAdditional';
 import { AppHeaderProps as Props } from './types';
 import { styles } from './styles';
 
-export const AppHeaderComponent: React.SFC<Props> = ({classes}) => (
+export const AppHeaderComponent: React.SFC<Props> = ({classes, isLoading}) => (
   <div className={ classes.header }>
     <div className={ classes.headerTop }>
       <div className={ merge([classes.headerContainer, classes.headerTopContainer]) }>
@@ -27,6 +28,7 @@ export const AppHeaderComponent: React.SFC<Props> = ({classes}) => (
 
         <AddNav/>
       </div>
+      <Preloader extraClasses={classes.preloader}/>
     </div>
   </div>
 );

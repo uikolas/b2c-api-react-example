@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: 32,
     textDecoration: 'none',
     '&:hover': {
-      color: theme.appColors.saleLabel,
+      color: theme.appColors.blue,
     },
   },
 });
