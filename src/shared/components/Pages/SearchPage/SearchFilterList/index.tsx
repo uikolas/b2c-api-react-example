@@ -6,18 +6,19 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {SprykerFilterElement} from "src/shared/components/UI/SprykerFilter/index";
 import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/index";
-import {RangeType} from "src/shared/components/Pages/SearchPage/types";
+import {RangeType, TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/SearchPage/types";
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
+import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
 
 
 interface SearchFilterListProps extends WithStyles<typeof styles> {
   filters:  Array<ValueFacets>;
   updateFilterHandler: Function;
-  activeValuesFilters: {[name: string]: string[]};
+  activeValuesFilters: TActiveFilters;
   ranges: Array<RangeFacets>;
-  activeValuesRanges: {[name: string]: RangeType};
+  activeValuesRanges: TActiveRangeFilters;
   updateRangeHandler: Function;
 }
 
@@ -65,14 +66,11 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     rangeItems = null;
   } else {
     rangeItems = ranges.map((filter: RangeFacets) => {
-      const titleParts = filter.name.split("-");
-      const title = (titleParts.length > 1) ? titleParts[0] : filter.name;
-
       return (
         <SprykerRange
           key={filter.name}
           attributeName={ filter.name}
-          title={title.charAt(0).toUpperCase() + title.slice(1)}
+          title={firstLetterToUpperCase(filter.name)}
           min={ numberToPrice(filter.min) }
           max={ numberToPrice(filter.max) }
           currentValue={ activeValuesRanges[filter.name] || {

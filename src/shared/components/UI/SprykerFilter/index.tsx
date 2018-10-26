@@ -19,6 +19,7 @@ export interface SprykerFilterProps extends WithStyles<typeof styles> {
   menuItems?: Array<IMenuItemsDropdown>;
   activeValues?: Array<string>;
   extraClassName?: string;
+  isShowSelected?: boolean;
 }
 
 interface SprykerFilterState {
@@ -51,6 +52,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
       menuItems,
       activeValues,
       extraClassName,
+      isShowSelected,
     } = this.props;
 
     return (
@@ -87,14 +89,16 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               </MenuItem>))
             }
           </Select>
-          { activeValues.map(item => (
-            <Chip
-              key={ item }
-              label={ item }
-              variant="outlined"
-              onDelete={ this.handleDelete(item) }
-              className={ classes.chip }
-            />))
+          { isShowSelected
+            ? activeValues.map(item => (
+                <Chip
+                  key={ item }
+                  label={ item }
+                  variant="outlined"
+                  onDelete={ this.handleDelete(item) }
+                  className={ classes.chip }
+                />))
+            : null
           }
         </FormControl>
       </div>

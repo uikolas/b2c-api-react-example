@@ -26,8 +26,9 @@ import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/in
 import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
 import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
 import {SearchPageContext} from './context';
-import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {TActiveFilters, TActiveRangeFilters, TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
+import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
 
 type IQuery = {
   q?: string,
@@ -44,8 +45,8 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
 type RangeType = {min: number, max: number};
 
 interface SearchPageState {
-  activeFilters: {[name: string]: string[]};
-  activeRangeFilters: {[name: string]: RangeType};
+  activeFilters: TActiveFilters;
+  activeRangeFilters: TActiveRangeFilters;
   sort: string;
   selectedCategory: TCategoryId;
   itemsPerPage: number;
@@ -233,6 +234,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       categoriesTree,
     } = this.props;
 
+    console.log('SearchPage props', this.props);
+    console.log('SearchPage state', this.state);
+    console.log('SearchPage activeFilters', this.state.activeFilters);
+    console.log('SearchPage activeRangeFilters', this.state.activeRangeFilters);
+
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -309,6 +315,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   ranges={rangeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
                   updateRangeHandler={this.updateRangeFilters}
+                />
+
+                <ActiveFiltersList
+                  activeValuesFilters={this.state.activeFilters}
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>

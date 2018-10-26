@@ -11,15 +11,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: theme.spacing.unit * 1.5,
     fontSize: theme.appFixedDimensions.fontSize.small,
   },
-  button: {
-    display: 'block',
-    marginLeft: theme.spacing.unit,
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
   chip: {
-    margin: theme.spacing.unit / 2,
-    display: 'flex',
-    justifyContent: 'space-between',
+    ...theme.appModules.chip,
   },
 });

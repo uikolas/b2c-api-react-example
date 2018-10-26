@@ -17,10 +17,19 @@ export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageD
 
 export type RangeType = {min: number, max: number};
 export type TCategoryId = number | string;
+export type TActiveFilters = {[name: string]: string[]};
+export type TActiveRangeFilters = {[name: string]: RangeType};
+export type TFilterItemName = string;
+export type TFilterItemValue = number | string;
 
 export interface SearchPageState {
-  activeFilters: {[name: string]: string[]};
-  activeRangeFilters: {[name: string]: RangeType};
+  activeFilters: TActiveFilters;
+  activeRangeFilters: TActiveRangeFilters;
   sort: string;
-  selectedCategory: number | string;
+  selectedCategory: TCategoryId;
+}
+
+export interface IFilterItem {
+  name: TFilterItemName;
+  value: TFilterItemValue;
 }

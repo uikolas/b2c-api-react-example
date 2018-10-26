@@ -34,9 +34,7 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: 'capitalize',
   },
   chip: {
-    margin: theme.spacing.unit / 2,
-    display: 'flex',
-    justifyContent: 'space-between',
+    ...theme.appModules.chip,
   },
   menuItem: {
     display: 'flex',
