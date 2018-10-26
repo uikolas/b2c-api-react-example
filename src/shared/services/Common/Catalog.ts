@@ -10,10 +10,26 @@ export class CatalogService {
 
       if (response.ok) {
         const pagination = response.data.data[0].attributes.pagination;
+        const filters: any[] = [];
+        let category: any[] = [];
+        let currentCategory: string = '';
+
+        response.data.data[0].attributes.valueFacets.forEach((filter: any) => {
+          if (filter.name === 'category') {
+            category = Array.isArray(filter.values) ? filter.values : [];
+            currentCategory = filter.activeValue;
+          } else {
+            filters.push(filter);
+          }
+        });
+
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           items: response.data.data[0].attributes.products,
-          filters: response.data.data[0].attributes.valueFacets,
+          filters,
+          category,
+          currentCategory,
+          currentSort: response.data.data[0].attributes.sort.currentSortParam,
           rangeFilters: response.data.data[0].attributes.rangeFacets,
           sortParams: response.data.data[0].attributes.sort.sortParamNames,
           pagination: {
@@ -21,7 +37,9 @@ export class CatalogService {
             currentPage: pagination.currentPage,
             maxPage: pagination.maxPage,
             currentItemsPerPage: pagination.currentItemsPerPage,
+            validItemsPerPageOptions: pagination.config.validItemsPerPageOptions,
           },
+          spellingSuggestion: response.data.data[0].attributes.spellingSuggestion,
         });
         return response.data;
       } else {
@@ -48,16 +66,20 @@ export class CatalogService {
   public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
-      let response: any;
-      response = await api.get('catalog-search-suggestions', {q: query, include: ''}, {withCredentials: true});
+      const response: any = await api.get(
+        'catalog-search-suggestions',
+        {q: query, include: 'abstract-product-prices'},
+        {withCredentials: true}
+      );
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          products: response.data.data[0].attributes.products,
+          products: response.data.data[0].attributes.products.slice(0, 4),
           categories: response.data.data[0].attributes.categories,
           searchTerm: query,
           currency: response.data.data[0].attributes.currency || '',
+          completion: response.data.data[0].attributes.completion,
         });
         return response.data;
       } else {
@@ -83,7 +105,6 @@ export class CatalogService {
 
   public static async getCategoriesTree(ACTION_TYPE: string, dispatch: Function): Promise<any> {
     try {
-
       const response: any = await api.get('category-trees', {}, {withCredentials: true});
 
       if (response.ok) {

@@ -1,6 +1,8 @@
 import { IProductCard } from '../product';
 import { TAppCurrency } from '../../reducers/Common/Init';
 
+export type TSpellingSuggestion = string;
+
 interface FilterValue {
   value: any;
   doc_count: number;
@@ -27,6 +29,7 @@ interface Pagination {
   currentPage: number;
   maxPage: number;
   currentItemsPerPage: number;
+  validItemsPerPageOptions: number[];
 }
 
 export interface Category {
@@ -36,15 +39,26 @@ export interface Category {
   children?: Array<Category> | object;
 }
 
+export interface FlyoutSearch {
+  suggestions?: Array<IProductCard>;
+  categories?: Array<{[name: string]: string}>;
+  completion?: string[];
+  pending?: boolean;
+}
+
 export interface ISearchPageData {
   dispatch?: Function;
-  suggestions?: Array<IProductCard>;
+  flyoutSearch?: FlyoutSearch;
   items?: Array<IProductCard>;
   filters?: Array<ValueFacets>;
   rangeFilters?: Array<RangeFacets>;
   searchTerm?: string;
   currency?: TAppCurrency;
   sortParams?: Array<string>;
+  currentSort?: string;
   pagination: Pagination;
-  categories: Array<Category>;
+  categoriesTree: Array<Category>;
+  category: Array<FilterValue>;
+  currentCategory: string;
+  spellingSuggestion: TSpellingSuggestion | null;
 }

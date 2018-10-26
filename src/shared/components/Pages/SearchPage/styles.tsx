@@ -2,14 +2,6 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  pageHeader: {
-    marginBottom: theme.spacing.unit * 2,
-  },
-  searchTerm: {
-    fontStyle: 'italic',
-    fontWeight: 'bold',
-    display: 'inline',
-  },
   categoryList: {
     width: '95%',
   },
@@ -36,5 +28,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   nestedList: {
     marginLeft: theme.spacing.unit * 2,
+  },
+  spellingSuggestion: {
+    color: theme.appColors.blue,
   },
 });

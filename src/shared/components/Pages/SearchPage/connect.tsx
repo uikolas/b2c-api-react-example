@@ -2,13 +2,15 @@ import * as React from 'react';
 import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { SearchState } from 'src/shared/reducers/Pages/Search';
+import {getSpellingSuggestion, SearchState} from 'src/shared/reducers/Pages/Search';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import {TSpellingSuggestion} from "src/shared/interfaces/searchPageData/index";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
   const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
+  const spellingSuggestion: TSpellingSuggestion = getSpellingSuggestion(state, ownProps);
 
   return ({
     location: routerProps.location ? routerProps.location : ownProps.location,
@@ -17,10 +19,14 @@ const mapStateToProps = (state: any, ownProps: any) => {
     filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
     rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
     sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
+    currentSort: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentSort : ownProps.currentSort,
     pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
-    categories: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categories : ownProps.categories,
+    categoriesTree: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.categoriesTree : ownProps.categoriesTree,
+    category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : ownProps.category,
+    currentCategory: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentCategory : ownProps.currentCategory,
     isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
     currency,
+    spellingSuggestion,
   });
 };
 

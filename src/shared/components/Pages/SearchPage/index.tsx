@@ -18,9 +18,9 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
 import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
 import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
-import { ISearchPageData, RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import {ISearchPageData, RangeFacets, TSpellingSuggestion, ValueFacets} from 'src/shared/interfaces/searchPageData';
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
+import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
@@ -30,6 +30,8 @@ import { connect } from './connect';
 import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
+import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
+import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -49,9 +51,11 @@ interface SearchPageState {
   activeRangeFilters: {[name: string]: RangeType};
   sort: string;
   selectedCategory: number | string;
+  itemsPerPage: number;
 }
 
-export const pageTitle = 'Search results for ';
+export const pageTitle = 'Results for ';
+export const pageTitleDefault = 'All products';
 
 @connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
@@ -76,8 +80,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.state = {
       activeFilters,
       activeRangeFilters,
-      sort: '',
-      selectedCategory: 0,
+      sort: props.currentSort,
+      selectedCategory: props.currentCategory,
+      itemsPerPage: props.pagination.currentItemsPerPage,
     };
   }
 
@@ -107,8 +112,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       currency: this.props.currency,
       sort: this.state.sort,
       include: '',
+      ipp: this.state.itemsPerPage,
       ...this.state.activeFilters,
     };
+
+    if (this.state.selectedCategory) {
+      query.category = this.state.selectedCategory;
+    }
 
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
       query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
@@ -122,12 +132,17 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({sort: e.target.value});
   };
 
+  public handleSetItemsPerPage = (e: any) => {
+    this.setState({itemsPerPage: e.target.value});
+  };
+
   public handlePagination = (e: any, value: number | string) => {
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
       include: '',
+      ipp: this.state.itemsPerPage,
       page: value,
       ...this.state.activeFilters,
     };
@@ -140,6 +155,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       query.page = this.props.pagination.currentPage + 1;
     }
 
+    if (this.state.selectedCategory) {
+      query.category = this.state.selectedCategory;
+    }
 
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
       query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
@@ -150,19 +168,19 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public renderProduct = (sku: string, name: string) => {
-    // this.props.dispatch(getProductDataAction(sku));
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public selectCategory = (category: string | number) => (e: any) => {
-    this.setState({selectedCategory: category});
+  public selectCategory = (categoryId: string | number) => (e: any) => {
+    this.setState({selectedCategory: categoryId});
 
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
       include: '',
-      category,
+      ipp: this.state.itemsPerPage,
+      category: categoryId,
       ...this.state.activeFilters,
     };
 
@@ -173,6 +191,34 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
+
+    let name: string = '';
+
+    const searchName = (leaf: any) => {
+      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
+      name += path;
+
+      if (leaf.nodeId === categoryId) {
+        return true;
+      }
+
+      if (Array.isArray(leaf.children) && leaf.children.length) {
+        const result = leaf.children.some(searchName);
+
+        if (!result) {
+          name = name.replace(path, '');
+        }
+
+        return result;
+      }
+
+      name = name.replace(path, '');
+      return false;
+    };
+
+    this.props.categoriesTree.some(searchName);
+
+    this.props.changeLocation(`${pathSearchPage}${name}`);
   };
 
   public render() {
@@ -186,7 +232,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       isLoading,
       sortParams,
       pagination,
-      categories,
+      category,
+      spellingSuggestion,
     } = this.props;
 
     const renderFilters: any[] = [];
@@ -226,18 +273,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     const pages: any[] = [];
 
-    if (+pagination.currentPage > 1) {
-      pages.push(
-        <BottomNavigationAction
-          showLabel
-          icon={ <ChevronLeft/> }
-          value="prev"
-          key="prev"
-          className={ classes.pageNumber }
-        />,
-      );
-    }
-
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
     const end = pagination.maxPage > 5
       ? pagination.currentPage <= 5 ? 5 : pagination.currentPage
@@ -254,51 +289,58 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         />);
     }
 
-    if (+pagination.currentPage < pagination.maxPage) {
-      pages.push(
-        <BottomNavigationAction
-          showLabel
-          icon={ <ChevronRight/> }
-          value="next"
-          key="next"
-          className={ classes.pageNumber }
-        />,
-      );
-    }
+    pages.push(
+      <BottomNavigationAction
+        showLabel
+        icon={ <ChevronRight/> }
+        value="next"
+        key="next"
+        className={ classes.pageNumber }
+      />,
+    );
 
-    const categoryList = categories.map((category) => {
-      const pureListItem = (data: any) => (
-        <ListItem
-          button
-          key={ `category-${data.nodeId}` }
-          onClick={ this.selectCategory(data.nodeId) }
-          selected={ this.state.selectedCategory === data.nodeId }
-        >
-          <ListItemText primary={ data.name }/>
-        </ListItem>
-      );
+    pages.unshift(
+      <BottomNavigationAction
+        showLabel
+        icon={ <ChevronLeft/> }
+        value="prev"
+        key="prev"
+        className={ classes.pageNumber }
+      />,
+    );
 
-      const nestedList = (data: any) => (
-        <li key={ `category-${data.nodeId}` }>
-          <ListItem button onClick={ this.selectCategory(data.nodeId) }
-                    selected={ this.state.selectedCategory === data.nodeId }>
-            <ListItemText primary={ data.name }/>
+    const categoryList = category.map((category) => {
+      let name: string;
+
+      const searchName = (leaf: any) => {
+        if (leaf.nodeId === category.value) {
+          name = leaf.name;
+          return true;
+        }
+
+        if (Array.isArray(leaf.children) && leaf.children.length) {
+          return leaf.children.some(searchName);
+        }
+
+        return false;
+      };
+
+      this.props.categoriesTree.some(searchName);
+
+      if (!name) {
+        return null;
+      }
+
+      return (
+          <ListItem
+            button
+            key={ `category-${category.value}` }
+            onClick={ this.selectCategory(category.value) }
+            selected={ this.state.selectedCategory === category.value }
+          >
+            <ListItemText primary={ `${name} (${category.doc_count})` }/>
           </ListItem>
-          <List dense className={ classes.nestedList }>
-            {
-              data.children.map((child: any) => {
-                return Array.isArray(child.children) && child.children.length
-                  ? nestedList(child)
-                  : pureListItem(child);
-              })
-            }
-          </List>
-        </li>
       );
-
-      return Array.isArray(category.children) && category.children.length
-        ? nestedList(category)
-        : pureListItem(category);
     });
 
     // TODO: Get label programmatically
@@ -310,21 +352,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     return (
       <AppMain>
-        <Grid container
-              justify="center"
-              alignItems="center"
-        >
-          { searchTerm
-            ? <Typography variant="title" color="inherit" align="center" className={ classes.pageHeader }
-                          id="pageTitle">
-              { pageTitle }
-              <Typography variant="title" component="span" className={ classes.searchTerm } id="searchTerm">
-                { searchTerm }
-              </Typography>
-            </Typography>
-            : null
-          }
-        </Grid>
+        <AppPageTitle
+          title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
+          intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
+        />
 
         <Grid container>
           <Grid item xs={ 3 }>
@@ -356,6 +387,21 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 item
                 xs={ 6 }
               >
+                <FormControl>
+                  <Select
+                    value={ this.state.itemsPerPage }
+                    onChange={ this.handleSetItemsPerPage }
+                    name="pages"
+                  >
+                    {
+                      pagination.validItemsPerPageOptions.map((qty: number) => (
+                        <MenuItem value={ qty } key={ `pages-${qty}` }>
+                          { qty }
+                        </MenuItem>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
                 <FormControl className={ classes.formControl }>
                   <Select
                     value={ this.state.sort }
