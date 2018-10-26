@@ -9,8 +9,3 @@ export interface CartProps extends WithStyles<typeof styles>, WithRouter {
 export interface CartState {
   anchorEl: HTMLElement | null;
 }
-
-export interface CartDropProps extends WithStyles<typeof styles> {
-  // connect
-  isUserLoggedIn?: boolean;
-}
