@@ -106,7 +106,7 @@ const config = {
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
-        parallel: false,
+        parallel: true,
         sourceMap: true,
         cache: !PRODUCTION,
         extractComments: PRODUCTION,
