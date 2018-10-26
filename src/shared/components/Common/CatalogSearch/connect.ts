@@ -1,5 +1,4 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
@@ -10,16 +9,17 @@ import { getProductDataAction } from 'src/shared/actions/Pages/Product';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.data ? state.pageSearch.data.flyoutSearch : null;
+  const searchTerm: string =  state.pageSearch && state.pageSearch.data ? state.pageSearch.data.searchTerm : ownProps.searchTerm;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
 
   return (
     {
       categories: searchProps ? searchProps.categories : ownProps.categories,
       suggestions: searchProps ? searchProps.suggestions : ownProps.suggestions,
-      searchTerm: searchProps ? searchProps.searchTerm : ownProps.searchTerm,
       completion: searchProps ? searchProps.completion : ownProps.completion,
-      // isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
+      isLoading: searchProps ? searchProps.pending : ownProps.isLoading,
       currency,
+      searchTerm,
     }
   );
 };

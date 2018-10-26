@@ -54,7 +54,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   };
 
   private handleChange = (event: any, {newValue}: any) => {
-    if (newValue.trim().length < 3) {
+    if (newValue.trim().length < 4) {
       this.props.clearSuggestions(newValue);
     }
 
@@ -73,8 +73,9 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   };
 
   private handleSearchCompletion = (e: any) => {
-    this.props.sendSearchAction({q: e.currentTarget.dataset.query, currency: this.props.currency, include: ''});
-   // this.props.push(pathSearchPage);
+    const query = e.currentTarget.dataset.query.trim();
+    this.setState({value: query});
+    this.props.sendSearchAction({q: query, currency: this.props.currency, include: ''});
   };
 
   /* Render Helpers */
@@ -141,18 +142,20 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   private renderSuggestionsContainer = (options: any) => {
     const {categories, completion, classes} = this.props;
-    let suggestQuery = options.query;
+    let suggestQuery = options.query.trim();
 
-    if (completion.length && completion[0].startsWith(suggestQuery)) {
-      suggestQuery = completion[0];
+    if (completion.length) {
+      completion.some((data: string) => {
+        if (data.startsWith(options.query.trim().toLowerCase())) {
+          suggestQuery = data;
+          return true;
+        }
+
+        return false;
+      });
     }
     const matches = match(suggestQuery, options.query);
     const parts = parse(suggestQuery, matches);
-
-    console.info(matches);
-    console.info(parts);
-    console.info(options.children);
-
 
     const completions: any[] = [];
     const renderedCategories: any[] = [];
@@ -192,9 +195,20 @@ export class CatalogSearchBase extends React.Component<Props, State> {
       <div { ...options.containerProps }>
         <Paper square>
           <Typography paragraph variant="headline">
-            {options.query}
+            { parts.map((part, index: number) => {
+                return part.highlight ? (
+                  <span key={ String(index) } style={ {fontWeight: 500} }>
+                    { part.text }
+                  </span>
+                ) : (
+                  <strong key={ String(index) } style={ {fontWeight: 300, color: '#D3D3D3'} }>
+                    { part.text }
+                  </strong>
+                );
+              })
+            }
           </Typography>
-          <div style={{marginLeft: '10%'}}>
+          <div className={classes.insideWrapper}>
             <div>
               {completions}
             </div>

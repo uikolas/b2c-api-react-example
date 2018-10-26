@@ -11,10 +11,6 @@ export const suggestPendingState = {
   type: PAGES_SUGGESTION_REQUEST + '_PENDING',
 };
 
-export const searchPendingState = {
-  type: PAGES_SEARCH_REQUEST + '_PENDING',
-};
-
 export const categoriesPendingState = {
   type: CATEGORIES_REQUEST + '_PENDING',
 };
@@ -28,7 +24,10 @@ export const sendSuggestionAction = function(query: string) {
 
 export const sendSearchAction = function(params: any) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(searchPendingState);
+    dispatch({
+      type: PAGES_SEARCH_REQUEST + '_PENDING',
+      searchTerm: params.q,
+    });
     CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
   };
 };

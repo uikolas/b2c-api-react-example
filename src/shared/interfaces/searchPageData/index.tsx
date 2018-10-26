@@ -40,10 +40,10 @@ export interface Category {
 }
 
 export interface FlyoutSearch {
-  searchTerm?: string;
   suggestions?: Array<IProductCard>;
   categories?: Array<{[name: string]: string}>;
   completion?: string[];
+  pending?: boolean;
 }
 
 export interface ISearchPageData {

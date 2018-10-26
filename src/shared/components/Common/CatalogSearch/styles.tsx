@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
     flexGrow: .9,
   },
+  insideWrapper: {
+    padding: `0px ${theme.spacing.unit * 4}px ${theme.spacing.unit * 3}px`
+  },
   suggestionsContainer: {
     display: 'none',
   },
@@ -25,6 +28,7 @@ export const styles = (theme: Theme) => createStyles({
     right: 0,
     maxHeight: '60vh',
     overflowY: 'auto',
+    width: '30vw',
   },
   suggestion: {
     display: 'block',
@@ -41,12 +45,10 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.common.white,
   },
   menuItem: {
-    width: '100%',
     height: '80px',
     display: 'flex',
     alignItems: 'center',
-    marginTop: theme.spacing.unit / 2,
-    marginBottom: theme.spacing.unit / 2,
+    paddingLeft: 0,
   },
   pendingProgress: {
     position: 'absolute',
@@ -72,7 +74,7 @@ export const styles = (theme: Theme) => createStyles({
     height: '80px',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit * 2,
   },
   actionAreaOverlay: {
     position: "absolute",
