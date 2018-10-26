@@ -5,11 +5,11 @@ export const styles = (theme: Theme) => createStyles({
   strikethrough: {
     textDecoration: 'line-through',
     color: theme.appColors.grey,
-    fontSize: "0.85rem",
+    fontSize: theme.appFixedDimensions.fontSize.small,
     letterSpacing: "0.2px",
   },
   defaultPrice: {
-    fontSize: "1.25rem",
+    fontSize: theme.appFixedDimensions.fontSize.big,
     fontWeight: 600,
   },
 });

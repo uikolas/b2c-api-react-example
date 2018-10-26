@@ -9,29 +9,26 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
-import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
-import { SprykerRange } from 'src/shared/components/UI/SprykerRangeFilter';
 import { getCategoriesAction, sendSearchAction } from 'src/shared/actions/Pages/Search';
-import {ISearchPageData, RangeFacets, TSpellingSuggestion, ValueFacets} from 'src/shared/interfaces/searchPageData';
+import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
-
 import { AppMain } from '../../Common/AppMain';
 import { ProductCard } from '../../Common/ProductCard';
-
 import { connect } from './connect';
-
 import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
+import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
+import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
+import {SearchPageContext} from './context';
+import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
+
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
@@ -50,7 +47,7 @@ interface SearchPageState {
   activeFilters: {[name: string]: string[]};
   activeRangeFilters: {[name: string]: RangeType};
   sort: string;
-  selectedCategory: number | string;
+  selectedCategory: TCategoryId;
   itemsPerPage: number;
 }
 
@@ -94,7 +91,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
   };
 
-  public updateRangeFilters = (name: string, {min, max}: RangeType) => {
+  public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
     this.setState((prevState: SearchPageState) => ({
       activeRangeFilters: {
         ...prevState.activeRangeFilters,
@@ -171,7 +168,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public selectCategory = (categoryId: string | number) => (e: any) => {
+  public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
     this.setState({selectedCategory: categoryId});
 
     const query: IQuery = {
@@ -183,7 +180,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       category: categoryId,
       ...this.state.activeFilters,
     };
-
 
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
       query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
@@ -234,42 +230,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       pagination,
       category,
       spellingSuggestion,
+      categoriesTree,
     } = this.props;
-
-    const renderFilters: any[] = [];
-
-    if (filters && filters.length) {
-      filters.forEach((filter: any) => {
-        if (Array.isArray(filter.values) && filter.values.length) {
-          renderFilters.push(
-            <Grid item xs={ 3 } key={ filter.name }>
-              <SprykerFilterElement
-                attributeName={ filter.name }
-                menuItems={ filter.values }
-                activeValues={ this.state.activeFilters[filter.name] || [] }
-                handleChange={ this.updateActiveFilters }
-              />
-            </Grid>,
-          );
-        }
-      });
-    }
-
-    const renderRangeFilters: any[] = rangeFilters && rangeFilters.length
-      ? rangeFilters.map((filter: any) => (
-        <Grid item xs={ 4 } key={ filter.name }>
-          <SprykerRange
-            attributeName={ filter.name }
-            min={ filter.min / 100 } max={ filter.max / 100 }
-            currentValue={ this.state.activeRangeFilters[filter.name] || {
-              min: filter.min / 100,
-              max: filter.max / 100,
-            } }
-            handleChange={ this.updateRangeFilters }
-          />
-        </Grid>
-      ))
-      : null;
 
     const pages: any[] = [];
 
@@ -309,46 +271,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       />,
     );
 
-    const categoryList = category.map((category) => {
-      let name: string;
-
-      const searchName = (leaf: any) => {
-        if (leaf.nodeId === category.value) {
-          name = leaf.name;
-          return true;
-        }
-
-        if (Array.isArray(leaf.children) && leaf.children.length) {
-          return leaf.children.some(searchName);
-        }
-
-        return false;
-      };
-
-      this.props.categoriesTree.some(searchName);
-
-      if (!name) {
-        return null;
-      }
-
-      return (
-          <ListItem
-            button
-            key={ `category-${category.value}` }
-            onClick={ this.selectCategory(category.value) }
-            selected={ this.state.selectedCategory === category.value }
-          >
-            <ListItemText primary={ `${name} (${category.doc_count})` }/>
-          </ListItem>
-      );
-    });
-
     // TODO: Get label programmatically
     const label: IProductLabel = {
       type: 'sale',
       text: 'Sale',
     };
-
 
     return (
       <AppMain>
@@ -358,117 +285,122 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         />
 
         <Grid container>
-          <Grid item xs={ 3 }>
-            <List
-              component="nav"
-              subheader={ <ListSubheader component="div">Categories</ListSubheader> }
-              className={ classes.categoryList }
-            >
-              { categoryList }
-            </List>
-          </Grid>
-          <Grid item xs={ 9 } container>
-            { renderFilters }
+          <SearchPageContext.Provider
+            value={{
+              selectCategoryHandler: this.selectCategory,
+            }}
+          >
 
-            <Grid item xs={ 12 } container>
-              { renderRangeFilters }
+            <Grid item xs={ 12 } sm={ 4 } md={ 3 }>
+              <CategoriesList
+                categories={category}
+                categoriesTree={categoriesTree}
+                selectedCategory={this.state.selectedCategory}
+              />
             </Grid>
 
-            <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-              <Grid
-                item
-                xs={ 3 }
-              >
-                <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                  Filter
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={ 6 }
-              >
-                <FormControl>
-                  <Select
-                    value={ this.state.itemsPerPage }
-                    onChange={ this.handleSetItemsPerPage }
-                    name="pages"
-                  >
-                    {
-                      pagination.validItemsPerPageOptions.map((qty: number) => (
-                        <MenuItem value={ qty } key={ `pages-${qty}` }>
-                          { qty }
+            <Grid item xs={ 12 } sm={ 8 } md={ 9 }>
+              <Grid container>
+
+                <SearchFilterList
+                  filters={filters}
+                  updateFilterHandler={this.updateActiveFilters}
+                  activeValuesFilters={this.state.activeFilters}
+                  ranges={rangeFilters}
+                  activeValuesRanges={this.state.activeRangeFilters}
+                  updateRangeHandler={this.updateRangeFilters}
+                />
+
+                <Grid item xs={ 12 } container className={ classes.buttonsRow }>
+                  <Grid item xs={ 3 }>
+                    <Button variant="contained" color="primary" onClick={ this.updateSearch }>
+                      Filter
+                    </Button>
+                  </Grid>
+                  <Grid item xs={ 6 }>
+                    <FormControl>
+                      <Select
+                        value={ this.state.itemsPerPage }
+                        onChange={ this.handleSetItemsPerPage }
+                        name="pages"
+                      >
+                        {
+                          pagination.validItemsPerPageOptions.map((qty: number) => (
+                            <MenuItem value={ qty } key={ `pages-${qty}` }>
+                              { qty }
+                            </MenuItem>
+                          ))
+                        }
+                      </Select>
+                    </FormControl>
+                    <FormControl className={ classes.formControl }>
+                      <Select
+                        value={ this.state.sort }
+                        onChange={ this.handleSetSorting }
+                        name="sort"
+                        displayEmpty
+                      >
+                        <MenuItem value="" disabled>
+                          Sorting...
                         </MenuItem>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
-                <FormControl className={ classes.formControl }>
-                  <Select
-                    value={ this.state.sort }
-                    onChange={ this.handleSetSorting }
-                    name="sort"
-                    displayEmpty
+                        {
+                          sortParams && sortParams.map((param) => <MenuItem value={ param }
+                                                                            key={ `sort-${param}` }>{ param }</MenuItem>)
+                        }
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={ 3 }>
+                    <Button variant="contained" color="primary" onClick={ this.updateSearch }>
+                      Sort
+                    </Button>
+                  </Grid>
+                </Grid>
+
+                <Grid item xs={ 12 } container spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
+                  { items && items.length > 0
+                    ? items.map((item: any) => (
+                      <Grid item xs={ 12 } sm={ 6 } md={ 4 }
+                            key={ item.abstract_sku || item.abstractSku }
+                      >
+                        <ProductCard
+                          currency={ currency }
+                          images={ item.images }
+                          price={ item.price }
+                          prices={ item.prices }
+                          name={ item.abstract_name || item.abstractName }
+                          sku={ item.abstract_sku || item.abstractSku }
+                          onSelectProduct={ this.renderProduct }
+                          label={label}
+                        />
+                      </Grid>
+                    ))
+                    : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
+                      <Typography variant="headline" component="h3">
+                        Nothing to show.
+                      </Typography>
+                      <Typography component="p">
+                        { isLoading ? 'Waiting results' : 'Try another search' }
+                      </Typography>
+                    </Paper>
+                  }
+                </Grid>
+
+                <Grid item xs={ 12 } container justify="center" alignItems="center">
+                  <BottomNavigation
+                    value={ pagination.currentPage }
+                    onChange={ this.handlePagination }
+                    className={ classes.pagesContainer }
                   >
-                    <MenuItem value="" disabled>
-                      Sorting...
-                    </MenuItem>
-                    {
-                      sortParams && sortParams.map((param) => <MenuItem value={ param }
-                                                                        key={ `sort-${param}` }>{ param }</MenuItem>)
-                    }
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={ 3 }>
-                <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                  Sort
-                </Button>
-              </Grid>
+                    { pages }
+                  </BottomNavigation>
+                </Grid>
+
             </Grid>
-            <Grid
-              item
-              xs={ 12 }
-              container
-              spacing={ sprykerTheme.appFixedDimensions.gridSpacing }
-            >
-              {
-                items && items.length > 0
-                  ? items.map((item: any) => (
-                    <Grid item xs={ 12 } sm={ 6 } md={ 4 }
-                          key={ item.abstract_sku || item.abstractSku }
-                    >
-                      <ProductCard
-                        currency={ currency }
-                        images={ item.images }
-                        price={ item.price }
-                        prices={ item.prices }
-                        name={ item.abstract_name || item.abstractName }
-                        sku={ item.abstract_sku || item.abstractSku }
-                        onSelectProduct={ this.renderProduct }
-                        label={label}
-                      />
-                    </Grid>
-                  ))
-                  : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
-                    <Typography variant="headline" component="h3">
-                      Nothing to show.
-                    </Typography>
-                    <Typography component="p">
-                      { isLoading ? 'Waiting results' : 'Try another search' }
-                    </Typography>
-                  </Paper>
-              }
             </Grid>
-            <Grid item xs={ 12 } container justify="center" alignItems="center">
-              <BottomNavigation
-                value={ pagination.currentPage }
-                onChange={ this.handlePagination }
-                className={ classes.pagesContainer }
-              >
-                { pages }
-              </BottomNavigation>
-            </Grid>
-          </Grid>
+
+          </SearchPageContext.Provider>
+
         </Grid>
       </AppMain>
     );
