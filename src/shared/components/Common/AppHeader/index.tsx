@@ -28,7 +28,7 @@ export const AppHeaderComponent: React.SFC<Props> = ({classes, isLoading}) => (
 
         <AddNav/>
       </div>
-      <Preloader extraClasses={classes.preloader}/>
+      {isLoading ? <Preloader extraClasses={classes.preloader}/> : null}
     </div>
   </div>
 );
