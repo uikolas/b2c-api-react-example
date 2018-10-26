@@ -16,6 +16,7 @@ export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageD
 }
 
 export type RangeType = {min: number, max: number};
+export type TCategoryId = number | string;
 
 export interface SearchPageState {
   activeFilters: {[name: string]: string[]};

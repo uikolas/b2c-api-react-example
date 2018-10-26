@@ -3,7 +3,7 @@ import { TAppCurrency } from '../../reducers/Common/Init';
 
 export type TSpellingSuggestion = string;
 
-interface FilterValue {
+export interface FilterValue {
   value: any;
   doc_count: number;
 }

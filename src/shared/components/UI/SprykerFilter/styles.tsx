@@ -3,10 +3,25 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-    width: '90%',
-    marginLeft: '5%',
+    width: '100%',
+    marginLeft: 0,
+    borderRadius: theme.appFixedDimensions.borderRadius,
+    border: `solid 1px ${theme.appColors.weakGrey}`,
+    backgroundColor: theme.appColors.white,
+  },
+  icon: {
+    transform: "rotate(270deg)",
+    transition: "transform .8s ease-in-out",
+    fill: theme.appColors.black,
+    right: theme.spacing.unit / 2,
+  },
+  input: {
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    lineHeight: "normal",
+    letterSpacing: 0.5,
+    paddingLeft: theme.spacing.unit * 1.5,
+    paddingTop: theme.spacing.unit * 1.5,
+    paddingBottom: theme.spacing.unit * 1.5,
   },
   button: {
     display: 'block',
@@ -15,7 +30,6 @@ export const styles = (theme: Theme) => createStyles({
     paddingRight: 0,
   },
   formControl: {
-    margin: theme.spacing.unit,
     width: '100%',
     textTransform: 'capitalize',
   },
@@ -26,6 +40,14 @@ export const styles = (theme: Theme) => createStyles({
   },
   menuItem: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    padding: theme.spacing.unit * 1.5,
+    lineHeight: "normal",
+    letterSpacing: 0.5,
+    height: "auto",
   },
+  menuItemName: {
+    marginRight: theme.spacing.unit * 1.5,
+  }
 });
