@@ -12,9 +12,10 @@ export const styles = (theme: Theme) => createStyles({
     border: `1px solid ${theme.appColors.blue}`,
     backgroundColor: theme.appColors.white,
     color: theme.appColors.blue,
-    fontSize: '0.7rem',
+    fontSize: theme.appFixedDimensions.fontSize.mini,
     fontWeight: 500,
     letterSpacing: 0.4,
+    textTransform: "uppercase",
   },
   close: {
     color: theme.appColors.blue,
@@ -29,6 +30,6 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   label: {
-    marginRight: theme.spacing.unit * 2.5,
+    paddingRight: theme.spacing.unit * 2.5,
   }
 });

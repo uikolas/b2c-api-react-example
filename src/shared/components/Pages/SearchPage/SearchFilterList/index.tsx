@@ -1,12 +1,11 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
 import {SprykerFilterElement} from "src/shared/components/UI/SprykerFilter/index";
 import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/index";
-import {RangeType, TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/SearchPage/types";
+import {TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/SearchPage/types";
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";

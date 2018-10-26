@@ -227,6 +227,18 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.updateActiveFilters(filterName, values);
   };
 
+  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
+    this.setState((prevState: SearchPageState) => {
+      return ({
+          activeFilters: {},
+          activeRangeFilters: {},
+          selectedCategory: null,
+      });
+    });
+    // TODO: UPDATE QUERY AFTER SORTING
+    this.updateSearch(event);
+  };
+
   public render() {
     const {
       classes,
@@ -329,6 +341,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
                 <ActiveFiltersList
                   activeValuesFilters={this.state.activeFilters}
+                  resetHandler={this.resetActiveFilters}
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>

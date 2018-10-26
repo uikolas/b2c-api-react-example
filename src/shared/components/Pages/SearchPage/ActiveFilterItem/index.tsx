@@ -6,11 +6,11 @@ import { CloseOutlined } from '@material-ui/icons';
 import { styles } from './styles';
 import {SearchPageContext} from '../context';
 import {TFilterItemName, TFilterItemValue} from "src/shared/components/Pages/SearchPage/types";
-import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
 
 interface ActiveFilterItemProps extends WithStyles<typeof styles> {
   filterValue: TFilterItemValue;
   filterName: TFilterItemName;
+  label: string;
 }
 
 export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) => {
@@ -18,21 +18,15 @@ export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) =>
     classes,
     filterValue,
     filterName,
+    label,
   } = props;
-
-  let title: string;
-  let filterNameParts = filterName.split('_');
-  if (filterNameParts.length) {
-    filterNameParts[0] = firstLetterToUpperCase(filterNameParts[0]);
-    title = filterNameParts.join(' ');
-  }
 
   return (
 
     <SearchPageContext.Consumer>
       {({deleteActiveFilterHandler}) => (
         <Chip
-          label={`${(title)}: ${filterValue}`}
+          label={label}
           variant="outlined"
           className={classes.chip}
           onDelete={ deleteActiveFilterHandler(filterName, filterValue) }
