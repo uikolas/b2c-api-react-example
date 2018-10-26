@@ -10,7 +10,7 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: 32,
     textDecoration: 'none',
     '&:hover': {
-      color:`1px solid ${theme.appColors.blue}`,
+      color: theme.appColors.blue,
     },
   },
 });

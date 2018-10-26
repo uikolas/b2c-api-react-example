@@ -1,27 +1,25 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 
-import { reduxify } from '../../../lib/redux-helper';
-import { SearchState } from '../../../reducers/Pages/Search';
-import { clearSuggestions } from '../../../actions/Pages/Search';
-import { getAppCurrency, TAppCurrency } from '../../../reducers/Common/Init';
-import { sendSearchAction, sendSuggestionAction } from '../../../actions/Pages/Search';
-import { getProductDataAction } from '../../../actions/Pages/Product';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
+import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { sendSearchAction, sendSuggestionAction, clearSuggestions } from 'src/shared/actions/Pages/Search';
+import { getProductDataAction } from 'src/shared/actions/Pages/Product';
 
 const mapStateToProps = (state: any, ownProps: any) => {
-  const routerProps: RouteProps = state.routing ? state.routing : {};
-  const searchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+  const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.data ? state.pageSearch.data.flyoutSearch : null;
+  const searchTerm: string =  state.pageSearch && state.pageSearch.data ? state.pageSearch.data.searchTerm : ownProps.searchTerm;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
 
   return (
     {
-      location: routerProps.location ? routerProps.location : ownProps.location,
-      categories: searchProps && searchProps.data ? searchProps.data.categories : ownProps.categories,
-      suggestions: searchProps && searchProps.data ? searchProps.data.suggestions : ownProps.suggestions,
-      searchTerm: searchProps && searchProps.data ? searchProps.data.searchTerm : ownProps.searchTerm,
-      isLoading: searchProps && searchProps.pending ? searchProps.pending : ownProps.pending,
+      categories: searchProps ? searchProps.categories : ownProps.categories,
+      suggestions: searchProps ? searchProps.suggestions : ownProps.suggestions,
+      completion: searchProps ? searchProps.completion : ownProps.completion,
+      isLoading: searchProps ? searchProps.pending : ownProps.isLoading,
       currency,
+      searchTerm,
     }
   );
 };

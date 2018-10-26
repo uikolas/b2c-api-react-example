@@ -16,9 +16,14 @@ export interface SearchState extends IReduxState {
 
 export const initialState: SearchState = {
   data: {
-    suggestions: [],
-    items: [],
+    flyoutSearch: {
+      suggestions: [],
+      categories: [],
+      completion: [],
+      pending: false,
+    },
     searchTerm: '',
+    items: [],
     filters: [],
     rangeFilters: [],
     sortParams: [],
@@ -33,7 +38,6 @@ export const initialState: SearchState = {
     },
     category: [],
     categoriesTree: [],
-    categories: [],
     spellingSuggestion: null,
   },
 };
@@ -41,33 +45,34 @@ export const initialState: SearchState = {
 export const pageSearch = produce<SearchState>(
   (draft: SearchState, action: any) => {
     switch (action.type) {
-      case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
       case `${PAGES_SEARCH_REQUEST}_PENDING`:
         draft.error = false;
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
         draft.initiated = true;
+        draft.data.searchTerm = action.searchTerm;
+        break;
+      case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
+        draft.data.flyoutSearch.pending = true;
         break;
       case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
-        draft.data.suggestions = action.products;
-        draft.data.categories = action.categories;
+        draft.data.flyoutSearch.suggestions = action.products;
+        draft.data.flyoutSearch.categories = action.categories;
+        draft.data.flyoutSearch.completion = action.completion;
+        draft.data.flyoutSearch.pending = false;
         draft.data.searchTerm = action.searchTerm;
-        draft.data.currency = action.currency || draft.data.currency;
-        draft.data.spellingSuggestion = null;
-        draft.error = false;
-        draft.pending = false;
-        draft.fulfilled = true;
-        draft.rejected = false;
-        draft.initiated = true;
         break;
-      case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
       case `${CATEGORIES_REQUEST}_REJECTED`:
       case `${PAGES_SEARCH_REQUEST}_REJECTED`:
         draft.error = action.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
+        break;
+      case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
+        draft.data.flyoutSearch.pending = false;
+        draft.error = action.error;
         break;
       case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
         draft.data.items = action.items;
@@ -94,8 +99,10 @@ export const pageSearch = produce<SearchState>(
         draft.initiated = true;
         break;
       case PAGES_SEARCH_REQUEST_CLEAR:
-        draft.data.suggestions = [];
         draft.data.searchTerm = action.searchTerm;
+        draft.data.flyoutSearch.suggestions = [];
+        draft.data.flyoutSearch.categories = [];
+        draft.data.flyoutSearch.completion = [];
         draft.data.spellingSuggestion = null;
         draft.error = false;
         draft.pending = false;

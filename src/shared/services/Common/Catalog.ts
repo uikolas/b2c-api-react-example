@@ -12,7 +12,7 @@ export class CatalogService {
         const pagination = response.data.data[0].attributes.pagination;
         const filters: any[] = [];
         let category: any[] = [];
-        let currentCategory: string;
+        let currentCategory: string = '';
 
         response.data.data[0].attributes.valueFacets.forEach((filter: any) => {
           if (filter.name === 'category') {
@@ -66,16 +66,20 @@ export class CatalogService {
   public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
     try {
 
-      let response: any;
-      response = await api.get('catalog-search-suggestions', {q: query, include: ''}, {withCredentials: true});
+      const response: any = await api.get(
+        'catalog-search-suggestions',
+        {q: query, include: 'abstract-product-prices'},
+        {withCredentials: true}
+      );
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          products: response.data.data[0].attributes.products,
+          products: response.data.data[0].attributes.products.slice(0, 4),
           categories: response.data.data[0].attributes.categories,
           searchTerm: query,
           currency: response.data.data[0].attributes.currency || '',
+          completion: response.data.data[0].attributes.completion,
         });
         return response.data;
       } else {

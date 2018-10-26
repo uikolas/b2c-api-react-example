@@ -13,6 +13,9 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
     flexGrow: 1,
   },
+  insideWrapper: {
+    padding: `0px ${theme.spacing.unit * 4}px ${theme.spacing.unit * 3}px`
+  },
   suggestionsContainer: {
     display: 'none',
   },
@@ -25,9 +28,10 @@ export const styles = (theme: Theme) => createStyles({
     right: 0,
     maxHeight: '60vh',
     overflowY: 'auto',
+    width: '30vw',
   },
   suggestion: {
-    display: 'flex',
+    display: 'block',
   },
   suggestionsList: {
     margin: 0,
@@ -64,14 +68,44 @@ export const styles = (theme: Theme) => createStyles({
     fill: `${theme.appColors.grey} !important`,
   },
   menuItem: {
-    width: '100%',
+    height: '80px',
     display: 'flex',
-    justifyContent: 'space-between',
-    textDecoration: 'none',
-    flexGrow: 1,
+    alignItems: 'center',
+    paddingLeft: 0,
   },
   pendingProgress: {
     position: 'absolute',
     left: '40%',
+  },
+  completion: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing.unit / 2,
+  },
+  marginTop: {
+    marginTop: theme.spacing.unit,
+  },
+  description: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  imgWrapper: {
+    display: 'flex',
+    position: 'relative',
+    width: '80px',
+    height: '80px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: theme.spacing.unit * 2,
+  },
+  actionAreaOverlay: {
+    position: "absolute",
+    background: "rgba(0, 0, 0, 0.10)",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 350,
   },
 });

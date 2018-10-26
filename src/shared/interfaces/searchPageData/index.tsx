@@ -39,9 +39,16 @@ export interface Category {
   children?: Array<Category> | object;
 }
 
+export interface FlyoutSearch {
+  suggestions?: Array<IProductCard>;
+  categories?: Array<{[name: string]: string}>;
+  completion?: string[];
+  pending?: boolean;
+}
+
 export interface ISearchPageData {
   dispatch?: Function;
-  suggestions?: Array<IProductCard>;
+  flyoutSearch?: FlyoutSearch;
   items?: Array<IProductCard>;
   filters?: Array<ValueFacets>;
   rangeFilters?: Array<RangeFacets>;
@@ -52,7 +59,6 @@ export interface ISearchPageData {
   pagination: Pagination;
   categoriesTree: Array<Category>;
   category: Array<FilterValue>;
-  categories: Array<{[name: string]: string}>;
   currentCategory: string;
   spellingSuggestion: TSpellingSuggestion | null;
 }
