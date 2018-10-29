@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { MainNavProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
+import { navLinks } from './navLinks';
 import { pathSearchPage } from 'src/shared/routes/contentRoutes';
 
 @connect
@@ -13,17 +14,11 @@ export class MainNavComponent extends React.PureComponent<Props> {
     const { classes, categoriesTree } = this.props;
     return (
       <nav className={classes.mainNav}>
-        {categoriesTree.map(category => (
-          <NavLink key={category.nodeId} className={classes.mainNavLink} to={`${pathSearchPage}/${category.nodeId}`}>
+        {navLinks.map(category => (
+          <NavLink key={ category.name + category.path } className={ classes.mainNavLink } to={ category.path }>
             {category.name}
           </NavLink>
         ))}
-        <NavLink key="sale" className={classes.mainNavLink} to={`${pathSearchPage}/outlet`}>
-          Sale %
-        </NavLink>
-        <NavLink key="new" className={classes.mainNavLink} to={`${pathSearchPage}/new`}>
-          New
-        </NavLink>
       </nav>
     );
   }

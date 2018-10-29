@@ -23,11 +23,11 @@ import { styles } from './styles';
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {IProductLabel} from "src/shared/interfaces/product/index";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
-import {SearchIntro} from "src/shared/components/Pages/SearchPage/SearchIntro/index";
-import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesList/index";
-import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
+import {SearchIntro} from "./SearchIntro";
+import {CategoriesList} from "./CategoriesList";
+import {SearchFilterList} from "./SearchFilterList";
 import {SearchPageContext} from './context';
-import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {TCategoryId} from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 
 type IQuery = {
@@ -41,7 +41,7 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
   categoriesTree: ICategory[];
-  location: Location,
+  location: Location;
 }
 
 type RangeType = {min: number, max: number};
@@ -82,18 +82,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       sort: props.currentSort,
       itemsPerPage: props.pagination.currentItemsPerPage,
     };
-
-    if (!props.location.pathname.endsWith(pathSearchPage) && !props.location.pathname.endsWith(pathSearchPage + '/')) {
-      const nodeId: string = props.location.pathname.substr(props.location.pathname.lastIndexOf('/') + 1);
-
-      if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
-        this.categorySearch(+nodeId);
-      } else if (nodeId && nodeId === 'outlet') {
-        this.labelSearch('SALE %');
-      } else if (nodeId && nodeId === 'new') {
-        this.labelSearch('NEW');
-      }
-    }
   }
 
   public componentDidUpdate(prevProps: SearchPageProps) {
@@ -102,8 +90,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
       if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
         this.categorySearch(+nodeId);
-      } else if (nodeId && (nodeId === 'outlet' || nodeId === 'new')) {
-        this.labelSearch(nodeId);
+      } else if (nodeId && nodeId === 'outlet') {
+        this.labelSearch('SALE %');
+      } else if (nodeId && nodeId === 'new') {
+        this.labelSearch('NEW');
       }
     }
   }

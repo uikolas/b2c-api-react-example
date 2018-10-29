@@ -45,7 +45,12 @@ export class InitAppService {
       const response: any = await api.get('category-trees', {}, {withCredentials: true});
 
       if (response.ok) {
-        dispatch(categoriesFulfilledState(response.data.data[0].attributes.categoryNodesStorage));
+        let tree = response.data.data[0].attributes.categoryNodesStorage;
+
+        if (!Array.isArray(tree)) {
+          tree = [];
+        }
+        dispatch(categoriesFulfilledState(tree));
         return response.data.data[0];
       } else {
         dispatch(categoriesRejectedState(response.problem));
