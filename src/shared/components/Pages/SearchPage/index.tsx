@@ -57,6 +57,8 @@ interface SearchPageState {
   selectedCategory: TCategoryId;
   itemsPerPage: number;
   isFiltersReset: boolean;
+  isNeedNewRequest: boolean;
+  isReadyToNewRequest: boolean;
 }
 
 export const pageTitle = 'Results for ';
@@ -89,6 +91,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       selectedCategory: props.currentCategory,
       itemsPerPage: props.pagination.currentItemsPerPage,
       isFiltersReset: false,
+      isNeedNewRequest: false,
+      isReadyToNewRequest: false,
     };
   }
 
@@ -97,9 +101,20 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
-    (prevState.isFiltersReset === false && this.state.isFiltersReset)
-      ? toast.success(resetFilterSuccessText)
-      : null;
+    // Init showing a message if filters is reset
+    (prevState.isFiltersReset === false && this.state.isFiltersReset) ? toast.success(resetFilterSuccessText) : null;
+
+    // Init new request if it's needed
+    if (this.state.isReadyToNewRequest === true) {
+      if (prevState.isReadyToNewRequest === false && this.state.isNeedNewRequest === true) {
+        console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
+        this.updateSearch();
+        this.setState({isReadyToNewRequest: false});
+      }
+      if (this.state.isReadyToNewRequest === true && this.state.isNeedNewRequest === false) {
+        this.setState({isReadyToNewRequest: false});
+      }
+    }
   }
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
@@ -109,6 +124,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         [name]: values
       },
       isFiltersReset: false,
+      isNeedNewRequest: true,
     }));
   };
 
@@ -119,14 +135,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         [name]: {min, max},
       },
       isFiltersReset: false,
+      isNeedNewRequest: true,
     }));
   };
 
-  // TODO: remove event parameter
-  public updateSearch = (e: any): boolean => {
-    e.preventDefault();
-    e.stopPropagation();
-
+  public updateSearch = (): boolean => {
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
@@ -146,6 +159,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
+
+    this.setState((prevState: SearchPageState) => ({
+      ...prevState,
+      isReadyToNewRequest: false,
+      isNeedNewRequest: false,
+    }));
 
     return true;
   };
@@ -246,6 +265,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                                       filterValue: TFilterItemValue): any => (event: React.MouseEvent<HTMLElement>) => {
     const values = [...this.state.activeFilters[filterName]].filter((val: TFilterItemValue) => val !== filterValue);
     this.updateActiveFilters(filterName, values);
+
+    this.setState({isReadyToNewRequest: true});
   };
 
   private runResetActiveFilters = async (event: any): Promise<any> => {
@@ -255,16 +276,26 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         activeRangeFilters: {},
         selectedCategory: null,
         isFiltersReset: true,
+        isNeedNewRequest: false,
+        isReadyToNewRequest: false,
       });
     });
 
-    const resultUpdate = await this.updateSearch(event);
+    const resultUpdate = await this.updateSearch();
     return resultUpdate;
   }
 
   public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
     const resultReset = this.runResetActiveFilters(event);
   };
+
+  public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
+  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
 
   public render() {
     const {
@@ -284,9 +315,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     console.log('SearchPage props', this.props);
     console.log('SearchPage state', this.state);
-    console.log('SearchPage activeFilters', this.state.activeFilters);
-    console.log('SearchPage activeRangeFilters', this.state.activeRangeFilters);
-
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -364,10 +392,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   ranges={rangeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
                   updateRangeHandler={this.updateRangeFilters}
+                  onCloseFilterHandler={this.onCloseFilterHandler}
+                  onBlurRangeFilter={this.onBlurRangeFiltersHandler}
                 />
 
                 <ActiveFiltersList
                   activeValuesFilters={this.state.activeFilters}
+                  activeValuesRanges={this.state.activeRangeFilters}
                   resetHandler={this.resetActiveFilters}
                 />
 

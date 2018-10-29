@@ -7,6 +7,7 @@ import { styles } from './styles';
 import {
   IFilterItem,
   TActiveFilters,
+  TActiveRangeFilters,
   TFilterItemName,
   TFilterItemValue
 } from "src/shared/components/Pages/SearchPage/types";
@@ -16,6 +17,7 @@ import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
 
 interface ActiveFiltersListProps extends WithStyles<typeof styles> {
   activeValuesFilters: TActiveFilters;
+  activeValuesRanges: TActiveRangeFilters;
   resetHandler: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -23,9 +25,12 @@ const title = 'Active Filters';
 const resetBtnTitle = 'RESET ALL FILTERS';
 
 export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) => {
-  const {classes, activeValuesFilters, resetHandler } = props;
+  const {classes, activeValuesFilters, activeValuesRanges, resetHandler } = props;
 
+  const isActiveRangesExist = ((Object.getOwnPropertyNames(activeValuesRanges).length > 0));
+  let isActiveValuesExist: boolean;
   const itemsGlobalCollection: Array<IFilterItem> = [];
+
   const transformName = (name: TFilterItemName) => {
     let filterNameParts = name.split('_');
     if (filterNameParts.length <= 0) {
@@ -44,7 +49,9 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
       itemsGlobalCollection.push(...itemsLocalCollection);
     }
   }
-  if (!itemsGlobalCollection.length) {
+  isActiveValuesExist = (itemsGlobalCollection.length > 0);
+
+  if (!isActiveValuesExist && !isActiveRangesExist) {
     return null;
   }
 
@@ -63,7 +70,7 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
             alignItems="center"
             className={ classes.list }
       >
-       {itemsGlobalCollection.map((item: IFilterItem) => {
+       {isActiveValuesExist && itemsGlobalCollection.map((item: IFilterItem) => {
          return (
            <ActiveFilterItem
              key={`${item.name}-${item.value}`}

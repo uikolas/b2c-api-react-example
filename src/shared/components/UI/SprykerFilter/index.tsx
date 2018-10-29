@@ -20,6 +20,7 @@ export interface SprykerFilterProps extends WithStyles<typeof styles> {
   activeValues?: Array<string>;
   extraClassName?: string;
   isShowSelected?: boolean;
+  handleClose?: Function;
 }
 
 interface SprykerFilterState {
@@ -32,7 +33,14 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
     isOpen: false,
   };
 
-  private handleChangeShowing = (): void => {
+  private handleChangeShowing = (event: React.ChangeEvent<{}>): void => {
+
+    if (this.state.isOpen === true) {
+      if (this.props.handleClose) {
+        this.props.handleClose(event);
+      }
+    }
+
     this.setState(prev => ({isOpen: !prev.isOpen}));
   };
 

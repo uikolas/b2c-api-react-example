@@ -20,6 +20,8 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   ranges: Array<RangeFacets>;
   activeValuesRanges: TActiveRangeFilters;
   updateRangeHandler: Function;
+  onCloseFilterHandler: Function;
+  onBlurRangeFilter: (event: any) => void;
 }
 
 const title = 'Filter your results';
@@ -33,6 +35,8 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     ranges,
     activeValuesRanges,
     updateRangeHandler,
+    onCloseFilterHandler,
+    onBlurRangeFilter,
   } = props;
 
   let filterItems: any[] | null = [];
@@ -47,13 +51,14 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
         filterItems.push(
           <FilterWrapper
             filter={ <SprykerFilterElement
-                      attributeName={ filter.name }
-                      menuItems={ filter.values }
-                      activeValues={ activeValuesFilters[filter.name] || [] }
-                      handleChange={ updateFilterHandler }
-                      extraClassName={classes.filter}
-                      isShowSelected={false}
-                    />
+                        attributeName={ filter.name }
+                        menuItems={ filter.values }
+                        activeValues={ activeValuesFilters[filter.name] || [] }
+                        handleChange={ updateFilterHandler }
+                        extraClassName={classes.filter}
+                        isShowSelected={false}
+                        handleClose={onCloseFilterHandler}
+                      />
             }
             keyValue={filter.name}
             key={filter.name}
@@ -80,6 +85,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
           } }
           handleChange={ updateRangeHandler }
           Wrapper={FilterWrapper}
+          handleBlur={onBlurRangeFilter}
         />
       );
     });
