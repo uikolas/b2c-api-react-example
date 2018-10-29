@@ -28,6 +28,9 @@ import {CategoriesList} from "src/shared/components/Pages/SearchPage/CategoriesL
 import {SearchFilterList} from "src/shared/components/Pages/SearchPage/SearchFilterList/index";
 import {SearchPageContext} from './context';
 import {
+  filterTypeFilter,
+  filterTypeRange,
+  IFilterItemToDelete,
   TActiveFilters, TActiveRangeFilters, TCategoryId, TFilterItemName,
   TFilterItemValue
 } from "src/shared/components/Pages/SearchPage/types";
@@ -42,6 +45,7 @@ type IQuery = {
   [key: string]: string | number,
 };
 
+// TODO: Should be full list of props
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
@@ -138,6 +142,36 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       isNeedNewRequest: true,
     }));
   };
+
+  public resetRangeFilterOneValue = ({name, rangeSubType}: IFilterItemToDelete): boolean => {
+    if (!rangeSubType) {
+      return false;
+    }
+    const defaultValuesArr = this.props.rangeFilters.filter((item: RangeFacets) => (item.name === name));
+    if (!defaultValuesArr || !defaultValuesArr[0] || !defaultValuesArr[0][rangeSubType]) {
+      return;
+    }
+    this.setState((prevState: SearchPageState) => ({
+      activeRangeFilters: {
+        ...prevState.activeRangeFilters,
+        [name]: {
+          ...prevState.activeRangeFilters[name],
+          [rangeSubType]: (defaultValuesArr[0][rangeSubType] / 100),
+        },
+      },
+      isFiltersReset: false,
+      isNeedNewRequest: true,
+    }));
+    return true;
+  }
+
+  public resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
+    const values = [...this.state.activeFilters[name]]
+      .filter((val: TFilterItemValue) => val !== value);
+
+    this.updateActiveFilters(name, values);
+    return true;
+  }
 
   public updateSearch = (): boolean => {
     const query: IQuery = {
@@ -261,10 +295,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathSearchPage}${name}`);
   };
 
-  public deleteActiveFilterHandler = (filterName: TFilterItemName,
-                                      filterValue: TFilterItemValue): any => (event: React.MouseEvent<HTMLElement>) => {
-    const values = [...this.state.activeFilters[filterName]].filter((val: TFilterItemValue) => val !== filterValue);
-    this.updateActiveFilters(filterName, values);
+  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete): any =>
+                                        (event: React.MouseEvent<HTMLElement>) => {
+    if (itemToDelete.type === filterTypeFilter) {
+      this.resetFilterOneValue(itemToDelete);
+    } else if (itemToDelete.type === filterTypeRange) {
+      this.resetRangeFilterOneValue(itemToDelete);
+    }
 
     this.setState({isReadyToNewRequest: true});
   };
@@ -296,6 +333,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
     this.setState({isReadyToNewRequest: true});
   }
+
+  private numberToPrice = (value: number): number => (value / 100);
 
   public render() {
     const {
@@ -394,12 +433,15 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   updateRangeHandler={this.updateRangeFilters}
                   onCloseFilterHandler={this.onCloseFilterHandler}
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
+                  numberToPrice={this.numberToPrice}
                 />
 
                 <ActiveFiltersList
                   activeValuesFilters={this.state.activeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
+                  rangeFilters={this.props.rangeFilters}
                   resetHandler={this.resetActiveFilters}
+                  numberToPrice={this.numberToPrice}
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>

@@ -5,20 +5,19 @@ import { CloseOutlined } from '@material-ui/icons';
 
 import { styles } from './styles';
 import {SearchPageContext} from '../context';
-import {TFilterItemName, TFilterItemValue} from "src/shared/components/Pages/SearchPage/types";
+import {IFilterItem, TFilterItemName, TFilterItemValue} from "src/shared/components/Pages/SearchPage/types";
 
-interface ActiveFilterItemProps extends WithStyles<typeof styles> {
-  filterValue: TFilterItemValue;
-  filterName: TFilterItemName;
-  label: string;
+interface ActiveFilterItemProps extends WithStyles<typeof styles>, IFilterItem {
 }
 
 export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) => {
   const {
     classes,
-    filterValue,
-    filterName,
+    value,
+    name,
     label,
+    type,
+    rangeSubType,
   } = props;
 
   return (
@@ -29,7 +28,7 @@ export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) =>
           label={label}
           variant="outlined"
           className={classes.chip}
-          onDelete={ deleteActiveFilterHandler(filterName, filterValue) }
+          onDelete={ deleteActiveFilterHandler({name, value, type, rangeSubType})}
           deleteIcon={<CloseOutlined className={classes.close} />}
           classes={{label: classes.label}}
         />

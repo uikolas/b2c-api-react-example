@@ -22,6 +22,7 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   updateRangeHandler: Function;
   onCloseFilterHandler: Function;
   onBlurRangeFilter: (event: any) => void;
+  numberToPrice: Function;
 }
 
 const title = 'Filter your results';
@@ -37,11 +38,11 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     updateRangeHandler,
     onCloseFilterHandler,
     onBlurRangeFilter,
+    numberToPrice,
   } = props;
 
   let filterItems: any[] | null = [];
   let rangeItems: any[] | null = [];
-  const numberToPrice = (value: number): number => (value / 100);
 
   if (!Array.isArray(filters) || !filters.length) {
     filterItems = null;
