@@ -1,5 +1,6 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -32,6 +33,7 @@ import {
 } from "src/shared/components/Pages/SearchPage/types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
+import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
 
 type IQuery = {
   q?: string,
@@ -43,6 +45,7 @@ type IQuery = {
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
+  isFulfilled: boolean;
 }
 
 type RangeType = {min: number, max: number};
@@ -53,6 +56,7 @@ interface SearchPageState {
   sort: string;
   selectedCategory: TCategoryId;
   itemsPerPage: number;
+  isFiltersReset: boolean;
 }
 
 export const pageTitle = 'Results for ';
@@ -84,6 +88,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       sort: props.currentSort,
       selectedCategory: props.currentCategory,
       itemsPerPage: props.pagination.currentItemsPerPage,
+      isFiltersReset: false,
     };
   }
 
@@ -91,8 +96,20 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.dispatch(getCategoriesAction());
   }
 
+  public componentDidUpdate = (prevProps: any, prevState: any) => {
+    (prevState.isFiltersReset === false && this.state.isFiltersReset)
+      ? toast.success(resetFilterSuccessText)
+      : null;
+  }
+
   public updateActiveFilters = (name: string, values: Array<string>) => {
-    this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
+    this.setState((prevState: SearchPageState) => ({
+      activeFilters: {
+        ...prevState.activeFilters,
+        [name]: values
+      },
+      isFiltersReset: false,
+    }));
   };
 
   public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
@@ -101,10 +118,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         ...prevState.activeRangeFilters,
         [name]: {min, max},
       },
+      isFiltersReset: false,
     }));
   };
 
-  public updateSearch = (e: any) => {
+  // TODO: remove event parameter
+  public updateSearch = (e: any): boolean => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -127,6 +146,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
+
+    return true;
   };
 
   public handleSetSorting = (e: any) => {
@@ -227,16 +248,22 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.updateActiveFilters(filterName, values);
   };
 
-  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
-    this.setState((prevState: SearchPageState) => {
+  private runResetActiveFilters = async (event: any): Promise<any> => {
+    await this.setState((prevState: SearchPageState) => {
       return ({
-          activeFilters: {},
-          activeRangeFilters: {},
-          selectedCategory: null,
+        activeFilters: {},
+        activeRangeFilters: {},
+        selectedCategory: null,
+        isFiltersReset: true,
       });
     });
-    // TODO: UPDATE QUERY AFTER SORTING
-    this.updateSearch(event);
+
+    const resultUpdate = await this.updateSearch(event);
+    return resultUpdate;
+  }
+
+  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
+    const resultReset = this.runResetActiveFilters(event);
   };
 
   public render() {
