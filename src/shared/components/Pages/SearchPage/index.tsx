@@ -1,5 +1,6 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { Location } from 'history';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -40,6 +41,7 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
   categoriesTree: ICategory[];
+  location: Location,
 }
 
 type RangeType = {min: number, max: number};
@@ -48,7 +50,6 @@ interface SearchPageState {
   activeFilters: {[name: string]: string[]};
   activeRangeFilters: {[name: string]: RangeType};
   sort: string;
-  selectedCategory: TCategoryId;
   itemsPerPage: number;
 }
 
@@ -79,10 +80,83 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       activeFilters,
       activeRangeFilters,
       sort: props.currentSort,
-      selectedCategory: props.currentCategory,
       itemsPerPage: props.pagination.currentItemsPerPage,
     };
+
+    if (!props.location.pathname.endsWith(pathSearchPage) && !props.location.pathname.endsWith(pathSearchPage + '/')) {
+      const nodeId: string = props.location.pathname.substr(props.location.pathname.lastIndexOf('/') + 1);
+
+      if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
+        this.categorySearch(+nodeId);
+      } else if (nodeId && nodeId === 'outlet') {
+        this.labelSearch('SALE %');
+      } else if (nodeId && nodeId === 'new') {
+        this.labelSearch('NEW');
+      }
+    }
   }
+
+  public componentDidUpdate(prevProps: SearchPageProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
+
+      if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
+        this.categorySearch(+nodeId);
+      } else if (nodeId && (nodeId === 'outlet' || nodeId === 'new')) {
+        this.labelSearch(nodeId);
+      }
+    }
+  }
+
+  public categorySearch = (categoryId: TCategoryId): void => {
+
+    const query: IQuery = {
+      q: '',
+      currency: this.props.currency,
+      category: categoryId,
+    };
+
+    this.props.dispatch(sendSearchAction(query));
+
+    let name: string = '';
+
+    const searchName = (leaf: any) => {
+      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
+      name += path;
+
+      if (leaf.nodeId === +categoryId) {
+        return true;
+      }
+
+      if (Array.isArray(leaf.children) && leaf.children.length) {
+        const result = leaf.children.some(searchName);
+
+        if (!result) {
+          name = name.replace(path, '');
+        }
+
+        return result;
+      }
+
+      name = name.replace(path, '');
+      return false;
+    };
+
+    this.props.categoriesTree.some(searchName);
+
+    this.props.changeLocation(`${pathSearchPage}${name}`);
+  };
+
+  public labelSearch = (label: string): void => {
+
+    const query: IQuery = {
+      q: '',
+      currency: this.props.currency,
+      label,
+    };
+
+    this.props.dispatch(sendSearchAction(query));
+  };
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
     this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
@@ -110,8 +184,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       ...this.state.activeFilters,
     };
 
-    if (this.state.selectedCategory) {
-      query.category = this.state.selectedCategory;
+    if (this.props.currentCategory) {
+      query.category = this.props.currentCategory;
     }
 
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
@@ -149,8 +223,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       query.page = this.props.pagination.currentPage + 1;
     }
 
-    if (this.state.selectedCategory) {
-      query.category = this.state.selectedCategory;
+    if (this.props.currentCategory) {
+      query.category = this.props.currentCategory;
     }
 
     Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
@@ -166,7 +240,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
-    this.setState({selectedCategory: categoryId});
 
     const query: IQuery = {
       q: this.props.searchTerm,
@@ -191,7 +264,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
       name += path;
 
-      if (leaf.nodeId === categoryId) {
+      if (leaf.nodeId === +categoryId) {
         return true;
       }
 
@@ -228,6 +301,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       category,
       spellingSuggestion,
       categoriesTree,
+      currentCategory,
     } = this.props;
 
     const pages: any[] = [];
@@ -292,7 +366,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               <CategoriesList
                 categories={category}
                 categoriesTree={categoriesTree}
-                selectedCategory={this.state.selectedCategory}
+                selectedCategory={currentCategory}
               />
             </Grid>
 

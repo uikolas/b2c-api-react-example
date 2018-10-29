@@ -56,7 +56,7 @@ export class RefreshTokenService {
         payload: responseParsed,
       });
 
-      return responseParsed.refreshToken;
+      return responseParsed.accessToken;
     } else {
       console.error('Refresh token', response.problem);
       dispatch({

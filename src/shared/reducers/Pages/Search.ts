@@ -87,7 +87,7 @@ export const pageSearch = produce<SearchState>(
         draft.initiated = true;
         break;
       case PAGES_SEARCH_REQUEST_CLEAR:
-        draft.data.searchTerm = action.searchTerm;
+        // draft.data.searchTerm = action.searchTerm;
         draft.data.flyoutSearch.suggestions = [];
         draft.data.flyoutSearch.categories = [];
         draft.data.flyoutSearch.completion = [];

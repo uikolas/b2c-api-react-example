@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   mainNavLink: {
     color: theme.appColors.black,
-    marginRight: 32,
+    marginRight: theme.spacing.unit * 2,
     textDecoration: 'none',
     '&:hover': {
       color: theme.appColors.blue,

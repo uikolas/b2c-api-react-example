@@ -206,7 +206,7 @@ export class WishlistService {
 
       const body: any = {
         data: {
-          type: 'wishlists',
+          type: 'wishlist-items',
           attributes: {sku}
         }
       };

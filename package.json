@@ -235,7 +235,7 @@
     "start:docker": "npm run cpy:local:docker && sudo docker-compose up --build",
     "dist:prod": "npm run cpy:prod && npm run build:web:prod",
     "dist": "npm run build:web:prod",
-    "dev": "cross-env NODE_ENV=webpack-dev-server node server.js",
+    "dev": "cross-env NODE_ENV=webpack-dev-server node --max_old_space_size=4096 server.js",
     "serve": "npm run cpy:local:serve && npm run dev",
     "serve:windows": "npm run cpy:local:serve_windows && npm run dev",
     "start": "node ./server.js",

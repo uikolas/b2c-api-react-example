@@ -83,6 +83,14 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     this.props.clearSuggestions(query);
   };
 
+  private handleCategoryLink = (e: any) => {
+    const { name, nodeid } = e.currentTarget.dataset;
+
+    this.props.sendSearchAction({q: '', currency: this.props.currency, category: nodeid, include: ''});
+    this.props.clearSuggestions(name);
+    this.setState({value: ''});
+  };
+
   /* Render Helpers */
 
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
@@ -212,11 +220,12 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     for (let i = 0; i < 4; i++) {
       if (categories[i]) {
         renderedCategories.push(
-          <NavLink to={pathSearchPage}
-                   data-query={categories[i].name}
+          <NavLink to={`${pathSearchPage}/${categories[i].name.split(/\s+/).join('-')}`}
+                   data-name={categories[i].name}
+                   data-nodeid={categories[i].nodeId}
                    key={`category-${i}`}
                    className={classes.completion}
-                   onClick={this.handleSearchCompletion}
+                   onClick={this.handleCategoryLink}
           >
             <div className={classes.completion}>{ categories[i].name }</div>
           </NavLink>
