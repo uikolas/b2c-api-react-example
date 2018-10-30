@@ -29,9 +29,14 @@ interface AppHandlerProps extends IComponent {
 }
 
 interface AppHandlerState {
+  mobileNavOpened: boolean;
 }
 
 export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerState> {
+  public state: AppHandlerState = {
+    mobileNavOpened: false,
+  };
+
   public componentDidMount() {
     const accessToken: string = localStorage.getItem('accessToken');
     const expiresIn: string = localStorage.getItem('tokenExpire');
@@ -53,8 +58,11 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     }
   }
 
+  private mobileNavToggle = () => this.setState(({mobileNavOpened}) => ({mobileNavOpened: !mobileNavOpened}));
+
   public render(): JSX.Element {
     const {isLoading, locale} = this.props;
+    const {mobileNavOpened} = this.state;
     addLocaleData(getLocaleData(locale));
 
     return (
@@ -62,7 +70,11 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
         <IntlProvider locale={ locale } key={ locale }>
           <div className={ className }>
             <CssBaseline/>
-            <AppHeader isLoading={ isLoading }/>
+            <AppHeader
+              isLoading={ isLoading }
+              onMobileNavToggle={ this.mobileNavToggle }
+              isMobileNavOpened={ mobileNavOpened }
+            />
             { getContentRoutes() }
             <ToastContainer
               autoClose={ 3000 }

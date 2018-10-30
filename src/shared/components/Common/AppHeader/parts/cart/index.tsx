@@ -13,6 +13,7 @@ import { CartDrop } from './parts/cartDrop';
 import { CartProps as Props, CartState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
+import { pathCartPage } from 'src/shared/routes/contentRoutes';
 
 @(withRouter as any)
 @connect
@@ -29,7 +30,14 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
   private openPopover = ({currentTarget}: ClickEvent) => {
     const { cartItemsQuantity } = this.props;
-    this.setState(() => ({anchorEl: cartItemsQuantity !== 0 ? currentTarget : null}));
+
+    if (window.innerWidth < 500) {
+      if (cartItemsQuantity !== 0) {
+        this.props.history.push(pathCartPage);
+      }
+    } else {
+      this.setState(() => ({anchorEl: cartItemsQuantity !== 0 ? currentTarget : null}));
+    }
   };
   private closePopover = () => this.setState(() => ({anchorEl: null}));
 

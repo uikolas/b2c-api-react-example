@@ -6,11 +6,14 @@ import Popover from '@material-ui/core/Popover';
 import Person from '@material-ui/icons/Person';
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { PopoverDrop } from '../popoverDrop';
 import { UserDrop } from './userDrop';
 import { UserProps as Props, UserState as State } from './types';
+import { connect } from './connect';
 import { styles } from './styles';
 
+@connect
 @(withRouter as any)
 export class UserComponent extends React.PureComponent<Props, State> {
   public state: State = {
@@ -24,7 +27,15 @@ export class UserComponent extends React.PureComponent<Props, State> {
   }
 
   private openPopover = ({currentTarget}: ClickEvent) => {
-    this.setState(() => ({anchorEl: currentTarget}));
+    if (window.innerWidth < 500) {
+      if (this.props.isUserLoggedIn) {
+        this.props.history.push(pathCustomerProfilePage);
+      } else {
+        this.props.history.push(pathLoginPage);
+      }
+    } else {
+      this.setState(() => ({anchorEl: currentTarget}));
+    }
   };
   private closePopover = () => this.setState(() => ({anchorEl: null}));
 

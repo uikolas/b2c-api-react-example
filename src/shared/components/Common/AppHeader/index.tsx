@@ -9,7 +9,7 @@ import { AddNav } from './parts/navAdditional';
 import { AppHeaderProps as Props } from './types';
 import { styles } from './styles';
 
-export const AppHeaderComponent: React.SFC<Props> = ({classes, isLoading}) => (
+export const AppHeaderComponent: React.SFC<Props> = ({classes, isLoading, isMobileNavOpened, onMobileNavToggle}) => (
   <div className={ classes.header }>
     <div className={ classes.headerTop }>
       <div className={ merge([classes.headerContainer, classes.headerTopContainer]) }>
@@ -24,11 +24,19 @@ export const AppHeaderComponent: React.SFC<Props> = ({classes, isLoading}) => (
     </div>
     <div className={ classes.headerBottom }>
       <div className={ classes.headerContainer }>
-        <MainNav/>
+        <div
+          className={ merge([classes.hamburger, isMobileNavOpened ? classes.hamburgerOpened : '']) }
+          onClick={ onMobileNavToggle }
+        >
+          <span/>
+          <span/>
+        </div>
+
+        <MainNav mobileNavState={ isMobileNavOpened }/>
 
         <AddNav/>
       </div>
-      {isLoading ? <Preloader extraClasses={classes.preloader}/> : null}
+      { isLoading ? <Preloader extraClasses={ classes.preloader }/> : null }
     </div>
   </div>
 );
