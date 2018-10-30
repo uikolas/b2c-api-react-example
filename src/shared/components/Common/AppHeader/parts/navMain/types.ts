@@ -4,6 +4,5 @@ import { styles } from './styles';
 
 export interface MainNavProps extends WithStyles<typeof styles> {
   categoriesTree: ICategory[];
-  dispatch: Function;
   mobileNavState: boolean;
 }
