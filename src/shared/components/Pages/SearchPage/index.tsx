@@ -103,15 +103,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     };
 
     if (!props.location.pathname.endsWith(pathSearchPage) && !props.location.pathname.endsWith(pathSearchPage + '/')) {
-      const nodeId: string = props.location.pathname.substr(props.location.pathname.lastIndexOf('/') + 1);
-
-      if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
-        this.categorySearch(+nodeId);
-      } else if (nodeId && nodeId === 'outlet') {
-        this.labelSearch('SALE %');
-      } else if (nodeId && nodeId === 'new') {
-        this.labelSearch('NEW');
-      }
+      this.makeLocationSearch();
     }
   }
 
@@ -132,15 +124,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
 
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
-
-      if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
-        this.categorySearch(+nodeId);
-      } else if (nodeId && nodeId === 'outlet') {
-        this.labelSearch('SALE %');
-      } else if (nodeId && nodeId === 'new') {
-        this.labelSearch('NEW');
-      }
+      this.makeLocationSearch();
     }
   }
 
@@ -156,6 +140,56 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     let name: string = '';
 
+    // TODO: DUPLICATE in selectCategory - should be fixed
+    const searchName = (leaf: any) => {
+      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
+      name += path;
+
+      if (leaf.nodeId === +categoryId) {
+        return true;
+      }
+
+      if (Array.isArray(leaf.children) && leaf.children.length) {
+        const result = leaf.children.some(searchName);
+
+        if (!result) {
+          name = name.replace(path, '');
+        }
+
+        return result;
+      }
+
+      name = name.replace(path, '');
+      return false;
+    };
+
+    this.props.categoriesTree.some(searchName);
+
+    this.props.changeLocation(`${pathSearchPage}${name}`);
+  };
+
+  public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
+
+    const query: IQuery = {
+      q: this.props.searchTerm,
+      currency: this.props.currency,
+      sort: this.state.sort,
+      include: '',
+      ipp: this.state.itemsPerPage,
+      category: categoryId,
+      ...this.state.activeFilters,
+    };
+
+    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
+      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
+      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
+    });
+
+    this.props.dispatch(sendSearchAction(query));
+
+    let name: string = '';
+
+    // TODO: DUPLICATE in categorySearch - should be fixed
     const searchName = (leaf: any) => {
       const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
       name += path;
@@ -322,54 +356,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
-
-    const query: IQuery = {
-      q: this.props.searchTerm,
-      currency: this.props.currency,
-      sort: this.state.sort,
-      include: '',
-      ipp: this.state.itemsPerPage,
-      category: categoryId,
-      ...this.state.activeFilters,
-    };
-
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
-
-    this.props.dispatch(sendSearchAction(query));
-
-    let name: string = '';
-
-    const searchName = (leaf: any) => {
-      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
-      name += path;
-
-      if (leaf.nodeId === +categoryId) {
-        return true;
-      }
-
-      if (Array.isArray(leaf.children) && leaf.children.length) {
-        const result = leaf.children.some(searchName);
-
-        if (!result) {
-          name = name.replace(path, '');
-        }
-
-        return result;
-      }
-
-      name = name.replace(path, '');
-      return false;
-    };
-
-    this.props.categoriesTree.some(searchName);
-
-    this.props.changeLocation(`${pathSearchPage}${name}`);
-  };
-
   public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete): any =>
                                         (event: React.MouseEvent<HTMLElement>) => {
     if (itemToDelete.type === filterTypeFilter) {
@@ -380,6 +366,17 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.setState({isReadyToNewRequest: true});
   };
+
+  private makeLocationSearch = (): void => {
+    const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
+    if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
+      this.categorySearch(+nodeId);
+    } else if (nodeId && nodeId === 'outlet') {
+      this.labelSearch('SALE %');
+    } else if (nodeId && nodeId === 'new') {
+      this.labelSearch('NEW');
+    }
+  }
 
   private runResetActiveFilters = async (event: any): Promise<any> => {
     await this.setState((prevState: SearchPageState) => {
