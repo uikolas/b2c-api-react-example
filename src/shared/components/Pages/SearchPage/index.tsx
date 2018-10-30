@@ -46,6 +46,7 @@ type IQuery = {
   q?: string,
   currency: TAppCurrency,
   sort?: string,
+  category?: TCategoryId,
   [key: string]: string | number,
 };
 
