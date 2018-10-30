@@ -3,4 +3,6 @@ import { styles } from './styles';
 
 export interface AppHeaderProps extends WithStyles<typeof styles> {
   isLoading: boolean;
+  onMobileNavToggle(): void;
+  isMobileNavOpened: boolean;
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { merge } from 'src/shared/helpers/common';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 
