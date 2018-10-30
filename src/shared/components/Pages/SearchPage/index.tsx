@@ -82,6 +82,18 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       sort: props.currentSort,
       itemsPerPage: props.pagination.currentItemsPerPage,
     };
+
+    if (!props.location.pathname.endsWith(pathSearchPage) && !props.location.pathname.endsWith(pathSearchPage + '/')) {
+      const nodeId: string = props.location.pathname.substr(props.location.pathname.lastIndexOf('/') + 1);
+
+      if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
+        this.categorySearch(+nodeId);
+      } else if (nodeId && nodeId === 'outlet') {
+        this.labelSearch('SALE %');
+      } else if (nodeId && nodeId === 'new') {
+        this.labelSearch('NEW');
+      }
+    }
   }
 
   public componentDidUpdate(prevProps: SearchPageProps) {
