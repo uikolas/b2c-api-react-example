@@ -6,43 +6,40 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {
   filterTypeFilter,
-  filterTypeRange,
-  IFilterItem, rangeMaxType, rangeMinType,
+  IFilterItem,
   TActiveFilters,
   TActiveRangeFilters,
-  TFilterItemName,
   TFilterItemValue,
 } from "src/shared/components/Pages/SearchPage/types";
 import {ActiveFilterItem} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/index";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
+import {isWordHasPrice} from "src/shared/helpers/common/transform";
 import {RangeFacets} from "src/shared/interfaces/searchPageData/index";
+import {createRangeFilterItem, transformName} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/helper";
 
 interface ActiveFiltersListProps extends WithStyles<typeof styles> {
   activeValuesFilters: TActiveFilters;
   activeValuesRanges: TActiveRangeFilters;
   rangeFilters?: Array<RangeFacets>;
   resetHandler: (event: React.MouseEvent<HTMLDivElement>) => void;
-  numberToPrice: Function;
+  rangeValueToFront: Function;
 }
 
 const title = 'Active Filters';
 const resetBtnTitle = 'RESET ALL FILTERS';
 
 export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) => {
-  const {classes, activeValuesFilters, activeValuesRanges, rangeFilters, resetHandler, numberToPrice } = props;
+  const {
+    classes,
+    activeValuesFilters,
+    activeValuesRanges,
+    rangeFilters,
+    resetHandler,
+    rangeValueToFront,
+  } = props;
 
   const isActiveRangesExist = ((Object.getOwnPropertyNames(activeValuesRanges).length > 0));
   const itemsGlobalCollection: Array<IFilterItem> = [];
-
-  const transformName = (name: TFilterItemName, separator: string) => {
-    let filterNameParts = name.split(separator);
-    if (filterNameParts.length <= 0) {
-      return name;
-    }
-    filterNameParts[0] = firstLetterToUpperCase(filterNameParts[0]);
-    return filterNameParts.join(' ');
-  };
 
   for (let filter in activeValuesFilters) {
     if (Array.isArray(activeValuesFilters[filter]) && activeValuesFilters[filter].length) {
@@ -62,25 +59,24 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
       const defaultValuesArr = rangeFilters.filter((item: RangeFacets) => (item.name === rangeName));
       if (defaultValuesArr && defaultValuesArr[0]) {
 
+        let isPrice = false;
+        if (isWordHasPrice(rangeName)) {
+          isPrice = true;
+        }
         const valueFrom = activeValuesRanges[rangeName].min;
         const valueTo = activeValuesRanges[rangeName].max;
-        if(numberToPrice(defaultValuesArr[0].min) !==  valueFrom) {
-          itemsGlobalCollection.push({
-            name: rangeName,
-            value: activeValuesRanges[rangeName].min,
-            label: `${firstLetterToUpperCase(rangeName)} from: ${valueFrom}`,
-            type: filterTypeRange,
-            rangeSubType: rangeMinType,
-          });
+        const defaultFrom =  rangeValueToFront(defaultValuesArr[0].min);
+        const defaultTo = rangeValueToFront(defaultValuesArr[0].max);
+
+        if(defaultFrom !==  valueFrom) {
+          itemsGlobalCollection.push(
+            createRangeFilterItem(isPrice, true, rangeName, valueFrom, classes.price)
+          );
         }
-        if(numberToPrice(defaultValuesArr[0].max) !==  valueTo) {
-          itemsGlobalCollection.push({
-            name: rangeName,
-            value: activeValuesRanges[rangeName].max,
-            label: `${firstLetterToUpperCase(rangeName)} to: ${valueTo}`,
-            type: filterTypeRange,
-            rangeSubType: rangeMaxType,
-          });
+        if(defaultTo !==  valueTo) {
+          itemsGlobalCollection.push(
+            createRangeFilterItem(isPrice, false, rangeName, valueTo, classes.price)
+          );
         }
 
       }
@@ -111,7 +107,7 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
        {itemsGlobalCollection.map((item: IFilterItem) => {
          return (
            <ActiveFilterItem
-             key={item.label}
+             key={`${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}`}
              value={item.value}
              name={item.name}
              label={item.label}

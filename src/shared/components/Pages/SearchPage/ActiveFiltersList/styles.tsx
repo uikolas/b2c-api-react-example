@@ -32,6 +32,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   resetLabel: {
     paddingRight: theme.spacing.unit * 1.5,
-
+  },
+  price: {
+    fontSize: theme.appFixedDimensions.fontSize.mini,
+    fontWeight: 500,
   }
 });

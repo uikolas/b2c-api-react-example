@@ -11,10 +11,12 @@ interface AppPriceProps extends WithStyles<typeof styles> {
   value: number | null;
   specificCurrency?: TAppCurrency;
   priceType?: TPriceTypeName;
+  title?: string;
+  extraClassName?: string;
 }
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
-  const {classes, currency, value, specificCurrency, priceType} = props;
+  const {classes, currency, value, specificCurrency, priceType, title, extraClassName} = props;
   const valueFormatted = value ? (value / 100) : 0;
   let priceClassName = '';
   if (priceType === priceTypeNameOriginal) {
@@ -25,7 +27,8 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
 
   return (
     value
-      ? <span className={ priceClassName }>
+      ? <span className={ extraClassName ? `${priceClassName} ${extraClassName}` : priceClassName }>
+          {title ? title : null}
           <FormattedNumber
             value={ valueFormatted }
             style="currency"

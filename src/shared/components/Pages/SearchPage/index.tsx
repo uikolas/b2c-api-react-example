@@ -37,6 +37,7 @@ import {
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
 import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
+import {isWordHasPrice} from "src/shared/helpers/common/transform";
 
 type IQuery = {
   q?: string,
@@ -151,12 +152,15 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     if (!defaultValuesArr || !defaultValuesArr[0] || !defaultValuesArr[0][rangeSubType]) {
       return;
     }
+
+    let defaultValue = this.rangeValueToFront(defaultValuesArr[0][rangeSubType]);
+
     this.setState((prevState: SearchPageState) => ({
       activeRangeFilters: {
         ...prevState.activeRangeFilters,
         [name]: {
           ...prevState.activeRangeFilters[name],
-          [rangeSubType]: (defaultValuesArr[0][rangeSubType] / 100),
+          [rangeSubType]: defaultValue,
         },
       },
       isFiltersReset: false,
@@ -334,7 +338,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({isReadyToNewRequest: true});
   }
 
-  private numberToPrice = (value: number): number => (value / 100);
+  private rangeValueToFront = (value: number): number => (value / 100);
+
+  private rangeValueToBack = (value: number): number => (value * 100);
 
   public render() {
     const {
@@ -433,15 +439,15 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   updateRangeHandler={this.updateRangeFilters}
                   onCloseFilterHandler={this.onCloseFilterHandler}
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
-                  numberToPrice={this.numberToPrice}
+                  rangeValueToFront={this.rangeValueToFront}
                 />
 
                 <ActiveFiltersList
                   activeValuesFilters={this.state.activeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
-                  rangeFilters={this.props.rangeFilters}
+                  rangeFilters={rangeFilters}
                   resetHandler={this.resetActiveFilters}
-                  numberToPrice={this.numberToPrice}
+                  rangeValueToFront={this.rangeValueToFront}
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>

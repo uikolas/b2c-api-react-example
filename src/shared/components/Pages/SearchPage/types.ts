@@ -41,7 +41,7 @@ export interface SearchPageState {
 }
 
 export interface IFilterItem extends IFilterItemToDelete {
-  label: string;
+  label: string | JSX.Element;
   order?: number;
 }
 

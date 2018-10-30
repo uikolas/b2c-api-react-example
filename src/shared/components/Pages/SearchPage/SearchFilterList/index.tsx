@@ -9,7 +9,7 @@ import {TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/S
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
-import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
+import {firstLetterToUpperCase, isWordHasPrice} from "src/shared/helpers/common/transform";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 
@@ -22,7 +22,7 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   updateRangeHandler: Function;
   onCloseFilterHandler: Function;
   onBlurRangeFilter: (event: any) => void;
-  numberToPrice: Function;
+  rangeValueToFront: Function;
 }
 
 const title = 'Filter your results';
@@ -38,7 +38,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     updateRangeHandler,
     onCloseFilterHandler,
     onBlurRangeFilter,
-    numberToPrice,
+    rangeValueToFront,
   } = props;
 
   let filterItems: any[] | null = [];
@@ -73,16 +73,17 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     rangeItems = null;
   } else {
     rangeItems = ranges.map((filter: RangeFacets) => {
+      const isPrice = isWordHasPrice(filter.name);
       return (
         <SprykerRange
           key={filter.name}
           attributeName={ filter.name}
           title={firstLetterToUpperCase(filter.name)}
-          min={ numberToPrice(filter.min) }
-          max={ numberToPrice(filter.max) }
+          min={ rangeValueToFront(filter.min) }
+          max={ rangeValueToFront(filter.max) }
           currentValue={ activeValuesRanges[filter.name] || {
-            min: numberToPrice(filter.min),
-            max: numberToPrice(filter.max),
+            min: rangeValueToFront(filter.min),
+            max: rangeValueToFront(filter.max),
           } }
           handleChange={ updateRangeHandler }
           Wrapper={FilterWrapper}

@@ -20,3 +20,14 @@ export const firstLetterToUpperCase = (word: any): string | null => {
 
   return title.charAt(0).toUpperCase() + title.slice(1);
 };
+
+export const isWordHasPrice = (word: any): boolean => {
+  if (!word) {
+    return false;
+  }
+
+  if (word.toLowerCase().indexOf('price') !== -1) {
+    return true;
+  }
+  return false;
+};
