@@ -1,6 +1,8 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+
 import { Location } from 'history';
+import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -27,8 +29,18 @@ import {SearchIntro} from "./SearchIntro";
 import {CategoriesList} from "./CategoriesList";
 import {SearchFilterList} from "./SearchFilterList";
 import {SearchPageContext} from './context';
-import {TCategoryId} from "./types";
+import {
+  filterTypeFilter,
+  filterTypeRange,
+  IFilterItemToDelete,
+  TActiveFilters,
+  TActiveRangeFilters,
+  TCategoryId,
+  TFilterItemValue
+} from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
+import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
+import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
 
 type IQuery = {
   q?: string,
@@ -42,15 +54,19 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   changeLocation: Function;
   categoriesTree: ICategory[];
   location: Location;
+  isFulfilled: boolean;
 }
 
 type RangeType = {min: number, max: number};
 
 interface SearchPageState {
-  activeFilters: {[name: string]: string[]};
-  activeRangeFilters: {[name: string]: RangeType};
+  activeFilters: TActiveFilters;
+  activeRangeFilters: TActiveRangeFilters;
   sort: string;
   itemsPerPage: number;
+  isFiltersReset: boolean;
+  isNeedNewRequest: boolean;
+  isReadyToNewRequest: boolean;
 }
 
 export const pageTitle = 'Results for ';
@@ -81,6 +97,9 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       activeRangeFilters,
       sort: props.currentSort,
       itemsPerPage: props.pagination.currentItemsPerPage,
+      isFiltersReset: false,
+      isNeedNewRequest: false,
+      isReadyToNewRequest: false,
     };
 
     if (!props.location.pathname.endsWith(pathSearchPage) && !props.location.pathname.endsWith(pathSearchPage + '/')) {
@@ -96,7 +115,22 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
   }
 
-  public componentDidUpdate(prevProps: SearchPageProps) {
+  public componentDidUpdate = (prevProps: any, prevState: any): void => {
+    // Init showing a message if filters is reset
+    (prevState.isFiltersReset === false && this.state.isFiltersReset) ? toast.success(resetFilterSuccessText) : null;
+
+    // Init new request if it's needed
+    if (this.state.isReadyToNewRequest === true) {
+      if (prevState.isReadyToNewRequest === false && this.state.isNeedNewRequest === true) {
+        console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
+        this.updateSearch();
+        this.setState({isReadyToNewRequest: false});
+      }
+      if (this.state.isReadyToNewRequest === true && this.state.isNeedNewRequest === false) {
+        this.setState({isReadyToNewRequest: false});
+      }
+    }
+
     if (prevProps.location.pathname !== this.props.location.pathname) {
       const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
 
@@ -161,7 +195,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
-    this.setState((prevState: SearchPageState) => ({activeFilters: {...prevState.activeFilters, [name]: values}}));
+    this.setState((prevState: SearchPageState) => ({
+      activeFilters: {
+        ...prevState.activeFilters,
+        [name]: values
+      },
+      isFiltersReset: false,
+      isNeedNewRequest: true,
+    }));
   };
 
   public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
@@ -170,13 +211,45 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
         ...prevState.activeRangeFilters,
         [name]: {min, max},
       },
+      isFiltersReset: false,
+      isNeedNewRequest: true,
     }));
   };
 
-  public updateSearch = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
+  public resetRangeFilterOneValue = ({name, rangeSubType}: IFilterItemToDelete): boolean => {
+    if (!rangeSubType) {
+      return false;
+    }
+    const defaultValuesArr = this.props.rangeFilters.filter((item: RangeFacets) => (item.name === name));
+    if (!defaultValuesArr || !defaultValuesArr[0] || !defaultValuesArr[0][rangeSubType]) {
+      return;
+    }
 
+    let defaultValue = this.rangeValueToFront(defaultValuesArr[0][rangeSubType]);
+
+    this.setState((prevState: SearchPageState) => ({
+      activeRangeFilters: {
+        ...prevState.activeRangeFilters,
+        [name]: {
+          ...prevState.activeRangeFilters[name],
+          [rangeSubType]: defaultValue,
+        },
+      },
+      isFiltersReset: false,
+      isNeedNewRequest: true,
+    }));
+    return true;
+  }
+
+  public resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
+    const values = [...this.state.activeFilters[name]]
+      .filter((val: TFilterItemValue) => val !== value);
+
+    this.updateActiveFilters(name, values);
+    return true;
+  }
+
+  public updateSearch = (): boolean => {
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
@@ -196,6 +269,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     });
 
     this.props.dispatch(sendSearchAction(query));
+
+    this.setState((prevState: SearchPageState) => ({
+      ...prevState,
+      isReadyToNewRequest: false,
+      isNeedNewRequest: false,
+    }));
+
+    return true;
   };
 
   public handleSetSorting = (e: any) => {
@@ -289,6 +370,50 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.changeLocation(`${pathSearchPage}${name}`);
   };
 
+  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete): any =>
+                                        (event: React.MouseEvent<HTMLElement>) => {
+    if (itemToDelete.type === filterTypeFilter) {
+      this.resetFilterOneValue(itemToDelete);
+    } else if (itemToDelete.type === filterTypeRange) {
+      this.resetRangeFilterOneValue(itemToDelete);
+    }
+
+    this.setState({isReadyToNewRequest: true});
+  };
+
+  private runResetActiveFilters = async (event: any): Promise<any> => {
+    await this.setState((prevState: SearchPageState) => {
+      return ({
+        ...prevState,
+        activeFilters: {},
+        activeRangeFilters: {},
+        selectedCategory: null,
+        isFiltersReset: true,
+        isNeedNewRequest: false,
+        isReadyToNewRequest: false,
+      });
+    });
+
+    const resultUpdate = await this.updateSearch();
+    return resultUpdate;
+  }
+
+  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
+    const resultReset = this.runResetActiveFilters(event);
+  };
+
+  public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
+  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
+  private rangeValueToFront = (value: number): number => (value / 100);
+
+  private rangeValueToBack = (value: number): number => (value * 100);
+
   public render() {
     const {
       classes,
@@ -306,6 +431,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       currentCategory,
     } = this.props;
 
+    console.log('SearchPage props', this.props);
+    console.log('SearchPage state', this.state);
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -361,6 +488,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
           <SearchPageContext.Provider
             value={{
               selectCategoryHandler: this.selectCategory,
+              deleteActiveFilterHandler: this.deleteActiveFilterHandler,
             }}
           >
 
@@ -382,6 +510,17 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   ranges={rangeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
                   updateRangeHandler={this.updateRangeFilters}
+                  onCloseFilterHandler={this.onCloseFilterHandler}
+                  onBlurRangeFilter={this.onBlurRangeFiltersHandler}
+                  rangeValueToFront={this.rangeValueToFront}
+                />
+
+                <ActiveFiltersList
+                  activeValuesFilters={this.state.activeFilters}
+                  activeValuesRanges={this.state.activeRangeFilters}
+                  rangeFilters={rangeFilters}
+                  resetHandler={this.resetActiveFilters}
+                  rangeValueToFront={this.rangeValueToFront}
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>
