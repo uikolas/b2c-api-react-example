@@ -16,6 +16,7 @@ interface RangeInputProps extends WithStyles<typeof styles> {
   min: number;
   attributeName: string;
   isMin: boolean;
+  handleBlur: (event: any) => void;
 }
 
 const titlePartMax = ' to';
@@ -32,6 +33,7 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
     min,
     max,
     attributeName,
+    handleBlur,
   } = props;
 
   return (
@@ -48,7 +50,7 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
             type="number"
             value={ currentValue }
             onChange={ handleChangeValues }
-
+            onBlur={handleBlur}
           />
         </Grid>
       </Grid>

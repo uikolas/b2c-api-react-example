@@ -6,8 +6,9 @@ import {
   getProductDataItemPendingStateAction,
   getProductDataRejectedStateAction,
 } from '../../actions/Pages/Product';
+import {ApiServiceAbstract} from "src/shared/services/apiAbstractions/ApiServiceAbstract";
 
-export class ProductService {
+export class ProductService extends ApiServiceAbstract {
   public static async getAbstractData(dispatch: Function, sku: string): Promise<any> {
     try {
       dispatch(getProductDataItemPendingStateAction());
@@ -27,10 +28,7 @@ export class ProductService {
         dispatch(getProductDataFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        let errorMessage = response.problem;
-        if (response.data.errors[0].detail) {
-          errorMessage = response.data.errors[0].detail;
-        }
+        const errorMessage = this.getParsedAPIError(response);
         dispatch(getProductDataRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;

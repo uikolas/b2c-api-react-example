@@ -10,11 +10,12 @@ export type TRangeInputName = 'min' | 'max';
 interface SprykerRangeProps extends WithStyles<typeof styles> {
   title: string;
   attributeName?: string;
-  handleChange?: Function;
+  handleChange: Function;
   min?: number;
   max?: number;
   currentValue?: {min: number, max: number};
   Wrapper?: React.SFC<any>;
+  handleBlur: (event: any) => void;
 }
 
 export interface SprykerRangeState {
@@ -40,6 +41,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
       currentValue,
       title,
       Wrapper,
+      handleBlur,
     } = this.props;
 
     if (min === 0 && max === 0) {
@@ -58,6 +60,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
         min={min}
         max={max}
         attributeName={`${attributeName}-max`}
+        handleBlur={handleBlur}
       />
     );
 
@@ -74,6 +77,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
         min={min}
         max={max}
         attributeName={`${attributeName}-min`}
+        handleBlur={handleBlur}
       />
     );
 

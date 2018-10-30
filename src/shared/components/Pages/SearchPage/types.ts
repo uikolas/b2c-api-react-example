@@ -17,10 +17,37 @@ export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageD
 
 export type RangeType = {min: number, max: number};
 export type TCategoryId = number | string;
+export type TActiveFilters = {[name: string]: string[]};
+export type TActiveRangeFilters = {[name: string]: RangeType};
+export type TFilterItemName = string;
+export type TFilterItemValue = number | string;
+export type TFilterItemTypeFilter = 'filter';
+export type TFilterItemTypeRange = 'range';
+export const filterTypeFilter: TFilterItemTypeFilter = 'filter';
+export const filterTypeRange: TFilterItemTypeRange = 'range';
+export type TFilterItemType = TFilterItemTypeFilter | TFilterItemTypeRange;
+
+export type TRangeMinType = 'min';
+export type TRangeMaxType = 'max';
+export const rangeMinType: TRangeMinType = 'min';
+export const rangeMaxType: TRangeMaxType = 'max';
+export type TRangeType = TRangeMinType | TRangeMaxType;
 
 export interface SearchPageState {
-  activeFilters: {[name: string]: string[]};
-  activeRangeFilters: {[name: string]: RangeType};
+  activeFilters: TActiveFilters;
+  activeRangeFilters: TActiveRangeFilters;
   sort: string;
-  selectedCategory: number | string;
+  selectedCategory: TCategoryId;
+}
+
+export interface IFilterItem extends IFilterItemToDelete {
+  label: string | JSX.Element;
+  order?: number;
+}
+
+export interface IFilterItemToDelete {
+  name: TFilterItemName;
+  value: TFilterItemValue;
+  type: TFilterItemType;
+  rangeSubType?: TRangeType;
 }
