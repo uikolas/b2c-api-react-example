@@ -7,3 +7,4 @@ export const emptyRequiredFieldsErrorText = 'Not all fields are filled';
 export const passwordsNotEqualErrorText = 'The passwords must match';
 export const CustomerProfileAuthenticateErrorText = 'You should login to see your Profile';
 export const unexpectedServerError = 'Sorry, we have an unexpected server error';
+export const validateRangeInputsError = 'Please, fix errors in the fields!';

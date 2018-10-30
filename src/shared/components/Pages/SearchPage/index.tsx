@@ -41,6 +41,7 @@ import {
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
 import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
+import {validateRangeInputsError} from "src/shared/constants/messages/errors";
 
 type IQuery = {
   q?: string,
@@ -57,7 +58,7 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   location: Location;
   isFulfilled: boolean;
 }
-
+// [key: string]: number
 type RangeType = {min: number, max: number};
 
 interface SearchPageState {
@@ -115,7 +116,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     // Init new request if it's needed
     if (this.state.isReadyToNewRequest === true) {
       if (prevState.isReadyToNewRequest === false && this.state.isNeedNewRequest === true) {
-        console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
         this.updateSearch();
         this.setState({isReadyToNewRequest: false});
       }
@@ -251,6 +251,28 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }));
   };
 
+  private validateRangeInput = (): boolean => {
+    const activeRanges: {[key: string]: any} = {...this.state.activeRangeFilters};
+    const defaultRanges = [...this.props.rangeFilters];
+    let canMakeNewRequest: boolean = true;
+
+    defaultRanges.forEach((filter: RangeFacets) => {
+      if (activeRanges[filter.name]) {
+        const defaultMin = this.rangeValueToFront(filter.min);
+        const defaultMax = this.rangeValueToFront(filter.max);
+
+        for (let prop in activeRanges[filter.name]) {
+          if (activeRanges[filter.name][prop] < defaultMin
+            || activeRanges[filter.name][prop] > defaultMax
+          ) {
+            canMakeNewRequest = false;
+          }
+        }
+      }
+    });
+    return canMakeNewRequest;
+  }
+
   public resetRangeFilterOneValue = ({name, rangeSubType}: IFilterItemToDelete): boolean => {
     if (!rangeSubType) {
       return false;
@@ -285,6 +307,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public updateSearch = (): boolean => {
+
+    if(!this.validateRangeInput()) {
+      console.error('can\'t make request in updateSearch method!!!');
+      toast.error(validateRangeInputsError);
+      return;
+    }
+    console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,

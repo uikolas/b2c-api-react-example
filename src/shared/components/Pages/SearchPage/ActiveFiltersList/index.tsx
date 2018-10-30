@@ -68,12 +68,12 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
         const defaultFrom =  rangeValueToFront(defaultValuesArr[0].min);
         const defaultTo = rangeValueToFront(defaultValuesArr[0].max);
 
-        if(defaultFrom !==  valueFrom) {
+        if(defaultFrom !==  valueFrom && valueFrom > 0) {
           itemsGlobalCollection.push(
             createRangeFilterItem(isPrice, true, rangeName, valueFrom, classes.price)
           );
         }
-        if(defaultTo !==  valueTo) {
+        if(defaultTo !==  valueTo && valueTo > 0) {
           itemsGlobalCollection.push(
             createRangeFilterItem(isPrice, false, rangeName, valueTo, classes.price)
           );

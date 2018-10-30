@@ -7,6 +7,11 @@ import {RangeInput} from "src/shared/components/UI/SprykerRangeFilter/RangeInput
 
 export type TRangeInputName = 'min' | 'max';
 
+export interface IRangeInputError {
+  isMoreError: boolean;
+  isLessError: boolean;
+}
+
 interface SprykerRangeProps extends WithStyles<typeof styles> {
   title: string;
   attributeName?: string;
@@ -19,16 +24,108 @@ interface SprykerRangeProps extends WithStyles<typeof styles> {
 }
 
 export interface SprykerRangeState {
+  isMinError: IRangeInputError;
+  isMaxError: IRangeInputError;
 }
 
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
 
+  public state: SprykerRangeState = {
+    isMinError: {
+      isMoreError: false,
+      isLessError: false,
+    },
+    isMaxError: {
+      isMoreError: false,
+      isLessError: false,
+    },
+  };
+
+  public componentDidUpdate = (prevProps: any, prevState: any): void => {
+    /*console.log('SprykerRangeFilter componentDidUpdate');
+    console.log('prevProps', prevProps);
+    console.log('this.props ', this.props);*/
+    if (this.props.currentValue.min !== prevProps.currentValue.min
+      || this.props.currentValue.max !== prevProps.currentValue.max) {
+      console.log('***** SprykerRangeFilter *****');
+      /*this.setState((prevState: SprykerRangeState) => ({
+        isMinError: {
+          isMoreError: false,
+          isLessError: false,
+        },
+        isMaxError: {
+          isMoreError: false,
+          isLessError: false,
+        },
+      }));*/
+    }
+
+  }
+
   public handleChangeValues = ( event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>,
                                 param: TRangeInputName) => {
     const newValue = +event.target.value;
-    if ((param === 'min' && newValue < this.props.min) || (param === 'max' && newValue > this.props.max)) {
+    if (!newValue) {
       return;
     }
+
+    if (param === 'min') {
+      if (newValue < this.props.min) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMinError: {
+            isMoreError: false,
+            isLessError: true,
+          }
+        }));
+      } else if (newValue > this.props.max) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMinError: {
+            isMoreError: true,
+            isLessError: false,
+          }
+        }));
+
+      } else {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMinError: {
+            isMoreError: false,
+            isLessError: false,
+          },
+        }));
+      }
+    } else if (param === 'max') {
+      if (newValue < this.props.min) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMaxError: {
+            isMoreError: false,
+            isLessError: true,
+          }
+        }));
+
+      } else if (newValue > this.props.max) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMaxError: {
+            isMoreError: true,
+            isLessError: false,
+          }
+        }));
+
+      } else {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMaxError: {
+            isMoreError: false,
+            isLessError: false,
+          },
+        }));
+      }
+    }
+
     this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: newValue});
   };
 
@@ -61,6 +158,8 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
         max={max}
         attributeName={`${attributeName}-max`}
         handleBlur={handleBlur}
+        isMoreError={this.state.isMaxError.isMoreError}
+        isLessError={this.state.isMaxError.isLessError}
       />
     );
 
@@ -78,6 +177,8 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
         max={max}
         attributeName={`${attributeName}-min`}
         handleBlur={handleBlur}
+        isMoreError={this.state.isMinError.isMoreError}
+        isLessError={this.state.isMinError.isLessError}
       />
     );
 
