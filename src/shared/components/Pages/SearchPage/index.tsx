@@ -42,6 +42,7 @@ import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
 import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
 import {validateRangeInputsError} from "src/shared/constants/messages/errors";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 
 type IQuery = {
   q?: string,
@@ -58,7 +59,7 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   location: Location;
   isFulfilled: boolean;
 }
-// [key: string]: number
+
 type RangeType = {min: number, max: number};
 
 interface SearchPageState {
@@ -506,6 +507,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     return (
       <AppMain>
+        {isLoading ? <AppBackdrop isOpen={true} /> : null}
+
         <AppPageTitle
           title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
           intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
