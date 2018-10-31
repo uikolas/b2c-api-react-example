@@ -3,33 +3,140 @@ import {ChangeEvent} from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import {RangeInput} from "src/shared/components/UI/SprykerRangeFilter/RangeInput/index";
+import {
+  getSprykerRangeStateLessError,
+  getSprykerRangeStateMoreError,
+  getSprykerRangeStateNoError
+} from "src/shared/components/UI/SprykerRangeFilter/helpers";
 
 
 export type TRangeInputName = 'min' | 'max';
 
+export interface IRangeInputError {
+  isMoreError: boolean;
+  isLessError: boolean;
+}
+
 interface SprykerRangeProps extends WithStyles<typeof styles> {
   title: string;
   attributeName?: string;
-  handleChange?: Function;
+  handleChange: Function;
   min?: number;
   max?: number;
   currentValue?: {min: number, max: number};
   Wrapper?: React.SFC<any>;
+  handleBlur: (event: any) => void;
+  isReset: boolean;
 }
 
 export interface SprykerRangeState {
+  isMinError: IRangeInputError;
+  isMaxError: IRangeInputError;
 }
 
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
 
+  public state: SprykerRangeState = {
+    isMinError: {
+      isMoreError: false,
+      isLessError: false,
+    },
+    isMaxError: {
+      isMoreError: false,
+      isLessError: false,
+    },
+  };
+
+  public componentDidUpdate = (prevProps: any, prevState: any): void => {
+
+    if (this.props.isReset && !prevProps.isReset) {
+
+      this.setState((prevState: SprykerRangeState) => ({
+        isMinError: {
+        ...getSprykerRangeStateNoError(),
+        },
+        isMaxError: {
+          ...getSprykerRangeStateNoError(),
+        },
+      }));
+
+      return;
+    }
+
+    if ( this.props.currentValue.max !== prevProps.currentValue.max) {
+      this.validateInputs('max', this.props.currentValue.max);
+    }
+
+    if ( this.props.currentValue.min !== prevProps.currentValue.min) {
+      this.validateInputs('min', this.props.currentValue.min);
+    }
+
+  }
+
   public handleChangeValues = ( event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>,
                                 param: TRangeInputName) => {
     const newValue = +event.target.value;
-    if ((param === 'min' && newValue < this.props.min) || (param === 'max' && newValue > this.props.max)) {
+    if (!newValue) {
       return;
     }
+
     this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: newValue});
   };
+
+
+  private validateInputs = (param: TRangeInputName, newValue: number): void => {
+
+    if (param === 'min') {
+      if (newValue < this.props.min) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMinError: {
+            ...getSprykerRangeStateLessError(),
+          }
+        }));
+      } else if (newValue > this.props.max) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMinError: {
+            ...getSprykerRangeStateMoreError(),
+          }
+        }));
+
+      } else {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMinError: {
+            ...getSprykerRangeStateNoError(),
+          },
+        }));
+      }
+    } else if (param === 'max') {
+      if (newValue < this.props.min) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMaxError: {
+            ...getSprykerRangeStateLessError(),
+          }
+        }));
+
+      } else if (newValue > this.props.max) {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMaxError: {
+            ...getSprykerRangeStateMoreError(),
+          }
+        }));
+
+      } else {
+        this.setState((prevState: SprykerRangeState) => ({
+          ...prevState,
+          isMaxError: {
+            ...getSprykerRangeStateNoError(),
+          },
+        }));
+      }
+    }
+  }
 
   public render() {
     const {
@@ -40,6 +147,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
       currentValue,
       title,
       Wrapper,
+      handleBlur,
     } = this.props;
 
     if (min === 0 && max === 0) {
@@ -58,6 +166,9 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
         min={min}
         max={max}
         attributeName={`${attributeName}-max`}
+        handleBlur={handleBlur}
+        isMoreError={this.state.isMaxError.isMoreError}
+        isLessError={this.state.isMaxError.isLessError}
       />
     );
 
@@ -74,6 +185,9 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
         min={min}
         max={max}
         attributeName={`${attributeName}-min`}
+        handleBlur={handleBlur}
+        isMoreError={this.state.isMinError.isMoreError}
+        isLessError={this.state.isMinError.isLessError}
       />
     );
 

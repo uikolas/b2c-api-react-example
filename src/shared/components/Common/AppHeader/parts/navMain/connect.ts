@@ -7,6 +7,4 @@ const mapStateToProps = (state: any, ownProps: any) => {
   return ({categoriesTree});
 };
 
-const mapDispatchToProps = (dispatch: Function) => ({dispatch});
-
-export const connect = reduxify(mapStateToProps, mapDispatchToProps);
+export const connect = reduxify(mapStateToProps);

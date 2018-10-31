@@ -12,8 +12,9 @@ import {
 import { orderAuthenticateErrorText } from '../../constants/messages/errors';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../../helpers/order/response';
 import { TOrderId } from '../../interfaces/order';
+import {ApiServiceAbstract} from "src/shared/services/apiAbstractions/ApiServiceAbstract";
 
-export class OrderService {
+export class OrderService extends ApiServiceAbstract {
 
   // Get collection of orders
   public static async getOrdersCollection(dispatch: Function): Promise<any> {
@@ -38,10 +39,7 @@ export class OrderService {
         dispatch(ordersCollectionFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        let errorMessage = response.problem;
-        if (response.data.errors[0].detail) {
-          errorMessage = response.data.errors[0].detail;
-        }
+        const errorMessage = this.getParsedAPIError(response);
         dispatch(ordersCollectionRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;
@@ -78,10 +76,7 @@ export class OrderService {
         dispatch(orderDetailsFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        let errorMessage = response.problem;
-        if (response.data.errors[0].detail) {
-          errorMessage = response.data.errors[0].detail;
-        }
+        const errorMessage = this.getParsedAPIError(response);
         dispatch(orderDetailsRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;

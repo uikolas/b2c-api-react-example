@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StickyContainer } from 'react-sticky';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,9 +36,14 @@ interface AppHandlerProps extends IComponent {
 }
 
 interface AppHandlerState {
+  mobileNavOpened: boolean;
 }
 
 export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerState> {
+  public state: AppHandlerState = {
+    mobileNavOpened: false,
+  };
+
   public componentDidMount() {
     const accessToken: string = localStorage.getItem('accessToken');
     const expiresIn: string = localStorage.getItem('tokenExpire');
@@ -59,6 +65,8 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     }
   }
 
+  private mobileNavToggle = () => this.setState(({mobileNavOpened}) => ({mobileNavOpened: !mobileNavOpened}));
+
   public componentDidUpdate(prevProps: AppHandlerProps) {
     if (!prevProps.isAppDataSet && this.props.isAppDataSet) {
       if (this.props.isCustomerAuth) {
@@ -71,6 +79,7 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
 
   public render(): JSX.Element {
     const {isLoading, locale} = this.props;
+    const {mobileNavOpened} = this.state;
     addLocaleData(getLocaleData(locale));
 
     return (
@@ -78,19 +87,25 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
         <IntlProvider locale={ locale } key={ locale }>
           <div className={ className }>
             <CssBaseline/>
-            <AppHeader isLoading={ isLoading }/>
-            { getContentRoutes() }
-            <ToastContainer
-              autoClose={ 3000 }
-              transition={ Slide }
-              position={ toast.POSITION.BOTTOM_LEFT }
-              pauseOnHover={ true }
-              style={ {
-                width: '90%',
-                left: 0,
-              } }
-            />
-            <AppFooter/>
+            <StickyContainer>
+              <AppHeader
+                isLoading={ isLoading }
+                onMobileNavToggle={ this.mobileNavToggle }
+                isMobileNavOpened={ mobileNavOpened }
+              />
+              { getContentRoutes() }
+              <ToastContainer
+                autoClose={ 3000 }
+                transition={ Slide }
+                position={ toast.POSITION.BOTTOM_LEFT }
+                pauseOnHover={ true }
+                style={ {
+                  width: '90%',
+                  left: 0,
+                } }
+              />
+              <AppFooter/>
+            </StickyContainer>
           </div>
         </IntlProvider>
       </MuiThemeProvider>

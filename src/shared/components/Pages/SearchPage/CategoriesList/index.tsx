@@ -1,6 +1,5 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
@@ -9,6 +8,7 @@ import {FilterValue} from "src/shared/interfaces/searchPageData/index";
 import {CategoryItem} from "src/shared/components/Pages/SearchPage/CategoryItem/index";
 import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 import {ICategory} from 'src/shared/reducers/Common/Init';
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 interface CategoriesListProps extends WithStyles<typeof styles> {
   categories: Array<FilterValue>;
@@ -32,7 +32,6 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
 
   const categoryList = categories.map((category: FilterValue) => {
     let name: string;
-
     const searchName = (leaf: any) => {
       if (leaf.nodeId === category.value) {
         name = leaf.name;
@@ -43,17 +42,15 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
       }
       return false;
     };
-
     categoriesTree.some(searchName);
     if (!name) {
       return null;
     }
-
     return (
       <CategoryItem
         key={`category-${category.value}`}
         categoryValue={category.value}
-        selectedCategory={selectedCategory === category.value}
+        isSelected={(+selectedCategory) === category.value}
         displayName={`${name} (${category.doc_count})`}
       />
     );
@@ -66,9 +63,7 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <Typography component="h2" color="inherit" className={classes.title}>
-          {title}
-        </Typography>
+        <AppPageSubTitle title={title} extraClass={classes.title}/>
         <List component="nav" className={ classes.list }>
           { categoryList }
         </List>

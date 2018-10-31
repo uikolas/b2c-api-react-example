@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
@@ -20,7 +19,6 @@ import { AppPrice } from '../AppPrice';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
-import {priceTypeNameOriginal} from "src/shared/interfaces/product";
 
 export const buttonTitle = 'Search';
 
@@ -143,7 +141,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
               src={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
               alt={ suggestion.abstract_name }
             />
-            <div className={ classes.actionAreaOverlay }></div>
+            <div className={ classes.actionAreaOverlay } />
           </div>
           <div className={ classes.description }>
             <span>
@@ -285,7 +283,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   /* RENDER */
 
   public render() {
-    const {classes, suggestions, isLoading} = this.props;
+    const {classes, suggestions, /*isLoading*/} = this.props;
 
     const autosuggestProps = {
       suggestions,

@@ -24,19 +24,22 @@ export const CategoryItemBase: React.SFC<CategoryItemProps> = (props) => {
   return (
     <SearchPageContext.Consumer>
       {({selectCategoryHandler}) => (
-        <ListItem
-          button
-          onClick={(event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event)}
-          selected={isSelected}
-          className={classes.categoryItem}
-          disableGutters
-        >
-          <ListItemText
-            disableTypography
-            classes={{root: classes.categoryItemText}}
-            primary={displayName}
-          />
+        <div className={classes.listItemOuter}>
+          <ListItem
+            button
+            onClick={(event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event)}
+            selected={isSelected}
+            className={classes.categoryItem}
+            disableGutters
+            classes={{root: classes.root, selected: classes.selected}}
+          >
+            <ListItemText
+              disableTypography
+              classes={{root: classes.categoryItemText}}
+              primary={displayName}
+            />
         </ListItem>
+        </div>
       ) }
     </SearchPageContext.Consumer>
   );

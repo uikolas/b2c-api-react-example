@@ -19,6 +19,8 @@ export interface SprykerFilterProps extends WithStyles<typeof styles> {
   menuItems?: Array<IMenuItemsDropdown>;
   activeValues?: Array<string>;
   extraClassName?: string;
+  isShowSelected?: boolean;
+  handleClose?: Function;
 }
 
 interface SprykerFilterState {
@@ -31,7 +33,14 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
     isOpen: false,
   };
 
-  private handleChangeShowing = (): void => {
+  private handleChangeShowing = (event: React.ChangeEvent<{}>): void => {
+
+    if (this.state.isOpen === true) {
+      if (this.props.handleClose) {
+        this.props.handleClose(event);
+      }
+    }
+
     this.setState(prev => ({isOpen: !prev.isOpen}));
   };
 
@@ -51,6 +60,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
       menuItems,
       activeValues,
       extraClassName,
+      isShowSelected,
     } = this.props;
 
     return (
@@ -87,14 +97,16 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               </MenuItem>))
             }
           </Select>
-          { activeValues && activeValues.map(item => (
-            <Chip
-              key={ item }
-              label={ item }
-              variant="outlined"
-              onDelete={ this.handleDelete(item) }
-              className={ classes.chip }
-            />))
+          { isShowSelected
+            ? activeValues.map(item => (
+                <Chip
+                  key={ item }
+                  label={ item }
+                  variant="outlined"
+                  onDelete={ this.handleDelete(item) }
+                  className={ classes.chip }
+                />))
+            : null
           }
         </FormControl>
       </div>
