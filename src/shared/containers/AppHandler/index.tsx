@@ -65,8 +65,6 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     }
   }
 
-  private mobileNavToggle = () => this.setState(({mobileNavOpened}) => ({mobileNavOpened: !mobileNavOpened}));
-
   public componentDidUpdate(prevProps: AppHandlerProps) {
     if (!prevProps.isAppDataSet && this.props.isAppDataSet) {
       if (this.props.isCustomerAuth) {
@@ -76,6 +74,8 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
       }
     }
   }
+
+  private mobileNavToggle = () => this.setState(({mobileNavOpened}) => ({mobileNavOpened: !mobileNavOpened}));
 
   public render(): JSX.Element {
     const {isLoading, locale} = this.props;
