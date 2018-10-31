@@ -23,6 +23,7 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   onCloseFilterHandler: Function;
   onBlurRangeFilter: (event: any) => void;
   rangeValueToFront: Function;
+  isFiltersReset: boolean;
 }
 
 const title = 'Filter your results';
@@ -39,6 +40,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     onCloseFilterHandler,
     onBlurRangeFilter,
     rangeValueToFront,
+    isFiltersReset,
   } = props;
 
   let filterItems: any[] | null = [];
@@ -87,6 +89,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
           handleChange={ updateRangeHandler }
           Wrapper={FilterWrapper}
           handleBlur={onBlurRangeFilter}
+          isReset={isFiltersReset}
         />
       );
     });

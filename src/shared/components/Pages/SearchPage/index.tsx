@@ -540,6 +540,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   onCloseFilterHandler={this.onCloseFilterHandler}
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
                   rangeValueToFront={this.rangeValueToFront}
+                  isFiltersReset={this.state.isFiltersReset}
                 />
 
                 <ActiveFiltersList
@@ -551,11 +552,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-                  <Grid item xs={ 3 }>
-                    <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                      Filter
-                    </Button>
-                  </Grid>
+
                   <Grid item xs={ 6 }>
                     <FormControl>
                       <Select
