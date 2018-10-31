@@ -46,12 +46,11 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
     if (!name) {
       return null;
     }
-
     return (
       <CategoryItem
         key={`category-${category.value}`}
         categoryValue={category.value}
-        selectedCategory={selectedCategory === category.value}
+        isSelected={(+selectedCategory) === category.value}
         displayName={`${name} (${category.doc_count})`}
       />
     );
@@ -64,7 +63,7 @@ export const CategoriesListBase: React.SFC<CategoriesListProps> = (props) => {
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <AppPageSubTitle title={title} />
+        <AppPageSubTitle title={title} extraClass={classes.title}/>
         <List component="nav" className={ classes.list }>
           { categoryList }
         </List>

@@ -5,10 +5,20 @@ export const styles = (theme: Theme) => createStyles({
   categoryItem: {
     paddingTop: 0,
     paddingBottom: 0,
+    paddingLeft: theme.spacing.unit,
   },
   categoryItemText: {
     lineHeight: 2.29,
     letterSpacing: 0.4,
     fontSize: theme.appFixedDimensions.fontSize.small,
+
   },
+  selected: {
+    backgroundColor: `${theme.appColors.black} !important`,
+    color: theme.appColors.white,
+  },
+  root: {},
+  listItemOuter: {
+    paddingRight: theme.spacing.unit,
+  }
 });

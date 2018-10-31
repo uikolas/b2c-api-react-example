@@ -9,4 +9,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: 0,
     paddingTop: 0,
   },
+  title: {
+    paddingLeft: theme.spacing.unit,
+  },
 });
