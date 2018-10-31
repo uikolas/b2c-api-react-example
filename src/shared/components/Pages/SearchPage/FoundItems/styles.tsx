@@ -6,7 +6,8 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   paragraph: {
-    fontSize: "1rem",
+    fontSize: theme.appFixedDimensions.fontSize.small,
     letterSpacing: -0.4,
+    lineHeight: 1,
   },
 });

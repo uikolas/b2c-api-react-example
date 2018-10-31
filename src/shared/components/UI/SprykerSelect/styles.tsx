@@ -3,7 +3,13 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
+    paddingLeft: theme.spacing.unit * 6,
 
+  },
+  formControl: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   selected: {
     ...theme.appModules.selectedItem,
@@ -26,6 +32,6 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   title: {
-
+    display: "inline-flex",
   },
 });

@@ -24,7 +24,7 @@ export const FoundItemsBase: React.SFC<FoundItemsProps> = (props) => {
           className={ classes.root }
     >
       <Grid item xs={ 12 } >
-        <Typography color="inherit" paragraph className={ classes.paragraph }>
+        <Typography color="inherit" component="p" className={ classes.paragraph }>
           {numberFound
             ? `${numberFound} ${(numberFound === 1) ? 'item' : 'items'} found`
             : 'Nothing found'

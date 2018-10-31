@@ -35,8 +35,14 @@ export const SortPanelBase: React.SFC<SortPanelProps> = (props) => {
       </Grid>
 
       <Grid item xs={ 12 } sm={6}>
-        {numberMode}
-        {sorterMode}
+        <div className={classes.sortsOuter}>
+          <div className={classes.sort}>
+            {numberMode}
+          </div>
+          <div className={classes.sort}>
+            {sorterMode}
+          </div>
+        </div>
       </Grid>
 
     </Grid>

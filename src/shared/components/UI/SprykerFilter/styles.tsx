@@ -47,5 +47,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   menuItemName: {
     marginRight: theme.spacing.unit * 1.5,
-  }
+  },
+  selected: {
+    ...theme.appModules.selectedItem,
+  },
 });

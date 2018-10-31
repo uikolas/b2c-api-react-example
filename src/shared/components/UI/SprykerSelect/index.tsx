@@ -45,8 +45,13 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
         value={ menuItemFirst.value }
         selected={ menuItemFirst.selected }
         disabled={ menuItemFirst.disabled }
+        disableGutters
+        classes={{
+          selected: classes.selected,
+        }}
+        className={ classes.menuItem }
       >
-        <em>{ menuItemFirst.name }</em>
+        { menuItemFirst.name }
       </MenuItem>
     );
   };
@@ -57,12 +62,12 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
 
   return (
     <Grid container
-          justify="flex-end"
+          justify="center"
           alignItems="center"
           className={ classes.root }
     >
-      <Grid item xs={ 12 } sm={6}>
-        <FormControl>
+      <Grid item xs={ 12 }>
+        <FormControl className={ classes.formControl }>
           { (title && isMenuItemsExist)
             ? <Typography component="span" className={classes.title}>{title}</Typography>
             : null

@@ -465,6 +465,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     console.log('SearchPage props', this.props);
     console.log('SearchPage state', this.state);
+    const isSortParamsExist = (sortParams.length);
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -581,11 +582,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                                 }))}
                                 menuItemFirst={{
                                   value: " ",
-                                  name: "Choose sort mode",
-                                  disabled: true,
+                                  name: (!isSortParamsExist && !this.state.sort) ? "Choose sort mode" : "relevance",
+                                  disabled: !isSortParamsExist,
                                 }}
                                 name="sort"
-                                title="Sort by "
+                                title={(isSortParamsExist) ? "Sort by " : null}
                               />}
                 />
 
