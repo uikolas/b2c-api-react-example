@@ -73,7 +73,7 @@ interface SearchPageState {
 }
 
 export const pageTitle = 'Results for ';
-export const pageTitleDefault = 'All products';
+export const pageTitleDefault = 'Start searching';
 
 @connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
