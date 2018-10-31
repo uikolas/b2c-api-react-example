@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StickyContainer } from 'react-sticky';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -70,23 +71,25 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
         <IntlProvider locale={ locale } key={ locale }>
           <div className={ className }>
             <CssBaseline/>
-            <AppHeader
-              isLoading={ isLoading }
-              onMobileNavToggle={ this.mobileNavToggle }
-              isMobileNavOpened={ mobileNavOpened }
-            />
-            { getContentRoutes() }
-            <ToastContainer
-              autoClose={ 3000 }
-              transition={ Slide }
-              position={ toast.POSITION.BOTTOM_LEFT }
-              pauseOnHover={ true }
-              style={ {
-                width: '90%',
-                left: 0,
-              } }
-            />
-            <AppFooter/>
+            <StickyContainer>
+              <AppHeader
+                isLoading={ isLoading }
+                onMobileNavToggle={ this.mobileNavToggle }
+                isMobileNavOpened={ mobileNavOpened }
+              />
+              { getContentRoutes() }
+              <ToastContainer
+                autoClose={ 3000 }
+                transition={ Slide }
+                position={ toast.POSITION.BOTTOM_LEFT }
+                pauseOnHover={ true }
+                style={ {
+                  width: '90%',
+                  left: 0,
+                } }
+              />
+              <AppFooter/>
+            </StickyContainer>
           </div>
         </IntlProvider>
       </MuiThemeProvider>
