@@ -3,6 +3,7 @@ import {
   CART_CREATE,
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
+  GET_CARTS,
 } from '../../constants/ActionTypes/Common/Cart';
 import { IReduxState } from '../../../typings/app';
 import {
@@ -15,6 +16,7 @@ import {
 } from '../../interfaces/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
+import {PAGES_CUSTOMER_LOGOUT} from "src/shared/constants/ActionTypes/Pages/Login";
 
 export interface ICartItem {
   sku: TProductSKU | null;
@@ -54,16 +56,21 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
     case `${CART_ADD_ITEM}_PENDING`:
     case `${CART_UPDATE_ITEM}_PENDING`:
     case `${CART_CREATE}_PENDING`:
+    case `${GET_CARTS}_PENDING`:
       return handlePending(state, action.payload);
+    case `${GET_CARTS}_PENDING`:
+      return state;
     case `${CART_ADD_ITEM}_FULFILLED`:
     case `${CART_UPDATE_ITEM}_FULFILLED`:
       return handleFulfilled(state, action.payload);
     case `${CART_ADD_ITEM}_REJECTED`:
     case `${CART_DELETE_ITEM}_REJECTED`:
     case `${CART_UPDATE_ITEM}_REJECTED`:
+    case `${GET_CARTS}_REJECTED`:
       return handleRejected(state, action.payload);
     case `${CART_CREATE}_FULFILLED`:
-      return handleCartCreateFulfilled(state, action.payload);
+    case `${GET_CARTS}_FULFILLED`:
+      return handleCartFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
       return handleCartCreateRejected(state, action.payload);
     case `${CART_DELETE_ITEM}_PENDING`:
@@ -82,6 +89,11 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
         ...state,
         data: {...state.data, items: itemsAfterDelete},
         ...getReducerPartFulfilled(),
+      };
+    case PAGES_CUSTOMER_LOGOUT:
+      return {
+        ...state,
+        data: initialState.data,
       };
     default:
       return state;
@@ -120,7 +132,7 @@ const handlePending = (cartState: ICartState, payload: any) => {
   };
 };
 
-const handleCartCreateFulfilled = (cartState: ICartState, payload: any) => {
+const handleCartFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
   return {
     ...cartState,
     data: {

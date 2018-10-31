@@ -12,20 +12,26 @@ import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAppLocale, isAppInitiated, TAppLocale } from 'src/shared/reducers/Common/Init';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
+import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 
 const styles = require('./style.scss');
 const className = styles.appHandler;
 
 interface AppHandlerProps extends IComponent {
+  dispatch: Function;
   isLoading: boolean;
   locale: TAppLocale;
   initApplicationData: Function;
   setAuth: Function;
+  getCustomerCart: Function;
+  getGuestCart: Function;
   isAppDataSet: boolean;
+  isCustomerAuth: boolean;
 }
 
 interface AppHandlerState {
@@ -50,6 +56,16 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     if (!this.props.isAppDataSet) {
       this.props.initApplicationData(null);
       return;
+    }
+  }
+
+  public componentDidUpdate(prevProps: AppHandlerProps) {
+    if (!prevProps.isAppDataSet && this.props.isAppDataSet) {
+      if (this.props.isCustomerAuth) {
+        this.props.getCustomerCart();
+      } else {
+        this.props.getGuestCart();
+      }
     }
   }
 
@@ -87,16 +103,20 @@ export const AppHandler = reduxify(
     const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
     const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
+    const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);
 
     return ({
       isLoading,
       locale,
       isAppDataSet,
+      isCustomerAuth,
     });
   },
   (dispatch: Function) => ({
     dispatch,
     initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
     setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
+    getCustomerCart: () => dispatch(getCustomerCartsAction()),
+    getGuestCart: () => dispatch(getGuestCartAction()),
   }),
 )(AppHandlerBase);

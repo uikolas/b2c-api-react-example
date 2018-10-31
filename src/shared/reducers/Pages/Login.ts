@@ -123,7 +123,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
 // selectors
 
 export function isUserAuthenticated(state: any, props: any): boolean {
-  return (state.pagesLogin && state.pagesLogin.data && state.pagesLogin.data.isAuth === true);
+  return (state.pagesLogin && state.pagesLogin.data && state.pagesLogin.data.isAuth);
 }
 
 export function getAccessToken(state: any, props: any): TAccessToken | null {

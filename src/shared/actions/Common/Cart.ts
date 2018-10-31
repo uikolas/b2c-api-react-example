@@ -3,21 +3,32 @@ import {
   CART_CREATE,
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
+  GET_CARTS,
 } from '../../constants/ActionTypes/Common/Cart';
 import { CartService, ICartCreatePayload } from '../../services/Common/Cart';
 import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
 import { TProductSKU } from '../../interfaces/product';
 
 
-export const addItemToCartAction = function(
-  payload: ICartAddItem,
-  cartId: TCartId,
-  payloadCartCreate: ICartCreatePayload,
-) {
+export const addItemToCartAction = function(payload: ICartAddItem, cartId: TCartId) {
   return (dispatch: Function, getState: Function) => {
-    CartService.cartAddItem(dispatch, payload, cartId, payloadCartCreate);
+    CartService.cartAddItem(dispatch, payload, cartId);
   };
 };
+
+export const getCartsPendingStateAction = () => ({
+  type: GET_CARTS + '_PENDING',
+});
+
+export const getCartsFulfilledStateAction = (payload: ICartDataResponse) => ({
+  type: GET_CARTS + '_FULFILLED',
+  payload,
+});
+
+export const getCartsRejectedStateAction = (message: string) => ({
+  type: GET_CARTS + '_REJECTED',
+  payload: {error: message},
+});
 
 export const cartAddItemPendingStateAction = () => ({
   type: CART_ADD_ITEM + '_PENDING',
@@ -25,6 +36,10 @@ export const cartAddItemPendingStateAction = () => ({
 
 export const cartDeleteItemPendingStateAction = {
   type: CART_DELETE_ITEM + '_PENDING',
+};
+
+export const cartDeleteItemRejectedStateAction = {
+  type: CART_DELETE_ITEM + '_REJECTED',
 };
 
 export const cartAddItemFulfilledStateAction = (payload: ICartDataResponse) => ({
@@ -89,6 +104,7 @@ export const multiItemsCartAction = function(cartId: TCartId, payloadCartCreate:
     CartService.moveItemstoCart(dispatch, cartId, payloadCartCreate, listItems);
   };
 };
+
 export const addMultipleItemsToCartAction = function(
   payload: TCartAddItemCollection,
   cartId: TCartId,
@@ -99,3 +115,33 @@ export const addMultipleItemsToCartAction = function(
   };
 };
 
+export const getCustomerCartsAction = function() {
+  return (dispatch: Function, getState: Function) => {
+    CartService.getCustomerCarts(dispatch);
+  };
+};
+
+export const createCartAndAddItemAction = function(payloadCartCreate: ICartCreatePayload, item: ICartAddItem) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.createCartAndAddItem(dispatch, payloadCartCreate, item);
+  };
+};
+
+
+export const getGuestCartAction = function() {
+  return (dispatch: Function, getState: Function) => {
+    CartService.getGuestCart(dispatch);
+  };
+};
+
+export const addItemGuestCartAction = function(payload: ICartAddItem) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.guestCartAddItem(dispatch, payload);
+  };
+};
+
+export const removeItemGuestCartAction = function(cartUid: string, sku: string) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.guestCartRemoveItem(dispatch, cartUid, sku);
+  };
+};

@@ -3,25 +3,11 @@ import { RouteProps } from 'react-router';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { toast } from 'react-toastify';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import { reduxify } from '../../../lib/redux-helper';
+import { connect } from './connect';
 
-import {
-  getProduct,
-  isPageProductStateFulfilled,
-  isPageProductStateInitiated,
-  isPageProductStateLoading,
-  isPageProductStateRejected,
-  isProductDetailsPresent,
-} from '../../../reducers/Pages/Product';
-import {
-  getWishlistsCollectionFromStore,
-  isPageWishlistStateLoading,
-  isWishlistsCollectionInitiated,
-} from '../../../reducers/Pages/Wishlist';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
@@ -41,9 +27,8 @@ import {
   ISuperAttributes,
   priceTypeNameOriginal,
   TProductQuantity,
-} from '../../../interfaces/product';
-import { IImageSlide } from '../../../components/Common/ImageSlider';
-
+} from 'src/shared/interfaces/product';
+import { IImageSlide } from 'src/shared/components/Common/ImageSlider';
 import { styles } from './styles';
 import {
   createPathToIdProductConcrete,
@@ -52,21 +37,16 @@ import {
   getAvailabilityDisplay,
   getInitialSuperAttrSelected,
   ISuperAttribute,
-} from '../../../helpers/product';
-import { addItemToCartAction } from '../../../actions/Common/Cart';
-import { getCartId, isCartCreated } from '../../../reducers/Common/Cart';
-import { getPayloadForCreateCart, isAppInitiated, TAppPriceMode, TAppStore } from '../../../reducers/Common/Init';
-import { addItemAction, getWishlistsAction } from '../../../actions/Pages/Wishlist';
-import { isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { createCartItemAddToCart } from '../../../helpers/cart';
-import { IWishlist, TWishListName } from '../../../interfaces/wishlist';
-import { ICartAddItem, TCartId } from '../../../interfaces/cart';
-import { AppPrice } from '../../Common/AppPrice';
-import { getProductDataAction } from '../../../actions/Pages/Product';
-import { getRouterLocation, getRouterMatchParam, TRouterMatchParam } from '../../../selectors/Common/router';
-import { cartAuthenticateErrorText } from '../../../constants/messages/errors';
-import { ICartCreatePayload } from '../../../services/Common/Cart';
-import { createWishListMenuVariants } from '../../../helpers/wishlist/list';
+} from 'src/shared/helpers/product';
+
+import { TAppPriceMode, TAppStore } from 'src/shared/reducers/Common/Init';
+import { createCartItemAddToCart } from 'src/shared/helpers/cart';
+import { IWishlist, TWishListName } from 'src/shared/interfaces/wishlist';
+import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { TRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { ICartCreatePayload } from 'src/shared/services/Common/Cart';
+import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
 
 export const buyBtnTitle = 'Add to cart';
 export const wishlistBtnTitle = 'Add to Wishlist';
@@ -79,9 +59,11 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   appPriceMode: TAppPriceMode;
   appStore: TAppStore;
   addItemToCart: Function;
+  addItemGuestCart: Function;
   getProductData: Function;
   getWishLists: Function;
   addToWishlist: Function;
+  createCartAndAddItem: Function;
   cartCreated: boolean;
   cartId: TCartId;
   payloadForCreateCart: ICartCreatePayload;
@@ -104,6 +86,7 @@ interface ProductPageState extends IProductPropFullData, ISuperAttributes {
   wishListSelected: TWishListName | null;
 }
 
+@connect
 export class ProductPageBase extends React.Component<ProductPageProps, ProductPageState> {
 
   public state: ProductPageState = {
@@ -237,29 +220,29 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     });
   };
 
-  public handleBuyBtnClick = (event: any): any => {
-    if (!this.props.isUserLoggedIn) {
-      toast.error(cartAuthenticateErrorText);
-      return;
-    }
-    if (this.state.productType === concreteProductType) {
-      this.props.addItemToCart(
-        createCartItemAddToCart(this.state.sku, this.state.quantitySelected),
-        this.props.cartId,
-        this.props.payloadForCreateCart,
-      );
+  public handleBuyBtnClick = (event: any): void => {
+    const item: ICartAddItem = createCartItemAddToCart(this.state.sku, this.state.quantitySelected);
 
-      this.setState((prevState: ProductPageState) => {
-        if (this.state.quantitySelected === quantitySelectedInitial) {
-          return;
-        }
-        return ({
-          ...prevState,
-          quantitySelected: quantitySelectedInitial,
-        });
-      });
+    if (this.props.isUserLoggedIn && this.props.cartId) {
+      this.props.addItemToCart(
+        item,
+        this.props.cartId,
+      );
+    } else if (this.props.isUserLoggedIn) {
+      this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
+    } else {
+      this.props.addItemGuestCart(item);
     }
-    return null;
+
+    this.setState((prevState: ProductPageState) => {
+      if (this.state.quantitySelected === quantitySelectedInitial) {
+        return;
+      }
+      return ({
+        ...prevState,
+        quantitySelected: quantitySelectedInitial,
+      });
+    });
   };
 
   private initRequestWishListsData = (): boolean => {
@@ -527,53 +510,4 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
 
 export const ProductPage = withStyles(styles)(ProductPageBase);
 
-export const ConnectedProductPage = reduxify(
-  (state: any, ownProps: any) => {
-    const location = getRouterLocation(state, ownProps);
-    const product = getProduct(state, ownProps);
-    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const cartCreated: boolean = isCartCreated(state, ownProps);
-    const cartId: TCartId = getCartId(state, ownProps);
-    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
-    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const isLoading: boolean = isPageProductStateLoading(state, ownProps);
-    const isRejected: boolean = isPageProductStateRejected(state, ownProps);
-    const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
-    const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
-    const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
-    const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
-    const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
-    const wishLists = getWishlistsCollectionFromStore(state, ownProps);
-    const isWishListsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
-
-    return ({
-      location,
-      product,
-      cartCreated,
-      cartId,
-      isAppDataSet,
-      payloadForCreateCart,
-      isUserLoggedIn,
-      isInitiated,
-      isLoading,
-      isRejected,
-      isFulfilled,
-      locationProductSKU,
-      wishLists,
-      isWishListsFetched,
-      isProductExist,
-      isWishListLoading,
-    });
-  },
-  (dispatch: Function) => ({
-    dispatch,
-    addItemToCart: (
-      payload: ICartAddItem, cartId: TCartId, payloadCartCreate: ICartCreatePayload,
-    ) => dispatch(addItemToCartAction(payload, cartId, payloadCartCreate)),
-    getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
-    getWishLists: () => dispatch(getWishlistsAction()),
-    addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
-  }),
-)(ProductPage);
-
-export default ConnectedProductPage;
+export default ProductPage;

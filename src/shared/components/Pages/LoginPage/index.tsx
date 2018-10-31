@@ -9,6 +9,7 @@ import { ILoginState } from 'src/shared/reducers/Pages/Login';
 import { customerRegisterAction, loginCustomerAction } from 'src/shared/actions/Pages/Login';
 import { ICustomerLoginData } from 'src/shared/interfaces/customer';
 import { pathForgotPassword } from 'src/shared/routes/contentRoutes';
+import { getCustomerCartsAction } from 'src/shared/actions/Common/Cart';
 
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
@@ -23,6 +24,7 @@ interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
   refreshToken?: string;
   handleSubmitRegisterForm: Function;
   handleSubmitLoginForm: Function;
+  getCustomerCart: Function;
 }
 
 interface LoginPageState {
@@ -31,6 +33,12 @@ interface LoginPageState {
 
 export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {};
+
+  public componentDidUpdate(prevProps: LoginPageProps) {
+    if (!prevProps.isAuth && this.props.isAuth) {
+      this.props.getCustomerCart();
+    }
+  }
 
   public render() {
     const {classes} = this.props;
@@ -83,6 +91,7 @@ export const ConnectedLogin = reduxify(
       dispatch,
       handleSubmitRegisterForm: (data: any): void => dispatch(customerRegisterAction(data)),
       handleSubmitLoginForm: (payload: ICustomerLoginData): void => dispatch(loginCustomerAction(payload)),
+      getCustomerCart: () => dispatch(getCustomerCartsAction()),
     };
   },
 )(LoginPage);

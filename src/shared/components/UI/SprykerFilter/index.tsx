@@ -87,7 +87,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               </MenuItem>))
             }
           </Select>
-          { activeValues.map(item => (
+          { activeValues && activeValues.map(item => (
             <Chip
               key={ item }
               label={ item }

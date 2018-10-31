@@ -1,9 +1,8 @@
 import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import { TProductSKU } from '../../interfaces/product';
-import { ICartAddItem, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
-import { parseAddToCartResponse } from '../../helpers/cart';
-import { parseCartCreateResponse } from '../../helpers/cart/response';
+import { TProductSKU } from 'src/shared/interfaces/product';
+import { ICartAddItem, TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
+import { parseAddToCartResponse, parseCartCreateResponse, parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { RefreshTokenService } from './RefreshToken';
 import {
   cartAddItemFulfilledStateAction,
@@ -15,8 +14,13 @@ import {
   cartUpdateItemFulfilledStateAction,
   cartUpdateItemPendingStateAction,
   cartUpdateItemRejectedStateAction,
-} from '../../actions/Common/Cart';
-import { cartAuthenticateErrorText } from '../../constants/messages/errors';
+  cartDeleteItemPendingStateAction,
+  cartDeleteItemRejectedStateAction,
+  getCartsPendingStateAction,
+  getCartsFulfilledStateAction,
+  getCartsRejectedStateAction,
+} from 'src/shared/actions/Common/Cart';
+import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
 
 export interface ICartCreatePayload {
   priceMode: string;
@@ -25,6 +29,41 @@ export interface ICartCreatePayload {
 }
 
 export class CartService {
+
+  public static async getCustomerCarts(dispatch: Function): Promise<any> {
+    try {
+      const token = await RefreshTokenService.getActualToken(dispatch);
+
+      if (!token) {
+        throw new Error(cartAuthenticateErrorText);
+      }
+
+      dispatch(getCartsPendingStateAction());
+      setAuthToken(token);
+      const response: any = await api.get('/carts', {}, {withCredentials: true});
+
+      if (response.ok) {
+        if (!response.data.data[0].id) {
+          return null;
+        }
+
+        const responseParsed = parseAddToCartResponse({
+          data: response.data.data[0],
+          included: response.data.included,
+        });
+        dispatch(getCartsFulfilledStateAction(responseParsed));
+        return responseParsed.id;
+      } else {
+        dispatch(getCartsRejectedStateAction(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+    } catch (err) {
+      dispatch(getCartsRejectedStateAction(err.message));
+      toast.error('Request Error: ' + err.message);
+      return null;
+    }
+  }
 
   public static async cartCreate(dispatch: Function, payload: ICartCreatePayload): Promise<any> {
     try {
@@ -38,18 +77,15 @@ export class CartService {
       };
 
       let response: any;
-      try {
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(cartAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.post('carts', body, {withCredentials: true});
-      } catch (err) {
-        console.error('CartService: cartCreate: err', err);
+      const token = await RefreshTokenService.getActualToken(dispatch);
+
+      if (!token) {
+        throw new Error(cartAuthenticateErrorText);
       }
 
-      console.info('cartCreate response: ', response);
+      setAuthToken(token);
+      response = await api.post('carts', body, {withCredentials: true});
+
       if (response.ok) {
         const responseParsed = parseCartCreateResponse(response.data);
         dispatch(cartCreateFulfilledStateAction(responseParsed));
@@ -68,20 +104,8 @@ export class CartService {
   }
 
   // Adds an item to the cart.
-  public static async cartAddItem(dispatch: Function,
-                                  payload: ICartAddItem,
-                                  cartId: TCartId | null,
-                                  payloadCartCreate: ICartCreatePayload): Promise<any> {
+  public static async cartAddItem(dispatch: Function, payload: ICartAddItem, cartId: TCartId): Promise<any> {
     try {
-      // Create cart if not exist
-      if (!cartId) {
-        try {
-          cartId = await CartService.cartCreate(dispatch, payloadCartCreate);
-        } catch (err) {
-          console.error('await CartService.cartCreate err', err);
-        }
-      }
-
       dispatch(cartAddItemPendingStateAction());
 
       const body = {
@@ -93,17 +117,13 @@ export class CartService {
 
       let response: any;
 
-      try {
-        const endpoint = `carts/${cartId}/items`;
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(cartAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.post(endpoint, body, {withCredentials: true});
-      } catch (err) {
-        console.error('CartService: cartAddItem: err', err);
+      const endpoint = `carts/${cartId}/items`;
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      if (!token) {
+        throw new Error(cartAuthenticateErrorText);
       }
+      setAuthToken(token);
+      response = await api.post(endpoint, body, {withCredentials: true});
 
       console.info('cartAddItem response: ', response);
 
@@ -120,6 +140,105 @@ export class CartService {
 
     } catch (error) {
       dispatch(cartAddItemRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async createCartAndAddItem(dispatch: Function, payload: ICartCreatePayload, item: ICartAddItem) {
+    const cartId = await CartService.cartCreate(dispatch, payload);
+
+    if (cartId) {
+      await CartService.cartAddItem(dispatch, item, cartId);
+    }
+  }
+
+  public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem): Promise<any> {
+    try {
+      dispatch(cartAddItemPendingStateAction());
+
+      const body = {
+        data: {
+          type: "guest-cart-items",
+          attributes: payload,
+        },
+      };
+
+      const response: any = await api.post(
+        'guest-cart-items',
+        body,
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': '777555'}}
+      );
+
+      if (response.ok) {
+        const responseParsed = parseGuestCartResponse(response.data);
+        dispatch(cartAddItemFulfilledStateAction(responseParsed));
+        return responseParsed;
+      } else {
+        dispatch(cartAddItemRejectedStateAction(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch(cartAddItemRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async getGuestCart(dispatch: Function): Promise<any> {
+    try {
+      dispatch(getCartsPendingStateAction());
+
+      const response: any = await api.get(
+        '/guest-carts', {},
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': '777555'}},
+      );
+
+      if (response.ok) {
+        if (!response.data.data[0].id) {
+          return null;
+        }
+
+        const responseParsed = parseGuestCartResponse({
+          data: response.data.data[0],
+          included: response.data.included,
+        });
+        dispatch(getCartsFulfilledStateAction(responseParsed));
+        return responseParsed.id;
+      } else {
+        dispatch(getCartsRejectedStateAction(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+    } catch (err) {
+      dispatch(getCartsRejectedStateAction(err.message));
+      toast.error('Request Error: ' + err.message);
+      return null;
+    }
+  }
+
+  public static async guestCartRemoveItem(dispatch: Function, cartUid: string, sku: string): Promise<any> {
+    try {
+      dispatch(cartDeleteItemPendingStateAction);
+
+      const response: any = await api.delete(
+        `guest-carts/${cartUid}/guest-cart-items/${sku}`,
+        {},
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': '777555'}}
+      );
+
+      if (response.ok) {
+        return CartService.getGuestCart(dispatch);
+      } else {
+        dispatch(getCartsRejectedStateAction(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch(getCartsRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
@@ -326,5 +445,4 @@ export class CartService {
     }
     return response;
   }
-
 }

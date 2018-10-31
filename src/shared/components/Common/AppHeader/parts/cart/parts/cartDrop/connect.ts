@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { cartDeleteItemAction } from 'src/shared/actions/Common/Cart';
+import { cartDeleteItemAction, removeItemGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { getCartId, ICartState } from 'src/shared/reducers/Common/Cart';
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       cartDeleteItemAction,
+      removeItemGuestCartAction,
     },
     dispatch,
   );

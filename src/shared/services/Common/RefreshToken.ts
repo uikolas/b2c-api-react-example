@@ -13,7 +13,7 @@ export class RefreshTokenService {
     const refreshToken: string = localStorage.getItem('refreshToken');
 
     if (!accessToken || !tokenExpire || !refreshToken) {
-      return Promise.reject();
+      return Promise.reject('Not tokens.');
     }
 
     const now: number = Math.floor(Date.now() / 1000);

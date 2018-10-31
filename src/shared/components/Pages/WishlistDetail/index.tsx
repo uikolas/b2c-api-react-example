@@ -15,20 +15,19 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
 
 import { push } from 'react-router-redux';
-import {reduxify} from '../../../lib/redux-helper';
-import {deleteItemAction} from '../../../actions/Pages/Wishlist';
-import {addItemToCartAction} from "../../../actions/Common/Cart";
-import {AppPrice} from '../../Common/AppPrice';
-import {IWishlist, IWishlistItem} from "../../../interfaces/wishlist";
-import {TCartId} from '../../../interfaces/cart';
-import {priceTypeNameOriginal, priceTypeNameDefault} from '../../../interfaces/product';
-import {getAppCurrency, getPayloadForCreateCart, TAppCurrency} from "../../../reducers/Common/Init";
-import {WishlistState} from "../../../reducers/Pages/Wishlist";
-import {getCartId, getTotalItemsQuantity, isCartLoading} from "../../../reducers/Common/Cart";
-import {ICartCreatePayload} from "../../../services/Common/Cart";
-import {createCartItemAddToCart} from "../../../helpers/cart";
+import {reduxify} from 'src/shared/lib/redux-helper';
+import {deleteItemAction} from 'src/shared/actions/Pages/Wishlist';
+import {addItemToCartAction} from 'src/shared/actions/Common/Cart';
+import {AppPrice} from 'src/shared/components/Common/AppPrice';
+import {IWishlist, IWishlistItem} from "src/shared/interfaces/wishlist";
+import {TCartId} from 'src/shared/interfaces/cart';
+import {priceTypeNameOriginal, priceTypeNameDefault} from 'src/shared/interfaces/product';
+import {getAppCurrency, TAppCurrency} from "src/shared/reducers/Common/Init";
+import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
+import {getCartId, getTotalItemsQuantity, isCartLoading} from "src/shared/reducers/Common/Cart";
+import {createCartItemAddToCart} from "src/shared/helpers/cart";
 import {styles} from './styles';
-import {pathProductPageBase} from "../../../routes/contentRoutes";
+import {pathProductPageBase} from 'src/shared/routes/contentRoutes';
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -38,7 +37,6 @@ interface WishlistPageProps extends WithStyles<typeof styles> {
   currency: TAppCurrency;
   cartLoading: boolean;
   cartId: TCartId;
-  payloadForCreateCart: ICartCreatePayload;
   cartItemsLength: number;
   changeLocation: Function;
 }
@@ -54,7 +52,7 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
 
   public state: WishlistPageState = {
     movedItem: '',
-  }
+  };
 
   public componentDidUpdate(prevProps: WishlistPageProps, prevState: WishlistPageState ) {
     if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
@@ -78,7 +76,6 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
     this.props.dispatch(addItemToCartAction(
       createCartItemAddToCart(sku, 1),
       this.props.cartId,
-      this.props.payloadForCreateCart
     ));
   }
 
@@ -234,7 +231,6 @@ export const ConnectedWishlistDetailPage = reduxify(
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
-    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const cartItemsLength: number = getTotalItemsQuantity(state, ownProps);
     const cartLoading: boolean = isCartLoading(state, ownProps);
     return (
@@ -245,7 +241,6 @@ export const ConnectedWishlistDetailPage = reduxify(
         isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
         currency,
         cartId,
-        payloadForCreateCart,
         cartItemsLength,
         cartLoading,
       }

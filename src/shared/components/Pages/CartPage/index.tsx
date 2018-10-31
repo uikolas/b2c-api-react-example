@@ -18,7 +18,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getCartId, ICartItem, ICartState } from 'src/shared/reducers/Common/Cart';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { cartDeleteItemAction, updateItemInCartAction } from 'src/shared/actions/Common/Cart';
+import {
+  cartDeleteItemAction,
+  updateItemInCartAction,
+  removeItemGuestCartAction,
+} from 'src/shared/actions/Common/Cart';
 import { ICartAddItem, ICartTotals, TCartId } from 'src/shared/interfaces/cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
 import { pathSearchPage } from 'src/shared/routes/contentRoutes';
@@ -35,6 +39,7 @@ interface CartPageProps extends WithStyles<typeof styles> {
   cartId: TCartId;
   updateItemInCart: Function;
   deleteItemInCart: Function;
+  deleteInGuestCart: Function;
 }
 
 interface CartPageState {
@@ -54,7 +59,8 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   public handleDeleteItem = (sku: string) => (e: any) => {
     e.preventDefault();
 
-    this.props.deleteItemInCart(this.props.cartId, sku);
+    // this.props.deleteItemInCart(this.props.cartId, sku);
+    this.props.deleteInGuestCart(this.props.cartId, sku);
   };
 
   public openMenu = (item: ICartItem) => (e: any) => {
@@ -236,6 +242,9 @@ export const ConnectedCartPage = reduxify(
     deleteItemInCart: (
       cartId: TCartId, itemId: TProductSKU,
     ) => dispatch(cartDeleteItemAction(cartId, itemId)),
+    deleteInGuestCart: (
+      cartId: TCartId, itemId: TProductSKU,
+    ) => dispatch(removeItemGuestCartAction(cartId, itemId)),
   }),
 )(CartPage);
 
