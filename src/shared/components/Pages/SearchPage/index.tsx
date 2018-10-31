@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {ChangeEvent, ReactNode} from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import { Location } from 'history';
@@ -40,9 +41,12 @@ import {
 } from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
-import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
+import {resetFilterSuccessText} from "src/shared/constants/messages/search";
 import {validateRangeInputsError} from "src/shared/constants/messages/errors";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
+import {SortPanel} from "src/shared/components/Pages/SearchPage/SortPanel/index";
+import {FoundItems} from "src/shared/components/Pages/SearchPage/FoundItems/index";
+import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
 
 type IQuery = {
   q?: string,
@@ -131,7 +135,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public categorySearch = (categoryId: TCategoryId): void => {
-
     const query: IQuery = {
       q: '',
       currency: this.props.currency,
@@ -220,7 +223,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public labelSearch = (label: string): void => {
-
     const query: IQuery = {
       q: '',
       currency: this.props.currency,
@@ -344,12 +346,14 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return true;
   };
 
-  public handleSetSorting = (e: any) => {
-    this.setState({sort: e.target.value});
+  public handleSetSorting = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
+    console.log('handleSetSorting: event.target.value', event.target.value);
+    this.setState({sort: event.target.value});
   };
 
-  public handleSetItemsPerPage = (e: any) => {
-    this.setState({itemsPerPage: e.target.value});
+  public handleSetItemsPerPage = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
+    console.log('handleSetItemsPerPage: event.target.value', event.target.value);
+    this.setState({itemsPerPage: +event.target.value});
   };
 
   public handlePagination = (e: any, value: number | string) => {
@@ -508,12 +512,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return (
       <AppMain>
         {isLoading ? <AppBackdrop isOpen={true} /> : null}
-
         <AppPageTitle
           title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
           intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
         />
-
         <Grid container>
           <SearchPageContext.Provider
             value={{
@@ -554,25 +556,44 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   rangeValueToFront={this.rangeValueToFront}
                 />
 
+                <SortPanel
+                  foundItems={<FoundItems numberFound={this.props.pagination.numFound} />}
+                  numberMode={<SprykerSelect
+                                currentMode={this.state.itemsPerPage}
+                                changeHandler={this.handleSetItemsPerPage}
+                                menuItems={pagination.validItemsPerPageOptions.map((item: number) => ({
+                                  value: item,
+                                  name: item,
+                                }))}
+                                menuItemFirst={{
+                                  value: " ",
+                                  name: "products per page",
+                                  disabled: true,
+                                }}
+                                name="pages"
+                              />}
+                  sorterMode={<SprykerSelect
+                                currentMode={this.state.sort || " "}
+                                changeHandler={this.handleSetSorting}
+                                menuItems={sortParams.map((item: string) => ({
+                                  value: item,
+                                  name: `${item}`,
+                                }))}
+                                menuItemFirst={{
+                                  value: " ",
+                                  name: "Choose sort mode",
+                                  disabled: true,
+                                }}
+                                name="sort"
+                                title="Sort by "
+                              />}
+                />
+
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>
 
                   <Grid item xs={ 6 }>
-                    <FormControl>
-                      <Select
-                        value={ this.state.itemsPerPage }
-                        onChange={ this.handleSetItemsPerPage }
-                        name="pages"
-                      >
-                        {
-                          pagination.validItemsPerPageOptions.map((qty: number) => (
-                            <MenuItem value={ qty } key={ `pages-${qty}` }>
-                              { qty }
-                            </MenuItem>
-                          ))
-                        }
-                      </Select>
-                    </FormControl>
-                    <FormControl className={ classes.formControl }>
+
+                    {/*<FormControl className={ classes.formControl }>
                       <Select
                         value={ this.state.sort }
                         onChange={ this.handleSetSorting }
@@ -590,7 +611,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                           ))
                         }
                       </Select>
-                    </FormControl>
+                    </FormControl>*/}
                   </Grid>
                   <Grid item xs={ 3 }>
                     <Button variant="contained" color="primary" onClick={ this.updateSearch }>

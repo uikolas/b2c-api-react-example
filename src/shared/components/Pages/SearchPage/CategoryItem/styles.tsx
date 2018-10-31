@@ -14,8 +14,7 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   selected: {
-    backgroundColor: `${theme.appColors.black} !important`,
-    color: theme.appColors.white,
+    ...theme.appModules.selectedItem,
   },
   root: {},
   listItemOuter: {
