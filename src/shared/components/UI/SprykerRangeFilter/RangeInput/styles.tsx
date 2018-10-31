@@ -15,5 +15,18 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.small,
     padding: 0,
     fontWeight: 600,
+  },
+  label: {
+    position: 'absolute',
+    color: theme.palette.error.main,
+    top: -theme.spacing.unit * 2.5,
+    left: "0%",
+    width: '100%',
+  },
+  error: {
+    color: theme.palette.error.main,
+    "label + &": {
+      marginTop: 0,
+    }
   }
 });

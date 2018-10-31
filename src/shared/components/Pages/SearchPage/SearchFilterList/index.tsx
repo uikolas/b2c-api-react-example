@@ -9,7 +9,7 @@ import {TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/S
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
-import {firstLetterToUpperCase, isWordHasPrice} from "src/shared/helpers/common/transform";
+import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 
@@ -23,6 +23,7 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   onCloseFilterHandler: Function;
   onBlurRangeFilter: (event: any) => void;
   rangeValueToFront: Function;
+  isFiltersReset: boolean;
 }
 
 const title = 'Filter your results';
@@ -39,6 +40,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     onCloseFilterHandler,
     onBlurRangeFilter,
     rangeValueToFront,
+    isFiltersReset,
   } = props;
 
   let filterItems: any[] | null = [];
@@ -73,7 +75,6 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     rangeItems = null;
   } else {
     rangeItems = ranges.map((filter: RangeFacets) => {
-      const isPrice = isWordHasPrice(filter.name);
       return (
         <SprykerRange
           key={filter.name}
@@ -88,6 +89,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
           handleChange={ updateRangeHandler }
           Wrapper={FilterWrapper}
           handleBlur={onBlurRangeFilter}
+          isReset={isFiltersReset}
         />
       );
     });

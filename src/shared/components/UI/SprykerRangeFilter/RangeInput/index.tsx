@@ -6,8 +6,9 @@ import { styles } from './styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import {IRangeInputError} from "src/shared/components/UI/SprykerRangeFilter/index";
 
-interface RangeInputProps extends WithStyles<typeof styles> {
+interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
   title: string;
   className: string;
   handleChangeValues: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
@@ -34,7 +35,15 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
     max,
     attributeName,
     handleBlur,
+    isMoreError,
+    isLessError,
   } = props;
+
+  let errorText: string;
+  const isError = (isMoreError || isLessError);
+  if (isError) {
+    errorText = `It can't be ${isLessError ? `less` : `more`} than ${isLessError ? min : max}!`;
+  }
 
   return (
     <FormControl className={ className }>
@@ -43,11 +52,19 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
           <span className={ classes.title }>{isMin ? `${title} ${titlePartMin}` : `${title} ${titlePartMax}`}</span>
         </Grid>
         <Grid item>
+          {isError
+            ? <label className={classes.label}>{errorText}</label>
+            : null
+          }
           <TextField
             id={ `${attributeName}` }
-            inputProps={{min, max}}
-            InputProps={{disableUnderline: true, classes: {input: classes.value}}}
-            type="number"
+            error={isError}
+            InputProps={{disableUnderline: true, classes: {input: classes.value, error: classes.error}}}
+            InputLabelProps={{
+              FormLabelClasses: {
+                root: classes.label
+            }}}
+            type="text"
             value={ currentValue }
             onChange={ handleChangeValues }
             onBlur={handleBlur}

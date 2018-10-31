@@ -41,11 +41,14 @@ import {
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
 import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
+import {validateRangeInputsError} from "src/shared/constants/messages/errors";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 
 type IQuery = {
   q?: string,
   currency: TAppCurrency,
   sort?: string,
+  category?: TCategoryId,
   [key: string]: string | number,
 };
 
@@ -70,7 +73,7 @@ interface SearchPageState {
 }
 
 export const pageTitle = 'Results for ';
-export const pageTitleDefault = 'All products';
+export const pageTitleDefault = 'Start searching';
 
 @connect
 export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
@@ -114,7 +117,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     // Init new request if it's needed
     if (this.state.isReadyToNewRequest === true) {
       if (prevState.isReadyToNewRequest === false && this.state.isNeedNewRequest === true) {
-        console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
         this.updateSearch();
         this.setState({isReadyToNewRequest: false});
       }
@@ -250,6 +252,28 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }));
   };
 
+  private validateRangeInput = (): boolean => {
+    const activeRanges: {[key: string]: any} = {...this.state.activeRangeFilters};
+    const defaultRanges = [...this.props.rangeFilters];
+    let canMakeNewRequest: boolean = true;
+
+    defaultRanges.forEach((filter: RangeFacets) => {
+      if (activeRanges[filter.name]) {
+        const defaultMin = this.rangeValueToFront(filter.min);
+        const defaultMax = this.rangeValueToFront(filter.max);
+
+        for (let prop in activeRanges[filter.name]) {
+          if (activeRanges[filter.name][prop] < defaultMin
+            || activeRanges[filter.name][prop] > defaultMax
+          ) {
+            canMakeNewRequest = false;
+          }
+        }
+      }
+    });
+    return canMakeNewRequest;
+  }
+
   public resetRangeFilterOneValue = ({name, rangeSubType}: IFilterItemToDelete): boolean => {
     if (!rangeSubType) {
       return false;
@@ -284,6 +308,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public updateSearch = (): boolean => {
+
+    if(!this.validateRangeInput()) {
+      console.error('can\'t make request in updateSearch method!!!');
+      toast.error(validateRangeInputsError);
+      return;
+    }
+    console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
     const query: IQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
@@ -476,6 +507,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     return (
       <AppMain>
+        {isLoading ? <AppBackdrop isOpen={true} /> : null}
+
         <AppPageTitle
           title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
           intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
@@ -510,6 +543,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   onCloseFilterHandler={this.onCloseFilterHandler}
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
                   rangeValueToFront={this.rangeValueToFront}
+                  isFiltersReset={this.state.isFiltersReset}
                 />
 
                 <ActiveFiltersList
@@ -521,11 +555,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                 />
 
                 <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-                  <Grid item xs={ 3 }>
-                    <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                      Filter
-                    </Button>
-                  </Grid>
+
                   <Grid item xs={ 6 }>
                     <FormControl>
                       <Select
