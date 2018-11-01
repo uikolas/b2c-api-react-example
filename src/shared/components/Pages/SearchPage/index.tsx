@@ -5,8 +5,6 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { Location } from 'history';
 import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
@@ -16,11 +14,8 @@ import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/s
 import { TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
-import { ProductCard } from '../../Common/ProductCard';
 import { connect } from './connect';
 import { styles } from './styles';
-import {sprykerTheme} from "src/shared/theme/sprykerTheme";
-import {IProductLabel} from "src/shared/interfaces/product/index";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {SearchIntro} from "./SearchIntro";
 import {CategoriesList} from "./CategoriesList";
@@ -43,6 +38,7 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {SortPanel} from "src/shared/components/Pages/SearchPage/SortPanel/index";
 import {FoundItems} from "src/shared/components/Pages/SearchPage/FoundItems/index";
 import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
+import {ProductsList} from "src/shared/components/Pages/SearchPage/ProductsList/index";
 
 type IQuery = {
   q?: string,
@@ -381,7 +377,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.dispatch(sendSearchAction(query));
   };
 
-  public renderProduct = (sku: string, name: string) => {
+  public onSelectProductHandler = (sku: string, name: string) => {
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
@@ -510,11 +506,29 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       />,
     );
 
-    // TODO: Get label programmatically
-    const label: IProductLabel = {
-      type: 'sale',
-      text: 'Sale',
-    };
+    const sortPanelNumberMode = (
+      <SprykerSelect
+        currentMode={this.state.itemsPerPage}
+        changeHandler={this.handleSetItemsPerPage}
+        menuItems={pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item}))}
+        menuItemFirst={{value: " ", name: "products per page", disabled: true}}
+        name="pages"
+      />);
+
+    const sortPanelSorterMode = (
+      <SprykerSelect
+        currentMode={this.state.sort || " "}
+        changeHandler={this.handleSetSorting}
+        menuItems={sortParams.map((item: string) => ({value: item, name: `${item}`}))}
+        menuItemFirst={{
+          value: " ",
+          name: (!isSortParamsExist && !this.state.sort) ? "Choose sort mode" : "relevance",
+          disabled: !isSortParamsExist,
+        }}
+        name="sort"
+        title={(isSortParamsExist) ? "Sort by " : null}
+      />
+    );
 
     return (
       <AppMain>
@@ -565,65 +579,15 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
                 <SortPanel
                   foundItems={<FoundItems numberFound={this.props.pagination.numFound} />}
-                  numberMode={<SprykerSelect
-                                currentMode={this.state.itemsPerPage}
-                                changeHandler={this.handleSetItemsPerPage}
-                                menuItems={pagination.validItemsPerPageOptions.map((item: number) => ({
-                                  value: item,
-                                  name: item,
-                                }))}
-                                menuItemFirst={{
-                                  value: " ",
-                                  name: "products per page",
-                                  disabled: true,
-                                }}
-                                name="pages"
-                              />}
-                  sorterMode={<SprykerSelect
-                                currentMode={this.state.sort || " "}
-                                changeHandler={this.handleSetSorting}
-                                menuItems={sortParams.map((item: string) => ({
-                                  value: item,
-                                  name: `${item}`,
-                                }))}
-                                menuItemFirst={{
-                                  value: " ",
-                                  name: (!isSortParamsExist && !this.state.sort) ? "Choose sort mode" : "relevance",
-                                  disabled: !isSortParamsExist,
-                                }}
-                                name="sort"
-                                title={(isSortParamsExist) ? "Sort by " : null}
-                              />}
+                  numberMode={sortPanelNumberMode}
+                  sorterMode={sortPanelSorterMode}
                 />
-
-                <Grid item xs={ 12 } container spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
-                  { items && items.length > 0
-                    ? items.map((item: any) => (
-                      <Grid item xs={ 12 } sm={ 6 } md={ 4 }
-                            key={ item.abstract_sku || item.abstractSku }
-                      >
-                        <ProductCard
-                          currency={ currency }
-                          images={ item.images }
-                          price={ item.price }
-                          prices={ item.prices }
-                          name={ item.abstract_name || item.abstractName }
-                          sku={ item.abstract_sku || item.abstractSku }
-                          onSelectProduct={ this.renderProduct }
-                          label={label}
-                        />
-                      </Grid>
-                    ))
-                    : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
-                      <Typography variant="headline" component="h3">
-                        Nothing to show.
-                      </Typography>
-                      <Typography component="p">
-                        { isLoading ? 'Waiting results' : 'Try another search' }
-                      </Typography>
-                    </Paper>
-                  }
-                </Grid>
+                <ProductsList
+                  products={items}
+                  selectProductHandler={this.onSelectProductHandler}
+                  currency={currency}
+                  isLoading={!!isLoading}
+                />
 
                 <Grid item xs={ 12 } container justify="center" alignItems="center">
                   <BottomNavigation

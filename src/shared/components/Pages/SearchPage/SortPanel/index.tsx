@@ -22,8 +22,6 @@ export const SortPanelBase: React.SFC<SortPanelProps> = (props) => {
     sorterMode,
   } = props;
 
-  console.log('SortPanel props', props);
-
   return (
     <Grid container
           justify="space-between"
