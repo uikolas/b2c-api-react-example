@@ -91,6 +91,10 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
                 key={ item.value }
                 value={ item.value }
                 className={ classes.menuItem }
+                disableGutters
+                classes={{
+                  selected: classes.selected,
+                }}
               >
                 <span className={ classes.menuItemName }>{ item.value }</span>
                 <span>({ item.doc_count })</span>

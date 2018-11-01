@@ -1,4 +1,5 @@
 import {baseTheme} from "src/shared/theme/index";
+import {appColors} from "src/shared/theme/properties/new/appColors";
 
 
 export interface IAppModules {
@@ -7,6 +8,10 @@ export interface IAppModules {
     display: React.CSSProperties['display'];
     justifyContent: React.CSSProperties['justifyContent'];
   };
+  selectedItem: {
+    backgroundColor: React.CSSProperties['backgroundColor'];
+    color: React.CSSProperties['color'];
+  };
 }
 
 export const appModules: IAppModules = {
@@ -14,5 +19,9 @@ export const appModules: IAppModules = {
     margin: baseTheme.spacing.unit / 2,
     display: 'flex',
     justifyContent: 'space-between',
-  }
+  },
+  selectedItem: {
+    backgroundColor: `${appColors.black} !important`,
+    color: appColors.white,
+  },
 };

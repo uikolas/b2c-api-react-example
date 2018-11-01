@@ -1,29 +1,21 @@
 import * as React from 'react';
+import {ChangeEvent, ReactNode} from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import { Location } from 'history';
 import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
 import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
-import { TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
+import { ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
-import { ProductCard } from '../../Common/ProductCard';
 import { connect } from './connect';
 import { styles } from './styles';
-import {sprykerTheme} from "src/shared/theme/sprykerTheme";
-import {IProductLabel} from "src/shared/interfaces/product/index";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {SearchIntro} from "./SearchIntro";
 import {CategoriesList} from "./CategoriesList";
@@ -33,24 +25,25 @@ import {
   filterTypeFilter,
   filterTypeRange,
   IFilterItemToDelete,
+  ISearchQuery,
+  rangeMaxType,
+  rangeMinType,
+  RangeType,
   TActiveFilters,
   TActiveRangeFilters,
   TCategoryId,
-  TFilterItemValue
+  TFilterItemValue,
 } from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
-import {resetFilterErrorText, resetFilterSuccessText} from "src/shared/constants/messages/search";
+import {resetFilterSuccessText} from "src/shared/constants/messages/search";
 import {validateRangeInputsError} from "src/shared/constants/messages/errors";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-
-type IQuery = {
-  q?: string,
-  currency: TAppCurrency,
-  sort?: string,
-  category?: TCategoryId,
-  [key: string]: string | number,
-};
+import {SortPanel} from "src/shared/components/Pages/SearchPage/SortPanel/index";
+import {FoundItems} from "src/shared/components/Pages/SearchPage/FoundItems/index";
+import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
+import {ProductsList} from "src/shared/components/Pages/SearchPage/ProductsList/index";
+import {rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
@@ -59,8 +52,6 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   location: Location;
   isFulfilled: boolean;
 }
-
-type RangeType = {min: number, max: number};
 
 interface SearchPageState {
   activeFilters: TActiveFilters;
@@ -128,11 +119,16 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     if (prevProps.location.pathname !== this.props.location.pathname) {
       this.makeLocationSearch();
     }
+
+    // if searchTerm was changed
+    if (prevProps.searchTerm !== this.props.searchTerm) {
+      this.runResetActiveFilters(false);
+    }
+
   }
 
   public categorySearch = (categoryId: TCategoryId): void => {
-
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: '',
       currency: this.props.currency,
       category: categoryId,
@@ -172,7 +168,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
 
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
@@ -220,8 +216,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public labelSearch = (label: string): void => {
-
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: '',
       currency: this.props.currency,
       label,
@@ -259,8 +254,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     defaultRanges.forEach((filter: RangeFacets) => {
       if (activeRanges[filter.name]) {
-        const defaultMin = this.rangeValueToFront(filter.min);
-        const defaultMax = this.rangeValueToFront(filter.max);
+        const defaultMin = rangeFilterValueToFront(filter.min, rangeMinType);
+        const defaultMax = rangeFilterValueToFront(filter.max, rangeMaxType);
 
         for (let prop in activeRanges[filter.name]) {
           if (activeRanges[filter.name][prop] < defaultMin
@@ -283,7 +278,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       return;
     }
 
-    let defaultValue = this.rangeValueToFront(defaultValuesArr[0][rangeSubType]);
+    let defaultValue = rangeFilterValueToFront(defaultValuesArr[0][rangeSubType], rangeSubType);
 
     this.setState((prevState: SearchPageState) => ({
       activeRangeFilters: {
@@ -300,9 +295,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
-    const values = [...this.state.activeFilters[name]]
-      .filter((val: TFilterItemValue) => val !== value);
-
+    const values = [...this.state.activeFilters[name]].filter((val: TFilterItemValue) => val !== value);
     this.updateActiveFilters(name, values);
     return true;
   }
@@ -315,7 +308,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       return;
     }
     console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
@@ -344,16 +337,16 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return true;
   };
 
-  public handleSetSorting = (e: any) => {
-    this.setState({sort: e.target.value});
+  public handleSetSorting = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
+    const result = this.runSetSorting(event.target.value);
   };
 
-  public handleSetItemsPerPage = (e: any) => {
-    this.setState({itemsPerPage: e.target.value});
+  public handleSetItemsPerPage = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
+    const result = this.runSetItemsPerPage(+event.target.value);
   };
 
   public handlePagination = (e: any, value: number | string) => {
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
@@ -383,7 +376,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.dispatch(sendSearchAction(query));
   };
 
-  public renderProduct = (sku: string, name: string) => {
+  public onSelectProductHandler = (sku: string, name: string) => {
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
@@ -398,6 +391,18 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({isReadyToNewRequest: true});
   };
 
+  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
+    const resultReset = this.runResetActiveFilters();
+  };
+
+  public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
+  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
   private makeLocationSearch = (): void => {
     const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
     if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
@@ -409,7 +414,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
   }
 
-  private runResetActiveFilters = async (event: any): Promise<any> => {
+  private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<any> => {
     await this.setState((prevState: SearchPageState) => {
       return ({
         ...prevState,
@@ -422,25 +427,24 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       });
     });
 
+    if (needUpdateSearch) {
+      const resultUpdate = await this.updateSearch();
+    }
+
+    return true;
+  }
+
+  private runSetItemsPerPage = async (itemsPerPage: SearchPageState["itemsPerPage"]): Promise<any> => {
+    await this.setState({itemsPerPage, isReadyToNewRequest: true});
     const resultUpdate = await this.updateSearch();
     return resultUpdate;
   }
 
-  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
-    const resultReset = this.runResetActiveFilters(event);
-  };
-
-  public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
-    this.setState({isReadyToNewRequest: true});
+  private runSetSorting = async (sortMode: SearchPageState["sort"]): Promise<any> => {
+    await this.setState({sort: sortMode, isReadyToNewRequest: true});
+    const resultUpdate = await this.updateSearch();
+    return resultUpdate;
   }
-
-  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
-    this.setState({isReadyToNewRequest: true});
-  }
-
-  private rangeValueToFront = (value: number): number => (value / 100);
-
-  private rangeValueToBack = (value: number): number => (value * 100);
 
   public render() {
     const {
@@ -461,6 +465,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     console.log('SearchPage props', this.props);
     console.log('SearchPage state', this.state);
+    const isSortParamsExist = (sortParams.length > 0);
+    const isProductsExist = (items.length > 0);
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -499,22 +505,38 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       />,
     );
 
-    // TODO: Get label programmatically
-    const label: IProductLabel = {
-      type: 'sale',
-      text: 'Sale',
-    };
+    const sortPanelNumberMode = (
+      <SprykerSelect
+        currentMode={this.state.itemsPerPage}
+        changeHandler={this.handleSetItemsPerPage}
+        menuItems={pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item}))}
+        menuItemFirst={{value: " ", name: "products per page", disabled: true}}
+        name="pages"
+      />);
+
+    const sortPanelSorterMode = (
+      <SprykerSelect
+        currentMode={this.state.sort || " "}
+        changeHandler={this.handleSetSorting}
+        menuItems={sortParams.map((item: string) => ({value: item, name: `${item}`}))}
+        menuItemFirst={{
+          value: " ",
+          name: (!isSortParamsExist && !this.state.sort) ? "Choose sort mode" : "relevance",
+          disabled: !isSortParamsExist,
+        }}
+        name="sort"
+        title={(isSortParamsExist) ? "Sort by " : null}
+      />
+    );
 
     return (
       <AppMain>
         {isLoading ? <AppBackdrop isOpen={true} /> : null}
-
         <AppPageTitle
           title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
           intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
         />
-
-        <Grid container>
+        <Grid container className={classes.container}>
           <SearchPageContext.Provider
             value={{
               selectCategoryHandler: this.selectCategory,
@@ -522,7 +544,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             }}
           >
 
-            <Grid item xs={ 12 } sm={ 4 } md={ 3 }>
+            <Grid item xs={12} sm={4} md={3}>
               <CategoriesList
                 categories={category}
                 categoriesTree={categoriesTree}
@@ -530,7 +552,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               />
             </Grid>
 
-            <Grid item xs={ 12 } sm={ 8 } md={ 9 }>
+            <Grid item xs={12} sm={8} md={9}>
               <Grid container>
 
                 <SearchFilterList
@@ -542,93 +564,29 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   updateRangeHandler={this.updateRangeFilters}
                   onCloseFilterHandler={this.onCloseFilterHandler}
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
-                  rangeValueToFront={this.rangeValueToFront}
                   isFiltersReset={this.state.isFiltersReset}
+                  isProductsExist={isProductsExist}
                 />
-
                 <ActiveFiltersList
                   activeValuesFilters={this.state.activeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
                   rangeFilters={rangeFilters}
                   resetHandler={this.resetActiveFilters}
-                  rangeValueToFront={this.rangeValueToFront}
+                />
+                <SortPanel
+                  foundItems={<FoundItems numberFound={this.props.pagination.numFound} />}
+                  numberMode={sortPanelNumberMode}
+                  sorterMode={sortPanelSorterMode}
+                  isProductsExist={isProductsExist}
+                />
+                <ProductsList
+                  products={items}
+                  selectProductHandler={this.onSelectProductHandler}
+                  currency={currency}
+                  isLoading={!!isLoading}
                 />
 
-                <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-
-                  <Grid item xs={ 6 }>
-                    <FormControl>
-                      <Select
-                        value={ this.state.itemsPerPage }
-                        onChange={ this.handleSetItemsPerPage }
-                        name="pages"
-                      >
-                        {
-                          pagination.validItemsPerPageOptions.map((qty: number) => (
-                            <MenuItem value={ qty } key={ `pages-${qty}` }>
-                              { qty }
-                            </MenuItem>
-                          ))
-                        }
-                      </Select>
-                    </FormControl>
-                    <FormControl className={ classes.formControl }>
-                      <Select
-                        value={ this.state.sort }
-                        onChange={ this.handleSetSorting }
-                        name="sort"
-                        displayEmpty
-                      >
-                        <MenuItem value="" disabled>
-                          Sorting...
-                        </MenuItem>
-                        {
-                          sortParams && sortParams.map((param) => (
-                            <MenuItem value={ param } key={ `sort-${param}` }>
-                              { param }
-                            </MenuItem>
-                          ))
-                        }
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={ 3 }>
-                    <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                      Sort
-                    </Button>
-                  </Grid>
-                </Grid>
-
-                <Grid item xs={ 12 } container spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
-                  { items && items.length > 0
-                    ? items.map((item: any) => (
-                      <Grid item xs={ 12 } sm={ 6 } md={ 4 }
-                            key={ item.abstract_sku || item.abstractSku }
-                      >
-                        <ProductCard
-                          currency={ currency }
-                          images={ item.images }
-                          price={ item.price }
-                          prices={ item.prices }
-                          name={ item.abstract_name || item.abstractName }
-                          sku={ item.abstract_sku || item.abstractSku }
-                          onSelectProduct={ this.renderProduct }
-                          label={label}
-                        />
-                      </Grid>
-                    ))
-                    : <Paper elevation={ 1 } className={ classes.empty } id="emptyResult">
-                      <Typography variant="headline" component="h3">
-                        Nothing to show.
-                      </Typography>
-                      <Typography component="p">
-                        { isLoading ? 'Waiting results' : 'Try another search' }
-                      </Typography>
-                    </Paper>
-                  }
-                </Grid>
-
-                <Grid item xs={ 12 } container justify="center" alignItems="center">
+                <Grid item xs={12} container justify="center" alignItems="center">
                   <BottomNavigation
                     value={ pagination.currentPage }
                     onChange={ this.handlePagination }

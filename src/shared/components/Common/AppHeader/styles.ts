@@ -3,6 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   headerStickyContainer: {
+    position: 'relative',
     zIndex: 5,
   },
   header: {

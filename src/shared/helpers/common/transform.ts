@@ -1,3 +1,5 @@
+import {rangeMaxType, rangeMinType, TRangeType} from "src/shared/components/Pages/SearchPage/types";
+
 export const firstLetterToUpperCase = (word: any): string | null => {
   if (!word) {
     return null;
@@ -30,4 +32,14 @@ export const isWordHasPrice = (word: any): boolean => {
     return true;
   }
   return false;
+};
+
+export const rangeFilterValueToFront = (value: number, type: TRangeType): number => {
+  let valueFixed = (value / 100);
+  if (type === rangeMinType) {
+    return Math.floor(valueFixed);
+  } else if (type === rangeMaxType) {
+    return Math.ceil(valueFixed);
+  }
+  return 0;
 };

@@ -24,7 +24,7 @@ export interface RangeFacets {
   docCount?: any;
 }
 
-interface Pagination {
+export interface ISearchPagination {
   numFound: number;
   currentPage: number;
   maxPage: number;
@@ -49,7 +49,7 @@ export interface ISearchPageData {
   currency?: TAppCurrency;
   sortParams?: Array<string>;
   currentSort?: string;
-  pagination: Pagination;
+  pagination: ISearchPagination;
   category: Array<FilterValue>;
   currentCategory: string;
   spellingSuggestion: TSpellingSuggestion | null;
