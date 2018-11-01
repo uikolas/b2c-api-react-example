@@ -14,11 +14,13 @@ import {removeItemGuestCartAction} from "src/shared/actions/Common/Cart";
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
   private deleteFromCart = (cartItemId: string) => {
-    const {cartDeleteItemAction, removeItemGuestCartAction, cartId} = this.props;
+    const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn} = this.props;
 
-    // cartDeleteItemAction(cartId, cartItemId);
-
-    removeItemGuestCartAction(cartId, cartItemId);
+    if (isUserLoggedIn) {
+      cartDeleteItemAction(cartId, cartItemId);
+    } else {
+      removeItemGuestCartAction(cartId, cartItemId);
+    }
   };
 
   public render() {

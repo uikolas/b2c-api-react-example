@@ -145,3 +145,9 @@ export const removeItemGuestCartAction = function(cartUid: string, sku: string) 
     CartService.guestCartRemoveItem(dispatch, cartUid, sku);
   };
 };
+
+export const updateGuestCartAction = function(payload: ICartAddItem, cartId: TCartId) {
+  return (dispatch: Function, getState: Function) => {
+    CartService.guestCartUpdate(dispatch, payload, cartId);
+  };
+};

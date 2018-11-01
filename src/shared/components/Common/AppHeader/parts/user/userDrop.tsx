@@ -16,6 +16,13 @@ import { styles } from './styles';
 
 @connect
 export class UserDropComponent extends React.PureComponent<Props> {
+
+  public customerLogout = (e: any) => {
+    e.preventDefault();
+    this.props.logout();
+    this.props.getGuestCartAction();
+  };
+
   public render() {
     const {classes, isUserLoggedIn, logout} = this.props;
     const loggedInUser = (
@@ -37,7 +44,7 @@ export class UserDropComponent extends React.PureComponent<Props> {
             variant="contained"
             color="primary"
             component={ ({innerRef, ...props}) => <Link { ...props } to={ pathHomePage }/> }
-            onClick={ logout }
+            onClick={ this.customerLogout }
           >
             Log Out
           </Button>

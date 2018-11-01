@@ -15,4 +15,5 @@ export interface UserDropProps extends WithStyles<typeof styles> {
   // connect
   isUserLoggedIn?: boolean;
   logout?(): void;
+  getGuestCartAction: Function;
 }

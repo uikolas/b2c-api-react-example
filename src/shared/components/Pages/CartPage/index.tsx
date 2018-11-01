@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -15,21 +14,15 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { reduxify } from 'src/shared/lib/redux-helper';
-import { getCartId, ICartItem, ICartState } from 'src/shared/reducers/Common/Cart';
+import { ICartItem } from 'src/shared/reducers/Common/Cart';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import {
-  cartDeleteItemAction,
-  updateItemInCartAction,
-  removeItemGuestCartAction,
-} from 'src/shared/actions/Common/Cart';
-import { ICartAddItem, ICartTotals, TCartId } from 'src/shared/interfaces/cart';
+import { ICartTotals, TCartId } from 'src/shared/interfaces/cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
 import { pathSearchPage } from 'src/shared/routes/contentRoutes';
-import { TProductSKU } from 'src/shared/interfaces/product';
 import { AppMain } from '../../Common/AppMain';
 import { AppPrice } from '../../Common/AppPrice';
 import { styles } from './styles';
+import { connect } from './connect';
 
 interface CartPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -37,9 +30,11 @@ interface CartPageProps extends WithStyles<typeof styles> {
   items: Array<ICartItem>;
   totals: ICartTotals;
   cartId: TCartId;
-  updateItemInCart: Function;
-  deleteItemInCart: Function;
-  deleteInGuestCart: Function;
+  isUserLoggedIn: boolean;
+  updateItemInCartAction: Function;
+  cartDeleteItemAction: Function;
+  removeItemGuestCartAction: Function;
+  updateGuestCartAction: Function;
 }
 
 interface CartPageState {
@@ -49,6 +44,7 @@ interface CartPageState {
 
 export const pageTitle = 'Search results for ';
 
+@connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
 
   public state: CartPageState = {
@@ -59,8 +55,13 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   public handleDeleteItem = (sku: string) => (e: any) => {
     e.preventDefault();
 
-    // this.props.deleteItemInCart(this.props.cartId, sku);
-    this.props.deleteInGuestCart(this.props.cartId, sku);
+    const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn} = this.props;
+
+    if (isUserLoggedIn) {
+      cartDeleteItemAction(cartId, sku);
+    } else {
+      removeItemGuestCartAction(cartId, sku);
+    }
   };
 
   public openMenu = (item: ICartItem) => (e: any) => {
@@ -74,15 +75,33 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   // Update quantity of the item
   public setItemQty = (e: any) => {
     const newQuantity = e.target.value;
-
+    const {
+      cartDeleteItemAction,
+      removeItemGuestCartAction,
+      updateItemInCartAction,
+      updateGuestCartAction,
+      cartId,
+      isUserLoggedIn
+    } = this.props;
     // If is selected 0, the cart item should be removed from the cart
     if (newQuantity <= 0) {
-      this.props.deleteItemInCart(this.props.cartId, this.state.currentItem.sku);
+      if (isUserLoggedIn) {
+        cartDeleteItemAction(cartId, this.state.currentItem.sku);
+      } else {
+        removeItemGuestCartAction(cartId, this.state.currentItem.sku);
+      }
     } else {
-      this.props.updateItemInCart(
-        createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
-        this.props.cartId,
-      );
+      if (isUserLoggedIn) {
+        updateItemInCartAction(
+          createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
+          this.props.cartId,
+        );
+      } else {
+        updateGuestCartAction(
+          createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
+          this.props.cartId,
+        );
+      }
     }
 
     this.closeMenu();
@@ -221,31 +240,4 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
 export const CartPage = withStyles(styles)(CartPageBase);
 
-export const ConnectedCartPage = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
-    const cartProps: ICartState = state.cart ? state.cart : null;
-    const cartId: TCartId = getCartId(state, ownProps);
-    return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        items: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
-        totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
-        cartId,
-      }
-    );
-  },
-  (dispatch: Function) => ({
-    updateItemInCart: (
-      payload: ICartAddItem, cartId: TCartId,
-    ) => dispatch(updateItemInCartAction(payload, cartId)),
-    deleteItemInCart: (
-      cartId: TCartId, itemId: TProductSKU,
-    ) => dispatch(cartDeleteItemAction(cartId, itemId)),
-    deleteInGuestCart: (
-      cartId: TCartId, itemId: TProductSKU,
-    ) => dispatch(removeItemGuestCartAction(cartId, itemId)),
-  }),
-)(CartPage);
-
-export default ConnectedCartPage;
+export default CartPage;
