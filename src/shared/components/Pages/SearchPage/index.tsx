@@ -537,7 +537,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
           title={searchTerm ? `${pageTitle} "${searchTerm}"` :  pageTitleDefault}
           intro={<SearchIntro className={classes.spellingSuggestion} spellingSuggestion={spellingSuggestion} />}
         />
-        <Grid container>
+        <Grid container className={classes.container}>
           <SearchPageContext.Provider
             value={{
               selectCategoryHandler: this.selectCategory,
@@ -545,7 +545,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             }}
           >
 
-            <Grid item xs={ 12 } sm={ 4 } md={ 3 }>
+            <Grid item xs={12} sm={4} md={3}>
               <CategoriesList
                 categories={category}
                 categoriesTree={categoriesTree}
@@ -553,7 +553,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               />
             </Grid>
 
-            <Grid item xs={ 12 } sm={ 8 } md={ 9 }>
+            <Grid item xs={12} sm={8} md={9}>
               <Grid container>
 
                 <SearchFilterList
@@ -589,7 +589,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   isLoading={!!isLoading}
                 />
 
-                <Grid item xs={ 12 } container justify="center" alignItems="center">
+                <Grid item xs={12} container justify="center" alignItems="center">
                   <BottomNavigation
                     value={ pagination.currentPage }
                     onChange={ this.handlePagination }

@@ -7,5 +7,5 @@ export const LoadableSearchPage = Loadable({
     import(/* webpackPrefetch: true, webpackChunkName: "LoadableSearch" */ 'src/shared/components/Pages/SearchPage').then(
       module => module.default,
     ),
-  loading: () => <div>Loading...</div>,
+  loading: () => <div style={{minHeight: "100vh", textAlign: "center"}}>Loading...</div>,
 });
