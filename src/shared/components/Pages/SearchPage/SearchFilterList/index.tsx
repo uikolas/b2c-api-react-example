@@ -24,6 +24,7 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   onBlurRangeFilter: (event: any) => void;
   rangeValueToFront: Function;
   isFiltersReset: boolean;
+  isProductsExist?: boolean;
 }
 
 const title = 'Filter your results';
@@ -101,6 +102,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
           alignItems="center"
           className={ classes.root }
     >
+      {}
       <Grid item xs={ 12 }>
         <AppPageSubTitle title={title} />
       </Grid>

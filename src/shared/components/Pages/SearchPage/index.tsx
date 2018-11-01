@@ -468,6 +468,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     console.log('SearchPage props', this.props);
     console.log('SearchPage state', this.state);
     const isSortParamsExist = (sortParams.length);
+    const isProductsExist = (items.length);
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -567,8 +568,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
                   rangeValueToFront={this.rangeValueToFront}
                   isFiltersReset={this.state.isFiltersReset}
+                  isProductsExist={isProductsExist}
                 />
-
                 <ActiveFiltersList
                   activeValuesFilters={this.state.activeFilters}
                   activeValuesRanges={this.state.activeRangeFilters}
@@ -576,11 +577,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   resetHandler={this.resetActiveFilters}
                   rangeValueToFront={this.rangeValueToFront}
                 />
-
                 <SortPanel
                   foundItems={<FoundItems numberFound={this.props.pagination.numFound} />}
                   numberMode={sortPanelNumberMode}
                   sorterMode={sortPanelSorterMode}
+                  isProductsExist={isProductsExist}
                 />
                 <ProductsList
                   products={items}

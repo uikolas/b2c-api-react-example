@@ -11,6 +11,7 @@ interface SortPanelProps extends WithStyles<typeof styles> {
   foundItems: React.SFC<FoundItemsProps>;
   numberMode: React.SFC<SprykerSelectProps>;
   sorterMode: React.SFC<SprykerSelectProps>;
+  isProductsExist: boolean;
 }
 
 
@@ -20,7 +21,12 @@ export const SortPanelBase: React.SFC<SortPanelProps> = (props) => {
     foundItems,
     numberMode,
     sorterMode,
+    isProductsExist,
   } = props;
+
+  if (!isProductsExist) {
+    return null;
+  }
 
   return (
     <Grid container
