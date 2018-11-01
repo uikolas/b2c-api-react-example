@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
+import { RouteProps, withRouter } from 'react-router';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { NavLink } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { ILoginState } from 'src/shared/reducers/Pages/Login';
 import { customerRegisterAction, loginCustomerAction } from 'src/shared/actions/Pages/Login';
 import { ICustomerLoginData } from 'src/shared/interfaces/customer';
-import { pathForgotPassword } from 'src/shared/routes/contentRoutes';
+import { pathForgotPassword, pathCustomerPage } from 'src/shared/routes/contentRoutes';
+import { WithRouter } from 'src/shared/interfaces/commoon/react';
 
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
@@ -16,7 +17,7 @@ import { RegisterForm } from './RegisterForm';
 
 import { styles } from './styles';
 
-interface LoginPageProps extends WithStyles<typeof styles>, RouteProps {
+interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
   dispatch?: Function;
   customer?: any;
   isAuth?: boolean;
@@ -29,8 +30,15 @@ interface LoginPageState {
 
 }
 
+@(withRouter as any)
 export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {};
+
+  public componentDidUpdate() {
+    if (this.props.isAuth) {
+      this.props.history.push(pathCustomerPage);
+    }
+  }
 
   public render() {
     const {classes} = this.props;

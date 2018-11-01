@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
+import { ProtectedRoute } from './ProtectedRoute';
+
 import { ConnectedHomePage } from '../components/Pages/Home';
 import { LoadableLoginPage } from '../components/Pages/LoginPage/loadable';
 import { LoadablePasswordForgotPage } from '../components/Pages/LoginPage/ForgotPasswordPage/loadable';
@@ -54,12 +56,12 @@ export const getContentRoutes = function() {
       <Route path={ pathProductPage } component={ LoadableProductPage }/>
       <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
       <Route path={ pathCartPage } component={ LoadableCartPage }/>
-      <Route path={ pathCustomerPage } component={ LoadableCustomerPage }/>
+      <ProtectedRoute path={ pathCustomerPage } component={ LoadableCustomerPage }/>
       <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
       <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
 
-      <Route path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
-      <Route path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
+      <ProtectedRoute path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
+      <ProtectedRoute path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
 
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
     </Switch>
