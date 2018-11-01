@@ -124,6 +124,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     if (prevProps.location.pathname !== this.props.location.pathname) {
       this.makeLocationSearch();
     }
+
+    // if searchTerm was changed
+    if (prevProps.searchTerm !== this.props.searchTerm) {
+      this.runResetActiveFilters(false);
+    }
+
   }
 
   public categorySearch = (categoryId: TCategoryId): void => {
@@ -415,7 +421,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
   }
 
-  private runResetActiveFilters = async (): Promise<any> => {
+  private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<any> => {
     await this.setState((prevState: SearchPageState) => {
       return ({
         ...prevState,
@@ -428,8 +434,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       });
     });
 
-    const resultUpdate = await this.updateSearch();
-    return resultUpdate;
+    if (needUpdateSearch) {
+      const resultUpdate = await this.updateSearch();
+    }
+
+    return true;
   }
 
   private runSetItemsPerPage = async (itemsPerPage: SearchPageState["itemsPerPage"]): Promise<any> => {

@@ -75,11 +75,13 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
   if (!Array.isArray(ranges) || !ranges.length) {
     rangeItems = null;
   } else {
-    rangeItems = ranges.map((filter: RangeFacets) => {
+    rangeItems = ranges
+      .filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0))
+      .map((filter: RangeFacets) => {
       return (
         <SprykerRange
           key={filter.name}
-          attributeName={ filter.name}
+          attributeName={filter.name}
           title={firstLetterToUpperCase(filter.name)}
           min={ rangeValueToFront(filter.min) }
           max={ rangeValueToFront(filter.max) }
@@ -87,7 +89,7 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
             min: rangeValueToFront(filter.min),
             max: rangeValueToFront(filter.max),
           } }
-          handleChange={ updateRangeHandler }
+          handleChange={updateRangeHandler}
           Wrapper={FilterWrapper}
           handleBlur={onBlurRangeFilter}
           isReset={isFiltersReset}
@@ -96,17 +98,20 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     });
   }
 
+  const isItemsExist = (filterItems && filterItems.length > 0) || (rangeItems && rangeItems.length > 0);
+
   return (
     <Grid container
           justify="flex-start"
           alignItems="center"
           className={ classes.root }
     >
-      {}
-      <Grid item xs={ 12 }>
-        <AppPageSubTitle title={title} />
-      </Grid>
-
+      {isItemsExist
+        ? <Grid item xs={ 12 }>
+            <AppPageSubTitle title={title} />
+          </Grid>
+        : null
+      }
       <Grid container alignItems="flex-start" spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
         {filterItems}
         {rangeItems}
