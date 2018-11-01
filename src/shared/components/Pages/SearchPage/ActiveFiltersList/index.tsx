@@ -13,7 +13,7 @@ import {
 } from "src/shared/components/Pages/SearchPage/types";
 import {ActiveFilterItem} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/index";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {isWordHasPrice} from "src/shared/helpers/common/transform";
+import {isWordHasPrice, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 import {RangeFacets} from "src/shared/interfaces/searchPageData/index";
 import {createRangeFilterItem, transformName} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/helper";
 
@@ -22,7 +22,6 @@ interface ActiveFiltersListProps extends WithStyles<typeof styles> {
   activeValuesRanges: TActiveRangeFilters;
   rangeFilters?: Array<RangeFacets>;
   resetHandler: (event: React.MouseEvent<HTMLDivElement>) => void;
-  rangeValueToFront: Function;
 }
 
 const title = 'Active Filters';
@@ -35,7 +34,6 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
     activeValuesRanges,
     rangeFilters,
     resetHandler,
-    rangeValueToFront,
   } = props;
 
   const isActiveRangesExist = ((Object.getOwnPropertyNames(activeValuesRanges).length > 0));
@@ -65,8 +63,8 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
         }
         const valueFrom = activeValuesRanges[rangeName].min;
         const valueTo = activeValuesRanges[rangeName].max;
-        const defaultFrom =  rangeValueToFront(defaultValuesArr[0].min, rangeMinType);
-        const defaultTo = rangeValueToFront(defaultValuesArr[0].max, rangeMaxType);
+        const defaultFrom =  rangeFilterValueToFront(defaultValuesArr[0].min, rangeMinType);
+        const defaultTo = rangeFilterValueToFront(defaultValuesArr[0].max, rangeMaxType);
 
         if(defaultFrom !==  valueFrom && valueFrom > 0) {
           itemsGlobalCollection.push(

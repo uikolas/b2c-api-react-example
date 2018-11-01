@@ -11,7 +11,7 @@ import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
 import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
-import { TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
+import { ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
 import { connect } from './connect';
@@ -24,11 +24,15 @@ import {SearchPageContext} from './context';
 import {
   filterTypeFilter,
   filterTypeRange,
-  IFilterItemToDelete, rangeMaxType, rangeMinType,
+  IFilterItemToDelete,
+  ISearchQuery,
+  rangeMaxType,
+  rangeMinType,
+  RangeType,
   TActiveFilters,
   TActiveRangeFilters,
   TCategoryId,
-  TFilterItemValue, TRangeMaxType, TRangeMinType, TRangeType
+  TFilterItemValue,
 } from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
@@ -39,14 +43,7 @@ import {SortPanel} from "src/shared/components/Pages/SearchPage/SortPanel/index"
 import {FoundItems} from "src/shared/components/Pages/SearchPage/FoundItems/index";
 import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
 import {ProductsList} from "src/shared/components/Pages/SearchPage/ProductsList/index";
-
-type IQuery = {
-  q?: string,
-  currency: TAppCurrency,
-  sort?: string,
-  category?: TCategoryId,
-  [key: string]: string | number,
-};
+import {rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
@@ -55,8 +52,6 @@ interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   location: Location;
   isFulfilled: boolean;
 }
-
-type RangeType = {min: number, max: number};
 
 interface SearchPageState {
   activeFilters: TActiveFilters;
@@ -133,7 +128,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public categorySearch = (categoryId: TCategoryId): void => {
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: '',
       currency: this.props.currency,
       category: categoryId,
@@ -173,7 +168,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
   public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
 
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
@@ -221,7 +216,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public labelSearch = (label: string): void => {
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: '',
       currency: this.props.currency,
       label,
@@ -259,17 +254,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     defaultRanges.forEach((filter: RangeFacets) => {
       if (activeRanges[filter.name]) {
-        const defaultMin = this.rangeValueToFront(filter.min, rangeMinType);
-        const defaultMax = this.rangeValueToFront(filter.max, rangeMaxType);
+        const defaultMin = rangeFilterValueToFront(filter.min, rangeMinType);
+        const defaultMax = rangeFilterValueToFront(filter.max, rangeMaxType);
 
         for (let prop in activeRanges[filter.name]) {
           if (activeRanges[filter.name][prop] < defaultMin
             || activeRanges[filter.name][prop] > defaultMax
           ) {
-            console.log('activeRanges[filter.name][prop] ', activeRanges[filter.name][prop]);
-            console.log('defaultMin ', defaultMin);
-            console.log('defaultMax ', defaultMax);
-            console.log('prop ', prop);
             canMakeNewRequest = false;
           }
         }
@@ -287,7 +278,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       return;
     }
 
-    let defaultValue = this.rangeValueToFront(defaultValuesArr[0][rangeSubType], rangeSubType);
+    let defaultValue = rangeFilterValueToFront(defaultValuesArr[0][rangeSubType], rangeSubType);
 
     this.setState((prevState: SearchPageState) => ({
       activeRangeFilters: {
@@ -304,9 +295,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   public resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
-    const values = [...this.state.activeFilters[name]]
-      .filter((val: TFilterItemValue) => val !== value);
-
+    const values = [...this.state.activeFilters[name]].filter((val: TFilterItemValue) => val !== value);
     this.updateActiveFilters(name, values);
     return true;
   }
@@ -319,7 +308,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       return;
     }
     console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
@@ -357,7 +346,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public handlePagination = (e: any, value: number | string) => {
-    const query: IQuery = {
+    const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
@@ -457,18 +446,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return resultUpdate;
   }
 
-  private rangeValueToFront = (value: number, type: TRangeType): number => {
-    let valueFixed = (value / 100);
-    if (type === rangeMinType) {
-      return Math.floor(valueFixed);
-    } else if (type === rangeMaxType) {
-      return Math.ceil(valueFixed);
-    }
-    return 0;
-  };
-
-  private rangeValueToBack = (value: number): number => (value * 100);
-
   public render() {
     const {
       classes,
@@ -488,8 +465,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     console.log('SearchPage props', this.props);
     console.log('SearchPage state', this.state);
-    const isSortParamsExist = (sortParams.length);
-    const isProductsExist = (items.length);
+    const isSortParamsExist = (sortParams.length > 0);
+    const isProductsExist = (items.length > 0);
     const pages: any[] = [];
 
     const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
@@ -587,7 +564,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   updateRangeHandler={this.updateRangeFilters}
                   onCloseFilterHandler={this.onCloseFilterHandler}
                   onBlurRangeFilter={this.onBlurRangeFiltersHandler}
-                  rangeValueToFront={this.rangeValueToFront}
                   isFiltersReset={this.state.isFiltersReset}
                   isProductsExist={isProductsExist}
                 />
@@ -596,7 +572,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   activeValuesRanges={this.state.activeRangeFilters}
                   rangeFilters={rangeFilters}
                   resetHandler={this.resetActiveFilters}
-                  rangeValueToFront={this.rangeValueToFront}
                 />
                 <SortPanel
                   foundItems={<FoundItems numberFound={this.props.pagination.numFound} />}
