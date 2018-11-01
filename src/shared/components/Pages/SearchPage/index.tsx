@@ -5,9 +5,6 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { Location } from 'history';
 import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
 import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
@@ -44,6 +41,7 @@ import {FoundItems} from "src/shared/components/Pages/SearchPage/FoundItems/inde
 import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
 import {ProductsList} from "src/shared/components/Pages/SearchPage/ProductsList/index";
 import {rangeFilterValueToFront} from "src/shared/helpers/common/transform";
+import {AppPagination} from "src/shared/components/Common/AppPagination/index";
 
 interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
@@ -345,7 +343,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     const result = this.runSetItemsPerPage(+event.target.value);
   };
 
-  public handlePagination = (e: any, value: number | string) => {
+  public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
     const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
@@ -467,43 +465,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     console.log('SearchPage state', this.state);
     const isSortParamsExist = (sortParams.length > 0);
     const isProductsExist = (items.length > 0);
-    const pages: any[] = [];
-
-    const start = pagination.currentPage <= 5 ? 1 : pagination.currentPage - 4;
-    const end = pagination.maxPage > 5
-      ? pagination.currentPage <= 5 ? 5 : pagination.currentPage
-      : pagination.maxPage;
-
-    for (let i = start; i <= end; i++) {
-      pages.push(
-        <BottomNavigationAction
-          showLabel
-          label={ i }
-          value={ i }
-          key={ `page-${i}` }
-          className={ classes.pageNumber }
-        />);
-    }
-
-    pages.push(
-      <BottomNavigationAction
-        showLabel
-        icon={ <ChevronRight/> }
-        value="next"
-        key="next"
-        className={ classes.pageNumber }
-      />,
-    );
-
-    pages.unshift(
-      <BottomNavigationAction
-        showLabel
-        icon={ <ChevronLeft/> }
-        value="prev"
-        key="prev"
-        className={ classes.pageNumber }
-      />,
-    );
+    const isCategoriesExist = (category.length > 0);
 
     const sortPanelNumberMode = (
       <SprykerSelect
@@ -544,7 +506,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
             }}
           >
 
-            <Grid item xs={12} sm={4} md={3}>
+            <Grid item xs={isCategoriesExist ? 12 : null} md={isCategoriesExist ? 3 : null}>
               <CategoriesList
                 categories={category}
                 categoriesTree={categoriesTree}
@@ -552,7 +514,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
               />
             </Grid>
 
-            <Grid item xs={12} sm={8} md={9}>
+            <Grid item xs={12} md={isCategoriesExist ? 9 : 12}>
               <Grid container>
 
                 <SearchFilterList
@@ -585,16 +547,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   currency={currency}
                   isLoading={!!isLoading}
                 />
-
-                <Grid item xs={12} container justify="center" alignItems="center">
-                  <BottomNavigation
-                    value={ pagination.currentPage }
-                    onChange={ this.handlePagination }
-                    className={ classes.pagesContainer }
-                  >
-                    { pages }
-                  </BottomNavigation>
-                </Grid>
+                <AppPagination pagination={pagination} onChangeHandler={this.handlePagination} />
 
             </Grid>
             </Grid>

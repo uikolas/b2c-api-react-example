@@ -4,11 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { styles } from './styles';
-import {ISearchPagination} from "src/shared/interfaces/searchPageData/index";
+import {IPagination} from "src/shared/components/Common/AppPagination/types";
 
 
 export interface FoundItemsProps extends WithStyles<typeof styles> {
-  numberFound: ISearchPagination["numFound"];
+  numberFound: IPagination["numFound"];
 }
 
 export const FoundItemsBase: React.SFC<FoundItemsProps> = (props) => {
