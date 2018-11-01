@@ -33,6 +33,14 @@ export const rangeMinType: TRangeMinType = 'min';
 export const rangeMaxType: TRangeMaxType = 'max';
 export type TRangeType = TRangeMinType | TRangeMaxType;
 
+export type ISearchQuery = {
+  q?: string,
+  currency: TAppCurrency,
+  sort?: string,
+  category?: TCategoryId,
+  [key: string]: string | number,
+};
+
 export interface SearchPageState {
   activeFilters: TActiveFilters;
   activeRangeFilters: TActiveRangeFilters;

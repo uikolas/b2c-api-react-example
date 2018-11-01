@@ -5,11 +5,16 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {SprykerFilterElement} from "src/shared/components/UI/SprykerFilter/index";
 import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/index";
-import {TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/SearchPage/types";
+import {
+  rangeMaxType,
+  rangeMinType,
+  TActiveFilters,
+  TActiveRangeFilters
+} from "src/shared/components/Pages/SearchPage/types";
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
-import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
+import {firstLetterToUpperCase, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 
@@ -22,8 +27,8 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   updateRangeHandler: Function;
   onCloseFilterHandler: Function;
   onBlurRangeFilter: (event: any) => void;
-  rangeValueToFront: Function;
   isFiltersReset: boolean;
+  isProductsExist?: boolean;
 }
 
 const title = 'Filter your results';
@@ -39,7 +44,6 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     updateRangeHandler,
     onCloseFilterHandler,
     onBlurRangeFilter,
-    rangeValueToFront,
     isFiltersReset,
   } = props;
 
@@ -74,19 +78,23 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
   if (!Array.isArray(ranges) || !ranges.length) {
     rangeItems = null;
   } else {
-    rangeItems = ranges.map((filter: RangeFacets) => {
+    rangeItems = ranges
+      .filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0))
+      .map((filter: RangeFacets) => {
+      const valueFrom = rangeFilterValueToFront(filter.min, rangeMinType);
+      const valueTo = rangeFilterValueToFront(filter.max, rangeMaxType);
       return (
         <SprykerRange
           key={filter.name}
-          attributeName={ filter.name}
+          attributeName={filter.name}
           title={firstLetterToUpperCase(filter.name)}
-          min={ rangeValueToFront(filter.min) }
-          max={ rangeValueToFront(filter.max) }
+          min={valueFrom}
+          max={valueTo}
           currentValue={ activeValuesRanges[filter.name] || {
-            min: rangeValueToFront(filter.min),
-            max: rangeValueToFront(filter.max),
+            min: valueFrom,
+            max: valueTo,
           } }
-          handleChange={ updateRangeHandler }
+          handleChange={updateRangeHandler}
           Wrapper={FilterWrapper}
           handleBlur={onBlurRangeFilter}
           isReset={isFiltersReset}
@@ -95,16 +103,20 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     });
   }
 
+  const isItemsExist = (filterItems && filterItems.length > 0) || (rangeItems && rangeItems.length > 0);
+
   return (
     <Grid container
           justify="flex-start"
           alignItems="center"
           className={ classes.root }
     >
-      <Grid item xs={ 12 }>
-        <AppPageSubTitle title={title} />
-      </Grid>
-
+      {isItemsExist
+        ? <Grid item xs={ 12 }>
+            <AppPageSubTitle title={title} />
+          </Grid>
+        : null
+      }
       <Grid container alignItems="flex-start" spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
         {filterItems}
         {rangeItems}
