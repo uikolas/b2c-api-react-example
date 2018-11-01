@@ -244,6 +244,41 @@ export class CartService {
     }
   }
 
+  public static async guestCartUpdate(dispatch: Function, payload: ICartAddItem, cartId: TCartId): Promise<any> {
+    try {
+      dispatch(cartUpdateItemPendingStateAction());
+
+      const body = {
+        data: {
+          type: 'guest-cart-items',
+          attributes: payload,
+        },
+      };
+      const {sku} = payload;
+      const response: any = await api.patch(
+        `guest-carts/${cartId}/guest-cart-items/${sku}`,
+        body,
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': '777555'}}
+      );
+
+      if (response.ok) {
+        const responseParsed = parseGuestCartResponse(response.data);
+        console.info('cartUpdateItem responseParsed: ', responseParsed);
+        dispatch(cartUpdateItemFulfilledStateAction(responseParsed));
+        return responseParsed;
+      } else {
+        dispatch(cartUpdateItemRejectedStateAction(response.problem));
+        toast.error('Request Error: ' + response.problem);
+        return null;
+      }
+
+    } catch (error) {
+      dispatch(cartUpdateItemRejectedStateAction(error.message));
+      toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
   public static async cartDeleteItem(ACTION_TYPE: string, dispatch: Function, cartId: TCartId, itemId: TProductSKU): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);

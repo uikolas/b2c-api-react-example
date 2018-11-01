@@ -19,6 +19,7 @@ export const parseStoreResponse = (data: any): IInitData => {
   result.currency = attributes.defaultCurrency;
   result.priceMode = PRICE_MODE_DEFAULT;
   result.timeZone = attributes.timeZone;
+  result.countries = attributes.countries;
 
   attributes.locales.forEach((row: any) => {
     row.code === result.store.toLowerCase() ? result.locale = row.code : 'fr';

@@ -17,6 +17,14 @@ export interface ICategory {
   children?: Array<ICategory> | object;
 }
 
+export interface ICountries {
+  iso2Code: string;
+  iso3Code: string;
+  name: string;
+  postalCodeMandatory: boolean;
+  postalCodeRegex: string;
+}
+
 export interface IInitData {
   ok?: boolean;
   priceMode: TAppPriceMode;
@@ -25,6 +33,7 @@ export interface IInitData {
   locale: TAppLocale;
   timeZone: TAppTimeZone;
   categoriesTree?: Array<ICategory>;
+  countries?: Array<ICountries>;
 }
 
 export interface IInitState extends IReduxState {
@@ -80,6 +89,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
       store: payload.store,
       locale: payload.locale,
       timeZone: payload.timeZone,
+      countries: payload.countries,
     },
     ...getReducerPartFulfilled(),
   };
