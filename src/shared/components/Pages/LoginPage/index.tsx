@@ -8,7 +8,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { ILoginState } from 'src/shared/reducers/Pages/Login';
 import { customerRegisterAction, loginCustomerAction } from 'src/shared/actions/Pages/Login';
 import { ICustomerLoginData } from 'src/shared/interfaces/customer';
-import { pathForgotPassword, pathHomePage } from 'src/shared/routes/contentRoutes';
+import { pathForgotPassword, pathCustomerPage } from 'src/shared/routes/contentRoutes';
 import { WithRouter } from 'src/shared/interfaces/commoon/react';
 
 import { AppMain } from '../../Common/AppMain';
@@ -36,7 +36,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
 
   public componentDidUpdate() {
     if (this.props.isAuth) {
-      this.props.history.push(pathHomePage);
+      this.props.history.push(pathCustomerPage);
     }
   }
 
