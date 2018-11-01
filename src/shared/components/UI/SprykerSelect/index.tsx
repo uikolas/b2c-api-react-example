@@ -58,8 +58,6 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
 
   const isMenuItemsExist = (menuItems.length > 0);
 
-  console.log('SprykerSelect props', props);
-
   return (
     <Grid container
           justify="center"
@@ -74,7 +72,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
           }
           <Select
             value={currentMode }
-            onChange={ changeHandler }
+            onChange={changeHandler}
             name={name}
             classes={{
               icon: classes.icon,
@@ -103,7 +101,6 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
       </Grid>
     </Grid>
   );
-
 };
 
 export const SprykerSelect = withStyles(styles)(SprykerSelectBase);

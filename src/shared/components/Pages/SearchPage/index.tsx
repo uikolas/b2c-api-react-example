@@ -7,10 +7,6 @@ import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
@@ -347,13 +343,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public handleSetSorting = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
-    console.log('handleSetSorting: event.target.value', event.target.value);
-    this.setState({sort: event.target.value});
+    const result = this.runSetSorting(event.target.value);
   };
 
   public handleSetItemsPerPage = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
-    console.log('handleSetItemsPerPage: event.target.value', event.target.value);
-    this.setState({itemsPerPage: +event.target.value});
+    const result = this.runSetItemsPerPage(+event.target.value);
   };
 
   public handlePagination = (e: any, value: number | string) => {
@@ -402,6 +396,18 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({isReadyToNewRequest: true});
   };
 
+  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
+    const resultReset = this.runResetActiveFilters();
+  };
+
+  public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
+  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
+    this.setState({isReadyToNewRequest: true});
+  }
+
   private makeLocationSearch = (): void => {
     const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
     if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
@@ -413,7 +419,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
   }
 
-  private runResetActiveFilters = async (event: any): Promise<any> => {
+  private runResetActiveFilters = async (): Promise<any> => {
     await this.setState((prevState: SearchPageState) => {
       return ({
         ...prevState,
@@ -430,16 +436,16 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return resultUpdate;
   }
 
-  public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
-    const resultReset = this.runResetActiveFilters(event);
-  };
-
-  public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
-    this.setState({isReadyToNewRequest: true});
+  private runSetItemsPerPage = async (itemsPerPage: SearchPageState["itemsPerPage"]): Promise<any> => {
+    await this.setState({itemsPerPage, isReadyToNewRequest: true});
+    const resultUpdate = await this.updateSearch();
+    return resultUpdate;
   }
 
-  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
-    this.setState({isReadyToNewRequest: true});
+  private runSetSorting = async (sortMode: SearchPageState["sort"]): Promise<any> => {
+    await this.setState({sort: sortMode, isReadyToNewRequest: true});
+    const resultUpdate = await this.updateSearch();
+    return resultUpdate;
   }
 
   private rangeValueToFront = (value: number): number => (value / 100);
@@ -589,37 +595,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                                 title={(isSortParamsExist) ? "Sort by " : null}
                               />}
                 />
-
-                <Grid item xs={ 12 } container className={ classes.buttonsRow }>
-
-                  <Grid item xs={ 6 }>
-
-                    {/*<FormControl className={ classes.formControl }>
-                      <Select
-                        value={ this.state.sort }
-                        onChange={ this.handleSetSorting }
-                        name="sort"
-                        displayEmpty
-                      >
-                        <MenuItem value="" disabled>
-                          Sorting...
-                        </MenuItem>
-                        {
-                          sortParams && sortParams.map((param) => (
-                            <MenuItem value={ param } key={ `sort-${param}` }>
-                              { param }
-                            </MenuItem>
-                          ))
-                        }
-                      </Select>
-                    </FormControl>*/}
-                  </Grid>
-                  <Grid item xs={ 3 }>
-                    <Button variant="contained" color="primary" onClick={ this.updateSearch }>
-                      Sort
-                    </Button>
-                  </Grid>
-                </Grid>
 
                 <Grid item xs={ 12 } container spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
                   { items && items.length > 0
