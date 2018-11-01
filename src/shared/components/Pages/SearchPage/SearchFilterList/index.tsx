@@ -5,7 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {SprykerFilterElement} from "src/shared/components/UI/SprykerFilter/index";
 import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/index";
-import {TActiveFilters, TActiveRangeFilters} from "src/shared/components/Pages/SearchPage/types";
+import {
+  rangeMaxType, rangeMinType, TActiveFilters,
+  TActiveRangeFilters
+} from "src/shared/components/Pages/SearchPage/types";
 import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
@@ -78,16 +81,18 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     rangeItems = ranges
       .filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0))
       .map((filter: RangeFacets) => {
+      const valueFrom = rangeValueToFront(filter.min, rangeMinType);
+      const valueTo = rangeValueToFront(filter.max, rangeMaxType);
       return (
         <SprykerRange
           key={filter.name}
           attributeName={filter.name}
           title={firstLetterToUpperCase(filter.name)}
-          min={ rangeValueToFront(filter.min) }
-          max={ rangeValueToFront(filter.max) }
+          min={valueFrom}
+          max={valueTo}
           currentValue={ activeValuesRanges[filter.name] || {
-            min: rangeValueToFront(filter.min),
-            max: rangeValueToFront(filter.max),
+            min: valueFrom,
+            max: valueTo,
           } }
           handleChange={updateRangeHandler}
           Wrapper={FilterWrapper}

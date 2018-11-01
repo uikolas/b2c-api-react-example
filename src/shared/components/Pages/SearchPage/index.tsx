@@ -24,11 +24,11 @@ import {SearchPageContext} from './context';
 import {
   filterTypeFilter,
   filterTypeRange,
-  IFilterItemToDelete,
+  IFilterItemToDelete, rangeMaxType, rangeMinType,
   TActiveFilters,
   TActiveRangeFilters,
   TCategoryId,
-  TFilterItemValue
+  TFilterItemValue, TRangeMaxType, TRangeMinType, TRangeType
 } from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
@@ -259,13 +259,17 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     defaultRanges.forEach((filter: RangeFacets) => {
       if (activeRanges[filter.name]) {
-        const defaultMin = this.rangeValueToFront(filter.min);
-        const defaultMax = this.rangeValueToFront(filter.max);
+        const defaultMin = this.rangeValueToFront(filter.min, rangeMinType);
+        const defaultMax = this.rangeValueToFront(filter.max, rangeMaxType);
 
         for (let prop in activeRanges[filter.name]) {
           if (activeRanges[filter.name][prop] < defaultMin
             || activeRanges[filter.name][prop] > defaultMax
           ) {
+            console.log('activeRanges[filter.name][prop] ', activeRanges[filter.name][prop]);
+            console.log('defaultMin ', defaultMin);
+            console.log('defaultMax ', defaultMax);
+            console.log('prop ', prop);
             canMakeNewRequest = false;
           }
         }
@@ -283,7 +287,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       return;
     }
 
-    let defaultValue = this.rangeValueToFront(defaultValuesArr[0][rangeSubType]);
+    let defaultValue = this.rangeValueToFront(defaultValuesArr[0][rangeSubType], rangeSubType);
 
     this.setState((prevState: SearchPageState) => ({
       activeRangeFilters: {
@@ -453,7 +457,15 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return resultUpdate;
   }
 
-  private rangeValueToFront = (value: number): number => (value / 100);
+  private rangeValueToFront = (value: number, type: TRangeType): number => {
+    let valueFixed = (value / 100);
+    if (type === rangeMinType) {
+      return Math.floor(valueFixed);
+    } else if (type === rangeMaxType) {
+      return Math.ceil(valueFixed);
+    }
+    return 0;
+  };
 
   private rangeValueToBack = (value: number): number => (value * 100);
 

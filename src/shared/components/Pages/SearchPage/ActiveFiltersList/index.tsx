@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {
   filterTypeFilter,
-  IFilterItem,
+  IFilterItem, rangeMaxType, rangeMinType,
   TActiveFilters,
   TActiveRangeFilters,
   TFilterItemValue,
@@ -65,8 +65,8 @@ export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) 
         }
         const valueFrom = activeValuesRanges[rangeName].min;
         const valueTo = activeValuesRanges[rangeName].max;
-        const defaultFrom =  rangeValueToFront(defaultValuesArr[0].min);
-        const defaultTo = rangeValueToFront(defaultValuesArr[0].max);
+        const defaultFrom =  rangeValueToFront(defaultValuesArr[0].min, rangeMinType);
+        const defaultTo = rangeValueToFront(defaultValuesArr[0].max, rangeMaxType);
 
         if(defaultFrom !==  valueFrom && valueFrom > 0) {
           itemsGlobalCollection.push(
