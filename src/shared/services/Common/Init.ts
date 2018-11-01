@@ -15,6 +15,14 @@ import { parseStoreResponse } from '../../helpers/init/store';
 export class InitAppService {
 
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<any> {
+    let anonymId: string;
+    try {
+      const nodeResponse: any = await api.get('react/getUniqueUser');
+      anonymId = nodeResponse.data;
+    } catch (err) {
+      anonymId = 'anonym';
+    }
+
     try {
       let response: any;
       dispatch(initApplicationDataPendingStateAction());
@@ -22,7 +30,7 @@ export class InitAppService {
 
       if (response.ok) {
         const responseParsed = parseStoreResponse(response.data);
-        dispatch(initApplicationDataFulfilledStateAction(responseParsed));
+        dispatch(initApplicationDataFulfilledStateAction({...responseParsed, anonymId}));
 
         dispatch(getCategoriesAction());
         return response.data;

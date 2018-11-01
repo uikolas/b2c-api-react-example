@@ -34,6 +34,7 @@ export interface IInitData {
   timeZone: TAppTimeZone;
   categoriesTree?: Array<ICategory>;
   countries?: Array<ICountries>;
+  anonymId?: string;
 }
 
 export interface IInitState extends IReduxState {
@@ -49,6 +50,7 @@ export const initialState: IInitState = {
     locale: null,
     timeZone: null,
     categoriesTree: [],
+    anonymId: 'anonym',
   },
 };
 
@@ -90,6 +92,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
       locale: payload.locale,
       timeZone: payload.timeZone,
       countries: payload.countries,
+      anonymId: payload.anonymId,
     },
     ...getReducerPartFulfilled(),
   };
@@ -159,4 +162,8 @@ export function getPayloadForCreateCart(state: any, props: any): ICartCreatePayl
 
 export function getCategoriesTree(state: any, props: any): ICategory[] {
   return state.init.data.categoriesTree;
+}
+
+export function getAnonymId(state: any, props: any): string {
+  return state.init.data.anonymId;
 }

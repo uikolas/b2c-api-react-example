@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const http = require('http');
+const crypto = require('crypto');
 
 const config = require('./server-config');
 
@@ -20,14 +21,17 @@ appRouter.use(express.static(path.join(__dirname, 'build/web')));
 appRouter.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build/web/index.html'));
 });
-// }
 
-// webServer.use('*', (req, res, next) => {
-//   console.info('Request on 3000');
-//   next();
-// });
+webServer.use('/react/getUniqueUser', (req, res, next) => {
+  const hash = crypto.createHmac('sha256', req.headers['x-forwarded-for'])
+    .update(req.headers['user-agent'])
+    .digest('hex');
+
+  res.end(hash);
+});
 
 webServer.use('/react/', appRouter);
+
 
 // Error Handler
 webServer.use((err, req, res, next) => {
