@@ -78,6 +78,10 @@ export class CatalogService {
         const products: any[] =  data.data[0].attributes.products.slice(0, 4);
         let counter = 0;
 
+        if (!data.included) {
+          throw new Error('No data available');
+        }
+
         data.included.some((row: any) => {
           if (row.type === 'abstract-product-prices') {
             const product: any = products.find((prod: any) => prod.abstract_sku === row.id);
