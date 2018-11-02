@@ -327,6 +327,10 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
+    if (value === 'next' && this.props.pagination.currentPage === this.props.pagination.maxPage) {
+      return;
+    }
+
     const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,

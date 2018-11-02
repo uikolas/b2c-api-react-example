@@ -19,7 +19,6 @@ interface AppPaginationProps extends WithStyles<typeof styles> {
 export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
   const {
     classes,
-    pagination,
     pagination: {
       currentPage,
       maxPage,
@@ -34,10 +33,14 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
 
   const pages: JSX.Element[] = [];
 
-  const start = currentPage <= maxActions ? 1 : currentPage - (maxActions - 1);
-  const end = maxPage > maxActions
+  let start = currentPage <= maxActions ? 1 : currentPage - (maxActions - 1);
+  let end = maxPage > maxActions
     ? currentPage <= maxActions ? maxActions : currentPage
     : maxPage;
+
+  if (currentPage > 3 && maxPage > maxActions) {
+    start = currentPage - 2;
+  }
 
   for (let i = start; i <= end; i++) {
     pages.push(
@@ -46,39 +49,47 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
         label={i}
         value={i}
         key={`page-${i}`}
-        className={classes.pageNumber}
+        classes={{
+          root: classes.item,
+          selected: classes.selected,
+          label: classes.label,
+        }}
       />);
   }
 
-  pages.push(
-    <BottomNavigationAction
-      showLabel
-      icon={ <ChevronRight/> }
-      value="next"
-      key="next"
-      className={classes.pageNumber}
-    />,
-  );
-
-  pages.unshift(
-    <BottomNavigationAction
-      showLabel
-      icon={ <ChevronLeft/> }
-      value="prev"
-      key="prev"
-      className={classes.pageNumber}
-    />,
-  );
-
   return (
     <Grid container justify="center" alignItems="center" className={ classes.root }>
-      <BottomNavigation
-        value={ pagination.currentPage }
-        onChange={ onChangeHandler }
-        className={ classes.pagesContainer }
-      >
-        {pages}
-      </BottomNavigation>
+      <Grid item xs>
+        <BottomNavigation
+          value={currentPage}
+          onChange={ onChangeHandler }
+          classes={{
+            root: classes.container
+          }}
+        >
+          <BottomNavigationAction
+            showLabel
+            icon={ <ChevronLeft/> }
+            value="prev"
+            key="prev"
+            classes={{
+              root: `${classes.item} ${classes.itemLeft}`,
+              wrapper: classes.wrapper,
+            }}
+          />
+          {pages}
+          <BottomNavigationAction
+            showLabel
+            icon={ <ChevronRight/> }
+            value="next"
+            key="next"
+            classes={{
+              root: `${classes.item} ${classes.itemRight}`,
+              wrapper: classes.wrapper,
+            }}
+          />
+        </BottomNavigation>
+      </Grid>
     </Grid>
   );
 };
