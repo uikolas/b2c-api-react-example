@@ -1,4 +1,5 @@
 import {GridSpacing} from "@material-ui/core/Grid";
+import {baseTheme} from "src/shared/theme/index";
 
 export interface IAppFixedDimensions {
   headerHeight: React.CSSProperties['height'];
@@ -21,7 +22,7 @@ export const appFixedDimensions: IAppFixedDimensions = {
   headerHeight: 65,
   card: {
     actionAreaWidth: 282,
-    actionAreaHeight: 428
+    actionAreaHeight: 428,
   },
   borderRadius: 4,
   gridSpacing: 24,

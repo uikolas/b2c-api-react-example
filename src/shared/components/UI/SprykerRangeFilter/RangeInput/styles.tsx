@@ -10,6 +10,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   value: {
     height: "auto",
+    width: 50,
     lineHeight: "normal",
     letterSpacing: 0.5,
     fontSize: theme.appFixedDimensions.fontSize.small,

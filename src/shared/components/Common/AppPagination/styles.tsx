@@ -13,6 +13,11 @@ export const styles = (theme: Theme) => createStyles({
     position: "relative",
     paddingLeft: 70,
     paddingRight: 70,
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: "column",
+      paddingLeft: theme.spacing.unit,
+      paddingRight: theme.spacing.unit,
+    },
   },
   item: {
     width: 70,
@@ -24,14 +29,32 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: 0,
     paddingBottom: 0,
     backgroundColor: theme.appColors.white,
+    [theme.breakpoints.down('xs')]: {
+      borderBottom: `1px solid ${theme.appColors.blockDivider}`,
+      width: "100%",
+      minWidth: "100%",
+      maxWidth: "100%",
+      height: 50,
+      "&:last-child": {
+        borderBottom: "none",
+      }
+    },
   },
   itemLeft: {
     position: "absolute",
     left: 0,
+    [theme.breakpoints.down('xs')]: {
+      position: "relative",
+      left: "auto",
+    },
   },
   itemRight: {
     position: "absolute",
     right: 0,
+    [theme.breakpoints.down('xs')]: {
+      position: "relative",
+      right: "auto",
+    },
   },
   label: {
     color: theme.appColors.black,

@@ -1,3 +1,5 @@
+import {baseTheme} from "src/shared/theme/index";
+
 export interface IAppContainerStyles {
   maxWidth: React.CSSProperties['width'];
   width: React.CSSProperties['width'];
@@ -12,4 +14,9 @@ export const appContainerStyles: IAppContainerStyles = {
   marginLeft: "auto",
   marginRight: "auto",
   position: 'relative',
+  [baseTheme.breakpoints.down('lg')]: {
+    maxWidth: "100%",
+    paddingLeft: baseTheme.spacing.unit * 2,
+    paddingRight: baseTheme.spacing.unit * 2,
+  },
 };

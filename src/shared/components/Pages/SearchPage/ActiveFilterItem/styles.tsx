@@ -16,6 +16,10 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: 500,
     letterSpacing: 0.4,
     textTransform: "uppercase",
+    [theme.breakpoints.down('xs')]: {
+      marginRight: 0,
+      width: "100%",
+    },
   },
   close: {
     color: theme.appColors.blue,
@@ -27,7 +31,7 @@ export const styles = (theme: Theme) => createStyles({
       color: theme.appColors.white,
       backgroundColor: theme.appColors.blue,
       transition: "all .5s ease-in-out",
-    }
+    },
   },
   label: {
     paddingRight: theme.spacing.unit * 2.5,

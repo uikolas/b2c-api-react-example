@@ -8,6 +8,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: 'auto',
     height: '100%',
     boxShadow: "none",
+    alignItems: "center",
   },
   media: {
     position: "absolute",
@@ -24,7 +25,10 @@ export const styles = (theme: Theme) => createStyles({
     minHeight: theme.appFixedDimensions.card.actionAreaHeight,
     borderRadius: theme.appFixedDimensions.borderRadius,
     position: "relative",
-
+    width: "100%",
+    [theme.breakpoints.down('md')]: {
+      minHeight: 350,
+    },
   },
   actionAreaOverlay: {
     position: "absolute",

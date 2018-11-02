@@ -30,15 +30,14 @@ export const SortPanelBase: React.SFC<SortPanelProps> = (props) => {
 
   return (
     <Grid container
-          justify="space-between"
           alignItems="center"
           className={ classes.root }
     >
-      <Grid item xs={ 12 } sm={6}>
+      <Grid item xs={ 12 } sm={3} >
         {foundItems}
       </Grid>
 
-      <Grid item xs={ 12 } sm={6}>
+      <Grid item xs={ 12 } sm={9}>
         <div className={classes.sortsOuter}>
           <div className={classes.sort}>
             {numberMode}
