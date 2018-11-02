@@ -1,9 +1,15 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {cartDeleteItemAction, removeItemGuestCartAction, updateItemInCartAction, updateGuestCartAction} from 'src/shared/actions/Common/Cart';
+import {
+  cartDeleteItemAction,
+  removeItemGuestCartAction,
+  updateItemInCartAction,
+  updateGuestCartAction
+} from 'src/shared/actions/Common/Cart';
 import { getCartId, ICartState } from 'src/shared/reducers/Common/Cart';
-import {isUserAuthenticated} from "src/shared/reducers/Pages/Login";
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { getAnonymId } from 'src/shared/reducers/Common/Init';
 import {RouteProps} from "react-router";
 import {TCartId} from "src/shared/interfaces/cart";
 
@@ -12,6 +18,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
   const cartProps: ICartState = state.cart ? state.cart : null;
   const cartId: TCartId = getCartId(state, ownProps);
+  const anonymId = getAnonymId(state, ownProps);
+
   return (
     {
       location: routerProps.location ? routerProps.location : ownProps.location,
@@ -19,6 +27,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
       totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
       cartId,
       isUserLoggedIn,
+      anonymId,
     }
   );
 };

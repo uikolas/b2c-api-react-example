@@ -20,7 +20,7 @@ export class UserDropComponent extends React.PureComponent<Props> {
   public customerLogout = (e: any) => {
     e.preventDefault();
     this.props.logout();
-    this.props.getGuestCartAction();
+    this.props.getGuestCartAction(this.props.anonymId);
   };
 
   public render() {

@@ -14,6 +14,7 @@ export interface UserState {
 export interface UserDropProps extends WithStyles<typeof styles> {
   // connect
   isUserLoggedIn?: boolean;
+  anonymId?: string;
   logout?(): void;
   getGuestCartAction: Function;
 }

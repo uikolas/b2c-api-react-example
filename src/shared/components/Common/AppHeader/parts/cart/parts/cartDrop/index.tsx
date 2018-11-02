@@ -9,17 +9,16 @@ import { ProductItem } from '../productItem';
 import { CartDropProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
-import {removeItemGuestCartAction} from "src/shared/actions/Common/Cart";
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
   private deleteFromCart = (cartItemId: string) => {
-    const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn} = this.props;
+    const {cartDeleteItemAction, removeItemGuestCartAction, cartId, anonymId, isUserLoggedIn} = this.props;
 
     if (isUserLoggedIn) {
       cartDeleteItemAction(cartId, cartItemId);
     } else {
-      removeItemGuestCartAction(cartId, cartItemId);
+      removeItemGuestCartAction(cartId, cartItemId, anonymId);
     }
   };
 

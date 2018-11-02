@@ -101,7 +101,7 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
 };
 
 // handlers
-const handleFulfilled = (cartState: ICartState, payload: ICartDataResponse) => {
+const handleFulfilled = (cartState: ICartState, payload: ICartDataResponse | null) => {
   return {
     ...cartState,
     data: {

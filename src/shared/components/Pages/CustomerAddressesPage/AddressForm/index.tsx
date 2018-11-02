@@ -12,22 +12,24 @@ import BackIcon from '@material-ui/icons/ChevronLeft';
 import { toast } from 'react-toastify';
 
 import {styles} from '../styles';
-import {IAddressItem} from '../../../../interfaces/addresses';
-import {addAddressAction, updateAddressAction} from '../../../../actions/Pages/Addresses';
+import {IAddressItem} from 'src/shared/interfaces/addresses';
+import {addAddressAction, updateAddressAction} from 'src/shared/actions/Pages/Addresses';
 
-import {IAddressesState} from "../../../../reducers/Pages/Addresses";
-import {ILoginState} from "../../../../reducers/Pages/Login";
-import {getRouterHistoryBack} from "../../../../selectors/Common/router";
-import {salutationVariants} from "../../../../constants/customer";
+import {IAddressesState} from "src/shared/reducers/Pages/Addresses";
+import {ILoginState} from "src/shared/reducers/Pages/Login";
+import {getCounties, ICountries} from "src/shared/reducers/Common/Init";
+import {getRouterHistoryBack} from "src/shared/selectors/Common/router";
+import {salutationVariants} from "src/shared/constants/customer";
 import {
   TSalutationVariant
-} from "../../../../interfaces/customer";
-import {emptyRequiredFieldsErrorText} from "../../../../constants/messages/errors";
-import {reduxify} from "../../../../lib/redux-helper";
+} from "src/shared/interfaces/customer";
+import {emptyRequiredFieldsErrorText} from "src/shared/constants/messages/errors";
+import {reduxify} from "src/shared/lib/redux-helper";
 
 interface AddressFormProps extends WithStyles<typeof styles> {
   customer: string;
   currentAddress: IAddressItem;
+  countries: ICountries[];
   addAddress: Function;
   updateAddress: Function;
   routerGoBack: Function;
@@ -53,6 +55,7 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
       zipCode: props.currentAddress ? props.currentAddress.zipCode : '',
       city: props.currentAddress ? props.currentAddress.city : '',
       country: props.currentAddress ? props.currentAddress.country : '',
+      iso2Code: props.currentAddress ? props.currentAddress.iso2Code : '',
       phone: props.currentAddress ? props.currentAddress.phone || '' : '',
       isDefaultShipping: props.currentAddress ? props.currentAddress.isDefaultShipping : true,
       isDefaultBilling: props.currentAddress ? props.currentAddress.isDefaultBilling : true,
@@ -71,6 +74,7 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
     zipCode: '',
     city: '',
     country: '',
+    iso2Code: '',
     isDefaultShipping: true,
     isDefaultBilling: true,
     submitted: false,
@@ -79,6 +83,12 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
   public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({
       salutation: event.target.value,
+    });
+  }
+
+  public handleChangeCountry = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    this.setState({
+      iso2Code: event.target.value,
     });
   }
 
@@ -108,7 +118,7 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
       || !this.state.address2
       || !this.state.zipCode
       || !this.state.city
-      || !this.state.country
+      || !this.state.iso2Code
     ) {
       toast.warn(emptyRequiredFieldsErrorText);
       return;
@@ -125,7 +135,7 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
   }
 
   public render(): JSX.Element {
-    const {classes, currentAddress, routerGoBack} = this.props;
+    const {classes, currentAddress, countries, routerGoBack} = this.props;
 
     return (
       <Grid container>
@@ -256,13 +266,20 @@ export class AddressForm extends React.Component<AddressFormProps, AddressFormSt
                 <Grid item xs={12} sm={4}>
                   <TextField
                     required
-                    error={this.state.submitted && !this.state.country}
+                    select
+                    error={this.state.submitted && !this.state.iso2Code}
                     fullWidth
                     label="Country"
-                    name="country"
-                    value={this.state.country}
-                    onChange={this.handleChange}
-                  />
+                    name="iso2Code"
+                    value={this.state.iso2Code}
+                    onChange={this.handleChangeCountry}
+                  >
+                    {countries.map((country: ICountries) => (
+                      <MenuItem key={`country-${country.iso2Code}`} value={country.iso2Code}>
+                        {country.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
                 </Grid>
               </Grid>
               <TextField
@@ -334,6 +351,7 @@ export const AddressFormPageBase = withStyles(styles)(AddressForm);
 export const AddressFormPage = reduxify(
   (state: any, ownProps: any) => {
     const routerGoBack = getRouterHistoryBack(state, ownProps);
+    const countries: ICountries[] = getCounties(state, ownProps);
     const customerProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
     const addressesProps: IAddressesState = state.pageAddresses ? state.pageAddresses : null;
 
@@ -341,6 +359,7 @@ export const AddressFormPage = reduxify(
       {
         customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customer,
         currentAddress: addressesProps && addressesProps.data ? addressesProps.data.currentAddress : ownProps.currentAddress,
+        countries,
         routerGoBack,
       }
     );

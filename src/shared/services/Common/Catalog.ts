@@ -78,11 +78,7 @@ export class CatalogService {
         const products: any[] =  data.data[0].attributes.products.slice(0, 4);
         let counter = 0;
 
-        if (!data.included) {
-          throw new Error('No data available');
-        }
-
-        data.included.some((row: any) => {
+        data.included && data.included.some((row: any) => {
           if (row.type === 'abstract-product-prices') {
             const product: any = products.find((prod: any) => prod.abstract_sku === row.id);
             if (product && row.attributes.prices && row.attributes.prices.length) {
@@ -102,9 +98,8 @@ export class CatalogService {
           currency: data.data[0].attributes.currency || '',
           completion: data.data[0].attributes.completion,
         });
-        return data;
+        return products;
       } else {
-        console.error('Catalog suggestion', response.problem);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,

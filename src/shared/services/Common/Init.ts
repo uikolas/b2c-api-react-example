@@ -18,7 +18,13 @@ export class InitAppService {
     let anonymId: string;
     try {
       const nodeResponse: any = await api.get('react/getUniqueUser');
-      anonymId = nodeResponse.data;
+
+      if (nodeResponse.ok) {
+        anonymId = nodeResponse.data;
+      } else {
+        anonymId = 'anonym';
+      }
+
     } catch (err) {
       anonymId = 'anonym';
     }

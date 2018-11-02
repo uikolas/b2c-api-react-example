@@ -3,6 +3,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import {
   getPayloadForCreateCart,
   isAppInitiated,
+  getAnonymId,
 } from 'src/shared/reducers/Common/Init';
 import {
   getProduct, isPageProductStateFulfilled,
@@ -41,6 +42,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
   const wishLists = getWishlistsCollectionFromStore(state, ownProps);
   const isWishListsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
+  const anonymId = getAnonymId(state, ownProps);
 
   return ({
     location,
@@ -59,6 +61,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isWishListsFetched,
     isProductExist,
     isWishListLoading,
+    anonymId,
   });
 };
 
@@ -71,6 +74,6 @@ export const connect = reduxify(
     addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
     createCartAndAddItem: (payload: ICartCreatePayload, item: ICartAddItem) => dispatch(createCartAndAddItemAction(payload, item)),
     addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
-    addItemGuestCart: (item: ICartAddItem) => dispatch(addItemGuestCartAction(item)),
+    addItemGuestCart: (item: ICartAddItem, anonymId: string) => dispatch(addItemGuestCartAction(item, anonymId)),
   }),
 );

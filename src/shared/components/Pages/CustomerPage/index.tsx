@@ -27,9 +27,9 @@ import {
   pathCustomerProfilePage,
   pathWishListPage,
   pathWishListsPage,
-} from '../../../routes/contentRoutes';
+} from 'src/shared/routes/contentRoutes';
 import {ConnectedCustomerProfilePage} from "../CustomerProfilePage/index";
-import {getRouterLocation} from "../../../selectors/Common/router";
+import {getRouterLocation} from "src/shared/selectors/Common/router";
 
 
 interface CustomerPageProps extends WithStyles<typeof styles> {

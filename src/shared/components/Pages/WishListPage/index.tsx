@@ -21,7 +21,7 @@ import SaveIcon from '@material-ui/icons/Save';
 
 import { push } from 'react-router-redux';
 
-import {reduxify} from '../../../lib/redux-helper';
+import {reduxify} from 'src/shared/lib/redux-helper';
 import {
   getWishlistsAction,
   addWishlistAction,
@@ -29,10 +29,10 @@ import {
   updateWishlistAction,
   getDetailWishlistAction,
 } from '../../../actions/Pages/Wishlist';
-import {IWishlist} from "../../../interfaces/wishlist";
-import {WishlistState} from "../../../reducers/Pages/Wishlist";
+import {IWishlist} from "src/shared/interfaces/wishlist";
+import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
 import {styles} from './styles';
-import {pathCustomerPage} from "../../../routes/contentRoutes";
+import {pathCustomerPage} from "src/shared/routes/contentRoutes";
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -56,7 +56,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     name: '',
     updatedName: '',
     updatedList: '',
-  }
+  };
 
   public componentDidMount() {
     if (!this.props.isInitial) {
@@ -76,7 +76,9 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     });
   }
 
-  public addWishlist = () => {
+  public addWishlist = (e: any) => {
+    e.preventDefault();
+
     if (!this.state.name.trim()) {
       return;
     }
@@ -180,13 +182,13 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
 
         <Grid item xs={12} container justify="center">
           <Paper elevation={4} className={classes.paperContainer}>
-            <form noValidate autoComplete="off">
+            <form noValidate autoComplete="off" onSubmit={this.addWishlist}>
               <TextField
                 className={classes.newList}
                 value={this.state.name}
                 onChange={this.handleChangeName}
               />
-              <Button variant="contained" color="primary" onClick={this.addWishlist}>
+              <Button type="submit" variant="contained" color="primary">
                 Add new wishlist
               </Button>
             </form>

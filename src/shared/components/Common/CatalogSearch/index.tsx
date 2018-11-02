@@ -180,7 +180,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   };
 
   private renderSuggestionsContainer = (options: any) => {
-    const {categories, completion, classes} = this.props;
+    const {categories, completion, suggestions, classes} = this.props;
     let suggestQuery = options.query.trim();
 
     if (completion.length) {
@@ -229,6 +229,18 @@ export class CatalogSearchBase extends React.Component<Props, State> {
           </NavLink>
         );
       }
+    }
+
+    if (!suggestions.length) {
+      return (
+        <div  { ...options.containerProps }>
+          <Paper square>
+            <Typography paragraph variant="headline">
+              Nothing found...
+            </Typography>
+          </Paper>
+        </div>
+      );
     }
 
     return (

@@ -20,7 +20,7 @@ export const getCartsPendingStateAction = () => ({
   type: GET_CARTS + '_PENDING',
 });
 
-export const getCartsFulfilledStateAction = (payload: ICartDataResponse) => ({
+export const getCartsFulfilledStateAction = (payload: ICartDataResponse | null) => ({
   type: GET_CARTS + '_FULFILLED',
   payload,
 });
@@ -128,26 +128,26 @@ export const createCartAndAddItemAction = function(payloadCartCreate: ICartCreat
 };
 
 
-export const getGuestCartAction = function() {
+export const getGuestCartAction = function(anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.getGuestCart(dispatch);
+    CartService.getGuestCart(dispatch, anonymId);
   };
 };
 
-export const addItemGuestCartAction = function(payload: ICartAddItem) {
+export const addItemGuestCartAction = function(payload: ICartAddItem, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.guestCartAddItem(dispatch, payload);
+    CartService.guestCartAddItem(dispatch, payload, anonymId);
   };
 };
 
-export const removeItemGuestCartAction = function(cartUid: string, sku: string) {
+export const removeItemGuestCartAction = function(cartUid: string, sku: string, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.guestCartRemoveItem(dispatch, cartUid, sku);
+    CartService.guestCartRemoveItem(dispatch, cartUid, sku, anonymId);
   };
 };
 
-export const updateGuestCartAction = function(payload: ICartAddItem, cartId: TCartId) {
+export const updateGuestCartAction = function(payload: ICartAddItem, cartId: TCartId, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.guestCartUpdate(dispatch, payload, cartId);
+    CartService.guestCartUpdate(dispatch, payload, cartId, anonymId);
   };
 };

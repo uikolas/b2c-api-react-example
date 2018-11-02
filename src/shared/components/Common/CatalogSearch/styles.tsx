@@ -11,11 +11,10 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   container: {
-    position: 'relative',
     flexGrow: 1,
   },
   insideWrapper: {
-    padding: `0px ${theme.spacing.unit * 4}px ${theme.spacing.unit * 3}px`
+    padding: `0px 76px 80px`
   },
   suggestionsContainer: {
     display: 'none',
@@ -23,12 +22,12 @@ export const styles = (theme: Theme) => createStyles({
   suggestionsContainerOpen: {
     display: 'block',
     position: 'absolute',
-    zIndex: 5,
     marginTop: theme.spacing.unit,
-    left: '5%',
-    maxHeight: '60vh',
+    height: '813px',
     overflowY: 'auto',
-    width: '90%',
+    width: '588px',
+    borderRadius: '2px',
+    backgroundColor: '#ffffff',
   },
   suggestion: {
     display: 'block',
@@ -94,15 +93,18 @@ export const styles = (theme: Theme) => createStyles({
   imgWrapper: {
     display: 'flex',
     position: 'relative',
-    width: '80px',
-    height: '80px',
+    width: '100px',
+    height: '100px',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: theme.spacing.unit * 2,
+    borderRadius: '1.5px',
+
   },
   actionAreaOverlay: {
     position: "absolute",
     background: "rgba(0, 0, 0, 0.10)",
+    borderRadius: '1.5px',
     top: 0,
     left: 0,
     right: 0,

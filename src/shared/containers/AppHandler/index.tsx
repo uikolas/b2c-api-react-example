@@ -12,7 +12,7 @@ import { AppHeader } from 'src/shared/components/Common/AppHeader';
 import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAppLocale, isAppInitiated, TAppLocale } from 'src/shared/reducers/Common/Init';
+import { getAppLocale, isAppInitiated, getAnonymId, TAppLocale } from 'src/shared/reducers/Common/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
@@ -33,6 +33,7 @@ interface AppHandlerProps extends IComponent {
   getGuestCart: Function;
   isAppDataSet: boolean;
   isCustomerAuth: boolean;
+  anonymId: string;
 }
 
 interface AppHandlerState {
@@ -70,7 +71,7 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
       if (this.props.isCustomerAuth) {
         this.props.getCustomerCart();
       } else {
-        this.props.getGuestCart();
+        this.props.getGuestCart(this.props.anonymId);
       }
     }
   }
@@ -119,12 +120,14 @@ export const AppHandler = reduxify(
     const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);
+    const anonymId = getAnonymId(state, ownProps);
 
     return ({
       isLoading,
       locale,
       isAppDataSet,
       isCustomerAuth,
+      anonymId,
     });
   },
   (dispatch: Function) => ({
@@ -132,6 +135,6 @@ export const AppHandler = reduxify(
     initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
     setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
     getCustomerCart: () => dispatch(getCustomerCartsAction()),
-    getGuestCart: () => dispatch(getGuestCartAction()),
+    getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
   }),
 )(AppHandlerBase);

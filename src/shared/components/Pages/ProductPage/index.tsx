@@ -76,7 +76,7 @@ interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   wishLists: Array<IWishlist>;
   isProductExist: boolean;
   isWishListLoading: boolean;
-
+  anonymId: string;
 }
 
 interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -231,7 +231,7 @@ export class ProductPageBase extends React.Component<ProductPageProps, ProductPa
     } else if (this.props.isUserLoggedIn) {
       this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
     } else {
-      this.props.addItemGuestCart(item);
+      this.props.addItemGuestCart(item, this.props.anonymId);
     }
 
     this.setState((prevState: ProductPageState) => {

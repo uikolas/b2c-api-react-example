@@ -50,6 +50,7 @@ export const initialState: IInitState = {
     locale: null,
     timeZone: null,
     categoriesTree: [],
+    countries: [],
     anonymId: 'anonym',
   },
 };
@@ -146,6 +147,10 @@ export function getAppPriceMode(state: any, props: any): TAppPriceMode {
 
 export function getAppStore(state: any, props: any): TAppStore {
   return isAppInitiated(state, props) ? state.init.data.store : null;
+}
+
+export function getCounties(state: any, props: any): ICountries[] {
+  return isAppInitiated(state, props) ? state.init.data.countries : null;
 }
 
 export function getPayloadForCreateCart(state: any, props: any): ICartCreatePayload {

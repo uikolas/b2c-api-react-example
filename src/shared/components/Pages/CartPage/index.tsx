@@ -31,6 +31,7 @@ interface CartPageProps extends WithStyles<typeof styles> {
   totals: ICartTotals;
   cartId: TCartId;
   isUserLoggedIn: boolean;
+  anonymId: string;
   updateItemInCartAction: Function;
   cartDeleteItemAction: Function;
   removeItemGuestCartAction: Function;
@@ -55,12 +56,12 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   public handleDeleteItem = (sku: string) => (e: any) => {
     e.preventDefault();
 
-    const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn} = this.props;
+    const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn, anonymId} = this.props;
 
     if (isUserLoggedIn) {
       cartDeleteItemAction(cartId, sku);
     } else {
-      removeItemGuestCartAction(cartId, sku);
+      removeItemGuestCartAction(cartId, sku, anonymId);
     }
   };
 
@@ -81,14 +82,15 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
       updateItemInCartAction,
       updateGuestCartAction,
       cartId,
-      isUserLoggedIn
+      isUserLoggedIn,
+      anonymId,
     } = this.props;
     // If is selected 0, the cart item should be removed from the cart
     if (newQuantity <= 0) {
       if (isUserLoggedIn) {
         cartDeleteItemAction(cartId, this.state.currentItem.sku);
       } else {
-        removeItemGuestCartAction(cartId, this.state.currentItem.sku);
+        removeItemGuestCartAction(cartId, this.state.currentItem.sku, anonymId);
       }
     } else {
       if (isUserLoggedIn) {
@@ -100,6 +102,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         updateGuestCartAction(
           createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
           this.props.cartId,
+          anonymId,
         );
       }
     }
