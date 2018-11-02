@@ -9,5 +9,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.small,
     letterSpacing: -0.4,
     lineHeight: 1,
+    [theme.breakpoints.down('xs')]: {
+      textAlign: "center",
+      marginBottom: theme.spacing.unit * 2,
+    },
   },
 });

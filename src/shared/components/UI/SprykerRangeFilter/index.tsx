@@ -84,7 +84,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
   };
 
 
-  private validateInputs = (param: TRangeInputName, newValue: number): void => {
+  private validateInputs = (param: TRangeInputName, newValue: number): boolean => {
 
     if (param === 'min') {
       if (newValue < this.props.min) {
@@ -94,6 +94,8 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
             ...getSprykerRangeStateLessError(),
           }
         }));
+        return false;
+
       } else if (newValue > this.props.max) {
         this.setState((prevState: SprykerRangeState) => ({
           ...prevState,
@@ -101,6 +103,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
             ...getSprykerRangeStateMoreError(),
           }
         }));
+        return false;
 
       } else {
         this.setState((prevState: SprykerRangeState) => ({
@@ -109,6 +112,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
             ...getSprykerRangeStateNoError(),
           },
         }));
+        return true;
       }
     } else if (param === 'max') {
       if (newValue < this.props.min) {
@@ -118,6 +122,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
             ...getSprykerRangeStateLessError(),
           }
         }));
+        return false;
 
       } else if (newValue > this.props.max) {
         this.setState((prevState: SprykerRangeState) => ({
@@ -126,6 +131,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
             ...getSprykerRangeStateMoreError(),
           }
         }));
+        return false;
 
       } else {
         this.setState((prevState: SprykerRangeState) => ({
@@ -134,6 +140,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
             ...getSprykerRangeStateNoError(),
           },
         }));
+        return true;
       }
     }
   }

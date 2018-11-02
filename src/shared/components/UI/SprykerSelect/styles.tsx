@@ -4,6 +4,9 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   root: {
     paddingLeft: theme.spacing.unit * 6,
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: 0,
+    },
 
   },
   formControl: {

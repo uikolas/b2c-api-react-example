@@ -11,6 +11,10 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 6,
     marginBottom: theme.spacing.unit * 4,
+    justifyContent: "space-between",
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: "center",
+    },
   },
   sort: {
     display: "flex",
@@ -18,6 +22,9 @@ export const styles = (theme: Theme) => createStyles({
   sortsOuter: {
     display: "flex",
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
+    [theme.breakpoints.down('xs')]: {
+      justifyContent: "space-between",
+    },
   },
 });
