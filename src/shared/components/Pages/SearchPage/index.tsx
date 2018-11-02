@@ -327,10 +327,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
-    if (value === 'next' && this.props.pagination.currentPage === this.props.pagination.maxPage) {
-      return;
-    }
-
     const query: ISearchQuery = {
       q: this.props.searchTerm,
       currency: this.props.currency,
@@ -340,14 +336,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       page: value,
       ...this.state.activeFilters,
     };
-
-    if (value === 'prev') {
-      query.page = this.props.pagination.currentPage - 1;
-    }
-
-    if (value === 'next') {
-      query.page = this.props.pagination.currentPage + 1;
-    }
 
     if (this.props.currentCategory) {
       query.category = this.props.currentCategory;

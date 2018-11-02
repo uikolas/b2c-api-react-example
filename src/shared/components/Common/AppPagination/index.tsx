@@ -13,64 +13,122 @@ import {IPagination} from "./types";
 interface AppPaginationProps extends WithStyles<typeof styles> {
   pagination: IPagination;
   onChangeHandler: (event: ChangeEvent<{}>, value: any) => void;
-  maxActions?: number;
+  step?: number;
 }
 
 export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
   const {
     classes,
     pagination: {
-      currentPage,
-      maxPage,
+      currentPage : page,
+      maxPage: size,
     },
     onChangeHandler,
-    maxActions = 5,
+    step = 1,
   } = props;
 
-  if (!currentPage) {
+  if (!page) {
     return null;
   }
 
+  const numberClasses = {
+    root: classes.item,
+    selected: classes.selected,
+    label: classes.label,
+  };
   const pages: JSX.Element[] = [];
+  const isLast = (page === size);
+  const isFirst = (page === 1);
 
-  let start = currentPage <= maxActions ? 1 : currentPage - (maxActions - 1);
-  let end = maxPage > maxActions
-    ? currentPage <= maxActions ? maxActions : currentPage
-    : maxPage;
+  const add = (from: number, to: number) => {
+    for (let i = from; i < to; i++) {
+      pages.push(
+        <BottomNavigationAction
+          disabled={page === i}
+          showLabel
+          label={i}
+          value={i}
+          key={`page-${i}`}
+          classes={numberClasses}
+        />);
+    }
+  };
 
-  if (currentPage > 3 && maxPage > maxActions) {
-    start = currentPage - 2;
-  }
-
-  for (let i = start; i <= end; i++) {
+  const dots = (i: number) => {
     pages.push(
       <BottomNavigationAction
         showLabel
-        label={i}
-        value={i}
-        key={`page-${i}`}
-        classes={{
-          root: classes.item,
-          selected: classes.selected,
-          label: classes.label,
-        }}
-      />);
+        disabled
+        label={`...`}
+        value={'dots'}
+        key={`${i}-dots`}
+        classes={numberClasses}
+      />
+    );
   }
+
+  const last = () => {
+    dots(size);
+    pages.push(
+      <BottomNavigationAction
+        showLabel
+        label={size}
+        value={size}
+        key={`page-${size}`}
+        classes={numberClasses}
+      />
+     );
+  };
+
+  const first = () => {
+    pages.push(
+      <BottomNavigationAction
+        showLabel
+        label={1}
+        value={1}
+        key={`page-${1}`}
+        classes={numberClasses}
+      />
+    );
+    dots(1);
+  };
+
+  const build = () => {
+    if (size < step * 2 + 6) {
+      add(1, size + 1);
+    }
+    else if (page < step * 2 + 1) {
+      add(1, step * 2 + 4);
+      last();
+    }
+    else if (page > size - step * 2) {
+      first();
+      add(size - step * 2 - 2, size + 1);
+    }
+    else {
+      first();
+      add(page - step, page + step + 1);
+      last();
+    }
+  };
+
+  build();
 
   return (
     <Grid container justify="center" alignItems="center" className={ classes.root }>
       <Grid item xs>
         <BottomNavigation
-          value={currentPage}
+          value={page}
           onChange={ onChangeHandler }
           classes={{
             root: classes.container
           }}
         >
           <BottomNavigationAction
+            disabled = {isFirst}
             showLabel
             icon={ <ChevronLeft/> }
-            value="prev"
+            value={page - 1}
             key="prev"
             classes={{
               root: `${classes.item} ${classes.itemLeft}`,
@@ -79,9 +137,10 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
           />
           {pages}
           <BottomNavigationAction
+            disabled = {isLast}
             showLabel
             icon={ <ChevronRight/> }
-            value="next"
+            value={page + 1}
             key="next"
             classes={{
               root: `${classes.item} ${classes.itemRight}`,
