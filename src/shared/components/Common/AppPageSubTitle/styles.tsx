@@ -7,5 +7,8 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: "bold",
     letterSpacing: 0.6,
     marginBottom: theme.spacing.unit * 2,
+    [theme.breakpoints.down('sm')]: {
+      textAlign: "center"
+    },
   },
 });

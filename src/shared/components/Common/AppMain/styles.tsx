@@ -4,8 +4,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   layout: {
     ...theme.appContainerStyles,
-    marginTop: theme.appFixedDimensions.headerHeight,
-    minHeight: "100vh",
+    minHeight: "calc(100vh - 163px - 366px)",
   },
   container: {
     position: 'relative',

@@ -1,5 +1,6 @@
 import { IProductCard } from '../product';
 import { TAppCurrency } from '../../reducers/Common/Init';
+import {IPagination} from "src/shared/components/Common/AppPagination/types";
 
 export type TSpellingSuggestion = string;
 
@@ -24,14 +25,6 @@ export interface RangeFacets {
   docCount?: any;
 }
 
-export interface ISearchPagination {
-  numFound: number;
-  currentPage: number;
-  maxPage: number;
-  currentItemsPerPage: number;
-  validItemsPerPageOptions: number[];
-}
-
 export interface FlyoutSearch {
   suggestions?: Array<IProductCard>;
   categories?: Array<{[name: string]: string}>;
@@ -49,7 +42,7 @@ export interface ISearchPageData {
   currency?: TAppCurrency;
   sortParams?: Array<string>;
   currentSort?: string;
-  pagination: ISearchPagination;
+  pagination: IPagination;
   category: Array<FilterValue>;
   currentCategory: string;
   spellingSuggestion: TSpellingSuggestion | null;
