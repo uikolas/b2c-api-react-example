@@ -31,6 +31,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   suggestion: {
     display: 'block',
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
   },
   suggestionsList: {
     margin: 0,
