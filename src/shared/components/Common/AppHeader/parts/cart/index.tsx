@@ -3,13 +3,13 @@ import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Popover from '@material-ui/core/Popover/Popover';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { PopoverDrop } from 'src/shared/components/Common/AppHeader/parts/popoverDrop';
 import { CartDrop } from './parts/cartDrop';
+import { CartIcon } from './cart-icon';
 import { CartProps as Props, CartState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
@@ -61,7 +61,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
           } }
           color="primary"
         >
-          <ShoppingCartIcon/>
+          <CartIcon/>
         </Badge>
       </IconButton>
     );
