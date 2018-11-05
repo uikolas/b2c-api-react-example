@@ -11,4 +11,3 @@ export const PartnerIconDhl: React.SFC = () => (
     <path fill="#111" fillRule="evenodd" d={ path } opacity=".497"/>
   </svg>
 );
-

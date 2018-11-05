@@ -4,10 +4,12 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   headerStickyContainer: {
     position: 'relative',
-    zIndex: 5,
+    zIndex: 999,
+    pointerEvents: 'none',
   },
   header: {
     position: 'relative',
+    pointerEvents: 'all',
   },
   headerTop: {
     background: theme.palette.primary.main,
