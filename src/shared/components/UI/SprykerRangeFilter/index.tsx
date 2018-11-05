@@ -73,73 +73,105 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
 
   }
 
-  public handleChangeValues = ( event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>,
-                                param: TRangeInputName) => {
+  public handleChangeValues = async ( event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>,
+                                      param: TRangeInputName): Promise<any> => {
     const newValue = +event.target.value;
-    if (!newValue) {
+    if (!newValue || newValue > 999999999) {
       return;
     }
 
+    await this.validateInputs(param, newValue);
     this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: newValue});
+
   };
 
 
   private validateInputs = (param: TRangeInputName, newValue: number): boolean => {
-
     if (param === 'min') {
       if (newValue < this.props.min) {
-        this.setState((prevState: SprykerRangeState) => ({
-          ...prevState,
-          isMinError: {
-            ...getSprykerRangeStateLessError(),
+        this.setState((prevState: SprykerRangeState) => {
+          if (prevState.isMinError.isLessError) {
+            return;
           }
-        }));
+          return {
+            ...prevState,
+            isMinError: {
+              ...getSprykerRangeStateLessError(),
+            }
+          };
+        });
         return false;
 
       } else if (newValue > this.props.max) {
-        this.setState((prevState: SprykerRangeState) => ({
-          ...prevState,
-          isMinError: {
-            ...getSprykerRangeStateMoreError(),
+        this.setState((prevState: SprykerRangeState) => {
+          if (prevState.isMinError.isMoreError) {
+            return;
           }
-        }));
+          return {
+            ...prevState,
+            isMinError: {
+              ...getSprykerRangeStateMoreError(),
+            }
+          };
+        });
         return false;
 
       } else {
-        this.setState((prevState: SprykerRangeState) => ({
-          ...prevState,
-          isMinError: {
-            ...getSprykerRangeStateNoError(),
-          },
-        }));
+        this.setState((prevState: SprykerRangeState) => {
+          if (!prevState.isMinError.isMoreError && !prevState.isMinError.isLessError) {
+            return;
+          }
+          return {
+            ...prevState,
+            isMinError: {
+              ...getSprykerRangeStateNoError(),
+            },
+          };
+        });
         return true;
       }
     } else if (param === 'max') {
       if (newValue < this.props.min) {
-        this.setState((prevState: SprykerRangeState) => ({
-          ...prevState,
-          isMaxError: {
-            ...getSprykerRangeStateLessError(),
+        this.setState((prevState: SprykerRangeState) => {
+          if (prevState.isMaxError.isLessError) {
+            return;
           }
-        }));
+          return {
+            ...prevState,
+            isMaxError: {
+              ...getSprykerRangeStateLessError(),
+            }
+          };
+        });
         return false;
 
       } else if (newValue > this.props.max) {
-        this.setState((prevState: SprykerRangeState) => ({
-          ...prevState,
-          isMaxError: {
-            ...getSprykerRangeStateMoreError(),
+        this.setState((prevState: SprykerRangeState) => {
+          if (prevState.isMaxError.isMoreError) {
+            return;
           }
-        }));
+          return {
+            ...prevState,
+            isMaxError: {
+              ...getSprykerRangeStateMoreError(),
+            },
+          };
+
+        });
         return false;
 
       } else {
-        this.setState((prevState: SprykerRangeState) => ({
-          ...prevState,
-          isMaxError: {
-            ...getSprykerRangeStateNoError(),
-          },
-        }));
+        this.setState((prevState: SprykerRangeState) => {
+          if (!prevState.isMaxError.isMoreError && !prevState.isMaxError.isLessError) {
+            return;
+          }
+          return {
+            ...prevState,
+            isMaxError: {
+              ...getSprykerRangeStateNoError(),
+            },
+          };
+        });
         return true;
       }
     }

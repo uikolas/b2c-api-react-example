@@ -10,12 +10,15 @@ export const styles = (theme: Theme) => createStyles({
   },
   value: {
     height: "auto",
-    width: 50,
     lineHeight: "normal",
     letterSpacing: 0.5,
     fontSize: theme.appFixedDimensions.fontSize.small,
     padding: 0,
     fontWeight: 600,
+    [theme.breakpoints.down('sm')]: {
+      width: 100,
+    },
+
   },
   label: {
     position: 'absolute',

@@ -6,6 +6,8 @@ import { styles } from './styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 import {IRangeInputError} from "src/shared/components/UI/SprykerRangeFilter/index";
 
 interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
@@ -59,7 +61,10 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
           <TextField
             id={ `${attributeName}` }
             error={isError}
-            InputProps={{disableUnderline: true, classes: {input: classes.value, error: classes.error}}}
+            InputProps={{
+              disableUnderline: false,
+              classes: {input: classes.value, error: classes.error},
+            }}
             InputLabelProps={{
               FormLabelClasses: {
                 root: classes.label
