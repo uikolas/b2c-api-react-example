@@ -3,11 +3,11 @@ import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import Popover from '@material-ui/core/Popover';
-import Person from '@material-ui/icons/Person';
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { PopoverDrop } from '../popoverDrop';
+import { PersonIcon } from './person-icon';
 import { UserDrop } from './userDrop';
 import { UserProps as Props, UserState as State } from './types';
 import { connect } from './connect';
@@ -52,7 +52,7 @@ export class UserComponent extends React.PureComponent<Props, State> {
     return (
       <div>
         <IconButton aria-label="person" onClick={ this.openPopover }>
-          <Person/>
+          <PersonIcon/>
         </IconButton>
 
         <Popover
