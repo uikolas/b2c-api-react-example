@@ -2,16 +2,15 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { ICartItem } from 'src/shared/reducers/Common/Cart';
@@ -125,45 +124,41 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     }
 
     const rows = items.map((item: any) => (
-      <TableRow
-        hover
+      <ListItem
         key={ item.sku }
+        disableGutters
+        className={ classes.listItem }
       >
-        <TableCell component="th" scope="row">{ item.name }</TableCell>
-        <TableCell>
-          <img src={ item.image } height={ 60 }/>
-        </TableCell>
-        <TableCell><AppPrice value={ item.calculations.sumPrice }/></TableCell>
-        <TableCell>
+        <div className={ classes.imgWrapper }>
+          <img src={ item.image } height={ 100 }/>
+        </div>
+        <div className={classes.itemWrapper}>
+          <div>{ item.name }</div>
+          <div>
+            <span>Remove</span>
+            <IconButton onClick={ this.handleDeleteItem(item.sku) }>
+              <DeleteIcon className={ classes.delIcon }/>
+            </IconButton>
+          </div>
+        </div>
+        <div>
           <span>{ item.quantity }</span>
-          <IconButton
-            onClick={ this.openMenu(item) }
-          >
-            <MoreVertIcon/>
-          </IconButton>
-        </TableCell>
-        <TableCell numeric>
-          <IconButton onClick={ this.handleDeleteItem(item.sku) }>
-            <DeleteIcon className={ classes.delIcon }/>
-          </IconButton>
-        </TableCell>
-      </TableRow>
+        </div>
+      </ListItem>
     ));
 
     if (!items || !items.length) {
       return (
         <AppMain>
-          <Grid container>
-            <Grid item xs={ 12 }>
-              <Typography
-                variant="display2"
-                noWrap
-                align="center"
-                className={ classes.title }
-              >
-                Empty cart, go shopping
-              </Typography>
-            </Grid>
+          <Grid item xs={ 12 }>
+            <Typography
+              variant="display2"
+              noWrap
+              align="center"
+              className={ classes.title }
+            >
+              Empty cart, go shopping
+            </Typography>
           </Grid>
         </AppMain>
       );
@@ -171,71 +166,83 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
     return (
       <AppMain>
-        <Grid container>
-          <Grid item xs={ 12 }>
-            <Typography
-              variant="headline"
-              noWrap
-              align="center"
-              className={ classes.title }
-            >
-              { `Cart has ${items.length} items` }
-            </Typography>
-          </Grid>
-          <Grid item xs={ 12 }>
+        <Grid item xs={ 8 }>
+          <Typography
+            variant="headline"
+            noWrap
+            align="left"
+            className={ classes.title }
+          >
+            { `Cart has ${items.length} items` }
+          </Typography>
+          <div className={ classes.listWrapper }>
+            <List>
+              { rows }
+            </List>
+          </div>
+        </Grid>
 
-          </Grid>
-          <Grid
-            item xs={ 9 }
-            container
-            alignItems="center"
+        <Grid
+          item xs={ 4 }
+          container
+          direction="column"
+          justify="space-evenly"
+          alignItems="center"
+        >
+          <Typography
+            variant="headline"
+            noWrap
+            align="left"
+            className={ classes.title }
           >
-            <Paper className={ classes.root }>
-              <div className={ classes.tableWrapper }>
-                <Table className={ classes.table }>
-                  <TableBody>
-                    { rows }
-                  </TableBody>
-                </Table>
-              </div>
-            </Paper>
-          </Grid>
-          <Grid
-            item xs={ 3 }
-            container
-            direction="column"
-            justify="space-evenly"
-            alignItems="center"
-          >
-            <Typography variant="body2">SubTotal: { totals && <AppPrice value={ totals.subtotal }/> }</Typography>
-            <Typography variant="body1">TaxTotal: { totals && <AppPrice value={ totals.taxTotal }/> }</Typography>
-            <Typography variant="body2">Discount: { `- ${totals.discountTotal}` }</Typography>
-            <Typography variant="subheading" color="primary">GrandTotal: { totals &&
-            <AppPrice value={ totals.grandTotal }/> }</Typography>
-          </Grid>
+            { 'Order summary' }
+          </Typography>
+          <div className={classes.totalMsg}>
+            <div>Subtotal</div>
+            <div>{ totals && <AppPrice value={ totals.subtotal }/> }</div>
+          </div>
+          <div className={classes.totalMsg}>
+            <div>Tax</div>
+            <div>{ totals && <AppPrice value={ totals.taxTotal }/> }</div>
+          </div>
+          <div className={classes.totalMsg}>
+            <div>Discount</div>
+            <div>{ totals && <AppPrice value={ totals.discountTotal }/> }</div>
+          </div>
+
+          <Divider/>
+
+          <div className={classes.totalMsg}>
+            <div>Grand Total</div>
+            <div>{ totals && <AppPrice value={ totals.grandTotal }/> }</div>
+          </div>
+
+          <Divider/>
+
           <Grid item xs={ 12 } container justify="center" className={ classes.footer }>
             <NavLink to={ pathSearchPage }>
-              <SprykerButton title="Back to search result"/>
+              <SprykerButton title="continue to checkout"/>
             </NavLink>
           </Grid>
 
-          <Menu
-            anchorEl={ this.state.anchorEl }
-            open={ !!this.state.anchorEl }
-            onClose={ this.closeMenu }
-          >
-            {
-              quantities.map((i: number) => (
-                <MenuItem
-                  value={ i }
-                  key={ `qty-${i}` }
-                  selected={ this.state.currentItem && i === this.state.currentItem.quantity }
-                  onClick={ this.setItemQty }
-                >{ i }</MenuItem>
-              ))
-            }
-          </Menu>
         </Grid>
+
+        <Menu
+          anchorEl={ this.state.anchorEl }
+          open={ !!this.state.anchorEl }
+          onClose={ this.closeMenu }
+        >
+          {
+            quantities.map((i: number) => (
+              <MenuItem
+                value={ i }
+                key={ `qty-${i}` }
+                selected={ this.state.currentItem && i === this.state.currentItem.quantity }
+                onClick={ this.setItemQty }
+              >{ i }</MenuItem>
+            ))
+          }
+        </Menu>
       </AppMain>
     );
   }
