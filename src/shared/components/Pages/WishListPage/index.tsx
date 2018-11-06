@@ -28,7 +28,7 @@ import {
   deleteWishlistAction,
   updateWishlistAction,
   getDetailWishlistAction,
-} from '../../../actions/Pages/Wishlist';
+} from 'src/shared/actions/Pages/Wishlist';
 import {IWishlist} from "src/shared/interfaces/wishlist";
 import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
 import {styles} from './styles';

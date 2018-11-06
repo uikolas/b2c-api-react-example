@@ -1,5 +1,6 @@
 import { ICartDataResponse } from '../../interfaces/cart';
 import { parseImageSets } from '../product/imageSetsParser';
+import {string} from "prop-types";
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
   return {
@@ -30,8 +31,19 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
         result[row.id].calculations = row.attributes.calculations;
         result[row.id].groupKey = row.attributes.groupKey;
       } else {
-        if (row.type === 'concrete-products' && !result[row.id].name) {
+        if (row.type === 'concrete-products') {
           result[row.id].name = row.attributes.name;
+
+          if (Array.isArray(row.attributes.superAttributesDefinition)) {
+            result[row.id].superAttributes = [];
+            Object.keys(row.attributes.attributes).forEach((attribute: string) => {
+              if (row.attributes.superAttributesDefinition.includes(attribute)) {
+                result[row.id].superAttributes.push({
+                  [attribute]: row.attributes.attributes[attribute],
+                });
+              }
+            });
+          }
         } else {
           if (row.type === 'concrete-product-availabilities' && !result[row.id].availability) {
             result[row.id].availability = row.attributes.availability;
@@ -65,6 +77,17 @@ export const parseGuestCartResponse = (data: any): ICartDataResponse => {
       result[row.id].image = images[0].externalUrlSmall ? images[0].externalUrlSmall : null;
     } else if (row.type === 'concrete-products') {
       result[row.id].name = row.attributes.name;
+
+      if (Array.isArray(row.attributes.superAttributesDefinition)) {
+        result[row.id].superAttributes = [];
+        Object.keys(row.attributes.attributes).forEach((attribute: string) => {
+          if (row.attributes.superAttributesDefinition.includes(attribute)) {
+            result[row.id].superAttributes.push({
+              [attribute]: row.attributes.attributes[attribute],
+            });
+          }
+        });
+      }
     } else if (row.type === 'concrete-product-availabilities') {
       result[row.id].availability = row.attributes.availability;
       result[row.id].availableQuantity = row.attributes.quantity;

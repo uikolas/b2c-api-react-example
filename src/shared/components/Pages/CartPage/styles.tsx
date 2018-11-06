@@ -7,18 +7,15 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 2,
   },
-  root: {
+  fullWidth: {
     width: '100%',
-    margin: '2%',
   },
-  listWrapper: {},
   listItem: {
-   // display: 'flex',
-    alignItems: "center",
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
   },
   imgWrapper: {
-    width: '129px',
-    height: '129px',
+    width: '20%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -27,23 +24,35 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
   },
   itemWrapper: {
-    width: '282px',
-    marginRight: '95px',
+    width: '40%',
   },
   itemName: {
     fontSize: theme.appFixedDimensions.fontSize.large,
      color: '#111111',
   },
-  totalMsg: {
-    display: 'flex',
-    justifyContent: 'space-between'
+  itemAttr: {
+    letterSpacing: '0.4px',
+    color: '#787878',
   },
-  delIcon: {
-    fontSize: 32,
-    color: theme.palette.secondary.light,
+  quantityForm: {
+    width: '20%',
+    textAlign: 'right',
+    paddingRight: theme.spacing.unit,
+  },
+  priceWrapper: {
+    width: '20%',
+    textAlign: 'right',
+    paddingRight: theme.spacing.unit * 3,
+
+  },
+  totalMsg: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: theme.spacing.unit * 3
   },
   footer: {
-    margin: theme.spacing.unit * 3,
+    margin: `${theme.spacing.unit * 3}px 0`,
   },
   actionAreaOverlay: {
     position: "absolute",

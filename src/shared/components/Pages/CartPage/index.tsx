@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import debounce from "lodash/debounce";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import TextField from '@material-ui/core/TextField';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -11,10 +14,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from '@material-ui/icons/Clear';
 
 import { ICartItem } from 'src/shared/reducers/Common/Cart';
-import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { ICartTotals, TCartId } from 'src/shared/interfaces/cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
 import { pathSearchPage } from 'src/shared/routes/contentRoutes';
@@ -38,19 +40,34 @@ interface CartPageProps extends WithStyles<typeof styles> {
 }
 
 interface CartPageState {
-  anchorEl: HTMLElement | null;
-  currentItem: ICartItem | null;
+
 }
 
 export const pageTitle = 'Search results for ';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
-  private listRef: React.RefObject<HTMLDivElement> = React.createRef()
+  private listRef: React.RefObject<HTMLDivElement> = React.createRef();
+
+  private heightListItem: number = 129;
 
   public state: CartPageState = {
-    anchorEl: null,
-    currentItem: null,
+
+  };
+
+  public componentDidMount() {
+    if (this.listRef && this.listRef.current) {
+      window.addEventListener('resize', this.setListItemHeight);
+      this.setListItemHeight();
+    }
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('resize', this.setListItemHeight);
+  }
+
+  private setListItemHeight = () => {
+    this.heightListItem = this.listRef.current.offsetWidth * 0.2;
   };
 
   public handleDeleteItem = (sku: string) => (e: any) => {
@@ -65,17 +82,8 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     }
   };
 
-  public openMenu = (item: ICartItem) => (e: any) => {
-    this.setState({anchorEl: e.currentTarget, currentItem: item});
-  };
-
-  public closeMenu = () => {
-    this.setState({anchorEl: null, currentItem: null});
-  };
-
-  // Update quantity of the item
-  public setItemQty = (e: any) => {
-    const newQuantity = e.target.value;
+  public handleChangeQty = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value }: any = event.target;
     const {
       cartDeleteItemAction,
       removeItemGuestCartAction,
@@ -86,68 +94,30 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
       anonymId,
     } = this.props;
     // If is selected 0, the cart item should be removed from the cart
-    if (newQuantity <= 0) {
+    if (value <= 0) {
       if (isUserLoggedIn) {
-        cartDeleteItemAction(cartId, this.state.currentItem.sku);
+        cartDeleteItemAction(cartId, name);
       } else {
-        removeItemGuestCartAction(cartId, this.state.currentItem.sku, anonymId);
+        removeItemGuestCartAction(cartId, name, anonymId);
       }
     } else {
       if (isUserLoggedIn) {
         updateItemInCartAction(
-          createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
+          createCartItemAddToCart(name, value),
           this.props.cartId,
         );
       } else {
         updateGuestCartAction(
-          createCartItemAddToCart(this.state.currentItem.sku, newQuantity),
+          createCartItemAddToCart(name, value),
           this.props.cartId,
           anonymId,
         );
       }
     }
-
-    this.closeMenu();
   };
 
   public render() {
     const {classes, items, totals} = this.props;
-
-    const quantities: number[] = [];
-
-    if (this.state.currentItem) {
-      const {availableQuantity} = this.state.currentItem;
-      const maxItems = availableQuantity && availableQuantity < 10 ? availableQuantity : 10;
-
-      for (let i = 0; i <= maxItems; i++) {
-        quantities.push(i);
-      }
-    }
-
-    const rows = items.map((item: any) => (
-      <ListItem
-        key={ item.sku }
-        disableGutters
-        className={ classes.listItem }
-      >
-        <div className={ classes.imgWrapper } style={{height: this.listRef.current.offsetWidth}}>
-          <img src={ item.image } height={ 100 } />
-          <div className={ classes.actionAreaOverlay } />
-        </div>
-        <div className={classes.itemWrapper}>
-          <div className={classes.itemName}>{ item.name }</div>
-          <div>
-            <span>Remove</span>
-            <IconButton onClick={ this.handleDeleteItem(item.sku) }>
-              <DeleteIcon className={ classes.delIcon }/>
-            </IconButton>
-          </div>
-        </div>
-        <div>
-          <span>{ item.quantity }</span>
-        </div>
-      </ListItem>
-    ));
 
     if (!items || !items.length) {
       return (
@@ -161,89 +131,153 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             >
               Empty cart, go shopping
             </Typography>
+            <div className={ classes.fullWidth } ref={this.listRef} />
           </Grid>
         </AppMain>
       );
     }
 
+    const rows = items.map((item: any) => {
+      const quantities: number[] = [];
+      const maxItems = item.availableQuantity < 10 ? item.availableQuantity : 10;
+
+      for (let i = 0; i <= maxItems; i++) {
+        quantities.push(i);
+      }
+
+      return (
+        <ListItem
+          key={ item.sku }
+          disableGutters
+          divider
+          className={ classes.listItem }
+        >
+          <div className={ classes.imgWrapper } style={{ height: this.heightListItem }}>
+            <img src={ item.image } height={ this.heightListItem * 0.82 } />
+            <div className={ classes.actionAreaOverlay } />
+          </div>
+
+          <div className={classes.itemWrapper} style={{ height: this.heightListItem }}>
+            <div className={classes.itemName}>{ item.name }</div>
+            <div>
+              <span className={classes.itemAttr}>Remove</span>
+              <IconButton onClick={ this.handleDeleteItem(item.sku) }>
+                <DeleteIcon />
+              </IconButton>
+            </div>
+          </div>
+
+          <form
+            noValidate
+            autoComplete="off"
+            className={classes.quantityForm}
+            style={{ height: this.heightListItem }}
+          >
+            <TextField
+              required
+              select
+              name={item.sku}
+              value={item.quantity}
+              onChange={this.handleChangeQty}
+            >
+              {
+                quantities.map((i: number) => (
+                  <MenuItem
+                    value={ i }
+                    key={ `qty-${item.sku}-${i}` }
+                  >{ i }</MenuItem>
+                ))
+              }
+            </TextField>
+          </form>
+
+          <div className={classes.priceWrapper} style={{ height: this.heightListItem }}>
+            <AppPrice value={ item.calculations.sumPriceToPayAggregation }/>
+            {
+              item.quantity > 1
+                ? <div>
+                  <span>(</span>
+                  <AppPrice value={ item.calculations.unitPriceToPayAggregation }/>
+                  <span> each)</span>
+                </div>
+                : null
+            }
+          </div>
+        </ListItem>
+      );
+    });
+
     return (
       <AppMain>
-        <Grid item xs={ 8 }>
-          <Typography
-            variant="headline"
-            noWrap
-            align="left"
-          >
-            { `Cart has ${items.length} items` }
-          </Typography>
-          <div className={ classes.listWrapper } ref={this.listRef}>
-            <List>
-              { rows }
-            </List>
-          </div>
-        </Grid>
+        <Grid container item xs={ 12 } spacing={ 24 }>
+          <Grid item xs={ 8 }>
+            <Typography
+              variant="headline"
+              noWrap
+              align="left"
+            >
+              { `Cart has ${items.length} items` }
+            </Typography>
+            <div className={ classes.fullWidth } ref={this.listRef}>
+              <List>
+                <ListItem
+                  disableGutters
+                  divider
+                  className={ classes.listItem }
+                >
+                  <div>Item</div>
 
-        <Grid
-          item xs={ 4 }
-          container
-          direction="column"
-          justify="space-evenly"
-          alignItems="center"
-        >
-          <Typography
-            variant="headline"
-            noWrap
-            align="left"
-            className={ classes.title }
-          >
-            { 'Order summary' }
-          </Typography>
-          <div className={classes.totalMsg}>
-            <div>Subtotal</div>
-            <div>{ totals && <AppPrice value={ totals.subtotal }/> }</div>
-          </div>
-          <div className={classes.totalMsg}>
-            <div>Tax</div>
-            <div>{ totals && <AppPrice value={ totals.taxTotal }/> }</div>
-          </div>
-          <div className={classes.totalMsg}>
-            <div>Discount</div>
-            <div>{ totals && <AppPrice value={ totals.discountTotal }/> }</div>
-          </div>
+                  <div className={classes.itemWrapper} />
 
-          <Divider/>
+                  <div className={classes.quantityForm}>Quantity</div>
 
-          <div className={classes.totalMsg}>
-            <div>Grand Total</div>
-            <div>{ totals && <AppPrice value={ totals.grandTotal }/> }</div>
-          </div>
-
-          <Divider/>
-
-          <Grid item xs={ 12 } container justify="center" className={ classes.footer }>
-            <NavLink to={ pathSearchPage }>
-              <SprykerButton title="continue to checkout"/>
-            </NavLink>
+                  <div className={classes.priceWrapper}>Price</div>
+                </ListItem>
+                { rows }
+              </List>
+            </div>
           </Grid>
 
-        </Grid>
+          <Grid item xs={ 4 }>
+            <Typography
+              variant="headline"
+              noWrap
+              align="left"
+            >
+              { 'Order summary' }
+            </Typography>
+            <Divider className={ classes.fullWidth } />
+            <div className={classes.totalMsg}>
+              <div>Subtotal</div>
+              <div>{ totals && <AppPrice value={ totals.subtotal }/> }</div>
+            </div>
+            <div className={classes.totalMsg}>
+              <div>Tax</div>
+              <div>{ totals && <AppPrice value={ totals.taxTotal }/> }</div>
+            </div>
+            <div className={classes.totalMsg}>
+              <div>Discount</div>
+              <div>{ totals && <AppPrice value={ totals.discountTotal }/> }</div>
+            </div>
 
-        <Menu
-          anchorEl={ this.state.anchorEl }
-          open={ !!this.state.anchorEl }
-          onClose={ this.closeMenu }
-        >
-          {
-            quantities.map((i: number) => (
-              <MenuItem
-                value={ i }
-                key={ `qty-${i}` }
-                selected={ this.state.currentItem && i === this.state.currentItem.quantity }
-                onClick={ this.setItemQty }
-              >{ i }</MenuItem>
-            ))
-          }
-        </Menu>
+            <Divider className={ classes.fullWidth } />
+
+            <div className={classes.totalMsg}>
+              <div>Grand Total</div>
+              <div>{ totals && <AppPrice value={ totals.grandTotal }/> }</div>
+            </div>
+
+            <Divider className={ classes.fullWidth } />
+
+            <Grid item xs={ 12 } container justify="center" className={ classes.footer }>
+              <NavLink to={ pathSearchPage } className={ classes.fullWidth }>
+                <Button variant="contained" color="primary" fullWidth>
+                  continue to checkout
+                </Button>
+              </NavLink>
+            </Grid>
+          </Grid>
+        </Grid>
       </AppMain>
     );
   }
