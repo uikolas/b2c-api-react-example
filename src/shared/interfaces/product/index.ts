@@ -24,7 +24,7 @@ export type TProductAvailability = boolean;
 export type TProductAttributes = object;
 export type TProductImageSRC = string;
 export type TProductAttributeMap = object;
-export type TProductLabel = 'sale' | 'new';
+export type TProductLabelPosition = number;
 
 export const priceTypeNameDefault = 'DEFAULT';
 export type TPriceTypeNameDefault = 'DEFAULT';
@@ -60,6 +60,7 @@ export interface IProductCard {
   abstract_sku?: TProductSKU;
   abstractSku?: TProductSKU;
   prices?: Array<IProductPricesItem>;
+
 }
 
 export interface IProductAttributeMap {
@@ -102,6 +103,7 @@ export interface IProductDataParsed {
 }
 
 export interface IProductLabel {
-  type: TProductLabel;
+  type: string;
   text: string;
+  position: TProductLabelPosition;
 }

@@ -7,7 +7,10 @@ import {
 import {
   IReduxState,
 } from '../../../typings/app';
-import {ISearchPageData, TSpellingSuggestion} from "../../interfaces/searchPageData";
+import {
+  IAvailableLabelsCollection, IProductsLabeledCollection, ISearchPageData,
+  TSpellingSuggestion
+} from "../../interfaces/searchPageData";
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
@@ -37,6 +40,8 @@ export const initialState: SearchState = {
     },
     category: [],
     spellingSuggestion: null,
+    productsLabeled: null,
+    availableLabels: null,
   },
 };
 
@@ -80,6 +85,8 @@ export const pageSearch = produce<SearchState>(
         draft.data.pagination = action.pagination;
         draft.data.currentCategory = action.currentCategory;
         draft.data.spellingSuggestion = action.spellingSuggestion || null;
+        draft.data.productsLabeled = action.productsLabeled || null;
+        draft.data.availableLabels = action.availableLabels || null;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -130,6 +137,22 @@ export function getSpellingSuggestion(state: any, props: any): TSpellingSuggesti
   return (
     state.pageSearch.data && state.pageSearch.data.spellingSuggestion
       ? state.pageSearch.data.spellingSuggestion
+      : null
+  );
+}
+
+export function getProductsLabeled(state: any, props: any): IProductsLabeledCollection | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.productsLabeled
+      ? state.pageSearch.data.productsLabeled
+      : null
+  );
+}
+
+export function getAvailableLabels(state: any, props: any): IAvailableLabelsCollection | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.availableLabels
+      ? state.pageSearch.data.availableLabels
       : null
   );
 }

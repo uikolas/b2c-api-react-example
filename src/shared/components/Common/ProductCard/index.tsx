@@ -8,12 +8,11 @@ import Typography from '@material-ui/core/Typography';
 
 import {
   IProductCard,
-  IProductCardImages,
+  IProductLabel,
   IProductPricesItem,
   priceTypeNameDefault,
   priceTypeNameOriginal,
   TProductCurrency,
-  TProductLabel,
   TProductName,
   TProductSKU,
 } from '../../../interfaces/product';
@@ -25,11 +24,9 @@ import {getOneProductImage} from "src/shared/helpers/product/imageSetsParser";
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
   onSelectProduct: Function;
   currency: TProductCurrency;
-  images: Array<IProductCardImages>;
   name: TProductName;
-  prices: Array<IProductPricesItem>;
   sku: TProductSKU;
-  label: TProductLabel;
+  label: IProductLabel | null;
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
@@ -57,7 +54,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
 
   const handleProductClick = (e: any) => {
     e.preventDefault();
-    props.onSelectProduct(sku, name);
+    props.onSelectProduct(sku);
   };
 
   return (

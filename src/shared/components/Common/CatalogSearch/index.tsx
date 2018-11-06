@@ -68,7 +68,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     e.preventDefault();
     const { value } = this.state;
     if (!this.props.isLoading && value.length > 2) {
-      this.props.sendSearchAction({q: this.state.value, currency: this.props.currency, include: ''});
+      this.props.sendSearchAction({q: this.state.value, currency: this.props.currency});
 
       this.props.push(pathSearchPage);
     }
@@ -77,14 +77,14 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   private handleSearchCompletion = (e: any) => {
     const query = e.currentTarget.dataset.query.trim();
     this.setState({value: query});
-    this.props.sendSearchAction({q: query, currency: this.props.currency, include: ''});
+    this.props.sendSearchAction({q: query, currency: this.props.currency});
     this.props.clearSuggestions(query);
   };
 
   private handleCategoryLink = (e: any) => {
     const { name, nodeid } = e.currentTarget.dataset;
 
-    this.props.sendSearchAction({q: '', currency: this.props.currency, category: nodeid, include: ''});
+    this.props.sendSearchAction({q: '', currency: this.props.currency, category: nodeid});
     this.props.clearSuggestions(name);
     this.setState({value: ''});
   };
