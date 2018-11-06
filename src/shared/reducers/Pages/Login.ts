@@ -52,10 +52,6 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
     case `${PAGES_CUSTOMER_REGISTER}_FULFILLED`:
       return {
         ...state,
-        data: {
-          ...state.data,
-          isAuth: false,
-        },
         ...getReducerPartFulfilled(),
       };
     case `${PAGES_CUSTOMER_REGISTER}_REJECTED`:
