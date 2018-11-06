@@ -3,7 +3,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import {IProductCard, TProductCurrency} from "src/shared/interfaces/product/index";
+import {IProductCard, IProductLabel, TProductCurrency} from "src/shared/interfaces/product/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {ProductCard} from "src/shared/components/Common/ProductCard/index";
 import {AppPageHeadline} from "src/shared/components/Common/AppPageHeadline/index";
@@ -43,8 +43,11 @@ export const ProductsListBase: React.SFC<ProductsListProps> = (props) => {
     <Grid container spacing={sprykerTheme.appFixedDimensions.gridSpacing} className={classes.root} >
       { isProductsExist
         ? products.map((product: IProductCard) => {
-            const labelsIdArr = productsLabeled[product.abstract_sku] || productsLabeled[product.abstractSku] || null;
-            const label = getProductLabel(labelsIdArr, availableLabels);
+            let label: IProductLabel | null = null;
+            if (productsLabeled) {
+              const labelsIdArr = productsLabeled[product.abstract_sku] || productsLabeled[product.abstractSku] || null;
+              label = getProductLabel(labelsIdArr, availableLabels);
+            }
 
             return (
               <Grid item xs={12} sm={6} md={4} key={product.abstract_sku || product.abstractSku} >

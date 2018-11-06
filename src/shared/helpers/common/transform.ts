@@ -43,3 +43,10 @@ export const rangeFilterValueToFront = (value: number, type: TRangeType): number
   }
   return 0;
 };
+
+export const rangeFilterValueToBack = (value: number): number => {
+  if(!value) {
+    return 0;
+  }
+  return value* 100;
+};

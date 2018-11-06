@@ -366,7 +366,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({isReadyToNewRequest: true});
   }
 
-  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
+  public onAfterChangeRangeFilterHandler = (value: number[]): void => {
     this.setState({isReadyToNewRequest: true});
   }
 
@@ -496,7 +496,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   activeValuesRanges={this.state.activeRangeFilters}
                   updateRangeHandler={this.updateRangeFilters}
                   onCloseFilterHandler={this.onCloseFilterHandler}
-                  onBlurRangeFilter={this.onBlurRangeFiltersHandler}
+                  onAfterChangeRangeFilter={this.onAfterChangeRangeFilterHandler}
                   isFiltersReset={this.state.isFiltersReset}
                   isProductsExist={isProductsExist}
                 />
