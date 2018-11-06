@@ -13,7 +13,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   listWrapper: {},
   listItem: {
-    display: 'flex',
+   // display: 'flex',
+    alignItems: "center",
   },
   imgWrapper: {
     width: '129px',

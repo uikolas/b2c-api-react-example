@@ -46,6 +46,7 @@ export const pageTitle = 'Search results for ';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
+  private listRef: React.RefObject<HTMLDivElement> = React.createRef()
 
   public state: CartPageState = {
     anchorEl: null,
@@ -129,7 +130,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
         disableGutters
         className={ classes.listItem }
       >
-        <div className={ classes.imgWrapper }>
+        <div className={ classes.imgWrapper } style={{height: this.listRef.current.offsetWidth}}>
           <img src={ item.image } height={ 100 } />
           <div className={ classes.actionAreaOverlay } />
         </div>
@@ -175,7 +176,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           >
             { `Cart has ${items.length} items` }
           </Typography>
-          <div className={ classes.listWrapper }>
+          <div className={ classes.listWrapper } ref={this.listRef}>
             <List>
               { rows }
             </List>
