@@ -46,7 +46,7 @@ export const parseGetOrderDetailsResponse = (data: IOrderDetailsResponse): IOrde
       acc[item.sku].sku = item.sku;
       acc[item.sku].quantity = prev.quantity + item.quantity;
       acc[item.sku].name = item.name;
-      acc[item.sku].sumPrice = prev.sumPrice + item.sumPrice;
+      acc[item.sku].sumPrice = prev.sumPrice;
       acc[item.sku].sumPriceToPayAggregation = prev.sumPriceToPayAggregation + item.sumPriceToPayAggregation;
 
     } else {
