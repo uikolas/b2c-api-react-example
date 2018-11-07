@@ -23,8 +23,6 @@ import {
   filterTypeRange,
   IFilterItemToDelete,
   ISearchQuery,
-  rangeMaxType,
-  rangeMinType,
   RangeType,
   TActiveFilters,
   TActiveRangeFilters,
@@ -33,7 +31,6 @@ import {
 } from "./types";
 import {TRangeInputName} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {ActiveFiltersList} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/index";
-import {resetFilterSuccessText} from "src/shared/constants/messages/search";
 import {validateRangeInputsError} from "src/shared/constants/messages/errors";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {SortPanel} from "src/shared/components/Pages/SearchPage/SortPanel/index";
@@ -171,7 +168,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
-      include: '',
       ipp: this.state.itemsPerPage,
       category: categoryId,
       ...this.state.activeFilters,
@@ -293,7 +289,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
-      include: '',
       ipp: this.state.itemsPerPage,
       ...this.state.activeFilters,
     };
@@ -331,7 +326,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       q: this.props.searchTerm,
       currency: this.props.currency,
       sort: this.state.sort,
-      include: '',
       ipp: this.state.itemsPerPage,
       page: value,
       ...this.state.activeFilters,
@@ -349,7 +343,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.props.dispatch(sendSearchAction(query));
   };
 
-  public onSelectProductHandler = (sku: string, name: string) => {
+  public onSelectProductHandler = (sku: string) => {
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
@@ -372,7 +366,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     this.setState({isReadyToNewRequest: true});
   }
 
-  public onBlurRangeFiltersHandler = (event: React.ChangeEvent<{}>): void => {
+  public onAfterChangeRangeFilterHandler = (value: number[]): void => {
     this.setState({isReadyToNewRequest: true});
   }
 
@@ -434,6 +428,8 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       spellingSuggestion,
       categoriesTree,
       currentCategory,
+      productsLabeled,
+      availableLabels,
     } = this.props;
 
     console.log('SearchPage props', this.props);
@@ -500,7 +496,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   activeValuesRanges={this.state.activeRangeFilters}
                   updateRangeHandler={this.updateRangeFilters}
                   onCloseFilterHandler={this.onCloseFilterHandler}
-                  onBlurRangeFilter={this.onBlurRangeFiltersHandler}
+                  onAfterChangeRangeFilter={this.onAfterChangeRangeFilterHandler}
                   isFiltersReset={this.state.isFiltersReset}
                   isProductsExist={isProductsExist}
                 />
@@ -511,7 +507,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   resetHandler={this.resetActiveFilters}
                 />
                 <SortPanel
-                  foundItems={<FoundItems numberFound={this.props.pagination.numFound} />}
+                  foundItems={<FoundItems numberFound={pagination.numFound} />}
                   numberMode={sortPanelNumberMode}
                   sorterMode={sortPanelSorterMode}
                   isProductsExist={isProductsExist}
@@ -521,10 +517,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
                   selectProductHandler={this.onSelectProductHandler}
                   currency={currency}
                   isLoading={!!isLoading}
+                  productsLabeled={productsLabeled}
+                  availableLabels={availableLabels}
                 />
                 <AppPagination pagination={pagination} onChangeHandler={this.handlePagination} />
 
-            </Grid>
+              </Grid>
             </Grid>
 
           </SearchPageContext.Provider>

@@ -1,45 +1,21 @@
 import api from '../api';
 import { toast } from 'react-toastify';
+import {parseCatalogSearchResponse} from "src/shared/helpers/catalog/catalogSearchResponse";
 
 export class CatalogService {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
     try {
 
+      params.include = 'abstract-products,product-labels,';
+
       let response: any;
       response = await api.get('catalog-search', params, {withCredentials: true});
 
       if (response.ok) {
-        const pagination = response.data.data[0].attributes.pagination;
-        const filters: any[] = [];
-        let category: any[] = [];
-        let currentCategory: string = '';
-
-        response.data.data[0].attributes.valueFacets.forEach((filter: any) => {
-          if (filter.name === 'category') {
-            category = Array.isArray(filter.values) ? filter.values : [];
-            currentCategory = filter.activeValue;
-          } else {
-            filters.push(filter);
-          }
-        });
-
+        const responseParsed = parseCatalogSearchResponse(response.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          items: response.data.data[0].attributes.products,
-          filters,
-          category,
-          currentCategory,
-          currentSort: response.data.data[0].attributes.sort.currentSortParam,
-          rangeFilters: response.data.data[0].attributes.rangeFacets,
-          sortParams: response.data.data[0].attributes.sort.sortParamNames,
-          pagination: {
-            numFound: pagination.numFound,
-            currentPage: pagination.currentPage,
-            maxPage: pagination.maxPage,
-            currentItemsPerPage: pagination.currentItemsPerPage,
-            validItemsPerPageOptions: pagination.config.validItemsPerPageOptions,
-          },
-          spellingSuggestion: response.data.data[0].attributes.spellingSuggestion,
+          ...responseParsed,
         });
         return response.data;
       } else {

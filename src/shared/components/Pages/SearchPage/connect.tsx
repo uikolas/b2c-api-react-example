@@ -2,7 +2,10 @@ import * as React from 'react';
 import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getSpellingSuggestion, SearchState} from 'src/shared/reducers/Pages/Search';
+import {
+  getAvailableLabels, getProductsLabeled, getSpellingSuggestion,
+  SearchState
+} from 'src/shared/reducers/Pages/Search';
 import { getAppCurrency, getCategoriesTree, TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
 import {TSpellingSuggestion} from "src/shared/interfaces/searchPageData/index";
 
@@ -12,6 +15,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
   const categoriesTree: ICategory[] = getCategoriesTree(state, ownProps);
   const spellingSuggestion: TSpellingSuggestion = getSpellingSuggestion(state, ownProps);
+  const productsLabeled = getProductsLabeled(state, ownProps);
+  const availableLabels = getAvailableLabels(state, ownProps);
 
   return ({
     location: routerProps.location ? routerProps.location : ownProps.location,
@@ -29,6 +34,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
     currency,
     categoriesTree,
     spellingSuggestion,
+    productsLabeled,
+    availableLabels,
   });
 };
 

@@ -8,4 +8,8 @@ export const styles = (theme: Theme) => createStyles({
   filter: {
 
   },
+  priceClassName: {
+    fontSize: `${theme.appFixedDimensions.fontSize.medium} !important`,
+    fontWeight: 600,
+  },
 });

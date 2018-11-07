@@ -11,11 +11,12 @@ import {
   TActiveFilters,
   TActiveRangeFilters
 } from "src/shared/components/Pages/SearchPage/types";
-import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
 import {firstLetterToUpperCase, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
+import {SprykerRangeSlider} from "src/shared/components/UI/SprykerRangeSlider/index";
+import {AppPrice} from "src/shared/components/Common/AppPrice/index";
 
 
 interface SearchFilterListProps extends WithStyles<typeof styles> {
@@ -26,7 +27,7 @@ interface SearchFilterListProps extends WithStyles<typeof styles> {
   activeValuesRanges: TActiveRangeFilters;
   updateRangeHandler: Function;
   onCloseFilterHandler: Function;
-  onBlurRangeFilter: (event: any) => void;
+  onAfterChangeRangeFilter: (value: number[]) => void;
   isFiltersReset: boolean;
   isProductsExist?: boolean;
 }
@@ -43,12 +44,16 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     activeValuesRanges,
     updateRangeHandler,
     onCloseFilterHandler,
-    onBlurRangeFilter,
+    onAfterChangeRangeFilter,
     isFiltersReset,
   } = props;
 
   let filterItems: any[] | null = [];
   let rangeItems: any[] | null = [];
+
+  const priceValueFormatter = (value: number) => {
+    return <AppPrice value={value * 100} extraClassName={classes.priceClassName} />;
+  };
 
   if (!Array.isArray(filters) || !filters.length) {
     filterItems = null;
@@ -81,26 +86,31 @@ export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) =>
     rangeItems = ranges
       .filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0))
       .map((filter: RangeFacets) => {
-      const valueFrom = rangeFilterValueToFront(filter.min, rangeMinType);
-      const valueTo = rangeFilterValueToFront(filter.max, rangeMaxType);
-      return (
-        <SprykerRange
-          key={filter.name}
-          attributeName={filter.name}
-          title={firstLetterToUpperCase(filter.name)}
-          min={valueFrom}
-          max={valueTo}
-          currentValue={ activeValuesRanges[filter.name] || {
-            min: valueFrom,
-            max: valueTo,
-          } }
-          handleChange={updateRangeHandler}
-          Wrapper={FilterWrapper}
-          handleBlur={onBlurRangeFilter}
-          isReset={isFiltersReset}
-        />
-      );
-    });
+        const valueFrom = rangeFilterValueToFront(filter.min, rangeMinType);
+        const valueTo = rangeFilterValueToFront(filter.max, rangeMaxType);
+        return (
+          <FilterWrapper
+            filter= {
+              <SprykerRangeSlider
+                key={filter.name}
+                attributeName={filter.name}
+                title={firstLetterToUpperCase(filter.name)}
+                min={valueFrom}
+                max={valueTo}
+                handleChange={updateRangeHandler}
+                handleAfterChange={onAfterChangeRangeFilter}
+                currentValue={activeValuesRanges[filter.name] || {
+                  min: valueFrom,
+                  max: valueTo,
+                }}
+                valueFormatter={filter.name.includes('price') ? priceValueFormatter : null}
+              />
+            }
+            keyValue={filter.name}
+            key={filter.name}
+          />
+        );
+      });
   }
 
   const isItemsExist = (filterItems && filterItems.length > 0) || (rangeItems && rangeItems.length > 0);

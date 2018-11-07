@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => createStyles({
     transform: "rotate(270deg)",
     transition: "transform .8s ease-in-out",
     fill: theme.appColors.black,
-    right: theme.spacing.unit / 2,
+    right: 10,
   },
   input: {
     fontSize: theme.appFixedDimensions.fontSize.small,

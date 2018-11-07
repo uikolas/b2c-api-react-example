@@ -1,4 +1,4 @@
-import { IProductCard } from '../product';
+import {IProductCard, TProductSKU} from '../product';
 import { TAppCurrency } from '../../reducers/Common/Init';
 import {IPagination} from "src/shared/components/Common/AppPagination/types";
 
@@ -32,18 +32,46 @@ export interface FlyoutSearch {
   pending?: boolean;
 }
 
-export interface ISearchPageData {
-  dispatch?: Function;
-  flyoutSearch?: FlyoutSearch;
+export type TLabelId = string;
+
+export interface IProductLabelResponse {
+  type: string;
+  id: number;
+}
+
+export interface IAvailableLabel {
+  id: string;
+  frontEndReference: string;
+  isExclusive: boolean;
+  name: string;
+  position: number;
+}
+
+export interface IProductsLabeledCollection {
+  [id: string]: Array<TLabelId>;
+}
+
+export interface IAvailableLabelsCollection {
+  [id: string]: IAvailableLabel;
+}
+
+export interface ICatalogSearchDataParsed {
   items?: Array<IProductCard>;
   filters?: Array<ValueFacets>;
-  rangeFilters?: Array<RangeFacets>;
-  searchTerm?: string;
-  currency?: TAppCurrency;
-  sortParams?: Array<string>;
-  currentSort?: string;
-  pagination: IPagination;
   category: Array<FilterValue>;
   currentCategory: string;
+  currentSort?: string;
+  rangeFilters?: Array<RangeFacets>;
+  sortParams?: Array<string>;
+  pagination: IPagination;
   spellingSuggestion: TSpellingSuggestion | null;
+  productsLabeled: IProductsLabeledCollection | null;
+  availableLabels: IAvailableLabelsCollection | null;
+}
+
+export interface ISearchPageData extends ICatalogSearchDataParsed {
+  dispatch?: Function;
+  flyoutSearch?: FlyoutSearch;
+  searchTerm?: string;
+  currency?: TAppCurrency;
 }

@@ -42,6 +42,7 @@ export const styles = (theme: Theme) => createStyles({
   cardContent: {
     padding: theme.spacing.unit + theme.spacing.unit/2,
     letterSpacing: "0.5px",
+    width: "100%",
   },
   productName: {
     fontSize: "1rem",
