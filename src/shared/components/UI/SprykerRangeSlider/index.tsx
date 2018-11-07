@@ -12,9 +12,8 @@ import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 
 import { styles } from './styles';
+import {TSprykerRangeSliderValue} from "src/shared/components/UI/SprykerRangeSlider/types";
 
-
-export type TSprykerRangeSliderValue = {min: number, max: number};
 
 export interface SprykerRangeSliderProps extends WithStyles<typeof styles> {
   title: string;
@@ -44,8 +43,6 @@ export const SprykerRangeSliderBase: React.SFC<SprykerRangeSliderProps> = (props
     extraClassName,
     currentValue,
   } = props;
-
-  // /*tipFormatter={(value: number) => `${value}$`}*/
 
   return (
     <Grid container className={extraClassName ? `${classes.root} ${extraClassName}` : classes.root }>

@@ -34,7 +34,7 @@ export const styles = (theme: Theme) => createStyles({
     minHeight: "auto !important",
   },
   panelSummaryExpanded: {
-    margin: "0 0 16px !important",
+    margin: "0 0 0 !important",
   },
   panelSummaryContent: {
     margin: "0 0",
@@ -47,7 +47,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   icon: {
     color: theme.appColors.black,
-    right: 4,
+    right: 10,
     padding: 0,
     margin: "0 !important",
   },

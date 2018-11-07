@@ -6,7 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import {
   filterTypeFilter,
-  IFilterItem, rangeMaxType, rangeMinType,
+  IFilterItem,
+  rangeMaxType,
+  rangeMinType,
   TActiveFilters,
   TActiveRangeFilters,
   TFilterItemValue,

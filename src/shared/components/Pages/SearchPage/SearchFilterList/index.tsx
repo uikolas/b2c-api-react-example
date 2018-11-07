@@ -11,7 +11,6 @@ import {
   TActiveFilters,
   TActiveRangeFilters
 } from "src/shared/components/Pages/SearchPage/types";
-import {SprykerRange} from "src/shared/components/UI/SprykerRangeFilter/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
 import {firstLetterToUpperCase, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
