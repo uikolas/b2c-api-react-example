@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import debounce from "lodash/debounce";
+import { FormattedPlural } from 'react-intl';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
-import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Clear';
@@ -40,7 +37,8 @@ interface CartPageProps extends WithStyles<typeof styles> {
 }
 
 interface CartPageState {
-
+  heightListItem: number;
+  voucherCode: string;
 }
 
 export const pageTitle = 'Search results for ';
@@ -49,25 +47,28 @@ export const pageTitle = 'Search results for ';
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
   private listRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-  private heightListItem: number = 129;
-
   public state: CartPageState = {
-
+    heightListItem: 129,
+    voucherCode: '',
   };
 
   public componentDidMount() {
-    if (this.listRef && this.listRef.current) {
-      window.addEventListener('resize', this.setListItemHeight);
-      this.setListItemHeight();
-    }
+    window.addEventListener('resize', this.setListItemHeight);
+    this.setListItemHeight();
   }
 
   public componentWillUnmount() {
     window.removeEventListener('resize', this.setListItemHeight);
   }
 
+  public componentDidUpdate() {
+    this.setListItemHeight();
+  }
+
   private setListItemHeight = () => {
-    this.heightListItem = this.listRef.current.offsetWidth * 0.2;
+    if (this.listRef && this.listRef.current && this.listRef.current.offsetWidth * 0.2 !== this.state.heightListItem) {
+      this.setState({heightListItem: this.listRef.current.offsetWidth * 0.2});
+    }
   };
 
   public handleDeleteItem = (sku: string) => (e: any) => {
@@ -116,6 +117,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     }
   };
 
+  public handleChangeVouchercode = (e: any) => {
+    this.setState({voucherCode: e.target.value});
+  };
+
   public render() {
     const {classes, items, totals} = this.props;
 
@@ -127,10 +132,11 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               variant="display2"
               noWrap
               align="center"
-              className={ classes.title }
             >
               Empty cart, go shopping
             </Typography>
+          </Grid>
+          <Grid item xs={ 8 }>
             <div className={ classes.fullWidth } ref={this.listRef} />
           </Grid>
         </AppMain>
@@ -152,15 +158,29 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           divider
           className={ classes.listItem }
         >
-          <div className={ classes.imgWrapper } style={{ height: this.heightListItem }}>
-            <img src={ item.image } height={ this.heightListItem * 0.82 } />
+          <div className={ classes.imgWrapper } style={{ height: this.state.heightListItem }}>
+            <img
+              src={ item.image }
+              style={{ maxWidth: this.state.heightListItem * 0.82, maxHeight: this.state.heightListItem * 0.82 }}
+            />
             <div className={ classes.actionAreaOverlay } />
           </div>
 
-          <div className={classes.itemWrapper} style={{ height: this.heightListItem }}>
+          <div className={classes.itemWrapper}>
             <div className={classes.itemName}>{ item.name }</div>
+            {
+              item.superAttributes
+                ? item.superAttributes.map((attr: any, idx: number) => (
+                  <div key={`${item.sku}-attr-${idx}`} className={`${classes.itemAttr} ${classes.textCapitalize}`}>
+                    <span>{Object.keys(attr)[0].split('_').join(' ')}</span>
+                    <span style={{ marginRight: '5px' }}>:</span>
+                    <span>{Object.values(attr)[0]}</span>
+                  </div>
+                ))
+                : null
+            }
             <div>
-              <span className={classes.itemAttr}>Remove</span>
+              <span className={`${classes.itemAttr} ${classes.remove}`}>remove</span>
               <IconButton onClick={ this.handleDeleteItem(item.sku) }>
                 <DeleteIcon />
               </IconButton>
@@ -171,7 +191,6 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             noValidate
             autoComplete="off"
             className={classes.quantityForm}
-            style={{ height: this.heightListItem }}
           >
             <TextField
               required
@@ -179,6 +198,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               name={item.sku}
               value={item.quantity}
               onChange={this.handleChangeQty}
+              variant="outlined"
+              InputProps={{
+                className: classes.select,
+              }}
             >
               {
                 quantities.map((i: number) => (
@@ -191,15 +214,20 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             </TextField>
           </form>
 
-          <div className={classes.priceWrapper} style={{ height: this.heightListItem }}>
-            <AppPrice value={ item.calculations.sumPriceToPayAggregation }/>
+          <div className={classes.priceWrapper}>
+            <div className={classes.sumWrapper}>
+             <AppPrice value={ item.calculations.sumPriceToPayAggregation } extraClassName={classes.mainCurrency} />
+            </div>
             {
               item.quantity > 1
-                ? <div>
-                  <span>(</span>
-                  <AppPrice value={ item.calculations.unitPriceToPayAggregation }/>
-                  <span> each)</span>
-                </div>
+                ? <div className={classes.itemAttr}>
+                    <span>(</span>
+                    <AppPrice
+                      value={ item.calculations.unitPriceToPayAggregation }
+                      extraClassName={`${classes.itemAttr} ${classes.eachCurrency}`}
+                    />
+                    <span> each)</span>
+                  </div>
                 : null
             }
           </div>
@@ -209,73 +237,114 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
     return (
       <AppMain>
-        <Grid container item xs={ 12 } spacing={ 24 }>
-          <Grid item xs={ 8 }>
+        <Grid item xs={ 12 } container spacing={ 24 } className={classes.root}>
+          <Grid item xs={ 12 } md={ 8 }>
             <Typography
-              variant="headline"
+              variant="display1"
               noWrap
               align="left"
+              color="primary"
             >
               { `Cart has ${items.length} items` }
             </Typography>
-            <div className={ classes.fullWidth } ref={this.listRef}>
-              <List>
-                <ListItem
-                  disableGutters
-                  divider
-                  className={ classes.listItem }
-                >
-                  <div>Item</div>
-
-                  <div className={classes.itemWrapper} />
-
-                  <div className={classes.quantityForm}>Quantity</div>
-
-                  <div className={classes.priceWrapper}>Price</div>
-                </ListItem>
-                { rows }
-              </List>
+            <div className={classes.listTitle} ref={this.listRef}>
+              <div style={{width: '20%'}}>Item</div>
+              <div className={classes.itemWrapper} />
+              <div className={classes.quantityForm}>Quantity</div>
+              <div className={classes.priceWrapper}>Price</div>
             </div>
+            <Divider className={ classes.fullWidth } />
+            <List>
+              { rows }
+            </List>
           </Grid>
 
-          <Grid item xs={ 4 }>
+          <Grid item xs={ 12 } md={ 4 }>
             <Typography
-              variant="headline"
+              variant="display1"
               noWrap
               align="left"
+              color="primary"
             >
               { 'Order summary' }
             </Typography>
+            <Divider className={ classes.calcDivider} />
+
+            <Grid container spacing={24}>
+              <Grid item xs={8}>
+                <form
+                  noValidate
+                  autoComplete="off"
+                  className={`${classes.fullWidth} ${classes.listItem}`}
+                >
+                  <TextField
+                    name="voucher"
+                    label="Apply voucher code"
+                    value={this.state.voucherCode}
+                    onChange={this.handleChangeVouchercode}
+                    fullWidth
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    InputProps={{
+                      style: {height: '44px'},
+                    }}
+                    variant="outlined"
+                  />
+                </form>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  fullWidth
+                  className={ classes.btnWrapper }
+                >
+                  apply
+                </Button>
+              </Grid>
+            </Grid>
+
             <Divider className={ classes.fullWidth } />
+
             <div className={classes.totalMsg}>
               <div>Subtotal</div>
-              <div>{ totals && <AppPrice value={ totals.subtotal }/> }</div>
+              <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={classes.mainCurrency} /> }</div>
             </div>
             <div className={classes.totalMsg}>
               <div>Tax</div>
-              <div>{ totals && <AppPrice value={ totals.taxTotal }/> }</div>
+              <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={classes.mainCurrency} /> }</div>
             </div>
             <div className={classes.totalMsg}>
               <div>Discount</div>
-              <div>{ totals && <AppPrice value={ totals.discountTotal }/> }</div>
+              <div>{ totals && <AppPrice value={ totals.discountTotal } extraClassName={classes.mainCurrency} /> }</div>
             </div>
 
             <Divider className={ classes.fullWidth } />
 
-            <div className={classes.totalMsg}>
-              <div>Grand Total</div>
+            <div className={`${classes.totalMsg}`}>
+              <div className={classes.grandTotal}>
+                Grand Total
+              </div>
               <div>{ totals && <AppPrice value={ totals.grandTotal }/> }</div>
             </div>
 
             <Divider className={ classes.fullWidth } />
 
-            <Grid item xs={ 12 } container justify="center" className={ classes.footer }>
-              <NavLink to={ pathSearchPage } className={ classes.fullWidth }>
-                <Button variant="contained" color="primary" fullWidth>
-                  continue to checkout
-                </Button>
-              </NavLink>
-            </Grid>
+            <NavLink to={ pathSearchPage } className={ classes.fullWidth }>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                className={ classes.btnWrapper }
+              >
+                continue to checkout
+              </Button>
+            </NavLink>
+
+            <div className={`${classes.itemAttr} ${classes.shippingMsg}`}>
+              Shipping fee will be calculated based on Shipping address
+            </div>
           </Grid>
         </Grid>
       </AppMain>
