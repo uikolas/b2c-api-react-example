@@ -16,7 +16,10 @@ import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
 import { ConnectedWishlistPage } from '../components/Pages/WishListPage';
 import { ConnectedWishlistDetailPage } from '../components/Pages/WishlistDetail';
 
+import {LoadableCheckoutPage} from "src/shared/components/Pages/CheckoutPage/loadable";
+
 import config from '../config';
+
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
@@ -46,6 +49,8 @@ export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 export const pathCustomerAddressesPage = `${pathCustomerPage}/addresses`;
 export const pathAddressFormPage = `${pathCustomerAddressesPage}/:action`;
 
+export const pathCheckoutPage = `${config.WEB_PATH}checkout`;
+
 export const pathNotFoundPage = `${config.WEB_PATH}*`;
 
 export const getContentRoutes = function() {
@@ -62,6 +67,9 @@ export const getContentRoutes = function() {
 
       <ProtectedRoute path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
       <ProtectedRoute path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
+
+      {/*TODO: Change to ProtectedRoute */}
+      <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
 
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
     </Switch>
