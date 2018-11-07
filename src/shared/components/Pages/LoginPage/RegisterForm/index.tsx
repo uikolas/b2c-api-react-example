@@ -9,13 +9,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 
-import {formStyles} from '../styles';
 import {
   TCustomerEmail, TCustomerFirstName, TCustomerLastName,
   TCustomerPassword, TCustomerSalutation, TSalutationVariant
-} from "../../../../interfaces/customer/index";
-import {salutationVariants} from "../../../../constants/customer/index";
-import {emptyRequiredFieldsErrorText} from "../../../../constants/messages/errors";
+} from "src/shared/interfaces/customer";
+import {salutationVariants} from "src/shared/constants/customer/index";
+import {emptyRequiredFieldsErrorText} from "src/shared/constants/messages/errors";
+import {formStyles} from '../styles';
 
 interface RegisterFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
@@ -99,7 +99,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
         </Typography>
         <form
           className={classes.container}
-          noValidate
+          // noValidate
           autoComplete="off"
           onSubmit={this.handleSubmitForm}
           id="RegisterForm"

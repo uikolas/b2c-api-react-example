@@ -1,8 +1,9 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import {IWishlist, IWishlistItem} from "../../interfaces/wishlist";
-import {wishlistAuthenticateErrorText} from "../../constants/messages/errors";
+import {IWishlist, IWishlistItem} from "src/shared/interfaces/wishlist";
+import {ADD_WISHLIST} from "src/shared/constants/ActionTypes/Pages/Wishlist";
+import {wishlistAuthenticateErrorText} from "src/shared/constants/messages/errors";
 
 export class WishlistService {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
@@ -103,11 +104,12 @@ export class WishlistService {
       const response: any = await api.post('wishlists', body, { withCredentials: true });
 
       if (response.ok) {
+        const parsedWishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlist: WishlistService.parseWishlistResponse(response.data.data)
+          wishlist: parsedWishlist,
         });
-        return response.data.data;
+        return parsedWishlist.id;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
@@ -199,10 +201,19 @@ export class WishlistService {
     }
   }
 
-  public static async addItemWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string, sku: string): Promise<any> {
+  public static async addItemWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string | null, sku: string): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
+      let id: string | null = wishlistId;
+
+      if (!wishlistId) {
+        id = await WishlistService.addWishlist(ADD_WISHLIST, dispatch, 'My first wishlist');
+      }
+
+      if (!id) {
+        throw new Error('Wishlist doesn`t created.');
+      }
 
       const body: any = {
         data: {
@@ -211,10 +222,10 @@ export class WishlistService {
         }
       };
 
-      const response: any = await api.post(`wishlists/${wishlistId}/wishlist-items`, body, { withCredentials: true });
+      const response: any = await api.post(`wishlists/${id}/wishlist-items`, body, { withCredentials: true });
 
       if (response.ok) {
-        const wishlistResponse: any = await api.get(`wishlists/${wishlistId}`, {include: ''}, { withCredentials: true });
+        const wishlistResponse: any = await api.get(`wishlists/${id}`, {include: ''}, { withCredentials: true });
         const wishlist: IWishlist = WishlistService.parseWishlistResponse(wishlistResponse.data.data);
 
         dispatch({

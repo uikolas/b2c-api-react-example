@@ -5,9 +5,9 @@ import {
   REFRESH_TOKEN_REQUEST,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
-} from '../../constants/ActionTypes/Pages/Login';
-import {PagesLoginService} from '../../services/Pages/Login';
-import {ICustomerLoginData, ICustomerLoginDataParsed} from "../../interfaces/customer/index";
+} from 'src/shared/constants/ActionTypes/Pages/Login';
+import {PagesLoginService} from 'src/shared/services/Pages/Login';
+import {ICustomerLoginData, ICustomerLoginDataParsed} from "src/shared/interfaces/customer/index";
 
 export const registerPendingState = () => ({
   type: PAGES_CUSTOMER_REGISTER + '_PENDING',

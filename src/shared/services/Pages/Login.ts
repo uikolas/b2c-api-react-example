@@ -1,17 +1,15 @@
 import { toast } from 'react-toastify';
 import api from '../api';
-import {saveLoginDataToStoreAction} from "../../actions/Pages/CustomerProfile";
-import {
-  parseLoginDataResponse,
-} from "../../helpers/customer/loginDataResponse";
+import {saveLoginDataToStoreAction} from "src/shared/actions/Pages/CustomerProfile";
+import {parseLoginDataResponse} from "src/shared/helpers/customer";
 import {
   loginCustomerFulfilledStateAction,
   loginCustomerPendingStateAction,
   loginCustomerRejectedStateAction
-} from "../../actions/Pages/Login";
+} from "src/shared/actions/Pages/Login";
 import {ApiServiceAbstract} from "../apiAbstractions/ApiServiceAbstract";
-import {ICustomerLoginData} from "../../interfaces/customer/index";
-import {saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage} from "../../helpers/localStorage/index";
+import {ICustomerLoginData} from "src/shared/interfaces/customer";
+import {saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage} from "src/shared/helpers/localStorage";
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
@@ -25,15 +23,16 @@ export class PagesLoginService extends ApiServiceAbstract {
       const response: any = await api.post('customers', body, { withCredentials: true });
 
       if (response.ok) {
-        dispatch(saveLoginDataToStoreAction({email: payload.email}));
-        // TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
-        saveCustomerUsernameToLocalStorage({email: payload.email});
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          payload: response.data,
         });
+
         toast.success('You have successfully registered');
-        return response.data;
+
+        return PagesLoginService.loginRequest(dispatch, {
+          username: payload.email,
+          password: payload.password,
+        });
       } else {
         console.error('register', response.problem);
         dispatch({

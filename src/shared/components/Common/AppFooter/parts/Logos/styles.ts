@@ -8,8 +8,16 @@ export const styles = (theme: Theme) => createStyles({
     listStyle: 'none',
     margin: 0,
     padding: 0,
+    [theme.breakpoints.down('xs')]: {
+      flexWrap: 'wrap',
+      textAlign: 'center',
+    },
   },
   logosListItem: {
     margin: '0 14px',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      margin: '10px 0',
+    },
   },
 });

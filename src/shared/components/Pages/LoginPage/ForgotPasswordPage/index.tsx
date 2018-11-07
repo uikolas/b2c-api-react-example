@@ -7,14 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ChevronLeft';
 
-import {reduxify} from '../../../../lib/redux-helper';
-import {forgotPasswordAction} from '../../../../actions/Pages/Login';
+import {reduxify} from 'src/shared/lib/redux-helper';
+import {forgotPasswordAction} from 'src/shared/actions/Pages/Login';
 import {RouteProps} from "react-router";
 
-import {AppMain} from '../../../Common/AppMain';
+import {AppMain} from 'src/shared/components/Common/AppMain';
 
 import {formStyles} from '../styles';
-import {getRouterHistoryBack} from "../../../../selectors/Common/router";
+import {getRouterHistoryBack} from "src/shared/selectors/Common/router";
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;
