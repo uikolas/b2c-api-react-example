@@ -1,14 +1,12 @@
 import * as React from 'react';
 import {ChangeEvent, ReactNode} from "react";
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import { Location } from 'history';
 import { toast } from 'react-toastify';
 import Grid from '@material-ui/core/Grid';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
-import {ISearchPageData, RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
-import { ICategory } from 'src/shared/reducers/Common/Init';
+import {RangeFacets, ValueFacets} from 'src/shared/interfaces/searchPageData';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
 import { connect } from './connect';
@@ -24,8 +22,8 @@ import {
   IFilterItemToDelete,
   ISearchQuery,
   RangeType,
-  TActiveFilters,
-  TActiveRangeFilters,
+  SearchPageProps,
+  SearchPageState,
   TCategoryId,
   TFilterItemValue,
 } from "./types";
@@ -41,23 +39,6 @@ import {rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 import {AppPagination} from "src/shared/components/Common/AppPagination/index";
 import {isValidRangeInput} from "src/shared/components/Pages/SearchPage/helper";
 
-interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
-  isLoading: boolean;
-  changeLocation: Function;
-  categoriesTree: ICategory[];
-  location: Location;
-  isFulfilled: boolean;
-}
-
-interface SearchPageState {
-  activeFilters: TActiveFilters;
-  activeRangeFilters: TActiveRangeFilters;
-  sort: string;
-  itemsPerPage: number;
-  isFiltersReset: boolean;
-  isNeedNewRequest: boolean;
-  isReadyToNewRequest: boolean;
-}
 
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';
@@ -432,8 +413,6 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
       availableLabels,
     } = this.props;
 
-    console.log('SearchPage props', this.props);
-    console.log('SearchPage state', this.state);
     const isSortParamsExist = (sortParams.length > 0);
     const isProductsExist = (items.length > 0);
     const isCategoriesExist = (category.length > 0);
