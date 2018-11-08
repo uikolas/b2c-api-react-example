@@ -1,19 +1,14 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { styles } from './styles';
 import {SearchPageContext} from '../context';
-import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {ICategoryItemProps} from "src/shared/components/Pages/SearchPage/CategoryItem/types";
 
-interface CategoryItemProps extends WithStyles<typeof styles> {
-  categoryValue: TCategoryId;
-  displayName: string;
-  isSelected: boolean;
-}
 
-export const CategoryItemBase: React.SFC<CategoryItemProps> = (props) => {
+export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
   const {
     classes,
     displayName,

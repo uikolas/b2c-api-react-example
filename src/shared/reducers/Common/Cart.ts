@@ -178,11 +178,31 @@ export function isCartLoading(state: any, props: any): boolean {
   return (state.cart && state.cart.pending && state.cart.pending === true);
 }
 
+export function isCartStateFulfilled(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.cart.fulfilled && state.cart.fulfilled === true);
+}
+
+export function isCartStateRejected(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.cart.rejected && state.cart.rejected === true);
+}
+
 export function getCartId(state: any, props: any): TCartId {
   return (isCartCreated(state, props) && state.cart.data.id) ? state.cart.data.id : null;
 }
 
+export function getProductsFromCart(state: any, props: any): ICartData["items"] | null {
+  return isProductsInCart(state, props) ? state.cart.data.items : null;
+}
+
+export function isProductsInCart(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.cart.data.items);
+}
+
 // selectors INNER
+function isStateExist(state: any, props: any): boolean {
+  return Boolean(state.cart);
+}
+
 function getProductFromCart(cartState: ICartState, sku: TProductSKU): ICartItem {
   return (cartState.data.items.filter((item: ICartItem): any => item.sku === sku))[0];
 }

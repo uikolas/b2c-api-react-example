@@ -1,5 +1,5 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 
@@ -9,8 +9,6 @@ import {
   IFilterItem,
   rangeMaxType,
   rangeMinType,
-  TActiveFilters,
-  TActiveRangeFilters,
   TFilterItemValue,
 } from "src/shared/components/Pages/SearchPage/types";
 import {ActiveFilterItem} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/index";
@@ -18,18 +16,13 @@ import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/inde
 import {isWordHasPrice, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 import {RangeFacets} from "src/shared/interfaces/searchPageData/index";
 import {createRangeFilterItem, transformName} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/helper";
+import {IActiveFiltersListProps} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/types";
 
-interface ActiveFiltersListProps extends WithStyles<typeof styles> {
-  activeValuesFilters: TActiveFilters;
-  activeValuesRanges: TActiveRangeFilters;
-  rangeFilters?: Array<RangeFacets>;
-  resetHandler: (event: React.MouseEvent<HTMLDivElement>) => void;
-}
 
 const title = 'Active Filters';
 const resetBtnTitle = 'RESET ALL FILTERS';
 
-export const ActiveFiltersListBase: React.SFC<ActiveFiltersListProps> = (props) => {
+export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props) => {
   const {
     classes,
     activeValuesFilters,

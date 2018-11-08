@@ -1,17 +1,13 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { styles } from './styles';
-import {IPagination} from "src/shared/components/Common/AppPagination/types";
+import {IFoundItemsProps} from "src/shared/components/Pages/SearchPage/FoundItems/types";
 
 
-export interface FoundItemsProps extends WithStyles<typeof styles> {
-  numberFound: IPagination["numFound"];
-}
-
-export const FoundItemsBase: React.SFC<FoundItemsProps> = (props) => {
+export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
   const {
     classes,
     numberFound,

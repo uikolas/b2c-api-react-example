@@ -1,4 +1,5 @@
 import {baseTheme} from "src/shared/theme/index";
+import {appFixedDimensions} from "src/shared/theme/properties/new/appFixedDimensions";
 
 export interface IAppContainerStyles {
   maxWidth: React.CSSProperties['width'];
@@ -14,7 +15,7 @@ export const appContainerStyles: IAppContainerStyles = {
   marginLeft: "auto",
   marginRight: "auto",
   position: 'relative',
-  [baseTheme.breakpoints.down('lg')]: {
+  [baseTheme.breakpoints.down(appFixedDimensions.customBreakpoints.tablet)]: {
     maxWidth: "100%",
     paddingLeft: baseTheme.spacing.unit * 2,
     paddingRight: baseTheme.spacing.unit * 2,

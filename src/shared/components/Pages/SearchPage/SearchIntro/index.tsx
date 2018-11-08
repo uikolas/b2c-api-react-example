@@ -1,17 +1,13 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import { styles } from './styles';
-import {TSpellingSuggestion} from "src/shared/interfaces/searchPageData/index";
+import {ISearchIntroProps} from "src/shared/components/Pages/SearchPage/SearchIntro/types";
 
-interface SearchIntroProps extends WithStyles<typeof styles> {
-  className: string;
-  spellingSuggestion: TSpellingSuggestion | null;
-}
 
 export const pageIntroText = 'Did you mean ';
 
-export const SearchIntroBase: React.SFC<SearchIntroProps> = (props) => {
+export const SearchIntroBase: React.SFC<ISearchIntroProps> = (props) => {
   const {classes, className, spellingSuggestion} = props;
 
   if(!spellingSuggestion) {

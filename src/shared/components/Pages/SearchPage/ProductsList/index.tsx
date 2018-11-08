@@ -1,32 +1,20 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import {IProductCard, IProductLabel, TProductCurrency} from "src/shared/interfaces/product/index";
+import {IProductCard, IProductLabel} from "src/shared/interfaces/product/index";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {ProductCard} from "src/shared/components/Common/ProductCard/index";
 import {AppPageHeadline} from "src/shared/components/Common/AppPageHeadline/index";
-import {
-  IAvailableLabelsCollection,
-  IProductsLabeledCollection
-} from "src/shared/interfaces/searchPageData/index";
 import {getProductLabel} from "src/shared/helpers/product/label";
+import {IProductsListProps} from "src/shared/components/Pages/SearchPage/ProductsList/types";
 
-
-interface ProductsListProps extends WithStyles<typeof styles> {
-  products: Array<IProductCard>;
-  selectProductHandler: Function;
-  currency: TProductCurrency;
-  isLoading: boolean;
-  productsLabeled: IProductsLabeledCollection | null;
-  availableLabels: IAvailableLabelsCollection | null;
-}
 
 const emptyTitle = 'Nothing to show.';
 const loadingTitle = 'Waiting for results';
 
-export const ProductsListBase: React.SFC<ProductsListProps> = (props) => {
+export const ProductsListBase: React.SFC<IProductsListProps> = (props) => {
   const {
     classes,
     products,

@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Clear';
 
 import { ICartItem } from 'src/shared/reducers/Common/Cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
-import { pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { pathCheckoutPage, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { styles } from './styles';
@@ -322,7 +322,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
             <Divider className={ classes.fullWidth } />
 
-            <NavLink to={ pathSearchPage } className={ classes.fullWidth }>
+            <NavLink to={ pathCheckoutPage } className={ classes.fullWidth }>
               <Button
                 variant="contained"
                 color="primary"

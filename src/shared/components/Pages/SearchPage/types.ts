@@ -1,7 +1,27 @@
-import { TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { WithStyles } from '@material-ui/core';
+import {ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init';
+import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import { ISearchPageData } from 'src/shared/interfaces/searchPageData';
+import { Location } from 'history';
+
+export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
+  isLoading: boolean;
+  changeLocation: Function;
+  categoriesTree: ICategory[];
+  location: Location;
+  isFulfilled: boolean;
+}
+
+export interface ISearchPageState {
+  activeFilters: TActiveFilters;
+  activeRangeFilters: TActiveRangeFilters;
+  sort: string;
+  itemsPerPage: number;
+  isFiltersReset: boolean;
+  isNeedNewRequest: boolean;
+  isReadyToNewRequest: boolean;
+  selectedCategory?: string | null;
+}
 
 export type IQuery = {
   q?: string,
@@ -9,11 +29,6 @@ export type IQuery = {
   sort?: string,
   [key: string]: string | number,
 };
-
-export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
-  isLoading: boolean;
-  changeLocation: Function;
-}
 
 export type RangeType = {min: number, max: number};
 export type TCategoryId = number | string;
@@ -40,13 +55,6 @@ export type ISearchQuery = {
   category?: TCategoryId,
   [key: string]: string | number,
 };
-
-export interface SearchPageState {
-  activeFilters: TActiveFilters;
-  activeRangeFilters: TActiveRangeFilters;
-  sort: string;
-  selectedCategory: TCategoryId;
-}
 
 export interface IFilterItem extends IFilterItemToDelete {
   label: string | JSX.Element;
