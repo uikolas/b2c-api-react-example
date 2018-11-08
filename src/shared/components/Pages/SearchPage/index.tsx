@@ -97,19 +97,23 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     }
   }
 
-  public componentDidUpdate = (prevProps: any, prevState: any): void => {
+  public componentDidUpdate = (prevProps: SearchPageProps, prevState: SearchPageState): void => {
     // Init showing a message if filters is reset
     // (prevState.isFiltersReset === false && this.state.isFiltersReset) ? toast.success(resetFilterSuccessText) : null;
 
     // Init new request if it's needed
-    if (this.state.isReadyToNewRequest === true) {
-      if (prevState.isReadyToNewRequest === false && this.state.isNeedNewRequest === true) {
+    if (this.state.isReadyToNewRequest) {
+      if (!prevState.isReadyToNewRequest && this.state.isNeedNewRequest) {
         this.updateSearch();
         this.setState({isReadyToNewRequest: false});
       }
-      if (this.state.isReadyToNewRequest === true && this.state.isNeedNewRequest === false) {
+      if (this.state.isReadyToNewRequest && !this.state.isNeedNewRequest) {
         this.setState({isReadyToNewRequest: false});
       }
+    }
+
+    if (!prevProps.categoriesTree.length && this.props.categoriesTree.length) {
+      this.searchAfterInitCategories();
     }
 
     if (prevProps.location.pathname !== this.props.location.pathname) {
@@ -120,22 +124,12 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     if (prevProps.searchTerm !== this.props.searchTerm) {
       this.runResetActiveFilters(false);
     }
-
   }
 
-  public categorySearch = (categoryId: TCategoryId): void => {
-    const query: ISearchQuery = {
-      q: '',
-      currency: this.props.currency,
-      category: categoryId,
-    };
-
-    this.props.dispatch(sendSearchAction(query));
-
+  private getCategoryNameById = (categoryId: TCategoryId): string => {
     let name: string = '';
 
-    // TODO: DUPLICATE in selectCategory - should be fixed
-    const searchName = (leaf: any) => {
+    const searchName = (leaf: ICategory) => {
       const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
       name += path;
 
@@ -159,7 +153,23 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.props.categoriesTree.some(searchName);
 
-    this.props.changeLocation(`${pathSearchPage}${name}`);
+    return name;
+  };
+
+  public categorySearch = (categoryId: TCategoryId): void => {
+    const query: ISearchQuery = {
+      q: '',
+      currency: this.props.currency,
+      category: categoryId,
+    };
+
+    this.props.dispatch(sendSearchAction(query));
+
+    const name: string = this.getCategoryNameById(categoryId);
+
+    if (this.props.location.pathname !== `${pathSearchPage}${name}`) {
+      this.props.changeLocation(`${pathSearchPage}${name}`);
+    }
   };
 
   public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
@@ -180,34 +190,11 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.props.dispatch(sendSearchAction(query));
 
-    let name: string = '';
+    const name: string = this.getCategoryNameById(categoryId);
 
-    // TODO: DUPLICATE in categorySearch - should be fixed
-    const searchName = (leaf: any) => {
-      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
-      name += path;
-
-      if (leaf.nodeId === +categoryId) {
-        return true;
-      }
-
-      if (Array.isArray(leaf.children) && leaf.children.length) {
-        const result = leaf.children.some(searchName);
-
-        if (!result) {
-          name = name.replace(path, '');
-        }
-
-        return result;
-      }
-
-      name = name.replace(path, '');
-      return false;
-    };
-
-    this.props.categoriesTree.some(searchName);
-
-    this.props.changeLocation(`${pathSearchPage}${name}`);
+    if (this.props.location.pathname !== `${pathSearchPage}${name}`) {
+      this.props.changeLocation(`${pathSearchPage}${name}`);
+    }
   };
 
   public labelSearch = (label: string): void => {
@@ -219,6 +206,38 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.props.dispatch(sendSearchAction(query));
   };
+
+  public searchAfterInitCategories = (): void => {
+    const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
+
+    const name = nodeId.split('-').join(' ');
+    let id: number | string = 0;
+
+    const searchNodeId = (leaf: ICategory) => {
+      if (leaf.name === name) {
+        id = leaf.nodeId;
+        return true;
+      }
+
+      if (leaf.name.includes('/') && leaf.name.endsWith(name)) {
+        id = leaf.nodeId;
+        return true;
+      }
+
+      if (Array.isArray(leaf.children) && leaf.children.length) {
+        const result = leaf.children.some(searchNodeId);
+        return result;
+      }
+
+      return false;
+    };
+
+    this.props.categoriesTree.some(searchNodeId);
+
+    if (id) {
+      this.categorySearch(+id);
+    }
+  }
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
     this.setState((prevState: SearchPageState) => ({

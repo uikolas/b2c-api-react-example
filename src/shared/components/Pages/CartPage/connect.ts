@@ -14,11 +14,11 @@ import {RouteProps} from "react-router";
 import {TCartId} from "src/shared/interfaces/cart";
 
 const mapStateToProps = (state: any, ownProps: any) => {
-  const isUserLoggedIn = isUserAuthenticated(state, ownProps);
+  const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);
   const routerProps: RouteProps = state.routing ? state.routing : {};
   const cartProps: ICartState = state.cart ? state.cart : null;
   const cartId: TCartId = getCartId(state, ownProps);
-  const anonymId = getAnonymId(state, ownProps);
+  const anonymId: string = getAnonymId(state, ownProps);
 
   return (
     {

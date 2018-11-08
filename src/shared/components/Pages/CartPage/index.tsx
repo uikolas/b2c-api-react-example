@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FormattedPlural } from 'react-intl';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -14,34 +14,13 @@ import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Clear';
 
 import { ICartItem } from 'src/shared/reducers/Common/Cart';
-import { ICartTotals, TCartId } from 'src/shared/interfaces/cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
 import { pathSearchPage } from 'src/shared/routes/contentRoutes';
-import { AppMain } from '../../Common/AppMain';
-import { AppPrice } from '../../Common/AppPrice';
+import { AppMain } from 'src/shared/components/Common/AppMain';
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { styles } from './styles';
 import { connect } from './connect';
-
-interface CartPageProps extends WithStyles<typeof styles> {
-  dispatch: Function;
-  location: string;
-  items: Array<ICartItem>;
-  totals: ICartTotals;
-  cartId: TCartId;
-  isUserLoggedIn: boolean;
-  anonymId: string;
-  updateItemInCartAction: Function;
-  cartDeleteItemAction: Function;
-  removeItemGuestCartAction: Function;
-  updateGuestCartAction: Function;
-}
-
-interface CartPageState {
-  heightListItem: number;
-  voucherCode: string;
-}
-
-export const pageTitle = 'Search results for ';
+import { CartPageProps, CartPageState } from './types';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
@@ -71,7 +50,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     }
   };
 
-  public handleDeleteItem = (sku: string) => (e: any) => {
+  public handleDeleteItem = (sku: string) => (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn, anonymId} = this.props;
@@ -83,8 +62,8 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     }
   };
 
-  public handleChangeQty = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value }: any = event.target;
+  public handleChangeQty = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value }: { name: string, value: string } = event.target;
     const {
       cartDeleteItemAction,
       removeItemGuestCartAction,
@@ -95,7 +74,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
       anonymId,
     } = this.props;
     // If is selected 0, the cart item should be removed from the cart
-    if (value <= 0) {
+    if (+value <= 0) {
       if (isUserLoggedIn) {
         cartDeleteItemAction(cartId, name);
       } else {
@@ -104,12 +83,12 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     } else {
       if (isUserLoggedIn) {
         updateItemInCartAction(
-          createCartItemAddToCart(name, value),
+          createCartItemAddToCart(name, +value),
           this.props.cartId,
         );
       } else {
         updateGuestCartAction(
-          createCartItemAddToCart(name, value),
+          createCartItemAddToCart(name, +value),
           this.props.cartId,
           anonymId,
         );
@@ -117,7 +96,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     }
   };
 
-  public handleChangeVouchercode = (e: any) => {
+  public handleChangeVouchercode = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({voucherCode: e.target.value});
   };
 
@@ -143,7 +122,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
       );
     }
 
-    const rows = items.map((item: any) => {
+    const rows = items.map((item: ICartItem) => {
       const quantities: number[] = [];
       const maxItems = item.availableQuantity < 10 ? item.availableQuantity : 10;
 
@@ -170,7 +149,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             <div className={classes.itemName}>{ item.name }</div>
             {
               item.superAttributes
-                ? item.superAttributes.map((attr: any, idx: number) => (
+                ? item.superAttributes.map((attr: { [key: string]: string }, idx: number) => (
                   <div key={`${item.sku}-attr-${idx}`} className={`${classes.itemAttr} ${classes.textCapitalize}`}>
                     <span>{Object.keys(attr)[0].split('_').join(' ')}</span>
                     <span style={{ marginRight: '5px' }}>:</span>

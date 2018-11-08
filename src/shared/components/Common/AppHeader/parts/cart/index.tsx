@@ -36,7 +36,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
         this.props.history.push(pathCartPage);
       }
     } else {
-      this.setState(() => ({anchorEl: currentTarget}));
+      this.setState(() => ({anchorEl: cartItemsQuantity !== 0 ? currentTarget : null}));
     }
   };
   private closePopover = () => this.setState(() => ({anchorEl: null}));
