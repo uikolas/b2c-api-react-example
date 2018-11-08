@@ -322,7 +322,11 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
             <Divider className={ classes.fullWidth } />
 
-            <NavLink to={ pathCheckoutPage } className={ classes.fullWidth }>
+            <NavLink
+              to={ pathCheckoutPage }
+              className={ classes.fullWidth }
+              style={{ textDecoration: 'none' }}
+            >
               <Button
                 variant="contained"
                 color="primary"
