@@ -8,6 +8,20 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing.unit,
   },
   value: {
-    display: 'inline',
+    display: 'block',
+    fontSize: '11px',
+    lineHeight: '15px',
+    textTransform: 'uppercase',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    padding: 7
+  },
+  available: {
+    borderColor: theme.appColors.green,
+    color: theme.appColors.green,
+  },
+  unavailable: {
+    borderColor: theme.appColors.grey,
+    color: theme.appColors.grey,
   },
 });

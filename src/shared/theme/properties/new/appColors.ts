@@ -12,7 +12,6 @@ export interface IAppColors {
   red: TAppColor;
   green: TAppColor;
 
-
   blockDivider: TAppColor;
 }
 
@@ -25,7 +24,7 @@ export const appColors: IAppColors = {
   blue: "#3589ea",
   orange: "#ea7a35",
   red: "#D50000",
-  green: "#009688",
+  green: "#008a00",
 
   blockDivider: "#e2e2e2",
 };
