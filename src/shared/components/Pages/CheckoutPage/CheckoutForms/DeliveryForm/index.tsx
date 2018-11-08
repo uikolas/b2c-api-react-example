@@ -9,6 +9,8 @@ import { styles } from './styles';
 import {IDeliveryFormProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
+import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
+import {FieldFirstName} from "src/shared/components/Common/FormFields/FieldFirstName/index";
 
 const deliveryFormName = 'delivery';
 
@@ -17,9 +19,11 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
     classes,
     submitHandler,
     inputChangeHandler,
-    firstName,
-    lastName,
-    salutation,
+    shippingAddress: {
+      firstName,
+      lastName,
+      salutation,
+    }
   }  = props;
 
   return (
@@ -70,23 +74,10 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
             </Grid>
 
             <Grid item xs={12} sm={5} className={classes.control}>
-              <TextField
-                required
-                id={`${deliveryFormName}-first-name`}
-                label="First Name"
-                name="firstName"
-                type="text"
+              <FieldFirstName
+                formName={deliveryFormName}
                 value={firstName}
-                className={classes.textField}
-                margin="normal"
-                onChange={inputChangeHandler}
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  className: classes.input,
-                }}
+                onChangeHandler={inputChangeHandler}
               />
             </Grid>
 
@@ -125,5 +116,5 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
   );
 };
 
-export const DeliveryForm = withStyles(styles)(DeliveryFormBase);
+export const DeliveryForm = withStyles(formStyles)(DeliveryFormBase);
 

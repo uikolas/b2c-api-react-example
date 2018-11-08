@@ -3,6 +3,7 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem} from "src/shared/reducers/Common/Cart";
 import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
+import {IShippingAddress} from "src/shared/interfaces/checkout/index";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
@@ -21,13 +22,7 @@ export interface ICheckoutPageState {
 
 }
 
-export interface ICheckoutDeliveryInputs {
-  salutation: TCustomerSalutation;
-  firstName: TCustomerFirstName;
-  lastName: TCustomerLastName;
-}
-
-export interface ICheckoutFormInput extends ICheckoutDeliveryInputs {
+export interface ICheckoutFormInputs extends IShippingAddress {
 }
 
 export type TCheckoutFormInputValue = TCustomerFirstName
@@ -35,6 +30,6 @@ export type TCheckoutFormInputValue = TCustomerFirstName
   | TCustomerSalutation;
 
 export interface ICheckoutFieldInput {
-  name: (keyof ICheckoutFormInput);
+  name: (keyof ICheckoutFormInputs);
   value: TCheckoutFormInputValue;
 }
