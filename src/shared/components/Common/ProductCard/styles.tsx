@@ -43,6 +43,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: theme.spacing.unit + theme.spacing.unit/2,
     letterSpacing: "0.5px",
     width: "100%",
+    maxWidth: theme.appFixedDimensions.card.actionAreaWidth,
   },
   productName: {
     fontSize: "1rem",

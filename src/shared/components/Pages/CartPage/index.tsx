@@ -17,7 +17,7 @@ import { ICartItem } from 'src/shared/reducers/Common/Cart';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { ICartTotals, TCartId } from 'src/shared/interfaces/cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
-import { pathSearchPage } from 'src/shared/routes/contentRoutes';
+import {pathCheckoutPage, pathSearchPage} from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
 import { AppPrice } from '../../Common/AppPrice';
 import { styles } from './styles';
@@ -220,7 +220,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           <Divider/>
 
           <Grid item xs={ 12 } container justify="center" className={ classes.footer }>
-            <NavLink to={ pathSearchPage }>
+            <NavLink to={ pathCheckoutPage }>
               <SprykerButton title="continue to checkout"/>
             </NavLink>
           </Grid>
