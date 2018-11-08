@@ -82,7 +82,7 @@ export const styles = (theme: Theme) => createStyles({
     letterSpacing: '0.5px',
   },
   btnWrapper: {
-    margin: `${theme.spacing.unit * 3}px 0`,
+    margin: `${theme.spacing.unit * 4}px 0`,
     height: '44px',
   },
   mainCurrency: {
@@ -97,7 +97,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   shippingMsg: {
     textTransform: 'none',
-    marginTop: '-16px',
+    marginTop: `-${theme.spacing.unit * 3}px`,
   },
   actionAreaOverlay: {
     position: "absolute",

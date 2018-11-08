@@ -122,7 +122,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   };
 
   public render() {
-    const {classes, items, totals} = this.props;
+    const {classes, items, totals, isUserLoggedIn} = this.props;
 
     if (!items || !items.length) {
       return (
@@ -245,7 +245,19 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               align="left"
               color="primary"
             >
-              { `Cart has ${items.length} items` }
+              <span>
+                {
+                  isUserLoggedIn
+                    ? 'Cart'
+                    : 'Cart (guest)'
+                }
+              </span>
+              <span>{ ` has ${items.length} ` }</span>
+              <FormattedPlural
+                value={items.length}
+                one='item'
+                other='items'
+              />
             </Typography>
             <div className={classes.listTitle} ref={this.listRef}>
               <div style={{width: '20%'}}>Item</div>
@@ -275,7 +287,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
                 <form
                   noValidate
                   autoComplete="off"
-                  className={`${classes.fullWidth} ${classes.listItem}`}
+                  className={`${classes.fullWidth} ${classes.btnWrapper}`}
                 >
                   <TextField
                     name="voucher"
@@ -315,7 +327,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               <div>Tax</div>
               <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={classes.mainCurrency} /> }</div>
             </div>
-            <div className={classes.totalMsg}>
+            <div className={classes.totalMsg} style={{ marginBottom: '24px'}}>
               <div>Discount</div>
               <div>{ totals && <AppPrice value={ totals.discountTotal } extraClassName={classes.mainCurrency} /> }</div>
             </div>
