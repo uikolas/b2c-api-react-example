@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { ISearchPageData } from 'src/shared/interfaces/searchPageData';
 import { Location } from 'history';
 
-export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
+export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
   isLoading: boolean;
   changeLocation: Function;
   categoriesTree: ICategory[];
@@ -12,7 +12,7 @@ export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageD
   isFulfilled: boolean;
 }
 
-export interface SearchPageState {
+export interface ISearchPageState {
   activeFilters: TActiveFilters;
   activeRangeFilters: TActiveRangeFilters;
   sort: string;

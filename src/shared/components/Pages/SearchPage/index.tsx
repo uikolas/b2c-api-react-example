@@ -22,8 +22,8 @@ import {
   IFilterItemToDelete,
   ISearchQuery,
   RangeType,
-  SearchPageProps,
-  SearchPageState,
+  ISearchPageProps,
+  ISearchPageState,
   TCategoryId,
   TFilterItemValue,
 } from "./types";
@@ -44,8 +44,8 @@ export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';
 
 @connect
-export class SearchPageBase extends React.Component<SearchPageProps, SearchPageState> {
-  constructor(props: SearchPageProps) {
+export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPageState> {
+  constructor(props: ISearchPageProps) {
     super(props);
 
     const activeFilters: {[key: string]: string[]} = {};
@@ -202,7 +202,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public updateActiveFilters = (name: string, values: Array<string>) => {
-    this.setState((prevState: SearchPageState) => ({
+    this.setState((prevState: ISearchPageState) => ({
       activeFilters: {
         ...prevState.activeFilters,
         [name]: values
@@ -213,7 +213,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   };
 
   public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
-    this.setState((prevState: SearchPageState) => ({
+    this.setState((prevState: ISearchPageState) => ({
       activeRangeFilters: {
         ...prevState.activeRangeFilters,
         [name]: {min, max},
@@ -238,7 +238,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     let defaultValue = rangeFilterValueToFront(defaultValuesArr[0][rangeSubType], rangeSubType);
 
-    this.setState((prevState: SearchPageState) => ({
+    this.setState((prevState: ISearchPageState) => ({
       activeRangeFilters: {
         ...prevState.activeRangeFilters,
         [name]: {
@@ -285,7 +285,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
 
     this.props.dispatch(sendSearchAction(query));
 
-    this.setState((prevState: SearchPageState) => ({
+    this.setState((prevState: ISearchPageState) => ({
       ...prevState,
       isReadyToNewRequest: false,
       isNeedNewRequest: false,
@@ -363,7 +363,7 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
   }
 
   private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<any> => {
-    await this.setState((prevState: SearchPageState) => {
+    await this.setState((prevState: ISearchPageState) => {
       return ({
         ...prevState,
         activeFilters: {},
@@ -382,13 +382,13 @@ export class SearchPageBase extends React.Component<SearchPageProps, SearchPageS
     return true;
   }
 
-  private runSetItemsPerPage = async (itemsPerPage: SearchPageState["itemsPerPage"]): Promise<any> => {
+  private runSetItemsPerPage = async (itemsPerPage: ISearchPageState["itemsPerPage"]): Promise<any> => {
     await this.setState({itemsPerPage, isReadyToNewRequest: true});
     const resultUpdate = await this.updateSearch();
     return resultUpdate;
   }
 
-  private runSetSorting = async (sortMode: SearchPageState["sort"]): Promise<any> => {
+  private runSetSorting = async (sortMode: ISearchPageState["sort"]): Promise<any> => {
     await this.setState({sort: sortMode, isReadyToNewRequest: true});
     const resultUpdate = await this.updateSearch();
     return resultUpdate;

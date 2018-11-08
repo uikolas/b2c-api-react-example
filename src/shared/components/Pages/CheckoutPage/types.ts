@@ -3,7 +3,7 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem} from "src/shared/reducers/Common/Cart";
 
-export interface CheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
+export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
   isLoading: boolean;
@@ -16,6 +16,6 @@ export interface CheckoutPageProps extends WithStyles<typeof styles>, RouteProps
   isCartRejected: boolean;
 }
 
-export interface CheckoutPageState {
+export interface ICheckoutPageState {
 
 }

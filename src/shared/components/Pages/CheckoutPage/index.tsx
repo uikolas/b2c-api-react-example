@@ -11,13 +11,13 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
-import {CheckoutPageProps, CheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types";
+import {ICheckoutPageProps, ICheckoutPageState} from "./types";
 
 
 @connect
-export class CheckoutPageBase extends React.Component<CheckoutPageProps, CheckoutPageState> {
+export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
 
-  public state: CheckoutPageState = {
+  public state: ICheckoutPageState = {
 
   };
 
