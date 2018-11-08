@@ -8,6 +8,7 @@ import {
   isPageProductStateRejected,
 } from "src/shared/reducers/Pages/Product";
 import {isUserAuthenticated} from "src/shared/reducers/Pages/Login";
+import {getProductsFromCart, isCartStateFulfilled, isCartStateRejected} from "src/shared/reducers/Common/Cart";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -18,6 +19,11 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
   const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
 
+  const products = getProductsFromCart(state, ownProps);
+  const isCartFulfilled: boolean = isCartStateFulfilled(state, ownProps);
+  const isCartRejected: boolean = isCartStateRejected(state, ownProps);
+
+
   return ({
     isAppDataSet,
     isUserLoggedIn,
@@ -25,6 +31,10 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isLoading,
     isRejected,
     isFulfilled,
+
+    products,
+    isCartFulfilled,
+    isCartRejected,
   });
 };
 

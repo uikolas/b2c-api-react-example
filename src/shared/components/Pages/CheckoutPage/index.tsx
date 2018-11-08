@@ -11,6 +11,7 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+import {ICartData, ICartItem} from "src/shared/reducers/Common/Cart";
 
 
 interface CheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
@@ -20,6 +21,10 @@ interface CheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isRejected: boolean;
   isFulfilled: boolean;
   isInitiated: boolean;
+
+  products: Array<ICartItem> | null;
+  isCartFulfilled: boolean;
+  isCartRejected: boolean;
 }
 
 interface CheckoutPageState {
@@ -46,12 +51,15 @@ export class CheckoutPageBase extends React.Component<CheckoutPageProps, Checkou
       classes,
       isLoading,
     } = this.props;
-    console.info('state: ', this.state);
-    console.info('props: ', this.props);
+    console.info('CheckoutPage state: ', this.state);
+    console.info('CheckoutPage props: ', this.props);
+
+    console.info('products: ', this.props.products);
 
     return (
       <AppMain>
         {isLoading ? <AppBackdrop isOpen={true} /> : null}
+
         <Grid container className={classes.container}>
           <Grid item xs={12} md={7}>
             <CheckoutForms />
@@ -60,6 +68,7 @@ export class CheckoutPageBase extends React.Component<CheckoutPageProps, Checkou
             <CartData />
           </Grid>
         </Grid>
+
       </AppMain>
     );
   }
