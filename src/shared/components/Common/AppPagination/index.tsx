@@ -65,7 +65,7 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
         classes={numberClasses}
       />
     );
-  }
+  };
 
   const last = () => {
     dots(size);

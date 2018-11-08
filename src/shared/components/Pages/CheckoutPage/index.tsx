@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -11,25 +11,8 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
-import {ICartData, ICartItem} from "src/shared/reducers/Common/Cart";
+import {CheckoutPageProps, CheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types";
 
-
-interface CheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
-  isAppDataSet: boolean;
-  isUserLoggedIn: boolean;
-  isLoading: boolean;
-  isRejected: boolean;
-  isFulfilled: boolean;
-  isInitiated: boolean;
-
-  products: Array<ICartItem> | null;
-  isCartFulfilled: boolean;
-  isCartRejected: boolean;
-}
-
-interface CheckoutPageState {
-
-}
 
 @connect
 export class CheckoutPageBase extends React.Component<CheckoutPageProps, CheckoutPageState> {
