@@ -25,7 +25,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
   }
 
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
+  public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
   };
 

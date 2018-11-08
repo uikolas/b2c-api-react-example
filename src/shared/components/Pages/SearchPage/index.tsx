@@ -78,7 +78,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
   }
 
-  public componentDidUpdate = (prevProps: any, prevState: any): void => {
+  public componentDidUpdate = (prevProps: ISearchPageProps, prevState: ISearchPageState): void => {
     // Init showing a message if filters is reset
     // (prevState.isFiltersReset === false && this.state.isFiltersReset) ? toast.success(resetFilterSuccessText) : null;
 
