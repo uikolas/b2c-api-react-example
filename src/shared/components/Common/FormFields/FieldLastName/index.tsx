@@ -3,20 +3,20 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 
-import {IFieldFirstNameProps} from "src/shared/components/Common/FormFields/FieldFirstName/types";
 import {fieldStyles} from "src/shared/components/Common/FormFields/fieldStyles";
+import {IFieldLastNameProps} from "src/shared/components/Common/FormFields/FieldLastName/types";
 
-const firstNameLabel = "First Name";
+const lastNameLabel = "Last Name";
 
-export const FieldFirstNameBase: React.SFC<IFieldFirstNameProps> = (props): JSX.Element => {
+export const FieldLastNameBase: React.SFC<IFieldLastNameProps> = (props): JSX.Element => {
   const {classes, value, formName, onChangeHandler}  = props;
 
   return (
     <TextField
       required
-      id={`${formName}-first-name`}
-      label={firstNameLabel}
-      name="firstName"
+      id={`${formName}-last-name`}
+      label={lastNameLabel}
+      name="lastName"
       type="text"
       value={value}
       className={classes.textField}
@@ -33,5 +33,5 @@ export const FieldFirstNameBase: React.SFC<IFieldFirstNameProps> = (props): JSX.
   );
 };
 
-export const FieldFirstName = withStyles(fieldStyles)(FieldFirstNameBase);
+export const FieldLastName = withStyles(fieldStyles)(FieldLastNameBase);
 

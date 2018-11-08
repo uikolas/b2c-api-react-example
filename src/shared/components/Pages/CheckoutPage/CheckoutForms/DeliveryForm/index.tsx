@@ -2,15 +2,12 @@ import * as React from 'react';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
 
-import { styles } from './styles';
 import {IDeliveryFormProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types";
-import {salutationVariants} from "src/shared/constants/customer/index";
-import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {FieldFirstName} from "src/shared/components/Common/FormFields/FieldFirstName/index";
+import {FieldLastName} from "src/shared/components/Common/FormFields/FieldLastName/index";
+import {FieldSalutation} from "src/shared/components/Common/FormFields/FieldSalutation/index";
 
 const deliveryFormName = 'delivery';
 
@@ -41,65 +38,28 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
 
           <Grid container justify="flex-start" className={classes.controlsGroup}>
             <Grid item xs={12} sm={2} className={classes.control}>
-              <TextField
-                required
-                id={`${deliveryFormName}-salutation`}
-                select
-                label="Salutation"
-                name="salutation"
-                className={classes.textField}
-                value={salutation}
-                onChange={inputChangeHandler}
-                fullWidth
-                SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                }}
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                  className: classes.label,
-                }}
-              >
-                {salutationVariants.map((option: TSalutationVariant) => (
-                  <MenuItem
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+             <FieldSalutation
+               formName={deliveryFormName}
+               value={salutation}
+               onChangeHandler={inputChangeHandler}
+             />
             </Grid>
 
-            <Grid item xs={12} sm={5} className={classes.control}>
+            <Grid item xs={12} sm={6} className={classes.control}>
               <FieldFirstName
                 formName={deliveryFormName}
                 value={firstName}
                 onChangeHandler={inputChangeHandler}
               />
+              <FieldLastName
+                formName={deliveryFormName}
+                value={lastName}
+                onChangeHandler={inputChangeHandler}
+              />
             </Grid>
 
             <Grid item xs={12} sm={5} className={classes.control}>
-              <TextField
-                required
-                id={`${deliveryFormName}-last-name`}
-                label="Last Name"
-                name="lastName"
-                type="text"
-                value={lastName}
-                onChange={inputChangeHandler}
-                className={classes.textField}
-                margin="normal"
-                fullWidth
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                InputProps={{
-                  className: classes.input,
-                }}
-              />
+
             </Grid>
           </Grid>
 
