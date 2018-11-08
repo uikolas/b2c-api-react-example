@@ -1,16 +1,15 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import Chip from '@material-ui/core/Chip';
 import { CloseOutlined } from '@material-ui/icons';
 
 import { styles } from './styles';
 import {SearchPageContext} from '../context';
-import {IFilterItem, TFilterItemName, TFilterItemValue} from "src/shared/components/Pages/SearchPage/types";
+import {IActiveFilterItemProps} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/types";
 
-interface ActiveFilterItemProps extends WithStyles<typeof styles>, IFilterItem {
-}
 
-export const ActiveFilterItemBase: React.SFC<ActiveFilterItemProps> = (props) => {
+export const ActiveFilterItemBase: React.SFC<IActiveFilterItemProps> = (props) => {
   const {
     classes,
     value,

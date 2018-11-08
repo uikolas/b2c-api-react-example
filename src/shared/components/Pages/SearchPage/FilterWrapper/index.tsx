@@ -1,15 +1,12 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
+import {IFilterWrapperProps} from "src/shared/components/Pages/SearchPage/FilterWrapper/types";
 
-interface FilterWrapperProps extends WithStyles<typeof styles> {
-  filter: JSX.Element;
-  keyValue: string;
-}
 
-export const FilterWrapperBase: React.SFC<FilterWrapperProps> = (props) => {
+export const FilterWrapperBase: React.SFC<IFilterWrapperProps> = (props) => {
   const {classes, filter, keyValue} = props;
 
   return (

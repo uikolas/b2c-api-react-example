@@ -1,18 +1,12 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import { styles } from './styles';
-import {TOrderProducts} from "src/shared/interfaces/order/index";
+import {ICartProductListItemProps} from "src/shared/components/Pages/CheckoutPage/CartProductListItem/types";
 
 
-interface CartProductListItemProps extends WithStyles<typeof styles> {
-
-}
-
-
-export const CartProductListItemBase: React.SFC<CartProductListItemProps> = (props): JSX.Element => {
+export const CartProductListItemBase: React.SFC<ICartProductListItemProps> = (props): JSX.Element => {
   const {classes}  = props;
 
   return (

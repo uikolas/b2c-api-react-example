@@ -1,40 +1,23 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
 import {SprykerFilterElement} from "src/shared/components/UI/SprykerFilter/index";
 import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/index";
-import {
-  rangeMaxType,
-  rangeMinType,
-  TActiveFilters,
-  TActiveRangeFilters
-} from "src/shared/components/Pages/SearchPage/types";
+import { rangeMaxType, rangeMinType} from "src/shared/components/Pages/SearchPage/types";
 import {sprykerTheme} from "src/shared/theme/sprykerTheme";
 import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
 import {firstLetterToUpperCase, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 import {SprykerRangeSlider} from "src/shared/components/UI/SprykerRangeSlider/index";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import {ISearchFilterListProps} from "src/shared/components/Pages/SearchPage/SearchFilterList/types";
 
-
-interface SearchFilterListProps extends WithStyles<typeof styles> {
-  filters:  Array<ValueFacets>;
-  updateFilterHandler: Function;
-  activeValuesFilters: TActiveFilters;
-  ranges: Array<RangeFacets>;
-  activeValuesRanges: TActiveRangeFilters;
-  updateRangeHandler: Function;
-  onCloseFilterHandler: Function;
-  onAfterChangeRangeFilter: (value: number[]) => void;
-  isFiltersReset: boolean;
-  isProductsExist?: boolean;
-}
 
 const title = 'Filter your results';
 
-export const SearchFilterListBase: React.SFC<SearchFilterListProps> = (props) => {
+export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) => {
   const {
     classes,
     filters,

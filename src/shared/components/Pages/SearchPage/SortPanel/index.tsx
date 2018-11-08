@@ -1,21 +1,12 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import {FoundItemsProps} from "src/shared/components/Pages/SearchPage/FoundItems/index";
-import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
+import {ISortPanelProps} from "src/shared/components/Pages/SearchPage/SortPanel/types";
 
 
-interface SortPanelProps extends WithStyles<typeof styles> {
-  foundItems: React.SFC<FoundItemsProps>;
-  numberMode: React.SFC<SprykerSelectProps>;
-  sorterMode: React.SFC<SprykerSelectProps>;
-  isProductsExist: boolean;
-}
-
-
-export const SortPanelBase: React.SFC<SortPanelProps> = (props) => {
+export const SortPanelBase: React.SFC<ISortPanelProps> = (props) => {
   const {
     classes,
     foundItems,

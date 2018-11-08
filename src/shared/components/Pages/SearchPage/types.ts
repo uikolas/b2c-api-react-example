@@ -30,11 +30,6 @@ export type IQuery = {
   [key: string]: string | number,
 };
 
-export interface SearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
-  isLoading: boolean;
-  changeLocation: Function;
-}
-
 export type RangeType = {min: number, max: number};
 export type TCategoryId = number | string;
 export type TActiveFilters = {[name: string]: string[]};

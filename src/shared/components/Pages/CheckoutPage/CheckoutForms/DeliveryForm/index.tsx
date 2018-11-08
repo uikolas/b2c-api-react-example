@@ -2,11 +2,11 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
+
 import { styles } from './styles';
-import {ICheckoutFormsProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {IDeliveryFormProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types";
 
-
-export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
+export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
   const {classes}  = props;
 
   return (
@@ -18,5 +18,5 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
   );
 };
 
-export const CheckoutForms = withStyles(styles)(CheckoutFormsBase);
+export const DeliveryForm = withStyles(styles)(DeliveryFormBase);
 
