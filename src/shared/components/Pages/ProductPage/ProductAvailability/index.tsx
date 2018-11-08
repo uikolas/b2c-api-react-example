@@ -17,7 +17,11 @@ export const ProductAvailabilityBase: React.SFC<ProductAvailabilityProps> = (pro
     <div className={ classes.root }>
       <Typography variant="title" color="inherit" gutterBottom={ true }>
         { availabilityTitle ? availabilityTitle : null }
-        <Typography variant="subheading" className={ classes.value } component="span">
+        <Typography
+          variant="subheading"
+          className={ `${classes.value} ${classes[availability === 'Available' ? 'available' : 'unavailable']}` }
+          component="span"
+        >
           { availability }
         </Typography>
       </Typography>

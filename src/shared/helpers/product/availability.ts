@@ -15,11 +15,11 @@ export const getAvailabilityDisplay = (availability: boolean, locale: string = A
   const availabilityMap: IAvailabilityMap = {
     'de': {
       yes: 'Available',
-      not: 'Not available',
+      not: 'Unavailable',
     },
     fallback: {
       yes: 'Available',
-      not: 'Not available',
+      not: 'Unavailable',
     },
   };
 

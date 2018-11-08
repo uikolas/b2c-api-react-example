@@ -7,7 +7,7 @@ export interface ISuperAttribute {
   data: Array<ISuperAttributeData>;
 }
 
-interface ISuperAttributeData {
+export interface ISuperAttributeData {
   value: string;
   name: string;
   idProductConcrete?: string | number;

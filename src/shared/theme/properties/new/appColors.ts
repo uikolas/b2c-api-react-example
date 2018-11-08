@@ -9,6 +9,7 @@ export interface IAppColors {
   weakGrey: TAppColor;
   blue: TAppColor;
   orange: TAppColor;
+  green: TAppColor;
 
   blockDivider: TAppColor;
 }
@@ -21,6 +22,7 @@ export const appColors: IAppColors = {
   weakGrey: "#d8d8d8",
   blue: "#3589ea",
   orange: "#ea7a35",
+  green: "#008a00",
 
   blockDivider: "#e2e2e2",
 };
