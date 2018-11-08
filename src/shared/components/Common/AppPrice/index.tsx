@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { FormattedNumber } from 'react-intl';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import { reduxify } from '../../../lib/redux-helper';
-import { getAppCurrency, TAppCurrency } from '../../../reducers/Common/Init';
-import {priceTypeNameDefault, priceTypeNameOriginal, TPriceTypeName} from '../../../interfaces/product';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import {priceTypeNameDefault, priceTypeNameOriginal, TPriceTypeName} from 'src/shared/interfaces/product';
 import { styles } from './styles';
 
 interface AppPriceProps extends WithStyles<typeof styles> {

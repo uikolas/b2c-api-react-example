@@ -17,6 +17,7 @@ import {
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
 import {PAGES_CUSTOMER_LOGOUT} from "src/shared/constants/ActionTypes/Pages/Login";
+import {IProductPropFullData} from "src/shared/interfaces/product";
 
 export interface ICartItem {
   sku: TProductSKU | null;
@@ -28,6 +29,7 @@ export interface ICartItem {
   groupKey: string | null;
   availability: TProductAvailability | null;
   availableQuantity: TProductQuantity | null;
+  superAttributes: Array<{ [key: string]: string }> | null;
 }
 
 export interface ICartData extends ICartDataResponse {
