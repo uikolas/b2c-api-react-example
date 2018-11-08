@@ -16,6 +16,9 @@ export interface IAppFixedDimensions {
     large: React.CSSProperties['fontSize'];
     big: React.CSSProperties['fontSize'];
   };
+  customBreakpoints: {
+    tablet: number;
+  };
 }
 
 export const appFixedDimensions: IAppFixedDimensions = {
@@ -33,5 +36,7 @@ export const appFixedDimensions: IAppFixedDimensions = {
     large: "1.13rem",
     big: "1.25rem",
   },
-
+  customBreakpoints: {
+    tablet: 1280,
+  }
 };

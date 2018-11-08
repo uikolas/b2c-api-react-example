@@ -13,7 +13,7 @@ interface CartProductListItemProps extends WithStyles<typeof styles> {
 
 
 export const CartProductListItemBase: React.SFC<CartProductListItemProps> = (props): JSX.Element => {
-  const {classes, items}  = props;
+  const {classes}  = props;
 
   return (
     <Grid container className={ classes.root }>
