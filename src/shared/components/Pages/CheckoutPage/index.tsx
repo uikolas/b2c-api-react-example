@@ -61,6 +61,15 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 firstName: 'firstName',
                 lastName: 'lastName',
                 salutation: 'Mr',
+                address1: 'address1 str',
+                address2: '37',
+                address3: '',
+                zipCode: '33222',
+                city: 'Bochum',
+                country: 'USA',
+                company: '',
+                phone: '+49 1234 5060',
+                iso2Code: 'RRR'
               }}
             />
           </Grid>

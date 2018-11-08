@@ -17,7 +17,7 @@ export interface SprykerSelectProps extends WithStyles<typeof styles> {
   changeHandler: (event: ChangeEvent<HTMLSelectElement>, child: ReactNode) => void;
   name: string;
   menuItems: Array<IMenuItemSelect>;
-  menuItemFirst?: IMenuItemFirst;
+  menuItemFirst?: IMenuItemFirst | null;
   title?: string;
 }
 
@@ -40,6 +40,9 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
   } = props;
 
   const getMenuItemFirst = () => {
+    if (!menuItemFirst) {
+      return null;
+    }
     return (
       <MenuItem
         value={ menuItemFirst.value }
