@@ -1,15 +1,5 @@
 FROM node:9.5.0
 
-## Update global server dependencies repos
-#RUN apt-get update
-
-## Install global server dependencies
-#RUN apt-get install -y \
-#  libcurl3 libcurl4-gnutls-dev curl
-
-## Install global npm dependencies
-## ...
-
 # Create app directory
 WORKDIR /usr/src/app
 

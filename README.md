@@ -1,7 +1,7 @@
-Boilerplate
+REACT SPA
 ===========
 
-## React boilerplate with devserver, typescript, redux, scss, css modules and unit tests.
+## React single page application with devserver, typescript, redux for Spryker Glue API.
 
 ## Requirements
 
@@ -32,64 +32,42 @@ To build assets for development and running locally run
 ```sh
 npm run dist:dev
 ```
-To build assets for development and running via docker run first
+To build assets for development and running via docker run
 ```sh
-npm run dist:docker
-```
-And then to build docker container run
-```sh
-docker-compose build
+npm run start:docker
 ```
 To build assets for production run
 ```sh
 npm run dist:prod
 ```
-To build server script for production run
+To build node server script for production run
 ```sh
-npm run build:server:prod
+npm run start
+```
+To build daemon node server for production run
+```sh
+npm run pm2:start
 ```
 
 ## Usage
-Configure your webserver to serve static build/web directory, edit *.env files to set correct API and run API server
+Configure your webserver to serve static build/web directory, edit *.env files to set correct functionality.
 
 ## Web server
 Before running webserver you have to build it for correct environment (see "Building" section).
 
-To start webserver run
-```sh
-npm run start
-```
 To restart webserver run
 ```sh
-npm run restart
+npm run pm2:restart
 ```
 To stop webserver run
 ```sh
-npm run stop
+npm run pm2:stop
 ```
 To start docker container run
 ```sh
 docker-compose up
 ```
-If you are working on Windows - do not forget to forward port 80 from docker machine to your host
-
-
-## Unit tests
-Before running webserver you have to build it for correct environment (see "Building" section).
-
-To run unit tests run
-```sh
-npm run unit
-```
-To run unit tests with coverage report run
-```sh
-npm run coverage
-```
-To run all tests (now only unit) run
-```sh
-npm run test
-```
-
+If you are working on Windows - do not forget to forward port 80 from docker machine to your hos
 
 ## License
 
