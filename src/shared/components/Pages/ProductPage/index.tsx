@@ -325,7 +325,7 @@ export class ProductPageBase extends React.Component<Props, State> {
   };
 
   private isAddToWishListBtnDisabled = () => {
-    return !this.props.isWishListsFetched || this.state.productType !== concreteProductType || !this.state.wishListSelected;
+    return !this.props.isWishListsFetched || this.state.productType !== concreteProductType;
   };
 
   public render(): JSX.Element {
