@@ -31,10 +31,25 @@ export const styles = (theme: Theme) => createStyles({
     paddingTop: theme.spacing.unit * 1.5,
     paddingBottom: theme.spacing.unit * 1.5,
   },
+  inputRoot: {
+
+  },
   menuItem: {
 
   },
   title: {
     display: "inline-flex",
+  },
+  label: {
+    position: 'relative',
+    paddingBottom: theme.spacing.unit,
+    color: theme.appColors.black,
+    top: "auto",
+    left: "auto",
+    width: '100%',
+    fontWeight: 600,
+  },
+  selectField: {
+
   },
 });

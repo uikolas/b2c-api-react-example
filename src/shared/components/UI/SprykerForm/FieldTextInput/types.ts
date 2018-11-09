@@ -1,15 +1,14 @@
-import * as React from 'react';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {ChangeEvent} from "react";
-import {fieldStyles} from "src/shared/components/UI/SprykerForm/sprykerFieldStyles";
-import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
+import {IFormField, IFormSettings} from "src/shared/components/UI/SprykerForm/types";
+import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
 
-export interface IFieldTextInputProps extends WithStyles<typeof fieldStyles> {
-  value: TFormInputValue;
-  formName: string;
-  inputName: string;
-  onChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  handleBlur?: React.EventHandler<any>;
-  label?: string;
-  isError: boolean;
+export interface IFieldTextInputProps extends WithStyles<typeof sprykerFormStyles> {
+  inputValue: IFormField["inputValue"];
+  formName: IFormSettings["formName"];
+  inputName: IFormField["inputName"];
+  onChangeHandler: IFormSettings["onChangeHandler"] | IFormField["onChangeOwnHandler"];
+  onBlurHandler?: IFormSettings["onBlurHandler"] | IFormField["onBlurOwnHandler"];
+  label?: IFormField["label"];
+  isError: IFormField["isError"];
+  isRequired: IFormField["isRequired"];
 }

@@ -13,7 +13,7 @@ import {
   TIso2Code
 } from "src/shared/interfaces/addresses/index";
 
-export interface IShippingAddress {
+export interface ICheckoutAddress {
   firstName: TCustomerFirstName;
   lastName: TCustomerLastName;
   salutation: TCustomerSalutation;
@@ -26,4 +26,10 @@ export interface IShippingAddress {
   company?: TAddressCompany;
   phone?: TAddressPhone;
   iso2Code: TIso2Code;
+}
+
+export interface IShippingAddress extends ICheckoutAddress {
+}
+
+export interface IBillingAddress extends ICheckoutAddress {
 }

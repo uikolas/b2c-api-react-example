@@ -38,17 +38,17 @@ export const styles = (theme: Theme) => createStyles({
     margin: `0 0 0 !important`,
   },
   panelDetailRoot: {
-    paddingLeft: theme.spacing.unit * 1.5,
+    paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: theme.spacing.unit * 3,
-    paddingRight: theme.spacing.unit * 1.5,
+    paddingRight: 0,
   },
   formOuter: {
     paddingLeft: 0,
     paddingTop: 0,
     paddingBottom: theme.spacing.unit * 3,
     paddingRight: 0,
-    maxWidth: `calc(100% - ${theme.spacing.unit * 3}px)`,
+    width: `100%`,
     margin: "auto",
   },
   title: {

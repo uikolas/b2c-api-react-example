@@ -3,31 +3,33 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 
-import {fieldStyles} from "src/shared/components/UI/SprykerForm/sprykerFieldStyles";
 import {IFieldTextInputProps} from "src/shared/components/UI/SprykerForm/FieldTextInput/types";
+import {OptionalPlaceholder} from "src/shared/constants/forms/labels";
+import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
 
 export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.Element => {
   const {
     classes,
-    value,
+    inputValue,
     formName,
     inputName,
     onChangeHandler,
     label,
     isError,
-    handleBlur
+    isRequired,
+    onBlurHandler
   }  = props;
 
   return (
     <TextField
-      required
+      required={isRequired ? isRequired : false}
       id={`${formName}-${inputName}`}
       label={label ? label : null}
       name={inputName}
       error={isError}
       InputProps={{
         disableUnderline: true,
-        classes: {input: classes.input, error: classes.error},
+        classes: {root: classes.inputRoot, input: classes.input, error: classes.error},
       }}
       InputLabelProps={{
         shrink: true,
@@ -36,15 +38,15 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
         }
       }}
       type="text"
-      value={value}
+      value={inputValue}
+      placeholder={isRequired ? null : OptionalPlaceholder}
       className={classes.textField}
       margin="normal"
       onChange={onChangeHandler}
-      onBlur={handleBlur}
+      onBlur={onBlurHandler}
       fullWidth
     />
   );
 };
 
-export const FieldTextInput = withStyles(fieldStyles)(FieldTextInputBase);
-
+export const FieldTextInput = withStyles(sprykerFormStyles)(FieldTextInputBase);

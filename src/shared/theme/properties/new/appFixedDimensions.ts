@@ -32,7 +32,7 @@ export const appFixedDimensions: IAppFixedDimensions = {
   gridSpacing: 24,
   fontSize: {
     mini: "0.69rem",
-    small: "0.875rem",
+    small: "0.875rem", // 14px
     medium: "1.0rem",
     large: "1.13rem",
     big: "1.25rem", // 20px

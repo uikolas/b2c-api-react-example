@@ -7,6 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import { ChevronLeft } from '@material-ui/icons';
+import InputLabel from '@material-ui/core/InputLabel';
 
 import { styles } from './styles';
 import {IMenuItemFirst, IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
@@ -19,6 +20,17 @@ export interface SprykerSelectProps extends WithStyles<typeof styles> {
   menuItems: Array<IMenuItemSelect>;
   menuItemFirst?: IMenuItemFirst | null;
   title?: string;
+  label?: string;
+  extraLabelClassName?: string;
+  isRequired?: boolean;
+  isFullWidth?: boolean;
+  extraTitleClassName?: string;
+  selectClassName?: string;
+  menuItemClassName?: string;
+  extraRootClassName?: string;
+  extraFormControlClassName?: string;
+  extraInputRootClassName?: string;
+  extraSelectFieldClassName?: string;
 }
 
 
@@ -37,6 +49,17 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
       disabled: false,
     },
     title,
+    label,
+    extraLabelClassName,
+    isRequired,
+    isFullWidth,
+    extraTitleClassName,
+    selectClassName,
+    menuItemClassName,
+    extraRootClassName,
+    extraFormControlClassName,
+    extraInputRootClassName,
+    extraSelectFieldClassName,
   } = props;
 
   const getMenuItemFirst = () => {
@@ -65,24 +88,44 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
     <Grid container
           justify="center"
           alignItems="center"
-          className={ classes.root }
+          className={`${classes.root} ${extraRootClassName ? extraRootClassName : ''}`}
     >
       <Grid item xs={ 12 }>
-        <FormControl className={ classes.formControl }>
+        <FormControl
+          required = {isRequired ? isRequired : false}
+          className={`${classes.formControl} ${extraFormControlClassName ? extraFormControlClassName : ''}`}
+        >
           { (title && isMenuItemsExist)
-            ? <Typography component="span" className={classes.title}>{title}</Typography>
+            ? <Typography
+                component="span"
+                className={`${classes.title} ${extraTitleClassName ? extraTitleClassName : ''}`}
+              >
+                {title}
+              </Typography>
             : null
           }
+
+          {label
+            ? <InputLabel classes={{root: `${classes.label} ${extraLabelClassName ? extraLabelClassName : ''}`}} >
+                {label}
+              </InputLabel>
+            : null
+          }
+
+
           <Select
             value={currentMode }
             onChange={changeHandler}
             name={name}
             classes={{
+              root: `${classes.inputRoot} ${extraInputRootClassName ? extraInputRootClassName : ''}`,
               icon: classes.icon,
-              select: classes.input,
+              select: `${classes.input} ${selectClassName ? selectClassName : ''}`,
             }}
             disableUnderline= {true}
             IconComponent={ChevronLeft}
+            fullWidth={isFullWidth ? isFullWidth : false}
+            className={`${classes.selectField} ${extraSelectFieldClassName ? extraSelectFieldClassName : ''}`}
           >
             { getMenuItemFirst() }
             {isMenuItemsExist && menuItems.map((item) => (
@@ -93,7 +136,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
                 classes={{
                   selected: classes.selected,
                 }}
-                className={ classes.menuItem }
+                className={`${classes.menuItem} ${menuItemClassName ? menuItemClassName : ''}`}
               >
                 {item.name}
               </MenuItem>

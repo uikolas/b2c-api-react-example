@@ -49,7 +49,8 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                   <FieldTextInput
                     formName={formName}
                     inputName={field.inputName}
-                    value={field.inputValue}
+                    inputValue={field.inputValue}
+                    isRequired={field.isRequired ? field.isRequired : false}
                     onChangeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
                     label={field.label ? field.label : null}
                     isError={field.isError ? field.isError : false}
@@ -62,6 +63,15 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                     changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
                     menuItems={field.menuItems}
                     name={field.inputName}
+                    label={field.label ? field.label : null}
+                    selectClassName={classes.input}
+                    isFullWidth={true}
+                    isRequired={field.isRequired ? field.isRequired : false}
+                    extraTitleClassName={`${classes.selectLabel} ${classes.label}`}
+                    extraFormControlClassName={classes.selectFormControlClassName}
+                    extraRootClassName={classes.selectRoot}
+                    extraInputRootClassName={classes.selectInputRoot}
+                    extraSelectFieldClassName={classes.inputRoot}
                   />
                 );
               } else {

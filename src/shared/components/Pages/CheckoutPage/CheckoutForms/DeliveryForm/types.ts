@@ -1,12 +1,8 @@
-import {ChangeEvent, FormEvent} from "react";
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import {IShippingAddress} from "src/shared/interfaces/checkout/index";
+import {IAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 
-export interface IDeliveryFormSettings {
-  submitHandler: (event: FormEvent<HTMLFormElement>) => void;
-  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  shippingAddress: IShippingAddress;
+export interface IDeliveryFormSettings extends IAddressFormSettings {
 }
 
 export interface IDeliveryFormProps extends WithStyles<typeof formStyles>, IDeliveryFormSettings {

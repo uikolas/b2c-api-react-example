@@ -1,3 +1,5 @@
+export const OptionalPlaceholder = "Optional";
+
 export const InputLabelFirstName = "First Name";
 export const InputLabelLastName = "Last Name";
 export const InputLabelSalutation = "Salutation";

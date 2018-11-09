@@ -28,6 +28,7 @@ export interface IFormField {
   inputName: string;
   inputValue: TFormInputValue;
   spaceNumber: GridSize;
+  isRequired?: boolean;
   onChangeOwnHandler?: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   onBlurOwnHandler?: React.EventHandler<any>;
   label?: string;
