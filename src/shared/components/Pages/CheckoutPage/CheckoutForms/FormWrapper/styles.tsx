@@ -2,14 +2,64 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  root: {},
-  panelRoot: {},
-  panelExpanded: {},
-  icon: {},
-  panelSummaryRoot: {},
-  panelSummaryContent: {},
-  panelSummaryExpanded: {},
-  panelDetailRoot: {},
-  formOuter: {},
-  title: {},
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 2.25,
+  },
+  panelRoot: {
+    padding: 0,
+    borderBottomLeftRadius: `${theme.appFixedDimensions.borderRadius}px !important`,
+    borderBottomRightRadius: `${theme.appFixedDimensions.borderRadius}px !important`,
+    borderTopRightRadius: `${theme.appFixedDimensions.borderRadius}px !important`,
+    borderTopLeftRadius: `${theme.appFixedDimensions.borderRadius}px !important`,
+    boxShadow: "none",
+    backgroundColor: theme.appColors.white,
+  },
+  panelExpanded: {
+    margin: "0 0",
+  },
+  icon: {
+    color: theme.appColors.black,
+    right: 10,
+    padding: 0,
+    margin: "0 !important",
+  },
+  panelSummaryRoot: {
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
+    minHeight: "auto !important",
+  },
+  panelSummaryContent: {
+    margin: "0 0",
+  },
+  panelSummaryExpanded: {
+    margin: `0 0 0 !important`,
+  },
+  panelDetailRoot: {
+    paddingLeft: theme.spacing.unit * 1.5,
+    paddingTop: 0,
+    paddingBottom: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 1.5,
+  },
+  formOuter: {
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: theme.spacing.unit * 3,
+    paddingRight: 0,
+    maxWidth: `calc(100% - ${theme.spacing.unit * 3}px)`,
+    margin: "auto",
+  },
+  title: {
+    fontSize: theme.appFixedDimensions.fontSize.xl,
+    fontWeight: "normal",
+    lineHeight: 1.13,
+    letterSpacing: -0.8,
+    paddingLeft: 0,
+    paddingBottom: theme.spacing.unit * 2,
+    color: theme.appColors.black,
+    borderBottom: `solid 1px ${theme.appColors.weakGrey}`,
+    width: "100%",
+  },
 });

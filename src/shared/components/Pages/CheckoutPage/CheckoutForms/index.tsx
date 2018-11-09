@@ -19,8 +19,6 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
   return (
     <Grid container className={ classes.root }>
       <Grid item xs={ 12 }>
-        CheckoutFormsBase
-
         <FormWrapper title="Delivery Address" >
           <DeliveryForm
             submitHandler={submitHandler}
