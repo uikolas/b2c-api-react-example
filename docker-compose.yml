@@ -1,7 +1,7 @@
 version: "3"
 services:
   boilerplate-node:
-    container_name: boilerplate-node
+    container_name: node-for-react
 
     build:
       context: .

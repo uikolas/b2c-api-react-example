@@ -9,22 +9,16 @@ const DashboardPlugin = require("webpack-dashboard/plugin");
 
 const basicConfig = require('./basic-webpack-config');
 
-console.info('Webpack config: API_URL:', process.env.API_URL);
-
-
 const {
   PRODUCTION,
   definableConstants,
   DEV_SERVER_HOST,
   DEV_SERVER_PORT,
   WEB_PATH,
-
   commonLoaders,
   webLoaders,
-
   cleanBuild,
   configureLoader,
-
   commonExtensions,
   webExtensions,
 } = basicConfig;
