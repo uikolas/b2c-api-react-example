@@ -3,8 +3,8 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 
-import {fieldStyles} from "src/shared/components/Common/FormFields/fieldStyles";
-import {IFieldTextInputProps} from "src/shared/components/Common/FormFields/FieldTextInput/types";
+import {fieldStyles} from "src/shared/components/UI/SprykerForm/sprykerFieldStyles";
+import {IFieldTextInputProps} from "src/shared/components/UI/SprykerForm/FieldTextInput/types";
 
 export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.Element => {
   const {
