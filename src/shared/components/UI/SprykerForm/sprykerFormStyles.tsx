@@ -34,6 +34,9 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     width: '100%',
     fontWeight: 600,
   },
+  labelCheckbox: {
+    paddingBottom: 0,
+  },
   inputRoot: {
 
     "label + &": {
@@ -59,6 +62,18 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     "&:focus": {
       border: `solid 1px ${theme.appColors.blue}`,
     },
+  },
+  inputCheckbox: {
+    padding: theme.spacing.unit,
+    paddingLeft: 0,
+    borderRadius: theme.appFixedDimensions.borderRadius,
+    color: theme.appColors.weakGrey,
+    "& svg": {
+      fontSize: 30,
+    }
+  },
+  outerCheckbox: {
+    marginLeft: 0,
   },
   selectRoot: {
     paddingLeft: 0,

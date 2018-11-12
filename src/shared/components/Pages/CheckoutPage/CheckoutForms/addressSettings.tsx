@@ -5,7 +5,9 @@ import {
   InputLabelFirstName,
   InputLabelLastName,
   InputLabelNumber,
-  InputLabelPhone, InputLabelSalutation,
+  InputLabelPhone,
+  InputLabelSalutation,
+  InputLabelSameAsDelivery,
   InputLabelStreet,
   InputLabelStreetExtra,
   InputLabelZipCode
@@ -31,6 +33,7 @@ export const getAddressFormSettings = ( formName: string,
     company,
     phone,
     iso2Code,
+    isSameAsDelivery,
   } = addressData;
 
   const formSettings: IFormSettings = {
@@ -153,6 +156,22 @@ export const getAddressFormSettings = ( formName: string,
       ],
     ],
   };
+
+  if (formName === 'billing') {
+    formSettings.fields.unshift(
+      [
+        {
+          type: 'checkbox',
+          inputName: 'sameAsDelivery',
+          inputValue: isSameAsDelivery,
+          spaceNumber: 12,
+          isRequired: false,
+          label: InputLabelSameAsDelivery,
+          isError: false,
+        }
+      ]
+    );
+  }
 
   return formSettings;
 };

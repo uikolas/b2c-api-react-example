@@ -33,12 +33,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private initRequestAddressesData = (): void => {
-    console.info('@@@@ initRequestAddressesData @@@@ customerReference', this.props.customerReference);
-    console.info('@@@@ initRequestAddressesData @@@@ addressesCollection', this.props.addressesCollection);
-    console.info('@@@@ initRequestAddressesData @@@@ isAddressesLoading', this.props.isAddressesLoading);
-    console.info('@@@@ initRequestAddressesData @@@@ isAppStateLoading', this.props.isAppStateLoading);
-    console.info('@@@@ initRequestAddressesData @@@@ isCartFulfilled', this.props.isCartFulfilled);
-
     const {customerReference,
       addressesCollection,
       isAddressesLoading,

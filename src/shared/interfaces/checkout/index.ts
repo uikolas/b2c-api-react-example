@@ -26,6 +26,7 @@ export interface ICheckoutAddress {
   company?: TAddressCompany;
   phone?: TAddressPhone;
   iso2Code: TIso2Code;
+  isSameAsDelivery?: boolean;
 }
 
 export interface IShippingAddress extends ICheckoutAddress {
