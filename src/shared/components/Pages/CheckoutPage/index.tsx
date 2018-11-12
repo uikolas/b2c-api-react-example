@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormEvent} from "react";
+import {FormEvent, ChangeEvent} from "react";
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -12,6 +12,7 @@ import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {ICheckoutFieldInput, ICheckoutPageProps, ICheckoutPageState} from "./types";
+import {CheckoutPageContext} from "./context";
 
 
 @connect
@@ -34,7 +35,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.log('handleSubmit ');
   }
 
-  public handleInputChange =  (event: {target: ICheckoutFieldInput}): void => {
+  public handleInputChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>): void => {
+    // {target: ICheckoutFieldInput}
+
     console.log('handleInputChange ');
   }
 
@@ -52,45 +55,50 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       <AppMain>
         {isLoading ? <AppBackdrop isOpen={true} /> : null}
 
-        <Grid container className={classes.container}>
-          <Grid item xs={12} md={7}>
-            <CheckoutForms
-              submitHandler={this.handleSubmit}
-              inputChangeHandler={this.handleInputChange}
-              shippingAddress={{
-                firstName: 'firstName',
-                lastName: 'lastName',
-                salutation: 'Mr',
-                address1: 'address1 str',
-                address2: '37',
-                address3: '',
-                zipCode: '33222',
-                city: 'Bochum',
-                country: 'USA',
-                company: '',
-                phone: '+49 1234 5060',
-                iso2Code: 'RRR'
-              }}
-              billingAddress={{
-                firstName: 'billing firstName',
-                lastName: 'billing lastName',
-                salutation: 'Mr',
-                address1: 'address1 str billing',
-                address2: '32',
-                address3: '',
-                zipCode: '344422',
-                city: 'Bochum',
-                country: 'USA',
-                company: '',
-                phone: '+49 1234 5060',
-                iso2Code: 'RRR'
-              }}
-            />
+        <CheckoutPageContext.Provider
+          value={{
+            submitHandler: this.handleSubmit,
+            inputChangeHandler: this.handleInputChange,
+          }}
+        >
+          <Grid container className={classes.container}>
+            <Grid item xs={12} md={7}>
+              <CheckoutForms
+                shippingAddress={{
+                  firstName: 'firstName',
+                  lastName: 'lastName',
+                  salutation: 'Mr',
+                  address1: 'address1 str',
+                  address2: '37',
+                  address3: '',
+                  zipCode: '33222',
+                  city: 'Bochum',
+                  country: 'USA',
+                  company: '',
+                  phone: '+49 1234 5060',
+                  iso2Code: 'RRR'
+                }}
+                billingAddress={{
+                  firstName: 'billing firstName',
+                  lastName: 'billing lastName',
+                  salutation: 'Mr',
+                  address1: 'address1 str billing',
+                  address2: '32',
+                  address3: '',
+                  zipCode: '344422',
+                  city: 'Bochum',
+                  country: 'USA',
+                  company: '',
+                  phone: '+49 1234 5060',
+                  iso2Code: 'RRR'
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={5}>
+              <CartData />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={5}>
-            <CartData />
-          </Grid>
-        </Grid>
+        </CheckoutPageContext.Provider>
 
       </AppMain>
     );

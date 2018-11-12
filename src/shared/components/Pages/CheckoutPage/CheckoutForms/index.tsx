@@ -12,8 +12,6 @@ import {BillingForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForm
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
   const {
     classes,
-    submitHandler,
-    inputChangeHandler,
     shippingAddress,
     billingAddress,
   }  = props;
@@ -23,15 +21,11 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
       <Grid item xs={ 12 }>
         <FormWrapper title="Delivery Address" >
           <DeliveryForm
-            submitHandler={submitHandler}
-            inputChangeHandler={inputChangeHandler}
             addressData={shippingAddress}
           />
         </FormWrapper>
         <FormWrapper title="Billing Address" >
           <BillingForm
-            submitHandler={submitHandler}
-            inputChangeHandler={inputChangeHandler}
             addressData={billingAddress}
           />
         </FormWrapper>

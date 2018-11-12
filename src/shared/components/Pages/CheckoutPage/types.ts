@@ -1,3 +1,5 @@
+import * as React from 'react';
+import {ChangeEvent, FormEvent} from "react";
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
@@ -19,7 +21,6 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 }
 
 export interface ICheckoutPageState {
-
 }
 
 export interface ICheckoutFormInputs extends IShippingAddress {
@@ -32,4 +33,9 @@ export type TCheckoutFormInputValue = TCustomerFirstName
 export interface ICheckoutFieldInput {
   name: (keyof ICheckoutFormInputs);
   value: TCheckoutFormInputValue;
+}
+
+export interface ICheckoutPageContext {
+  submitHandler: (event: FormEvent<HTMLFormElement>) => void;
+  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
 }
