@@ -4,7 +4,13 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   root: {
     width: '100%',
-    marginTop: theme.spacing.unit * 2.25,
+    marginTop: theme.spacing.unit * 7.25,
+    "&:first-child": {
+      marginTop: theme.spacing.unit * 2.25,
+    },
+    "&:last-child": {
+      marginBottom: theme.spacing.unit * 7.25,
+    }
   },
   panelRoot: {
     padding: 0,
