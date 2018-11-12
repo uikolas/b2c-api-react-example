@@ -6,6 +6,7 @@ import { formStyles } from './styles';
 import {ICheckoutFormsProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {DeliveryForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/index";
 import {FormWrapper} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/index";
+import {BillingForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/index";
 
 
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
@@ -14,6 +15,7 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
     submitHandler,
     inputChangeHandler,
     shippingAddress,
+    billingAddress,
   }  = props;
 
   return (
@@ -26,7 +28,13 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
             addressData={shippingAddress}
           />
         </FormWrapper>
-
+        <FormWrapper title="Billing Address" >
+          <BillingForm
+            submitHandler={submitHandler}
+            inputChangeHandler={inputChangeHandler}
+            addressData={billingAddress}
+          />
+        </FormWrapper>
       </Grid>
     </Grid>
   );

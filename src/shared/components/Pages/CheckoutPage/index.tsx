@@ -71,6 +71,20 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 phone: '+49 1234 5060',
                 iso2Code: 'RRR'
               }}
+              billingAddress={{
+                firstName: 'billing firstName',
+                lastName: 'billing lastName',
+                salutation: 'Mr',
+                address1: 'address1 str billing',
+                address2: '32',
+                address3: '',
+                zipCode: '344422',
+                city: 'Bochum',
+                country: 'USA',
+                company: '',
+                phone: '+49 1234 5060',
+                iso2Code: 'RRR'
+              }}
             />
           </Grid>
           <Grid item xs={12} md={5}>
