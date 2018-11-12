@@ -48,7 +48,8 @@ export const getAddressFormSettings = ( formName: string,
           label: InputLabelSalutation,
           isError: false,
           menuItems: salutationVariants
-            .map((item: TSalutationVariant) => ({value: item.value, name: item.label}))
+            .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
+          menuItemFirst: null,
         }
       ],
       [

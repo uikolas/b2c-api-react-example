@@ -67,6 +67,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                     selectClassName={classes.input}
                     isFullWidth={true}
                     isRequired={field.isRequired ? field.isRequired : false}
+                    menuItemFirst={field.menuItemFirst ? field.menuItemFirst : null}
                     extraTitleClassName={`${classes.selectLabel} ${classes.label}`}
                     extraFormControlClassName={classes.selectFormControlClassName}
                     extraRootClassName={classes.selectRoot}
