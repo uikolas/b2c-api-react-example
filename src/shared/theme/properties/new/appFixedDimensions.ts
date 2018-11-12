@@ -15,6 +15,7 @@ export interface IAppFixedDimensions {
     medium: React.CSSProperties['fontSize'];
     large: React.CSSProperties['fontSize'];
     big: React.CSSProperties['fontSize'];
+    xl: React.CSSProperties['fontSize'];
   };
   customBreakpoints: {
     tablet: number;
@@ -31,10 +32,11 @@ export const appFixedDimensions: IAppFixedDimensions = {
   gridSpacing: 24,
   fontSize: {
     mini: "0.69rem",
-    small: "0.875rem",
+    small: "0.875rem", // 14px
     medium: "1.0rem",
     large: "1.13rem",
-    big: "1.25rem",
+    big: "1.25rem", // 20px
+    xl: "2.0rem", // 32px
   },
   customBreakpoints: {
     tablet: 1280,
