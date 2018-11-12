@@ -23,7 +23,7 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
           <DeliveryForm
             submitHandler={submitHandler}
             inputChangeHandler={inputChangeHandler}
-            shippingAddress={shippingAddress}
+            addressData={shippingAddress}
           />
         </FormWrapper>
 
