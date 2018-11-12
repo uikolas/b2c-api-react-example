@@ -24,11 +24,35 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   public componentDidMount() {
     console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
+    this.initRequestAddressesData();
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
-  };
+    this.initRequestAddressesData();
+  }
+
+  private initRequestAddressesData = (): void => {
+    console.info('@@@@ initRequestAddressesData @@@@ customerReference', this.props.customerReference);
+    console.info('@@@@ initRequestAddressesData @@@@ addressesCollection', this.props.addressesCollection);
+    console.info('@@@@ initRequestAddressesData @@@@ isAddressesLoading', this.props.isAddressesLoading);
+    console.info('@@@@ initRequestAddressesData @@@@ isAppStateLoading', this.props.isAppStateLoading);
+    console.info('@@@@ initRequestAddressesData @@@@ isCartFulfilled', this.props.isCartFulfilled);
+
+    const {customerReference,
+      addressesCollection,
+      isAddressesLoading,
+      isAddressesFulfilled,
+      isAppStateLoading,
+      isCartFulfilled,
+    } = this.props;
+    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled) {
+      return;
+    }
+    if (customerReference && !addressesCollection) {
+      this.props.getAddressesList(customerReference);
+    }
+  }
 
   public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();

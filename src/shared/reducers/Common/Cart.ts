@@ -58,8 +58,6 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
     case `${CART_CREATE}_PENDING`:
     case `${GET_CARTS}_PENDING`:
       return handlePending(state, action.payload);
-    case `${GET_CARTS}_PENDING`:
-      return state;
     case `${CART_ADD_ITEM}_FULFILLED`:
     case `${CART_UPDATE_ITEM}_FULFILLED`:
       return handleFulfilled(state, action.payload);
@@ -172,7 +170,7 @@ export function isCartCreated(state: any, props: any): boolean {
   return (state.cart.data.cartCreated);
 }
 
-export function isCartLoading(state: any, props: any): boolean {
+export function isCartStateLoading(state: any, props: any): boolean {
   return (state.cart && state.cart.pending && state.cart.pending === true);
 }
 

@@ -1,6 +1,5 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
-import {ChangeEvent, FormEvent} from "react";
 import {IBillingAddress, ICheckoutAddress, IShippingAddress} from "src/shared/interfaces/checkout/index";
 import {ICheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
 

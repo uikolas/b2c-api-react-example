@@ -111,5 +111,29 @@ export const pageAddresses = produce<IAddressesState>(
 );
 
 export function isPageAddressesStateLoading(state: any, props: any): boolean {
-  return (state.pageAddresses && state.pageAddresses.pending);
+  return Boolean(isStateExist(state, props) && state.pageAddresses.pending && state.pageAddresses.pending === true);
+}
+
+export function isPageAddressesStateRejected(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageAddresses.rejected && state.pageAddresses.rejected === true);
+}
+
+export function isPageAddressesFulfilled(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageAddresses.fulfilled && state.pageAddresses.fulfilled === true);
+}
+
+export function getCurrentAddressFromStore(state: any, props: any): IAddressItem | null {
+  return (isStateExist(state, props) && state.pageAddresses.data.currentAddress)
+    ? state.pageAddresses.data.currentAddress
+    : null;
+}
+
+export function getAddressesCollectionFromStore(state: any, props: any): IAddressItem[] | null {
+  return (isStateExist(state, props) && state.pageAddresses.data.addresses && state.pageAddresses.data.addresses.length)
+    ? state.pageAddresses.data.addresses
+    : null;
+}
+
+function isStateExist(state: any, props: any): boolean {
+  return Boolean(state.pageAddresses.data);
 }

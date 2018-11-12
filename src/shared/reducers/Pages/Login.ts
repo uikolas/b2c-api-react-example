@@ -138,7 +138,7 @@ export function getLoginCustomer(state: any, props: any): any | null {
   );
 }
 
-export function getCustomerReference(state: any, props: any): TCustomerReference | null {
+export function getCustomerReference(state: any, props: any): string | null {
   return (
     isUserAuthenticated(state, props) && state.pagesLogin.data.customerRef
       ? state.pagesLogin.data.customerRef
@@ -166,5 +166,5 @@ export function isPageLoginStateLoading(state: any, props: any): boolean {
 }
 
 function isStateExist(state: any, props: any): boolean {
-  return Boolean(state.pagesLogin);
+  return Boolean(state.pagesLogin.data);
 }
