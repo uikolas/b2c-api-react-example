@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
-import {ICartItem} from "src/shared/reducers/Common/Cart";
+import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
 import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
 import {IShippingAddress} from "src/shared/interfaces/checkout/index";
 
@@ -14,6 +14,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isInitiated: boolean;
 
   products: Array<ICartItem> | null;
+  totals: ICartTotals;
   isCartFulfilled: boolean;
   isCartRejected: boolean;
 }

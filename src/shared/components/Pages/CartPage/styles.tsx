@@ -26,15 +26,6 @@ export const styles = (theme: Theme) => createStyles({
     width: '100%',
     marginTop: '58px'
   },
-  imgWrapper: {
-    width: '20%',
-    minWidth: '20%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '4px',
-    position: 'relative',
-  },
   itemWrapper: {
     width: '40%',
     paddingLeft: theme.spacing.unit * 3,
@@ -69,21 +60,12 @@ export const styles = (theme: Theme) => createStyles({
     lineHeight: '26px',
     verticalAlign: 'middle',
   },
-  totalMsg: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginTop: theme.spacing.unit * 3,
-  },
-  grandTotal: {
-    marginBottom: theme.spacing.unit * 3,
-    fontSize: '24px',
-    fontWeight: 'bold',
-    letterSpacing: '0.5px',
-  },
   btnWrapper: {
     margin: `${theme.spacing.unit * 4}px 0`,
     height: '44px',
+    borderRadius: '4px',
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    letterSpacing: '1.5px',
   },
   mainCurrency: {
     fontSize: theme.appFixedDimensions.fontSize.large,
@@ -98,15 +80,5 @@ export const styles = (theme: Theme) => createStyles({
   shippingMsg: {
     textTransform: 'none',
     marginTop: `-${theme.spacing.unit * 3}px`,
-  },
-  actionAreaOverlay: {
-    position: "absolute",
-    background: "rgba(0, 0, 0, 0.10)",
-    borderRadius: '1.5px',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 350,
   },
 });

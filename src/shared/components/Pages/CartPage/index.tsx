@@ -13,11 +13,13 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Clear';
 
-import { ICartItem } from 'src/shared/reducers/Common/Cart';
+import { ICartItem } from 'src/shared/interfaces/cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
-import { pathCheckoutPage, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { CartImage } from 'src/shared/components/Common/CartImage';
+import { CartTotal } from 'src/shared/components/Common/CartTotal';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
@@ -115,9 +117,6 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               Empty cart, go shopping
             </Typography>
           </Grid>
-          <Grid item xs={ 8 }>
-            <div className={ classes.fullWidth } ref={this.listRef} />
-          </Grid>
         </AppMain>
       );
     }
@@ -137,14 +136,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           divider
           className={ classes.listItem }
         >
-          <div className={ classes.imgWrapper } style={{ height: this.state.heightListItem }}>
-            <img
-              src={ item.image }
-              style={{ maxWidth: this.state.heightListItem * 0.82, maxHeight: this.state.heightListItem * 0.82 }}
-            />
-            <div className={ classes.actionAreaOverlay } />
-          </div>
-
+          <CartImage
+            image={ item.image }
+            size={this.state.heightListItem}
+          />
           <div className={classes.itemWrapper}>
             <div className={classes.itemName}>{ item.name }</div>
             {
@@ -225,11 +220,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               color="primary"
             >
               <span>
-                {
-                  isUserLoggedIn
-                    ? 'Cart'
-                    : 'Cart (guest)'
-                }
+                { isUserLoggedIn ? 'Cart' : 'Cart (guest)' }
               </span>
               <span>{ ` has ${items.length} ` }</span>
               <FormattedPlural
@@ -296,31 +287,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               </Grid>
             </Grid>
 
-            <Divider className={ classes.fullWidth } />
-
-            <div className={classes.totalMsg}>
-              <div>Subtotal</div>
-              <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={classes.mainCurrency} /> }</div>
-            </div>
-            <div className={classes.totalMsg}>
-              <div>Tax</div>
-              <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={classes.mainCurrency} /> }</div>
-            </div>
-            <div className={classes.totalMsg} style={{ marginBottom: '24px'}}>
-              <div>Discount</div>
-              <div>{ totals && <AppPrice value={ totals.discountTotal } extraClassName={classes.mainCurrency} /> }</div>
-            </div>
-
-            <Divider className={ classes.fullWidth } />
-
-            <div className={`${classes.totalMsg}`}>
-              <div className={classes.grandTotal}>
-                Grand Total
-              </div>
-              <div>{ totals && <AppPrice value={ totals.grandTotal }/> }</div>
-            </div>
-
-            <Divider className={ classes.fullWidth } />
+            <CartTotal totals={totals} />
 
             <NavLink
               to={ pathCheckoutPage }

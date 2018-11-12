@@ -4,33 +4,21 @@ import {
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
   GET_CARTS,
-} from '../../constants/ActionTypes/Common/Cart';
-import { IReduxState } from '../../../typings/app';
+} from 'src/shared/constants/ActionTypes/Common/Cart';
+import { IReduxState } from 'src/typings/app';
 import {
-  TProductAvailability,
-  TProductImageSRC,
-  TProductName,
-  TProductPrice,
   TProductQuantity,
   TProductSKU,
-} from '../../interfaces/product';
+} from 'src/shared/interfaces/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
+import {
+  ICartDataResponse,
+  ICartItemCalculation,
+  ICartItem,
+  ICartTotals,
+  TCartId,
+} from 'src/shared/interfaces/cart';
 import {PAGES_CUSTOMER_LOGOUT} from "src/shared/constants/ActionTypes/Pages/Login";
-import {IProductPropFullData} from "src/shared/interfaces/product";
-
-export interface ICartItem {
-  sku: TProductSKU | null;
-  name: TProductName | null;
-  image: TProductImageSRC | null;
-  quantity: TProductQuantity | null;
-  amount: TProductPrice | null;
-  calculations: ICartItemCalculation | null;
-  groupKey: string | null;
-  availability: TProductAvailability | null;
-  availableQuantity: TProductQuantity | null;
-  superAttributes: Array<{ [key: string]: string }> | null;
-}
 
 export interface ICartData extends ICartDataResponse {
   cartCreated: boolean;
@@ -190,12 +178,12 @@ export function getCartId(state: any, props: any): TCartId {
   return (isCartCreated(state, props) && state.cart.data.id) ? state.cart.data.id : null;
 }
 
-export function getProductsFromCart(state: any, props: any): ICartData["items"] | null {
-  return isProductsInCart(state, props) ? state.cart.data.items : null;
+export function getCartTotals(state: any, props: any): ICartTotals | null {
+  return isStateExist(state, props) ? state.cart.data.totals: null;
 }
 
-export function isProductsInCart(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.cart.data.items);
+export function getProductsFromCart(state: any, props: any): ICartItem[] {
+  return isStateExist(state, props) ? state.cart.data.items: [];
 }
 
 // selectors INNER

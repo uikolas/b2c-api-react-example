@@ -1,7 +1,7 @@
-import { ICartItem } from '../../reducers/Common/Cart';
-import { TAppCurrency } from '../../reducers/Common/Init';
+import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { IAbstractTotals } from '../abstract/totals';
-import { TProductQuantity, TProductSKU } from '../product';
+import { TProductQuantity, TProductSKU, TProductImageSRC, TProductAvailability } from '../product';
+import {TProductName, TProductPrice} from "src/shared/interfaces/product";
 
 export type TCartId = string;
 export type TCartPriceMode = string;
@@ -24,6 +24,19 @@ export interface ICartAddItem {
 
 export interface ICartTotals extends IAbstractTotals {
 
+}
+
+export interface ICartItem {
+  sku: TProductSKU | null;
+  name: TProductName | null;
+  image: TProductImageSRC | null;
+  quantity: TProductQuantity | null;
+  amount: TProductPrice | null;
+  calculations: ICartItemCalculation | null;
+  groupKey: string | null;
+  availability: TProductAvailability | null;
+  availableQuantity: TProductQuantity | null;
+  superAttributes: Array<{ [key: string]: string }> | null;
 }
 
 export interface ICartDataResponse {

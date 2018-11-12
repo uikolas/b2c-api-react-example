@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
-import { pathCartPage } from 'src/shared/routes/contentRoutes';
+import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 
 import { ProductItem } from '../productItem';
 import { CartDropProps as Props } from './types';
@@ -52,7 +52,7 @@ export class CartDropComponent extends React.PureComponent<Props> {
           <Button
             variant="contained"
             color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathCartPage }/> }
+            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathCheckoutPage }/> }
           >
             Checkout
           </Button>

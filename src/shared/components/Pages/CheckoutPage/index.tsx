@@ -42,6 +42,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const {
       classes,
       isLoading,
+      products,
+      totals,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
@@ -74,7 +76,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             />
           </Grid>
           <Grid item xs={12} md={5}>
-            <CartData />
+            <CartData products={products} totals={totals}/>
           </Grid>
         </Grid>
 
