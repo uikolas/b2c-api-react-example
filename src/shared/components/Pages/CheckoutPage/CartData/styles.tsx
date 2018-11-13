@@ -3,8 +3,9 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    width: '100%',
+    width: '90%',
     marginTop: '18px',
+    marginLeft: '10%',
   },
   title: {
     fontSize: theme.appFixedDimensions.fontSize.xl,
