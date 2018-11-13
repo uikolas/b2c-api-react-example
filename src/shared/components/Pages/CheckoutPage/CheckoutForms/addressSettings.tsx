@@ -7,7 +7,6 @@ import {
   InputLabelNumber,
   InputLabelPhone,
   InputLabelSalutation,
-  InputLabelSameAsDelivery,
   InputLabelStreet,
   InputLabelStreetExtra,
   InputLabelZipCode
@@ -17,8 +16,12 @@ import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressParamsFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 
+
 export const getAddressFormSettings = ( formName: string,
-                                        {addressData, submitHandler, inputChangeHandler}: IAddressParamsFormSettings
+                                        { addressData,
+                                          submitHandler,
+                                          inputChangeHandler,
+                                        }: IAddressParamsFormSettings
                                         ) => {
   const {
     firstName,
@@ -33,7 +36,6 @@ export const getAddressFormSettings = ( formName: string,
     company,
     phone,
     iso2Code,
-    isSameAsDelivery,
   } = addressData;
 
   const formSettings: IFormSettings = {
@@ -156,22 +158,6 @@ export const getAddressFormSettings = ( formName: string,
       ],
     ],
   };
-
-  if (formName === 'billing') {
-    formSettings.fields.unshift(
-      [
-        {
-          type: 'checkbox',
-          inputName: 'sameAsDelivery',
-          inputValue: isSameAsDelivery,
-          spaceNumber: 12,
-          isRequired: false,
-          label: InputLabelSameAsDelivery,
-          isError: false,
-        }
-      ]
-    );
-  }
 
   return formSettings;
 };

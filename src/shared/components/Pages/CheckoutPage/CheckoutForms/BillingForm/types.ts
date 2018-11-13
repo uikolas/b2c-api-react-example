@@ -4,5 +4,4 @@ import {IAddressDataFormSettings} from "src/shared/components/Pages/CheckoutPage
 
 
 export interface IBillingFormProps extends WithStyles<typeof formStyles>, IAddressDataFormSettings {
-
 }

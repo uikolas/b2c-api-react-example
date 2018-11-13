@@ -35,4 +35,3 @@ export const FieldCheckboxBase: React.SFC<IFieldCheckboxProps> = (props): JSX.El
 };
 
 export const FieldCheckbox = withStyles(sprykerFormStyles)(FieldCheckboxBase);
-

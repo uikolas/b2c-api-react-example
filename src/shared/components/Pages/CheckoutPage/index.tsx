@@ -19,7 +19,7 @@ import {CheckoutPageContext} from "./context";
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
 
   public state: ICheckoutPageState = {
-
+    isBillingSameAsDelivery: false,
   };
 
   public componentDidMount() {
@@ -50,13 +50,31 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log('handleSubmit ');
+    console.info('handleSubmit ');
   }
 
   public handleInputChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>): void => {
     // {target: ICheckoutFieldInput}
+    console.info('handleInputChange ');
+    // const { name, value }: ICheckoutFieldInput = event.target;
+    const { name, value } = event.target;
+    console.info('handleInputChange target', event.target);
+    console.info('handleInputChange name', event.target.name);
+    console.info('handleInputChange value', event.target.value);
 
-    console.log('handleInputChange ');
+  }
+
+  public handleBillingSameAsDelivery = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    console.info('handleBillingSameAsDelivery value', event.target.value);
+    if (event.target.value !== "sameAsDelivery") {
+      return;
+    }
+    this.setState( (prevState: ICheckoutPageState) => {
+      return ({
+        ...prevState,
+        isBillingSameAsDelivery: !prevState.isBillingSameAsDelivery,
+      });
+    });
   }
 
   public render(): JSX.Element {
@@ -77,6 +95,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           value={{
             submitHandler: this.handleSubmit,
             inputChangeHandler: this.handleInputChange,
+            billingSameAsDeliveryHandler: this.handleBillingSameAsDelivery,
+            isBillingSameAsDelivery: this.state.isBillingSameAsDelivery,
           }}
         >
           <Grid container className={classes.container}>

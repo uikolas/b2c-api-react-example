@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {isAppInitiated, } from 'src/shared/reducers/Common/Init';
+import {getCounties, ICountries, isAppInitiated,} from 'src/shared/reducers/Common/Init';
 import {
   isPageProductStateFulfilled,
   isPageProductStateInitiated,
@@ -9,7 +9,9 @@ import {
 } from "src/shared/reducers/Pages/Product";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
-  getProductsFromCart, isCartStateLoading, isCartStateFulfilled,
+  getProductsFromCart,
+  isCartStateLoading,
+  isCartStateFulfilled,
   isCartStateRejected
 } from "src/shared/reducers/Common/Cart";
 import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer/index";
@@ -43,6 +45,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isAddressesFulfilled = isPageAddressesFulfilled(state, ownProps);
   // from global state
   const isAppStateLoading = isStateLoading(state, ownProps);
+  // Countries from init state
+  const countriesCollection: ICountries[] = getCounties(state, ownProps);
 
 
   return ({
@@ -63,6 +67,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isAddressesLoading,
     isAddressesFulfilled,
     isAppStateLoading,
+    countriesCollection,
   });
 };
 

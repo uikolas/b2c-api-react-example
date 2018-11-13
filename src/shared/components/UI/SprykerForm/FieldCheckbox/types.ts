@@ -9,5 +9,5 @@ export interface IFieldCheckboxProps extends WithStyles<typeof sprykerFormStyles
   inputName: IFormField["inputName"];
   isError: IFormField["isError"];
   isChecked: boolean;
-  changeHandler: (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  changeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
