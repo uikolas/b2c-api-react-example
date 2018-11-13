@@ -5,7 +5,8 @@ import {
   InputLabelFirstName,
   InputLabelLastName,
   InputLabelNumber,
-  InputLabelPhone, InputLabelSalutation,
+  InputLabelPhone,
+  InputLabelSalutation,
   InputLabelStreet,
   InputLabelStreetExtra,
   InputLabelZipCode
@@ -13,10 +14,14 @@ import {
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {IAddressParamsFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+
 
 export const getAddressFormSettings = ( formName: string,
-                                        {addressData, submitHandler, inputChangeHandler}: IAddressFormSettings
+                                        { addressData,
+                                          submitHandler,
+                                          inputChangeHandler,
+                                        }: IAddressParamsFormSettings
                                         ) => {
   const {
     firstName,
@@ -48,7 +53,8 @@ export const getAddressFormSettings = ( formName: string,
           label: InputLabelSalutation,
           isError: false,
           menuItems: salutationVariants
-            .map((item: TSalutationVariant) => ({value: item.value, name: item.label}))
+            .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
+          menuItemFirst: null,
         }
       ],
       [

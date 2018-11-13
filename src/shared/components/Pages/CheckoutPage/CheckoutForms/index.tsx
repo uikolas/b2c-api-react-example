@@ -6,14 +6,14 @@ import { formStyles } from './styles';
 import {ICheckoutFormsProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {DeliveryForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/index";
 import {FormWrapper} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/index";
+import {BillingForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/index";
 
 
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
   const {
     classes,
-    submitHandler,
-    inputChangeHandler,
     shippingAddress,
+    billingAddress,
   }  = props;
 
   return (
@@ -21,12 +21,14 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
       <Grid item xs={ 12 }>
         <FormWrapper title="Delivery Address" >
           <DeliveryForm
-            submitHandler={submitHandler}
-            inputChangeHandler={inputChangeHandler}
             addressData={shippingAddress}
           />
         </FormWrapper>
-
+        <FormWrapper title="Billing Address" >
+          <BillingForm
+            addressData={billingAddress}
+          />
+        </FormWrapper>
       </Grid>
     </Grid>
   );

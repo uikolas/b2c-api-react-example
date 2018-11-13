@@ -7,6 +7,7 @@ import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFor
 import {IFormField, ISprykerFormProps} from "src/shared/components/UI/SprykerForm/types";
 import {FieldTextInput} from "src/shared/components/UI/SprykerForm/FieldTextInput/index";
 import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
+import {FieldCheckbox} from "src/shared/components/UI/SprykerForm/FieldCheckbox/index";
 
 
 export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Element => {
@@ -67,6 +68,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                     selectClassName={classes.input}
                     isFullWidth={true}
                     isRequired={field.isRequired ? field.isRequired : false}
+                    menuItemFirst={field.menuItemFirst ? field.menuItemFirst : null}
                     extraTitleClassName={`${classes.selectLabel} ${classes.label}`}
                     extraFormControlClassName={classes.selectFormControlClassName}
                     extraRootClassName={classes.selectRoot}
@@ -74,6 +76,15 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                     extraSelectFieldClassName={classes.inputRoot}
                   />
                 );
+              } else if (field.type === 'checkbox') {
+                 fieldComponent = (
+                   <FieldCheckbox
+                     inputName={field.inputName}
+                     label={field.label ? field.label : null}
+                     isChecked={field.inputValue}
+                     changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
+                   />
+                 );
               } else {
                 fieldComponent = null;
               }

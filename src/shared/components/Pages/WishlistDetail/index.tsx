@@ -24,7 +24,7 @@ import {TCartId} from 'src/shared/interfaces/cart';
 import {priceTypeNameOriginal, priceTypeNameDefault} from 'src/shared/interfaces/product';
 import {getAppCurrency, TAppCurrency} from "src/shared/reducers/Common/Init";
 import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
-import {getCartId, getTotalItemsQuantity, isCartLoading} from "src/shared/reducers/Common/Cart";
+import {getCartId, getTotalItemsQuantity, isCartStateLoading} from "src/shared/reducers/Common/Cart";
 import {createCartItemAddToCart} from "src/shared/helpers/cart";
 import {styles} from './styles';
 import {pathProductPageBase} from 'src/shared/routes/contentRoutes';
@@ -232,7 +232,7 @@ export const ConnectedWishlistDetailPage = reduxify(
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
     const cartItemsLength: number = getTotalItemsQuantity(state, ownProps);
-    const cartLoading: boolean = isCartLoading(state, ownProps);
+    const cartLoading: boolean = isCartStateLoading(state, ownProps);
     return (
       {
         location: routerProps.location ? routerProps.location : ownProps.location,
