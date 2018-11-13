@@ -3,12 +3,18 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const sprykerFormStyles = (theme: Theme) => createStyles({
   form: {
-    paddingBottom: theme.spacing.unit * 1.5,
-    paddingTop: theme.spacing.unit * 1.5,
+    paddingBottom: 0,
+    paddingTop: 0,
+    "&:first-child": {
+      paddingTop: theme.spacing.unit * 1.5,
+    },
   },
   controlsGroup: {
     paddingBottom: theme.spacing.unit * 1.5,
     paddingTop: theme.spacing.unit * 2.5,
+    "&:last-child": {
+      paddingBottom: 0,
+    },
   },
   control: {
     paddingLeft: theme.spacing.unit * 1.5,
@@ -33,6 +39,9 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     left: "auto",
     width: '100%',
     fontWeight: 600,
+  },
+  labelCheckbox: {
+    paddingBottom: 0,
   },
   inputRoot: {
 
@@ -59,6 +68,18 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     "&:focus": {
       border: `solid 1px ${theme.appColors.blue}`,
     },
+  },
+  inputCheckbox: {
+    padding: 0,
+    paddingRight: theme.spacing.unit,
+    borderRadius: theme.appFixedDimensions.borderRadius,
+    color: theme.appColors.weakGrey,
+    "& svg": {
+      fontSize: 30,
+    }
+  },
+  outerCheckbox: {
+    marginLeft: 0,
   },
   selectRoot: {
     paddingLeft: 0,

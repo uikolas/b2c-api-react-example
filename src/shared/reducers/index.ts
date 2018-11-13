@@ -4,7 +4,7 @@ import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product';
 import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
 import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses';
-import { cart, isCartLoading } from './Common/Cart';
+import { cart, isCartStateLoading } from './Common/Cart';
 import { init, isAppLoading } from './Common/Init';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
 import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
@@ -28,7 +28,7 @@ export function isStateLoading(state: any, props: any): boolean {
   return Boolean(
     isPageProductStateLoading(state, props)
     || isPageLoginStateLoading(state, props)
-    || isCartLoading(state, props)
+    || isCartStateLoading(state, props)
     || isPageSearchStateLoading(state, props)
     || isPageHomeStateLoading(state, props)
     || isAppLoading(state, props)

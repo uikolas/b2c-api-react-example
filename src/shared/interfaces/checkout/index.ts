@@ -33,3 +33,7 @@ export interface IShippingAddress extends ICheckoutAddress {
 
 export interface IBillingAddress extends ICheckoutAddress {
 }
+
+export interface ISameAsDelivery {
+  isSameAsDelivery: boolean;
+}
