@@ -6,7 +6,6 @@ import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
 import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
 import {IShippingAddress} from "src/shared/interfaces/checkout/index";
-import {ICartItem} from "src/shared/reducers/Common/Cart";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {ICheckoutAddress, ISameAsDelivery} from "src/shared/interfaces/checkout/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";

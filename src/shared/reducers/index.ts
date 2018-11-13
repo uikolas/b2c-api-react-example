@@ -4,11 +4,13 @@ import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product';
 import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
 import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses';
+import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
+import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout';
 import { cart, isCartStateLoading } from './Common/Cart';
 import { init, isAppLoading } from './Common/Init';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
 import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
-import { isPageCustomerProfileLoading, pageCustomerProfile } from "./Pages/CustomerProfile";
+
 
 export const reducers = {
   pagesHome,
@@ -17,6 +19,7 @@ export const reducers = {
   pageProduct,
   pageWishlist,
   pageAddresses,
+  pageCheckout,
   cart,
   init,
   orderHistory,
@@ -37,5 +40,6 @@ export function isStateLoading(state: any, props: any): boolean {
     || isOrderDetailsLoading(state, props)
     || isPageCustomerProfileLoading(state, props)
     || isPageAddressesStateLoading(state, props)
+    || isPageCheckoutStateLoading(state, props)
   );
 }

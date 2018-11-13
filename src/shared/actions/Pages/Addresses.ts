@@ -4,10 +4,9 @@ import {
   DELETE_ADDRESS,
   UPDATE_ADDRESS,
   SET_CURRENT_ADDRESS,
-} from '../../constants/ActionTypes/Pages/Addresses';
-import {IAddressItem} from '../../interfaces/addresses';
-import {AddressesService} from '../../services/Pages/Addresses';
-import {PAGES_CUSTOMER_LOGOUT} from "../../constants/ActionTypes/Pages/Login";
+} from 'src/shared/constants/ActionTypes/Pages/Addresses';
+import {IAddressItem} from 'src/shared/interfaces/addresses';
+import {AddressesService} from 'src/shared/services/Pages/Addresses';
 
 
 export const getAllListPendingState = {

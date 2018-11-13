@@ -7,21 +7,16 @@ import {
   isPageProductStateLoading,
   isPageProductStateRejected,
 } from "src/shared/reducers/Pages/Product";
-import {
-  getProductsFromCart,
-  getCartTotals,
-  isCartStateFulfilled,
-  isCartStateRejected,
-} from "src/shared/reducers/Common/Cart";
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
   getProductsFromCart,
   isCartStateLoading,
+  getCartTotals,
   isCartStateFulfilled,
   isCartStateRejected
 } from "src/shared/reducers/Common/Cart";
-import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer/index";
+import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer";
 import {getAddressesAction} from "src/shared/actions/Pages/Addresses";
 import {
   getAddressesCollectionFromStore,
