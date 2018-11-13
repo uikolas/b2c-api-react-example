@@ -31,6 +31,10 @@ export const getProductLabel = (labelsIdArr: Array<TLabelId> | null,
   }
   const checkedValue = "position";
 
+  /*if (labels.length === 1) {
+    return labels[0];
+  }*/
+
   const label = labels.reduce(function(prev: IProductLabel, current: IProductLabel) {
     if (prev && current) {
       return (prev[checkedValue] > current[checkedValue]) ? prev : current;

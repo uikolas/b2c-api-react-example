@@ -16,7 +16,8 @@ import {IAddressItem} from "src/shared/interfaces/addresses/index";
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
   shippingAddress: IShippingAddress;
   billingAddress: IBillingAddress;
-  addressesCollection: IAddressItem[] [] | null;
+  addressesCollection: IAddressItem[] | null;
+  selectedAddresses: IUsageSavedAddress | null;
 }
 
 export interface IAddressDataFormSettings {

@@ -1,6 +1,7 @@
 import {InputLabelSelectSavedDeliveryAddress} from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {ISavedAddressParamsFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 export const getDeliverySavedAddressFormSettings = ( formName: string,
@@ -10,6 +11,12 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
                                                        inputChangeHandler,
                                                      }: ISavedAddressParamsFormSettings
                                         ) => {
+
+  const isAddressesCollectionExist = Boolean(
+    addressesCollection
+    && Array.isArray(addressesCollection)
+    && addressesCollection.length > 0
+  );
 
   const formSettings: IFormSettings = {
     formName,
@@ -25,8 +32,10 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
           isRequired: false,
           label: InputLabelSelectSavedDeliveryAddress,
           isError: false,
-          /*menuItems: addressesCollection.
-            .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),*/
+          radioItems: isAddressesCollectionExist
+                      ? addressesCollection
+                      .map((item: IAddressItem) => ({value: item.id, label: item.address1}))
+                      : null,
         }
       ]
     ],
@@ -34,3 +43,7 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
 
   return formSettings;
 };
+
+const convertAddressesCollectionToRadioItems = () => {
+
+}

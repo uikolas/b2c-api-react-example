@@ -20,6 +20,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   public state: ICheckoutPageState = {
     isBillingSameAsDelivery: false,
+    selectedAddresses: {
+      billingSelectedAddressId: null,
+      deliverySelectedAddressId: null,
+    }
   };
 
   public componentDidMount() {
@@ -132,6 +136,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                   iso2Code: 'RRR'
                 }}
                 addressesCollection={addressesCollection}
+                selectedAddresses={this.state.selectedAddresses}
               />
             </Grid>
             <Grid item xs={12} md={5}>

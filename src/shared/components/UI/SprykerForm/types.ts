@@ -36,6 +36,7 @@ export interface IFormField {
   menuItems?: SprykerSelectProps["menuItems"];
   menuItemFirst?: SprykerSelectProps["menuItemFirst"];
   title?: SprykerSelectProps["title"];
+  radioItems?: Array<IRadioItem>;
 }
 
 export interface IFormSettings {
@@ -48,6 +49,11 @@ export interface IFormSettings {
 
 export interface ISprykerFormProps extends WithStyles<typeof sprykerFormStyles> {
   form: IFormSettings;
+}
+
+export interface IRadioItem {
+  value: string;
+  label: string;
 }
 
 export type TFormInputValue = TCustomerFirstName

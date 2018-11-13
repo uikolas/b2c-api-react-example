@@ -8,6 +8,9 @@ import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms
 import {CheckoutPageContext} from '../../context';
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings";
+import {
+  getDeliverySavedAddressFormSettings
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -18,15 +21,23 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
     addressesCollection,
   }  = props;
 
+  console.log('DeliveryFormBase selectedAddresses', selectedAddresses);
+  console.log('DeliveryFormBase addressesCollection', addressesCollection);
+
   return (
     <CheckoutPageContext.Consumer>
       {({submitHandler, inputChangeHandler}) => {
-        const params = {addressData, submitHandler, inputChangeHandler};
-        const deliveryFormSettings = getAddressFormSettings('delivery', params);
+        const deliveryParams = {addressData, submitHandler, inputChangeHandler};
+        const savedDeliveryParams = {selectedAddresses, addressesCollection, submitHandler, inputChangeHandler};
+        const deliveryFormSettings = getAddressFormSettings('delivery', deliveryParams);
+        const savedAddressFormSettings = getDeliverySavedAddressFormSettings('savedDelivery', savedDeliveryParams);
         return (
           <Grid container className={ classes.root }>
             <Grid item xs={ 12 }>
-              <SprykerForm form={deliveryFormSettings} />
+              {addressesCollection
+                ? <SprykerForm form={savedAddressFormSettings} />
+                : <SprykerForm form={deliveryFormSettings} />
+              }
             </Grid>
           </Grid>
         );

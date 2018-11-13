@@ -35,6 +35,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 
 export interface ICheckoutPageState {
   isBillingSameAsDelivery: boolean;
+  selectedAddresses: IUsageSavedAddress;
 }
 
 // All possibles names of input

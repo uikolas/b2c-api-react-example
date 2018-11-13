@@ -8,6 +8,7 @@ import {IFormField, ISprykerFormProps} from "src/shared/components/UI/SprykerFor
 import {FieldTextInput} from "src/shared/components/UI/SprykerForm/FieldTextInput/index";
 import {SprykerSelect} from "src/shared/components/UI/SprykerSelect/index";
 import {FieldCheckbox} from "src/shared/components/UI/SprykerForm/FieldCheckbox/index";
+import {FieldRadio} from "src/shared/components/UI/SprykerForm/FieldRadio/index";
 
 
 export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Element => {
@@ -85,6 +86,16 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                      changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
                    />
                  );
+              } else if (field.type === 'radio') {
+                fieldComponent = (
+                  <FieldRadio
+                    inputName={field.inputName}
+                    currentMode={field.inputValue}
+                    radioItems={field.radioItems}
+                    label={field.label ? field.label : null}
+                    changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
+                  />
+                );
               } else {
                 fieldComponent = null;
               }
