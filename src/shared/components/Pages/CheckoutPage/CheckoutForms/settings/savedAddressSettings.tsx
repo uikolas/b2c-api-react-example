@@ -12,12 +12,6 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
                                                      }: ISavedAddressParamsFormSettings
                                         ) => {
 
-  const isAddressesCollectionExist = Boolean(
-    addressesCollection
-    && Array.isArray(addressesCollection)
-    && addressesCollection.length > 0
-  );
-
   const formSettings: IFormSettings = {
     formName,
     onChangeHandler: inputChangeHandler,
@@ -32,10 +26,7 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
           isRequired: false,
           label: InputLabelSelectSavedDeliveryAddress,
           isError: false,
-          radioItems: isAddressesCollectionExist
-                      ? addressesCollection
-                      .map((item: IAddressItem) => ({value: item.id, label: item.address1}))
-                      : null,
+          radioItems: convertAddressesCollectionToRadioItems(addressesCollection),
         }
       ]
     ],
@@ -44,6 +35,16 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
   return formSettings;
 };
 
-const convertAddressesCollectionToRadioItems = () => {
+const convertAddressesCollectionToRadioItems = (
+  addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"]) => {
 
-}
+  const isAddressesCollectionExist = Boolean(addressesCollection
+                                             && Array.isArray(addressesCollection)
+                                             && addressesCollection.length > 0
+  );
+
+  return (isAddressesCollectionExist
+          ? addressesCollection.map((item: IAddressItem) => ({value: item.id, label: item.address1}))
+          : null
+  );
+};
