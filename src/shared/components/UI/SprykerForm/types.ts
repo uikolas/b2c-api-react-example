@@ -24,7 +24,7 @@ import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFor
 
 
 export interface IFormField {
-  type: 'input' | 'select' | 'checkbox';
+  type: 'input' | 'select' | 'checkbox' | 'radio';
   inputName: string;
   inputValue: TFormInputValue;
   spaceNumber: GridSize;

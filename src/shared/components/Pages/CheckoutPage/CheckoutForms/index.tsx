@@ -14,6 +14,7 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
     classes,
     shippingAddress,
     billingAddress,
+    addressesCollection,
   }  = props;
 
   return (
@@ -22,6 +23,7 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
         <FormWrapper title="Delivery Address" >
           <DeliveryForm
             addressData={shippingAddress}
+            addressesCollection={addressesCollection}
           />
         </FormWrapper>
         <FormWrapper title="Billing Address" >

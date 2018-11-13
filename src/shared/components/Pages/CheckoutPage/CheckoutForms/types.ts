@@ -4,15 +4,19 @@ import {
   IBillingAddress,
   ICheckoutAddress,
   ISameAsDelivery,
-  IShippingAddress
+  IShippingAddress,
+  IUsageSavedAddress
 } from "src/shared/interfaces/checkout/index";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
+import {ICountries} from "src/shared/reducers/Common/Init";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
   shippingAddress: IShippingAddress;
   billingAddress: IBillingAddress;
+  addressesCollection: IAddressItem[] [] | null;
 }
 
 export interface IAddressDataFormSettings {
@@ -41,4 +45,15 @@ export interface ISameAsDeliveryDataFormSettings {
 export interface ISameAsDeliveryParamsFormSettings extends IBaseCheckoutFormHandler,
                                                            ISameAsDeliveryDataFormSettings {
   inputChangeHandler: TCheckoutPageContext["billingSameAsDeliveryHandler"];
+}
+
+export interface ISavedAddressDataFormSettings {
+  selectedAddresses: IUsageSavedAddress | null;
+  addressesCollection: ICheckoutFormsProps["addressesCollection"];
+}
+
+// Param to create saved addresses form
+export interface ISavedAddressParamsFormSettings extends IBaseCheckoutFormHandler,
+                                                         ISavedAddressDataFormSettings {
+  // TODO: handler from Context
 }

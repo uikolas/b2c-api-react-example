@@ -81,6 +81,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const {
       classes,
       isLoading,
+      addressesCollection,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
@@ -130,6 +131,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                   phone: '+49 1234 5060',
                   iso2Code: 'RRR'
                 }}
+                addressesCollection={addressesCollection}
               />
             </Grid>
             <Grid item xs={12} md={5}>

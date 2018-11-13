@@ -7,13 +7,15 @@ import {IDeliveryFormProps} from "src/shared/components/Pages/CheckoutPage/Check
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {CheckoutPageContext} from '../../context';
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/addressSettings";
+import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
   const {
     classes,
     addressData,
+    selectedAddresses,
+    addressesCollection,
   }  = props;
 
   return (

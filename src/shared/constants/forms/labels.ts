@@ -12,3 +12,5 @@ export const InputLabelZipCode = "Zipcode";
 export const InputLabelCountry = "Country";
 export const InputLabelPhone = "Phone";
 export const InputLabelSameAsDelivery = "Same as Delivery Address";
+export const InputLabelSelectSavedDeliveryAddress = "Select delivery address";
+export const InputLabelSelectSavedBillingAddress = "Select billing address";

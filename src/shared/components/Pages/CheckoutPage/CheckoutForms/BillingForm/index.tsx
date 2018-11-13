@@ -7,10 +7,10 @@ import {IBillingFormProps} from "src/shared/components/Pages/CheckoutPage/Checko
 import {CheckoutPageContext} from '../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/addressSettings";
+import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings";
 import {
   getSameAsDeliveryFormSettings
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/sameAsDeliverySettings";
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/sameAsDeliverySettings";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
