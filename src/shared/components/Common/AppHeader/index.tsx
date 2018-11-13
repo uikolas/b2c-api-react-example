@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Sticky, StickyChildArgs } from 'react-sticky';
 import debounce from 'lodash/debounce';
+import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { merge } from 'src/shared/helpers/common';
+import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import CatalogSearch from '../CatalogSearch';
 import { Preloader } from '../Preloader';
 import { Logo } from './parts/logo';
@@ -11,6 +13,7 @@ import { AddNav } from './parts/navAdditional';
 import { AppHeaderProps as Props, AppHeaderState as State } from './types';
 import { styles } from './styles';
 
+@(withRouter as any)
 export class AppHeaderComponent extends React.PureComponent<Props, State> {
   public state: State = {
     showSearch: true,
@@ -115,7 +118,11 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                       <span/>
                     </div>
 
-                    <MainNav mobileNavState={ isMobileNavOpened }/>
+                    {
+                      this.props.location.pathname.endsWith(pathCheckoutPage)
+                        ? <div className={ classes.checkout }>Checkout</div>
+                       : <MainNav mobileNavState={ isMobileNavOpened }/>
+                    }
 
                     <AddNav showSearch={ showSearch } handleSearch={ this.handleSearch }/>
                   </div>

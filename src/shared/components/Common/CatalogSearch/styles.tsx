@@ -13,8 +13,9 @@ export const styles = (theme: Theme) => createStyles({
   container: {
     flexGrow: 1,
   },
-  insideWrapper: {
-    padding: `0px 76px 80px`
+  insideContWrapper: {
+    width: '75%',
+    margin: '40px 12.5% 80px',
   },
   suggestionsContainer: {
     display: 'none',
@@ -22,17 +23,14 @@ export const styles = (theme: Theme) => createStyles({
   suggestionsContainerOpen: {
     display: 'block',
     position: 'absolute',
-    marginTop: theme.spacing.unit,
-    height: '813px',
+    width: '100%',
+    height: '85vh',
     overflowY: 'auto',
-    width: '588px',
     borderRadius: '2px',
     backgroundColor: '#ffffff',
   },
   suggestion: {
     display: 'block',
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
   },
   suggestionsList: {
     margin: 0,
@@ -69,10 +67,13 @@ export const styles = (theme: Theme) => createStyles({
     fill: `${theme.appColors.grey} !important`,
   },
   menuItem: {
-    height: '80px',
     display: 'flex',
     alignItems: 'center',
     paddingLeft: 0,
+    marginTop: theme.spacing.unit * 3,
+    height: '100%',
+    paddingTop: 0,
+    paddingBottom: 0,
   },
   pendingProgress: {
     position: 'absolute',
@@ -82,35 +83,55 @@ export const styles = (theme: Theme) => createStyles({
   completion: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing.unit / 2,
+    marginBottom: '22px',
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    color: theme.appColors.black,
+    letterSpacing: '0.5px',
+    textDecoration: 'none',
+  },
+  categoryTitle: {
+    lineHeight: '25px',
+    fontSize: '20px',
+    letterSpacing: '0.6px',
+    marginTop: '60px',
+    marginBottom: theme.spacing.unit * 2,
+  },
+  searchTitle: {
+    marginLeft: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit,
+    letterSpacing: '0.5px',
   },
   marginTop: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 2,
   },
   description: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    marginLeft: theme.spacing.unit * 2,
+    alignSelf: 'stretch',
   },
-  imgWrapper: {
-    display: 'flex',
-    position: 'relative',
-    width: '100px',
-    height: '100px',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: theme.spacing.unit * 2,
-    borderRadius: '1.5px',
-
+  itemName: {
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    letterSpacing: '0.5px',
+    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
-  actionAreaOverlay: {
-    position: "absolute",
-    background: "rgba(0, 0, 0, 0.10)",
-    borderRadius: '1.5px',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 350,
+  mainPrice: {
+    fontSize: theme.appFixedDimensions.fontSize.large,
+    letterSpacing: '1px',
+    color: theme.appColors.black,
+  },
+  oldPrice: {
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    letterSpacing: '1px',
+    color: theme.appColors.grey,
+  },
+  linkAll: {
+    display: 'inline-block',
+    marginTop: theme.spacing.unit * 3,
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    color: theme.appColors.black,
+    letterSpacing: '0.4px',
+    textDecoration: 'underline',
   },
 });

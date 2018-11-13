@@ -17,6 +17,7 @@ import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
 
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {
   private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
+  private designImgWidth: number = 0.33;
 
   public state: CartDataState = {
     heightListItem: 100,
@@ -33,7 +34,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
 
   private setListItemHeight = () => {
     if (this.containerRef && this.containerRef.current) {
-      this.setState({heightListItem: this.containerRef.current.offsetWidth * 0.33});
+      this.setState({heightListItem: this.containerRef.current.offsetWidth * this.designImgWidth});
     }
   };
 

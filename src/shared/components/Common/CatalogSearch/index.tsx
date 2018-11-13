@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppPrice } from '../AppPrice';
+import { CartImage } from '../CartImage';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
@@ -24,11 +25,29 @@ export const buttonTitle = 'Search';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
+  private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
+  private designImgWidth: number = 0.23;
+  public timer: any;
+
   public state: State = {
     value: '',
+    heightListItem: 100,
   };
 
-  public timer: any;
+  public componentDidMount() {
+    window.addEventListener('resize', this.setListItemHeight);
+    this.setListItemHeight();
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('resize', this.setListItemHeight);
+  }
+
+  private setListItemHeight = () => {
+    if (this.containerRef && this.containerRef.current) {
+      this.setState({heightListItem: this.containerRef.current.offsetWidth * this.designImgWidth});
+    }
+  };
 
   // Action handlers
 
@@ -133,18 +152,18 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     const { classes } = this.props;
 
     return (
-      <NavLink to={ `${pathProductPageBase}/${suggestion.abstract_sku}` }>
+      <NavLink
+        to={ `${pathProductPageBase}/${suggestion.abstract_sku}` }
+        style={{ textDecoration: 'none' }}
+      >
         <MenuItem selected={ isHighlighted } component="div" className={classes.menuItem}>
-          <div className={classes.imgWrapper}>
-            <img
-              height={ 60 }
-              src={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
-              alt={ suggestion.abstract_name }
-            />
-            <div className={ classes.actionAreaOverlay } />
-          </div>
+          <CartImage
+            image={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
+            size={this.state.heightListItem}
+          />
+
           <div className={ classes.description }>
-            <span>
+            <span className={ classes.itemName }>
             { parts.map((part, index: number) => {
               return part.highlight ? (
                 <span key={ String(index) } style={ {fontWeight: 500} }>
@@ -163,6 +182,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 ? suggestion.prices[0].grossAmount
                 : suggestion.price }
               priceType={ suggestion.prices && suggestion.prices.length ? suggestion.prices[0].priceTypeName : '' }
+              extraClassName={classes.mainPrice}
             />
 
             {
@@ -170,6 +190,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 ? <AppPrice
                     value={ suggestion.prices[1].grossAmount }
                     priceType={ suggestion.prices[1].priceTypeName }
+                    extraClassName={classes.oldPrice}
                   />
                 : null
             }
@@ -245,49 +266,48 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
     return (
       <div { ...options.containerProps }>
-        <Paper square>
-          <Typography paragraph variant="headline">
-            { parts.map((part, index: number) => {
-                return part.highlight ? (
-                  <span key={ String(index) } style={ {fontWeight: 500} }>
+        <Typography variant="title" className={classes.searchTitle}>
+          { parts.map((part, index: number) => {
+            return part.highlight ? (
+              <span key={ String(index) } style={ {fontWeight: 500} }>
                     { part.text }
                   </span>
-                ) : (
-                  <strong key={ String(index) } style={ {fontWeight: 300, color: '#D3D3D3'} }>
-                    { part.text }
-                  </strong>
-                );
-              })
-            }
-          </Typography>
-          <div className={classes.insideWrapper}>
-            <div>
-              {completions}
-            </div>
-            <Typography variant="title" className={classes.marginTop}>
-              Categories
-            </Typography>
-            <Divider/>
-            <div className={classes.marginTop}>
-              {renderedCategories}
-            </div>
-            <Typography variant="title" className={classes.marginTop}>
-              Suggested Products
-            </Typography>
-            <Divider/>
-            <div className={classes.marginTop}>
-              {
-                options.children
-              }
-            </div>
-            <NavLink to={pathSearchPage}
-                     data-query={options.query}
-                     onClick={this.handleSearchCompletion}
-            >
-              <strong>See all suggested products</strong>
-            </NavLink>
+            ) : (
+              <strong key={ String(index) } style={ {fontWeight: 300, color: '#D3D3D3'} }>
+                { part.text }
+              </strong>
+            );
+          })
+          }
+        </Typography>
+        <div className={classes.insideContWrapper}>
+          <div>
+            {completions}
           </div>
-        </Paper>
+          <Typography component="h4" className={classes.categoryTitle}>
+            Categories
+          </Typography>
+          <Divider />
+          <div className={classes.marginTop}>
+            {renderedCategories}
+          </div>
+          <Typography component="h4" className={classes.categoryTitle}>
+            Suggested Products
+          </Typography>
+
+          <Divider />
+
+          <div>{ options.children }</div>
+
+          <NavLink
+            to={pathSearchPage}
+            data-query={options.query}
+            onClick={this.handleSearchCompletion}
+            className={classes.linkAll}
+          >
+            See all suggested products
+          </NavLink>
+        </div>
       </div>
     );
   };
@@ -309,7 +329,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     };
 
     return (
-      <div className={ classes.root } id="CatalogSearch">
+      <div className={ classes.root } id="CatalogSearch"  ref={this.containerRef}>
         <Autosuggest
           { ...autosuggestProps }
           inputProps={ {
