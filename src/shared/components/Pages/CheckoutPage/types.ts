@@ -5,7 +5,10 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem} from "src/shared/reducers/Common/Cart";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
-import {ICheckoutAddress, ISameAsDelivery, IUsageSavedAddress} from "src/shared/interfaces/checkout/index";
+import {
+  IAddNewAddressActions, ICheckoutAddress, ISameAsDelivery,
+  IUsageSavedAddress
+} from "src/shared/interfaces/checkout/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
@@ -33,7 +36,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   countriesCollection: ICountries[];
 }
 
-export interface ICheckoutPageState {
+export interface ICheckoutPageState extends IAddNewAddressActions {
   isBillingSameAsDelivery: boolean;
   selectedAddresses: IUsageSavedAddress;
 }
@@ -41,7 +44,8 @@ export interface ICheckoutPageState {
 // All possibles names of input
 export interface ICheckoutFormInputs extends ICheckoutAddress,
                                              ISameAsDelivery,
-                                             IUsageSavedAddress {
+                                             IUsageSavedAddress,
+                                             IAddNewAddressActions {
 
 }
 

@@ -13,6 +13,11 @@ import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutFo
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {ICheckoutFieldInput, ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
+import {IExtraAddressesOptions, TAddressType} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {
+  InputLabelAddNewBillingAddress, InputLabelAddNewDeliveryAddress,
+  InputLabelSameAsCurrentDelivery
+} from "src/shared/constants/forms/labels";
 
 
 @connect
@@ -23,7 +28,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     selectedAddresses: {
       billingSelectedAddressId: null,
       deliverySelectedAddressId: null,
-    }
+    },
+    isAddNewBilling: false,
+    isAddNewDelivery: false,
   };
 
   public componentDidMount() {
@@ -79,6 +86,26 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         isBillingSameAsDelivery: !prevState.isBillingSameAsDelivery,
       });
     });
+  }
+
+  private getExtraAddressesOptions = (): IExtraAddressesOptions | null => {
+    const response: IExtraAddressesOptions = {delivery: null, billing: null};
+
+    if (this.props.addressesCollection) {
+      response.delivery = [];
+      response.billing = [];
+      response.delivery.push({value: 'isAddNewDelivery', label: InputLabelAddNewDeliveryAddress});
+      response.billing.push(
+        {value: 'isAddNewBilling', label: InputLabelAddNewBillingAddress},
+        {value: 'sameAsDelivery', label: InputLabelSameAsCurrentDelivery}
+      );
+    }
+
+    if (!response.delivery && !response.billing) {
+      return null;
+    }
+
+    return response;
   }
 
   public render(): JSX.Element {
@@ -137,6 +164,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 }}
                 addressesCollection={addressesCollection}
                 selectedAddresses={this.state.selectedAddresses}
+                extraAddressesOptions={this.getExtraAddressesOptions()}
+                isAddNewBilling={this.state.isAddNewBilling}
+                isAddNewDelivery={this.state.isAddNewDelivery}
               />
             </Grid>
             <Grid item xs={12} md={5}>

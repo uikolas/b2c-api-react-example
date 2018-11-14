@@ -1,16 +1,20 @@
 import {InputLabelSelectSavedDeliveryAddress} from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {ISavedAddressParamsFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {
+  ISavedAddressParamsFormSettings,
+  TAddressType
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 
 
 export const getDeliverySavedAddressFormSettings = ( formName: string,
-                                                     { selectedAddresses,
+                                                     { selectedAddressId,
                                                        addressesCollection,
                                                        submitHandler,
                                                        inputChangeHandler,
+                                                       extraAddressesOptions,
                                                      }: ISavedAddressParamsFormSettings
                                                    ) => {
 
@@ -23,13 +27,13 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
         {
           type: 'radio',
           inputName: 'deliverySelectedAddressId',
-          inputValue: selectedAddresses.deliverySelectedAddressId
+          inputValue: selectedAddressId
                       || getDefaultAddressId(addressesCollection, 'delivery'),
           spaceNumber: 12,
           isRequired: false,
           label: InputLabelSelectSavedDeliveryAddress,
           isError: false,
-          radioItems: convertAddressesCollectionToRadioItems(addressesCollection),
+          radioItems: getRadioItems(addressesCollection, extraAddressesOptions),
         }
       ]
     ],
@@ -38,11 +42,19 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
   return formSettings;
 };
 
-const getRadioItems = (addressesCollection: Array<IAddressItem> | null) => {
-
+const getRadioItems = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"],
+                       extraAddressesOptions: ISavedAddressParamsFormSettings["extraAddressesOptions"]) => {
+  let items = convertAddressesToRadioItems(addressesCollection);
+  if (!items) {
+    return null;
+  }
+  if(Array.isArray(extraAddressesOptions) && extraAddressesOptions.length > 0) {
+    items = items.concat(extraAddressesOptions);
+  }
+  return items;
 };
 
-const convertAddressesCollectionToRadioItems = (addressesCollection: Array<IAddressItem> | null) => {
+const convertAddressesToRadioItems = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"]) => {
 
   return (isAddressesCollectionExist(addressesCollection)
           ? addressesCollection.map((item: IAddressItem) => ({value: item.id, label: createRadioItemLabel(item)}))
@@ -50,14 +62,15 @@ const convertAddressesCollectionToRadioItems = (addressesCollection: Array<IAddr
   );
 };
 
-const isAddressesCollectionExist = (addressesCollection: Array<IAddressItem> | null) => {
+const isAddressesCollectionExist = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"]) => {
   return Boolean(addressesCollection
     && Array.isArray(addressesCollection)
     && addressesCollection.length > 0
   );
 };
 
-const getDefaultAddressId = (addressesCollection: Array<IAddressItem>, addressType: 'delivery' | 'billing') => {
+const getDefaultAddressId = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"],
+                             addressType: TAddressType) => {
   if (!isAddressesCollectionExist(addressesCollection)) {
     return null;
   }

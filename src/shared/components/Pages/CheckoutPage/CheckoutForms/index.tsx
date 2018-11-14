@@ -16,6 +16,9 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
     billingAddress,
     selectedAddresses,
     addressesCollection,
+    extraAddressesOptions,
+    isAddNewBilling,
+    isAddNewDelivery,
   }  = props;
 
   return (
@@ -25,12 +28,18 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
           <DeliveryForm
             addressData={shippingAddress}
             addressesCollection={addressesCollection}
-            selectedAddresses={selectedAddresses}
+            selectedAddressId={selectedAddresses ? selectedAddresses.deliverySelectedAddressId : null}
+            extraAddressesOptions={extraAddressesOptions ? extraAddressesOptions.delivery : null}
+            isAddNewDelivery={isAddNewDelivery}
           />
         </FormWrapper>
         <FormWrapper title="Billing Address" >
           <BillingForm
             addressData={billingAddress}
+            addressesCollection={addressesCollection}
+            selectedAddressId={selectedAddresses ? selectedAddresses.billingSelectedAddressId : null}
+            extraAddressesOptions={extraAddressesOptions ? extraAddressesOptions.billing : null}
+            isAddNewBilling={isAddNewBilling}
           />
         </FormWrapper>
       </Grid>

@@ -43,3 +43,8 @@ export interface IUsageSavedAddress {
   billingSelectedAddressId: IAddressItem["id"] | null;
   deliverySelectedAddressId: IAddressItem["id"] | null;
 }
+
+export interface IAddNewAddressActions {
+  isAddNewBilling: boolean;
+  isAddNewDelivery: boolean;
+}

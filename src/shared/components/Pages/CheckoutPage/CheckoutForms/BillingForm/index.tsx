@@ -17,6 +17,8 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
   const {
     classes,
     addressData,
+    selectedAddressId,
+    extraAddressesOptions,
   }  = props;
 
   return (

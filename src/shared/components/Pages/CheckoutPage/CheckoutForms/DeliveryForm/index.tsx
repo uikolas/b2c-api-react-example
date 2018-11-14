@@ -17,18 +17,26 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
   const {
     classes,
     addressData,
-    selectedAddresses,
+    selectedAddressId,
     addressesCollection,
+    extraAddressesOptions,
+    isAddNewDelivery,
   }  = props;
 
-  console.log('DeliveryFormBase selectedAddresses', selectedAddresses);
+  console.log('DeliveryFormBase selectedAddressId', selectedAddressId);
   console.log('DeliveryFormBase addressesCollection', addressesCollection);
 
   return (
     <CheckoutPageContext.Consumer>
       {({submitHandler, inputChangeHandler}) => {
         const deliveryParams = {addressData, submitHandler, inputChangeHandler};
-        const savedDeliveryParams = {selectedAddresses, addressesCollection, submitHandler, inputChangeHandler};
+        const savedDeliveryParams = {
+          selectedAddressId,
+          addressesCollection,
+          extraAddressesOptions,
+          submitHandler,
+          inputChangeHandler
+        };
         const deliveryFormSettings = getAddressFormSettings('delivery', deliveryParams);
         const savedAddressFormSettings = getDeliverySavedAddressFormSettings('savedDelivery', savedDeliveryParams);
         return (

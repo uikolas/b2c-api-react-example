@@ -1,6 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
 import {
+  IAddNewAddressActions,
   IBillingAddress,
   ICheckoutAddress,
   ISameAsDelivery,
@@ -12,8 +13,10 @@ import {IFormField, IRadioItem} from "src/shared/components/UI/SprykerForm/types
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
-
-export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
+// TODO: fix extends
+export interface ICheckoutFormsProps extends WithStyles<typeof formStyles>,
+                                             IExtraAddressesOptionsDataFormSettings,
+                                             IAddNewAddressActions {
   shippingAddress: IShippingAddress;
   billingAddress: IBillingAddress;
   addressesCollection: IAddressItem[] | null;
@@ -49,13 +52,25 @@ export interface ISameAsDeliveryParamsFormSettings extends IBaseCheckoutFormHand
 }
 
 export interface ISavedAddressDataFormSettings {
-  selectedAddresses: IUsageSavedAddress | null;
   addressesCollection: ICheckoutFormsProps["addressesCollection"];
-  additionalOptions?: Array<IRadioItem>;
 }
 
 // Param to create saved addresses form
 export interface ISavedAddressParamsFormSettings extends IBaseCheckoutFormHandler,
                                                          ISavedAddressDataFormSettings {
+
   // TODO: handler from Context
+  selectedAddressId: IAddressItem["id"] | null;
+  extraAddressesOptions: Array<IRadioItem> | null;
 }
+
+export interface IExtraAddressesOptions {
+  delivery: Array<IRadioItem> | null;
+  billing: Array<IRadioItem> | null;
+}
+
+export interface IExtraAddressesOptionsDataFormSettings {
+  extraAddressesOptions: IExtraAddressesOptions | null;
+}
+
+export type TAddressType = 'delivery' | 'billing';
