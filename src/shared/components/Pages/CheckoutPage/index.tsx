@@ -63,15 +63,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleInputChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>): void => {
-    // {target: ICheckoutFieldInput}
-    console.info('handleInputChange ');
     // const { name, value }: ICheckoutFieldInput = event.target;
     const { name, value } = event.target;
     console.info('handleInputChange name', event.target.name);
     console.info('handleInputChange value', event.target.value);
     if (name === 'deliverySelection') {
       this.handleDeliverySelection(event.target.name, event.target.value);
-    } else if (name === 'billingSelection') {
+    } else if (name === 'billingSelection' || name === 'sameAsDelivery') {
       this.handleBillingSelection(event.target.name, event.target.value);
     }
 
@@ -122,11 +120,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       return true;
     } else if (value === 'sameAsDelivery') {
       this.setState( (prevState: ICheckoutPageState) => {
+        const newSameValue = !prevState.billingSelection.isSameAsDelivery;
         return ({
           billingSelection: {
             selectedAddressId: null,
-            isAddNew: false,
-            isSameAsDelivery: true,
+            isAddNew: newSameValue ? false : true,
+            isSameAsDelivery: newSameValue,
           }
         });
       });
