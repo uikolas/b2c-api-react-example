@@ -14,9 +14,9 @@ export const styles = (theme: Theme) => createStyles({
     transition: 'transform .3s ease-in-out',
     '&:not(:first-child)': {
       marginLeft: 8,
-    }
+    },
   },
   addNavSearch: {
-    transform: 'scale(0)'
+    transform: 'scale(0)',
   },
 });

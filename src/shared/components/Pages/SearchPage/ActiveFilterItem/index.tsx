@@ -5,8 +5,8 @@ import Chip from '@material-ui/core/Chip';
 import { CloseOutlined } from '@material-ui/icons';
 
 import { styles } from './styles';
-import {SearchPageContext} from '../context';
-import {IActiveFilterItemProps} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/types";
+import { SearchPageContext } from '../context';
+import { IActiveFilterItemProps } from 'src/shared/components/Pages/SearchPage/ActiveFilterItem/types';
 
 
 export const ActiveFilterItemBase: React.SFC<IActiveFilterItemProps> = (props) => {
@@ -22,14 +22,14 @@ export const ActiveFilterItemBase: React.SFC<IActiveFilterItemProps> = (props) =
   return (
 
     <SearchPageContext.Consumer>
-      {({deleteActiveFilterHandler}) => (
+      { ({deleteActiveFilterHandler}) => (
         <Chip
-          label={label}
+          label={ label }
           variant="outlined"
-          className={classes.chip}
-          onDelete={ deleteActiveFilterHandler({name, value, type, rangeSubType})}
-          deleteIcon={<CloseOutlined className={classes.close} />}
-          classes={{label: classes.label}}
+          className={ classes.chip }
+          onDelete={ deleteActiveFilterHandler({name, value, type, rangeSubType}) }
+          deleteIcon={ <CloseOutlined className={ classes.close }/> }
+          classes={ {label: classes.label} }
         />
       ) }
     </SearchPageContext.Consumer>

@@ -1,14 +1,13 @@
 import * as React from 'react';
-import {ChangeEvent} from "react";
+import { ChangeEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import { styles } from './styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
-import {IRangeInputError} from "src/shared/components/UI/SprykerRangeFilter/index";
+import { IRangeInputError } from 'src/shared/components/UI/SprykerRangeFilter';
 
 interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
   title: string;
@@ -51,28 +50,29 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
     <FormControl className={ className }>
       <Grid container justify="flex-start" alignItems="center">
         <Grid item>
-          <span className={ classes.title }>{isMin ? `${title} ${titlePartMin}` : `${title} ${titlePartMax}`}</span>
+          <span className={ classes.title }>{ isMin ? `${title} ${titlePartMin}` : `${title} ${titlePartMax}` }</span>
         </Grid>
         <Grid item>
-          {isError
-            ? <label className={classes.label}>{errorText}</label>
+          { isError
+            ? <label className={ classes.label }>{ errorText }</label>
             : null
           }
           <TextField
             id={ `${attributeName}` }
-            error={isError}
-            InputProps={{
+            error={ isError }
+            InputProps={ {
               disableUnderline: false,
               classes: {input: classes.value, error: classes.error},
-            }}
-            InputLabelProps={{
+            } }
+            InputLabelProps={ {
               FormLabelClasses: {
-                root: classes.label
-            }}}
+                root: classes.label,
+              },
+            } }
             type="text"
             value={ currentValue }
             onChange={ handleChangeValues }
-            onBlur={handleBlur}
+            onBlur={ handleBlur }
           />
         </Grid>
       </Grid>

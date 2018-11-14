@@ -3,11 +3,13 @@ import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
-  getAvailableLabels, getProductsLabeled, getSpellingSuggestion,
-  SearchState
+  getAvailableLabels,
+  getProductsLabeled,
+  getSpellingSuggestion,
+  SearchState,
 } from 'src/shared/reducers/Pages/Search';
-import { getAppCurrency, getCategoriesTree, TAppCurrency, ICategory } from 'src/shared/reducers/Common/Init';
-import {TSpellingSuggestion} from "src/shared/interfaces/searchPageData/index";
+import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { TSpellingSuggestion } from 'src/shared/interfaces/searchPageData';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
@@ -28,7 +30,9 @@ const mapStateToProps = (state: any, ownProps: any) => {
     currentSort: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentSort : ownProps.currentSort,
     pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
     category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : ownProps.category,
-    currentCategory: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentCategory : ownProps.currentCategory,
+    currentCategory: pageSearchProps && pageSearchProps.data
+      ? pageSearchProps.data.currentCategory
+      : ownProps.currentCategory,
     isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
     isFulfilled: pageSearchProps && pageSearchProps.fulfilled ? pageSearchProps.fulfilled : ownProps.fulfilled,
     currency,

@@ -1,4 +1,4 @@
-import {CHECKOUT_DATA_INIT_REQUEST} from "src/shared/constants/ActionTypes/Pages/Checkout";
+import { CHECKOUT_DATA_INIT_REQUEST } from 'src/shared/constants/ActionTypes/Pages/Checkout';
 
 export const getCheckoutDataInitPendingStateAction = () => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_PENDING',

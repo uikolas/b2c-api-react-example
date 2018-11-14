@@ -1,4 +1,4 @@
-import {ICustomerDataParsed} from "src/shared/interfaces/customer";
+import { ICustomerDataParsed } from 'src/shared/interfaces/customer';
 
 interface ICustomerDataResponse {
   data: object;
@@ -9,7 +9,7 @@ export const parseCustomerDataResponse = (response: ICustomerDataResponse): ICus
   if (!response) {
     return null;
   }
-  const { data: {attributes, id} }: any = response;
+  const {data: {attributes, id}}: any = response;
 
   let result: ICustomerDataParsed = {
     id,

@@ -1,6 +1,5 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { blueGrey, grey, teal } from '@material-ui/core/colors';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
@@ -26,7 +25,7 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   buyBtn: {
-    color: "#fff",
+    color: '#fff',
     backgroundColor: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
     '&:hover': {
@@ -44,7 +43,7 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: 'transparent',
     borderColor: theme.palette.primary.main,
     '&:hover': {
-      color: "#fff",
+      color: '#fff',
       backgroundColor: theme.palette.primary.main,
       borderColor: theme.palette.primary.main,
     },
@@ -77,7 +76,7 @@ export const styles = (theme: Theme) => createStyles({
     '& .control-prev': {
       '&:before': {
         transform: 'scale(-1, 1)',
-      }
+      },
     },
     '& .control-arrow': {
       width: 68,
@@ -86,7 +85,7 @@ export const styles = (theme: Theme) => createStyles({
         // tslint:disable:max-line-length
         content: `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAMCAYAAABfnvydAAAAAXNSR0IArs4c6QAAAO5JREFUGBljNjY2bpSWll4uKSkpnJ6evv/AgQP/GZAAI1DBAyBfHiq2SklJKXb16tW/YGqYGBkZS4Cc31CBsPv37291cHDggSlgBDFMTU09/v37txbI5ALxgZrOcHJyeh0+fPg1WAFI0MzMzBKoaMv///+FoIpusbGxucEVgASBJmkDFe0EMqWhio4zgRj4ANwEXFaATQA58u/fv3tg9gNNPAt0pM2xY8ceMpmYmIQA7d0EFAT7AEjv4+DgcAT5AGQ1E1BXD5BmBXGA3lsrJibmdfTo0c8gPgiArFgIlHgJxF0+Pj5h27dv/wmWgRIADAlXCagfJNEAAAAASUVORK5CYII=') !important`,
         // tslint:enable:max-line-length
-      }
+      },
     },
   },
   productMain: {
@@ -118,5 +117,5 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.appColors.grey,
     textTransform: 'uppercase',
     paddingTop: 25,
-  }
+  },
 });

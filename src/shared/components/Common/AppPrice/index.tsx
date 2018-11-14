@@ -3,7 +3,7 @@ import { FormattedNumber } from 'react-intl';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
-import {priceTypeNameDefault, priceTypeNameOriginal, TPriceTypeName} from 'src/shared/interfaces/product';
+import { priceTypeNameOriginal, TPriceTypeName } from 'src/shared/interfaces/product';
 import { styles } from './styles';
 
 interface AppPriceProps extends WithStyles<typeof styles> {
@@ -28,12 +28,12 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
   return (
     value
       ? <span className={ extraClassName ? `${priceClassName} ${extraClassName}` : priceClassName }>
-          {title ? title : null}
-          <FormattedNumber
-            value={ valueFormatted }
-            style="currency"
-            currency={ specificCurrency ? specificCurrency : currency }
-          />
+          { title ? title : null }
+        <FormattedNumber
+          value={ valueFormatted }
+          style="currency"
+          currency={ specificCurrency ? specificCurrency : currency }
+        />
       </span>
       : null
   );

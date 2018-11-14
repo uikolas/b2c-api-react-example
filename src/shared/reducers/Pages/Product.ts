@@ -1,12 +1,7 @@
-import produce from 'immer';
-import {
-  PAGES_PRODUCT_REQUEST,
-} from '../../constants/ActionTypes/Pages/Product';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {IProductDataParsed} from "../../interfaces/product/index";
+import { PAGES_PRODUCT_REQUEST } from '../../constants/ActionTypes/Pages/Product';
+import { IReduxState } from 'src/typings/app';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { IProductDataParsed } from '../../interfaces/product';
 
 
 export interface IProductState extends IReduxState {
@@ -58,7 +53,7 @@ export const initialState: IProductState = {
   return res;
 };*/
 
-export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
+export const pageProduct = function(state: IProductState = initialState, action: any): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
       return handleRejected(state, action.payload);
@@ -128,7 +123,9 @@ export function getProduct(state: any, props: any): IProductDataParsed | null {
   if (isPageProductStateRejected(state, props)) {
     return null;
   }
-  return (isStateExist(state, props) && state.pageProduct.data.selectedProduct) ? state.pageProduct.data.selectedProduct : null;
+  return (isStateExist(state, props) && state.pageProduct.data.selectedProduct)
+    ? state.pageProduct.data.selectedProduct
+    : null;
 }
 
 function isStateExist(state: any, props: any): boolean {

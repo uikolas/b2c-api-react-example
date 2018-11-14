@@ -1,5 +1,5 @@
-import {baseTheme} from "src/shared/theme/index";
-import {appFixedDimensions} from "src/shared/theme/properties/new/appFixedDimensions";
+import { baseTheme } from 'src/shared/theme';
+import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
 
 export interface IAppContainerStyles {
   maxWidth: React.CSSProperties['width'];
@@ -12,11 +12,11 @@ export interface IAppContainerStyles {
 export const appContainerStyles: IAppContainerStyles = {
   maxWidth: 1200,
   width: '100%',
-  marginLeft: "auto",
-  marginRight: "auto",
+  marginLeft: 'auto',
+  marginRight: 'auto',
   position: 'relative',
   [baseTheme.breakpoints.down(appFixedDimensions.customBreakpoints.tablet)]: {
-    maxWidth: "100%",
+    maxWidth: '100%',
     paddingLeft: baseTheme.spacing.unit * 2,
     paddingRight: baseTheme.spacing.unit * 2,
   },

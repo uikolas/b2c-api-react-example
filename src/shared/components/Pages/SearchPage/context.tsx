@@ -1,8 +1,5 @@
 import * as React from 'react';
-import {
-  IFilterItemToDelete, TCategoryId, TFilterItemName,
-  TFilterItemValue
-} from "src/shared/components/Pages/SearchPage/types";
+import { IFilterItemToDelete, TCategoryId } from 'src/shared/components/Pages/SearchPage/types';
 
 type TSearchPageContext = {
   selectCategoryHandler: (categoryId: TCategoryId) => any;
@@ -10,10 +7,10 @@ type TSearchPageContext = {
 };
 
 export const SearchPageContext = React.createContext<TSearchPageContext>({
-  selectCategoryHandler: (categoryId: TCategoryId) => {
+  selectCategoryHandler: (/*categoryId: TCategoryId*/) => {
     throw new Error('selectCategoryHandler() not implemented');
   },
-  deleteActiveFilterHandler: (itemToDelete: IFilterItemToDelete) => {
+  deleteActiveFilterHandler: (/*itemToDelete: IFilterItemToDelete*/) => {
     throw new Error('deleteActiveFilterHandler() not implemented');
   },
 });

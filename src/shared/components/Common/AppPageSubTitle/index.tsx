@@ -17,8 +17,8 @@ export const AppPageSubTitleBase: React.SFC<AppPageSubTitleProps> = (props) => {
   }
 
   return (
-    <Typography component="h2" color="inherit" className={`${classes.title} ${extraClass ? extraClass : ''}` }>
-      {title}
+    <Typography component="h2" color="inherit" className={ `${classes.title} ${extraClass ? extraClass : ''}` }>
+      { title }
     </Typography>
   );
 };

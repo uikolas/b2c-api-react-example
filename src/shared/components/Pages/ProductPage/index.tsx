@@ -394,7 +394,8 @@ export class ProductPageBase extends React.Component<Props, State> {
 
                   { this.props.isUserLoggedIn
                     ? (<Grid container justify="center" className={ classes.wishlistBtnArea }>
-                        <Grid item xs={ 12 } sm={ this.state.wishListSelected ? 6 : 12 } className={ classes.buyBtnParent }>
+                        <Grid item xs={ 12 } sm={ this.state.wishListSelected ? 6 : 12 }
+                              className={ classes.buyBtnParent }>
                           <SprykerButton
                             title={ wishlistBtnTitle }
                             extraClasses={ `${classes.productBtn} ${classes.wishListBtn}` }
@@ -428,10 +429,10 @@ export class ProductPageBase extends React.Component<Props, State> {
 
               <div className={ classes.descriptionContainer }>
                 <Grid container justify="center" className={ classes.description }>
-                  <Grid item md={7} sm={12}>
+                  <Grid item md={ 7 } sm={ 12 }>
                     <ProductAttributes attributes={ this.state.attributes }/>
                   </Grid>
-                  <Grid item md={5} sm={12}>
+                  <Grid item md={ 5 } sm={ 12 }>
                     <Typography variant="title" color="textPrimary" className={ classes.descriptionTitle }>
                       Description
                     </Typography>

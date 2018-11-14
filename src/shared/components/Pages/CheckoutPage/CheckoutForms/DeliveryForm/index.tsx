@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 
 
 import { styles } from './styles';
-import {IDeliveryFormProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types";
+import { IDeliveryFormProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types';
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
-  const {classes}  = props;
+  const {classes} = props;
 
   return (
     <Grid container className={ classes.root }>

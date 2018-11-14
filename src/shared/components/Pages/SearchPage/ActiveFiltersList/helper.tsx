@@ -1,16 +1,18 @@
 import * as React from 'react';
-import {firstLetterToUpperCase} from "src/shared/helpers/common/transform";
-import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import { firstLetterToUpperCase } from 'src/shared/helpers/common/transform';
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import {
-  filterTypeRange, rangeMaxType, rangeMinType,
-  TFilterItemName
-} from "src/shared/components/Pages/SearchPage/types";
+  filterTypeRange,
+  rangeMaxType,
+  rangeMinType,
+  TFilterItemName,
+} from 'src/shared/components/Pages/SearchPage/types';
 
-export const createRangeFilterItem = ( isPrice: boolean,
-                                       isMin: boolean,
-                                       rangeName: string,
-                                       value: number,
-                                       priceClassName: string | null = null) => {
+export const createRangeFilterItem = (isPrice: boolean,
+                                      isMin: boolean,
+                                      rangeName: string,
+                                      value: number,
+                                      priceClassName: string | null = null) => {
   let rangeNameTitle = firstLetterToUpperCase(rangeName);
   const rangeNameTitlePrefixed = isMin ? `${rangeNameTitle} from: ` : `${rangeNameTitle} to: `;
   return {
@@ -18,9 +20,9 @@ export const createRangeFilterItem = ( isPrice: boolean,
     value,
     label: isPrice
       ? <AppPrice
-        value={value * 100}
-        title={rangeNameTitlePrefixed}
-        extraClassName={priceClassName}
+        value={ value * 100 }
+        title={ rangeNameTitlePrefixed }
+        extraClassName={ priceClassName }
       />
       : `${rangeNameTitlePrefixed} ${value}`,
     type: filterTypeRange,

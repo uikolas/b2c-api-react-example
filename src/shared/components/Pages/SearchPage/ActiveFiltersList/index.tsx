@@ -10,13 +10,13 @@ import {
   rangeMaxType,
   rangeMinType,
   TFilterItemValue,
-} from "src/shared/components/Pages/SearchPage/types";
-import {ActiveFilterItem} from "src/shared/components/Pages/SearchPage/ActiveFilterItem/index";
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {isWordHasPrice, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
-import {RangeFacets} from "src/shared/interfaces/searchPageData/index";
-import {createRangeFilterItem, transformName} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/helper";
-import {IActiveFiltersListProps} from "src/shared/components/Pages/SearchPage/ActiveFiltersList/types";
+} from 'src/shared/components/Pages/SearchPage/types';
+import { ActiveFilterItem } from 'src/shared/components/Pages/SearchPage/ActiveFilterItem';
+import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
+import { isWordHasPrice, rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
+import { RangeFacets } from 'src/shared/interfaces/searchPageData';
+import { createRangeFilterItem, transformName } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
+import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
 
 
 const title = 'Active Filters';
@@ -36,7 +36,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
 
   for (let filter in activeValuesFilters) {
     if (Array.isArray(activeValuesFilters[filter]) && activeValuesFilters[filter].length) {
-      const itemsLocalCollection =  activeValuesFilters[filter].map((value: TFilterItemValue) => ({
+      const itemsLocalCollection = activeValuesFilters[filter].map((value: TFilterItemValue) => ({
         name: filter,
         value,
         label: `${transformName(filter, '_')}: ${value}`,
@@ -58,17 +58,17 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
         }
         const valueFrom = activeValuesRanges[rangeName].min;
         const valueTo = activeValuesRanges[rangeName].max;
-        const defaultFrom =  rangeFilterValueToFront(defaultValuesArr[0].min, rangeMinType);
+        const defaultFrom = rangeFilterValueToFront(defaultValuesArr[0].min, rangeMinType);
         const defaultTo = rangeFilterValueToFront(defaultValuesArr[0].max, rangeMaxType);
 
-        if(defaultFrom !==  valueFrom && valueFrom > 0) {
+        if (defaultFrom !== valueFrom && valueFrom > 0) {
           itemsGlobalCollection.push(
-            createRangeFilterItem(isPrice, true, rangeName, valueFrom, classes.price)
+            createRangeFilterItem(isPrice, true, rangeName, valueFrom, classes.price),
           );
         }
-        if(defaultTo !==  valueTo && valueTo > 0) {
+        if (defaultTo !== valueTo && valueTo > 0) {
           itemsGlobalCollection.push(
-            createRangeFilterItem(isPrice, false, rangeName, valueTo, classes.price)
+            createRangeFilterItem(isPrice, false, rangeName, valueTo, classes.price),
           );
         }
 
@@ -89,7 +89,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <AppPageSubTitle title={title} />
+        <AppPageSubTitle title={ title }/>
       </Grid>
 
       <Grid container
@@ -97,24 +97,24 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
             alignItems="center"
             className={ classes.list }
       >
-       {itemsGlobalCollection.map((item: IFilterItem) => {
-         return (
-           <ActiveFilterItem
-             key={`${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}`}
-             value={item.value}
-             name={item.name}
-             label={item.label}
-             type={item.type}
-             rangeSubType={item.rangeSubType}
-           />
-         );
-       })
-       }
+        { itemsGlobalCollection.map((item: IFilterItem) => {
+          return (
+            <ActiveFilterItem
+              key={ `${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}` }
+              value={ item.value }
+              name={ item.name }
+              label={ item.label }
+              type={ item.type }
+              rangeSubType={ item.rangeSubType }
+            />
+          );
+        })
+        }
         <Chip
-          label={resetBtnTitle}
-          className={`${classes.reset}`}
-          onClick={resetHandler}
-          classes={{label: classes.resetLabel}}
+          label={ resetBtnTitle }
+          className={ `${classes.reset}` }
+          onClick={ resetHandler }
+          classes={ {label: classes.resetLabel} }
         />
 
       </Grid>

@@ -61,7 +61,7 @@ export class UserComponent extends React.PureComponent<Props, State> {
           transformOrigin={ {vertical: 'top', horizontal: 'center'} }
         >
           <PopoverDrop>
-            <UserDrop />
+            <UserDrop/>
           </PopoverDrop>
         </Popover>
       </div>

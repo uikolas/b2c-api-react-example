@@ -5,7 +5,7 @@ import {
   CART_UPDATE_ITEM,
   GET_CARTS,
 } from '../../constants/ActionTypes/Common/Cart';
-import { IReduxState } from '../../../typings/app';
+import { IReduxState } from 'src/typings/app';
 import {
   TProductAvailability,
   TProductImageSRC,
@@ -16,8 +16,7 @@ import {
 } from '../../interfaces/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
-import {PAGES_CUSTOMER_LOGOUT} from "src/shared/constants/ActionTypes/Pages/Login";
-import {IProductPropFullData} from "src/shared/interfaces/product";
+import { PAGES_CUSTOMER_LOGOUT } from 'src/shared/constants/ActionTypes/Pages/Login';
 
 export interface ICartItem {
   sku: TProductSKU | null;
@@ -29,7 +28,7 @@ export interface ICartItem {
   groupKey: string | null;
   availability: TProductAvailability | null;
   availableQuantity: TProductQuantity | null;
-  superAttributes: Array<{ [key: string]: string }> | null;
+  superAttributes: Array<{[key: string]: string}> | null;
 }
 
 export interface ICartData extends ICartDataResponse {
@@ -190,7 +189,7 @@ export function getCartId(state: any, props: any): TCartId {
   return (isCartCreated(state, props) && state.cart.data.id) ? state.cart.data.id : null;
 }
 
-export function getProductsFromCart(state: any, props: any): ICartData["items"] | null {
+export function getProductsFromCart(state: any, props: any): ICartData['items'] | null {
   return isProductsInCart(state, props) ? state.cart.data.items : null;
 }
 
@@ -214,4 +213,3 @@ function isProductExistsInCart(cartState: ICartState, sku: TProductSKU): boolean
 function getCartItemsWithoutSelected(cartState: ICartState, sku: TProductSKU): Array<ICartItem> {
   return cartState.data.items.filter((item: ICartItem): any => item.sku !== sku);
 }
-

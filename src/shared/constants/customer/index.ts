@@ -1,4 +1,4 @@
-import {TSalutationVariant} from "../../interfaces/customer/index";
+import { TSalutationVariant } from '../../interfaces/customer';
 
 export const salutationVariants: Array<TSalutationVariant> = [
   {
@@ -16,5 +16,5 @@ export const salutationVariants: Array<TSalutationVariant> = [
   {
     value: 'Dr',
     label: 'Dr.',
-  }
+  },
 ];

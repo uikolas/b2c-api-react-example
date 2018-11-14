@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   link: {
     margin: theme.spacing.unit * 2,
-  }
+  },
 });
 
 
@@ -49,5 +49,5 @@ export const formStyles = (theme: Theme) => createStyles({
   },
   passwordButtons: {
     margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit}px 0px`,
-  }
+  },
 });

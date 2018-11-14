@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {styles} from "./styles";
-import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
-import {IFoundItemsProps} from "src/shared/components/Pages/SearchPage/FoundItems/types";
+import { styles } from './styles';
+import { SprykerSelectProps } from 'src/shared/components/UI/SprykerSelect';
+import { IFoundItemsProps } from 'src/shared/components/Pages/SearchPage/FoundItems/types';
 
 
 export interface ISortPanelProps extends WithStyles<typeof styles> {

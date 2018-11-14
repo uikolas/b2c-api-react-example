@@ -19,5 +19,5 @@ export const styles = (theme: Theme) => createStyles({
   root: {},
   listItemOuter: {
     paddingRight: theme.spacing.unit,
-  }
+  },
 });

@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
   },
   insideWrapper: {
-    padding: `0px 76px 80px`
+    padding: `0px 76px 80px`,
   },
   suggestionsContainer: {
     display: 'none',
@@ -104,8 +104,8 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   actionAreaOverlay: {
-    position: "absolute",
-    background: "rgba(0, 0, 0, 0.10)",
+    position: 'absolute',
+    background: 'rgba(0, 0, 0, 0.10)',
     borderRadius: '1.5px',
     top: 0,
     left: 0,

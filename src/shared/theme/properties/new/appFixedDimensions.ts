@@ -1,5 +1,4 @@
-import {GridSpacing} from "@material-ui/core/Grid";
-import {baseTheme} from "src/shared/theme/index";
+import { GridSpacing } from '@material-ui/core/Grid';
 
 export interface IAppFixedDimensions {
   headerHeight: React.CSSProperties['height'];
@@ -30,13 +29,13 @@ export const appFixedDimensions: IAppFixedDimensions = {
   borderRadius: 4,
   gridSpacing: 24,
   fontSize: {
-    mini: "0.69rem",
-    small: "0.875rem",
-    medium: "1.0rem",
-    large: "1.13rem",
-    big: "1.25rem",
+    mini: '0.69rem',
+    small: '0.875rem',
+    medium: '1.0rem',
+    large: '1.13rem',
+    big: '1.25rem',
   },
   customBreakpoints: {
     tablet: 1280,
-  }
+  },
 };

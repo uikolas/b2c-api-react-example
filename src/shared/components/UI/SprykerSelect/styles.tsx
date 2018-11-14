@@ -10,31 +10,29 @@ export const styles = (theme: Theme) => createStyles({
 
   },
   formControl: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   selected: {
     ...theme.appModules.selectedItem,
   },
   icon: {
-    transform: "rotate(270deg)",
-    transition: "transform .8s ease-in-out",
+    transform: 'rotate(270deg)',
+    transition: 'transform .8s ease-in-out',
     fill: theme.appColors.black,
     right: theme.spacing.unit / 2,
   },
   input: {
     fontSize: theme.appFixedDimensions.fontSize.small,
-    lineHeight: "normal",
+    lineHeight: 'normal',
     letterSpacing: 0.5,
     paddingLeft: theme.spacing.unit * 1.5,
     paddingTop: theme.spacing.unit * 1.5,
     paddingBottom: theme.spacing.unit * 1.5,
   },
-  menuItem: {
-
-  },
+  menuItem: {},
   title: {
-    display: "inline-flex",
+    display: 'inline-flex',
   },
 });

@@ -1,7 +1,7 @@
-import * as React from "react";
-import {Route, Switch, RouteProps} from 'react-router';
-import {Location} from 'history';
-import {NavLink} from 'react-router-dom';
+import * as React from 'react';
+import { Route, RouteProps, Switch } from 'react-router';
+import { Location } from 'history';
+import { NavLink } from 'react-router-dom';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,27 +9,27 @@ import MenuList from '@material-ui/core/MenuList';
 // import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import {reduxify} from '../../../lib/redux-helper';
-import {AppMain} from '../../Common/AppMain';
-import {styles} from './styles';
-import {ConnectedWishlistPage} from '../WishListPage';
-import {ConnectedWishlistDetailPage} from '../WishlistDetail';
-import {CustomerAddressPage} from '../CustomerAddressesPage';
-import {AddressFormPage} from '../CustomerAddressesPage/AddressForm';
-import {ConnectedOrderDetailsPage} from "../OrderDetailsPage/reduxified";
-import {ConnectedOrderHistoryPage} from "../OrderHistoryPage/reduxified";
+import { reduxify } from '../../../lib/redux-helper';
+import { AppMain } from '../../Common/AppMain';
+import { styles } from './styles';
+import { ConnectedWishlistPage } from '../WishListPage';
+import { ConnectedWishlistDetailPage } from '../WishlistDetail';
+import { CustomerAddressPage } from '../CustomerAddressesPage';
+import { AddressFormPage } from '../CustomerAddressesPage/AddressForm';
+import { ConnectedOrderDetailsPage } from '../OrderDetailsPage/reduxified';
+import { ConnectedOrderHistoryPage } from '../OrderHistoryPage/reduxified';
 import {
+  pathAddressFormPage,
+  pathCustomerAddressesPage,
   pathCustomerPage,
+  pathCustomerProfilePage,
   pathOrderDetailsPage,
   pathOrderHistoryPage,
-  pathCustomerAddressesPage,
-  pathAddressFormPage,
-  pathCustomerProfilePage,
   pathWishListPage,
   pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
-import {ConnectedCustomerProfilePage} from "../CustomerProfilePage/index";
-import {getRouterLocation} from "src/shared/selectors/Common/router";
+import { ConnectedCustomerProfilePage } from '../CustomerProfilePage';
+import { getRouterLocation } from 'src/shared/selectors/Common/router';
 
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
@@ -43,13 +43,11 @@ interface CustomerPageState {
 
 export class CustomerPageBase extends React.Component<CustomerPageProps, CustomerPageState> {
 
-  public state: CustomerPageState = {
-
-  };
+  public state: CustomerPageState = {};
 
   public handleMenuItemClick = (option: string) => (e: any) => {
     this.setState({selectedMenu: option});
-  }
+  };
 
   public render() {
     const {classes, location} = this.props;
@@ -57,50 +55,50 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
     return (
       <AppMain>
         <Grid container>
-          <Grid item xs={3} container direction="column" justify="flex-start" className={classes.pageMenu}>
+          <Grid item xs={ 3 } container direction="column" justify="flex-start" className={ classes.pageMenu }>
             <Paper>
               <MenuList>
                 <MenuItem
-                  selected={location.pathname === pathCustomerProfilePage}
+                  selected={ location.pathname === pathCustomerProfilePage }
                 >
-                  <NavLink to={pathCustomerProfilePage} className={classes.link}>
+                  <NavLink to={ pathCustomerProfilePage } className={ classes.link }>
                     Profile
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname === pathCustomerAddressesPage}
+                  selected={ location.pathname === pathCustomerAddressesPage }
                 >
-                  <NavLink to={pathCustomerAddressesPage} className={classes.link}>
+                  <NavLink to={ pathCustomerAddressesPage } className={ classes.link }>
                     Addresses
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname.includes(pathOrderHistoryPage)}
+                  selected={ location.pathname.includes(pathOrderHistoryPage) }
                 >
-                  <NavLink to={pathOrderHistoryPage} className={classes.link}>
+                  <NavLink to={ pathOrderHistoryPage } className={ classes.link }>
                     Orders history
                   </NavLink>
                 </MenuItem>
                 <MenuItem
-                  selected={location.pathname.includes(pathWishListsPage)}
+                  selected={ location.pathname.includes(pathWishListsPage) }
                 >
-                  <NavLink to={pathWishListsPage} className={classes.link}>
+                  <NavLink to={ pathWishListsPage } className={ classes.link }>
                     Wishlist
                   </NavLink>
                 </MenuItem>
               </MenuList>
             </Paper>
           </Grid>
-          <Grid item xs={9}>
+          <Grid item xs={ 9 }>
             <Switch>
-              <Route path={pathCustomerPage} exact component={ConnectedCustomerProfilePage} />
-              <Route path={pathCustomerAddressesPage} exact component={CustomerAddressPage} />
-              <Route path={pathAddressFormPage} component={AddressFormPage} />
-              <Route path={pathWishListsPage} component={ConnectedWishlistPage} />
-              <Route path={pathWishListPage} component={ConnectedWishlistDetailPage} />
-              <Route path={pathOrderHistoryPage} exact component={ConnectedOrderHistoryPage} />
-              <Route path={pathOrderDetailsPage} component={ConnectedOrderDetailsPage} />
-              <Route path={pathCustomerProfilePage} component={ConnectedCustomerProfilePage} />
+              <Route path={ pathCustomerPage } exact component={ ConnectedCustomerProfilePage }/>
+              <Route path={ pathCustomerAddressesPage } exact component={ CustomerAddressPage }/>
+              <Route path={ pathAddressFormPage } component={ AddressFormPage }/>
+              <Route path={ pathWishListsPage } component={ ConnectedWishlistPage }/>
+              <Route path={ pathWishListPage } component={ ConnectedWishlistDetailPage }/>
+              <Route path={ pathOrderHistoryPage } exact component={ ConnectedOrderHistoryPage }/>
+              <Route path={ pathOrderDetailsPage } component={ ConnectedOrderDetailsPage }/>
+              <Route path={ pathCustomerProfilePage } component={ ConnectedCustomerProfilePage }/>
             </Switch>
           </Grid>
         </Grid>
@@ -121,7 +119,7 @@ export const ConnectedCustomerPage = reduxify(
         location,
       }
     );
-  }
+  },
 )(CustomerPage);
 
 export default ConnectedCustomerPage;

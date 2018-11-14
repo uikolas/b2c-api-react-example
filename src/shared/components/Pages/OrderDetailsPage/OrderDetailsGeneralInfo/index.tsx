@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 
 import { styles } from './styles';
-import { TOrderDate, TOrderId } from '../../../../interfaces/order';
+import { TOrderDate, TOrderId } from 'src/shared/interfaces/order';
 import { SprykerButton } from '../../../UI/SprykerButton';
 import { AppDate } from '../../../Common/AppDate';
 

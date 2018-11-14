@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { styles } from './styles';
-import { IOrderDetailsItem } from '../../../../interfaces/order';
+import { IOrderDetailsItem } from 'src/shared/interfaces/order';
 import { AppPrice } from '../../../Common/AppPrice';
 import { OrderDetailsContext } from '../context';
 

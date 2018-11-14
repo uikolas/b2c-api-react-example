@@ -3,14 +3,14 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   title: {
-    lineHeight: "normal",
+    lineHeight: 'normal',
     letterSpacing: 0.5,
-    height: "auto",
+    height: 'auto',
     paddingRight: theme.spacing.unit * 1.5,
   },
   value: {
-    height: "auto",
-    lineHeight: "normal",
+    height: 'auto',
+    lineHeight: 'normal',
     letterSpacing: 0.5,
     fontSize: theme.appFixedDimensions.fontSize.small,
     padding: 0,
@@ -24,13 +24,13 @@ export const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     color: theme.palette.error.main,
     top: -theme.spacing.unit * 2.5,
-    left: "0%",
+    left: '0%',
     width: '100%',
   },
   error: {
     color: theme.palette.error.main,
-    "label + &": {
+    'label + &': {
       marginTop: 0,
-    }
-  }
+    },
+  },
 });

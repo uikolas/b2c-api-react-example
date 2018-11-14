@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {styles} from "./styles";
-import {ICartItem} from "src/shared/reducers/Common/Cart";
+import { styles } from './styles';
+import { ICartItem } from 'src/shared/reducers/Common/Cart';
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;

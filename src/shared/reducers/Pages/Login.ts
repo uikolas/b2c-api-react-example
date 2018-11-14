@@ -1,21 +1,17 @@
 import {
+  FORGOT_PASSWORD,
+  PAGES_CUSTOMER_LOGOUT,
   PAGES_CUSTOMER_REGISTER,
   PAGES_LOGIN_REQUEST,
-  PAGES_CUSTOMER_LOGOUT,
   REFRESH_TOKEN_REQUEST,
-  FORGOT_PASSWORD,
   RESET_PASSWORD,
 } from '../../constants/ActionTypes/Pages/Login';
-import {
-  SET_AUTH_FROM_STORAGE,
-} from '../../constants/ActionTypes/Common/Init';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {TAccessToken} from "../../interfaces/login/index";
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {TCustomerEmail, TCustomerReference, TCustomerUsername} from "../../interfaces/customer/index";
-import {LOGIN_DATA_SET_TO_STORE} from "../../constants/ActionTypes/Pages/CustomerProfile";
+import { SET_AUTH_FROM_STORAGE } from '../../constants/ActionTypes/Common/Init';
+import { IReduxState } from 'src/typings/app';
+import { TAccessToken } from '../../interfaces/login';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { TCustomerEmail, TCustomerReference, TCustomerUsername } from '../../interfaces/customer';
+import { LOGIN_DATA_SET_TO_STORE } from '../../constants/ActionTypes/Pages/CustomerProfile';
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -41,7 +37,7 @@ export const initialState: ILoginState = {
   },
 };
 
-export const pagesLogin = function (state: ILoginState = initialState, action: any): ILoginState {
+export const pagesLogin = function(state: ILoginState = initialState, action: any): ILoginState {
   switch (action.type) {
     case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
@@ -103,7 +99,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: a
       localStorage.clear();
       return {
         ...state,
-        data: initialState.data
+        data: initialState.data,
       };
     case `${FORGOT_PASSWORD}_FULFILLED`:
     case `${RESET_PASSWORD}_FULFILLED`:
@@ -125,8 +121,8 @@ export function isUserAuthenticated(state: any, props: any): boolean {
 export function getAccessToken(state: any, props: any): TAccessToken | null {
   return (
     isUserAuthenticated(state, props) && state.pagesLogin.data.accessToken
-    ? state.pagesLogin.data.accessToken
-    : null
+      ? state.pagesLogin.data.accessToken
+      : null
   );
 }
 
@@ -150,14 +146,16 @@ export function getCustomerUsername(state: any, props: any): TCustomerUsername |
 
   if (!isStateExist(state, props) || !isUserAuthenticated(state, props)) {
     return null;
-  } else if (state.pagesLogin.data && state.pagesLogin.data.customerUsername) {
-    return state.pagesLogin.data.customerUsername;
   } else {
-    const customerUsername = localStorage.getItem('customerUsername');
-    if (!customerUsername) {
-      return null;
+    if (state.pagesLogin.data && state.pagesLogin.data.customerUsername) {
+      return state.pagesLogin.data.customerUsername;
+    } else {
+      const customerUsername = localStorage.getItem('customerUsername');
+      if (!customerUsername) {
+        return null;
+      }
+      return customerUsername;
     }
-    return customerUsername;
   }
 }
 

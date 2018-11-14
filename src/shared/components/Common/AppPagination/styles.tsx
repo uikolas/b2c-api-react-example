@@ -9,12 +9,12 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: theme.spacing.unit * 12,
   },
   container: {
-    height: "auto",
-    position: "relative",
+    height: 'auto',
+    position: 'relative',
     paddingLeft: 70,
     paddingRight: 70,
     [theme.breakpoints.down('xs')]: {
-      flexDirection: "column",
+      flexDirection: 'column',
       paddingLeft: theme.spacing.unit,
       paddingRight: theme.spacing.unit,
     },
@@ -31,29 +31,29 @@ export const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.appColors.white,
     [theme.breakpoints.down('xs')]: {
       borderBottom: `1px solid ${theme.appColors.blockDivider}`,
-      width: "100%",
-      minWidth: "100%",
-      maxWidth: "100%",
+      width: '100%',
+      minWidth: '100%',
+      maxWidth: '100%',
       height: 50,
-      "&:last-child": {
-        borderBottom: "none",
-      }
+      '&:last-child': {
+        borderBottom: 'none',
+      },
     },
   },
   itemLeft: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     [theme.breakpoints.down('xs')]: {
-      position: "relative",
-      left: "auto",
+      position: 'relative',
+      left: 'auto',
     },
   },
   itemRight: {
-    position: "absolute",
+    position: 'absolute',
     right: 0,
     [theme.breakpoints.down('xs')]: {
-      position: "relative",
-      right: "auto",
+      position: 'relative',
+      right: 'auto',
     },
   },
   label: {
@@ -61,7 +61,7 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.large,
   },
   selected: {
-    paddingTop: "0 !important",
+    paddingTop: '0 !important',
     color: theme.appColors.blue,
     fontSize: `${theme.appFixedDimensions.fontSize.large} !important`,
   },
@@ -69,8 +69,8 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.appColors.black,
   },
   pagesWrapper: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     flexGrow: 1,
-  }
+  },
 });

@@ -1,5 +1,5 @@
-import { INIT_APP_ACTION_TYPE, CATEGORIES_TREE_REQUEST } from '../../constants/ActionTypes/Common/Init';
-import { IReduxState } from '../../../typings/app';
+import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '../../constants/ActionTypes/Common/Init';
+import { IReduxState } from 'src/typings/app';
 
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { ICartCreatePayload } from '../../services/Common/Cart';

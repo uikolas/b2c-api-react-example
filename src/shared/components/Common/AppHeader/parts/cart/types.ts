@@ -6,6 +6,7 @@ export interface CartProps extends WithStyles<typeof styles>, WithRouter {
   // connect
   cartItemsQuantity?: number;
 }
+
 export interface CartState {
   anchorEl: HTMLElement | null;
 }

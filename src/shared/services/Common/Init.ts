@@ -1,16 +1,16 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import {
+  categoriesFulfilledState,
+  categoriesPendingState,
+  categoriesRejectedState,
+  getCategoriesAction,
   IInitApplicationDataPayload,
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction,
-  categoriesPendingState,
-  categoriesRejectedState,
-  categoriesFulfilledState,
-  getCategoriesAction,
 } from '../../actions/Common/Init';
-import { parseStoreResponse } from '../../helpers/init/store';
+import { parseStoreResponse } from 'src/shared/helpers/init/store';
 
 export class InitAppService {
 

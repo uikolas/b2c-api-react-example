@@ -9,7 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { styles } from './styles';
-import { IOrderCollectionParsed } from '../../../../interfaces/order';
+import { IOrderCollectionParsed } from 'src/shared/interfaces/order';
 import { OrderListItem } from '../OrderListItem';
 
 interface OrderListProps extends WithStyles<typeof styles>, IOrderCollectionParsed {

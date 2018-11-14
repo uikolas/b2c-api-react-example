@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: 10,
     '& strong': {
       fontWeight: 400,
-    }
+    },
   },
   userDropNav: {
     listStyle: 'none',
@@ -30,16 +30,16 @@ export const styles = (theme: Theme) => createStyles({
     },
     '& a': {
       color: theme.appColors.black,
-      textDecoration: 'none'
-    }
+      textDecoration: 'none',
+    },
   },
   userBtns: {
     display: 'flex',
     '& a': {
       flex: 1,
       '&:not(:last-child)': {
-        marginRight: 12
-      }
-    }
-  }
+        marginRight: 12,
+      },
+    },
+  },
 });

@@ -3,16 +3,16 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import {SprykerFilterElement} from "src/shared/components/UI/SprykerFilter/index";
-import {RangeFacets, ValueFacets} from "src/shared/interfaces/searchPageData/index";
-import { rangeMaxType, rangeMinType} from "src/shared/components/Pages/SearchPage/types";
-import {sprykerTheme} from "src/shared/theme/sprykerTheme";
-import {FilterWrapper} from "src/shared/components/Pages/SearchPage/FilterWrapper/index";
-import {firstLetterToUpperCase, rangeFilterValueToFront} from "src/shared/helpers/common/transform";
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {SprykerRangeSlider} from "src/shared/components/UI/SprykerRangeSlider/index";
-import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import {ISearchFilterListProps} from "src/shared/components/Pages/SearchPage/SearchFilterList/types";
+import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
+import { RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import { rangeMaxType, rangeMinType } from 'src/shared/components/Pages/SearchPage/types';
+import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
+import { FilterWrapper } from 'src/shared/components/Pages/SearchPage/FilterWrapper';
+import { firstLetterToUpperCase, rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
+import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
+import { SprykerRangeSlider } from 'src/shared/components/UI/SprykerRangeSlider';
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { ISearchFilterListProps } from 'src/shared/components/Pages/SearchPage/SearchFilterList/types';
 
 
 const title = 'Filter your results';
@@ -35,7 +35,7 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
   let rangeItems: any[] | null = [];
 
   const priceValueFormatter = (value: number) => {
-    return <AppPrice value={value * 100} extraClassName={classes.priceClassName} />;
+    return <AppPrice value={ value * 100 } extraClassName={ classes.priceClassName }/>;
   };
 
   if (!Array.isArray(filters) || !filters.length) {
@@ -46,18 +46,18 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
         filterItems.push(
           <FilterWrapper
             filter={ <SprykerFilterElement
-                        attributeName={ filter.name }
-                        menuItems={ filter.values }
-                        activeValues={ activeValuesFilters[filter.name] || [] }
-                        handleChange={ updateFilterHandler }
-                        extraClassName={classes.filter}
-                        isShowSelected={false}
-                        handleClose={onCloseFilterHandler}
-                      />
+              attributeName={ filter.name }
+              menuItems={ filter.values }
+              activeValues={ activeValuesFilters[filter.name] || [] }
+              handleChange={ updateFilterHandler }
+              extraClassName={ classes.filter }
+              isShowSelected={ false }
+              handleClose={ onCloseFilterHandler }
+            />
             }
-            keyValue={filter.name}
-            key={filter.name}
-          />
+            keyValue={ filter.name }
+            key={ filter.name }
+          />,
         );
       }
     });
@@ -66,34 +66,32 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
   if (!Array.isArray(ranges) || !ranges.length) {
     rangeItems = null;
   } else {
-    rangeItems = ranges
-      .filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0))
-      .map((filter: RangeFacets) => {
-        const valueFrom = rangeFilterValueToFront(filter.min, rangeMinType);
-        const valueTo = rangeFilterValueToFront(filter.max, rangeMaxType);
-        return (
-          <FilterWrapper
-            filter= {
-              <SprykerRangeSlider
-                key={filter.name}
-                attributeName={filter.name}
-                title={firstLetterToUpperCase(filter.name)}
-                min={valueFrom}
-                max={valueTo}
-                handleChange={updateRangeHandler}
-                handleAfterChange={onAfterChangeRangeFilter}
-                currentValue={activeValuesRanges[filter.name] || {
-                  min: valueFrom,
-                  max: valueTo,
-                }}
-                valueFormatter={filter.name.includes('price') ? priceValueFormatter : null}
-              />
-            }
-            keyValue={filter.name}
-            key={filter.name}
-          />
-        );
-      });
+    rangeItems = ranges.filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0)).map((filter: RangeFacets) => {
+      const valueFrom = rangeFilterValueToFront(filter.min, rangeMinType);
+      const valueTo = rangeFilterValueToFront(filter.max, rangeMaxType);
+      return (
+        <FilterWrapper
+          filter={
+            <SprykerRangeSlider
+              key={ filter.name }
+              attributeName={ filter.name }
+              title={ firstLetterToUpperCase(filter.name) }
+              min={ valueFrom }
+              max={ valueTo }
+              handleChange={ updateRangeHandler }
+              handleAfterChange={ onAfterChangeRangeFilter }
+              currentValue={ activeValuesRanges[filter.name] || {
+                min: valueFrom,
+                max: valueTo,
+              } }
+              valueFormatter={ filter.name.includes('price') ? priceValueFormatter : null }
+            />
+          }
+          keyValue={ filter.name }
+          key={ filter.name }
+        />
+      );
+    });
   }
 
   const isItemsExist = (filterItems && filterItems.length > 0) || (rangeItems && rangeItems.length > 0);
@@ -104,15 +102,15 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
           alignItems="center"
           className={ classes.root }
     >
-      {isItemsExist
+      { isItemsExist
         ? <Grid item xs={ 12 }>
-            <AppPageSubTitle title={title} />
-          </Grid>
+          <AppPageSubTitle title={ title }/>
+        </Grid>
         : null
       }
       <Grid container alignItems="flex-start" spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
-        {filterItems}
-        {rangeItems}
+        { filterItems }
+        { rangeItems }
       </Grid>
 
     </Grid>

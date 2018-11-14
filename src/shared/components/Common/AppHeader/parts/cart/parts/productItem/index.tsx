@@ -12,26 +12,26 @@ export const ProductItemComponent: React.SFC<Props> = ({classes, productData, de
   <div className={ classes.productItem }>
     <div className={ classes.image }>
       <div>
-        <img src={ productData.image } alt={productData.name}/>
+        <img src={ productData.image } alt={ productData.name }/>
       </div>
     </div>
     <div className={ classes.rowsContainer }>
       <div className={ classes.topRow }>
         <div className={ classes.name }>
-          {productData.name}
+          { productData.name }
         </div>
         <div className={ classes.price }>
-          <AppPrice value={productData.calculations.sumPrice}/>
+          <AppPrice value={ productData.calculations.sumPrice }/>
         </div>
       </div>
       <div className={ classes.bottomRow }>
         <div className={ classes.quantity }>
         <span>
-          Quantity: {productData.quantity}
+          Quantity: { productData.quantity }
         </span>
         </div>
         <div>
-          <Button className={ classes.btnRemove } onClick={() => deleteItem(productData.sku)}>
+          <Button className={ classes.btnRemove } onClick={ () => deleteItem(productData.sku) }>
             Remove
           </Button>
         </div>

@@ -16,7 +16,7 @@ import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
 import { ConnectedWishlistPage } from '../components/Pages/WishListPage';
 import { ConnectedWishlistDetailPage } from '../components/Pages/WishlistDetail';
 
-import {LoadableCheckoutPage} from "src/shared/components/Pages/CheckoutPage/loadable";
+import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
 
 import config from '../config';
 
@@ -68,7 +68,7 @@ export const getContentRoutes = function() {
       <ProtectedRoute path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
       <ProtectedRoute path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
 
-      {/*TODO: Change to ProtectedRoute */}
+      { /*TODO: Change to ProtectedRoute */ }
       <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
 
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>

@@ -44,11 +44,11 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
     this.setTriggerOffset();
   }, 0.3);
   private onWindowScroll = debounce(() => {
-    const { showSearch, stickyTriggerOffset } = this.state;
+    const {showSearch, stickyTriggerOffset} = this.state;
     const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
     if (showSearch && scrollPosition > stickyTriggerOffset) {
-      this.setState(() => ({ showSearch: false }));
+      this.setState(() => ({showSearch: false}));
     }
   }, 0.3);
 

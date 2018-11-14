@@ -1,5 +1,5 @@
-import * as React from "react";
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import * as React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -14,38 +14,18 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import {reduxify} from '../../../lib/redux-helper';
-import {styles} from './styles';
-import {IAddressItem} from '../../../interfaces/addresses';
-import {getAddressesAction, deleteAddressAction, setCurrentAddressAction} from '../../../actions/Pages/Addresses';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { deleteAddressAction, getAddressesAction, setCurrentAddressAction } from 'src/shared/actions/Pages/Addresses';
+import { IAddressesState } from 'src/shared/reducers/Pages/Addresses';
+import { ILoginState } from 'src/shared/reducers/Pages/Login';
+import { getRouterHistoryPush, getRouterLocation } from 'src/shared/selectors/Common/router';
+import { pathCustomerAddressesPage } from 'src/shared/routes/contentRoutes';
 
-import {IAddressesState} from "../../../reducers/Pages/Addresses";
-import {ILoginState} from "../../../reducers/Pages/Login";
-import {getRouterLocation, getRouterHistoryPush} from "../../../selectors/Common/router";
-import {pathCustomerAddressesPage} from "../../../routes/contentRoutes";
+import { styles } from './styles';
+import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
 
-interface CustomerAddressPageProps extends WithStyles<typeof styles> {
-  location: string;
-  customer: string;
-  addresses: Array<IAddressItem>;
-  currentAddress: IAddressItem;
-  isLoading: boolean;
-  isInitial: boolean;
-  dispatch: Function;
-  getAddressesList: Function;
-  deleteAddress: Function;
-  routerPush: Function;
-}
-
-interface CustomerAddressPageState {
-
-}
-
-export class CustomerAddressBase extends React.Component<CustomerAddressPageProps, CustomerAddressPageState> {
-
-  public state: CustomerAddressPageState = {
-
-  };
+export class CustomerAddressBase extends React.Component<Props, State> {
+  public state: State = {};
 
   public componentDidMount() {
     if (this.props.customer) {
@@ -55,12 +35,12 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
 
   public handleAddAddress = () => {
     this.props.routerPush(`${pathCustomerAddressesPage}/new`);
-  }
+  };
 
   public setUpdatedAddress = (addressId: string) => (e: any) => {
     this.props.dispatch(setCurrentAddressAction(addressId));
     this.props.routerPush(`${pathCustomerAddressesPage}/update`);
-  }
+  };
 
   public render(): JSX.Element {
     const {classes, addresses, isLoading, deleteAddress} = this.props;
@@ -68,23 +48,23 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
     const rows: any[] = addresses.map((item: any) => (
       <TableRow
         hover
-        key={item.id}
+        key={ item.id }
       >
         <TableCell component="th" scope="row">
-          <div className={classes.customerName}>{`${item.salutation} ${item.firstName} ${item.lastName}`}</div>
-          <div>{`${item.company || ''}`}</div>
-          <div>{`${item.address1} ${item.address2} ${item.address3}`}</div>
-          <div>{`${item.zipCode} ${item.city}, ${item.country}`}</div>
-          <div>{`${item.phone || ''}`}</div>
-          <div className={classes.chips}>
+          <div className={ classes.customerName }>{ `${item.salutation} ${item.firstName} ${item.lastName}` }</div>
+          <div>{ `${item.company || ''}` }</div>
+          <div>{ `${item.address1} ${item.address2} ${item.address3}` }</div>
+          <div>{ `${item.zipCode} ${item.city}, ${item.country}` }</div>
+          <div>{ `${item.phone || ''}` }</div>
+          <div className={ classes.chips }>
             {
               item.isDefaultShipping
                 ? <Chip
-                    label="Shipping address"
-                    color="primary"
-                    variant="outlined"
-                    className={classes.marginRight}
-                  />
+                  label="Shipping address"
+                  color="primary"
+                  variant="outlined"
+                  className={ classes.marginRight }
+                />
                 : null
             }
             {
@@ -103,19 +83,19 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
         <TableCell padding="checkbox">
           <IconButton
             color="primary"
-            onClick={this.setUpdatedAddress(item.id)}
-            disabled={isLoading}
+            onClick={ this.setUpdatedAddress(item.id) }
+            disabled={ isLoading }
           >
-            <EditIcon />
+            <EditIcon/>
           </IconButton>
         </TableCell>
         <TableCell padding="checkbox">
           <IconButton
             color="primary"
-            onClick={() => deleteAddress(item.id, this.props.customer)}
-            disabled={isLoading}
+            onClick={ () => deleteAddress(item.id, this.props.customer) }
+            disabled={ isLoading }
           >
-            <DeleteIcon />
+            <DeleteIcon/>
           </IconButton>
         </TableCell>
       </TableRow>
@@ -124,22 +104,23 @@ export class CustomerAddressBase extends React.Component<CustomerAddressPageProp
     return (
       <Grid container>
 
-        <Grid item xs={12} container justify="center">
+        <Grid item xs={ 12 } container justify="center">
           <Typography
             variant="headline"
             children="Manage Addresses"
           />
         </Grid>
 
-        <Grid item xs={12} container justify="center">
-          <Paper elevation={4} className={classes.paperContainer}>
-            <Button variant="contained" color="primary" className={classes.addButton} onClick={this.handleAddAddress}>
+        <Grid item xs={ 12 } container justify="center">
+          <Paper elevation={ 4 } className={ classes.paperContainer }>
+            <Button variant="contained" color="primary" className={ classes.addButton }
+                    onClick={ this.handleAddAddress }>
               Add new address
             </Button>
-            <Divider />
+            <Divider/>
             <Table>
               <TableBody>
-                {rows}
+                { rows }
               </TableBody>
             </Table>
           </Paper>
@@ -162,7 +143,9 @@ export const CustomerAddressPage = reduxify(
     return ({
       customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customer,
       addresses: addressesProps && addressesProps.data ? addressesProps.data.addresses : ownProps.addresses,
-      currentAddress: addressesProps && addressesProps.data ? addressesProps.data.currentAddress : ownProps.currentAddress,
+      currentAddress: addressesProps && addressesProps.data
+        ? addressesProps.data.currentAddress
+        : ownProps.currentAddress,
       isInitial: addressesProps && addressesProps.data ? addressesProps.data.isInitial : ownProps.isInitial,
       isLoading: addressesProps ? addressesProps.pending : ownProps.isLoading,
       location,
@@ -173,5 +156,5 @@ export const CustomerAddressPage = reduxify(
     dispatch,
     getAddressesList: (customerId: string) => dispatch(getAddressesAction(customerId)),
     deleteAddress: (addressId: string, customerId: string) => dispatch(deleteAddressAction(addressId, customerId)),
-  })
+  }),
 )(CustomerAddress);

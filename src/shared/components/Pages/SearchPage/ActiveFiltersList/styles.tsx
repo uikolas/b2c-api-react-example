@@ -21,13 +21,13 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.mini,
     fontWeight: 500,
     letterSpacing: 0.4,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     borderRadius: 0,
-    transition: "all .5s ease-in-out",
-    "&:hover": {
+    transition: 'all .5s ease-in-out',
+    '&:hover': {
       color: theme.appColors.white,
       backgroundColor: theme.appColors.blue,
-      transition: "all .5s ease-in-out",
+      transition: 'all .5s ease-in-out',
     },
   },
   resetLabel: {
@@ -36,5 +36,5 @@ export const styles = (theme: Theme) => createStyles({
   price: {
     fontSize: theme.appFixedDimensions.fontSize.mini,
     fontWeight: 500,
-  }
+  },
 });

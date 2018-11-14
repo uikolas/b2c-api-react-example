@@ -2,24 +2,21 @@ import * as React from 'react';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import { connect } from './connect';
 import { styles } from './styles';
 
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
-import {ICheckoutPageProps, ICheckoutPageState} from "./types";
+import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
+import { AppMain } from 'src/shared/components/Common/AppMain';
+import { CheckoutForms } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms';
+import { CartData } from 'src/shared/components/Pages/CheckoutPage/CartData';
+import { ICheckoutPageProps, ICheckoutPageState } from './types';
 
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
 
-  public state: ICheckoutPageState = {
-
-  };
+  public state: ICheckoutPageState = {};
 
   public componentDidMount() {
     console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
@@ -41,14 +38,14 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     return (
       <AppMain>
-        {isLoading ? <AppBackdrop isOpen={true} /> : null}
+        { isLoading ? <AppBackdrop isOpen={ true }/> : null }
 
-        <Grid container className={classes.container}>
-          <Grid item xs={12} md={7}>
-            <CheckoutForms />
+        <Grid container className={ classes.container }>
+          <Grid item xs={ 12 } md={ 7 }>
+            <CheckoutForms/>
           </Grid>
-          <Grid item xs={12} md={5}>
-            <CartData />
+          <Grid item xs={ 12 } md={ 5 }>
+            <CartData/>
           </Grid>
         </Grid>
 

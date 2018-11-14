@@ -1,29 +1,31 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
+import { getAnonymId, getPayloadForCreateCart, isAppInitiated } from 'src/shared/reducers/Common/Init';
 import {
-  getPayloadForCreateCart,
-  isAppInitiated,
-  getAnonymId,
-} from 'src/shared/reducers/Common/Init';
-import {
-  getProduct, isPageProductStateFulfilled,
-  isPageProductStateInitiated, isPageProductStateLoading,
+  getProduct,
+  isPageProductStateFulfilled,
+  isPageProductStateInitiated,
+  isPageProductStateLoading,
   isPageProductStateRejected,
-  isProductDetailsPresent
-} from "src/shared/reducers/Pages/Product";
+  isProductDetailsPresent,
+} from 'src/shared/reducers/Pages/Product';
 import {
   getWishlistsCollectionFromStore,
   isPageWishlistStateLoading,
-  isWishlistsCollectionInitiated
-} from "src/shared/reducers/Pages/Wishlist";
-import {getCartId, isCartCreated} from "src/shared/reducers/Common/Cart";
-import {isUserAuthenticated} from "src/shared/reducers/Pages/Login";
-import {getRouterLocation, getRouterMatchParam} from "src/shared/selectors/Common/router";
-import {ICartCreatePayload} from "src/shared/services/Common/Cart";
-import {ICartAddItem, TCartId} from "src/shared/interfaces/cart";
-import {getProductDataAction} from "src/shared/actions/Pages/Product";
-import {addItemAction, getWishlistsAction} from "src/shared/actions/Pages/Wishlist";
-import {addItemGuestCartAction, addItemToCartAction, createCartAndAddItemAction} from "src/shared/actions/Common/Cart";
+  isWishlistsCollectionInitiated,
+} from 'src/shared/reducers/Pages/Wishlist';
+import { getCartId, isCartCreated } from 'src/shared/reducers/Common/Cart';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { ICartCreatePayload } from 'src/shared/services/Common/Cart';
+import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
+import { getProductDataAction } from 'src/shared/actions/Pages/Product';
+import { addItemAction, getWishlistsAction } from 'src/shared/actions/Pages/Wishlist';
+import {
+  addItemGuestCartAction,
+  addItemToCartAction,
+  createCartAndAddItemAction,
+} from 'src/shared/actions/Common/Cart';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const location = getRouterLocation(state, ownProps);
@@ -72,7 +74,10 @@ export const connect = reduxify(
     getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
     getWishLists: () => dispatch(getWishlistsAction()),
     addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
-    createCartAndAddItem: (payload: ICartCreatePayload, item: ICartAddItem) => dispatch(createCartAndAddItemAction(payload, item)),
+    createCartAndAddItem: (
+      payload: ICartCreatePayload,
+      item: ICartAddItem
+    ) => dispatch(createCartAndAddItemAction(payload, item)),
     addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
     addItemGuestCart: (item: ICartAddItem, anonymId: string) => dispatch(addItemGuestCartAction(item, anonymId)),
   }),

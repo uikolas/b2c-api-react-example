@@ -12,7 +12,7 @@ import { AppHeader } from 'src/shared/components/Common/AppHeader';
 import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAppLocale, isAppInitiated, getAnonymId, TAppLocale } from 'src/shared/reducers/Common/Init';
+import { getAnonymId, getAppLocale, isAppInitiated, TAppLocale } from 'src/shared/reducers/Common/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';

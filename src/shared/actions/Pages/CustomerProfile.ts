@@ -1,9 +1,9 @@
 import {
   CUSTOMER_DATA_REQUEST,
   CUSTOMER_DATA_UPDATE,
-  LOGIN_DATA_SET_TO_STORE,
-  CUSTOMER_PASSWORD_UPDATE,
   CUSTOMER_DELETE_ENTITY,
+  CUSTOMER_PASSWORD_UPDATE,
+  LOGIN_DATA_SET_TO_STORE,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
 import { CustomerProfileService } from '../../services/Pages/CustomerProfile';
 import {
@@ -12,7 +12,7 @@ import {
   ICustomerProfilePassword,
   ILoginDataToLocalStorage,
   TCustomerReference,
-} from "../../interfaces/customer";
+} from '../../interfaces/customer';
 
 // Retrieve customer data.
 export const getCustomerProfilePendingStateAction = () => ({
@@ -29,7 +29,7 @@ export const getCustomerProfileFulfilledStateAction = (payload: ICustomerDataPar
   payload,
 });
 
-export const getCustomerProfileAction = function (customerReference: TCustomerReference) {
+export const getCustomerProfileAction = function(customerReference: TCustomerReference) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.getProfileData(dispatch, customerReference);
   };
@@ -50,8 +50,8 @@ export const updateCustomerProfileFulfilledStateAction = (payload: ICustomerData
   payload,
 });
 
-export const updateCustomerProfileAction = function (customerReference: TCustomerReference,
-                                                     payload: ICustomerProfileIdentity) {
+export const updateCustomerProfileAction = function(customerReference: TCustomerReference,
+                                                    payload: ICustomerProfileIdentity) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.updateProfileData(dispatch, customerReference, payload);
   };
@@ -77,7 +77,9 @@ export const updateCustomerPasswordFulfilledStateAction = () => ({
   type: CUSTOMER_PASSWORD_UPDATE + '_FULFILLED',
 });
 
-export const updateCustomerPasswordAction = function (customerReference: TCustomerReference, payload: ICustomerProfilePassword) {
+export const updateCustomerPasswordAction = function(
+  customerReference: TCustomerReference, payload: ICustomerProfilePassword
+) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.updatePasswordData(dispatch, customerReference, payload);
   };
@@ -97,7 +99,7 @@ export const deleteCustomerFulfilledStateAction = () => ({
   type: CUSTOMER_DELETE_ENTITY + '_FULFILLED',
 });
 
-export const deleteCustomerAction = function (customerReference: TCustomerReference) {
+export const deleteCustomerAction = function(customerReference: TCustomerReference) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.deleteCustomerEntity(dispatch, customerReference);
   };

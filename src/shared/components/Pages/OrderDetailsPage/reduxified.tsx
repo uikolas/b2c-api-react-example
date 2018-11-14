@@ -1,23 +1,23 @@
-import * as React from "react";
-import {reduxify} from '../../../lib/redux-helper';
-import {OrderDetailsPage} from "./index";
-import {getRouterHistoryBack, getRouterLocation, getRouterMatchParam} from "../../../selectors/Common/router";
+import * as React from 'react';
+import { reduxify } from '../../../lib/redux-helper';
+import { OrderDetailsPage } from '.';
+import { getRouterHistoryBack, getRouterLocation, getRouterMatchParam } from '../../../selectors/Common/router';
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
   isOrderDetailsInitiated,
   isOrderDetailsLoading,
   isOrderDetailsPresent,
-  isOrderDetailsStateRejected
-} from "../../../reducers/Pages/OrderDetails";
-import {getAppCurrency, getPayloadForCreateCart, isAppInitiated} from "../../../reducers/Common/Init";
-import {isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {ICartCreatePayload} from "../../../services/Common/Cart";
-import {TCartAddItemCollection, TCartId} from "../../../interfaces/cart/index";
-import {getCartId} from "../../../reducers/Common/Cart";
-import {TOrderId} from "../../../interfaces/order/index";
-import {getOrderDetailsAction} from "../../../actions/Pages/Order";
-import {addMultipleItemsToCartAction} from "../../../actions/Common/Cart";
+  isOrderDetailsStateRejected,
+} from '../../../reducers/Pages/OrderDetails';
+import { getAppCurrency, getPayloadForCreateCart, isAppInitiated } from '../../../reducers/Common/Init';
+import { isUserAuthenticated } from '../../../reducers/Pages/Login';
+import { ICartCreatePayload } from '../../../services/Common/Cart';
+import { TCartAddItemCollection, TCartId } from '../../../interfaces/cart';
+import { getCartId } from '../../../reducers/Common/Cart';
+import { TOrderId } from '../../../interfaces/order';
+import { getOrderDetailsAction } from '../../../actions/Pages/Order';
+import { addMultipleItemsToCartAction } from '../../../actions/Common/Cart';
 
 export const ConnectedOrderDetailsPage = reduxify(
   (state: any, ownProps: any) => {
@@ -56,7 +56,7 @@ export const ConnectedOrderDetailsPage = reduxify(
   (dispatch: Function) => ({
     getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId)),
     addMultipleItemsToCart: (
-      payload: TCartAddItemCollection, cartId: TCartId, payloadCartCreate: ICartCreatePayload
+      payload: TCartAddItemCollection, cartId: TCartId, payloadCartCreate: ICartCreatePayload,
     ) => dispatch(addMultipleItemsToCartAction(payload, cartId, payloadCartCreate)),
-  })
+  }),
 )(OrderDetailsPage);

@@ -1,5 +1,5 @@
 import { ORDERS_COLLECTION_REQUEST } from '../../constants/ActionTypes/Pages/Order';
-import { IReduxState } from '../../../typings/app';
+import { IReduxState } from 'src/typings/app';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { IOrderCollectionParsed, TOrderCollection } from '../../interfaces/order';
 

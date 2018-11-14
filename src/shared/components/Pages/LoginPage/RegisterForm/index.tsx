@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -10,12 +10,16 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 
 import {
-  TCustomerEmail, TCustomerFirstName, TCustomerLastName,
-  TCustomerPassword, TCustomerSalutation, TSalutationVariant
-} from "src/shared/interfaces/customer";
-import {salutationVariants} from "src/shared/constants/customer/index";
-import {emptyRequiredFieldsErrorText} from "src/shared/constants/messages/errors";
-import {formStyles} from '../styles';
+  TCustomerEmail,
+  TCustomerFirstName,
+  TCustomerLastName,
+  TCustomerPassword,
+  TCustomerSalutation,
+  TSalutationVariant,
+} from 'src/shared/interfaces/customer';
+import { salutationVariants } from 'src/shared/constants/customer';
+import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/errors';
+import { formStyles } from '../styles';
 
 interface RegisterFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
@@ -44,31 +48,31 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
   };
 
   public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if(!event.target.value) {
+    if (!event.target.value) {
       return;
     }
 
     this.setState({
       salutation: event.target.value,
     });
-  }
+  };
 
   public handleChangeAgreement = (event: React.FormEvent<HTMLInputElement>): void => {
     this.setState({
       acceptedTerms: !this.state.acceptedTerms,
     });
-  }
+  };
 
-  public handleChange =  (event: any) => {
-    const { name, value }: any = event.target;
+  public handleChange = (event: any) => {
+    const {name, value}: any = event.target;
     this.setState({
-      ...this.state, [name]: value
+      ...this.state, [name]: value,
     });
-  }
+  };
 
   public handleSubmitForm = (e: any): any => {
     e.preventDefault();
-    if(
+    if (
       !this.state.salutation
       || !this.state.firstName
       || !this.state.lastName
@@ -87,10 +91,10 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
     }
 
     this.props.handleSubmit(this.state);
-  }
+  };
 
   public render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <React.Fragment>
@@ -98,10 +102,10 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
           Register
         </Typography>
         <form
-          className={classes.container}
+          className={ classes.container }
           // noValidate
           autoComplete="off"
-          onSubmit={this.handleSubmitForm}
+          onSubmit={ this.handleSubmitForm }
           id="RegisterForm"
         >
 
@@ -111,25 +115,25 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             select
             label="Salutation"
             name="salutation"
-            className={classes.textField}
-            value={this.state.salutation}
-            onChange={this.handleChangeSalutation}
-            SelectProps={{
+            className={ classes.textField }
+            value={ this.state.salutation }
+            onChange={ this.handleChangeSalutation }
+            SelectProps={ {
               MenuProps: {
                 className: classes.menu,
               },
-            }}
+            } }
             margin="normal"
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               shrink: true,
-            }}
+            } }
           >
-            {salutationVariants.map((option: TSalutationVariant) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            { salutationVariants.map((option: TSalutationVariant) => (
+              <MenuItem key={ option.value } value={ option.value }>
+                { option.label }
               </MenuItem>
-            ))}
+            )) }
           </TextField>
 
           <TextField
@@ -138,17 +142,17 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             label="First Name"
             name="firstName"
             type="text"
-            value={this.state.firstName}
-            className={classes.textField}
+            value={ this.state.firstName }
+            className={ classes.textField }
             margin="normal"
             fullWidth
-            onChange={this.handleChange}
-            InputLabelProps={{
+            onChange={ this.handleChange }
+            InputLabelProps={ {
               shrink: true,
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               className: classes.input,
-            }}
+            } }
           />
 
           <TextField
@@ -157,17 +161,17 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             label="Last Name"
             name="lastName"
             type="text"
-            value={this.state.lastName}
-            onChange={this.handleChange}
-            className={classes.textField}
+            value={ this.state.lastName }
+            onChange={ this.handleChange }
+            className={ classes.textField }
             margin="normal"
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               shrink: true,
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               className: classes.input,
-            }}
+            } }
           />
 
           <TextField
@@ -176,64 +180,64 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             label="Email"
             name="email"
             type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-            className={classes.textField}
+            value={ this.state.email }
+            onChange={ this.handleChange }
+            className={ classes.textField }
             margin="normal"
             fullWidth
-            InputLabelProps={{
+            InputLabelProps={ {
               shrink: true,
-            }}
-            InputProps={{
+            } }
+            InputProps={ {
               className: classes.input,
-            }}
+            } }
           />
 
           <Grid container
                 direction="row"
                 justify="space-between"
                 alignItems="center"
-                spacing={16}
+                spacing={ 16 }
           >
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={ 12 } sm={ 6 }>
               <TextField
                 required
                 id="register-password"
                 label="Password"
                 name="password"
                 type="password"
-                value={this.state.password}
-                onChange={this.handleChange}
-                className={classes.textField}
+                value={ this.state.password }
+                onChange={ this.handleChange }
+                className={ classes.textField }
                 margin="normal"
                 fullWidth
-                InputLabelProps={{
+                InputLabelProps={ {
                   shrink: true,
-                }}
-                InputProps={{
+                } }
+                InputProps={ {
                   className: classes.input,
-                }}
+                } }
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={ 12 } sm={ 6 }>
               <TextField
                 required
                 id="register-confirm-password"
                 label="Confirm password"
                 name="passwordConfirmation"
                 type="password"
-                value={this.state.passwordConfirmation}
-                onChange={this.handleChange}
-                className={classes.textField}
+                value={ this.state.passwordConfirmation }
+                onChange={ this.handleChange }
+                className={ classes.textField }
                 margin="normal"
                 fullWidth
-                InputLabelProps={{
+                InputLabelProps={ {
                   shrink: true,
-                }}
-                InputProps={{
+                } }
+                InputProps={ {
                   className: classes.input,
-                }}
+                } }
               />
             </Grid>
 
@@ -241,8 +245,8 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
           <FormControlLabel
             control={
               <Checkbox
-                checked={this.state.acceptedTerms}
-                onChange={this.handleChangeAgreement}
+                checked={ this.state.acceptedTerms }
+                onChange={ this.handleChangeAgreement }
                 name="acceptedTerms"
               />
             }
@@ -250,7 +254,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
           />
 
 
-          <Button type="submit" variant="contained" className={classes.button}>
+          <Button type="submit" variant="contained" className={ classes.button }>
             Register
           </Button>
 

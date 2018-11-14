@@ -7,22 +7,22 @@ export const styles = (theme: Theme) => createStyles({
   },
   heroBlock: {
     backgroundImage: 'url("https://now.spryker.com/hubfs/Events/duotone_Events.jpg?t=1537192687999")',
-    backgroundColor: "red",
-    backgroundSize: "cover",
-    height: "700px",
+    backgroundColor: 'red',
+    backgroundSize: 'cover',
+    height: '700px',
   },
   contentBlock: {
-    minHeight: "400px",
-    backgroundColor: "#d8d1d1",
+    minHeight: '400px',
+    backgroundColor: '#d8d1d1',
   },
   footerBlock: {
-    minHeight: "200px",
-    backgroundColor: "#7979ce",
+    minHeight: '200px',
+    backgroundColor: '#7979ce',
   },
   pageMenu: {
     paddingTop: theme.spacing.unit * 7,
   },
   link: {
-    width: "100%",
-  }
+    width: '100%',
+  },
 });

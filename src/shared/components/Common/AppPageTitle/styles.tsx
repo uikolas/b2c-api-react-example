@@ -8,14 +8,14 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: theme.spacing.unit * 6,
   },
   pageHeader: {
-    fontSize: "2.13rem",
+    fontSize: '2.13rem',
     lineHeight: 1.06,
     letterSpacing: -0.9,
     marginBottom: theme.spacing.unit * 2,
   },
   paragraph: {
-    fontSize: "1rem",
-    fontStyle: "italic",
+    fontSize: '1rem',
+    fontStyle: 'italic',
     lineHeight: 1.25,
     letterSpacing: -0.4,
     marginBottom: 0,

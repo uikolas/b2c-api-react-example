@@ -6,7 +6,7 @@ export const styles = (theme: Theme) => createStyles({
     textDecoration: 'line-through',
     color: theme.appColors.grey,
     fontSize: theme.appFixedDimensions.fontSize.small,
-    letterSpacing: "0.2px",
+    letterSpacing: '0.2px',
   },
   defaultPrice: {
     fontSize: theme.appFixedDimensions.fontSize.big,

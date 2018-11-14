@@ -1,17 +1,15 @@
 import produce from 'immer';
+import { IReduxState } from 'src/typings/app';
 import {
-  WISHLIST_ALL_LISTS,
-  ADD_WISHLIST,
-  DELETE_WISHLIST,
-  UPDATE_WISHLIST,
-  DETAIL_WISHLIST,
   ADD_ITEM_WISHLIST,
+  ADD_WISHLIST,
   DELETE_ITEM_WISHLIST,
+  DELETE_WISHLIST,
+  DETAIL_WISHLIST,
+  UPDATE_WISHLIST,
+  WISHLIST_ALL_LISTS,
 } from '../../constants/ActionTypes/Pages/Wishlist';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {IWishlist, IWishlistItem} from '../../interfaces/wishlist';
+import { IWishlist, IWishlistItem } from '../../interfaces/wishlist';
 
 export interface WishlistState extends IReduxState {
   data: {
@@ -96,7 +94,9 @@ export const pageWishlist = produce<WishlistState>(
         break;
       }
       case `${DELETE_WISHLIST}_FULFILLED`: {
-        const wishlists: IWishlist[] = draft.data.wishlists.filter((wishlist: IWishlist) => wishlist.id !== action.wishlistId);
+        const wishlists: IWishlist[] = draft.data.wishlists.filter((
+          wishlist: IWishlist,
+        ) => wishlist.id !== action.wishlistId);
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
         draft.error = false;
@@ -107,7 +107,9 @@ export const pageWishlist = produce<WishlistState>(
         break;
       }
       case `${UPDATE_WISHLIST}_FULFILLED`: {
-        const wishlists: IWishlist[] = draft.data.wishlists.map((wishlist: IWishlist) => wishlist.id === action.wishlistId ? action.data : wishlist);
+        const wishlists: IWishlist[] = draft.data.wishlists.map((
+          wishlist: IWishlist,
+        ) => wishlist.id === action.wishlistId ? action.data : wishlist);
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
         draft.error = false;
@@ -129,9 +131,11 @@ export const pageWishlist = produce<WishlistState>(
         break;
       }
       case `${ADD_ITEM_WISHLIST}_FULFILLED`: {
-        const wishlists: IWishlist[] = draft.data.wishlists.map((wishlist: IWishlist) => wishlist.id === action.wishlist.id
+        const wishlists: IWishlist[] = draft.data.wishlists.map((
+          wishlist: IWishlist,
+          ) => wishlist.id === action.wishlist.id
           ? action.wishlist
-          : wishlist
+          : wishlist,
         );
         draft.data.wishlists = wishlists;
         draft.error = false;
@@ -142,10 +146,14 @@ export const pageWishlist = produce<WishlistState>(
         break;
       }
       case `${DELETE_ITEM_WISHLIST}_FULFILLED`: {
-        const currentItems: IWishlistItem[] = draft.data.currentItems.filter((item: IWishlistItem) => item.sku !== action.sku);
-        const wishlists: IWishlist[] = draft.data.wishlists.map((wishlist: IWishlist) => wishlist.id === action.wishlistId
+        const currentItems: IWishlistItem[] = draft.data.currentItems.filter((
+          item: IWishlistItem,
+        ) => item.sku !== action.sku);
+        const wishlists: IWishlist[] = draft.data.wishlists.map((
+          wishlist: IWishlist,
+        ) => wishlist.id === action.wishlistId
           ? {...wishlist, numberOfItems: currentItems.length}
-          : wishlist
+          : wishlist,
         );
         draft.data.wishlists = wishlists;
         draft.data.currentItems = currentItems;

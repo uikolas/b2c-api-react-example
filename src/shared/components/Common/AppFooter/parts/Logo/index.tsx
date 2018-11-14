@@ -20,7 +20,7 @@ const logoImage = (
 
 export const LogoComponent: React.SFC<Props> = ({classes}) => (
   <div className={ classes.logoContainer }>
-    <NavLink to={pathHomePage} className={ classes.logo }>{ logoImage }</NavLink>
+    <NavLink to={ pathHomePage } className={ classes.logo }>{ logoImage }</NavLink>
     <span className={ classes.logoCopy }>&copy; Spryker GmbH</span>
   </div>
 );
