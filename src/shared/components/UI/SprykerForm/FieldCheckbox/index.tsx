@@ -24,8 +24,7 @@ export const FieldCheckboxBase: React.SFC<IFieldCheckboxProps> = (props): JSX.El
           checked={isChecked}
           onChange={changeHandler}
           value={inputName}
-          color="primary"
-          classes={{root: classes.inputCheckbox}}
+          classes={{root: classes.inputCheckbox, checked: classes.checkedCheckbox}}
         />
       }
       label={label}

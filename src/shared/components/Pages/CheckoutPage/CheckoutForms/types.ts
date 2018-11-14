@@ -8,7 +8,7 @@ import {
   IUsageSavedAddress
 } from "src/shared/interfaces/checkout/index";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
-import {IFormField} from "src/shared/components/UI/SprykerForm/types";
+import {IFormField, IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
@@ -51,6 +51,7 @@ export interface ISameAsDeliveryParamsFormSettings extends IBaseCheckoutFormHand
 export interface ISavedAddressDataFormSettings {
   selectedAddresses: IUsageSavedAddress | null;
   addressesCollection: ICheckoutFormsProps["addressesCollection"];
+  additionalOptions?: Array<IRadioItem>;
 }
 
 // Param to create saved addresses form

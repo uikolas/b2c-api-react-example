@@ -28,7 +28,12 @@ export const FieldRadioBase: React.SFC<IFieldRadioProps> = (props): JSX.Element 
 
   return (
     <React.Fragment>
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel
+        component="legend"
+        classes={{root: classes.label}}
+      >
+        {label}
+      </FormLabel>
       <RadioGroup
         aria-label={label}
         name={inputName}
@@ -39,7 +44,14 @@ export const FieldRadioBase: React.SFC<IFieldRadioProps> = (props): JSX.Element 
           <FormControlLabel
             value={item.value}
             key={`${item.value}`}
-            control={<Radio />}
+            classes={{
+              root: `${classes.inputRadio} ${ (currentMode === item.value) ? classes.checkedInputRadio : '' }`,
+              label: `${(currentMode === item.value) ? classes.checkedRadioLabel : '' }`,
+            }}
+            control={<Radio
+                      classes={{root: classes.radio, checked: classes.checkedRadio}}
+                     />
+            }
             label={item.label}
           />
         ))}
