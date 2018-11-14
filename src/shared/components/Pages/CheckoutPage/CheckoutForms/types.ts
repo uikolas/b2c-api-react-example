@@ -7,20 +7,20 @@ import {
 import {
   IBillingSelection,
   IDeliverySelection,
-  TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
-// TODO: fix extends
+
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
   shippingAddress: IShippingAddress;
   billingAddress: IBillingAddress;
   addressesCollection: IAddressItem[] | null;
   selections: IAddressesSelections;
-  isAddressesLoading: boolean;
+  isAddressesFulfilled: boolean;
   extraAddressesOptions: IExtraAddressesOptions | null;
+  isUserLoggedIn: boolean;
 }
 
 export type TAddressType = 'delivery' | 'billing';

@@ -12,5 +12,6 @@ export interface IDeliveryFormProps extends WithStyles<typeof formStyles> {
   addressData: ICheckoutAddress;
   selections: IDeliverySelection;
   extraAddressesOptions: IExtraAddressesOptions["delivery"];
-  isAddressesLoading: boolean;
+  isAddressesFulfilled: boolean;
+  isUserLoggedIn: boolean;
 }

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';

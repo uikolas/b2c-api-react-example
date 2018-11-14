@@ -32,10 +32,15 @@ export interface ISameAsDeliveryParams extends IBaseCheckoutFormHandler {
 
 // Param to create saved addresses form
 export interface IAddressesParams extends IBaseCheckoutFormHandler {
-
-  // TODO: handler from Context
   addressesCollection: ICheckoutFormsProps["addressesCollection"];
   selections: IDeliverySelection | IBillingSelection;
   extraAddressesOptions: IExtraAddressesOptions["delivery"] | IExtraAddressesOptions["billing"] | null;
 }
 
+export interface IDeliveryAddressesParams extends IAddressesParams {
+  selections: IDeliverySelection;
+}
+
+export interface IBillingAddressesParams extends IAddressesParams {
+  selections: IBillingSelection;
+}

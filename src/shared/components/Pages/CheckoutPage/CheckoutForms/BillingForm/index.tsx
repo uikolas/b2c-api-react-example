@@ -11,6 +11,11 @@ import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/C
 import {
   getSameAsDeliveryFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/sameAsDeliverySettings";
+import {
+  getBillingSavedAddressFormSettings
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
+import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
@@ -18,7 +23,10 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
     classes,
     addressData,
     selections,
+    addressesCollection,
     extraAddressesOptions,
+    isAddressesFulfilled,
+    isUserLoggedIn,
   }  = props;
 
   return (
@@ -34,13 +42,33 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           submitHandler,
           inputChangeHandler,
         };
+        const savedBillingParams = {
+          selections,
+          addressesCollection,
+          extraAddressesOptions,
+          submitHandler,
+          inputChangeHandler
+        };
         const billingFormSettings = getAddressFormSettings('billing', billingParams);
         const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings('sameAsDeliveryForm', sameAsDeliveryParams);
+        const savedAddressFormSettings = getBillingSavedAddressFormSettings('savedBilling', savedBillingParams);
+
+        const inputsForm = isBillingSameAsDelivery ? null : <SprykerForm form={billingFormSettings} />;
+        const sameAsDeliveryForm = <SprykerForm form={sameAsDeliveryFormSettings} />;
+        const selectionForm = <SprykerForm form={savedAddressFormSettings} />;
+
         return (
           <Grid container className={classes.root}>
             <Grid item xs={ 12 }>
-              <SprykerForm form={sameAsDeliveryFormSettings} />
-              <SprykerForm form={billingFormSettings} />
+              { isUserLoggedIn
+                ? (!isAddressesFulfilled)
+                  ? <AppPageSubTitle title={FormTextWaitingForResponse} />
+                  : <React.Fragment>
+                    {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
+                    {selections.isAddNew ? inputsForm : null}
+                  </React.Fragment>
+                : [sameAsDeliveryForm, inputsForm]
+              }
             </Grid>
           </Grid>
         );

@@ -1,13 +1,20 @@
-import {InputLabelSelectSavedDeliveryAddress} from "src/shared/constants/forms/labels";
+import {
+  InputLabelSelectSavedBillingAddress,
+  InputLabelSelectSavedDeliveryAddress
+} from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {TAddressType} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
-import {IAddressesParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {
+  IAddressesParams,
+  IBillingAddressesParams,
+  IDeliveryAddressesParams
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getDeliverySavedAddressFormSettings = (formName: string, params: IAddressesParams) => {
+export const getDeliverySavedAddressFormSettings = (formName: string, params: IDeliveryAddressesParams) => {
 
   const {
     selections,
@@ -16,6 +23,10 @@ export const getDeliverySavedAddressFormSettings = (formName: string, params: IA
     inputChangeHandler,
     extraAddressesOptions,
   } = params;
+
+  const currentValue = selections.selectedAddressId
+                       || (selections.isAddNew && 'isAddNewDelivery')
+                       || getDefaultAddressId(addressesCollection, 'delivery');
 
   const formSettings: IFormSettings = {
     formName,
@@ -26,11 +37,48 @@ export const getDeliverySavedAddressFormSettings = (formName: string, params: IA
         {
           type: 'radio',
           inputName: 'deliverySelection',
-          inputValue: selections.selectedAddressId
-                      || getDefaultAddressId(addressesCollection, 'delivery'),
+          inputValue: currentValue,
           spaceNumber: 12,
           isRequired: false,
           label: InputLabelSelectSavedDeliveryAddress,
+          isError: false,
+          radioItems: getRadioItems(addressesCollection, extraAddressesOptions),
+        }
+      ]
+    ],
+  };
+
+  return formSettings;
+};
+
+export const getBillingSavedAddressFormSettings = (formName: string, params: IBillingAddressesParams) => {
+
+  const {
+    selections,
+    addressesCollection,
+    submitHandler,
+    inputChangeHandler,
+    extraAddressesOptions,
+  } = params;
+
+  const currentValue = selections.selectedAddressId
+                      || (selections.isAddNew && 'isAddNewBilling')
+                      || (selections.isSameAsDelivery && 'sameAsDelivery')
+                      || getDefaultAddressId(addressesCollection, 'billing');
+
+  const formSettings: IFormSettings = {
+    formName,
+    onChangeHandler: inputChangeHandler,
+    onSubmitHandler: submitHandler,
+    fields: [
+      [
+        {
+          type: 'radio',
+          inputName: 'billingSelection',
+          inputValue: currentValue,
+          spaceNumber: 12,
+          isRequired: false,
+          label: InputLabelSelectSavedBillingAddress,
           isError: false,
           radioItems: getRadioItems(addressesCollection, extraAddressesOptions),
         }

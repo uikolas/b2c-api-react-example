@@ -13,5 +13,6 @@ export interface IBillingFormProps extends WithStyles<typeof formStyles> {
   addressData: ICheckoutAddress;
   selections: IBillingSelection;
   extraAddressesOptions: IExtraAddressesOptions["billing"];
-  isAddressesLoading: boolean;
+  isAddressesFulfilled: boolean;
+  isUserLoggedIn: boolean;
 }

@@ -17,7 +17,8 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
     selections,
     addressesCollection,
     extraAddressesOptions,
-    isAddressesLoading,
+    isAddressesFulfilled,
+    isUserLoggedIn,
   }  = props;
 
   return (
@@ -29,7 +30,8 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
             addressesCollection={addressesCollection}
             selections={selections.delivery}
             extraAddressesOptions={extraAddressesOptions ? extraAddressesOptions.delivery : null}
-            isAddNewDelivery={selections.delivery.isAddNew}
+            isAddressesFulfilled={isAddressesFulfilled}
+            isUserLoggedIn={isUserLoggedIn}
           />
         </FormWrapper>
         <FormWrapper title="Billing Address" >
@@ -38,7 +40,8 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
             addressesCollection={addressesCollection}
             selections={selections.billing}
             extraAddressesOptions={extraAddressesOptions ? extraAddressesOptions.billing : null}
-            isAddNewBilling={selections.billing.isAddNew}
+            isAddressesFulfilled={isAddressesFulfilled}
+            isUserLoggedIn={isUserLoggedIn}
           />
         </FormWrapper>
       </Grid>
@@ -47,4 +50,3 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
 };
 
 export const CheckoutForms = withStyles(formStyles)(CheckoutFormsBase);
-

@@ -11,6 +11,8 @@ import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/C
 import {
   getDeliverySavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
+import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -20,10 +22,9 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
     selections,
     addressesCollection,
     extraAddressesOptions,
+    isAddressesFulfilled,
+    isUserLoggedIn,
   }  = props;
-
-  console.log('DeliveryFormBase selections', selections);
-  console.log('DeliveryFormBase addressesCollection', addressesCollection);
 
   return (
     <CheckoutPageContext.Consumer>
@@ -38,12 +39,20 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
         };
         const deliveryFormSettings = getAddressFormSettings('delivery', deliveryParams);
         const savedAddressFormSettings = getDeliverySavedAddressFormSettings('savedDelivery', savedDeliveryParams);
+        const selectionForm = <SprykerForm form={savedAddressFormSettings} />;
+        const inputsForm = <SprykerForm form={deliveryFormSettings} />;
+
         return (
           <Grid container className={ classes.root }>
             <Grid item xs={ 12 }>
-              {addressesCollection
-                ? <SprykerForm form={savedAddressFormSettings} />
-                : <SprykerForm form={deliveryFormSettings} />
+              { isUserLoggedIn
+                ? (!isAddressesFulfilled)
+                  ? <AppPageSubTitle title={FormTextWaitingForResponse} />
+                  : <React.Fragment>
+                    {addressesCollection ? selectionForm : inputsForm}
+                    {selections.isAddNew ? inputsForm : null}
+                  </React.Fragment>
+                : inputsForm
               }
             </Grid>
           </Grid>
