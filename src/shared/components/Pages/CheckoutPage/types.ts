@@ -6,7 +6,9 @@ import {styles} from "./styles";
 import {ICartItem} from "src/shared/reducers/Common/Cart";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {
-  IAddNewAddressActions, ICheckoutAddress, ISameAsDelivery,
+  IAddNewAddressActions,
+  ICheckoutAddress,
+  ISameAsDelivery,
   IUsageSavedAddress
 } from "src/shared/interfaces/checkout/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
@@ -36,9 +38,20 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   countriesCollection: ICountries[];
 }
 
-export interface ICheckoutPageState extends IAddNewAddressActions {
-  isBillingSameAsDelivery: boolean;
-  selectedAddresses: IUsageSavedAddress;
+export interface ICheckoutPageState {
+  deliverySelection: IDeliverySelection;
+  billingSelection: IBillingSelection;
+}
+
+export interface IDeliverySelection {
+  selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
+  isAddNew: IAddNewAddressActions["isAddNewDelivery"];
+}
+
+export interface IBillingSelection {
+  selectedAddressId: IUsageSavedAddress["billingSelectedAddressId"];
+  isAddNew: IAddNewAddressActions["isAddNewBilling"];
+  isSameAsDelivery: ISameAsDelivery["isSameAsDelivery"];
 }
 
 // All possibles names of input
@@ -58,6 +71,5 @@ export interface ICheckoutFieldInput {
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  billingSameAsDeliveryHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isBillingSameAsDelivery: boolean;
 };

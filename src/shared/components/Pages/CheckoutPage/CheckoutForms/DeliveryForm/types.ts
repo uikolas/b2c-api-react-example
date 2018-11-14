@@ -1,16 +1,16 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {
-  IAddressDataFormSettings,
+  ICheckoutFormsProps,
   IExtraAddressesOptions,
-  ISavedAddressDataFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {IAddNewAddressActions, IUsageSavedAddress} from "src/shared/interfaces/checkout/index";
+import {ICheckoutAddress} from "src/shared/interfaces/checkout/index";
+import {IDeliverySelection} from "src/shared/components/Pages/CheckoutPage/types";
 
-export interface IDeliveryFormProps extends WithStyles<typeof formStyles>,
-                                            IAddressDataFormSettings,
-                                            ISavedAddressDataFormSettings {
-  selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
-  isAddNewDelivery: IAddNewAddressActions["isAddNewDelivery"];
+export interface IDeliveryFormProps extends WithStyles<typeof formStyles> {
+  addressesCollection: ICheckoutFormsProps["addressesCollection"];
+  addressData: ICheckoutAddress;
+  selections: IDeliverySelection;
   extraAddressesOptions: IExtraAddressesOptions["delivery"];
+  isAddressesLoading: boolean;
 }

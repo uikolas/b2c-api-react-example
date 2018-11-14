@@ -17,13 +17,12 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
   const {
     classes,
     addressData,
-    selectedAddressId,
+    selections,
     addressesCollection,
     extraAddressesOptions,
-    isAddNewDelivery,
   }  = props;
 
-  console.log('DeliveryFormBase selectedAddressId', selectedAddressId);
+  console.log('DeliveryFormBase selections', selections);
   console.log('DeliveryFormBase addressesCollection', addressesCollection);
 
   return (
@@ -31,7 +30,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
       {({submitHandler, inputChangeHandler}) => {
         const deliveryParams = {addressData, submitHandler, inputChangeHandler};
         const savedDeliveryParams = {
-          selectedAddressId,
+          selections,
           addressesCollection,
           extraAddressesOptions,
           submitHandler,

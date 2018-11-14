@@ -1,22 +1,21 @@
 import {InputLabelSelectSavedDeliveryAddress} from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {
-  ISavedAddressParamsFormSettings,
-  TAddressType
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {TAddressType} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
+import {IAddressesParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getDeliverySavedAddressFormSettings = ( formName: string,
-                                                     { selectedAddressId,
-                                                       addressesCollection,
-                                                       submitHandler,
-                                                       inputChangeHandler,
-                                                       extraAddressesOptions,
-                                                     }: ISavedAddressParamsFormSettings
-                                                   ) => {
+export const getDeliverySavedAddressFormSettings = (formName: string, params: IAddressesParams) => {
+
+  const {
+    selections,
+    addressesCollection,
+    submitHandler,
+    inputChangeHandler,
+    extraAddressesOptions,
+  } = params;
 
   const formSettings: IFormSettings = {
     formName,
@@ -26,8 +25,8 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
       [
         {
           type: 'radio',
-          inputName: 'deliverySelectedAddressId',
-          inputValue: selectedAddressId
+          inputName: 'deliverySelection',
+          inputValue: selections.selectedAddressId
                       || getDefaultAddressId(addressesCollection, 'delivery'),
           spaceNumber: 12,
           isRequired: false,
@@ -42,39 +41,36 @@ export const getDeliverySavedAddressFormSettings = ( formName: string,
   return formSettings;
 };
 
-const getRadioItems = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"],
-                       extraAddressesOptions: ISavedAddressParamsFormSettings["extraAddressesOptions"]) => {
-  let items = convertAddressesToRadioItems(addressesCollection);
+const getRadioItems = (collection: IAddressesParams["addressesCollection"],
+                       extraOptions: IAddressesParams["extraAddressesOptions"]) => {
+  let items = convertAddressesToRadioItems(collection);
   if (!items) {
     return null;
   }
-  if(Array.isArray(extraAddressesOptions) && extraAddressesOptions.length > 0) {
-    items = items.concat(extraAddressesOptions);
+  if(Array.isArray(extraOptions) && extraOptions.length > 0) {
+    items = items.concat(extraOptions);
   }
   return items;
 };
 
-const convertAddressesToRadioItems = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"]) => {
+const convertAddressesToRadioItems = (collection: IAddressesParams["addressesCollection"]) => {
 
-  return (isAddressesCollectionExist(addressesCollection)
-          ? addressesCollection.map((item: IAddressItem) => ({value: item.id, label: createRadioItemLabel(item)}))
+  return (isAddressesCollectionExist(collection)
+          ? collection.map((item: IAddressItem) => ({value: item.id, label: createRadioItemLabel(item)}))
           : null
   );
 };
 
-const isAddressesCollectionExist = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"]) => {
-  return Boolean(addressesCollection
-    && Array.isArray(addressesCollection)
-    && addressesCollection.length > 0
-  );
+const isAddressesCollectionExist = (collection: IAddressesParams["addressesCollection"]) => {
+  return Boolean(collection && Array.isArray(collection) && collection.length > 0);
 };
 
-const getDefaultAddressId = (addressesCollection: ISavedAddressParamsFormSettings["addressesCollection"],
+const getDefaultAddressId = (collection: IAddressesParams["addressesCollection"],
                              addressType: TAddressType) => {
-  if (!isAddressesCollectionExist(addressesCollection)) {
+  if (!isAddressesCollectionExist(collection)) {
     return null;
   }
-  const variantData = addressesCollection
+  const variantData = collection
     .filter((item: IAddressItem) => {
       if (addressType === 'delivery') {
         return item.isDefaultShipping === true;

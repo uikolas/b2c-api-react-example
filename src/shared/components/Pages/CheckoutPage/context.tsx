@@ -10,8 +10,5 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
     throw new Error('inputChangeHandler() not implemented');
   },
-  billingSameAsDeliveryHandler: (event: React.ChangeEvent<HTMLInputElement>) => {
-    throw new Error('billingSameAsDeliveryHandler() not implemented');
-  },
   isBillingSameAsDelivery: false,
 });
