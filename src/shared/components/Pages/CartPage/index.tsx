@@ -15,7 +15,7 @@ import DeleteIcon from '@material-ui/icons/Clear';
 
 import { ICartItem } from 'src/shared/reducers/Common/Cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
-import { pathCheckoutPage, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { styles } from './styles';
@@ -63,7 +63,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   };
 
   public handleChangeQty = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value }: { name: string, value: string } = event.target;
+    const {name, value}: {name: string, value: string} = event.target;
     const {
       cartDeleteItemAction,
       removeItemGuestCartAction,
@@ -116,7 +116,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             </Typography>
           </Grid>
           <Grid item xs={ 8 }>
-            <div className={ classes.fullWidth } ref={this.listRef} />
+            <div className={ classes.fullWidth } ref={ this.listRef }/>
           </Grid>
         </AppMain>
       );
@@ -137,31 +137,31 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           divider
           className={ classes.listItem }
         >
-          <div className={ classes.imgWrapper } style={{ height: this.state.heightListItem }}>
+          <div className={ classes.imgWrapper } style={ {height: this.state.heightListItem} }>
             <img
               src={ item.image }
-              style={{ maxWidth: this.state.heightListItem * 0.82, maxHeight: this.state.heightListItem * 0.82 }}
+              style={ {maxWidth: this.state.heightListItem * 0.82, maxHeight: this.state.heightListItem * 0.82} }
             />
-            <div className={ classes.actionAreaOverlay } />
+            <div className={ classes.actionAreaOverlay }/>
           </div>
 
-          <div className={classes.itemWrapper}>
-            <div className={classes.itemName}>{ item.name }</div>
+          <div className={ classes.itemWrapper }>
+            <div className={ classes.itemName }>{ item.name }</div>
             {
               item.superAttributes
-                ? item.superAttributes.map((attr: { [key: string]: string }, idx: number) => (
-                  <div key={`${item.sku}-attr-${idx}`} className={`${classes.itemAttr} ${classes.textCapitalize}`}>
-                    <span>{Object.keys(attr)[0].split('_').join(' ')}</span>
-                    <span style={{ marginRight: '5px' }}>:</span>
-                    <span>{Object.values(attr)[0]}</span>
+                ? item.superAttributes.map((attr: {[key: string]: string}, idx: number) => (
+                  <div key={ `${item.sku}-attr-${idx}` } className={ `${classes.itemAttr} ${classes.textCapitalize}` }>
+                    <span>{ Object.keys(attr)[0].split('_').join(' ') }</span>
+                    <span style={ {marginRight: '5px'} }>:</span>
+                    <span>{ Object.values(attr)[0] }</span>
                   </div>
                 ))
                 : null
             }
             <div>
-              <span className={`${classes.itemAttr} ${classes.remove}`}>remove</span>
+              <span className={ `${classes.itemAttr} ${classes.remove}` }>remove</span>
               <IconButton onClick={ this.handleDeleteItem(item.sku) }>
-                <DeleteIcon />
+                <DeleteIcon/>
               </IconButton>
             </div>
           </div>
@@ -169,18 +169,18 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           <form
             noValidate
             autoComplete="off"
-            className={classes.quantityForm}
+            className={ classes.quantityForm }
           >
             <TextField
               required
               select
-              name={item.sku}
-              value={item.quantity}
-              onChange={this.handleChangeQty}
+              name={ item.sku }
+              value={ item.quantity }
+              onChange={ this.handleChangeQty }
               variant="outlined"
-              InputProps={{
+              InputProps={ {
                 className: classes.select,
-              }}
+              } }
             >
               {
                 quantities.map((i: number) => (
@@ -193,20 +193,20 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             </TextField>
           </form>
 
-          <div className={classes.priceWrapper}>
-            <div className={classes.sumWrapper}>
-             <AppPrice value={ item.calculations.sumPriceToPayAggregation } extraClassName={classes.mainCurrency} />
+          <div className={ classes.priceWrapper }>
+            <div className={ classes.sumWrapper }>
+              <AppPrice value={ item.calculations.sumPriceToPayAggregation } extraClassName={ classes.mainCurrency }/>
             </div>
             {
               item.quantity > 1
-                ? <div className={classes.itemAttr}>
-                    <span>(</span>
-                    <AppPrice
-                      value={ item.calculations.unitPriceToPayAggregation }
-                      extraClassName={`${classes.itemAttr} ${classes.eachCurrency}`}
-                    />
-                    <span> each)</span>
-                  </div>
+                ? <div className={ classes.itemAttr }>
+                  <span>(</span>
+                  <AppPrice
+                    value={ item.calculations.unitPriceToPayAggregation }
+                    extraClassName={ `${classes.itemAttr} ${classes.eachCurrency}` }
+                  />
+                  <span> each)</span>
+                </div>
                 : null
             }
           </div>
@@ -216,7 +216,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
     return (
       <AppMain>
-        <Grid item xs={ 12 } container spacing={ 24 } className={classes.root}>
+        <Grid item xs={ 12 } container spacing={ 24 } className={ classes.root }>
           <Grid item xs={ 12 } md={ 8 }>
             <Typography
               variant="display1"
@@ -233,18 +233,18 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               </span>
               <span>{ ` has ${items.length} ` }</span>
               <FormattedPlural
-                value={items.length}
+                value={ items.length }
                 one='item'
                 other='items'
               />
             </Typography>
-            <div className={classes.listTitle} ref={this.listRef}>
-              <div style={{width: '20%'}}>Item</div>
-              <div className={classes.itemWrapper} />
-              <div className={classes.quantityForm}>Quantity</div>
-              <div className={classes.priceWrapper}>Price</div>
+            <div className={ classes.listTitle } ref={ this.listRef }>
+              <div style={ {width: '20%'} }>Item</div>
+              <div className={ classes.itemWrapper }/>
+              <div className={ classes.quantityForm }>Quantity</div>
+              <div className={ classes.priceWrapper }>Price</div>
             </div>
-            <Divider className={ classes.fullWidth } />
+            <Divider className={ classes.fullWidth }/>
             <List>
               { rows }
             </List>
@@ -259,32 +259,32 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             >
               { 'Order summary' }
             </Typography>
-            <Divider className={ classes.calcDivider} />
+            <Divider className={ classes.calcDivider }/>
 
-            <Grid container spacing={24}>
-              <Grid item xs={8}>
+            <Grid container spacing={ 24 }>
+              <Grid item xs={ 8 }>
                 <form
                   noValidate
                   autoComplete="off"
-                  className={`${classes.fullWidth} ${classes.btnWrapper}`}
+                  className={ `${classes.fullWidth} ${classes.btnWrapper}` }
                 >
                   <TextField
                     name="voucher"
                     label="Apply voucher code"
-                    value={this.state.voucherCode}
-                    onChange={this.handleChangeVouchercode}
+                    value={ this.state.voucherCode }
+                    onChange={ this.handleChangeVouchercode }
                     fullWidth
-                    InputLabelProps={{
+                    InputLabelProps={ {
                       shrink: true,
-                    }}
-                    InputProps={{
+                    } }
+                    InputProps={ {
                       style: {height: '44px'},
-                    }}
+                    } }
                     variant="outlined"
                   />
                 </form>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={ 4 }>
                 <Button
                   variant="outlined"
                   color="primary"
@@ -296,36 +296,37 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               </Grid>
             </Grid>
 
-            <Divider className={ classes.fullWidth } />
+            <Divider className={ classes.fullWidth }/>
 
-            <div className={classes.totalMsg}>
+            <div className={ classes.totalMsg }>
               <div>Subtotal</div>
-              <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={classes.mainCurrency} /> }</div>
+              <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={ classes.mainCurrency }/> }</div>
             </div>
-            <div className={classes.totalMsg}>
+            <div className={ classes.totalMsg }>
               <div>Tax</div>
-              <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={classes.mainCurrency} /> }</div>
+              <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={ classes.mainCurrency }/> }</div>
             </div>
-            <div className={classes.totalMsg} style={{ marginBottom: '24px'}}>
+            <div className={ classes.totalMsg } style={ {marginBottom: '24px'} }>
               <div>Discount</div>
-              <div>{ totals && <AppPrice value={ totals.discountTotal } extraClassName={classes.mainCurrency} /> }</div>
+              <div>{ totals &&
+              <AppPrice value={ totals.discountTotal } extraClassName={ classes.mainCurrency }/> }</div>
             </div>
 
-            <Divider className={ classes.fullWidth } />
+            <Divider className={ classes.fullWidth }/>
 
-            <div className={`${classes.totalMsg}`}>
-              <div className={classes.grandTotal}>
+            <div className={ `${classes.totalMsg}` }>
+              <div className={ classes.grandTotal }>
                 Grand Total
               </div>
               <div>{ totals && <AppPrice value={ totals.grandTotal }/> }</div>
             </div>
 
-            <Divider className={ classes.fullWidth } />
+            <Divider className={ classes.fullWidth }/>
 
             <NavLink
               to={ pathCheckoutPage }
               className={ classes.fullWidth }
-              style={{ textDecoration: 'none' }}
+              style={ {textDecoration: 'none'} }
             >
               <Button
                 variant="contained"
@@ -337,7 +338,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               </Button>
             </NavLink>
 
-            <div className={`${classes.itemAttr} ${classes.shippingMsg}`}>
+            <div className={ `${classes.itemAttr} ${classes.shippingMsg}` }>
               Shipping fee will be calculated based on Shipping address
             </div>
           </Grid>

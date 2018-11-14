@@ -4,14 +4,14 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import {
   cartDeleteItemAction,
   removeItemGuestCartAction,
+  updateGuestCartAction,
   updateItemInCartAction,
-  updateGuestCartAction
 } from 'src/shared/actions/Common/Cart';
 import { getCartId, ICartState } from 'src/shared/reducers/Common/Cart';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getAnonymId } from 'src/shared/reducers/Common/Init';
-import {RouteProps} from "react-router";
-import {TCartId} from "src/shared/interfaces/cart";
+import { RouteProps } from 'react-router';
+import { TCartId } from 'src/shared/interfaces/cart';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);

@@ -23,7 +23,7 @@ export const styles = (theme: Theme) => createStyles({
     marginRight: theme.spacing.unit,
   },
   addressForm: {
-    margin:  `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
+    margin: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
   },
   textField: {
     marginTop: theme.spacing.unit,
@@ -31,5 +31,5 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttons: {
     margin: theme.spacing.unit,
-  }
+  },
 });

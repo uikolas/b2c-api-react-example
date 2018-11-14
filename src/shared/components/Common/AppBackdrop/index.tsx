@@ -12,7 +12,7 @@ export const AppBackdropBase: React.SFC<AppBackdropProps> = (props) => {
   const {classes, isOpen} = props;
 
   return (
-    <Backdrop open={isOpen} classes={{root: classes.root}} />
+    <Backdrop open={ isOpen } classes={ {root: classes.root} }/>
   );
 };
 

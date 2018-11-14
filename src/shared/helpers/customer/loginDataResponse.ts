@@ -1,5 +1,5 @@
-import {ICustomerLoginDataParsed, TCustomerId} from "src/shared/interfaces/customer";
-import {TAccessToken} from "src/shared/interfaces/login";
+import { ICustomerLoginDataParsed, TCustomerId } from 'src/shared/interfaces/customer';
+import { TAccessToken } from 'src/shared/interfaces/login';
 import jwtDecoder from 'jwt-decode';
 
 interface ICustomerLoginDataResponse {
@@ -18,7 +18,7 @@ export const parseLoginDataResponse = (response: ICustomerLoginDataResponse): IC
   if (!response) {
     return null;
   }
-  const { data: {attributes} }: any = response;
+  const {data: {attributes}}: any = response;
   const {sub}: {sub: string} = jwtDecoder(attributes.accessToken);
   const customerRef = JSON.parse(sub).customer_reference;
 

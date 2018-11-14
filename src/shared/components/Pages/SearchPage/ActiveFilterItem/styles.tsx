@@ -15,25 +15,25 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.mini,
     fontWeight: 500,
     letterSpacing: 0.4,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
     [theme.breakpoints.down('xs')]: {
       marginRight: 0,
-      width: "100%",
+      width: '100%',
     },
   },
   close: {
     color: theme.appColors.blue,
     fontSize: theme.spacing.unit * 2.3,
     backgroundColor: theme.appColors.white,
-    borderRadius: "50%",
-    transition: "all .5s ease-in-out",
-    "&:hover": {
+    borderRadius: '50%',
+    transition: 'all .5s ease-in-out',
+    '&:hover': {
       color: theme.appColors.white,
       backgroundColor: theme.appColors.blue,
-      transition: "all .5s ease-in-out",
+      transition: 'all .5s ease-in-out',
     },
   },
   label: {
     paddingRight: theme.spacing.unit * 2.5,
-  }
+  },
 });

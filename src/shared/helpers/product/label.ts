@@ -1,9 +1,9 @@
-import {IAvailableLabelsCollection, TLabelId} from "src/shared/interfaces/searchPageData/index";
-import {IProductLabel} from "src/shared/interfaces/product/index";
+import { IAvailableLabelsCollection, TLabelId } from 'src/shared/interfaces/searchPageData';
+import { IProductLabel } from 'src/shared/interfaces/product';
 
 export const getProductLabelCollection = (labelsIdArr: Array<TLabelId> | null,
-                                          availableLabels: IAvailableLabelsCollection | null
-                                          ): Array<IProductLabel> | null => {
+                                          availableLabels: IAvailableLabelsCollection | null,
+): Array<IProductLabel> | null => {
 
   const isLabelsExist = (Array.isArray(labelsIdArr) && labelsIdArr.length > 0);
 
@@ -29,7 +29,7 @@ export const getProductLabel = (labelsIdArr: Array<TLabelId> | null,
   if (!labels) {
     return null;
   }
-  const checkedValue = "position";
+  const checkedValue = 'position';
 
   const label = labels.reduce(function(prev: IProductLabel, current: IProductLabel) {
     if (prev && current) {

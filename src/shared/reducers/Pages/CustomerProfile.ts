@@ -1,16 +1,13 @@
-import produce from 'immer';
 import {
   CUSTOMER_DATA_REQUEST,
   CUSTOMER_DATA_UPDATE,
+  CUSTOMER_DELETE_ENTITY,
   CUSTOMER_PASSWORD_UPDATE,
-  CUSTOMER_DELETE_ENTITY
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
-import {
-  IReduxState,
-} from '../../../typings/app';
-import {getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected} from "../parts";
-import {ICustomerDataParsed} from "../../interfaces/customer";
-import {IPayloadError} from "../../interfaces/errors/index";
+import { IReduxState } from 'src/typings/app';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { ICustomerDataParsed } from '../../interfaces/customer';
+import { IPayloadError } from '../../interfaces/errors';
 
 
 export interface ICustomerDataState extends IReduxState {
@@ -156,37 +153,37 @@ const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload
 
 // selectors
 export function isPageCustomerProfileInitiated(state: any, props: any): boolean {
-  return Boolean( isStateExist(state, props)
-                  && state.pageCustomerProfile.initiated
-                  && state.pageCustomerProfile.initiated === true
+  return Boolean(isStateExist(state, props)
+    && state.pageCustomerProfile.initiated
+    && state.pageCustomerProfile.initiated === true,
   );
 }
 
 export function isCustomerProfilePresent(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props)
-                && state.pageCustomerProfile.data.profile
-                && state.pageCustomerProfile.data.profile.id
+    && state.pageCustomerProfile.data.profile
+    && state.pageCustomerProfile.data.profile.id,
   );
 }
 
 export function isPageCustomerProfileLoading(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props)
-          && state.pageCustomerProfile.pending
-          && state.pageCustomerProfile.pending === true
+    && state.pageCustomerProfile.pending
+    && state.pageCustomerProfile.pending === true,
   );
 }
 
 export function isPageCustomerProfileRejected(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props)
-          && state.pageCustomerProfile.rejected
-          && state.pageCustomerProfile.rejected === true
+    && state.pageCustomerProfile.rejected
+    && state.pageCustomerProfile.rejected === true,
   );
 }
 
 export function isPageCustomerProfileFulfilled(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props)
-          && state.pageCustomerProfile.fulfilled
-          && state.pageCustomerProfile.fulfilled === true
+    && state.pageCustomerProfile.fulfilled
+    && state.pageCustomerProfile.fulfilled === true,
   );
 }
 

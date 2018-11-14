@@ -64,7 +64,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
     } = this.props;
 
     return (
-      <div className={extraClassName ? `${classes.root} ${extraClassName}` : classes.root}>
+      <div className={ extraClassName ? `${classes.root} ${extraClassName}` : classes.root }>
         <FormControl className={ classes.formControl }>
           <Select
             multiple
@@ -79,12 +79,12 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
             onOpen={ this.handleChangeShowing }
             value={ activeValues }
             onChange={ this.handleChangeValues }
-            disableUnderline= {true}
-            IconComponent={ChevronLeft}
-            classes = {{
+            disableUnderline={ true }
+            IconComponent={ ChevronLeft }
+            classes={ {
               icon: classes.icon,
               select: classes.input,
-            }}
+            } }
           >
             { menuItems.map((item) => (
               <MenuItem
@@ -92,9 +92,9 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
                 value={ item.value }
                 className={ classes.menuItem }
                 disableGutters
-                classes={{
+                classes={ {
                   selected: classes.selected,
-                }}
+                } }
               >
                 <span className={ classes.menuItemName }>{ item.value }</span>
                 <span>({ item.doc_count })</span>
@@ -103,13 +103,13 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
           </Select>
           { isShowSelected
             ? activeValues.map(item => (
-                <Chip
-                  key={ item }
-                  label={ item }
-                  variant="outlined"
-                  onDelete={ this.handleDelete(item) }
-                  className={ classes.chip }
-                />))
+              <Chip
+                key={ item }
+                label={ item }
+                variant="outlined"
+                onDelete={ this.handleDelete(item) }
+                className={ classes.chip }
+              />))
             : null
           }
         </FormControl>

@@ -10,8 +10,8 @@ const path_2 = 'M22.8 20.825c-.185.967-.95 1.675-1.87 1.675H5.07c-.92 0-1.685-.7
 export const CartIcon: React.SFC = () => (
   <svg width="24" height="24" viewBox="0 0 26 23">
     <g fill="none" fillRule="evenodd">
-      <path fill="#000" d={path_1}/>
-      <path stroke="#000" d={path_2}/>
+      <path fill="#000" d={ path_1 }/>
+      <path stroke="#000" d={ path_2 }/>
       <g fill="#000" transform="translate(9.5 11)">
         <rect width="1" height="7" rx=".5"/>
         <rect width="1" height="7" x="6" rx=".5"/>

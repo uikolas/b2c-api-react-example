@@ -9,5 +9,5 @@ export const reduxify = (
   mapStateToProps as any,
   mapDispatchToProps as any,
   mergeProps,
-  options
+  options,
 )(target) as any;

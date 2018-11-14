@@ -29,7 +29,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
   }
 
   private openPopover = ({currentTarget}: ClickEvent) => {
-    const { cartItemsQuantity } = this.props;
+    const {cartItemsQuantity} = this.props;
 
     if (window.innerWidth < 500) {
       if (cartItemsQuantity !== 0) {
@@ -68,11 +68,11 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
     return (
       <div>
-        {cartItemsQuantity === 0 ? (
+        { cartItemsQuantity === 0 ? (
           <Tooltip disableFocusListener placement="top" title="Cart is empty">
-            {cartButton}
+            { cartButton }
           </Tooltip>
-        ) : cartButton}
+        ) : cartButton }
 
         <Popover
           { ...popoverProps }

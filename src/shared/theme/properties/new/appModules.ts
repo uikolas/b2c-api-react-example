@@ -1,5 +1,5 @@
-import {baseTheme} from "src/shared/theme/index";
-import {appColors} from "src/shared/theme/properties/new/appColors";
+import { baseTheme } from 'src/shared/theme';
+import { appColors } from 'src/shared/theme/properties/new/appColors';
 
 
 export interface IAppModules {

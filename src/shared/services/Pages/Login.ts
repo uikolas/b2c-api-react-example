@@ -1,26 +1,26 @@
 import { toast } from 'react-toastify';
 import api from '../api';
-import {saveLoginDataToStoreAction} from "src/shared/actions/Pages/CustomerProfile";
-import {parseLoginDataResponse} from "src/shared/helpers/customer";
+import { saveLoginDataToStoreAction } from 'src/shared/actions/Pages/CustomerProfile';
+import { parseLoginDataResponse } from 'src/shared/helpers/customer';
 import {
   loginCustomerFulfilledStateAction,
   loginCustomerPendingStateAction,
-  loginCustomerRejectedStateAction
-} from "src/shared/actions/Pages/Login";
-import {ApiServiceAbstract} from "../apiAbstractions/ApiServiceAbstract";
-import {ICustomerLoginData} from "src/shared/interfaces/customer";
-import {saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage} from "src/shared/helpers/localStorage";
+  loginCustomerRejectedStateAction,
+} from 'src/shared/actions/Pages/Login';
+import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { ICustomerLoginData } from 'src/shared/interfaces/customer';
+import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
     try {
       const body = {
         data: {
-          type: "customers",
+          type: 'customers',
           attributes: payload,
-        }
+        },
       };
-      const response: any = await api.post('customers', body, { withCredentials: true });
+      const response: any = await api.post('customers', body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -62,12 +62,12 @@ export class PagesLoginService extends ApiServiceAbstract {
 
       const body = {
         data: {
-          type: "access-tokens",
+          type: 'access-tokens',
           attributes: payload,
-        }
+        },
       };
 
-      response = await api.post('access-tokens', body, { withCredentials: true });
+      response = await api.post('access-tokens', body, {withCredentials: true});
       if (response.ok) {
         const responseParsed = parseLoginDataResponse(response.data);
         dispatch(saveLoginDataToStoreAction({email: payload.username}));
@@ -98,12 +98,12 @@ export class PagesLoginService extends ApiServiceAbstract {
     try {
       const body = {
         data: {
-          type: "customer-forgotten-password",
+          type: 'customer-forgotten-password',
           attributes: {email},
-        }
+        },
       };
 
-      const response: any = await api.post('customer-forgotten-password', body, { withCredentials: true });
+      const response: any = await api.post('customer-forgotten-password', body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -134,12 +134,12 @@ export class PagesLoginService extends ApiServiceAbstract {
     try {
       const body = {
         data: {
-          type: "customer-restore-password",
+          type: 'customer-restore-password',
           attributes: payload,
-        }
+        },
       };
 
-      const response: any = await api.patch('customer-restore-password', body, { withCredentials: true });
+      const response: any = await api.patch('customer-restore-password', body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({

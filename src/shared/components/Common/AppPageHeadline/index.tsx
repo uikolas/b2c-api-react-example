@@ -21,9 +21,9 @@ export const AppPageHeadlineBase: React.SFC<AppPageHeadlineProps> = (props) => {
       component="h3"
       color="inherit"
       align="center"
-      className={`${classes.title} ${extraClass ? extraClass : ''}`}
+      className={ `${classes.title} ${extraClass ? extraClass : ''}` }
     >
-      {title}
+      { title }
     </Typography>
   );
 };

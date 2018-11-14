@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEvent} from "react";
+import { ChangeEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -7,7 +7,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import { ChevronLeft, ChevronRight } from '@material-ui/icons';
 
 import { styles } from './styles';
-import {IPagination} from "./types";
+import { IPagination } from './types';
 
 
 interface AppPaginationProps extends WithStyles<typeof styles> {
@@ -20,7 +20,7 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
   const {
     classes,
     pagination: {
-      currentPage : page,
+      currentPage: page,
       maxPage: size,
     },
     onChangeHandler,
@@ -44,12 +44,12 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
     for (let i = from; i < to; i++) {
       pages.push(
         <BottomNavigationAction
-          disabled={page === i}
+          disabled={ page === i }
           showLabel
-          label={i}
-          value={i}
-          key={`page-${i}`}
-          classes={numberClasses}
+          label={ i }
+          value={ i }
+          key={ `page-${i}` }
+          classes={ numberClasses }
         />);
     }
   };
@@ -59,11 +59,11 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
       <BottomNavigationAction
         showLabel
         disabled
-        label={`...`}
-        value={'dots'}
-        key={`${i}-dots`}
-        classes={numberClasses}
-      />
+        label={ `...` }
+        value={ 'dots' }
+        key={ `${i}-dots` }
+        classes={ numberClasses }
+      />,
     );
   };
 
@@ -72,23 +72,23 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
     pages.push(
       <BottomNavigationAction
         showLabel
-        label={size}
-        value={size}
-        key={`page-${size}`}
-        classes={numberClasses}
-      />
-     );
+        label={ size }
+        value={ size }
+        key={ `page-${size}` }
+        classes={ numberClasses }
+      />,
+    );
   };
 
   const first = () => {
     pages.push(
       <BottomNavigationAction
         showLabel
-        label={1}
-        value={1}
-        key={`page-${1}`}
-        classes={numberClasses}
-      />
+        label={ 1 }
+        value={ 1 }
+        key={ `page-${1}` }
+        classes={ numberClasses }
+      />,
     );
     dots(1);
   };
@@ -97,18 +97,22 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
     if (size < step * 2 + 6) {
       add(1, size + 1);
     }
-    else if (page < step * 2 + 1) {
-      add(1, step * 2 + 4);
-      last();
-    }
-    else if (page > size - step * 2) {
-      first();
-      add(size - step * 2 - 2, size + 1);
-    }
     else {
-      first();
-      add(page - step, page + step + 1);
-      last();
+      if (page < step * 2 + 1) {
+        add(1, step * 2 + 4);
+        last();
+      }
+      else {
+        if (page > size - step * 2) {
+          first();
+          add(size - step * 2 - 2, size + 1);
+        }
+        else {
+          first();
+          add(page - step, page + step + 1);
+          last();
+        }
+      }
     }
   };
 
@@ -118,34 +122,34 @@ export const AppPaginationBase: React.SFC<AppPaginationProps> = (props) => {
     <Grid container justify="center" alignItems="center" className={ classes.root }>
       <Grid item xs>
         <BottomNavigation
-          value={page}
+          value={ page }
           onChange={ onChangeHandler }
-          classes={{
-            root: classes.container
-          }}
+          classes={ {
+            root: classes.container,
+          } }
         >
           <BottomNavigationAction
-            disabled = {isFirst}
+            disabled={ isFirst }
             showLabel
             icon={ <ChevronLeft/> }
-            value={page - 1}
+            value={ page - 1 }
             key="prev"
-            classes={{
+            classes={ {
               root: `${classes.item} ${classes.itemLeft}`,
               wrapper: classes.wrapper,
-            }}
+            } }
           />
-          {pages}
+          { pages }
           <BottomNavigationAction
-            disabled = {isLast}
+            disabled={ isLast }
             showLabel
             icon={ <ChevronRight/> }
-            value={page + 1}
+            value={ page + 1 }
             key="next"
-            classes={{
+            classes={ {
               root: `${classes.item} ${classes.itemRight}`,
               wrapper: classes.wrapper,
-            }}
+            } }
           />
         </BottomNavigation>
       </Grid>

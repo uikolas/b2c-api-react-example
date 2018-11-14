@@ -2,8 +2,8 @@ import {
   FilterValue,
   ICatalogSearchDataParsed,
   IProductLabelResponse,
-  ValueFacets
-} from "src/shared/interfaces/searchPageData/index";
+  ValueFacets,
+} from 'src/shared/interfaces/searchPageData';
 
 interface IResponse {
   data: object;
@@ -69,21 +69,24 @@ export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchD
       if (!result.productsLabeled) {
         result.productsLabeled = {};
       }
-      result.productsLabeled[row.id] = row.relationships['product-labels'].data
-        .map((item: IProductLabelResponse) => item.id);
+      result.productsLabeled[row.id] = row.relationships['product-labels'].data.map((
+        item: IProductLabelResponse
+      ) => item.id);
 
-    } else if (row.type === 'product-labels') {
-      if (!result.productsLabeled) {
-        result.availableLabels = {};
+    } else {
+      if (row.type === 'product-labels') {
+        if (!result.productsLabeled) {
+          result.availableLabels = {};
+        }
+
+        result.availableLabels[row.id] = {
+          id: row.id,
+          frontEndReference: row.attributes.frontEndReference,
+          isExclusive: row.attributes.isExclusive,
+          name: row.attributes.name,
+          position: row.attributes.position,
+        };
       }
-
-      result.availableLabels[row.id] = {
-        id: row.id,
-        frontEndReference: row.attributes.frontEndReference,
-        isExclusive: row.attributes.isExclusive,
-        name: row.attributes.name,
-        position: row.attributes.position,
-      };
     }
 
   });

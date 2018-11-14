@@ -1,4 +1,4 @@
-import {ICustomerLoginDataParsed, ILoginDataToLocalStorage} from "src/shared/interfaces/customer";
+import { ICustomerLoginDataParsed, ILoginDataToLocalStorage } from 'src/shared/interfaces/customer';
 
 export const saveAccessDataToLocalStorage = (payload: ICustomerLoginDataParsed): boolean => {
   if (!payload) {
@@ -6,7 +6,7 @@ export const saveAccessDataToLocalStorage = (payload: ICustomerLoginDataParsed):
   }
   localStorage.setItem(
     'tokenExpire',
-    (Math.floor(Date.now() / 1000) + payload.expiresIn - 120).toString(10)
+    (Math.floor(Date.now() / 1000) + payload.expiresIn - 120).toString(10),
   );
   localStorage.setItem('accessToken', payload.accessToken);
   localStorage.setItem('refreshToken', payload.refreshToken);

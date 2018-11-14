@@ -1,4 +1,8 @@
-import { INIT_APP_ACTION_TYPE, SET_AUTH_FROM_STORAGE, CATEGORIES_TREE_REQUEST } from '../../constants/ActionTypes/Common/Init';
+import {
+  CATEGORIES_TREE_REQUEST,
+  INIT_APP_ACTION_TYPE,
+  SET_AUTH_FROM_STORAGE,
+} from '../../constants/ActionTypes/Common/Init';
 import { InitAppService } from '../../services/Common/Init';
 import { IInitData } from '../../reducers/Common/Init';
 
@@ -41,7 +45,9 @@ export const initApplicationDataAction = function(payload: IInitApplicationDataP
   };
 };
 
-export const setAuthFromStorageAction = (payload: {expiresIn: string, accessToken: string, refreshToken: string, customerRef: string}) => ({
+export const setAuthFromStorageAction = (
+  payload: {expiresIn: string, accessToken: string, refreshToken: string, customerRef: string}
+) => ({
   type: SET_AUTH_FROM_STORAGE + '_FULFILLED',
   payload,
 });

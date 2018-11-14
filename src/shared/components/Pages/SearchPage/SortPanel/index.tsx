@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import {ISortPanelProps} from "src/shared/components/Pages/SearchPage/SortPanel/types";
+import { ISortPanelProps } from 'src/shared/components/Pages/SearchPage/SortPanel/types';
 
 
 export const SortPanelBase: React.SFC<ISortPanelProps> = (props) => {
@@ -24,17 +24,17 @@ export const SortPanelBase: React.SFC<ISortPanelProps> = (props) => {
           alignItems="center"
           className={ classes.root }
     >
-      <Grid item xs={ 12 } sm={3} >
-        {foundItems}
+      <Grid item xs={ 12 } sm={ 3 }>
+        { foundItems }
       </Grid>
 
-      <Grid item xs={ 12 } sm={9}>
-        <div className={classes.sortsOuter}>
-          <div className={classes.sort}>
-            {numberMode}
+      <Grid item xs={ 12 } sm={ 9 }>
+        <div className={ classes.sortsOuter }>
+          <div className={ classes.sort }>
+            { numberMode }
           </div>
-          <div className={classes.sort}>
-            {sorterMode}
+          <div className={ classes.sort }>
+            { sorterMode }
           </div>
         </div>
       </Grid>

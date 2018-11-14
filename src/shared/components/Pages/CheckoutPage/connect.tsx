@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {isAppInitiated, } from 'src/shared/reducers/Common/Init';
+import { isAppInitiated } from 'src/shared/reducers/Common/Init';
 import {
   isPageProductStateFulfilled,
   isPageProductStateInitiated,
   isPageProductStateLoading,
   isPageProductStateRejected,
-} from "src/shared/reducers/Pages/Product";
-import {isUserAuthenticated} from "src/shared/reducers/Pages/Login";
-import {getProductsFromCart, isCartStateFulfilled, isCartStateRejected} from "src/shared/reducers/Common/Cart";
+} from 'src/shared/reducers/Pages/Product';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { getProductsFromCart, isCartStateFulfilled, isCartStateRejected } from 'src/shared/reducers/Common/Cart';
 
 
 const mapStateToProps = (state: any, ownProps: any) => {

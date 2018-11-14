@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Route } from 'react-router';
-import { withRouter } from 'react-router';
+import { Route, withRouter } from 'react-router';
 
 import { Props } from './types';
 import { connect } from './connect';
@@ -40,6 +39,6 @@ export class ProtectedRoute extends React.PureComponent<Props> {
   // RENDER
 
   public render(): React.ReactNode {
-    return this.props.isUserLoggedIn ? <Route {...this.props} /> : null;
+    return this.props.isUserLoggedIn ? <Route { ...this.props } /> : null;
   }
 }

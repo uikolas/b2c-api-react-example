@@ -24,7 +24,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   calcDivider: {
     width: '100%',
-    marginTop: '58px'
+    marginTop: '58px',
   },
   imgWrapper: {
     width: '20%',
@@ -100,8 +100,8 @@ export const styles = (theme: Theme) => createStyles({
     marginTop: `-${theme.spacing.unit * 3}px`,
   },
   actionAreaOverlay: {
-    position: "absolute",
-    background: "rgba(0, 0, 0, 0.10)",
+    position: 'absolute',
+    background: 'rgba(0, 0, 0, 0.10)',
     borderRadius: '1.5px',
     top: 0,
     left: 0,

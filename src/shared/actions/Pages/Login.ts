@@ -1,27 +1,26 @@
 import {
-  PAGES_LOGIN_REQUEST,
-  PAGES_CUSTOMER_REGISTER,
-  PAGES_CUSTOMER_LOGOUT,
-  REFRESH_TOKEN_REQUEST,
   FORGOT_PASSWORD,
+  PAGES_CUSTOMER_LOGOUT,
+  PAGES_CUSTOMER_REGISTER,
+  PAGES_LOGIN_REQUEST,
   RESET_PASSWORD,
 } from 'src/shared/constants/ActionTypes/Pages/Login';
-import {PagesLoginService} from 'src/shared/services/Pages/Login';
-import {ICustomerLoginData, ICustomerLoginDataParsed} from "src/shared/interfaces/customer/index";
+import { PagesLoginService } from 'src/shared/services/Pages/Login';
+import { ICustomerLoginData, ICustomerLoginDataParsed } from 'src/shared/interfaces/customer';
 
 export const registerPendingState = () => ({
   type: PAGES_CUSTOMER_REGISTER + '_PENDING',
 });
 
-export const customerRegisterAction = function (payload: any) {
+export const customerRegisterAction = function(payload: any) {
   return (dispatch: Function, getState: Function) => {
     dispatch(registerPendingState);
     PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);
   };
 };
 
-export const logout = function () {
-  return { type: PAGES_CUSTOMER_LOGOUT };
+export const logout = function() {
+  return {type: PAGES_CUSTOMER_LOGOUT};
 };
 
 // Login Customer Entity
@@ -39,7 +38,7 @@ export const loginCustomerFulfilledStateAction = (payload: ICustomerLoginDataPar
   payload,
 });
 
-export const loginCustomerAction = function (payload: ICustomerLoginData) {
+export const loginCustomerAction = function(payload: ICustomerLoginData) {
   return (dispatch: Function, getState: Function) => {
     PagesLoginService.loginRequest(dispatch, payload);
   };

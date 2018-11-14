@@ -22,5 +22,5 @@ export const styles = (theme: Theme) => createStyles({
     margin: theme.spacing.unit,
     width: '44px',
     height: '44px',
-  }
+  },
 });

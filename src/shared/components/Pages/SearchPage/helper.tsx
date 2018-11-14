@@ -1,9 +1,9 @@
-import {ISearchPageData, RangeFacets} from "src/shared/interfaces/searchPageData/index";
-import {rangeFilterValueToFront} from "src/shared/helpers/common/transform";
-import {rangeMaxType, rangeMinType, TActiveRangeFilters} from "src/shared/components/Pages/SearchPage/types";
+import { ISearchPageData, RangeFacets } from 'src/shared/interfaces/searchPageData';
+import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
+import { rangeMaxType, rangeMinType, TActiveRangeFilters } from 'src/shared/components/Pages/SearchPage/types';
 
 export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
-                                  defaultRanges: ISearchPageData["rangeFilters"]): boolean => {
+                                  defaultRanges: ISearchPageData['rangeFilters']): boolean => {
   const activeData: {[key: string]: any} = {...activeRanges};
   const defaultData = [...defaultRanges];
   let canMakeNewRequest: boolean = true;

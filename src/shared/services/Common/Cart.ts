@@ -11,13 +11,12 @@ import {
   cartCreateFulfilledStateAction,
   cartCreatePendingStateAction,
   cartCreateRejectedStateAction,
+  cartDeleteItemPendingStateAction,
   cartUpdateItemFulfilledStateAction,
   cartUpdateItemPendingStateAction,
   cartUpdateItemRejectedStateAction,
-  cartDeleteItemPendingStateAction,
-  cartDeleteItemRejectedStateAction,
-  getCartsPendingStateAction,
   getCartsFulfilledStateAction,
+  getCartsPendingStateAction,
   getCartsRejectedStateAction,
 } from 'src/shared/actions/Common/Cart';
 import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
@@ -159,7 +158,7 @@ export class CartService {
 
       const body = {
         data: {
-          type: "guest-cart-items",
+          type: 'guest-cart-items',
           attributes: payload,
         },
       };
@@ -167,7 +166,7 @@ export class CartService {
       const response: any = await api.post(
         'guest-cart-items',
         body,
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
 
       if (response.ok) {
@@ -220,14 +219,16 @@ export class CartService {
     }
   }
 
-  public static async guestCartRemoveItem(dispatch: Function, cartUid: string, sku: string, anonymId: string): Promise<any> {
+  public static async guestCartRemoveItem(
+    dispatch: Function, cartUid: string, sku: string, anonymId: string,
+  ): Promise<any> {
     try {
       dispatch(cartDeleteItemPendingStateAction);
 
       const response: any = await api.delete(
         `guest-carts/${cartUid}/guest-cart-items/${sku}`,
         {},
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
 
       if (response.ok) {
@@ -245,7 +246,9 @@ export class CartService {
     }
   }
 
-  public static async guestCartUpdate(dispatch: Function, payload: ICartAddItem, cartId: TCartId, anonymId: string): Promise<any> {
+  public static async guestCartUpdate(
+    dispatch: Function, payload: ICartAddItem, cartId: TCartId, anonymId: string,
+  ): Promise<any> {
     try {
       dispatch(cartUpdateItemPendingStateAction());
 
@@ -259,7 +262,7 @@ export class CartService {
       const response: any = await api.patch(
         `guest-carts/${cartId}/guest-cart-items/${sku}`,
         body,
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
 
       if (response.ok) {
@@ -279,7 +282,9 @@ export class CartService {
     }
   }
 
-  public static async cartDeleteItem(ACTION_TYPE: string, dispatch: Function, cartId: TCartId, itemId: TProductSKU): Promise<any> {
+  public static async cartDeleteItem(
+    ACTION_TYPE: string, dispatch: Function, cartId: TCartId, itemId: TProductSKU,
+  ): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -325,9 +330,11 @@ export class CartService {
   }
 
   // Update cart item quantity.
-  public static async cartUpdateItem(dispatch: Function,
-                                     payload: ICartAddItem,
-                                     cartId: TCartId | null): Promise<any> {
+  public static async cartUpdateItem(
+    dispatch: Function,
+    payload: ICartAddItem,
+    cartId: TCartId | null,
+  ): Promise<any> {
     try {
       dispatch(cartUpdateItemPendingStateAction());
 
@@ -372,10 +379,12 @@ export class CartService {
     }
   }
 
-  public static async moveItemstoCart(dispatch: Function,
-                                      cartId: TCartId | null,
-                                      payloadCartCreate: ICartCreatePayload,
-                                      productsList: string[]): Promise<any> {
+  public static async moveItemstoCart(
+    dispatch: Function,
+    cartId: TCartId | null,
+    payloadCartCreate: ICartCreatePayload,
+    productsList: string[]
+  ): Promise<any> {
 
     try {
       const id = cartId || await CartService.cartCreate(dispatch, payloadCartCreate);
@@ -410,10 +419,12 @@ export class CartService {
   }
 
   // Adds multiple items to the cart.
-  public static async cartMultipleItems(dispatch: Function,
-                                        payload: TCartAddItemCollection,
-                                        cartId: TCartId | null,
-                                        payloadCartCreate: ICartCreatePayload): Promise<any> {
+  public static async cartMultipleItems(
+    dispatch: Function,
+    payload: TCartAddItemCollection,
+    cartId: TCartId | null,
+    payloadCartCreate: ICartCreatePayload
+  ): Promise<any> {
     if (!payload) {
       return false;
     }
@@ -455,9 +466,11 @@ export class CartService {
     }
   }
 
-  private static async addingItemProcess(dispatch: Function,
-                                         payload: ICartAddItem,
-                                         cartId: TCartId): Promise<any> {
+  private static async addingItemProcess(
+    dispatch: Function,
+    payload: ICartAddItem,
+    cartId: TCartId
+  ): Promise<any> {
     const body = {
       data: {
         type: 'items',

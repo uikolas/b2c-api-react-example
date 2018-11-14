@@ -10,9 +10,9 @@ import {
   ordersCollectionRejectedStateAction,
 } from '../../actions/Pages/Order';
 import { orderAuthenticateErrorText } from '../../constants/messages/errors';
-import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '../../helpers/order/response';
+import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/shared/helpers/order/response';
 import { TOrderId } from '../../interfaces/order';
-import {ApiServiceAbstract} from "src/shared/services/apiAbstractions/ApiServiceAbstract";
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 
 export class OrderService extends ApiServiceAbstract {
 

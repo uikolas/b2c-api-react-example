@@ -3,7 +3,7 @@ export interface IMenuItemSelect {
   name: string | number;
 }
 
-export interface IMenuItemFirst extends IMenuItemSelect{
+export interface IMenuItemFirst extends IMenuItemSelect {
   selected?: boolean;
   disabled?: boolean;
 }

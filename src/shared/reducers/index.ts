@@ -8,7 +8,7 @@ import { cart, isCartLoading } from './Common/Cart';
 import { init, isAppLoading } from './Common/Init';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
 import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
-import { isPageCustomerProfileLoading, pageCustomerProfile } from "./Pages/CustomerProfile";
+import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
 
 export const reducers = {
   pagesHome,
@@ -36,6 +36,6 @@ export function isStateLoading(state: any, props: any): boolean {
     || isOrderHistoryLoading(state, props)
     || isOrderDetailsLoading(state, props)
     || isPageCustomerProfileLoading(state, props)
-    || isPageAddressesStateLoading(state, props)
+    || isPageAddressesStateLoading(state, props),
   );
 }

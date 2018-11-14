@@ -1,10 +1,9 @@
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-export const styles = (theme: Theme) => createStyles({
+export const styles = () => createStyles({
   productItem: {
     display: 'flex',
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
   image: {
     width: 100,
@@ -14,7 +13,7 @@ export const styles = (theme: Theme) => createStyles({
       display: 'block',
       width: '100%',
       maxHeight: '100%',
-    }
+    },
   },
   rowsContainer: {
     flexGrow: 1,
@@ -32,5 +31,5 @@ export const styles = (theme: Theme) => createStyles({
   price: {},
   bottomRow: {},
   quantity: {},
-  btnRemove: {}
+  btnRemove: {},
 });

@@ -12,7 +12,7 @@ export const PreloaderBase: React.SFC<PreloaderProps> = (props) => {
   const {classes, extraClasses} = props;
   return (
     <div className={ `${classes.root} ${extraClasses}` }>
-      <LinearProgress color="primary" />
+      <LinearProgress color="primary"/>
       <br/>
       <LinearProgress color="primary" variant="query"/>
     </div>

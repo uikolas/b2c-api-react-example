@@ -6,7 +6,8 @@ export type language = {
   code: string,
 };
 
-export interface LangProps extends WithStyles<typeof styles> {}
+export interface LangProps extends WithStyles<typeof styles> {
+}
 
 export interface LangState {
   anchorEl: HTMLElement | null;

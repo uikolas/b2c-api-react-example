@@ -50,7 +50,7 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     alignItems: 'stretch',
     [theme.breakpoints.down('md')]: {
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
     },
   },
 });

@@ -13,13 +13,13 @@ import { styles } from './styles';
 export const AddNavComponent: React.SFC<Props> = ({classes, showSearch, handleSearch}) => (
   <div className={ classes.addNavContainer }>
     <div className={ merge([classes.addNavItem, showSearch ? classes.addNavSearch : '']) }>
-      <IconButton onClick={handleSearch} aria-label="Search">
+      <IconButton onClick={ handleSearch } aria-label="Search">
         <Search/>
       </IconButton>
     </div>
-    <div className={ classes.addNavItem }><Lang /></div>
-    <div className={ classes.addNavItem }><User /></div>
-    <div className={ classes.addNavItem }><Cart /></div>
+    <div className={ classes.addNavItem }><Lang/></div>
+    <div className={ classes.addNavItem }><User/></div>
+    <div className={ classes.addNavItem }><Cart/></div>
   </div>
 );
 

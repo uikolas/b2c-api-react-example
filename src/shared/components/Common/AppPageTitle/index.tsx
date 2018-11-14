@@ -19,22 +19,22 @@ export const AppPageTitleBase: React.SFC<AppPageTitleProps> = (props) => {
           alignItems="center"
           className={ classes.root }
     >
-      <Grid item xs={12}>
-        {title
+      <Grid item xs={ 12 }>
+        { title
           ? (<Typography component="h1"
                          color="inherit"
                          align="left"
                          className={ classes.pageHeader }
                          id="pageTitle"
-              >
-                {title}
-              </Typography>)
+          >
+            { title }
+          </Typography>)
           : null
         }
-        {intro
+        { intro
           ? (
             <Typography color="inherit" paragraph className={ classes.paragraph }>
-              {intro}
+              { intro }
             </Typography>
           )
           : null

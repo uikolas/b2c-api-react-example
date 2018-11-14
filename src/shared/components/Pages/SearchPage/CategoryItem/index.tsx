@@ -4,8 +4,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { styles } from './styles';
-import {SearchPageContext} from '../context';
-import {ICategoryItemProps} from "src/shared/components/Pages/SearchPage/CategoryItem/types";
+import { SearchPageContext } from '../context';
+import { ICategoryItemProps } from 'src/shared/components/Pages/SearchPage/CategoryItem/types';
 
 
 export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
@@ -18,22 +18,22 @@ export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
 
   return (
     <SearchPageContext.Consumer>
-      {({selectCategoryHandler}) => (
-        <div className={classes.listItemOuter}>
+      { ({selectCategoryHandler}) => (
+        <div className={ classes.listItemOuter }>
           <ListItem
             button
-            onClick={(event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event)}
-            selected={isSelected}
-            className={classes.categoryItem}
+            onClick={ (event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event) }
+            selected={ isSelected }
+            className={ classes.categoryItem }
             disableGutters
-            classes={{root: classes.root, selected: classes.selected}}
+            classes={ {root: classes.root, selected: classes.selected} }
           >
             <ListItemText
               disableTypography
-              classes={{root: classes.categoryItemText}}
-              primary={displayName}
+              classes={ {root: classes.categoryItemText} }
+              primary={ displayName }
             />
-        </ListItem>
+          </ListItem>
         </div>
       ) }
     </SearchPageContext.Consumer>

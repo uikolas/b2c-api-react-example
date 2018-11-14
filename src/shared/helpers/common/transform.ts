@@ -1,4 +1,4 @@
-import {rangeMaxType, rangeMinType, TRangeType} from "src/shared/components/Pages/SearchPage/types";
+import { rangeMaxType, rangeMinType, TRangeType } from 'src/shared/components/Pages/SearchPage/types';
 
 export const firstLetterToUpperCase = (word: any): string | null => {
   if (!word) {
@@ -13,7 +13,7 @@ export const firstLetterToUpperCase = (word: any): string | null => {
     }
   });
 
-  if(separator && separator.length) {
+  if (separator && separator.length) {
     const wordParts = word.split(separator[0]);
     title = (wordParts.length > 1) ? wordParts[0] : word;
   } else {
@@ -38,15 +38,17 @@ export const rangeFilterValueToFront = (value: number, type: TRangeType): number
   let valueFixed = (value / 100);
   if (type === rangeMinType) {
     return Math.floor(valueFixed);
-  } else if (type === rangeMaxType) {
-    return Math.ceil(valueFixed);
+  } else {
+    if (type === rangeMaxType) {
+      return Math.ceil(valueFixed);
+    }
   }
   return 0;
 };
 
 export const rangeFilterValueToBack = (value: number): number => {
-  if(!value) {
+  if (!value) {
     return 0;
   }
-  return value* 100;
+  return value * 100;
 };

@@ -1,17 +1,17 @@
-import {reduxify} from '../../../lib/redux-helper';
-import {getRouterHistoryPush, getRouterLocation} from "../../../selectors/Common/router";
-import {getOrdersCollectionAction} from "../../../actions/Pages/Order";
+import { reduxify } from '../../../lib/redux-helper';
+import { getRouterHistoryPush, getRouterLocation } from '../../../selectors/Common/router';
+import { getOrdersCollectionAction } from '../../../actions/Pages/Order';
 import {
   getOrdersCollectionFromStore,
   isOrderHistoryFulfilled,
   isOrderHistoryInitiated,
   isOrderHistoryItems,
   isOrderHistoryLoading,
-  isOrderHistoryStateRejected
-} from "../../../reducers/Pages/OrderHistory";
-import {isAppInitiated} from "../../../reducers/Common/Init";
-import {isUserAuthenticated} from "../../../reducers/Pages/Login";
-import {OrderHistoryPage} from "./index";
+  isOrderHistoryStateRejected,
+} from '../../../reducers/Pages/OrderHistory';
+import { isAppInitiated } from '../../../reducers/Common/Init';
+import { isUserAuthenticated } from '../../../reducers/Pages/Login';
+import { OrderHistoryPage } from '.';
 
 
 export const ConnectedOrderHistoryPage = reduxify(
@@ -42,5 +42,5 @@ export const ConnectedOrderHistoryPage = reduxify(
   },
   (dispatch: Function) => ({
     getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-  })
+  }),
 )(OrderHistoryPage);

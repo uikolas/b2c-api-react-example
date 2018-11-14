@@ -11,15 +11,15 @@ import { navLinks } from './navLinks';
 @connect
 export class MainNavComponent extends React.PureComponent<Props> {
   public render() {
-    const { classes, categoriesTree, mobileNavState } = this.props;
+    const {classes, categoriesTree, mobileNavState} = this.props;
 
     return (
       <nav className={ merge([classes.mainNav, mobileNavState ? classes.mainNavOpened : '']) }>
-        {navLinks.map(category => (
+        { navLinks.map(category => (
           <NavLink key={ category.name + category.path } className={ classes.mainNavLink } to={ category.path }>
-            {category.name}
+            { category.name }
           </NavLink>
-        ))}
+        )) }
       </nav>
     );
   }

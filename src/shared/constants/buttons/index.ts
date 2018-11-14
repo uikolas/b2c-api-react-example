@@ -1,1 +1,1 @@
-export const submitBtnTitle = "Submit";
+export const submitBtnTitle = 'Submit';

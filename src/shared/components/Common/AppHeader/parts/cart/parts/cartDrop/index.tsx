@@ -31,7 +31,7 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         <ul className={ classes.cartDropProductsList }>
           { cartItems.map(cartItem => (
-            <li key={cartItem.sku}>
+            <li key={ cartItem.sku }>
               <ProductItem productData={ cartItem } deleteItem={ this.deleteFromCart }/>
             </li>
           )) }
@@ -39,7 +39,7 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         <div className={ classes.cartTotal }>
           <span>Total</span>
-          <span>{totals.grandTotal}</span>
+          <span>{ totals.grandTotal }</span>
         </div>
 
         <div className={ classes.cartBtns }>

@@ -4,7 +4,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
 import { styles } from './styles';
-import { IOrderItem } from '../../../../interfaces/order';
+import { IOrderItem } from 'src/shared/interfaces/order';
 import { AppPrice } from '../../../Common/AppPrice';
 import { AppDate } from '../../../Common/AppDate';
 import { SprykerButton } from '../../../UI/SprykerButton';

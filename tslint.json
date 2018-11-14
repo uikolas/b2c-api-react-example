@@ -11,7 +11,7 @@
     "indent": [ true, "spaces"],
     "label-position": true,
     "max-classes-per-file": [true, 1],
-    "max-file-line-count": [true, 400],
+    "max-file-line-count": [true, 200],
     "max-line-length": [true, 120],
     "member-access": true,
     "no-any": false,

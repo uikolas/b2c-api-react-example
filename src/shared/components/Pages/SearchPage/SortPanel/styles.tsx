@@ -11,20 +11,20 @@ export const styles = (theme: Theme) => createStyles({
     paddingBottom: theme.spacing.unit * 2,
     marginTop: theme.spacing.unit * 6,
     marginBottom: theme.spacing.unit * 4,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     [theme.breakpoints.down('sm')]: {
-      justifyContent: "center",
+      justifyContent: 'center',
     },
   },
   sort: {
-    display: "flex",
+    display: 'flex',
   },
   sortsOuter: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
     [theme.breakpoints.down('xs')]: {
-      justifyContent: "space-between",
+      justifyContent: 'space-between',
     },
   },
 });

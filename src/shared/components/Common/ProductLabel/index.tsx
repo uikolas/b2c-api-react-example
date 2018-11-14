@@ -2,7 +2,7 @@ import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 
-import {IProductLabel} from '../../../interfaces/product';
+import { IProductLabel } from '../../../interfaces/product';
 import { styles } from './styles';
 
 interface ProductLabelProps extends WithStyles<typeof styles> {
@@ -35,13 +35,13 @@ export const ProductLabelBase: React.SFC<ProductLabelProps> = (props) => {
   const colorClassName: string = labelData[label.type].className;
 
   return (
-    <div className={`${classes.labelsOuter}`}>
-      <div key={label.type} className={`${classes.label}`}>
+    <div className={ `${classes.labelsOuter}` }>
+      <div key={ label.type } className={ `${classes.label}` }>
         <Typography
           component="span"
-          className={`${classes.labelText} ${colorClassName}`}
+          className={ `${classes.labelText} ${colorClassName}` }
         >
-          {label.text}
+          { label.text }
         </Typography>
       </div>
     </div>

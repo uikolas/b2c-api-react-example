@@ -2,10 +2,12 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import {
-  IProductAttributeMap, IProductAttributes,
+  IProductAttributeMap,
+  IProductAttributes,
   IProductDataParsed,
   IProductPropFullData,
-  ISuperAttributes, TProductQuantity,
+  ISuperAttributes,
+  TProductQuantity,
 } from 'src/shared/interfaces/product';
 import { TAppPriceMode, TAppStore } from 'src/shared/reducers/Common/Init';
 import { TCartId } from 'src/shared/interfaces/cart';

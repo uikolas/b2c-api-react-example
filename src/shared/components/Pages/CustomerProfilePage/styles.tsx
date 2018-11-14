@@ -1,12 +1,11 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import {blueGrey, teal, grey} from '@material-ui/core/colors';
 
 export const pageStyles = (theme: Theme) => createStyles({
   root: {
-    width: "100%",
-    maxWidth: "1400px",
-    margin: "auto",
+    width: '100%',
+    maxWidth: '1400px',
+    margin: 'auto',
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
   },
@@ -21,9 +20,7 @@ export const pageStyles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
   },
-  textField: {
-
-  },
+  textField: {},
   controlsGroup: {
     paddingBottom: theme.spacing.unit,
     paddingTop: theme.spacing.unit,
@@ -32,18 +29,13 @@ export const pageStyles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
   },
-  label: {
-
-  },
+  label: {},
   menu: {
     width: 200,
   },
   btnSubmitOuter: {
     textAlign: 'right',
   },
-  form: {
-
-  },
-  input: {
-  },
+  form: {},
+  input: {},
 });

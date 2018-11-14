@@ -9,7 +9,7 @@ import { ILoginState } from 'src/shared/reducers/Pages/Login';
 import { customerRegisterAction, loginCustomerAction } from 'src/shared/actions/Pages/Login';
 import { ICustomerLoginData } from 'src/shared/interfaces/customer';
 import { getCustomerCartsAction } from 'src/shared/actions/Common/Cart';
-import { pathForgotPassword, pathCustomerPage } from 'src/shared/routes/contentRoutes';
+import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
 import { WithRouter } from 'src/shared/interfaces/commoon/react';
 
 import { AppMain } from '../../Common/AppMain';

@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { styles } from './styles';
-import { IOrderDetailsItem, TOrderProducts } from '../../../../interfaces/order';
+import { IOrderDetailsItem, TOrderProducts } from 'src/shared/interfaces/order';
 import { OrderProductListItem } from '../OrderProductListItem';
 
 interface OrderProductListProps extends WithStyles<typeof styles> {

@@ -3,27 +3,27 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   labelsOuter: {
-    position: "absolute",
+    position: 'absolute',
     top: theme.spacing.unit + theme.spacing.unit / 2,
     left: theme.spacing.unit + theme.spacing.unit / 2,
-    width: "auto",
+    width: 'auto',
     zIndex: 351,
   },
   label: {
     marginBottom: 5,
-    display: "flex",
+    display: 'flex',
   },
   labelText: {
     fontSize: theme.appFixedDimensions.fontSize.small,
     color: theme.appColors.white,
     padding: 7,
     letterSpacing: 0.6,
-    textAlign: "center",
+    textAlign: 'center',
     lineHeight: 1,
     borderRadius: 2,
-    boxShadow: "1px 1px 0 0 rgba(0, 0, 0, 0.08)",
+    boxShadow: '1px 1px 0 0 rgba(0, 0, 0, 0.08)',
     minWidth: 33,
-    display: "inline-flex",
+    display: 'inline-flex',
   },
   saleLabel: {
     background: theme.appColors.blue,

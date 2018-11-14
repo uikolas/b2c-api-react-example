@@ -1,6 +1,6 @@
 import api from '../api';
 import { toast } from 'react-toastify';
-import {parseCatalogSearchResponse} from "src/shared/helpers/catalog/catalogSearchResponse";
+import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
 
 export class CatalogService {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
@@ -45,13 +45,13 @@ export class CatalogService {
       const response: any = await api.get(
         'catalog-search-suggestions',
         {q: query, include: 'abstract-products,abstract-product-prices'},
-        {withCredentials: true}
+        {withCredentials: true},
       );
 
       if (response.ok) {
         const {data}: any = response;
 
-        const products: any[] =  data.data[0].attributes.products.slice(0, 4);
+        const products: any[] = data.data[0].attributes.products.slice(0, 4);
         let counter = 0;
 
         data.included && data.included.some((row: any) => {

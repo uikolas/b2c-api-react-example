@@ -1,5 +1,5 @@
 import { ORDER_DETAILS_REQUEST } from '../../constants/ActionTypes/Pages/Order';
-import { IReduxState } from '../../../typings/app';
+import { IReduxState } from 'src/typings/app';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { IOrderDetailsParsed } from '../../interfaces/order';
 

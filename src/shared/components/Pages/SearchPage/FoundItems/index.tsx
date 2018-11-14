@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { styles } from './styles';
-import {IFoundItemsProps} from "src/shared/components/Pages/SearchPage/FoundItems/types";
+import { IFoundItemsProps } from 'src/shared/components/Pages/SearchPage/FoundItems/types';
 
 
 export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
@@ -19,9 +19,9 @@ export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
           alignItems="center"
           className={ classes.root }
     >
-      <Grid item xs={ 12 } >
+      <Grid item xs={ 12 }>
         <Typography color="inherit" component="p" className={ classes.paragraph }>
-          {numberFound
+          { numberFound
             ? `${numberFound} ${(numberFound === 1) ? 'item' : 'items'} found`
             : 'Nothing found'
           }

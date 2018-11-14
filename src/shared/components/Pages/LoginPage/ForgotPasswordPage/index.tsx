@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -7,14 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ChevronLeft';
 
-import {reduxify} from 'src/shared/lib/redux-helper';
-import {forgotPasswordAction} from 'src/shared/actions/Pages/Login';
-import {RouteProps} from "react-router";
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { forgotPasswordAction } from 'src/shared/actions/Pages/Login';
+import { RouteProps } from 'react-router';
 
-import {AppMain} from 'src/shared/components/Common/AppMain';
+import { AppMain } from 'src/shared/components/Common/AppMain';
 
-import {formStyles} from '../styles';
-import {getRouterHistoryBack} from "src/shared/selectors/Common/router";
+import { formStyles } from '../styles';
+import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;
@@ -28,56 +28,56 @@ interface ForgotPasswordPageState {
 
 export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPageProps, ForgotPasswordPageState> {
   public state: ForgotPasswordPageState = {
-    email: ''
+    email: '',
   };
 
   public handleChange = (e: any) => {
     this.setState({email: e.target.value});
-  }
+  };
 
   public submitRequest = (e: any) => {
     this.props.sendForgotRequest(this.state.email);
-  }
+  };
 
   public render() {
-    const { classes, routerGoBack } = this.props;
+    const {classes, routerGoBack} = this.props;
 
     return (
       <AppMain>
         <Grid
-          item xs={12}
+          item xs={ 12 }
           container
           justify="center"
         >
-          <Paper className={classes.forgot}>
+          <Paper className={ classes.forgot }>
             <Typography color="primary" variant="headline" paragraph>Recover my password</Typography>
             <Typography variant="title" paragraph>Enter the e-mail address associated with your account.</Typography>
             <form autoComplete="off">
               <TextField
                 required
-                inputProps={{type: 'email'}}
+                inputProps={ {type: 'email'} }
                 label="Email Address"
-                className={classes.email}
-                value={this.state.email}
+                className={ classes.email }
+                value={ this.state.email }
                 placeholder="Email Address"
-                onChange={this.handleChange}
+                onChange={ this.handleChange }
               />
             </form>
             <Grid container justify="flex-end">
               <Button
                 variant="outlined"
                 color="primary"
-                className={classes.passwordButtons}
-                onClick={() => routerGoBack()}
+                className={ classes.passwordButtons }
+                onClick={ () => routerGoBack() }
               >
-                <BackIcon />
+                <BackIcon/>
                 <span>Back</span>
               </Button>
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.passwordButtons}
-                onClick={this.submitRequest}
+                className={ classes.passwordButtons }
+                onClick={ this.submitRequest }
               >
                 Submit
               </Button>
@@ -105,7 +105,7 @@ export const ForgotPasswordPage = reduxify(
       dispatch,
       sendForgotRequest: (email: string) => dispatch(forgotPasswordAction(email)),
     };
-  }
+  },
 )(ForgotPassword);
 
 export default ForgotPasswordPage;

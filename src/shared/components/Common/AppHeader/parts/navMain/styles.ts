@@ -33,6 +33,6 @@ export const styles = (theme: Theme) => createStyles({
     },
     [theme.breakpoints.down('sm')]: {
       margin: '0 0 5vmin',
-    }
+    },
   },
 });

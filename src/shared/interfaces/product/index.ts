@@ -1,4 +1,4 @@
-import { ISuperAttribute } from '../../helpers/product/superAttributes';
+import { ISuperAttribute } from 'src/shared/helpers/product/superAttributes';
 
 // Constants
 export const concreteProductType = 'concreteProduct';

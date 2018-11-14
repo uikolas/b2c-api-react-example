@@ -31,7 +31,7 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
       <Typography variant="title" color="inherit" gutterBottom={ true }>
         { name }
       </Typography>
-      <div className={classes.productInfo}>
+      <div className={ classes.productInfo }>
         <div className={ classes.priceBlock }>
           <Typography variant="subheading" color="inherit" gutterBottom={ true } className={ classes.price }>
             { price }

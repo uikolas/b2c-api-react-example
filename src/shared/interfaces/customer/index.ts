@@ -1,4 +1,4 @@
-import {TAccessToken} from "../login/index";
+import { TAccessToken } from '../login';
 
 export type TCustomerSalutation = string;
 export type TCustomerFirstName = string;

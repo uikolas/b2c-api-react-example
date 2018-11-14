@@ -14,7 +14,7 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: 'uppercase',
     borderWidth: '1px',
     borderStyle: 'solid',
-    padding: 7
+    padding: 7,
   },
   available: {
     borderColor: theme.appColors.green,

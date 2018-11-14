@@ -1,5 +1,4 @@
-
-import {unexpectedServerError} from "src/shared/constants/messages/errors";
+import { unexpectedServerError } from 'src/shared/constants/messages/errors';
 
 interface IResponseError {
   problem?: string;
@@ -23,6 +22,6 @@ export class ApiServiceAbstract {
       errorMessage = response.data.errors[0].detail;
     }
     return errorMessage;
-  }
+  };
 
 }

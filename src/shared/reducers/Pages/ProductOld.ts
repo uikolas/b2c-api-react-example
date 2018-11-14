@@ -1,7 +1,7 @@
+import { IReduxState } from 'src/typings/app';
 import { PAGES_PRODUCT_REQUEST } from '../../constants/ActionTypes/Pages/Product';
-import { IReduxState } from '../../../typings/app';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { IProductDataParsed } from '../../interfaces/product';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 
 export interface IProductState extends IReduxState {
   data: {
@@ -106,7 +106,9 @@ export function getProduct(state: any, props: any): IProductDataParsed | null {
   if (isPageProductStateRejected(state, props)) {
     return null;
   }
-  return (isStateExist(state, props) && state.pageProduct.data.selectedProduct) ? state.pageProduct.data.selectedProduct : null;
+  return (isStateExist(state, props) && state.pageProduct.data.selectedProduct)
+    ? state.pageProduct.data.selectedProduct
+    : null;
 }
 
 function isStateExist(state: any, props: any): boolean {

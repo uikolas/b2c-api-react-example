@@ -1,8 +1,9 @@
-import api, {setAuthToken} from '../api';
+import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
 import {
   deleteCustomerFulfilledStateAction,
-  deleteCustomerPendingStateAction, deleteCustomerRejectedStateAction,
+  deleteCustomerPendingStateAction,
+  deleteCustomerRejectedStateAction,
   getCustomerProfileFulfilledStateAction,
   getCustomerProfilePendingStateAction,
   getCustomerProfileRejectedStateAction,
@@ -11,18 +12,18 @@ import {
   updateCustomerPasswordRejectedStateAction,
   updateCustomerProfileFulfilledStateAction,
   updateCustomerProfilePendingStateAction,
-  updateCustomerProfileRejectedStateAction
-} from "../../actions/Pages/CustomerProfile";
+  updateCustomerProfileRejectedStateAction,
+} from '../../actions/Pages/CustomerProfile';
 import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
-  TCustomerReference
-} from "../../interfaces/customer/index";
-import {parseCustomerDataResponse} from "../../helpers/customer/customerDataResponse";
-import {RefreshTokenService} from "../Common/RefreshToken";
-import {CustomerProfileAuthenticateErrorText} from "../../constants/messages/errors";
-import {ApiServiceAbstract} from "../apiAbstractions/ApiServiceAbstract";
-import {logout} from "../../actions/Pages/Login";
+  TCustomerReference,
+} from '../../interfaces/customer';
+import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerDataResponse';
+import { RefreshTokenService } from '../Common/RefreshToken';
+import { CustomerProfileAuthenticateErrorText } from '../../constants/messages/errors';
+import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { logout } from '../../actions/Pages/Login';
 
 
 export class CustomerProfileService extends ApiServiceAbstract {
@@ -44,7 +45,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
         response = await api.get(
           this.getCustomersEndpoint(customerReference),
           {include: ''},
-          { withCredentials: true }
+          {withCredentials: true},
         );
       } catch (err) {
         console.error('CustomerProfileService: getProfileData: err', err);
@@ -95,7 +96,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
         response = await api.patch(
           this.getCustomersEndpoint(customerReference),
           body,
-          { withCredentials: true }
+          {withCredentials: true},
         );
       } catch (err) {
         console.error('CustomerProfileService: updateProfileData: err', err);
@@ -143,7 +144,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
           throw new Error(CustomerProfileAuthenticateErrorText);
         }
         setAuthToken(token);
-        response = await api.patch(`customer-password/${customerReference}`, body, { withCredentials: true });
+        response = await api.patch(`customer-password/${customerReference}`, body, {withCredentials: true});
       } catch (err) {
         console.error('CustomerProfileService: updatePasswordData: err', err);
       }
@@ -181,7 +182,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
           throw new Error(CustomerProfileAuthenticateErrorText);
         }
         setAuthToken(token);
-        response = await api.delete(`customers/${customerReference}`, null, { withCredentials: true });
+        response = await api.delete(`customers/${customerReference}`, null, {withCredentials: true});
       } catch (err) {
         console.error('CustomerProfileService: deleteCustomerEntity: err', err);
       }

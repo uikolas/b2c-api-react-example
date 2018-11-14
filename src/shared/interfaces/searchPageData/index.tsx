@@ -1,6 +1,6 @@
-import {IProductCard, TProductSKU} from '../product';
+import { IProductCard } from '../product';
 import { TAppCurrency } from '../../reducers/Common/Init';
-import {IPagination} from "src/shared/components/Common/AppPagination/types";
+import { IPagination } from 'src/shared/components/Common/AppPagination/types';
 
 export type TSpellingSuggestion = string;
 

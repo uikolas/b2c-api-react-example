@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ChangeEvent, ReactNode} from "react";
+import { ChangeEvent, ReactNode } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { ChevronLeft } from '@material-ui/icons';
 
 import { styles } from './styles';
-import {IMenuItemFirst, IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
+import { IMenuItemFirst, IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
 
 
 export interface SprykerSelectProps extends WithStyles<typeof styles> {
@@ -31,7 +31,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
     name,
     menuItemFirst = {
       // Do not change default value!!!!
-      value: " ",
+      value: ' ',
       name: 'please select',
       selected: false,
       disabled: false,
@@ -46,9 +46,9 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
         selected={ menuItemFirst.selected }
         disabled={ menuItemFirst.disabled }
         disableGutters
-        classes={{
+        classes={ {
           selected: classes.selected,
-        }}
+        } }
         className={ classes.menuItem }
       >
         { menuItemFirst.name }
@@ -67,32 +67,32 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
       <Grid item xs={ 12 }>
         <FormControl className={ classes.formControl }>
           { (title && isMenuItemsExist)
-            ? <Typography component="span" className={classes.title}>{title}</Typography>
+            ? <Typography component="span" className={ classes.title }>{ title }</Typography>
             : null
           }
           <Select
-            value={currentMode }
-            onChange={changeHandler}
-            name={name}
-            classes={{
+            value={ currentMode }
+            onChange={ changeHandler }
+            name={ name }
+            classes={ {
               icon: classes.icon,
               select: classes.input,
-            }}
-            disableUnderline= {true}
-            IconComponent={ChevronLeft}
+            } }
+            disableUnderline={ true }
+            IconComponent={ ChevronLeft }
           >
             { getMenuItemFirst() }
-            {isMenuItemsExist && menuItems.map((item) => (
+            { isMenuItemsExist && menuItems.map((item) => (
               <MenuItem
-                value={item.value}
-                key={`${item.name}-${item.value}`}
+                value={ item.value }
+                key={ `${item.name}-${item.value}` }
                 disableGutters
-                classes={{
+                classes={ {
                   selected: classes.selected,
-                }}
+                } }
                 className={ classes.menuItem }
               >
-                {item.name}
+                { item.name }
               </MenuItem>
             ))
             }

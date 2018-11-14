@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { styles } from './styles';
-import { IOrderDetailsExpenseItem, IOrderTotals, TOrderExpenses } from '../../../../interfaces/order';
+import { IOrderDetailsExpenseItem, IOrderTotals, TOrderExpenses } from 'src/shared/interfaces/order';
 import { AppPrice } from '../../../Common/AppPrice';
 import { TAppCurrency } from '../../../../reducers/Common/Init';
-import { TAbstractTotal } from '../../../../interfaces/abstract/totals';
+import { TAbstractTotal } from 'src/shared/interfaces/abstract/totals';
 
 
 interface OrderDetailsTotalsProps extends WithStyles<typeof styles>, IOrderTotals {
