@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
@@ -7,7 +6,12 @@ import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
 import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
 import {IShippingAddress} from "src/shared/interfaces/checkout/index";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
-import {ICheckoutAddress, ISameAsDelivery} from "src/shared/interfaces/checkout/index";
+import {
+  IAddNewAddressActions,
+  ICheckoutAddress,
+  ISameAsDelivery,
+  IUsageSavedAddress
+} from "src/shared/interfaces/checkout/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
@@ -37,12 +41,27 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 }
 
 export interface ICheckoutPageState {
-  isBillingSameAsDelivery: boolean;
+  deliverySelection: IDeliverySelection;
+  billingSelection: IBillingSelection;
+}
+
+export interface IDeliverySelection {
+  selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
+  isAddNew: IAddNewAddressActions["isAddNewDelivery"];
+}
+
+export interface IBillingSelection {
+  selectedAddressId: IUsageSavedAddress["billingSelectedAddressId"];
+  isAddNew: IAddNewAddressActions["isAddNewBilling"];
+  isSameAsDelivery: ISameAsDelivery["isSameAsDelivery"];
 }
 
 // All possibles names of input
 export interface ICheckoutFormInputs extends ICheckoutAddress,
-                                             ISameAsDelivery {
+                                             ISameAsDelivery,
+                                             IUsageSavedAddress,
+                                             IAddNewAddressActions {
+
 }
 
 export interface ICheckoutFieldInput {
@@ -54,6 +73,5 @@ export interface ICheckoutFieldInput {
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  billingSameAsDeliveryHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isBillingSameAsDelivery: boolean;
 };

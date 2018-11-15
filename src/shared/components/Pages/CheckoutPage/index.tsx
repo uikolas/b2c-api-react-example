@@ -13,13 +13,22 @@ import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutFo
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {ICheckoutFieldInput, ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
+import {getExtraAddressesOptions} from "src/shared/components/Pages/CheckoutPage/helpers";
 
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
 
   public state: ICheckoutPageState = {
-    isBillingSameAsDelivery: false,
+    deliverySelection: {
+      selectedAddressId: null,
+      isAddNew: false,
+    },
+    billingSelection: {
+      selectedAddressId: null,
+      isAddNew: false,
+      isSameAsDelivery: false,
+    }
   };
 
   public componentDidMount() {
@@ -54,27 +63,86 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleInputChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>): void => {
-    // {target: ICheckoutFieldInput}
-    console.info('handleInputChange ');
     // const { name, value }: ICheckoutFieldInput = event.target;
     const { name, value } = event.target;
-    console.info('handleInputChange target', event.target);
     console.info('handleInputChange name', event.target.name);
     console.info('handleInputChange value', event.target.value);
+    if (name === 'deliverySelection') {
+      this.handleDeliverySelection(event.target.name, event.target.value);
+    } else if (name === 'billingSelection' || name === 'sameAsDelivery') {
+      this.handleBillingSelection(event.target.name, event.target.value);
+    }
 
   }
 
-  public handleBillingSameAsDelivery = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    console.info('handleBillingSameAsDelivery value', event.target.value);
-    if (event.target.value !== "sameAsDelivery") {
-      return;
-    }
-    this.setState( (prevState: ICheckoutPageState) => {
-      return ({
-        ...prevState,
-        isBillingSameAsDelivery: !prevState.isBillingSameAsDelivery,
+  private handleDeliverySelection = (name: string, value: string): boolean => {
+    console.info('handleDeliverySelection name', name);
+    console.info('handleDeliverySelection value', value);
+
+    if (value === 'isAddNewDelivery') {
+      this.setState( (prevState: ICheckoutPageState) => {
+        return ({
+          deliverySelection: {
+            selectedAddressId: null,
+            isAddNew: true,
+          }
+        });
       });
-    });
+      return true;
+    } else {
+      this.setState( (prevState: ICheckoutPageState) => {
+        return ({
+          deliverySelection: {
+            selectedAddressId: value,
+            isAddNew: false,
+          }
+        });
+      });
+      return true;
+    }
+    return false;
+  }
+
+  private handleBillingSelection = (name: string, value: string): boolean => {
+    console.info('handleBillingSelection name', name);
+    console.info('handleBillingSelection value', value);
+
+    if (value === 'isAddNewBilling') {
+      this.setState( (prevState: ICheckoutPageState) => {
+        return ({
+          billingSelection: {
+            selectedAddressId: null,
+            isAddNew: true,
+            isSameAsDelivery: false,
+          }
+        });
+      });
+      return true;
+    } else if (value === 'sameAsDelivery') {
+      this.setState( (prevState: ICheckoutPageState) => {
+        const newSameValue = !prevState.billingSelection.isSameAsDelivery;
+        return ({
+          billingSelection: {
+            selectedAddressId: null,
+            isAddNew: newSameValue ? false : true,
+            isSameAsDelivery: newSameValue,
+          }
+        });
+      });
+      return true;
+    } else {
+      this.setState( (prevState: ICheckoutPageState) => {
+        return ({
+          billingSelection: {
+            selectedAddressId: value,
+            isAddNew: false,
+            isSameAsDelivery: false,
+          }
+        });
+      });
+      return true;
+    }
+    return false;
   }
 
   public render(): JSX.Element {
@@ -83,11 +151,16 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       isLoading,
       products,
       totals,
+      addressesCollection,
+      isAddressesLoading,
+      isAddressesFulfilled,
+      isUserLoggedIn,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
     console.info('CheckoutPage props: ', this.props);
     console.info('products: ', this.props.products);
+    const isAddressesCollectionExist = Boolean(Array.isArray(addressesCollection) && addressesCollection.length > 0);
 
     return (
       <AppMain>
@@ -97,8 +170,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           value={{
             submitHandler: this.handleSubmit,
             inputChangeHandler: this.handleInputChange,
-            billingSameAsDeliveryHandler: this.handleBillingSameAsDelivery,
-            isBillingSameAsDelivery: this.state.isBillingSameAsDelivery,
+            isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
           }}
         >
           <Grid container className={classes.container}>
@@ -132,6 +204,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                   phone: '+49 1234 5060',
                   iso2Code: 'RRR'
                 }}
+                addressesCollection={addressesCollection}
+                selections={{delivery: this.state.deliverySelection, billing: this.state.billingSelection}}
+                extraAddressesOptions={getExtraAddressesOptions(isAddressesCollectionExist)}
+                isAddressesFulfilled={isAddressesFulfilled}
+                isUserLoggedIn={isUserLoggedIn}
               />
             </Grid>
             <Grid item xs={12} md={5}>

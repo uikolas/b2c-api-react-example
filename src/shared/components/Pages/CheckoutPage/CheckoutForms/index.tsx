@@ -14,6 +14,11 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
     classes,
     shippingAddress,
     billingAddress,
+    selections,
+    addressesCollection,
+    extraAddressesOptions,
+    isAddressesFulfilled,
+    isUserLoggedIn,
   }  = props;
 
   return (
@@ -22,11 +27,21 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
         <FormWrapper title="Delivery Address" >
           <DeliveryForm
             addressData={shippingAddress}
+            addressesCollection={addressesCollection}
+            selections={selections.delivery}
+            extraAddressesOptions={extraAddressesOptions ? extraAddressesOptions.delivery : null}
+            isAddressesFulfilled={isAddressesFulfilled}
+            isUserLoggedIn={isUserLoggedIn}
           />
         </FormWrapper>
         <FormWrapper title="Billing Address" >
           <BillingForm
             addressData={billingAddress}
+            addressesCollection={addressesCollection}
+            selections={selections.billing}
+            extraAddressesOptions={extraAddressesOptions ? extraAddressesOptions.billing : null}
+            isAddressesFulfilled={isAddressesFulfilled}
+            isUserLoggedIn={isUserLoggedIn}
           />
         </FormWrapper>
       </Grid>
@@ -35,4 +50,3 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
 };
 
 export const CheckoutForms = withStyles(formStyles)(CheckoutFormsBase);
-

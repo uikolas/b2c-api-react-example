@@ -4,6 +4,7 @@ import {
   TCustomerSalutation
 } from "src/shared/interfaces/customer/index";
 import {
+  IAddressItem,
   TAddress,
   TAddressCity,
   TAddressCompany,
@@ -36,4 +37,14 @@ export interface IBillingAddress extends ICheckoutAddress {
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;
+}
+
+export interface IUsageSavedAddress {
+  billingSelectedAddressId: IAddressItem["id"] | null;
+  deliverySelectedAddressId: IAddressItem["id"] | null;
+}
+
+export interface IAddNewAddressActions {
+  isAddNewBilling: boolean;
+  isAddNewDelivery: boolean;
 }

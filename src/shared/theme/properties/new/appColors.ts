@@ -8,6 +8,7 @@ export interface IAppColors {
   lightGrey: TAppColor;
   weakGrey: TAppColor;
   blue: TAppColor;
+  blueTransparent: TAppColor;
   orange: TAppColor;
   red: TAppColor;
   green: TAppColor;
@@ -22,6 +23,7 @@ export const appColors: IAppColors = {
   lightGrey: "#f2f2f2",
   weakGrey: "#d8d8d8",
   blue: "#3589ea",
+  blueTransparent: "rgba(53, 137, 234, 0.1)",
   orange: "#ea7a35",
   red: "#D50000",
   green: "#008a00",

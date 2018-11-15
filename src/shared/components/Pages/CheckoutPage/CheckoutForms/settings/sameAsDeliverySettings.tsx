@@ -2,20 +2,15 @@ import {
   InputLabelSameAsDelivery,
 } from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {
-  ISameAsDeliveryParamsFormSettings
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {ISameAsDeliveryParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getSameAsDeliveryFormSettings = ( formName: string,
-                                               {sameAsDeliveryData,
-                                                submitHandler,
-                                                inputChangeHandler,
-                                               }: ISameAsDeliveryParamsFormSettings
-                                        ) => {
+export const getSameAsDeliveryFormSettings = ( formName: string, params: ISameAsDeliveryParams) => {
   const {
     isSameAsDelivery,
-  } = sameAsDeliveryData;
+    submitHandler,
+    inputChangeHandler,
+  } = params;
 
   const formSettings: IFormSettings = {
     formName,

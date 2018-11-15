@@ -24,6 +24,11 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
       paddingRight: theme.spacing.unit * 1.5,
       paddingLeft: 0,
     },
+
+    "&:only-child": {
+      paddingRight: 0,
+      paddingLeft: 0,
+    },
   },
   root: {},
   textField: {
@@ -69,6 +74,29 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
       border: `solid 1px ${theme.appColors.blue}`,
     },
   },
+  inputRadio: {
+    padding: 0,
+    border: `solid 1px ${theme.appColors.weakGrey}`,
+    borderRadius: theme.appFixedDimensions.borderRadius,
+    marginBottom: theme.spacing.unit * 1.5,
+    marginLeft: 0,
+    marginRight: 0,
+  },
+  checkedInputRadio: {
+    border: `solid 1px ${theme.appColors.blue}`,
+    backgroundColor: theme.appColors.blueTransparent,
+  },
+  checkedRadioLabel: {
+    color: theme.appColors.blue,
+  },
+  radio: {
+    color: theme.appColors.weakGrey,
+  },
+  checkedRadio: {
+    "& svg": {
+      color: theme.appColors.blue,
+    }
+  },
   inputCheckbox: {
     padding: 0,
     paddingRight: theme.spacing.unit,
@@ -76,6 +104,11 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     color: theme.appColors.weakGrey,
     "& svg": {
       fontSize: 30,
+    }
+  },
+  checkedCheckbox: {
+    "& svg": {
+      color: theme.appColors.blue,
     }
   },
   outerCheckbox: {

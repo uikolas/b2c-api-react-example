@@ -14,29 +14,29 @@ import {
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressParamsFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getAddressFormSettings = ( formName: string,
-                                        { addressData,
-                                          submitHandler,
-                                          inputChangeHandler,
-                                        }: IAddressParamsFormSettings
-                                        ) => {
+export const getAddressFormSettings = ( formName: string, params: IAddressParams) => {
   const {
-    firstName,
-    lastName,
-    salutation,
-    address1,
-    address2,
-    address3,
-    zipCode,
-    city,
-    country,
-    company,
-    phone,
-    iso2Code,
-  } = addressData;
+    addressData: {
+      firstName,
+      lastName,
+      salutation,
+      address1,
+      address2,
+      address3,
+      zipCode,
+      city,
+      country,
+      company,
+      phone,
+      iso2Code,
+    },
+    submitHandler,
+    inputChangeHandler,
+  } = params;
+
 
   const formSettings: IFormSettings = {
     formName,
