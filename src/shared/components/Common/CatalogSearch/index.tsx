@@ -31,7 +31,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   public state: State = {
     value: '',
-    completionValue: '',
     heightListItem: 100,
   };
 
@@ -129,8 +128,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     }
     const matches = match(suggestQuery, this.state.value);
     const parts = parse(suggestQuery, matches);
-
-    console.info(parts);
 
     return (
       <form action="/" method="GET" onSubmit={this.handleFullSearch}>
@@ -301,20 +298,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
     return (
       <div { ...options.containerProps }>
-        {/*<Typography variant="title" className={classes.searchTitle}>*/}
-          {/*{ parts.map((part, index: number) => {*/}
-            {/*return part.highlight ? (*/}
-              {/*<span key={ String(index) } style={ {fontWeight: 500} }>*/}
-                    {/*{ part.text }*/}
-                  {/*</span>*/}
-            {/*) : (*/}
-              {/*<strong key={ String(index) } style={ {fontWeight: 300, color: '#D3D3D3'} }>*/}
-                {/*{ part.text }*/}
-              {/*</strong>*/}
-            {/*);*/}
-          {/*})*/}
-          {/*}*/}
-        {/*</Typography>*/}
         <div className={classes.insideContWrapper}>
           <div>
             {completions}
