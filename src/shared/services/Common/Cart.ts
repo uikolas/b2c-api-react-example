@@ -37,7 +37,6 @@ export class CartService {
         throw new Error(cartAuthenticateErrorText);
       }
 
-      dispatch(getCartsPendingStateAction());
       setAuthToken(token);
       const response: any = await api.get('/carts', {}, {withCredentials: true});
 

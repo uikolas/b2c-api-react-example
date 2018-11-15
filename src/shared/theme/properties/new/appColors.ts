@@ -1,3 +1,4 @@
+
 type TAppColor = React.CSSProperties['color'];
 
 export interface IAppColors {
@@ -7,6 +8,7 @@ export interface IAppColors {
   lightGrey: TAppColor;
   weakGrey: TAppColor;
   blue: TAppColor;
+  blueTransparent: TAppColor;
   orange: TAppColor;
   red: TAppColor;
   green: TAppColor;
@@ -15,15 +17,16 @@ export interface IAppColors {
 }
 
 export const appColors: IAppColors = {
-  white: '#ffffff',
-  black: '#111111',
-  grey: '#787878',
-  lightGrey: '#f2f2f2',
-  weakGrey: '#d8d8d8',
-  blue: '#3589ea',
-  orange: '#ea7a35',
-  red: '#D50000',
-  green: '#008a00',
+  white: "#ffffff",
+  black: "#111111",
+  grey: "#787878",
+  lightGrey: "#f2f2f2",
+  weakGrey: "#d8d8d8",
+  blue: "#3589ea",
+  blueTransparent: "rgba(53, 137, 234, 0.1)",
+  orange: "#ea7a35",
+  red: "#D50000",
+  green: "#008a00",
 
-  blockDivider: '#e2e2e2',
+  blockDivider: "#e2e2e2",
 };

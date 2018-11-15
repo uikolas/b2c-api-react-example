@@ -1,3 +1,12 @@
+export type TAddress = string;
+export type TAddressZipCode = string;
+export type TAddressCity = string;
+export type TAddressCountry = string;
+export type TAddressCompany = string;
+export type TAddressPhone = string;
+export type TIso2Code = string;
+
+
 export interface IAddressItem {
   id?: string;
   salutation: string;

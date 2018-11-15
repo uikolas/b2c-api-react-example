@@ -4,7 +4,7 @@ import {
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
   GET_CARTS,
-} from '../../constants/ActionTypes/Common/Cart';
+} from 'src/shared/constants/ActionTypes/Common/Cart';
 import { IReduxState } from 'src/typings/app';
 import {
   TProductAvailability,
@@ -13,23 +13,16 @@ import {
   TProductPrice,
   TProductQuantity,
   TProductSKU,
-} from '../../interfaces/product';
+} from 'src/shared/interfaces/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
-import { PAGES_CUSTOMER_LOGOUT } from 'src/shared/constants/ActionTypes/Pages/Login';
-
-export interface ICartItem {
-  sku: TProductSKU | null;
-  name: TProductName | null;
-  image: TProductImageSRC | null;
-  quantity: TProductQuantity | null;
-  amount: TProductPrice | null;
-  calculations: ICartItemCalculation | null;
-  groupKey: string | null;
-  availability: TProductAvailability | null;
-  availableQuantity: TProductQuantity | null;
-  superAttributes: Array<{[key: string]: string}> | null;
-}
+import {
+  ICartDataResponse,
+  ICartItemCalculation,
+  ICartItem,
+  ICartTotals,
+  TCartId,
+} from 'src/shared/interfaces/cart';
+import {PAGES_CUSTOMER_LOGOUT} from "src/shared/constants/ActionTypes/Pages/Login";
 
 export interface ICartData extends ICartDataResponse {
   cartCreated: boolean;
@@ -59,8 +52,6 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
     case `${CART_CREATE}_PENDING`:
     case `${GET_CARTS}_PENDING`:
       return handlePending(state, action.payload);
-    case `${GET_CARTS}_PENDING`:
-      return state;
     case `${CART_ADD_ITEM}_FULFILLED`:
     case `${CART_UPDATE_ITEM}_FULFILLED`:
       return handleFulfilled(state, action.payload);
@@ -173,7 +164,7 @@ export function isCartCreated(state: any, props: any): boolean {
   return (state.cart.data.cartCreated);
 }
 
-export function isCartLoading(state: any, props: any): boolean {
+export function isCartStateLoading(state: any, props: any): boolean {
   return (state.cart && state.cart.pending && state.cart.pending === true);
 }
 
@@ -189,12 +180,12 @@ export function getCartId(state: any, props: any): TCartId {
   return (isCartCreated(state, props) && state.cart.data.id) ? state.cart.data.id : null;
 }
 
-export function getProductsFromCart(state: any, props: any): ICartData['items'] | null {
-  return isProductsInCart(state, props) ? state.cart.data.items : null;
+export function getCartTotals(state: any, props: any): ICartTotals | null {
+  return isStateExist(state, props) ? state.cart.data.totals: null;
 }
 
-export function isProductsInCart(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.cart.data.items);
+export function getProductsFromCart(state: any, props: any): ICartItem[] {
+  return isStateExist(state, props) ? state.cart.data.items: [];
 }
 
 // selectors INNER

@@ -9,6 +9,7 @@ import { CartService, ICartCreatePayload } from '../../services/Common/Cart';
 import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
 import { TProductSKU } from '../../interfaces/product';
 
+
 export const addItemToCartAction = function(payload: ICartAddItem, cartId: TCartId) {
   return (dispatch: Function, getState: Function) => {
     CartService.cartAddItem(dispatch, payload, cartId);
@@ -98,11 +99,9 @@ export const updateItemInCartAction = function(payload: ICartAddItem, cartId: TC
   };
 };
 
-export const multiItemsCartAction = function(
-  cartId: TCartId,
-  payloadCartCreate: ICartCreatePayload,
-  listItems: string[],
-) {
+export const multiItemsCartAction = function(cartId: TCartId,
+                                             payloadCartCreate: ICartCreatePayload,
+                                             listItems: string[]) {
   return (dispatch: Function, getState: Function) => {
     CartService.moveItemstoCart(dispatch, cartId, payloadCartCreate, listItems);
   };
@@ -120,6 +119,7 @@ export const addMultipleItemsToCartAction = function(
 
 export const getCustomerCartsAction = function() {
   return (dispatch: Function, getState: Function) => {
+    dispatch(getCartsPendingStateAction());
     CartService.getCustomerCarts(dispatch);
   };
 };

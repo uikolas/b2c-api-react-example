@@ -89,4 +89,9 @@ export const styles = (theme: Theme) => createStyles({
       '&:last-child': {transform: 'rotate(-45deg)'},
     },
   },
+  checkout: {
+    lineHeight: '20px',
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    letterSpacing: '0.3px',
+  },
 });

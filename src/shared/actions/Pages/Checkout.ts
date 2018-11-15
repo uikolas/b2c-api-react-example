@@ -1,4 +1,13 @@
-import { CHECKOUT_DATA_INIT_REQUEST } from 'src/shared/constants/ActionTypes/Pages/Checkout';
+import {
+  CHECKOUT_DATA_INIT_REQUEST,
+  SEND_CHECKOUT_DATA,
+} from "src/shared/constants/ActionTypes/Pages/Checkout";
+import { CheckoutService } from 'src/shared/services/Pages/Checkout';
+import {
+  IBillingAddress,
+  IShippingAddress,
+} from 'src/shared/interfaces/checkout';
+
 
 export const getCheckoutDataInitPendingStateAction = () => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_PENDING',
@@ -14,8 +23,28 @@ export const getCheckoutDataInitFulfilledStateAction = (payload: any) => ({
   payload,
 });
 
-export const getCheckoutDataAction = function(sku: string) {
+export const getCheckoutDataAction = function(payload: any) {
   return (dispatch: Function, getState: Function) => {
-    // ProductService.getAbstractData(dispatch, sku);
+    CheckoutService.getCheckoutData(dispatch, payload);
+  };
+};
+
+export const sendCheckoutDataPendingStateAction = () => ({
+  type: SEND_CHECKOUT_DATA + '_PENDING',
+});
+
+export const sendCheckoutDataRejectedStateAction = (message: string) => ({
+  type: SEND_CHECKOUT_DATA + '_REJECTED',
+  payload: {error: message},
+});
+
+export const sendCheckoutDataFulfilledStateAction = (payload: any) => ({
+  type: SEND_CHECKOUT_DATA + '_FULFILLED',
+  payload,
+});
+
+export const sendCheckoutDataAction = function(payload: any) {
+  return (dispatch: Function, getState: Function) => {
+    CheckoutService.sendOrderData(dispatch, payload);
   };
 };

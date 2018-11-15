@@ -1,7 +1,36 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { styles } from './styles';
+import {formStyles} from "./styles";
+import {
+  IBillingAddress,
+  IShippingAddress,
+} from "src/shared/interfaces/checkout/index";
+import {
+  IBillingSelection,
+  IDeliverySelection,
+} from "src/shared/components/Pages/CheckoutPage/types";
+import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
+import {ICountries} from "src/shared/reducers/Common/Init";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
-export interface ICheckoutFormsProps extends WithStyles<typeof styles> {
+export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
+  shippingAddress: IShippingAddress;
+  billingAddress: IBillingAddress;
+  addressesCollection: IAddressItem[] | null;
+  selections: IAddressesSelections;
+  isAddressesFulfilled: boolean;
+  extraAddressesOptions: IExtraAddressesOptions | null;
+  isUserLoggedIn: boolean;
+}
 
+export type TAddressType = 'delivery' | 'billing';
+
+export interface IExtraAddressesOptions {
+  delivery: Array<IRadioItem> | null;
+  billing: Array<IRadioItem> | null;
+}
+
+export interface IAddressesSelections {
+  delivery: IDeliverySelection;
+  billing: IBillingSelection;
 }
