@@ -107,7 +107,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   };
 
   public render() {
-    const {classes, items, totals, isUserLoggedIn} = this.props;
+    const {classes, items, totals, isUserLoggedIn, totalQty} = this.props;
 
     if (!items || !items.length) {
       return (
@@ -229,9 +229,9 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               <span>
                 { isUserLoggedIn ? 'Cart' : 'Cart (guest)' }
               </span>
-              <span>{ ` has ${items.length} ` }</span>
+              <span>{ ` has ${totalQty} ` }</span>
               <FormattedPlural
-                value={items.length}
+                value={totalQty}
                 one='item'
                 other='items'
               />

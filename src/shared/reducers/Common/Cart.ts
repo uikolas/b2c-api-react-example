@@ -42,6 +42,7 @@ export const initialState: ICartState = {
     store: null,
     discounts: null,
     totals: null,
+    totalQty: 0,
   },
 };
 
@@ -157,7 +158,7 @@ export function getTotalProductsQuantity(state: any, props: any): TProductQuanti
 
 // Number of items in the cart
 export function getTotalItemsQuantity(state: any, props: any): TProductQuantity {
-  return state.cart.data.items.length;
+  return state.cart.data.totalQty;
 }
 
 export function isCartCreated(state: any, props: any): boolean {
@@ -184,8 +185,14 @@ export function getCartTotals(state: any, props: any): ICartTotals | null {
   return isStateExist(state, props) ? state.cart.data.totals: null;
 }
 
-export function getProductsFromCart(state: any, props: any): ICartItem[] {
-  return isStateExist(state, props) ? state.cart.data.items: [];
+export function getProductsFromCart(state: any, props: any): {items: ICartItem[], totalQty: number} {
+  const items: ICartItem[] = isStateExist(state, props) ? state.cart.data.items: [];
+  const totalQty: number = isStateExist(state, props) ? state.cart.data.totalQty : 0;
+
+  return ({
+    items,
+    totalQty,
+  });
 }
 
 // selectors INNER

@@ -37,7 +37,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
   const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
 
-  const products: ICartItem[] = getProductsFromCart(state, ownProps);
+  const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
   const totals: ICartTotals = getCartTotals(state, ownProps);
   const isCartFulfilled: boolean = isCartStateFulfilled(state, ownProps);
   const isCartRejected: boolean = isCartStateRejected(state, ownProps);
@@ -60,7 +60,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isLoading,
     isRejected,
     isFulfilled,
-    products,
+    products: items,
     totals,
     isCartFulfilled,
     isCartRejected,

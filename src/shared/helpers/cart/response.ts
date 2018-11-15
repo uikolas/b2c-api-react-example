@@ -11,6 +11,7 @@ export const parseCartCreateResponse = (data: any): ICartDataResponse => {
 export const parseAddToCartResponse = (data: any): ICartDataResponse => {
 
   const result: any = {};
+  let totalQty: number = 0;
   // Fill data with concrete products ids
   if (data.data.relationships && data.data.relationships.items) {
     data.data.relationships.items.data.forEach((datum: any) => {
@@ -29,6 +30,7 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
         result[row.id].amount = row.attributes.amount;
         result[row.id].calculations = row.attributes.calculations;
         result[row.id].groupKey = row.attributes.groupKey;
+        totalQty += row.attributes.quantity;
       } else {
         if (row.type === 'concrete-products') {
           result[row.id].name = row.attributes.name;
@@ -57,12 +59,14 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
   return {
     ...parseCommonDataInCartResponse(data),
     items,
+    totalQty,
   };
 };
 
 export const parseGuestCartResponse = (data: any): ICartDataResponse => {
 
   const result: any = {};
+  let totalQty: number = 0;
   // Fill data with concrete products ids
   if (data.data.relationships && data.data.relationships['guest-cart-items']) {
     data.data.relationships['guest-cart-items'].data.forEach((datum: any) => {
@@ -99,6 +103,7 @@ export const parseGuestCartResponse = (data: any): ICartDataResponse => {
             result[row.id].amount = row.attributes.amount;
             result[row.id].calculations = row.attributes.calculations;
             result[row.id].groupKey = row.attributes.groupKey;
+            totalQty += row.attributes.quantity;
           }
         }
       }
@@ -110,6 +115,7 @@ export const parseGuestCartResponse = (data: any): ICartDataResponse => {
     ...parseCommonDataInCartResponse(data),
     cartCreated: true,
     items,
+    totalQty,
   };
 };
 
