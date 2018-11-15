@@ -2,7 +2,6 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
 import {
   ISameAsDelivery,
-  IShippingAddress
 } from "src/shared/interfaces/checkout";
 import { IAddressItem } from "src/shared/interfaces/addresses";
 import {

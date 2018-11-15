@@ -36,7 +36,6 @@ if(webpackDevServer) {
   const staticPattern = new RegExp('^/.*\.(js|css|json|woff|woff2|ttf|gif|eot|svg|md|jpg|png|map|ico)$');
   devServer = {
     contentBase: path.resolve(__dirname, 'build', 'web'),
-    watchPoll: true,
     public: true,
     compress: true,
     historyApiFallback: {

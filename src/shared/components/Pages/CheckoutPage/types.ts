@@ -3,12 +3,12 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation, TCustomerReference} from "src/shared/interfaces/customer";
-import {ICheckoutRequest, ISameAsDelivery} from "src/shared/interfaces/checkout";
+import {TCustomerReference} from "src/shared/interfaces/customer";
 import {
   IAddNewAddressActions,
   ISameAsDelivery,
-  IUsageSavedAddress
+  IUsageSavedAddress,
+  ICheckoutRequest,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
@@ -73,6 +73,5 @@ export interface ICheckoutFieldInput {
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  billingSameAsDeliveryHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isBillingSameAsDelivery: boolean;
 };
