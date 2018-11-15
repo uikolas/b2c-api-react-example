@@ -35,9 +35,11 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           extraAddressesOptions,
           isAddressesFulfilled,
           isUserLoggedIn,
+          countriesCollection
       }) => {
         const billingParams = {
           addressData: billingAddress,
+          countriesCollection,
           submitHandler,
           inputChangeHandler,
         };

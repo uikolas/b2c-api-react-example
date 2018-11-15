@@ -9,12 +9,13 @@ import {
   InputLabelSalutation,
   InputLabelStreet,
   InputLabelStreetExtra,
-  InputLabelZipCode
+  InputLabelZipCode, InputSelectCountryFirstItem
 } from "src/shared/constants/forms/labels";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {ICountries} from "src/shared/reducers/Common/Init";
 
 
 export const getAddressFormSettings = ( formName: string, params: IAddressParams) => {
@@ -33,10 +34,12 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       phone,
       iso2Code,
     },
+    countriesCollection,
     submitHandler,
     inputChangeHandler,
   } = params;
 
+  const isCountriesCollectionExist = Boolean(Array.isArray(countriesCollection) && countriesCollection.length > 0);
 
   const formSettings: IFormSettings = {
     formName,
@@ -139,13 +142,23 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       ],
       [
         {
-          type: 'input',
+          type: 'select',
           inputName: 'country',
           inputValue: country,
           spaceNumber: 6,
           isRequired: true,
           label: InputLabelCountry,
           isError: false,
+          menuItems: isCountriesCollectionExist
+                     ? countriesCollection
+                        .map((item: ICountries) => ({value: item.iso2Code, name: item.name}))
+                     : null,
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectCountryFirstItem,
+            selected: true,
+            disabled: true,
+          },
         },
         {
           type: 'input',

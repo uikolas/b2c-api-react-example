@@ -9,6 +9,7 @@ import {
   TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {ICountries} from "src/shared/reducers/Common/Init";
 
 
 // Base handlers for checkout's page forms
@@ -20,6 +21,7 @@ export interface IBaseCheckoutFormHandler {
 // Param to create address forms
 export interface IAddressParams extends IBaseCheckoutFormHandler {
   addressData: ICheckoutAddress;
+  countriesCollection: ICountries[] | null;
   listFieldNameToChangeHandler?: {
     [key: string]: IFormField["onChangeOwnHandler"]
   };

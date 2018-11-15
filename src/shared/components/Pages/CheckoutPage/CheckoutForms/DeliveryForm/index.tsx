@@ -31,8 +31,9 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           extraAddressesOptions,
           isAddressesFulfilled,
           isUserLoggedIn,
+          countriesCollection,
       }) => {
-        const deliveryParams = {addressData: deliveryAddress, submitHandler, inputChangeHandler};
+        const deliveryParams = {addressData: deliveryAddress, countriesCollection, submitHandler, inputChangeHandler};
         const savedDeliveryParams = {
           selections: selections.delivery,
           addressesCollection,

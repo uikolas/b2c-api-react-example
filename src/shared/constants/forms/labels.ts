@@ -19,3 +19,5 @@ export const InputLabelAddNewBillingAddress = "Add new billing address";
 export const InputLabelSameAsCurrentDelivery = "Same as current delivery Address";
 
 export const FormTextWaitingForResponse = "Waiting for data.";
+
+export const InputSelectCountryFirstItem = "please select";

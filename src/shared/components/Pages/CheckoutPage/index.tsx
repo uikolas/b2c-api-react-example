@@ -178,7 +178,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
               address3: '',
               zipCode: '33222',
               city: 'Bochum',
-              country: 'USA',
+              country: ' ',
               company: '',
               phone: '+49 1234 5060',
               iso2Code: 'RRR'
@@ -192,7 +192,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
               address3: '',
               zipCode: '344422',
               city: 'Bochum',
-              country: 'USA',
+              country: ' ',
               company: '',
               phone: '+49 1234 5060',
               iso2Code: 'RRR'
