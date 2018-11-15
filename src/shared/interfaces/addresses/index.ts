@@ -1,3 +1,9 @@
+import {
+  TCustomerFirstName,
+  TCustomerLastName,
+  TCustomerSalutation,
+} from "src/shared/interfaces/customer";
+
 export type TAddress = string;
 export type TAddressZipCode = string;
 export type TAddressCity = string;
@@ -9,18 +15,18 @@ export type TIso2Code = string;
 
 export interface IAddressItem {
   id?: string;
-  salutation: string;
-  firstName: string;
-  lastName: string;
-  address1: string;
-  address2: string;
-  address3: string;
-  zipCode: string;
-  city: string;
-  country: string;
-  company?: string;
-  phone?: string;
+  salutation: TCustomerSalutation;
+  firstName: TCustomerFirstName;
+  lastName: TCustomerLastName;
+  address1: TAddress;
+  address2: TAddress;
+  address3: TAddress;
+  zipCode: TAddressZipCode;
+  city: TAddressCity;
+  country: TAddressCountry;
+  company?: TAddressCompany;
+  phone?: TAddressPhone;
   isDefaultShipping?: boolean;
   isDefaultBilling?: boolean;
-  iso2Code?: string;
+  iso2Code?: TIso2Code;
 }

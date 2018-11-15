@@ -4,12 +4,12 @@ import {
   ICheckoutFormsProps,
   IExtraAddressesOptions,
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {ICheckoutAddress} from "src/shared/interfaces/checkout/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {IDeliverySelection} from "src/shared/components/Pages/CheckoutPage/types";
 
 export interface IDeliveryFormProps extends WithStyles<typeof formStyles> {
   addressesCollection: ICheckoutFormsProps["addressesCollection"];
-  addressData: ICheckoutAddress;
+  addressData: IAddressItem;
   selections: IDeliverySelection;
   extraAddressesOptions: IExtraAddressesOptions["delivery"];
   isAddressesFulfilled: boolean;
