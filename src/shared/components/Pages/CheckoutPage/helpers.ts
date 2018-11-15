@@ -5,7 +5,7 @@ import {
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
 
-export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions | null => {
+export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions => {
   const response: IExtraAddressesOptions = {delivery: null, billing: null};
 
   if (isAddressesCollectionExist) {
@@ -16,10 +16,6 @@ export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): I
       {value: 'isAddNewBilling', label: InputLabelAddNewBillingAddress},
       {value: 'sameAsDelivery', label: InputLabelSameAsCurrentDelivery}
     );
-  }
-
-  if (!response.delivery && !response.billing) {
-    return null;
   }
 
   return response;

@@ -21,19 +21,23 @@ import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/inde
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
   const {
     classes,
-    addressData,
-    selections,
-    addressesCollection,
-    extraAddressesOptions,
-    isAddressesFulfilled,
-    isUserLoggedIn,
   }  = props;
 
   return (
     <CheckoutPageContext.Consumer>
-      {({submitHandler, inputChangeHandler, isBillingSameAsDelivery}) => {
+      {({
+          submitHandler,
+          inputChangeHandler,
+          isBillingSameAsDelivery,
+          billingAddress,
+          selections,
+          addressesCollection,
+          extraAddressesOptions,
+          isAddressesFulfilled,
+          isUserLoggedIn,
+      }) => {
         const billingParams = {
-          addressData,
+          addressData: billingAddress,
           submitHandler,
           inputChangeHandler,
         };
@@ -43,9 +47,9 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           inputChangeHandler,
         };
         const savedBillingParams = {
-          selections,
+          selections: selections.billing,
           addressesCollection,
-          extraAddressesOptions,
+          extraAddressesOptions: extraAddressesOptions.billing,
           submitHandler,
           inputChangeHandler
         };
@@ -65,7 +69,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
-                    {selections.isAddNew ? inputsForm : null}
+                    {selections.billing.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : [sameAsDeliveryForm, inputsForm]
               }

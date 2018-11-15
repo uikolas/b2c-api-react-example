@@ -5,7 +5,7 @@ import {
 import { CheckoutService } from 'src/shared/services/Pages/Checkout';
 import {
   IBillingAddress,
-  IShippingAddress,
+  IDeliveryAddress,
 } from 'src/shared/interfaces/checkout';
 
 

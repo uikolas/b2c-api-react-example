@@ -1,5 +1,4 @@
 import {
-  ICheckoutFormsProps,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {ICheckoutAddress, ISameAsDelivery} from "src/shared/interfaces/checkout/index";
@@ -9,6 +8,7 @@ import {
   IDeliverySelection,
   TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 // Base handlers for checkout's page forms
@@ -32,7 +32,7 @@ export interface ISameAsDeliveryParams extends IBaseCheckoutFormHandler {
 
 // Param to create saved addresses form
 export interface IAddressesParams extends IBaseCheckoutFormHandler {
-  addressesCollection: ICheckoutFormsProps["addressesCollection"];
+  addressesCollection: IAddressItem[] | null;
   selections: IDeliverySelection | IBillingSelection;
   extraAddressesOptions: IExtraAddressesOptions["delivery"] | IExtraAddressesOptions["billing"] | null;
 }

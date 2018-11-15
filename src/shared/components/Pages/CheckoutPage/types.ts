@@ -3,8 +3,7 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
-import {IShippingAddress} from "src/shared/interfaces/checkout/index";
+import {IBillingAddress, IDeliveryAddress} from "src/shared/interfaces/checkout/index";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {
   IAddNewAddressActions,
@@ -15,6 +14,10 @@ import {
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
+import {
+  IAddressesSelections,
+  IExtraAddressesOptions
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
@@ -74,4 +77,12 @@ export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   isBillingSameAsDelivery: boolean;
+  deliveryAddress: IDeliveryAddress | null;
+  billingAddress: IBillingAddress | null;
+  addressesCollection: IAddressItem[] | null;
+  countriesCollection: ICountries[] | null;
+  selections: IAddressesSelections | null;
+  isAddressesFulfilled: boolean;
+  extraAddressesOptions: IExtraAddressesOptions | null;
+  isUserLoggedIn: boolean;
 };

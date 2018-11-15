@@ -29,7 +29,7 @@ export interface ICheckoutAddress {
   iso2Code: TIso2Code;
 }
 
-export interface IShippingAddress extends ICheckoutAddress {
+export interface IDeliveryAddress extends ICheckoutAddress {
 }
 
 export interface IBillingAddress extends ICheckoutAddress {

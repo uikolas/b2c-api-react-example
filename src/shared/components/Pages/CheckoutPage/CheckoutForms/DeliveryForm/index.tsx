@@ -18,22 +18,25 @@ import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/inde
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
   const {
     classes,
-    addressData,
-    selections,
-    addressesCollection,
-    extraAddressesOptions,
-    isAddressesFulfilled,
-    isUserLoggedIn,
   }  = props;
 
   return (
     <CheckoutPageContext.Consumer>
-      {({submitHandler, inputChangeHandler}) => {
-        const deliveryParams = {addressData, submitHandler, inputChangeHandler};
-        const savedDeliveryParams = {
+      {({
+          submitHandler,
+          inputChangeHandler,
+          deliveryAddress,
           selections,
           addressesCollection,
           extraAddressesOptions,
+          isAddressesFulfilled,
+          isUserLoggedIn,
+      }) => {
+        const deliveryParams = {addressData: deliveryAddress, submitHandler, inputChangeHandler};
+        const savedDeliveryParams = {
+          selections: selections.delivery,
+          addressesCollection,
+          extraAddressesOptions: extraAddressesOptions.delivery,
           submitHandler,
           inputChangeHandler
         };
@@ -50,7 +53,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : inputsForm}
-                    {selections.isAddNew ? inputsForm : null}
+                    {selections.delivery.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : inputsForm
               }

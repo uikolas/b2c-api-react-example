@@ -1,18 +1,6 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import {
-  getCheckoutDataInitFulfilledStateAction,
-  getCheckoutDataInitPendingStateAction,
-  getCheckoutDataInitRejectedStateAction,
-  sendCheckoutDataFulfilledStateAction,
-  sendCheckoutDataPendingStateAction,
-  sendCheckoutDataRejectedStateAction,
-} from 'src/shared/actions/Pages/Checkout';
-import {
-  IBillingAddress,
-  IShippingAddress,
-} from 'src/shared/interfaces/checkout';
 
 
 export class CheckoutService {

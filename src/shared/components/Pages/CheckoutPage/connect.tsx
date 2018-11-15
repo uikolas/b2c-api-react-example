@@ -25,6 +25,7 @@ import {
   isPageAddressesStateLoading
 } from "src/shared/reducers/Pages/Addresses";
 import {isStateLoading} from "src/shared/reducers/index";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -42,8 +43,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isCartLoading = isCartStateLoading(state, ownProps);
   // from ILoginState
   const customerReference = getCustomerReference(state, ownProps);
-  const currentAddress = getCurrentAddressFromStore(state, ownProps);
-  const addressesCollection = getAddressesCollectionFromStore(state, ownProps);
+  const currentAddress: IAddressItem | null  = getCurrentAddressFromStore(state, ownProps);
+  const addressesCollection: IAddressItem[] | null = getAddressesCollectionFromStore(state, ownProps);
   const isAddressesLoading = isPageAddressesStateLoading(state, ownProps);
   const isAddressesFulfilled = isPageAddressesFulfilled(state, ownProps);
   // from global state

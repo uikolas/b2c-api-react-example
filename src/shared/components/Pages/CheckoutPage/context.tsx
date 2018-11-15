@@ -11,4 +11,12 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
     throw new Error('inputChangeHandler() not implemented');
   },
   isBillingSameAsDelivery: false,
+  deliveryAddress: null,
+  billingAddress: null,
+  addressesCollection: null,
+  countriesCollection: null,
+  selections: {delivery: null, billing: null},
+  isAddressesFulfilled: false,
+  extraAddressesOptions: {delivery: null, billing: null},
+  isUserLoggedIn: false,
 });

@@ -8,20 +8,20 @@ import {
 } from 'src/typings/app';
 import {
   IBillingAddress,
-  IShippingAddress,
+  IDeliveryAddress,
 } from 'src/shared/interfaces/checkout';
 
 export interface ICheckoutState extends IReduxState {
   data: {
     billingAddress?: IBillingAddress;
-    shippingAddress?: IShippingAddress;
+    deliveryAddress?: IDeliveryAddress;
   };
 }
 
 export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
-    shippingAddress: null,
+    deliveryAddress: null,
   },
 };
 
@@ -46,7 +46,7 @@ export const pageCheckout = produce<ICheckoutState>(
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
         draft.data.billingAddress = action.billingAddress || null;
-        draft.data.shippingAddress = action.shippingAddress || null;
+        draft.data.deliveryAddress = action.deliveryAddress || null;
 
         draft.error = false;
         draft.pending = false;

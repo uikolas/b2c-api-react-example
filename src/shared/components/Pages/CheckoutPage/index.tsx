@@ -41,6 +41,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     this.initRequestAddressesData();
   }
 
+  // TODO: Remove it after we get access to checkout endpoint
   private initRequestAddressesData = (): void => {
     const {customerReference,
       addressesCollection,
@@ -72,7 +73,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     } else if (name === 'billingSelection' || name === 'sameAsDelivery') {
       this.handleBillingSelection(event.target.name, event.target.value);
     }
-
   }
 
   private handleDeliverySelection = (name: string, value: string): boolean => {
@@ -100,7 +100,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
       return true;
     }
-    return false;
   }
 
   private handleBillingSelection = (name: string, value: string): boolean => {
@@ -124,7 +123,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         return ({
           billingSelection: {
             selectedAddressId: null,
-            isAddNew: newSameValue ? false : true,
+            isAddNew: !newSameValue,
             isSameAsDelivery: newSameValue,
           }
         });
@@ -142,7 +141,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
       return true;
     }
-    return false;
   }
 
   public render(): JSX.Element {
@@ -152,9 +150,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       products,
       totals,
       addressesCollection,
-      isAddressesLoading,
       isAddressesFulfilled,
       isUserLoggedIn,
+      countriesCollection,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
@@ -171,45 +169,45 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             submitHandler: this.handleSubmit,
             inputChangeHandler: this.handleInputChange,
             isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
+            deliveryAddress: {
+              firstName: 'firstName',
+              lastName: 'lastName',
+              salutation: 'Mr',
+              address1: 'address1 str',
+              address2: '37',
+              address3: '',
+              zipCode: '33222',
+              city: 'Bochum',
+              country: 'USA',
+              company: '',
+              phone: '+49 1234 5060',
+              iso2Code: 'RRR'
+            },
+            billingAddress: {
+              firstName: 'billing firstName',
+              lastName: 'billing lastName',
+              salutation: 'Mr',
+              address1: 'address1 str billing',
+              address2: '32',
+              address3: '',
+              zipCode: '344422',
+              city: 'Bochum',
+              country: 'USA',
+              company: '',
+              phone: '+49 1234 5060',
+              iso2Code: 'RRR'
+            },
+            addressesCollection,
+            countriesCollection,
+            selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},
+            extraAddressesOptions: getExtraAddressesOptions(isAddressesCollectionExist),
+            isAddressesFulfilled,
+            isUserLoggedIn,
           }}
         >
           <Grid container className={classes.container}>
             <Grid item xs={12} md={7}>
-              <CheckoutForms
-                shippingAddress={{
-                  firstName: 'firstName',
-                  lastName: 'lastName',
-                  salutation: 'Mr',
-                  address1: 'address1 str',
-                  address2: '37',
-                  address3: '',
-                  zipCode: '33222',
-                  city: 'Bochum',
-                  country: 'USA',
-                  company: '',
-                  phone: '+49 1234 5060',
-                  iso2Code: 'RRR'
-                }}
-                billingAddress={{
-                  firstName: 'billing firstName',
-                  lastName: 'billing lastName',
-                  salutation: 'Mr',
-                  address1: 'address1 str billing',
-                  address2: '32',
-                  address3: '',
-                  zipCode: '344422',
-                  city: 'Bochum',
-                  country: 'USA',
-                  company: '',
-                  phone: '+49 1234 5060',
-                  iso2Code: 'RRR'
-                }}
-                addressesCollection={addressesCollection}
-                selections={{delivery: this.state.deliverySelection, billing: this.state.billingSelection}}
-                extraAddressesOptions={getExtraAddressesOptions(isAddressesCollectionExist)}
-                isAddressesFulfilled={isAddressesFulfilled}
-                isUserLoggedIn={isUserLoggedIn}
-              />
+              <CheckoutForms />
             </Grid>
             <Grid item xs={12} md={5}>
               <CartData products={products} totals={totals}/>
