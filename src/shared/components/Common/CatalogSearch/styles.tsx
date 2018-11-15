@@ -53,10 +53,11 @@ export const styles = (theme: Theme) => createStyles({
   input: {
     fontSize: 16,
     lineHeight: '20px',
-    fontWeight: 'bold',
-    color: theme.appColors.grey,
+    fontWeight: 500,
+    color: theme.appColors.black,
     padding: 13,
-    zIndex: 2,
+    zIndex: 3,
+    background: 'transparent',
   },
   inputIconContainer: {
     position: 'relative',
@@ -133,5 +134,23 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.appColors.black,
     letterSpacing: '0.4px',
     textDecoration: 'underline',
+  },
+  completionInput: {
+    position: 'absolute',
+    left: 21,
+    top: 14,
+    zIndex: 2,
+  },
+  hiddenPart: {
+    display: 'inline-block',
+    transform: 'translateY(-200px)',
+  },
+  visiblePart: {
+    fontSize: 16,
+    lineHeight: '20px',
+    color: '#000000',
+    letterSpacing: '0.5px',
+    opacity: 0.35,
+    fontWeight: 300,
   },
 });

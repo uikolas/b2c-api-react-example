@@ -2,13 +2,14 @@ import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
-interface CartImageProps extends WithStyles<typeof styles> {
+interface SquareImageProps extends WithStyles<typeof styles> {
   image: string;
   size: number;
+  alt: string | undefined;
 }
 
-export const CartImageBase: React.SFC<CartImageProps> = (props) => {
-  const {classes, size, image} = props;
+export const SquareImageBase: React.SFC<SquareImageProps> = (props) => {
+  const { classes, size, image, alt = '' } = props;
   const sizePX = `${size}px`;
   const imgSize = size * 0.82;
 
@@ -17,10 +18,11 @@ export const CartImageBase: React.SFC<CartImageProps> = (props) => {
       <img
         src={ image }
         style={{ maxWidth: imgSize, maxHeight: imgSize }}
+        alt={alt}
       />
       <div className={ classes.actionAreaOverlay } />
     </div>
   );
 };
 
-export const CartImage = withStyles(styles)(CartImageBase);
+export const SquareImage = withStyles(styles)(SquareImageBase);

@@ -4,8 +4,7 @@ import {
 } from "src/shared/constants/ActionTypes/Pages/Checkout";
 import { CheckoutService } from 'src/shared/services/Pages/Checkout';
 import {
-  IBillingAddress,
-  IShippingAddress,
+  ICheckoutRequest,
 } from 'src/shared/interfaces/checkout';
 
 
@@ -23,7 +22,7 @@ export const getCheckoutDataInitFulfilledStateAction = (payload: any) => ({
   payload,
 });
 
-export const getCheckoutDataAction = function(payload: any) {
+export const getCheckoutDataAction = function(payload: ICheckoutRequest) {
   return (dispatch: Function, getState: Function) => {
     CheckoutService.getCheckoutData(dispatch, payload);
   };
@@ -43,7 +42,7 @@ export const sendCheckoutDataFulfilledStateAction = (payload: any) => ({
   payload,
 });
 
-export const sendCheckoutDataAction = function(payload: any) {
+export const sendCheckoutDataAction = function(payload: ICheckoutRequest) {
   return (dispatch: Function, getState: Function) => {
     CheckoutService.sendOrderData(dispatch, payload);
   };

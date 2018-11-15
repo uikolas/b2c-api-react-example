@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getCounties, ICountries, isAppInitiated,} from 'src/shared/reducers/Common/Init';
+import { getCounties, ICountries, isAppInitiated } from 'src/shared/reducers/Common/Init';
 import {
   isPageProductStateFulfilled,
   isPageProductStateInitiated,
   isPageProductStateLoading,
   isPageProductStateRejected,
 } from "src/shared/reducers/Pages/Product";
-import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
+import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
+import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
   getProductsFromCart,
@@ -16,15 +17,16 @@ import {
   isCartStateFulfilled,
   isCartStateRejected
 } from "src/shared/reducers/Common/Cart";
-import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer";
-import {getAddressesAction} from "src/shared/actions/Pages/Addresses";
+import { TCustomerId, TCustomerReference } from "src/shared/interfaces/customer";
+import { getAddressesAction } from "src/shared/actions/Pages/Addresses";
+import { getCheckoutDataAction, sendCheckoutDataAction } from "src/shared/actions/Pages/Checkout";
 import {
   getAddressesCollectionFromStore,
   getCurrentAddressFromStore,
   isPageAddressesFulfilled,
   isPageAddressesStateLoading
 } from "src/shared/reducers/Pages/Addresses";
-import {isStateLoading} from "src/shared/reducers/index";
+import {isStateLoading} from "src/shared/reducers";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -78,5 +80,7 @@ export const connect = reduxify(
   (dispatch: Function) => ({
     dispatch,
     getAddressesList: (customerRef: TCustomerReference) => dispatch(getAddressesAction(customerRef)),
+    getCheckoutData: (payload: ICheckoutRequest) => dispatch(getCheckoutDataAction(payload)),
+    sendCheckoutData: (payload: ICheckoutRequest) => dispatch(sendCheckoutDataAction(payload)),
   }),
 );

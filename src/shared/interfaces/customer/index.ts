@@ -26,9 +26,9 @@ export type TSalutationVariant = {
 };
 
 export interface ICustomerProfileIdentity {
-  salutation: TCustomerSalutation;
-  firstName: TCustomerFirstName;
-  lastName: TCustomerLastName;
+  salutation?: TCustomerSalutation;
+  firstName?: TCustomerFirstName;
+  lastName?: TCustomerLastName;
   email: TCustomerEmail;
 }
 
