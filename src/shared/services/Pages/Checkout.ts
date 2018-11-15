@@ -10,13 +10,14 @@ import {
   sendCheckoutDataRejectedStateAction,
 } from 'src/shared/actions/Pages/Checkout';
 import {
-  IBillingAddress,
-  IShippingAddress,
+  ICheckoutRequest,
 } from 'src/shared/interfaces/checkout';
+import { IAddressItem } from "src/shared/interfaces/addresses";
+
 
 
 export class CheckoutService {
-  public static async getCheckoutData(dispatch: Function, payload: any): Promise<any> {
+  public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -48,7 +49,7 @@ export class CheckoutService {
     }
   }
 
-  public static async sendOrderData(dispatch: Function, payload: any): Promise<any> {
+  public static async sendOrderData(dispatch: Function, payload: ICheckoutRequest): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);

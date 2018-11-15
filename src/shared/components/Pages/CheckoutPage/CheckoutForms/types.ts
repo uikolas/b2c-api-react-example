@@ -1,22 +1,20 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
 import {
-  IBillingAddress,
-  ICheckoutAddress,
   ISameAsDelivery,
-  IShippingAddress
 } from "src/shared/interfaces/checkout/index";
+import { IAddressItem } from "src/shared/interfaces/addresses";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 
 
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
-  shippingAddress: IShippingAddress;
-  billingAddress: IBillingAddress;
+  shippingAddress: IAddressItem;
+  billingAddress: IAddressItem;
 }
 
 export interface IAddressDataFormSettings {
-  addressData: ICheckoutAddress;
+  addressData: IAddressItem;
 }
 
 // Base handlers for checkout's page forms

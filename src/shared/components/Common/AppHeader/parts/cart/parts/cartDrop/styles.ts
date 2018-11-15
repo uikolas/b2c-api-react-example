@@ -48,6 +48,11 @@ export const styles = (theme: Theme) => createStyles({
     borderBottom: '1px solid #d8d8d8',
     marginBottom: 24,
   },
+  priceTotal: {
+    fontSize: 16,
+    lineHeight: '20px',
+    fontWeight: 'bold',
+  },
   cartBtns: {
     display: 'flex',
     '& a': {

@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from './connect';
 import { styles } from './styles';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
@@ -77,6 +78,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
+  public sendCheckoutDataForOrder = (event: ClickEvent) => {
+    event.preventDefault();
+    console.info('Send checkout data');
+
+    // this.props.sendCheckoutData();
+  }
+
   public render(): JSX.Element {
     const {
       classes,
@@ -135,7 +143,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
               />
             </Grid>
             <Grid item xs={12} md={5}>
-              <CartData products={products} totals={totals}/>
+              <CartData
+                products={products}
+                totals={totals}
+                sendData={this.sendCheckoutDataForOrder}
+              />
             </Grid>
           </Grid>
         </CheckoutPageContext.Provider>
