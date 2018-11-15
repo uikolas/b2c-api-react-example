@@ -11,9 +11,11 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
-import {ICheckoutFieldInput, ICheckoutPageProps, ICheckoutPageState} from "./types";
+import {ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
 import {getExtraAddressesOptions} from "src/shared/components/Pages/CheckoutPage/helpers";
+import {billingNewAddressDefault, deliveryNewAddressDefault} from "src/shared/components/Pages/CheckoutPage/constants";
+import {inputSaveErrorText} from "src/shared/constants/messages/errors";
 
 
 @connect
@@ -28,7 +30,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       selectedAddressId: null,
       isAddNew: false,
       isSameAsDelivery: false,
-    }
+    },
+    deliveryNewAddress: {
+      ...deliveryNewAddressDefault
+    },
+    billingNewAddress: {
+      ...billingNewAddressDefault
+    },
   };
 
   public componentDidMount() {
@@ -63,11 +71,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('handleSubmit ');
   }
 
-  public handleInputChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>): void => {
-    // const { name, value }: ICheckoutFieldInput = event.target;
+  public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                  ): void => {
     const { name, value } = event.target;
-    console.info('handleInputChange name', event.target.name);
-    console.info('handleInputChange value', event.target.value);
     if (name === 'deliverySelection') {
       this.handleDeliverySelection(event.target.name, event.target.value);
     } else if (name === 'billingSelection' || name === 'sameAsDelivery') {
@@ -75,10 +81,56 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
-  private handleDeliverySelection = (name: string, value: string): boolean => {
-    console.info('handleDeliverySelection name', name);
-    console.info('handleDeliverySelection value', value);
+  public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                ): void => {
 
+    const name: any = event.target.name;
+    const cleanValue = event.target.value.trim();
+    if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
+
+    this.setState((prevState: ICheckoutPageState) => {
+      const key: any = name;
+      if (prevState.deliveryNewAddress[key] === cleanValue) {
+        return;
+      }
+
+      return ({
+        ...prevState,
+        deliveryNewAddress: {
+          ...prevState.deliveryNewAddress,
+          [key]: cleanValue,
+        },
+      });
+    });
+  }
+
+  public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                ): void => {
+    const name: any = event.target.name;
+    const cleanValue = event.target.value.trim();
+    if (!this.state.billingNewAddress.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
+
+    this.setState((prevState: ICheckoutPageState) => {
+      const key: any = name;
+      if (prevState.billingNewAddress[key] === cleanValue) {
+        return;
+      }
+
+      return ({
+        ...prevState,
+        deliveryNewAddress: {
+          ...prevState.billingNewAddress,
+          [key]: cleanValue,
+        },
+      });
+    });
+  }
+
+  private handleDeliverySelection = (name: string, value: string): boolean => {
     if (value === 'isAddNewDelivery') {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
@@ -103,9 +155,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handleBillingSelection = (name: string, value: string): boolean => {
-    console.info('handleBillingSelection name', name);
-    console.info('handleBillingSelection value', value);
-
     if (value === 'isAddNewBilling') {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
@@ -157,7 +206,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     console.info('CheckoutPage state: ', this.state);
     console.info('CheckoutPage props: ', this.props);
-    console.info('products: ', this.props.products);
+
     const isAddressesCollectionExist = Boolean(Array.isArray(addressesCollection) && addressesCollection.length > 0);
 
     return (
@@ -167,36 +216,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         <CheckoutPageContext.Provider
           value={{
             submitHandler: this.handleSubmit,
-            inputChangeHandler: this.handleInputChange,
+            selectionsChangeHandler: this.handleSelectionsChange,
+            handleDeliveryInputs: this.handleDeliveryInputs,
+            handleBillingInputs: this.handleBillingInputs,
             isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
-            deliveryAddress: {
-              firstName: 'firstName',
-              lastName: 'lastName',
-              salutation: 'Mr',
-              address1: 'address1 str',
-              address2: '37',
-              address3: '',
-              zipCode: '33222',
-              city: 'Bochum',
-              country: ' ',
-              company: '',
-              phone: '+49 1234 5060',
-              iso2Code: 'RRR'
-            },
-            billingAddress: {
-              firstName: 'billing firstName',
-              lastName: 'billing lastName',
-              salutation: 'Mr',
-              address1: 'address1 str billing',
-              address2: '32',
-              address3: '',
-              zipCode: '344422',
-              city: 'Bochum',
-              country: ' ',
-              company: '',
-              phone: '+49 1234 5060',
-              iso2Code: 'RRR'
-            },
+            deliveryNewAddress: this.state.deliveryNewAddress,
+            billingNewAddress: this.state.billingNewAddress,
             addressesCollection,
             countriesCollection,
             selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},

@@ -21,3 +21,4 @@ export const InputLabelSameAsCurrentDelivery = "Same as current delivery Address
 export const FormTextWaitingForResponse = "Waiting for data.";
 
 export const InputSelectCountryFirstItem = "please select";
+export const InputSelectSalutationFirstItem = "please select";

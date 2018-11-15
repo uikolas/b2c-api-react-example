@@ -27,9 +27,10 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
     <CheckoutPageContext.Consumer>
       {({
           submitHandler,
-          inputChangeHandler,
+          selectionsChangeHandler,
+          handleBillingInputs,
           isBillingSameAsDelivery,
-          billingAddress,
+          billingNewAddress,
           selections,
           addressesCollection,
           extraAddressesOptions,
@@ -38,22 +39,22 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           countriesCollection
       }) => {
         const billingParams = {
-          addressData: billingAddress,
+          addressData: billingNewAddress,
           countriesCollection,
           submitHandler,
-          inputChangeHandler,
+          inputChangeHandler: handleBillingInputs,
         };
         const sameAsDeliveryParams = {
           isSameAsDelivery: isBillingSameAsDelivery,
           submitHandler,
-          inputChangeHandler,
+          inputChangeHandler: selectionsChangeHandler,
         };
         const savedBillingParams = {
           selections: selections.billing,
           addressesCollection,
           extraAddressesOptions: extraAddressesOptions.billing,
           submitHandler,
-          inputChangeHandler
+          inputChangeHandler: selectionsChangeHandler,
         };
         const billingFormSettings = getAddressFormSettings('billing', billingParams);
         const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings('sameAsDeliveryForm', sameAsDeliveryParams);

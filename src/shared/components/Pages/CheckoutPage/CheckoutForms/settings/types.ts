@@ -1,3 +1,4 @@
+import {ChangeEvent} from "react";
 import {
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
@@ -15,7 +16,7 @@ import {ICountries} from "src/shared/reducers/Common/Init";
 // Base handlers for checkout's page forms
 export interface IBaseCheckoutFormHandler {
   submitHandler: TCheckoutPageContext["submitHandler"];
-  inputChangeHandler: TCheckoutPageContext["inputChangeHandler"];
+  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 // Param to create address forms

@@ -3,7 +3,7 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {IBillingAddress, IDeliveryAddress} from "src/shared/interfaces/checkout/index";
+import {IBillingAddress, IDeliveryAddress, TAddressInputValue} from "src/shared/interfaces/checkout/index";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {
   IAddNewAddressActions,
@@ -46,6 +46,8 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 export interface ICheckoutPageState {
   deliverySelection: IDeliverySelection;
   billingSelection: IBillingSelection;
+  deliveryNewAddress: IDeliveryAddress;
+  billingNewAddress: IBillingAddress;
 }
 
 export interface IDeliverySelection {
@@ -67,18 +69,15 @@ export interface ICheckoutFormInputs extends ICheckoutAddress,
 
 }
 
-export interface ICheckoutFieldInput {
-  name: (keyof ICheckoutFormInputs);
-  value: TFormInputValue;
-}
-
 // Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
-  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   isBillingSameAsDelivery: boolean;
-  deliveryAddress: IDeliveryAddress | null;
-  billingAddress: IBillingAddress | null;
+  deliveryNewAddress: IDeliveryAddress | null;
+  billingNewAddress: IBillingAddress | null;
   addressesCollection: IAddressItem[] | null;
   countriesCollection: ICountries[] | null;
   selections: IAddressesSelections | null;

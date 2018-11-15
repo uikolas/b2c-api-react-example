@@ -9,7 +9,7 @@ import {
   InputLabelSalutation,
   InputLabelStreet,
   InputLabelStreetExtra,
-  InputLabelZipCode, InputSelectCountryFirstItem
+  InputLabelZipCode, InputSelectCountryFirstItem, InputSelectSalutationFirstItem
 } from "src/shared/constants/forms/labels";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
@@ -57,7 +57,12 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
           isError: false,
           menuItems: salutationVariants
             .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
-          menuItemFirst: null,
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectSalutationFirstItem,
+            selected: true,
+            disabled: true,
+          },
         }
       ],
       [

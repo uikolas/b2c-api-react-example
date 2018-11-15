@@ -30,10 +30,23 @@ export interface ICheckoutAddress {
 }
 
 export interface IDeliveryAddress extends ICheckoutAddress {
+  [key: string]: string;
 }
 
 export interface IBillingAddress extends ICheckoutAddress {
+  [key: string]: string;
 }
+
+export type TAddressInputValue = TCustomerFirstName
+  | TCustomerLastName
+  | TCustomerSalutation
+  | TAddress
+  | TAddressZipCode
+  | TAddressCity
+  | TAddressCountry
+  | TAddressCompany
+  | TAddressPhone
+  | TIso2Code;
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;
