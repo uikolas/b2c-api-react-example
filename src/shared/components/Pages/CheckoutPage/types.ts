@@ -3,11 +3,9 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {IBillingAddress, IDeliveryAddress, TAddressInputValue} from "src/shared/interfaces/checkout/index";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {
   IAddNewAddressActions,
-  ICheckoutAddress,
   ISameAsDelivery,
   IUsageSavedAddress
 } from "src/shared/interfaces/checkout/index";
@@ -15,7 +13,8 @@ import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {
-  IAddressesSelections, ICurrentValuesInSelections,
+  IAddressesSelections,
+  ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 
@@ -47,9 +46,64 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 export interface ICheckoutPageState {
   deliverySelection: IDeliverySelection;
   billingSelection: IBillingSelection;
-  deliveryNewAddress: IDeliveryAddress;
-  billingNewAddress: IBillingAddress;
+  deliveryNewAddress: IDeliveryAddressState;
+  billingNewAddress: IBillingAddressState;
   stepsCompletion: ICheckoutStepsCompletion;
+}
+
+export interface ICheckoutAddressState {
+  firstName: IConfigInputState;
+  lastName: IConfigInputState;
+  salutation: IConfigInputState;
+  address1: IConfigInputState;
+  address2: IConfigInputState;
+  address3: IConfigInputState;
+  zipCode: IConfigInputState;
+  city: IConfigInputState;
+  country: IConfigInputState;
+  company: IConfigInputState;
+  phone: IConfigInputState;
+
+  [key: string]: IConfigInputState;
+}
+
+export interface IObjectConfigInputStable {
+  firstName: IConfigInputStable;
+  lastName: IConfigInputStable;
+  salutation: IConfigInputStable;
+  address1: IConfigInputStable;
+  address2: IConfigInputStable;
+  address3: IConfigInputStable;
+  zipCode: IConfigInputStable;
+  city: IConfigInputStable;
+  country: IConfigInputStable;
+  company: IConfigInputStable;
+  phone: IConfigInputStable;
+
+  [key: string]: IConfigInputStable;
+}
+
+export interface IDeliveryAddressState extends ICheckoutAddressState {
+}
+
+export interface IBillingAddressState extends ICheckoutAddressState {
+}
+
+export interface IDeliveryObjectConfigInputStable extends IObjectConfigInputStable {
+}
+
+export interface IBillingObjectConfigInputStable extends IObjectConfigInputStable {
+}
+
+
+export interface IConfigInputStable {
+  isRequired: boolean;
+  inputName: string;
+}
+
+export interface IConfigInputState {
+  value: TFormInputValue;
+  isError: boolean;
 }
 
 export const isAddNewDeliveryValue = "isAddNewDelivery";
@@ -87,8 +141,10 @@ export type TCheckoutPageContext = {
   handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   isBillingSameAsDelivery: boolean;
-  deliveryNewAddress: IDeliveryAddress | null;
-  billingNewAddress: IBillingAddress | null;
+  deliveryNewAddress: IDeliveryAddressState;
+  billingNewAddress: IBillingAddressState;
+  deliveryAddressInputsConfig: IDeliveryObjectConfigInputStable;
+  billingAddressInputsConfig: IBillingObjectConfigInputStable;
   addressesCollection: IAddressItem[] | null;
   countriesCollection: ICountries[] | null;
   selections: IAddressesSelections | null;

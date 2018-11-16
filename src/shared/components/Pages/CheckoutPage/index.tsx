@@ -12,7 +12,10 @@ import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {
-  ICheckoutPageProps, ICheckoutPageState, isAddNewBillingValue, isAddNewDeliveryValue,
+  ICheckoutPageProps,
+  ICheckoutPageState,
+  isAddNewBillingValue,
+  isAddNewDeliveryValue,
   isSameAsDeliveryValue
 } from "./types";
 import {CheckoutPageContext} from "./context";
@@ -21,7 +24,9 @@ import {
   getExtraAddressesOptions,
 } from "src/shared/components/Pages/CheckoutPage/helpers";
 import {
+  billingConfigInputStable,
   billingNewAddressDefault,
+  deliveryConfigInputStable,
   deliveryNewAddressDefault,
   stepCompletionCheckoutDefault,
 } from "src/shared/components/Pages/CheckoutPage/constants";
@@ -121,7 +126,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     this.setState((prevState: ICheckoutPageState) => {
       const key: any = name;
-      if (prevState.deliveryNewAddress[key] === cleanValue) {
+      if (prevState.deliveryNewAddress[key].value === cleanValue) {
         return;
       }
 
@@ -129,7 +134,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         ...prevState,
         deliveryNewAddress: {
           ...prevState.deliveryNewAddress,
-          [key]: cleanValue,
+          [key]: {
+            value: cleanValue,
+            isError: false,
+          },
         },
       });
     });
@@ -145,7 +153,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     this.setState((prevState: ICheckoutPageState) => {
       const key: any = name;
-      if (prevState.billingNewAddress[key] === cleanValue) {
+      if (prevState.billingNewAddress[key].value === cleanValue) {
         return;
       }
 
@@ -153,7 +161,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         ...prevState,
         deliveryNewAddress: {
           ...prevState.billingNewAddress,
-          [key]: cleanValue,
+          [key]: {
+            value: cleanValue,
+            isError: false,
+          },
         },
       });
     });
@@ -288,6 +299,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
             deliveryNewAddress: this.state.deliveryNewAddress,
             billingNewAddress: this.state.billingNewAddress,
+            deliveryAddressInputsConfig: deliveryConfigInputStable,
+            billingAddressInputsConfig: billingConfigInputStable,
             addressesCollection,
             countriesCollection,
             selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},

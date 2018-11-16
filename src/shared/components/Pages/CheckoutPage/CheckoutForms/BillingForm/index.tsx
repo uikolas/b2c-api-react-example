@@ -31,6 +31,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           handleBillingInputs,
           isBillingSameAsDelivery,
           billingNewAddress,
+          billingAddressInputsConfig,
           selections,
           currentValuesInSelections,
           addressesCollection,
@@ -41,6 +42,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
       }) => {
         const billingParams = {
           addressData: billingNewAddress,
+          addressInputsConfig: billingAddressInputsConfig,
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleBillingInputs,

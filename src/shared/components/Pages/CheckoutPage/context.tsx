@@ -1,7 +1,11 @@
 import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
-import {billingNewAddressDefault, deliveryNewAddressDefault} from "src/shared/components/Pages/CheckoutPage/constants";
+import {
+  billingConfigInputStable,
+  billingNewAddressDefault, deliveryConfigInputStable,
+  deliveryNewAddressDefault
+} from "src/shared/components/Pages/CheckoutPage/constants";
 
 
 export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
@@ -20,6 +24,8 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   isBillingSameAsDelivery: false,
   deliveryNewAddress: {...deliveryNewAddressDefault},
   billingNewAddress: {...billingNewAddressDefault},
+  deliveryAddressInputsConfig: {...deliveryConfigInputStable},
+  billingAddressInputsConfig: {...billingConfigInputStable},
   addressesCollection: null,
   countriesCollection: null,
   selections: {delivery: null, billing: null},

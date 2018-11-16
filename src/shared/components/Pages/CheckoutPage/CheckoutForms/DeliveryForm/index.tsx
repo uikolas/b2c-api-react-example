@@ -27,6 +27,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           selectionsChangeHandler,
           handleDeliveryInputs,
           deliveryNewAddress,
+          deliveryAddressInputsConfig,
           selections,
           currentValuesInSelections,
           addressesCollection,
@@ -37,6 +38,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
       }) => {
         const deliveryParams = {
           addressData: deliveryNewAddress,
+          addressInputsConfig: deliveryAddressInputsConfig,
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleDeliveryInputs,

@@ -3,11 +3,11 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {ICheckoutAddress, ISameAsDelivery} from "src/shared/interfaces/checkout/index";
+import {ISameAsDelivery} from "src/shared/interfaces/checkout/index";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
-  IBillingSelection,
-  IDeliverySelection,
+  ICheckoutAddressState,
+  IObjectConfigInputStable,
   TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
@@ -22,7 +22,8 @@ export interface IBaseCheckoutFormHandler {
 
 // Param to create address forms
 export interface IAddressParams extends IBaseCheckoutFormHandler {
-  addressData: ICheckoutAddress;
+  addressData: ICheckoutAddressState;
+  addressInputsConfig: IObjectConfigInputStable;
   countriesCollection: ICountries[] | null;
   listFieldNameToChangeHandler?: {
     [key: string]: IFormField["onChangeOwnHandler"]
