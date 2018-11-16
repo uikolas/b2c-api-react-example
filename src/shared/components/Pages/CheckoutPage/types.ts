@@ -153,3 +153,13 @@ export type TCheckoutPageContext = {
   extraAddressesOptions: IExtraAddressesOptions | null;
   isUserLoggedIn: boolean;
 };
+
+export interface IParamInputValidity {
+  value: TFormInputValue;
+  fieldConfig: IConfigInputStable;
+}
+
+export interface IParamFormValidity {
+  form: IDeliveryAddressState | IBillingAddressState;
+  fieldsConfig: IDeliveryObjectConfigInputStable | IBillingObjectConfigInputStable;
+}

@@ -9,7 +9,9 @@ import {
   InputLabelSalutation,
   InputLabelStreet,
   InputLabelStreetExtra,
-  InputLabelZipCode, InputSelectCountryFirstItem, InputSelectSalutationFirstItem
+  InputLabelZipCode,
+  InputSelectCountryFirstItem,
+  InputSelectSalutationFirstItem
 } from "src/shared/constants/forms/labels";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
@@ -156,7 +158,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
           spaceNumber: 6,
           isRequired: zipCodeConfig.isRequired,
           label: InputLabelZipCode,
-          isError: city.isError,
+          isError: zipCode.isError,
         },
       ],
       [
@@ -191,6 +193,5 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       ],
     ],
   };
-
   return formSettings;
 };

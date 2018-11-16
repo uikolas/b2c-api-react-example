@@ -5,8 +5,12 @@ import {
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
 import {
-  ICheckoutPageProps, isAddNewBillingValue,
-  isAddNewDeliveryValue, isSameAsDeliveryValue
+  ICheckoutPageProps,
+  IParamFormValidity,
+  IParamInputValidity,
+  isAddNewBillingValue,
+  isAddNewDeliveryValue,
+  isSameAsDeliveryValue
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
@@ -42,4 +46,29 @@ export const getDefaultAddressId = (collection: ICheckoutPageProps["addressesCol
       }
     });
   return ((variantData && variantData[0]) ? variantData[0].id : null);
+};
+
+export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
+  const {value, fieldConfig} = param;
+  if (!value && fieldConfig.isRequired) {
+    return false;
+  }
+  return true;
+};
+
+export const checkAddressFormValidity = (param: IParamFormValidity): boolean => {
+  const {form, fieldsConfig} = param;
+  let result: boolean = true;
+
+  for (const field in form) {
+    if (!result
+      || form[field].isError
+      || (fieldsConfig[field].isRequired && !form[field].value)
+      || form[field].value === " "
+    ) {
+      result = false;
+    }
+  }
+
+  return result;
 };

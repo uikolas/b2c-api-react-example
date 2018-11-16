@@ -48,10 +48,6 @@ export const deliveryNewAddressDefault = {
     value: '',
     isError: false,
   },
-  iso2Code: {
-    value: '',
-    isError: false,
-  },
 };
 
 export const billingNewAddressDefault = {
@@ -92,7 +88,7 @@ export const deliveryConfigInputStable: IDeliveryObjectConfigInputStable = {
     inputName: 'city',
   },
   country: {
-    isRequired: false,
+    isRequired: true,
     inputName: 'country',
   },
   company: {

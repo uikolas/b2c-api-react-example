@@ -20,6 +20,8 @@ import {
 } from "./types";
 import {CheckoutPageContext} from "./context";
 import {
+  checkAddressFormValidity,
+  checkFormInputValidity,
   getDefaultAddressId,
   getExtraAddressesOptions,
 } from "src/shared/components/Pages/CheckoutPage/helpers";
@@ -117,55 +119,102 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                 ): void => {
-
+    // TODO: checkAddressFormValidity change on blur event
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
+    const key: any = name;
+
+    const isInputValid = checkFormInputValidity({
+      value: cleanValue,
+      fieldConfig: deliveryConfigInputStable[key],
+    });
+
+    const newInputState = {
+      [key]: {
+        value: cleanValue,
+        isError: !isInputValid,
+      }
+    };
+
+    const isFormValid = checkAddressFormValidity({
+      form: {
+        ...this.state.deliveryNewAddress,
+        ...newInputState,
+      },
+      fieldsConfig: deliveryConfigInputStable,
+    });
 
     this.setState((prevState: ICheckoutPageState) => {
-      const key: any = name;
       if (prevState.deliveryNewAddress[key].value === cleanValue) {
         return;
       }
-
       return ({
         ...prevState,
         deliveryNewAddress: {
           ...prevState.deliveryNewAddress,
-          [key]: {
-            value: cleanValue,
-            isError: false,
-          },
+          ...newInputState,
         },
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          first: isFormValid,
+        }
       });
     });
   }
 
   public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                 ): void => {
+    // TODO: checkAddressFormValidity change on blur event
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
+    const key: any = name;
+
+    const isInputValid = checkFormInputValidity({
+      value: cleanValue,
+      fieldConfig: billingConfigInputStable[key],
+    });
+
+    const newInputState = {
+      [key]: {
+        value: cleanValue,
+        isError: !isInputValid,
+      }
+    };
+
+    const isFormValid = checkAddressFormValidity({
+      form: {
+        ...this.state.billingNewAddress,
+        ...newInputState,
+      },
+      fieldsConfig: billingConfigInputStable,
+    });
 
     this.setState((prevState: ICheckoutPageState) => {
-      const key: any = name;
+
       if (prevState.billingNewAddress[key].value === cleanValue) {
         return;
       }
 
       return ({
         ...prevState,
-        deliveryNewAddress: {
+        billingNewAddress: {
           ...prevState.billingNewAddress,
+          ...newInputState,
           [key]: {
             value: cleanValue,
             isError: false,
           },
         },
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          second: isFormValid,
+        }
       });
     });
   }
