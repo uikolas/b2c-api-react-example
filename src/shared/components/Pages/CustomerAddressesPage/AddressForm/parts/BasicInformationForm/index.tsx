@@ -11,7 +11,7 @@ import { BasicInformationFormProps as Props } from './types';
 import { styles } from './styles';
 
 export const BasicInformationFormComponent: React.SFC<Props> = ({
-  submitted, salutation, firstName, lastName, handleChange,
+  submitted, salutation, firstName, lastName, handleChange, handleChangeSalutation,
 }) => (
   <Grid container spacing={ 16 }>
     <Grid item xs={ 12 } sm={ 2 }>
@@ -23,7 +23,7 @@ export const BasicInformationFormComponent: React.SFC<Props> = ({
         label="Salutation"
         name="salutation"
         value={ salutation }
-        onChange={ this.handleChangeSalutation }
+        onChange={ handleChangeSalutation }
       >
         { salutationVariants.map((option: TSalutationVariant) => (
           <MenuItem key={ option.value } value={ option.value }>{ option.label }</MenuItem>
