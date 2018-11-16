@@ -2,7 +2,7 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
 import {
   IBillingSelection,
-  IDeliverySelection,
+  IDeliverySelection, TIsAddNewBillingValue, TIsAddNewDeliveryValue, TIsSameAsDeliveryValue,
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
@@ -30,8 +30,8 @@ export interface IAddressesSelections {
 }
 
 export interface ICurrentValuesInSelections {
-  delivery: 'isAddNewDelivery' | IAddressItem["id"] | null;
-  billing: 'isAddNewBilling' | 'sameAsDelivery' | IAddressItem["id"] | null;
+  delivery: TIsAddNewDeliveryValue | IAddressItem["id"] | null;
+  billing: TIsAddNewBillingValue | TIsSameAsDeliveryValue | IAddressItem["id"] | null;
 }
 
 export interface IPanelData {

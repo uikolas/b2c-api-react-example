@@ -52,6 +52,16 @@ export interface ICheckoutPageState {
   stepsCompletion: ICheckoutStepsCompletion;
 }
 
+export const isAddNewDeliveryValue = "isAddNewDelivery";
+export type TIsAddNewDeliveryValue = "isAddNewDelivery";
+
+export const isAddNewBillingValue = "isAddNewBilling";
+export type TIsAddNewBillingValue = "isAddNewBilling";
+
+export const isSameAsDeliveryValue = "isSameAsDelivery";
+export type TIsSameAsDeliveryValue = "isSameAsDelivery";
+
+
 export interface IDeliverySelection {
   selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
   isAddNew: IAddNewAddressActions["isAddNewDelivery"];

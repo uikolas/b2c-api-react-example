@@ -4,7 +4,10 @@ import {
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
-import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types";
+import {
+  ICheckoutPageProps, isAddNewBillingValue,
+  isAddNewDeliveryValue, isSameAsDeliveryValue
+} from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions => {
@@ -13,10 +16,10 @@ export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): I
   if (isAddressesCollectionExist) {
     response.delivery = [];
     response.billing = [];
-    response.delivery.push({value: 'isAddNewDelivery', label: InputLabelAddNewDeliveryAddress});
+    response.delivery.push({value: isAddNewDeliveryValue, label: InputLabelAddNewDeliveryAddress});
     response.billing.push(
-      {value: 'isAddNewBilling', label: InputLabelAddNewBillingAddress},
-      {value: 'sameAsDelivery', label: InputLabelSameAsCurrentDelivery}
+      {value: isAddNewBillingValue, label: InputLabelAddNewBillingAddress},
+      {value: isSameAsDeliveryValue, label: InputLabelSameAsCurrentDelivery}
     );
   }
 
