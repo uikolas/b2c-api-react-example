@@ -1,5 +1,6 @@
 import {ChangeEvent} from "react";
 import {
+  ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {ICheckoutAddress, ISameAsDelivery} from "src/shared/interfaces/checkout/index";
@@ -36,14 +37,12 @@ export interface ISameAsDeliveryParams extends IBaseCheckoutFormHandler {
 // Param to create saved addresses form
 export interface IAddressesParams extends IBaseCheckoutFormHandler {
   addressesCollection: IAddressItem[] | null;
-  selections: IDeliverySelection | IBillingSelection;
   extraAddressesOptions: IExtraAddressesOptions["delivery"] | IExtraAddressesOptions["billing"] | null;
+  currentValueInSelection: ICurrentValuesInSelections["delivery"] | ICurrentValuesInSelections["billing"];
 }
 
 export interface IDeliveryAddressesParams extends IAddressesParams {
-  selections: IDeliverySelection;
 }
 
 export interface IBillingAddressesParams extends IAddressesParams {
-  selections: IBillingSelection;
 }

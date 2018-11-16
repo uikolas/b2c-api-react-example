@@ -19,6 +19,7 @@ import {
 import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer";
 import {getAddressesAction} from "src/shared/actions/Pages/Addresses";
 import {
+  checkAddressesCollectionExist,
   getAddressesCollectionFromStore,
   getCurrentAddressFromStore,
   isPageAddressesFulfilled,
@@ -45,6 +46,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const customerReference = getCustomerReference(state, ownProps);
   const currentAddress: IAddressItem | null  = getCurrentAddressFromStore(state, ownProps);
   const addressesCollection: IAddressItem[] | null = getAddressesCollectionFromStore(state, ownProps);
+  const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
   const isAddressesLoading = isPageAddressesStateLoading(state, ownProps);
   const isAddressesFulfilled = isPageAddressesFulfilled(state, ownProps);
   // from global state
@@ -67,6 +69,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     customerReference,
     currentAddress,
     addressesCollection,
+    isAddressesCollectionExist,
     isAddressesLoading,
     isAddressesFulfilled,
     isAppStateLoading,

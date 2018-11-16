@@ -13,9 +13,18 @@ import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutFo
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
-import {getExtraAddressesOptions} from "src/shared/components/Pages/CheckoutPage/helpers";
-import {billingNewAddressDefault, deliveryNewAddressDefault} from "src/shared/components/Pages/CheckoutPage/constants";
+import {
+  getDefaultAddressId,
+  getExtraAddressesOptions,
+} from "src/shared/components/Pages/CheckoutPage/helpers";
+import {
+  billingNewAddressDefault,
+  deliveryNewAddressDefault,
+  stepCompletionCheckoutDefault,
+} from "src/shared/components/Pages/CheckoutPage/constants";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
+import {IUsageSavedAddress} from "src/shared/interfaces/checkout/index";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 @connect
@@ -37,6 +46,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     billingNewAddress: {
       ...billingNewAddressDefault
     },
+    stepsCompletion: {
+      ...stepCompletionCheckoutDefault
+    }
   };
 
   public componentDidMount() {
@@ -47,6 +59,21 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
     this.initRequestAddressesData();
+
+    // If we get saved addressesCollection
+    if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
+
+      const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
+      if (defaultValueDelivery) {
+        this.handleDeliverySelection(defaultValueDelivery);
+      }
+
+      const defaultValueBilling = getDefaultAddressId(this.props.addressesCollection, 'billing');
+      if (defaultValueBilling) {
+        this.handleBillingSelection(defaultValueBilling);
+      }
+    }
+
   }
 
   // TODO: Remove it after we get access to checkout endpoint
@@ -75,9 +102,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                                   ): void => {
     const { name, value } = event.target;
     if (name === 'deliverySelection') {
-      this.handleDeliverySelection(event.target.name, event.target.value);
+      this.handleDeliverySelection(event.target.value);
     } else if (name === 'billingSelection' || name === 'sameAsDelivery') {
-      this.handleBillingSelection(event.target.name, event.target.value);
+      this.handleBillingSelection(event.target.value);
     }
   }
 
@@ -130,14 +157,18 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  private handleDeliverySelection = (name: string, value: string): boolean => {
+  private handleDeliverySelection = (value: string): boolean => {
     if (value === 'isAddNewDelivery') {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
           deliverySelection: {
             selectedAddressId: null,
             isAddNew: true,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            first: false,
+          },
         });
       });
       return true;
@@ -147,14 +178,18 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           deliverySelection: {
             selectedAddressId: value,
             isAddNew: false,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            first: true,
+          },
         });
       });
       return true;
     }
   }
 
-  private handleBillingSelection = (name: string, value: string): boolean => {
+  private handleBillingSelection = (value: string): boolean => {
     if (value === 'isAddNewBilling') {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
@@ -162,7 +197,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             selectedAddressId: null,
             isAddNew: true,
             isSameAsDelivery: false,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            second: false,
+          },
         });
       });
       return true;
@@ -174,7 +213,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             selectedAddressId: null,
             isAddNew: !newSameValue,
             isSameAsDelivery: newSameValue,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            second: true,
+          },
         });
       });
       return true;
@@ -185,11 +228,28 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             selectedAddressId: value,
             isAddNew: false,
             isSameAsDelivery: false,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            second: true,
+          },
         });
       });
       return true;
     }
+  }
+
+  private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
+    return this.state.billingSelection.selectedAddressId
+           || (this.state.billingSelection.isAddNew && 'isAddNewBilling')
+           || (this.state.billingSelection.isSameAsDelivery && 'sameAsDelivery')
+           || null;
+  }
+
+  private getCurrentValueInDeliverySelection = (): IAddressItem["id"] | string | null => {
+    return this.state.deliverySelection.selectedAddressId
+           || (this.state.deliverySelection.isAddNew && 'isAddNewDelivery')
+           || null;
   }
 
   public render(): JSX.Element {
@@ -199,6 +259,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       products,
       totals,
       addressesCollection,
+      isAddressesCollectionExist,
       isAddressesFulfilled,
       isUserLoggedIn,
       countriesCollection,
@@ -207,7 +268,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('CheckoutPage state: ', this.state);
     console.info('CheckoutPage props: ', this.props);
 
-    const isAddressesCollectionExist = Boolean(Array.isArray(addressesCollection) && addressesCollection.length > 0);
+    const isFirstPanelDisabled = false;
+    const isSecondPanelDisabled = !this.state.stepsCompletion.first;
+    const isThirdPanelDisabled = !this.state.stepsCompletion.second;
+    const isFourthPanelDisabled = !this.state.stepsCompletion.third;
 
     return (
       <AppMain>
@@ -225,6 +289,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             addressesCollection,
             countriesCollection,
             selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},
+            currentValuesInSelections: {
+              delivery: this.getCurrentValueInDeliverySelection(),
+              billing: this.getCurrentValueInBillingSelection(),
+            },
             extraAddressesOptions: getExtraAddressesOptions(isAddressesCollectionExist),
             isAddressesFulfilled,
             isUserLoggedIn,
@@ -232,7 +300,26 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         >
           <Grid container className={classes.container}>
             <Grid item xs={12} md={7}>
-              <CheckoutForms />
+              <CheckoutForms
+                panels={{
+                  first: {
+                    title: "Delivery Address",
+                    isDisabled: isFirstPanelDisabled
+                  },
+                  second: {
+                    title: "Billing Address",
+                    isDisabled: isSecondPanelDisabled
+                  },
+                  third: {
+                    title: "Shipment",
+                    isDisabled: isThirdPanelDisabled
+                  },
+                  fourth: {
+                    title: "Payment",
+                    isDisabled: isFourthPanelDisabled
+                  },
+                }}
+              />
             </Grid>
             <Grid item xs={12} md={5}>
               <CartData products={products} totals={totals}/>

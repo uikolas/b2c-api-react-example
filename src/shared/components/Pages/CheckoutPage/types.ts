@@ -15,7 +15,7 @@ import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {
-  IAddressesSelections,
+  IAddressesSelections, ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 
@@ -32,6 +32,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isCartFulfilled: boolean;
   isCartRejected: boolean;
   isCartLoading: boolean;
+  isAddressesCollectionExist: boolean;
   getAddressesList: (customerRef: TCustomerReference) => void;
   customerReference: TCustomerReference | null;
   currentAddress: IAddressItem | null;
@@ -48,6 +49,7 @@ export interface ICheckoutPageState {
   billingSelection: IBillingSelection;
   deliveryNewAddress: IDeliveryAddress;
   billingNewAddress: IBillingAddress;
+  stepsCompletion: ICheckoutStepsCompletion;
 }
 
 export interface IDeliverySelection {
@@ -61,12 +63,11 @@ export interface IBillingSelection {
   isSameAsDelivery: ISameAsDelivery["isSameAsDelivery"];
 }
 
-// All possibles names of input
-export interface ICheckoutFormInputs extends ICheckoutAddress,
-                                             ISameAsDelivery,
-                                             IUsageSavedAddress,
-                                             IAddNewAddressActions {
-
+export interface ICheckoutStepsCompletion {
+  first: boolean;
+  second: boolean;
+  third: boolean;
+  fourth: boolean;
 }
 
 // Type for Context Provider of the Checkout Page
@@ -81,6 +82,7 @@ export type TCheckoutPageContext = {
   addressesCollection: IAddressItem[] | null;
   countriesCollection: ICountries[] | null;
   selections: IAddressesSelections | null;
+  currentValuesInSelections: ICurrentValuesInSelections;
   isAddressesFulfilled: boolean;
   extraAddressesOptions: IExtraAddressesOptions | null;
   isUserLoggedIn: boolean;

@@ -27,3 +27,10 @@ export const billingNewAddressDefault = {
   phone: '',
   iso2Code: '',
 };
+
+export const stepCompletionCheckoutDefault = {
+  first: false,
+  second: false,
+  third: false,
+  fourth: false,
+};

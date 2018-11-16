@@ -5,10 +5,16 @@ import {
   IDeliverySelection,
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
-
+  panels: {
+    first: IPanelData;
+    second: IPanelData;
+    third: IPanelData;
+    fourth: IPanelData;
+  };
 }
 
 export type TAddressType = 'delivery' | 'billing';
@@ -21,4 +27,14 @@ export interface IExtraAddressesOptions {
 export interface IAddressesSelections {
   delivery: IDeliverySelection;
   billing: IBillingSelection;
+}
+
+export interface ICurrentValuesInSelections {
+  delivery: 'isAddNewDelivery' | IAddressItem["id"] | null;
+  billing: 'isAddNewBilling' | 'sameAsDelivery' | IAddressItem["id"] | null;
+}
+
+export interface IPanelData {
+  title: string;
+  isDisabled: boolean;
 }
