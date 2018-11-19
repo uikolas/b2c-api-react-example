@@ -21,24 +21,28 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
         <FormWrapper
           title={panels.first.title}
           isDisabled={panels.first.isDisabled}
+          isOpen={panels.first.isOpen}
         >
           <DeliveryForm />
         </FormWrapper>
         <FormWrapper
           title={panels.second.title}
           isDisabled={panels.second.isDisabled}
+          isOpen={panels.second.isOpen}
         >
           <BillingForm />
         </FormWrapper>
         <FormWrapper
           title={panels.third.title}
           isDisabled={panels.third.isDisabled}
+          isOpen={panels.third.isOpen}
         >
           First
         </FormWrapper>
         <FormWrapper
           title={panels.fourth.title}
           isDisabled={panels.fourth.isDisabled}
+          isOpen={panels.fourth.isOpen}
         >
           second
         </FormWrapper>

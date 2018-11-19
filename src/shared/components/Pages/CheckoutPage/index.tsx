@@ -103,6 +103,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
+  private isCheckoutFormValid = (): boolean => {
+    return false;
+  }
+
   public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.info('handleSubmit ');
@@ -169,6 +173,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                 ): void => {
     // TODO: checkAddressFormValidity change on blur event
+
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
@@ -376,19 +381,23 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 panels={{
                   first: {
                     title: "Delivery Address",
-                    isDisabled: isFirstPanelDisabled
+                    isDisabled: isFirstPanelDisabled,
+                    isOpen: !isFirstPanelDisabled,
                   },
                   second: {
                     title: "Billing Address",
-                    isDisabled: isSecondPanelDisabled
+                    isDisabled: isSecondPanelDisabled,
+                    isOpen: !isSecondPanelDisabled,
                   },
                   third: {
                     title: "Shipment",
-                    isDisabled: isThirdPanelDisabled
+                    isDisabled: isThirdPanelDisabled,
+                    isOpen: !isThirdPanelDisabled,
                   },
                   fourth: {
                     title: "Payment",
-                    isDisabled: isFourthPanelDisabled
+                    isDisabled: isFourthPanelDisabled,
+                    isOpen: !isFourthPanelDisabled,
                   },
                 }}
               />
