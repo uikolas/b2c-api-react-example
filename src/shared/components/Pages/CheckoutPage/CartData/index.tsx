@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 import { styles } from './styles';
-import { CartImage } from 'src/shared/components/Common/CartImage';
+import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { CartTotal } from 'src/shared/components/Common/CartTotal';
 import { CartDataProps, CartDataState } from './types';
@@ -39,7 +39,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
   };
 
   public render() {
-    const { classes, products, totals }  = this.props;
+    const { classes, products, totals, sendData }  = this.props;
 
     const rows = products.map((item: ICartItem) => (
       <ListItem
@@ -48,9 +48,10 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
         divider
         className={ classes.listItem }
       >
-        <CartImage
+        <SquareImage
           image={ item.image }
-          size={this.state.heightListItem}
+          size={ this.state.heightListItem }
+          alt={ item.name }
         />
         <div className={classes.itemWrapper}>
           <div className={classes.itemName}>{ item.name }</div>
@@ -104,6 +105,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
           color="primary"
           fullWidth
           className={ classes.btnWrapper }
+          onClick={ sendData }
         >
           place order
         </Button>

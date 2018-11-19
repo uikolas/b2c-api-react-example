@@ -3,15 +3,13 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
-import {IShippingAddress} from "src/shared/interfaces/checkout/index";
-import {TCustomerReference} from "src/shared/interfaces/customer/index";
+import {TCustomerReference} from "src/shared/interfaces/customer";
 import {
   IAddNewAddressActions,
-  ICheckoutAddress,
   ISameAsDelivery,
-  IUsageSavedAddress
-} from "src/shared/interfaces/checkout/index";
+  IUsageSavedAddress,
+  ICheckoutRequest,
+} from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
@@ -38,6 +36,8 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 
   isAppStateLoading: boolean;
   countriesCollection: ICountries[];
+  getCheckoutData: (payload: ICheckoutRequest) => void;
+  sendCheckoutData: (payload: ICheckoutRequest) => void;
 }
 
 export interface ICheckoutPageState {
@@ -57,7 +57,7 @@ export interface IBillingSelection {
 }
 
 // All possibles names of input
-export interface ICheckoutFormInputs extends ICheckoutAddress,
+export interface ICheckoutFormInputs extends IAddressItem,
                                              ISameAsDelivery,
                                              IUsageSavedAddress,
                                              IAddNewAddressActions {
