@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { FormattedDate } from 'react-intl';
-import { RouteProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -19,38 +18,17 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 
-import { reduxify } from 'src/shared/lib/redux-helper';
-import {
-  addWishlistAction,
-  deleteWishlistAction,
-  getDetailWishlistAction,
-  getWishlistsAction,
-  updateWishlistAction,
-} from 'src/shared/actions/Pages/Wishlist';
-import { IWishlist } from 'src/shared/interfaces/wishlist';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
-import { styles } from './styles';
 import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
-
-interface WishlistPageProps extends WithStyles<typeof styles> {
-  dispatch: Function;
-  wishlists: IWishlist[];
-  isLoading: boolean;
-  isInitial: boolean;
-}
-
-
-interface WishlistPageState {
-  name: string;
-  updatedName: string;
-  updatedList: string;
-}
+import { styles } from './styles';
+import { connect } from './connect';
+import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 
 export const pageTitle = 'Search results for ';
 
-export class WishListBase extends React.Component<WishlistPageProps, WishlistPageState> {
+@connect
+export class WishListBase extends React.Component<Props, State> {
 
-  public state: WishlistPageState = {
+  public state: State = {
     name: '',
     updatedName: '',
     updatedList: '',
@@ -58,7 +36,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
 
   public componentDidMount() {
     if (!this.props.isInitial) {
-      this.props.dispatch(getWishlistsAction());
+      this.props.getWishlistsAction();
     }
   }
 
@@ -80,17 +58,17 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
     if (!this.state.name.trim()) {
       return;
     }
-    this.props.dispatch(addWishlistAction(this.state.name));
+    this.props.addWishlistAction(this.state.name);
     this.setState({name: ''});
   };
 
   public handleUpdateWishlist = (e: any) => {
-    this.props.dispatch(updateWishlistAction(this.state.updatedList, this.state.updatedName));
+    this.props.updateWishlistAction(this.state.updatedList, this.state.updatedName);
     this.setState({updatedList: '', updatedName: ''});
   };
 
   public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
-    this.props.dispatch(deleteWishlistAction(wishlistId));
+    this.props.deleteWishlistAction(wishlistId);
   };
 
   private setUpdatedWishlist = (id: string, name: string) => (e: any) => {
@@ -98,7 +76,7 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
   };
 
   public setCurrentWishlist = (wishlistId: string) => (e: any) => {
-    this.props.dispatch(getDetailWishlistAction(wishlistId));
+    this.props.getDetailWishlistAction(wishlistId);
   };
 
   public render() {
@@ -197,8 +175,8 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
                   <TableCell className={ classes.headerCell }>Name</TableCell>
                   <TableCell className={ classes.headerCell }># of items</TableCell>
                   <TableCell className={ classes.headerCell }>Date of creation</TableCell>
-                  <TableCell numeric></TableCell>
-                  <TableCell numeric></TableCell>
+                  <TableCell numeric />
+                  <TableCell numeric />
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -213,19 +191,6 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
   }
 }
 
-export const WishlistPage = withStyles(styles)(WishListBase);
+export const ConnectedWishlistPage = withStyles(styles)(WishListBase);
 
-export const ConnectedWishlistPage = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
-    const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
-    return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
-        isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : ownProps.isInitial,
-        isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
-      }
-    );
-  },
-)(WishlistPage);
+export default ConnectedWishlistPage;

@@ -1,4 +1,4 @@
-import { ICartItem } from '../../reducers/Common/Cart';
+import { ICartItem } from '../../reducers/Common/Cart/types';
 import { TAppCurrency } from '../../reducers/Common/Init';
 import { IAbstractTotals } from '../abstract/totals';
 import { TProductQuantity, TProductSKU } from '../product';

@@ -2,7 +2,7 @@ import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '../../constants/A
 import { IReduxState } from 'src/typings/app';
 
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { ICartCreatePayload } from '../../services/Common/Cart';
+import { ICartCreatePayload } from '../../services/Common/Cart/types';
 
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;

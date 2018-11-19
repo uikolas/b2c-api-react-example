@@ -1,81 +1,27 @@
 import * as React from 'react';
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
-import { RouteProps } from 'react-router';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { toast } from 'react-toastify';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { toast } from 'react-toastify';
 
-import { reduxify } from '../../../lib/redux-helper';
-import { pageStyles } from './styles';
-import { isAppInitiated } from '../../../reducers/Common/Init';
-import { getCustomerReference, getCustomerUsername, isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { getRouterHistoryPush, getRouterLocation } from '../../../selectors/Common/router';
-import { UpdateProfile } from './UpdateProfile';
-import {
-  ICustomerDataParsed,
-  ICustomerProfile,
-  ICustomerProfileIdentity,
-  ICustomerProfilePassword,
-  ILoginDataToLocalStorage,
-  TCustomerInputValue,
-  TCustomerReference,
-} from '../../../interfaces/customer';
+import { ICustomerProfile, TCustomerInputValue, } from 'src/shared/interfaces/customer';
 import {
   emptyRequiredFieldsErrorText,
   inputSaveErrorText,
   passwordsNotEqualErrorText,
-} from '../../../constants/messages/errors';
+} from 'src/shared/constants/messages/errors';
+import { saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
+import { pathLoginPage } from 'src/shared/routes/contentRoutes';
+import { SprykerDialog } from '../../UI/SprykerDialog';
+import { UpdateProfile } from './UpdateProfile';
 import { ChangePassword } from './ChangePassword';
 import { AccountActions } from './AccountActions';
-import {
-  deleteCustomerAction,
-  getCustomerProfileAction,
-  saveLoginDataToStoreAction,
-  updateCustomerPasswordAction,
-  updateCustomerProfileAction,
-} from '../../../actions/Pages/CustomerProfile';
-import {
-  getCustomerProfile,
-  isCustomerPasswordUpdated,
-  isCustomerProfilePresent,
-  isPageCustomerProfileFulfilled,
-  isPageCustomerProfileLoading,
-  isPageCustomerProfileRejected,
-} from '../../../reducers/Pages/CustomerProfile';
-import { SprykerDialog } from '../../UI/SprykerDialog';
-import { pathLoginPage } from '../../../routes/contentRoutes';
-import { saveCustomerUsernameToLocalStorage } from '../../../helpers/localStorage';
+import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
+import { pageStyles } from './styles';
+import { connect } from './connect';
 
 export const pageTitle = 'Profile';
-
-interface ICustomerProfilePageProps extends WithStyles<typeof pageStyles>, RouteProps {
-  isLoading: boolean;
-  isRejected: boolean;
-  isFulfilled: boolean;
-  isCustomerDataExist: boolean;
-  isAppDataSet: boolean;
-  isUserLoggedIn: boolean;
-  customerReference: TCustomerReference;
-  getCustomerData: Function;
-  updateCustomerData: Function;
-  saveLoginDataToStore: Function;
-  updateCustomerPassword: Function;
-  customerData: ICustomerDataParsed;
-  passwordUpdated: boolean;
-  deleteCustomerEntity: Function;
-  routerPush: Function;
-}
-
-interface ICustomerProfilePageState {
-  inputs: ICustomerProfile;
-  isDeleteProfileDialogOpen: boolean;
-}
-
-interface IProfileFieldInput {
-  name: (keyof ICustomerProfile);
-  value: TCustomerInputValue;
-}
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -87,9 +33,9 @@ const keyConfirmPassword = 'confirmPassword';
 
 const deleteProfileContent = 'Are you sure you want to delete your account?';
 
-export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps, ICustomerProfilePageState> {
-
-  public state: ICustomerProfilePageState = {
+@connect
+export class CustomerProfilePageBase extends React.Component<Props, State> {
+  public state: State = {
     inputs: {
       salutation: '',
       firstName: '',
@@ -107,7 +53,6 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     if (!this.props.isCustomerDataExist) {
       this.initRequestData();
     }
-
   };
 
   public componentDidUpdate = (prevProps: any, prevState: any) => {
@@ -129,7 +74,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       return;
     }
 
-    this.setState((prevState: ICustomerProfilePageState) => {
+    this.setState((prevState: State) => {
       const key: (keyof ICustomerProfile) = name;
       const prevValue: TCustomerInputValue = prevState.inputs[key];
       if (prevValue === cleanValue) {
@@ -237,17 +182,15 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
       return;
     }
 
-    this.setState((prevState: ICustomerProfilePageState) => {
-      return ({
-        ...prevState,
-        inputs: {
-          ...prevState.inputs,
-          newPassword: '',
-          password: '',
-          confirmPassword: '',
-        },
-      });
-    });
+    this.setState((prevState: State) => ({
+      ...prevState,
+      inputs: {
+        ...prevState.inputs,
+        newPassword: '',
+        password: '',
+        confirmPassword: '',
+      },
+    }));
   };
 
   private initRequestData = () => {
@@ -261,7 +204,6 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
     }
     return false;
   };
-
 
   public render(): JSX.Element {
     console.info('CustomerProfilePage props: ', this.props);
@@ -279,7 +221,6 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
             </Grid>
           </Grid>
           <Grid container justify="center">
-
             <UpdateProfile
               submitHandler={ this.handleSubmitUpdateProfile }
               inputChangeHandler={ this.handleProfileInputChange }
@@ -297,9 +238,7 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
               confirmPassword={ this.getCurrentDataField(keyConfirmPassword) }
             />
 
-            <AccountActions
-              submitDeleteHandler={ this.handleSubmitDeleteAccount }
-            />
+            <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount }/>
 
             { this.state.isDeleteProfileDialogOpen
               ? (
@@ -310,10 +249,8 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
                   handleAgree={ this.handleDeleteProfileDialogAgree }
                   handleDisagree={ this.handleDeleteProfileDialogDisagree }
                 />
-              )
-              : null
+              ) : null
             }
-
           </Grid>
         </div>
       </div>
@@ -322,49 +259,3 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
 }
 
 export const CustomerProfilePage = withStyles(pageStyles)(CustomerProfilePageBase);
-
-export const ConnectedCustomerProfilePage = reduxify(
-  (state: any, ownProps: any) => {
-    const location = getRouterLocation(state, ownProps);
-    const isLoading = isPageCustomerProfileLoading(state, ownProps);
-    const isRejected = isPageCustomerProfileRejected(state, ownProps);
-    const isFulfilled = isPageCustomerProfileFulfilled(state, ownProps);
-    const isCustomerDataExist = isCustomerProfilePresent(state, ownProps);
-    const isAppDataSet = isAppInitiated(state, ownProps);
-    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const customerReference = getCustomerReference(state, ownProps);
-    const customerData = getCustomerProfile(state, ownProps);
-    const customerEmail = getCustomerUsername(state, ownProps);
-    const passwordUpdated = isCustomerPasswordUpdated(state, ownProps);
-    const routerPush = getRouterHistoryPush(state, ownProps);
-
-    if (customerData) {
-      customerData.email = customerEmail;
-    }
-
-    return ({
-      location,
-      isLoading,
-      isRejected,
-      isFulfilled,
-      isCustomerDataExist,
-      isAppDataSet,
-      isUserLoggedIn,
-      customerReference,
-      customerData,
-      passwordUpdated,
-      routerPush,
-    });
-  },
-  (dispatch: Function) => ({
-    getCustomerData: (customerReference: TCustomerReference) => dispatch(getCustomerProfileAction(customerReference)),
-    updateCustomerData: (customerReference: TCustomerReference, payload: ICustomerProfileIdentity) => dispatch(
-      updateCustomerProfileAction(customerReference, payload),
-    ),
-    saveLoginDataToStore: (payload: ILoginDataToLocalStorage) => dispatch(saveLoginDataToStoreAction(payload)),
-    updateCustomerPassword: (customerReference: TCustomerReference, payload: ICustomerProfilePassword) => dispatch(
-      updateCustomerPasswordAction(customerReference, payload),
-    ),
-    deleteCustomerEntity: (customerReference: TCustomerReference) => dispatch(deleteCustomerAction(customerReference)),
-  }),
-)(CustomerProfilePage);

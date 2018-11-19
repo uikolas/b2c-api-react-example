@@ -1,6 +1,6 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { ICartTotals, TCartId } from 'src/shared/interfaces/cart';
-import { ICartItem } from 'src/shared/reducers/Common/Cart';
+import { ICartItem } from 'src/shared/reducers/Common/Cart/types';
 import { TProductSKU } from 'src/shared/interfaces/product';
 import { styles } from './styles';
 

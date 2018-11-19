@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -14,49 +13,26 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CartIcon from '@material-ui/icons/AddShoppingCart';
 
-import { push } from 'react-router-redux';
-import { reduxify } from 'src/shared/lib/redux-helper';
-import { deleteItemAction } from 'src/shared/actions/Pages/Wishlist';
-import { addItemToCartAction } from 'src/shared/actions/Common/Cart';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { IWishlist, IWishlistItem } from 'src/shared/interfaces/wishlist';
-import { TCartId } from 'src/shared/interfaces/cart';
+import { IWishlistItem } from 'src/shared/interfaces/wishlist';
 import { priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
-import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
-import { getCartId, getTotalItemsQuantity, isCartLoading } from 'src/shared/reducers/Common/Cart';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
-import { styles } from './styles';
 import { pathProductPageBase } from 'src/shared/routes/contentRoutes';
-
-interface WishlistPageProps extends WithStyles<typeof styles> {
-  dispatch: Function;
-  wishlist: IWishlist;
-  products: Array<IWishlistItem>;
-  isLoading: boolean;
-  currency: TAppCurrency;
-  cartLoading: boolean;
-  cartId: TCartId;
-  cartItemsLength: number;
-  changeLocation: Function;
-}
-
-
-interface WishlistPageState {
-  movedItem: string;
-}
+import { styles } from './styles';
+import { WishlistPageProps as Props, WishlistPageState as State } from './types';
+import { connect } from './connect';
 
 export const pageTitle = 'Search results for ';
 
-export class WishlistDetailBase extends React.Component<WishlistPageProps, WishlistPageState> {
-
-  public state: WishlistPageState = {
+@connect
+export class WishlistDetailBase extends React.Component<Props, State> {
+  public state: State = {
     movedItem: '',
   };
 
-  public componentDidUpdate(prevProps: WishlistPageProps, prevState: WishlistPageState) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
-      this.props.dispatch(deleteItemAction(this.props.wishlist.id, prevState.movedItem));
+      this.props.deleteItemAction(this.props.wishlist.id, prevState.movedItem);
       this.setState({movedItem: ''});
     }
   }
@@ -68,15 +44,15 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
   };
 
   public handleDeleteItem = (sku: string) => (e: any) => {
-    this.props.dispatch(deleteItemAction(this.props.wishlist.id, sku));
+    this.props.deleteItemAction(this.props.wishlist.id, sku);
   };
 
   public moveToCart = (sku: string) => (e: any) => {
     this.setState({movedItem: sku});
-    this.props.dispatch(addItemToCartAction(
+    this.props.addItemToCartAction(
       createCartItemAddToCart(sku, 1),
       this.props.cartId,
-    ));
+    );
   };
 
   public moveAllProductsToCart = (e: any) => {
@@ -144,13 +120,11 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
                 { item.name }
               </span>
               <span>{ item.sku }</span>
-              {
-                item.attributes.map((attr: any, idx: number) => (
-                  <span className={ classes.attributes } key={ `attr-${item.sku}-${idx}` }>
-                    { `${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}` }
-                  </span>
-                ))
-              }
+              { item.attributes.map((attr: any, idx: number) => (
+                <span className={ classes.attributes } key={ `attr-${item.sku}-${idx}` }>
+                  { `${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}` }
+                </span>
+              )) }
             </div>
           </TableCell>
           <TableCell>
@@ -159,9 +133,7 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
               <AppPrice value={ prices.default } currency={ currency } priceType={ priceTypeNameDefault }/>
             </div>
           </TableCell>
-          <TableCell padding="dense">
-            { item.availability ? 'Available' : 'Not available' }
-          </TableCell>
+          <TableCell padding="dense">{ item.availability ? 'Available' : 'Not available' }</TableCell>
           <TableCell padding="checkbox">
             <IconButton
               color="primary"
@@ -186,7 +158,6 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
 
     return (
       <Grid container>
-
         <Grid item xs={ 12 } container justify="space-around">
           <Typography
             variant="headline"
@@ -201,57 +172,28 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
             Add all available products to cart
           </Button>
         </Grid>
-
         <Grid item xs={ 12 } container justify="center">
           <Paper elevation={ 4 } className={ classes.paperContainer }>
             <Table>
               <TableHead>
                 <TableRow key="table-header">
-                  <TableCell></TableCell>
+                  <TableCell/>
                   <TableCell className={ classes.headerCell }>Product</TableCell>
                   <TableCell className={ classes.headerCell }>Price</TableCell>
                   <TableCell className={ classes.headerCell }>Availability</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                  <TableCell/>
+                  <TableCell/>
                 </TableRow>
               </TableHead>
-              <TableBody>
-                { rows }
-              </TableBody>
+              <TableBody>{ rows }</TableBody>
             </Table>
           </Paper>
         </Grid>
-
       </Grid>
     );
   }
 }
 
-export const WishlistDetailPage = withStyles(styles)(WishlistDetailBase);
+export const ConnectedWishlistDetailPage = withStyles(styles)(WishlistDetailBase);
 
-export const ConnectedWishlistDetailPage = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
-    const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
-    const currency: TAppCurrency = getAppCurrency(state, ownProps);
-    const cartId: TCartId = getCartId(state, ownProps);
-    const cartItemsLength: number = getTotalItemsQuantity(state, ownProps);
-    const cartLoading: boolean = isCartLoading(state, ownProps);
-    return (
-      {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        wishlist: wishlistProps && wishlistProps.data ? wishlistProps.data.currentWishlist : ownProps.wishlist,
-        products: wishlistProps && wishlistProps.data ? wishlistProps.data.currentItems : ownProps.products,
-        isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
-        currency,
-        cartId,
-        cartItemsLength,
-        cartLoading,
-      }
-    );
-  },
-  (dispatch: Function) => ({
-    dispatch,
-    changeLocation: (location: string) => dispatch(push(location)),
-  })
-)(WishlistDetailPage);
+export default ConnectedWishlistDetailPage;

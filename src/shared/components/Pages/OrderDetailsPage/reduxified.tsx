@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { reduxify } from '../../../lib/redux-helper';
-import { OrderDetailsPage } from '.';
-import { getRouterHistoryBack, getRouterLocation, getRouterMatchParam } from '../../../selectors/Common/router';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { getRouterHistoryBack, getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
@@ -9,15 +8,16 @@ import {
   isOrderDetailsLoading,
   isOrderDetailsPresent,
   isOrderDetailsStateRejected,
-} from '../../../reducers/Pages/OrderDetails';
-import { getAppCurrency, getPayloadForCreateCart, isAppInitiated } from '../../../reducers/Common/Init';
-import { isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { ICartCreatePayload } from '../../../services/Common/Cart';
-import { TCartAddItemCollection, TCartId } from '../../../interfaces/cart';
-import { getCartId } from '../../../reducers/Common/Cart';
-import { TOrderId } from '../../../interfaces/order';
-import { getOrderDetailsAction } from '../../../actions/Pages/Order';
-import { addMultipleItemsToCartAction } from '../../../actions/Common/Cart';
+} from 'src/shared/reducers/Pages/OrderDetails';
+import { getAppCurrency, getPayloadForCreateCart, isAppInitiated } from 'src/shared/reducers/Common/Init';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
+import { TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
+import { getCartId } from 'src/shared/reducers/Common/Cart';
+import { TOrderId } from 'src/shared/interfaces/order';
+import { getOrderDetailsAction } from 'src/shared/actions/Pages/Order';
+import { addMultipleItemsToCartAction } from 'src/shared/actions/Common/Cart';
+import { OrderDetailsPage } from './';
 
 export const ConnectedOrderDetailsPage = reduxify(
   (state: any, ownProps: any) => {

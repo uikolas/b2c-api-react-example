@@ -1,5 +1,5 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -9,34 +9,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 
-import {
-  TCustomerEmail,
-  TCustomerFirstName,
-  TCustomerLastName,
-  TCustomerPassword,
-  TCustomerSalutation,
-  TSalutationVariant,
-} from 'src/shared/interfaces/customer';
+import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { salutationVariants } from 'src/shared/constants/customer';
 import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/errors';
 import { formStyles } from '../styles';
+import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 
-interface RegisterFormProps extends WithStyles<typeof formStyles> {
-  handleSubmit: Function;
-}
-
-interface RegisterFormState {
-  salutation: TCustomerSalutation;
-  firstName: TCustomerFirstName;
-  lastName: TCustomerLastName;
-  email: TCustomerEmail;
-  password: TCustomerPassword;
-  passwordConfirmation: TCustomerPassword;
-  acceptedTerms: boolean;
-}
-
-export class RegisterFormBase extends React.Component<RegisterFormProps, RegisterFormState> {
-
+export class RegisterFormBase extends React.Component<Props, State> {
   public state = {
     salutation: '',
     firstName: '',
@@ -52,40 +31,24 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
       return;
     }
 
-    this.setState({
-      salutation: event.target.value,
-    });
+    this.setState(() => ({salutation: event.target.value}));
   };
 
   public handleChangeAgreement = (event: React.FormEvent<HTMLInputElement>): void => {
-    this.setState({
-      acceptedTerms: !this.state.acceptedTerms,
-    });
+    this.setState(() => ({acceptedTerms: !this.state.acceptedTerms}));
   };
 
-  public handleChange = (event: any) => {
-    const {name, value}: any = event.target;
-    this.setState({
-      ...this.state, [name]: value,
-    });
-  };
+  public handleChange = ({target: {name, value}}: any) => this.setState(() => ({...this.state, [name]: value}));
 
   public handleSubmitForm = (e: any): any => {
+    const {salutation, firstName, lastName, email, password, passwordConfirmation, acceptedTerms} = this.state;
     e.preventDefault();
-    if (
-      !this.state.salutation
-      || !this.state.firstName
-      || !this.state.lastName
-      || !this.state.email
-      || !this.state.password
-      || !this.state.passwordConfirmation
-      || !this.state.acceptedTerms
-    ) {
+    if (!salutation || !firstName || !lastName || !email || !password || !passwordConfirmation || !acceptedTerms) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
 
-    if (this.state.password !== this.state.passwordConfirmation) {
+    if (password !== passwordConfirmation) {
       toast.warn('The passwords must match');
       return null;
     }
@@ -98,9 +61,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
 
     return (
       <React.Fragment>
-        <Typography variant="title" color="inherit" noWrap>
-          Register
-        </Typography>
+        <Typography variant="title" color="inherit" noWrap>Register</Typography>
         <form
           className={ classes.container }
           // noValidate
@@ -108,7 +69,6 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
           onSubmit={ this.handleSubmitForm }
           id="RegisterForm"
         >
-
           <TextField
             required
             id="register-salutation"
@@ -125,14 +85,10 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             } }
             margin="normal"
             fullWidth
-            InputLabelProps={ {
-              shrink: true,
-            } }
+            InputLabelProps={ {shrink: true} }
           >
             { salutationVariants.map((option: TSalutationVariant) => (
-              <MenuItem key={ option.value } value={ option.value }>
-                { option.label }
-              </MenuItem>
+              <MenuItem key={ option.value } value={ option.value }>{ option.label }</MenuItem>
             )) }
           </TextField>
 
@@ -147,12 +103,8 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             margin="normal"
             fullWidth
             onChange={ this.handleChange }
-            InputLabelProps={ {
-              shrink: true,
-            } }
-            InputProps={ {
-              className: classes.input,
-            } }
+            InputLabelProps={ {shrink: true} }
+            InputProps={ {className: classes.input} }
           />
 
           <TextField
@@ -166,12 +118,8 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             className={ classes.textField }
             margin="normal"
             fullWidth
-            InputLabelProps={ {
-              shrink: true,
-            } }
-            InputProps={ {
-              className: classes.input,
-            } }
+            InputLabelProps={ {shrink: true} }
+            InputProps={ {className: classes.input} }
           />
 
           <TextField
@@ -185,21 +133,17 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             className={ classes.textField }
             margin="normal"
             fullWidth
-            InputLabelProps={ {
-              shrink: true,
-            } }
-            InputProps={ {
-              className: classes.input,
-            } }
+            InputLabelProps={ {shrink: true} }
+            InputProps={ {className: classes.input} }
           />
 
-          <Grid container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-                spacing={ 16 }
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+            spacing={ 16 }
           >
-
             <Grid item xs={ 12 } sm={ 6 }>
               <TextField
                 required
@@ -212,12 +156,8 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
                 className={ classes.textField }
                 margin="normal"
                 fullWidth
-                InputLabelProps={ {
-                  shrink: true,
-                } }
-                InputProps={ {
-                  className: classes.input,
-                } }
+                InputLabelProps={ {shrink: true} }
+                InputProps={ {className: classes.input} }
               />
             </Grid>
             <Grid item xs={ 12 } sm={ 6 }>
@@ -232,15 +172,10 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
                 className={ classes.textField }
                 margin="normal"
                 fullWidth
-                InputLabelProps={ {
-                  shrink: true,
-                } }
-                InputProps={ {
-                  className: classes.input,
-                } }
+                InputLabelProps={ {shrink: true} }
+                InputProps={ {className: classes.input} }
               />
             </Grid>
-
           </Grid>
           <FormControlLabel
             control={
@@ -253,11 +188,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
             label="I agree with ..."
           />
 
-
-          <Button type="submit" variant="contained" className={ classes.button }>
-            Register
-          </Button>
-
+          <Button type="submit" variant="contained" className={ classes.button }>Register</Button>
         </form>
       </React.Fragment>
     );
@@ -265,4 +196,3 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
 }
 
 export const RegisterForm = withStyles(formStyles)(RegisterFormBase);
-

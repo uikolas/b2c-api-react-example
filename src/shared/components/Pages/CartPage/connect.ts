@@ -7,7 +7,8 @@ import {
   updateGuestCartAction,
   updateItemInCartAction,
 } from 'src/shared/actions/Common/Cart';
-import { getCartId, ICartState } from 'src/shared/reducers/Common/Cart';
+import { getCartId } from 'src/shared/reducers/Common/Cart';
+import { ICartState } from 'src/shared/reducers/Common/Cart/types';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getAnonymId } from 'src/shared/reducers/Common/Init';
 import { RouteProps } from 'react-router';

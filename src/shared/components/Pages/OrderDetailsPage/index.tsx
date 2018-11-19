@@ -1,55 +1,26 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { styles } from './styles';
-import { TRouterMatchParam } from '../../../selectors/Common/router';
-import { emptyOrderText } from '../../../constants/messages/orders';
-import { TAppCurrency } from '../../../reducers/Common/Init';
-import { IOrderDetailsItem, IOrderDetailsParsed, IOrderDetailsSelectedItems } from '../../../interfaces/order';
+import { emptyOrderText } from 'src/shared/constants/messages/orders';
+import { IOrderDetailsItem, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
+import { emptyValueErrorText } from 'src/shared/constants/messages/errors';
+import { ICartAddItem, TCartAddItemCollection } from 'src/shared/interfaces/cart';
+import { SprykerButton } from '../../UI/SprykerButton';
 import { OrderDetailsGeneralInfo } from './OrderDetailsGeneralInfo';
 import { OrderProductList } from './OrderProductsList';
-import { OrderDetailsContext } from './context';
-import { emptyValueErrorText } from '../../../constants/messages/errors';
 import { OrderDetailsTotals } from './OrderDetailsTotals';
-import { SprykerButton } from '../../UI/SprykerButton';
-import { ICartAddItem, TCartAddItemCollection, TCartId } from '../../../interfaces/cart';
-import { ICartCreatePayload } from '../../../services/Common/Cart';
+import { OrderDetailsContext } from './context';
+import { styles } from './styles';
+import { OrderDetailsPageProps as Props, OrderDetailsPageState as State } from './types';
 
 export const pageTitle = 'Orders History';
-
-interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
-  isLoading: boolean;
-  isRejected: boolean;
-  isFulfilled: boolean;
-  isAppDataSet: boolean;
-  isUserLoggedIn: boolean;
-  isInitiated: boolean;
-  isOrderExist: boolean;
-  getOrderData: Function;
-  orderIdParam: TRouterMatchParam;
-  order: IOrderDetailsParsed;
-  routerGoBack: Function;
-  currency: TAppCurrency;
-
-  payloadForCreateCart: ICartCreatePayload;
-  cartId: TCartId;
-  addMultipleItemsToCart: Function;
-}
-
-interface OrderDetailsPageState {
-  selectedItems: IOrderDetailsSelectedItems;
-  selectedItemsData: TCartAddItemCollection;
-}
-
 const reorderSelectedBtnTitle = 'Reorder selected items';
 const reorderAllBtnTitle = 'Reorder all';
 
-export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps, OrderDetailsPageState> {
-
-  public state: OrderDetailsPageState = {
+export class OrderDetailsPageBase extends React.Component<Props, State> {
+  public state: State = {
     selectedItems: {},
     selectedItemsData: null,
   };
@@ -74,8 +45,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
       return;
     }
 
-    this.setState((prevState: OrderDetailsPageState) => {
-
+    this.setState((prevState: State) => {
       const newSelectedItems = {
         ...prevState.selectedItems,
         [key]: !prevState.selectedItems[key],
@@ -113,7 +83,7 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
       allSelectedItems[item.sku] = true;
     }
 
-    this.setState((prevState: OrderDetailsPageState) => {
+    this.setState((prevState: State) => {
       return ({
         ...prevState,
         selectedItems: allSelectedItems,
@@ -197,8 +167,6 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                         subtotal={ order.totals.subtotal }
                         grandTotal={ order.totals.grandTotal }
                       />
-
-
                       <Grid item xs={ 12 } className={ `${classes.section} ${classes.btnOuter}` }>
                         <SprykerButton
                           title={ reorderSelectedBtnTitle }
@@ -218,11 +186,9 @@ export class OrderDetailsPageBase extends React.Component<OrderDetailsPageProps,
                       { emptyOrderText }
                     </Typography>
                   }
-
                 </Grid>
               </div>
             </OrderDetailsContext.Provider>
-
           )
         }
       </div>

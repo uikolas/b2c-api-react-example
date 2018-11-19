@@ -4,40 +4,15 @@ import {
   CART_DELETE_ITEM,
   CART_UPDATE_ITEM,
   GET_CARTS,
-} from '../../constants/ActionTypes/Common/Cart';
-import { IReduxState } from 'src/typings/app';
+} from 'src/shared/constants/ActionTypes/Common/Cart';
 import {
-  TProductAvailability,
-  TProductImageSRC,
-  TProductName,
-  TProductPrice,
   TProductQuantity,
   TProductSKU,
-} from '../../interfaces/product';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { ICartDataResponse, ICartItemCalculation, TCartId } from '../../interfaces/cart';
+} from 'src/shared/interfaces/product';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { ICartDataResponse, TCartId } from 'src/shared/interfaces/cart';
 import { PAGES_CUSTOMER_LOGOUT } from 'src/shared/constants/ActionTypes/Pages/Login';
-
-export interface ICartItem {
-  sku: TProductSKU | null;
-  name: TProductName | null;
-  image: TProductImageSRC | null;
-  quantity: TProductQuantity | null;
-  amount: TProductPrice | null;
-  calculations: ICartItemCalculation | null;
-  groupKey: string | null;
-  availability: TProductAvailability | null;
-  availableQuantity: TProductQuantity | null;
-  superAttributes: Array<{[key: string]: string}> | null;
-}
-
-export interface ICartData extends ICartDataResponse {
-  cartCreated: boolean;
-}
-
-export interface ICartState extends IReduxState {
-  data: ICartData;
-}
+import { ICartData, ICartItem, ICartState } from './types';
 
 export const initialState: ICartState = {
   data: {

@@ -5,7 +5,7 @@
     "class-name": true,
     "comment-format": [true, "check-space"],
     "curly": false,
-    "cyclomatic-complexity": [true, 20],
+    "cyclomatic-complexity": false,
     "eofline": false,
     "forin": false,
     "indent": [ true, "spaces"],

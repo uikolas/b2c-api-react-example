@@ -17,7 +17,7 @@ import {
 import { getCartId, isCartCreated } from 'src/shared/reducers/Common/Cart';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
-import { ICartCreatePayload } from 'src/shared/services/Common/Cart';
+import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { getProductDataAction } from 'src/shared/actions/Pages/Product';
 import { addItemAction, getWishlistsAction } from 'src/shared/actions/Pages/Wishlist';

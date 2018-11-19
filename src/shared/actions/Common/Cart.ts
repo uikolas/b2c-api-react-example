@@ -5,7 +5,9 @@ import {
   CART_UPDATE_ITEM,
   GET_CARTS,
 } from '../../constants/ActionTypes/Common/Cart';
-import { CartService, ICartCreatePayload } from '../../services/Common/Cart';
+import { CartService } from '../../services/Common/Cart';
+import { GuestCartService } from '../../services/Common/Cart/guestCart';
+import { ICartCreatePayload } from '../../services/Common/Cart/types';
 import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '../../interfaces/cart';
 import { TProductSKU } from '../../interfaces/product';
 
@@ -104,7 +106,7 @@ export const multiItemsCartAction = function(
   listItems: string[],
 ) {
   return (dispatch: Function, getState: Function) => {
-    CartService.moveItemstoCart(dispatch, cartId, payloadCartCreate, listItems);
+    CartService.moveItemsToCart(dispatch, cartId, payloadCartCreate, listItems);
   };
 };
 
@@ -133,24 +135,24 @@ export const createCartAndAddItemAction = function(payloadCartCreate: ICartCreat
 
 export const getGuestCartAction = function(anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.getGuestCart(dispatch, anonymId);
+    GuestCartService.getGuestCart(dispatch, anonymId);
   };
 };
 
 export const addItemGuestCartAction = function(payload: ICartAddItem, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.guestCartAddItem(dispatch, payload, anonymId);
+    GuestCartService.guestCartAddItem(dispatch, payload, anonymId);
   };
 };
 
 export const removeItemGuestCartAction = function(cartUid: string, sku: string, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.guestCartRemoveItem(dispatch, cartUid, sku, anonymId);
+    GuestCartService.guestCartRemoveItem(dispatch, cartUid, sku, anonymId);
   };
 };
 
 export const updateGuestCartAction = function(payload: ICartAddItem, cartId: TCartId, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CartService.guestCartUpdate(dispatch, payload, cartId, anonymId);
+    GuestCartService.guestCartUpdate(dispatch, payload, cartId, anonymId);
   };
 };

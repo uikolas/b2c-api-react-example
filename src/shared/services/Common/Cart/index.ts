@@ -1,34 +1,14 @@
-import api, { setAuthToken } from '../api';
+import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
-import { parseAddToCartResponse, parseCartCreateResponse, parseGuestCartResponse } from 'src/shared/helpers/cart';
-import { RefreshTokenService } from './RefreshToken';
-import {
-  cartAddItemFulfilledStateAction,
-  cartAddItemPendingStateAction,
-  cartAddItemRejectedStateAction,
-  cartCreateFulfilledStateAction,
-  cartCreatePendingStateAction,
-  cartCreateRejectedStateAction,
-  cartDeleteItemPendingStateAction,
-  cartUpdateItemFulfilledStateAction,
-  cartUpdateItemPendingStateAction,
-  cartUpdateItemRejectedStateAction,
-  getCartsFulfilledStateAction,
-  getCartsPendingStateAction,
-  getCartsRejectedStateAction,
-} from 'src/shared/actions/Common/Cart';
+import { parseAddToCartResponse, parseCartCreateResponse } from 'src/shared/helpers/cart';
+import * as cartActions from 'src/shared/actions/Common/Cart';
 import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
-
-export interface ICartCreatePayload {
-  priceMode: string;
-  currency: string;
-  store: string;
-}
+import { RefreshTokenService } from '../RefreshToken';
+import { ICartCreatePayload } from './types';
 
 export class CartService {
-
   public static async getCustomerCarts(dispatch: Function): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
@@ -37,7 +17,7 @@ export class CartService {
         throw new Error(cartAuthenticateErrorText);
       }
 
-      dispatch(getCartsPendingStateAction());
+      dispatch(cartActions.getCartsPendingStateAction());
       setAuthToken(token);
       const response: any = await api.get('/carts', {}, {withCredentials: true});
 
@@ -50,15 +30,15 @@ export class CartService {
           data: response.data.data[0],
           included: response.data.included,
         });
-        dispatch(getCartsFulfilledStateAction(responseParsed));
+        dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
         return responseParsed.id;
       } else {
-        dispatch(getCartsRejectedStateAction(response.problem));
+        dispatch(cartActions.getCartsRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
     } catch (err) {
-      dispatch(getCartsRejectedStateAction(err.message));
+      dispatch(cartActions.getCartsRejectedStateAction(err.message));
       toast.error('Request Error: ' + err.message);
       return null;
     }
@@ -66,7 +46,7 @@ export class CartService {
 
   public static async cartCreate(dispatch: Function, payload: ICartCreatePayload): Promise<any> {
     try {
-      dispatch(cartCreatePendingStateAction());
+      dispatch(cartActions.cartCreatePendingStateAction());
 
       const body = {
         data: {
@@ -87,16 +67,16 @@ export class CartService {
 
       if (response.ok) {
         const responseParsed = parseCartCreateResponse(response.data);
-        dispatch(cartCreateFulfilledStateAction(responseParsed));
+        dispatch(cartActions.cartCreateFulfilledStateAction(responseParsed));
         return responseParsed.id;
       } else {
-        dispatch(cartCreateRejectedStateAction(response.problem));
+        dispatch(cartActions.cartCreateRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch(cartCreateRejectedStateAction(error.message));
+      dispatch(cartActions.cartCreateRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
@@ -105,7 +85,7 @@ export class CartService {
   // Adds an item to the cart.
   public static async cartAddItem(dispatch: Function, payload: ICartAddItem, cartId: TCartId): Promise<any> {
     try {
-      dispatch(cartAddItemPendingStateAction());
+      dispatch(cartActions.cartAddItemPendingStateAction());
 
       const body = {
         data: {
@@ -129,16 +109,16 @@ export class CartService {
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
         console.info('cartAddItem responseParsed: ', responseParsed);
-        dispatch(cartAddItemFulfilledStateAction(responseParsed));
+        dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        dispatch(cartAddItemRejectedStateAction(response.problem));
+        dispatch(cartActions.cartAddItemRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch(cartAddItemRejectedStateAction(error.message));
+      dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
@@ -149,136 +129,6 @@ export class CartService {
 
     if (cartId) {
       await CartService.cartAddItem(dispatch, item, cartId);
-    }
-  }
-
-  public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<any> {
-    try {
-      dispatch(cartAddItemPendingStateAction());
-
-      const body = {
-        data: {
-          type: 'guest-cart-items',
-          attributes: payload,
-        },
-      };
-
-      const response: any = await api.post(
-        'guest-cart-items',
-        body,
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
-      );
-
-      if (response.ok) {
-        const responseParsed = parseGuestCartResponse(response.data);
-        dispatch(cartAddItemFulfilledStateAction(responseParsed));
-        return responseParsed;
-      } else {
-        dispatch(cartAddItemRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
-        return null;
-      }
-
-    } catch (error) {
-      dispatch(cartAddItemRejectedStateAction(error.message));
-      toast.error('Unexpected Error: ' + error.message);
-      return null;
-    }
-  }
-
-  public static async getGuestCart(dispatch: Function, anonymId: string): Promise<any> {
-    try {
-      dispatch(getCartsPendingStateAction());
-
-      const response: any = await api.get(
-        '/guest-carts', {},
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
-      );
-
-      if (response.ok) {
-        if (!response.data.data.length) {
-          dispatch(getCartsFulfilledStateAction(null));
-          return null;
-        }
-
-        const responseParsed = parseGuestCartResponse({
-          data: response.data.data[0],
-          included: response.data.included,
-        });
-        dispatch(getCartsFulfilledStateAction(responseParsed));
-        return responseParsed.id;
-      } else {
-        dispatch(getCartsRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
-        return null;
-      }
-    } catch (err) {
-      dispatch(getCartsRejectedStateAction(err.message));
-      toast.error('Unexpected Error: ' + err.message);
-      return null;
-    }
-  }
-
-  public static async guestCartRemoveItem(
-    dispatch: Function, cartUid: string, sku: string, anonymId: string,
-  ): Promise<any> {
-    try {
-      dispatch(cartDeleteItemPendingStateAction);
-
-      const response: any = await api.delete(
-        `guest-carts/${cartUid}/guest-cart-items/${sku}`,
-        {},
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
-      );
-
-      if (response.ok) {
-        return CartService.getGuestCart(dispatch, anonymId);
-      } else {
-        dispatch(getCartsRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
-        return null;
-      }
-
-    } catch (error) {
-      dispatch(getCartsRejectedStateAction(error.message));
-      toast.error('Unexpected Error: ' + error.message);
-      return null;
-    }
-  }
-
-  public static async guestCartUpdate(
-    dispatch: Function, payload: ICartAddItem, cartId: TCartId, anonymId: string,
-  ): Promise<any> {
-    try {
-      dispatch(cartUpdateItemPendingStateAction());
-
-      const body = {
-        data: {
-          type: 'guest-cart-items',
-          attributes: payload,
-        },
-      };
-      const {sku} = payload;
-      const response: any = await api.patch(
-        `guest-carts/${cartId}/guest-cart-items/${sku}`,
-        body,
-        {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
-      );
-
-      if (response.ok) {
-        const responseParsed = parseGuestCartResponse(response.data);
-        dispatch(cartUpdateItemFulfilledStateAction(responseParsed));
-        return responseParsed;
-      } else {
-        dispatch(cartUpdateItemRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
-        return null;
-      }
-
-    } catch (error) {
-      dispatch(cartUpdateItemRejectedStateAction(error.message));
-      toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
@@ -300,7 +150,7 @@ export class CartService {
 
         if (newCartResponse.ok) {
           const responseParsed = parseAddToCartResponse(newCartResponse.data);
-          dispatch(cartAddItemFulfilledStateAction(responseParsed));
+          dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
         } else {
           dispatch({
             type: ACTION_TYPE + '_REJECTED',
@@ -330,13 +180,9 @@ export class CartService {
   }
 
   // Update cart item quantity.
-  public static async cartUpdateItem(
-    dispatch: Function,
-    payload: ICartAddItem,
-    cartId: TCartId | null,
-  ): Promise<any> {
+  public static async cartUpdateItem(dispatch: Function, payload: ICartAddItem, cartId: TCartId | null): Promise<any> {
     try {
-      dispatch(cartUpdateItemPendingStateAction());
+      dispatch(cartActions.cartUpdateItemPendingStateAction());
 
       const body = {
         data: {
@@ -364,28 +210,24 @@ export class CartService {
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
         console.info('cartUpdateItem responseParsed: ', responseParsed);
-        dispatch(cartUpdateItemFulfilledStateAction(responseParsed));
+        dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
-        dispatch(cartUpdateItemRejectedStateAction(response.problem));
+        dispatch(cartActions.cartUpdateItemRejectedStateAction(response.problem));
         toast.error('Request Error: ' + response.problem);
         return null;
       }
 
     } catch (error) {
-      dispatch(cartUpdateItemRejectedStateAction(error.message));
+      dispatch(cartActions.cartUpdateItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
   }
 
-  public static async moveItemstoCart(
-    dispatch: Function,
-    cartId: TCartId | null,
-    payloadCartCreate: ICartCreatePayload,
-    productsList: string[]
+  public static async moveItemsToCart(
+    dispatch: Function, cartId: TCartId | null, payloadCartCreate: ICartCreatePayload, productsList: string[]
   ): Promise<any> {
-
     try {
       const id = cartId || await CartService.cartCreate(dispatch, payloadCartCreate);
       const endpoint = `carts/${id}/items?include=`;
@@ -412,7 +254,7 @@ export class CartService {
       await Promise.all(requests);
 
     } catch (err) {
-      dispatch(cartAddItemRejectedStateAction(err.message));
+      dispatch(cartActions.cartAddItemRejectedStateAction(err.message));
       toast.error('Unexpected Error: ' + err.message);
       return null;
     }
@@ -420,10 +262,7 @@ export class CartService {
 
   // Adds multiple items to the cart.
   public static async cartMultipleItems(
-    dispatch: Function,
-    payload: TCartAddItemCollection,
-    cartId: TCartId | null,
-    payloadCartCreate: ICartCreatePayload
+    dispatch: Function, payload: TCartAddItemCollection, cartId: TCartId | null, payloadCartCreate: ICartCreatePayload
   ): Promise<any> {
     if (!payload) {
       return false;
@@ -443,33 +282,31 @@ export class CartService {
 
       for (const item of payload) {
         if (!globalResponse) {
-          dispatch(cartAddItemRejectedStateAction('Error in processing adding products in sequence'));
+          dispatch(cartActions.cartAddItemRejectedStateAction('Error in processing adding products in sequence'));
           return false;
         }
-        dispatch(cartAddItemPendingStateAction());
+        dispatch(cartActions.cartAddItemPendingStateAction());
         const processResult = await this.addingItemProcess(dispatch, item, cartId);
         if (processResult.ok) {
           const responseParsed = parseAddToCartResponse(processResult.data);
-          dispatch(cartAddItemFulfilledStateAction(responseParsed));
+          dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
           globalResponse = true;
         } else {
-          dispatch(cartAddItemRejectedStateAction(processResult.problem));
+          dispatch(cartActions.cartAddItemRejectedStateAction(processResult.problem));
           toast.error('Request Error: ' + processResult.problem);
           globalResponse = false;
         }
       }
       return globalResponse;
     } catch (error) {
-      dispatch(cartAddItemRejectedStateAction(error.message));
+      dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
       return null;
     }
   }
 
   private static async addingItemProcess(
-    dispatch: Function,
-    payload: ICartAddItem,
-    cartId: TCartId
+    dispatch: Function, payload: ICartAddItem, cartId: TCartId
   ): Promise<any> {
     const body = {
       data: {

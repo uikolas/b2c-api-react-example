@@ -27,12 +27,11 @@ import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
-import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { DropdownControlled } from '../../UI/DropdownControlled';
 import { SprykerButton } from '../../UI/SprykerButton';
+import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { ProductAttributes } from './ProductAttributes';
 import { ProductSuperAttribute } from './ProductSuperAttribute';
-
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
@@ -345,8 +344,12 @@ export class ProductPageBase extends React.Component<Props, State> {
               <Grid container justify="center" className={ classes.productMain }>
                 <Grid item xs={ 12 } sm={ 7 } className={ classes.sliderParent }>
                   <div className={ classes.sliderParentContainer }>
-                    <ImageSlider images={ images } uniqueKey={ this.state.sku } showThumbs={ false }
-                                 showStatus={ false }/>
+                    <ImageSlider
+                      images={ images }
+                      uniqueKey={ this.state.sku }
+                      showThumbs={ false }
+                      showStatus={ false }
+                    />
                   </div>
                 </Grid>
 
@@ -363,8 +366,10 @@ export class ProductPageBase extends React.Component<Props, State> {
                   />
 
                   { this.state.superAttributes
-                    ? <ProductSuperAttribute productData={ this.state.superAttributes }
-                                             onChange={ this.handleSuperAttributesChange }/>
+                    ? <ProductSuperAttribute
+                      productData={ this.state.superAttributes }
+                      onChange={ this.handleSuperAttributesChange }
+                    />
                     : null
                   }
 
