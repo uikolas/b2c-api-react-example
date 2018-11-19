@@ -94,13 +94,15 @@ export const styles = (theme: Theme) => createStyles({
   },
   wrapProductImage: {
     position: 'relative',
+    maxHeight: '3.5rem',
+    maxWidth: '3.5rem',
+    padding: '0.4375rem',
     '&:before': {
       position: 'absolute',
       left: 0,
       top: 0,
       right: 0,
       bottom: 0,
-      maxHeight: '3.5rem',
       backgroundColor: 'rgba(0, 0, 0, 0.05)',
       content: '""',
     }

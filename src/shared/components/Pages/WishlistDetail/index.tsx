@@ -39,7 +39,6 @@ interface WishlistPageProps extends WithStyles<typeof styles> {
   changeLocation: Function;
 }
 
-
 interface WishlistPageState {
   movedItem: string;
 }
@@ -149,7 +148,7 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
             content: (
               <div className={classes.product}>
                 <span className={classes.wrapProductImage}>
-                  <img src={item.image} height={56} width={56} />
+                  <img src={item.image} height={42} width={42} />
                 </span>
                 <div className={classes.productDescription}>
                   <span className={classes.tableAction} onClick={this.renderProduct(item.sku, item.name)}>
@@ -217,7 +216,6 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
             bodyRows.length ?
               <Paper elevation={ 0 }>
                 <AppTable
-                  isRowHover = {true}
                   classes = {{bodyCell: classes.bodyCell}}
                   headerCells = {headerCells}
                   bodyRows = {bodyRows}

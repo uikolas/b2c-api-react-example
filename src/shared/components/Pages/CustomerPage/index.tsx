@@ -54,8 +54,8 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
 
     return (
       <AppMain>
-        <Grid container>
-          <Grid item xs={ 3 } container direction="column" justify="flex-start" className={ classes.pageMenu }>
+        <Grid container justify="space-between" className={classes.customerContainer}>
+          <Grid item xs={ 12 } sm={ 3 } container direction="column">
             <Paper>
               <MenuList>
                 <MenuItem
@@ -89,7 +89,7 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
               </MenuList>
             </Paper>
           </Grid>
-          <Grid item xs={ 9 }>
+          <Grid item xs={ 12 } sm={ 7 }>
             <Switch>
               <Route path={ pathCustomerPage } exact component={ ConnectedCustomerProfilePage }/>
               <Route path={ pathCustomerAddressesPage } exact component={ CustomerAddressPage }/>

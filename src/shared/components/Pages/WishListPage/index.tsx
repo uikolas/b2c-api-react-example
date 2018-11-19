@@ -34,7 +34,6 @@ interface WishlistPageProps extends WithStyles<typeof styles> {
   isInitial: boolean;
 }
 
-
 interface WishlistPageState {
   name: string;
   updatedName: string;
@@ -224,7 +223,6 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
           {
             bodyRows.length ?
               <AppTable
-                isRowHover = {true}
                 headerCells = {headerCells}
                 bodyRows = {bodyRows}
               /> :

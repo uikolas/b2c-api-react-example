@@ -17,8 +17,11 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
     label,
     isError,
     isRequired,
-    onBlurHandler
+    onBlurHandler,
+    placeholderText
   }  = props;
+
+  const placeholder = placeholderText ? placeholderText : (isRequired ? null : OptionalPlaceholder);
 
   return (
     <TextField
@@ -39,7 +42,7 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
       }}
       type="text"
       value={inputValue}
-      placeholder={isRequired ? null : OptionalPlaceholder}
+      placeholder={placeholder}
       className={classes.textField}
       margin="normal"
       onChange={onChangeHandler}

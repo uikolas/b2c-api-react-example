@@ -19,10 +19,13 @@ export const styles = (theme: Theme) => createStyles({
     minHeight: '200px',
     backgroundColor: '#7979ce',
   },
-  pageMenu: {
-    paddingTop: theme.spacing.unit * 7,
-  },
   link: {
     width: '100%',
   },
+  customerContainer: {
+    padding: '1.875rem 0 2.5rem',
+    [theme.breakpoints.up('lg')]: {
+      padding: '3.875rem 0 5rem'
+    }
+  }
 });
