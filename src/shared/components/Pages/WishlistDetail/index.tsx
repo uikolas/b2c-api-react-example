@@ -5,14 +5,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CartIcon from '@material-ui/icons/AddShoppingCart';
+import Divider from "@material-ui/core/Divider/Divider";
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import {AppPageTitle} from "../../Common/AppPageTitle";
+import {AppTable} from "../../Common/AppTable";
 
 import { push } from 'react-router-redux';
 import {reduxify} from 'src/shared/lib/redux-helper';
@@ -27,7 +24,8 @@ import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
 import {getCartId, getTotalItemsQuantity, isCartStateLoading} from "src/shared/reducers/Common/Cart";
 import {createCartItemAddToCart} from "src/shared/helpers/cart";
 import {styles} from './styles';
-import {pathProductPageBase} from 'src/shared/routes/contentRoutes';
+import {pathCustomerProfilePage, pathProductPageBase, pathWishListsPage} from 'src/shared/routes/contentRoutes';
+import {NavLink} from "react-router-dom";
 
 interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
@@ -90,32 +88,50 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
     // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
   }
 
+  public wishlistMenu = () => {
+    const {classes, wishlist} = this.props;
+
+    return (
+      <MenuList className={classes.menu}>
+        <MenuItem className={classes.menuItem}>
+          <NavLink to={ pathWishListsPage } className={classes.link}>
+            Wishlist
+          </NavLink>
+        </MenuItem>
+        <MenuItem className={classes.menuItem}>
+          {wishlist.name}
+        </MenuItem>
+      </MenuList>
+    )
+  }
+
   public render() {
     const { classes, wishlist, products, isLoading, cartLoading, currency } = this.props;
+    const tableAction = cartLoading ? classes.tableActionDisabled : classes.tableAction;
 
     if (!products.length && isLoading) {
       return null;
-    } else if (!products.length && !isLoading) {
-      return (
-        <Grid container>
-          <Grid item xs={12} container justify="center">
-            <Typography
-              variant="headline"
-              children={wishlist ? `Wishlist ${wishlist.name}` : ''}
-              paragraph
-            />
-          </Grid>
-          <Grid item xs={12} container justify="center">
-            <Typography
-              variant="title"
-              children={wishlist ? 'Currently there are no items in your wishlist.' : ''}
-            />
-          </Grid>
-        </Grid>
-      );
     }
 
-    const rows: any[] = products.map((item: IWishlistItem) => {
+    const headerCells: any[] = [
+      {
+        content: 'Product'
+      },
+      {
+        content: 'Price'
+      },
+      {
+        content: 'Availability'
+      },
+      {
+        content: ''
+      },
+      {
+        content: ''
+      }
+    ];
+
+    const bodyRows: any[] = products.map((item: IWishlistItem) => {
       const prices: any = {default: '', original: ''};
 
       item.prices.forEach((price: any) => {
@@ -126,96 +142,108 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
         }
       });
 
-      return (
-        <TableRow
-          hover
-          key={item.sku}
-        >
-          <TableCell component="th" scope="row">
-            <img src={item.image} height={52} />
-          </TableCell>
-          <TableCell>
-            <div className={classes.vertical}>
-              <span className={classes.name} onClick={this.renderProduct(item.sku, item.name)}>
-                {item.name}
-              </span>
-              <span>{item.sku}</span>
-              {
-                item.attributes.map((attr: any, idx: number) => (
-                  <span className={classes.attributes} key={`attr-${item.sku}-${idx}`}>
-                    {`${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}`}
+      return {
+        id: item.sku,
+        cells: [
+          {
+            content: (
+              <div className={classes.product}>
+                <span className={classes.wrapProductImage}>
+                  <img src={item.image} height={56} width={56} />
+                </span>
+                <div className={classes.productDescription}>
+                  <span className={classes.tableAction} onClick={this.renderProduct(item.sku, item.name)}>
+                    {item.name}
                   </span>
-                ))
-              }
-            </div>
-          </TableCell>
-          <TableCell>
-            <div className={classes.vertical}>
-              <AppPrice value={prices.original} currency={currency} priceType={priceTypeNameOriginal} />
-              <AppPrice value={prices.default} currency={currency} priceType={priceTypeNameDefault} />
-            </div>
-          </TableCell>
-          <TableCell padding="dense">
-            {item.availability ? 'Available' : 'Not available'}
-          </TableCell>
-          <TableCell padding="checkbox">
-            <IconButton
-              color="primary"
-              onClick={this.moveToCart(item.sku)}
-              disabled={!item.availability || isLoading || cartLoading}
-            >
-              <CartIcon />
-            </IconButton>
-          </TableCell>
-          <TableCell padding="none">
-            <IconButton
-              color="primary"
-              onClick={this.handleDeleteItem(item.sku)}
-              disabled={isLoading || cartLoading}
-            >
-              <DeleteIcon />
-            </IconButton>
-          </TableCell>
-        </TableRow>
-      );
+                  <span className={classes.attributes}>SKU: {item.sku}</span>
+                  {
+                    item.attributes.map((attr: any, idx: number) => (
+                      <span className={classes.attributes} key={`attr-${item.sku}-${idx}`}>
+                      {`${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}`}
+                    </span>
+                    ))
+                  }
+                </div>
+              </div>
+            )
+          },
+          {
+            content: (
+              <div className={classes.vertical}>
+                <AppPrice value={prices.original} extraClassName={classes.price}  currency={currency} priceType={priceTypeNameOriginal} />
+                <AppPrice value={prices.default} extraClassName={classes.price}  currency={currency} priceType={priceTypeNameDefault} />
+              </div>
+            )
+          },
+          {
+            content: (
+              <span className={item.availability ? classes.available : classes.noAvailable}>
+                {item.availability ? 'Available' : 'Not available'}
+              </span>
+            )
+          },
+          {
+            content: (
+              <Typography component="span" className={tableAction} onClick={this.moveToCart(item.sku)}>
+                Add to Cart
+              </Typography>
+            )
+          },
+          {
+            content: (
+              <Typography component="span" className={tableAction} onClick={this.handleDeleteItem(item.sku)}>
+                Remove
+              </Typography>
+            )
+          },
+        ]
+      }
     });
 
     return (
       <Grid container>
 
-        <Grid item xs={12} container justify="space-around">
-          <Typography
-            variant="headline"
-            children={wishlist ? `Wishlist ${wishlist.name}` : ''}
+        <Grid item xs={ 12 }>
+          <AppPageTitle
+            classes={{ root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader }}
+            title="Wishlist"
           />
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={this.moveAllProductsToCart}
-            disabled={isLoading || cartLoading}
-          >
-            Add all available products to cart
-          </Button>
         </Grid>
 
-        <Grid item xs={12} container justify="center">
-          <Paper elevation={4} className={classes.paperContainer}>
-            <Table>
-              <TableHead>
-                <TableRow key="table-header">
-                  <TableCell></TableCell>
-                  <TableCell className={classes.headerCell}>Product</TableCell>
-                  <TableCell className={classes.headerCell}>Price</TableCell>
-                  <TableCell className={classes.headerCell}>Availability</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows}
-              </TableBody>
-            </Table>
-          </Paper>
+        <Grid item xs={ 12 }>
+          {this.wishlistMenu()}
+
+          {
+            bodyRows.length ?
+              <Paper elevation={ 0 }>
+                <AppTable
+                  isRowHover = {true}
+                  classes = {{bodyCell: classes.bodyCell}}
+                  headerCells = {headerCells}
+                  bodyRows = {bodyRows}
+                />
+
+                <Button
+                  className={classes.addAllBtn}
+                  color="primary"
+                  variant="contained"
+                  onClick={this.moveAllProductsToCart}
+                  disabled={isLoading || cartLoading}
+                >
+                  Add all available products to cart
+                </Button>
+
+              </Paper> :
+              <Paper elevation={ 0 }>
+                <Divider />
+
+                <Typography paragraph className={classes.noItems}>
+                  Currently no items in your wishlist.
+                </Typography>
+
+              </Paper>
+          }
+
         </Grid>
 
       </Grid>

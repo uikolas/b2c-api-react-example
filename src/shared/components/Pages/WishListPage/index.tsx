@@ -8,16 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
+import {AppPageTitle} from "../../Common/AppPageTitle";
+import {AppTable} from "../../Common/AppTable";
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
@@ -103,109 +98,146 @@ export class WishListBase extends React.Component<WishlistPageProps, WishlistPag
 
   public render() {
     const {classes, wishlists, isLoading, isInitial} = this.props;
+    const tableAction = isLoading ? classes.tableActionDisabled : classes.tableAction;
 
     if (!wishlists.length && isLoading) {
       return null;
     }
 
-    const rows: any[] = wishlists.map((item: any) => (
-      <TableRow
-        hover
-        key={ item.id }
-      >
-        <TableCell component="th" scope="row">
-          { this.state.updatedList && this.state.updatedList === item.id
-            ? (
-              <form noValidate autoComplete="off" className={ classes.updateCell }>
-                <TextField
-                  value={ this.state.updatedName }
-                  onChange={ this.handleChangeUpdatedName }
-                />
-                <IconButton
-                  color="primary"
-                  onClick={ this.handleUpdateWishlist }
-                  disabled={ isLoading }
+    const headerCells: any[] = [
+      {
+        content: 'Name'
+      },
+      {
+        content: 'Items'
+      },
+      {
+        content: 'Created'
+      },
+      {
+        content: ''
+      },
+      {
+        content: ''
+      }
+    ];
+
+    const bodyRows: any[] = wishlists.map((item: any) => (
+      {
+        id: item.id,
+        cells: [
+          {
+            content: (
+              this.state.updatedList && this.state.updatedList === item.id
+                ?  (
+                  <form noValidate autoComplete="off" className={ classes.updateCell }>
+                    <TextField
+                      value={ this.state.updatedName }
+                      onChange={ this.handleChangeUpdatedName }
+                    />
+                    <IconButton
+                      color="primary"
+                      onClick={ this.handleUpdateWishlist }
+                      disabled={ isLoading }
+                    >
+                      <SaveIcon/>
+                    </IconButton>
+                  </form>
+                )
+                :
+                <NavLink
+                  className={classes.link}
+                  to={ `${pathCustomerPage}/wishlist/${item.name}` }
+                  onClick={ this.setCurrentWishlist(item.id) }
                 >
-                  <SaveIcon/>
-                </IconButton>
-              </form>
+                  { item.name }
+                </NavLink>
             )
-            : <NavLink
-              to={ `${pathCustomerPage}/wishlist/${item.name}` }
-              onClick={ this.setCurrentWishlist(item.id) }
-            >
-              { item.name }
-            </NavLink>
+          },
+          {
+            content: (
+              item.numberOfItems
+            )
+          },
+          {
+            content: (
+              <FormattedDate
+                value={ new Date(item.createdAt) }
+                year='numeric'
+                month='short'
+                day='2-digit'
+              />
+            )
+          },
+          {
+            content: (
+              <Typography component="span" className={tableAction} onClick={ this.setUpdatedWishlist(item.id, item.name) }>
+                Edit
+              </Typography>
+            )
+          },
+          {
+            content: (
+              <Typography component="span" className={tableAction} onClick={ this.handleDeleteWishlist(item.id) }>
+                Delete
+              </Typography>
+            )
           }
-        </TableCell>
-        <TableCell>{ item.numberOfItems }</TableCell>
-        <TableCell>
-          <FormattedDate
-            value={ new Date(item.createdAt) }
-            year='numeric'
-            month='short'
-            day='2-digit'
-          />
-        </TableCell>
-        <TableCell padding="checkbox">
-          <IconButton
-            color="primary"
-            onClick={ this.setUpdatedWishlist(item.id, item.name) }
-            disabled={ isLoading }
-          >
-            <EditIcon/>
-          </IconButton>
-        </TableCell>
-        <TableCell padding="checkbox">
-          <IconButton
-            color="primary"
-            onClick={ this.handleDeleteWishlist(item.id) }
-            disabled={ isLoading }
-          >
-            <DeleteIcon/>
-          </IconButton>
-        </TableCell>
-      </TableRow>
+        ]
+      }
     ));
 
     return (
       <Grid container>
 
-        <Grid item xs={ 12 } container justify="center">
-          <Typography
-            variant="headline"
-            children="Manage wishlists"
+        <Grid item xs={ 12 }>
+          <AppPageTitle
+            classes={{ root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader }}
+            title="Wishlist"
           />
         </Grid>
 
-        <Grid item xs={ 12 } container justify="center">
-          <Paper elevation={ 4 } className={ classes.paperContainer }>
-            <form noValidate autoComplete="off" onSubmit={ this.addWishlist }>
+        <Grid item xs={ 12 }>
+          <form noValidate autoComplete="off" onSubmit={ this.addWishlist } className={classes.form}>
+            <Typography paragraph className={classes.titleForm}>
+                Add New Wishlist
+            </Typography>
+
+            <Paper elevation={ 0 } className={classes.formItem}>
               <TextField
-                className={ classes.newList }
+                className={classes.textFieldForm}
+                placeholder="Wishlist Name"
                 value={ this.state.name }
+                variant={'outlined'}
                 onChange={ this.handleChangeName }
+                inputProps = {{
+                    className: classes.input
+                }}
               />
-              <Button type="submit" variant="contained" color="primary">
-                Add new wishlist
+
+              <Button type="submit" variant="contained" color="primary" className={classes.formSubmit}>
+                  Add
               </Button>
-            </form>
-            <Divider/>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell className={ classes.headerCell }>Name</TableCell>
-                  <TableCell className={ classes.headerCell }># of items</TableCell>
-                  <TableCell className={ classes.headerCell }>Date of creation</TableCell>
-                  <TableCell numeric></TableCell>
-                  <TableCell numeric></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                { rows }
-              </TableBody>
-            </Table>
-          </Paper>
+            </Paper>
+          </form>
+
+          {
+            bodyRows.length ?
+              <AppTable
+                isRowHover = {true}
+                headerCells = {headerCells}
+                bodyRows = {bodyRows}
+              /> :
+              <Paper elevation={ 0 }>
+                <Divider />
+
+                <Typography paragraph className={classes.noItems}>
+                  You do not have any lists yet, create one above to get started.
+                </Typography>
+
+              </Paper>
+          }
+
         </Grid>
 
       </Grid>
