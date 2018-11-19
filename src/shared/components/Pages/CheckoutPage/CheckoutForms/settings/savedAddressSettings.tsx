@@ -14,7 +14,8 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getDeliverySavedAddressFormSettings = (formName: string, params: IDeliveryAddressesParams) => {
+export const getDeliverySavedAddressFormSettings = (formName: string,
+                                                    params: IDeliveryAddressesParams): IFormSettings => {
 
   const {
     addressesCollection,
@@ -47,7 +48,8 @@ export const getDeliverySavedAddressFormSettings = (formName: string, params: ID
   return formSettings;
 };
 
-export const getBillingSavedAddressFormSettings = (formName: string, params: IBillingAddressesParams) => {
+export const getBillingSavedAddressFormSettings = (formName: string,
+                                                   params: IBillingAddressesParams): IFormSettings => {
 
   const {
     addressesCollection,

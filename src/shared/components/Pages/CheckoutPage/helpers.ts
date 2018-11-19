@@ -1,11 +1,14 @@
-import {IExtraAddressesOptions, TAddressType} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {
+  ICheckoutFormsProps, IExtraAddressesOptions,
+  TAddressType
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {
   InputLabelAddNewBillingAddress,
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
 import {
-  ICheckoutPageProps,
+  ICheckoutPageProps, ICheckoutPanelsSettings,
   IParamFormValidity,
   IParamInputValidity,
   isAddNewBillingValue,
@@ -71,4 +74,35 @@ export const checkAddressFormValidity = (param: IParamFormValidity): boolean => 
   }
 
   return result;
+};
+
+export const getCheckoutPanelsSettings = (params: ICheckoutPanelsSettings): ICheckoutFormsProps["panels"] => {
+
+  const {
+    isFirstPanelDisabled,
+    isSecondPanelDisabled,
+    isThirdPanelDisabled,
+    isFourthPanelDisabled,
+  } = params;
+
+  const response = {
+    first: {
+      title: "Delivery Address",
+      isDisabled: isFirstPanelDisabled,
+    },
+    second: {
+      title: "Billing Address",
+      isDisabled: isSecondPanelDisabled,
+    },
+    third: {
+      title: "Shipment",
+      isDisabled: isThirdPanelDisabled,
+    },
+    fourth: {
+      title: "Payment",
+      isDisabled: isFourthPanelDisabled,
+    },
+  };
+
+  return response;
 };

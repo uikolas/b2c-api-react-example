@@ -22,7 +22,7 @@ import {
 import {CheckoutPageContext} from "./context";
 import {
   checkAddressFormValidity,
-  checkFormInputValidity,
+  checkFormInputValidity, getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraAddressesOptions,
 } from "src/shared/components/Pages/CheckoutPage/helpers";
@@ -58,7 +58,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     },
     stepsCompletion: {
       ...stepCompletionCheckoutDefault
-    }
+    },
+    shipmentMethod: null,
   };
 
   public componentDidMount() {
@@ -86,39 +87,30 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   }
 
-  // TODO: Remove it after we get access to checkout endpoint
-  private initRequestAddressesData = (): void => {
-    const {customerReference,
-      addressesCollection,
-      isAddressesLoading,
-      isAddressesFulfilled,
-      isAppStateLoading,
-      isCartFulfilled,
-    } = this.props;
-    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled) {
-      return;
-    }
-    if (customerReference && !addressesCollection) {
-      this.props.getAddressesList(customerReference);
-    }
-  }
-
-  private isCheckoutFormValid = (): boolean => {
-    return false;
-  }
-
   public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.info('handleSubmit ');
   }
 
+  public sendCheckoutDataForOrder = (event: ClickEvent) => {
+    event.preventDefault();
+    console.info('Send checkout data');
+
+    // this.props.sendCheckoutData();
+  }
+
   public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                   ): void => {
     const { name, value } = event.target;
+    console.log(name, value);
     if (name === 'deliverySelection') {
       this.handleDeliverySelection(value);
     } else if (name === 'billingSelection' || name === isSameAsDeliveryValue) {
       this.handleBillingSelection(value);
+    } else if (name === 'shipmentMethodSelection') {
+      this.handleShipmentMethodSelection(value);
+    } else {
+      throw new Error(`Undefined type of forms: ${name}`);
     }
   }
 
@@ -212,10 +204,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         billingNewAddress: {
           ...prevState.billingNewAddress,
           ...newInputState,
-          [key]: {
-            value: cleanValue,
-            isError: false,
-          },
         },
         stepsCompletion: {
           ...prevState.stepsCompletion,
@@ -307,6 +295,19 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
+  private handleShipmentMethodSelection = (value: string): boolean => {
+    this.setState( (prevState: ICheckoutPageState) => {
+      return ({
+        shipmentMethod: value,
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          third: true,
+        },
+      });
+    });
+    return true;
+  }
+
   private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
            || (this.state.billingSelection.isAddNew && isAddNewBillingValue)
@@ -320,11 +321,26 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
            || null;
   }
 
-  public sendCheckoutDataForOrder = (event: ClickEvent) => {
-    event.preventDefault();
-    console.info('Send checkout data');
+  // TODO: Remove it after we get access to checkout endpoint
+  private initRequestAddressesData = (): void => {
+    const {
+      customerReference,
+      addressesCollection,
+      isAddressesLoading,
+      isAddressesFulfilled,
+      isAppStateLoading,
+      isCartFulfilled,
+    } = this.props;
+    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled) {
+      return;
+    }
+    if (customerReference && !addressesCollection) {
+      this.props.getAddressesList(customerReference);
+    }
+  }
 
-    // this.props.sendCheckoutData();
+  private isCheckoutFormValid = (): boolean => {
+    return false;
   }
 
   public render(): JSX.Element {
@@ -338,6 +354,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       isAddressesFulfilled,
       isUserLoggedIn,
       countriesCollection,
+      shipmentMethods,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
@@ -347,6 +364,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const isSecondPanelDisabled = !this.state.stepsCompletion.first;
     const isThirdPanelDisabled = !this.state.stepsCompletion.second;
     const isFourthPanelDisabled = !this.state.stepsCompletion.third;
+
+    // TODO: Handle isOpen param for panels
 
     return (
       <AppMain>
@@ -373,33 +392,19 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             extraAddressesOptions: getExtraAddressesOptions(isAddressesCollectionExist),
             isAddressesFulfilled,
             isUserLoggedIn,
+            shipmentMethods,
+            currentValueShipmentMethod: this.state.shipmentMethod,
           }}
         >
           <Grid container className={classes.container}>
             <Grid item xs={12} md={7}>
               <CheckoutForms
-                panels={{
-                  first: {
-                    title: "Delivery Address",
-                    isDisabled: isFirstPanelDisabled,
-                    isOpen: !isFirstPanelDisabled,
-                  },
-                  second: {
-                    title: "Billing Address",
-                    isDisabled: isSecondPanelDisabled,
-                    isOpen: !isSecondPanelDisabled,
-                  },
-                  third: {
-                    title: "Shipment",
-                    isDisabled: isThirdPanelDisabled,
-                    isOpen: !isThirdPanelDisabled,
-                  },
-                  fourth: {
-                    title: "Payment",
-                    isDisabled: isFourthPanelDisabled,
-                    isOpen: !isFourthPanelDisabled,
-                  },
-                }}
+                panels={getCheckoutPanelsSettings({
+                  isFirstPanelDisabled,
+                  isSecondPanelDisabled,
+                  isThirdPanelDisabled,
+                  isFourthPanelDisabled,
+                })}
               />
             </Grid>
             <Grid item xs={12} md={5}>

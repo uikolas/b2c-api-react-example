@@ -7,6 +7,7 @@ import {ICheckoutFormsProps, IPanelData} from "src/shared/components/Pages/Check
 import {DeliveryForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/index";
 import {FormWrapper} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/index";
 import {BillingForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/index";
+import {ShipmentMethod} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod/index";
 
 
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
@@ -21,28 +22,24 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
         <FormWrapper
           title={panels.first.title}
           isDisabled={panels.first.isDisabled}
-          isOpen={panels.first.isOpen}
         >
           <DeliveryForm />
         </FormWrapper>
         <FormWrapper
           title={panels.second.title}
           isDisabled={panels.second.isDisabled}
-          isOpen={panels.second.isOpen}
         >
           <BillingForm />
         </FormWrapper>
         <FormWrapper
           title={panels.third.title}
           isDisabled={panels.third.isDisabled}
-          isOpen={panels.third.isOpen}
         >
-          First
+          <ShipmentMethod />
         </FormWrapper>
         <FormWrapper
           title={panels.fourth.title}
           isDisabled={panels.fourth.isDisabled}
-          isOpen={panels.fourth.isOpen}
         >
           second
         </FormWrapper>

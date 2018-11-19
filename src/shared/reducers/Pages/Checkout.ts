@@ -8,25 +8,68 @@ import {
 } from 'src/typings/app';
 import { IAddressItem } from "src/shared/interfaces/addresses";
 import {
-  IPayment,
-  IShipment,
+  IPaymentMethod,
+  IShipmentMethod,
 } from 'src/shared/interfaces/checkout';
 
 export interface ICheckoutState extends IReduxState {
   data: {
-    billingAddress?: IAddressItem | null;
-    deliveryAddress?: IAddressItem | null;
-    payments?: Array<IPayment>;
-    shipments?: Array<IShipment>;
+    billingAddress: IAddressItem | null;
+    deliveryAddress: IAddressItem | null;
+    payments: Array<IPaymentMethod>;
+    shipments: Array<IShipmentMethod>;
   };
 }
+
+const shipmentMethodsFixture: Array<IShipmentMethod> = [
+  {
+    carrierName: 'DHL',
+    id: '1',
+    name: 'DHL-1',
+    price: 5,
+    taxRate: 2,
+    shipmentDeliveryTime: 'Standard'
+  },
+  {
+    carrierName: 'DHL',
+    id: '2',
+    name: 'DHL-2',
+    price: 5,
+    taxRate: 2,
+    shipmentDeliveryTime: 'Standard'
+  },
+  {
+    carrierName: 'Hermes',
+    id: '3',
+    name: 'Hermes-3',
+    price: 5.6,
+    taxRate: 2,
+    shipmentDeliveryTime: 'Next Day'
+  },
+  {
+    carrierName: 'Hermes',
+    id: '4',
+    name: 'Hermes-4',
+    price: 15,
+    taxRate: 2,
+    shipmentDeliveryTime: 'Same Day'
+  },
+  {
+    carrierName: 'Hermes',
+    id: '5',
+    name: 'Hermes-5',
+    price: 15,
+    taxRate: 2,
+    shipmentDeliveryTime: 'Same Day'
+  }
+];
 
 export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
     deliveryAddress: null,
     payments: [],
-    shipments: [],
+    shipments: shipmentMethodsFixture || [],
   },
 };
 
@@ -85,6 +128,14 @@ export function isPageCheckoutStateRejected(state: any, props: any): boolean {
 
 export function isPageCheckoutFulfilled(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.fulfilled);
+}
+
+export function getShipmentMethodsFromStore(state: any, props: any): Array<IShipmentMethod> | null {
+  return isShipmentMethodsExist(state, props) ? state.pageCheckout.data.shipments : null;
+}
+
+export function isShipmentMethodsExist(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageCheckout.data.shipments);
 }
 
 function isStateExist(state: any, props: any): boolean {
