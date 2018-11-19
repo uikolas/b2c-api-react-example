@@ -9,12 +9,15 @@ import {
   InputLabelSalutation,
   InputLabelStreet,
   InputLabelStreetExtra,
-  InputLabelZipCode
+  InputLabelZipCode,
+  InputSelectCountryFirstItem,
+  InputSelectSalutationFirstItem
 } from "src/shared/constants/forms/labels";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {ICountries} from "src/shared/reducers/Common/Init";
 
 
 export const getAddressFormSettings = ( formName: string, params: IAddressParams) => {
@@ -31,12 +34,26 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       country,
       company,
       phone,
-      iso2Code,
     },
+    addressInputsConfig: {
+      firstName: firstNameConfig,
+      lastName: lastNameConfig,
+      salutation: salutationConfig,
+      address1: address1Config,
+      address2: address2Config,
+      address3: address3Config,
+      zipCode: zipCodeConfig,
+      city: cityConfig,
+      country: countryConfig,
+      company: companyConfig,
+      phone: phoneConfig,
+    },
+    countriesCollection,
     submitHandler,
     inputChangeHandler,
   } = params;
 
+  const isCountriesCollectionExist = Boolean(Array.isArray(countriesCollection) && countriesCollection.length > 0);
 
   const formSettings: IFormSettings = {
     formName,
@@ -46,118 +63,135 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       [
         {
           type: 'select',
-          inputName: 'salutation',
-          inputValue: salutation,
+          inputName: salutationConfig.inputName,
+          inputValue: salutation.value,
           spaceNumber: 3,
-          isRequired: true,
+          isRequired: salutationConfig.isRequired,
           label: InputLabelSalutation,
-          isError: false,
+          isError: salutation.isError,
           menuItems: salutationVariants
             .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
-          menuItemFirst: null,
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectSalutationFirstItem,
+            selected: true,
+            disabled: true,
+          },
         }
       ],
       [
         {
           type: 'input',
-          inputName: 'firstName',
-          inputValue: firstName,
+          inputName: firstNameConfig.inputName,
+          inputValue: firstName.value,
           spaceNumber: 6,
-          isRequired: true,
+          isRequired: firstNameConfig.isRequired,
           label: InputLabelFirstName,
-          isError: false,
+          isError: firstName.isError,
         },
         {
           type: 'input',
-          inputName: 'lastName',
-          inputValue: lastName,
+          inputName: lastNameConfig.inputName,
+          inputValue: lastName.value,
           spaceNumber: 6,
-          isRequired: true,
+          isRequired: lastNameConfig.isRequired,
           label: InputLabelLastName,
-          isError: false,
+          isError: lastName.isError,
         }
       ],
       [
         {
           type: 'input',
-          inputName: 'company',
-          inputValue: company,
+          inputName: companyConfig.inputName,
+          inputValue: company.value,
           spaceNumber: 6,
+          isRequired: companyConfig.isRequired,
           label: InputLabelCompany,
-          isError: false,
+          isError: company.isError,
         },
       ],
       [
         {
           type: 'input',
-          inputName: 'address1',
-          inputValue: address1,
+          inputName: address1Config.inputName,
+          inputValue: address1.value,
           spaceNumber: 6,
-          isRequired: true,
+          isRequired: address1Config.isRequired,
           label: InputLabelStreet,
-          isError: false,
+          isError: address1.isError,
         },
         {
           type: 'input',
-          inputName: 'address2',
-          inputValue: address2,
+          inputName: address2Config.inputName,
+          inputValue: address2.value,
           spaceNumber: 3,
-          isRequired: true,
+          isRequired: address2Config.isRequired,
           label: InputLabelNumber,
-          isError: false,
+          isError: address2.isError,
         }
       ],
       [
         {
           type: 'input',
-          inputName: 'address3',
-          inputValue: address3,
+          inputName: address3Config.inputName,
+          inputValue: address3.value,
           spaceNumber: 6,
+          isRequired: address3Config.isRequired,
           label: InputLabelStreetExtra,
-          isError: false,
+          isError: address3.isError,
         },
       ],
       [
         {
           type: 'input',
-          inputName: 'city',
-          inputValue: city,
+          inputName: cityConfig.inputName,
+          inputValue: city.value,
           spaceNumber: 6,
-          isRequired: true,
+          isRequired: cityConfig.isRequired,
           label: InputLabelCity,
-          isError: false,
+          isError: city.isError,
         },
         {
           type: 'input',
-          inputName: 'zipCode',
-          inputValue: zipCode,
+          inputName: zipCodeConfig.inputName,
+          inputValue: zipCode.value,
           spaceNumber: 6,
-          isRequired: true,
+          isRequired: zipCodeConfig.isRequired,
           label: InputLabelZipCode,
-          isError: false,
+          isError: zipCode.isError,
         },
       ],
       [
         {
-          type: 'input',
-          inputName: 'country',
-          inputValue: country,
+          type: 'select',
+          inputName: countryConfig.inputName,
+          inputValue: country.value,
           spaceNumber: 6,
-          isRequired: true,
+          isRequired: countryConfig.isRequired,
           label: InputLabelCountry,
-          isError: false,
+          isError: country.isError,
+          menuItems: isCountriesCollectionExist
+                     ? countriesCollection
+                        .map((item: ICountries) => ({value: item.iso2Code, name: item.name}))
+                     : null,
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectCountryFirstItem,
+            selected: true,
+            disabled: true,
+          },
         },
         {
           type: 'input',
-          inputName: 'phone',
-          inputValue: phone,
+          inputName: phoneConfig.inputName,
+          inputValue: phone.value,
           spaceNumber: 6,
+          isRequired: phoneConfig.isRequired,
           label: InputLabelPhone,
-          isError: false,
+          isError: phone.isError,
         },
       ],
     ],
   };
-
   return formSettings;
 };

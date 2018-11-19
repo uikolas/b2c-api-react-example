@@ -17,16 +17,12 @@ import {
 export const getDeliverySavedAddressFormSettings = (formName: string, params: IDeliveryAddressesParams) => {
 
   const {
-    selections,
     addressesCollection,
     submitHandler,
     inputChangeHandler,
     extraAddressesOptions,
+    currentValueInSelection,
   } = params;
-
-  const currentValue = selections.selectedAddressId
-                       || (selections.isAddNew && 'isAddNewDelivery')
-                       || getDefaultAddressId(addressesCollection, 'delivery');
 
   const formSettings: IFormSettings = {
     formName,
@@ -37,7 +33,7 @@ export const getDeliverySavedAddressFormSettings = (formName: string, params: ID
         {
           type: 'radio',
           inputName: 'deliverySelection',
-          inputValue: currentValue,
+          inputValue: currentValueInSelection,
           spaceNumber: 12,
           isRequired: false,
           label: InputLabelSelectSavedDeliveryAddress,
@@ -54,17 +50,12 @@ export const getDeliverySavedAddressFormSettings = (formName: string, params: ID
 export const getBillingSavedAddressFormSettings = (formName: string, params: IBillingAddressesParams) => {
 
   const {
-    selections,
     addressesCollection,
     submitHandler,
     inputChangeHandler,
     extraAddressesOptions,
+    currentValueInSelection,
   } = params;
-
-  const currentValue = selections.selectedAddressId
-                      || (selections.isAddNew && 'isAddNewBilling')
-                      || (selections.isSameAsDelivery && 'sameAsDelivery')
-                      || getDefaultAddressId(addressesCollection, 'billing');
 
   const formSettings: IFormSettings = {
     formName,
@@ -75,7 +66,7 @@ export const getBillingSavedAddressFormSettings = (formName: string, params: IBi
         {
           type: 'radio',
           inputName: 'billingSelection',
-          inputValue: currentValue,
+          inputValue: currentValueInSelection,
           spaceNumber: 12,
           isRequired: false,
           label: InputLabelSelectSavedBillingAddress,
@@ -113,23 +104,6 @@ const isAddressesCollectionExist = (collection: IAddressesParams["addressesColle
   return Boolean(collection && Array.isArray(collection) && collection.length > 0);
 };
 
-const getDefaultAddressId = (collection: IAddressesParams["addressesCollection"],
-                             addressType: TAddressType) => {
-  if (!isAddressesCollectionExist(collection)) {
-    return null;
-  }
-  const variantData = collection
-    .filter((item: IAddressItem) => {
-      if (addressType === 'delivery') {
-        return item.isDefaultShipping === true;
-      } else if (addressType === 'billing') {
-        return item.isDefaultBilling === true;
-      } else {
-        return false;
-      }
-    });
-  return ((variantData && variantData[0]) ? variantData[0].id : null);
-};
 
 const createRadioItemLabel = (address: IAddressItem) => {
   let response: string = '';

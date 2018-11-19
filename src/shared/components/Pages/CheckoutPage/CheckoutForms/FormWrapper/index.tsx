@@ -13,19 +13,19 @@ import {IFormWrapperProps} from "src/shared/components/Pages/CheckoutPage/Checko
 
 
 export const FormWrapperBase: React.SFC<IFormWrapperProps> = (props): JSX.Element => {
-  const {classes, title}  = props;
+  const {classes, title, isDisabled}  = props;
 
   return (
     <Grid container className={ classes.root }>
-      <Grid item xs={ 12 }>
+      <Grid item xs={12}>
 
         <ExpansionPanel
+          disabled={isDisabled}
           classes={{
             root: classes.panelRoot,
             expanded: classes.panelExpanded,
           }}
         >
-
           <ExpansionPanelSummary
             expandIcon={<ExpandMoreIcon />}
             classes={{
@@ -37,20 +37,15 @@ export const FormWrapperBase: React.SFC<IFormWrapperProps> = (props): JSX.Elemen
           >
             <Typography className={classes.title} component="h3" >{title}</Typography>
           </ExpansionPanelSummary>
-
           <ExpansionPanelDetails
-            classes={{
-              root: classes.panelDetailRoot,
-            }}
+            classes={{root: classes.panelDetailRoot}}
           >
             <Grid container >
               <Grid item xs={12} className={classes.formOuter}>
                 {props.children}
               </Grid>
-
             </Grid>
           </ExpansionPanelDetails>
-
         </ExpansionPanel>
 
       </Grid>
@@ -59,4 +54,3 @@ export const FormWrapperBase: React.SFC<IFormWrapperProps> = (props): JSX.Elemen
 };
 
 export const FormWrapper = withStyles(styles)(FormWrapperBase);
-

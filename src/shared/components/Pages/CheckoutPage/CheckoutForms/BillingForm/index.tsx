@@ -21,33 +21,43 @@ import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/inde
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
   const {
     classes,
-    addressData,
-    selections,
-    addressesCollection,
-    extraAddressesOptions,
-    isAddressesFulfilled,
-    isUserLoggedIn,
   }  = props;
 
   return (
     <CheckoutPageContext.Consumer>
-      {({submitHandler, inputChangeHandler, isBillingSameAsDelivery}) => {
-        const billingParams = {
-          addressData,
+      {({
           submitHandler,
-          inputChangeHandler,
+          selectionsChangeHandler,
+          handleBillingInputs,
+          isBillingSameAsDelivery,
+          billingNewAddress,
+          billingAddressInputsConfig,
+          selections,
+          currentValuesInSelections,
+          addressesCollection,
+          extraAddressesOptions,
+          isAddressesFulfilled,
+          isUserLoggedIn,
+          countriesCollection
+      }) => {
+        const billingParams = {
+          addressData: billingNewAddress,
+          addressInputsConfig: billingAddressInputsConfig,
+          countriesCollection,
+          submitHandler,
+          inputChangeHandler: handleBillingInputs,
         };
         const sameAsDeliveryParams = {
           isSameAsDelivery: isBillingSameAsDelivery,
           submitHandler,
-          inputChangeHandler,
+          inputChangeHandler: selectionsChangeHandler,
         };
         const savedBillingParams = {
-          selections,
+          currentValueInSelection: currentValuesInSelections.billing,
           addressesCollection,
-          extraAddressesOptions,
+          extraAddressesOptions: extraAddressesOptions.billing,
           submitHandler,
-          inputChangeHandler
+          inputChangeHandler: selectionsChangeHandler,
         };
         const billingFormSettings = getAddressFormSettings('billing', billingParams);
         const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings('sameAsDeliveryForm', sameAsDeliveryParams);
@@ -65,7 +75,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
-                    {selections.isAddNew ? inputsForm : null}
+                    {selections.billing.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : [sameAsDeliveryForm, inputsForm]
               }
