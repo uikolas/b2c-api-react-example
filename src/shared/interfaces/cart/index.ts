@@ -42,11 +42,12 @@ export interface ICartItem {
 export interface ICartDataResponse {
   id: TCartId;
   currency: TAppCurrency;
-  discounts: ICartDiscounts | any;
+  discounts?: ICartDiscounts | any;
   priceMode: TCartPriceMode;
   store: TCartStore;
   totals: ICartTotals;
   items: Array<ICartItem>;
+  totalQty?: number;
 }
 
 export interface ICartItemCalculation {

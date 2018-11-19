@@ -3,18 +3,21 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TCustomerFirstName, TCustomerLastName, TCustomerSalutation} from "src/shared/interfaces/customer/index";
-import {IShippingAddress} from "src/shared/interfaces/checkout/index";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {
   IAddNewAddressActions,
-  ICheckoutAddress,
   ISameAsDelivery,
-  IUsageSavedAddress
-} from "src/shared/interfaces/checkout/index";
+  IUsageSavedAddress,
+  ICheckoutRequest,
+} from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
+import {
+  IAddressesSelections,
+  ICurrentValuesInSelections,
+  IExtraAddressesOptions
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
@@ -29,6 +32,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isCartFulfilled: boolean;
   isCartRejected: boolean;
   isCartLoading: boolean;
+  isAddressesCollectionExist: boolean;
   getAddressesList: (customerRef: TCustomerReference) => void;
   customerReference: TCustomerReference | null;
   currentAddress: IAddressItem | null;
@@ -38,12 +42,82 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 
   isAppStateLoading: boolean;
   countriesCollection: ICountries[];
+  getCheckoutData: (payload: ICheckoutRequest) => void;
+  sendCheckoutData: (payload: ICheckoutRequest) => void;
 }
 
 export interface ICheckoutPageState {
   deliverySelection: IDeliverySelection;
   billingSelection: IBillingSelection;
+  deliveryNewAddress: IDeliveryAddressState;
+  billingNewAddress: IBillingAddressState;
+  stepsCompletion: ICheckoutStepsCompletion;
 }
+
+export interface ICheckoutAddressState {
+  firstName: IConfigInputState;
+  lastName: IConfigInputState;
+  salutation: IConfigInputState;
+  address1: IConfigInputState;
+  address2: IConfigInputState;
+  address3: IConfigInputState;
+  zipCode: IConfigInputState;
+  city: IConfigInputState;
+  country: IConfigInputState;
+  company: IConfigInputState;
+  phone: IConfigInputState;
+
+  [key: string]: IConfigInputState;
+}
+
+export interface IObjectConfigInputStable {
+  firstName: IConfigInputStable;
+  lastName: IConfigInputStable;
+  salutation: IConfigInputStable;
+  address1: IConfigInputStable;
+  address2: IConfigInputStable;
+  address3: IConfigInputStable;
+  zipCode: IConfigInputStable;
+  city: IConfigInputStable;
+  country: IConfigInputStable;
+  company: IConfigInputStable;
+  phone: IConfigInputStable;
+
+  [key: string]: IConfigInputStable;
+}
+
+export interface IDeliveryAddressState extends ICheckoutAddressState {
+}
+
+export interface IBillingAddressState extends ICheckoutAddressState {
+}
+
+export interface IDeliveryObjectConfigInputStable extends IObjectConfigInputStable {
+}
+
+export interface IBillingObjectConfigInputStable extends IObjectConfigInputStable {
+}
+
+
+export interface IConfigInputStable {
+  isRequired: boolean;
+  inputName: string;
+}
+
+export interface IConfigInputState {
+  value: TFormInputValue;
+  isError: boolean;
+}
+
+export const isAddNewDeliveryValue = "isAddNewDelivery";
+export type TIsAddNewDeliveryValue = "isAddNewDelivery";
+
+export const isAddNewBillingValue = "isAddNewBilling";
+export type TIsAddNewBillingValue = "isAddNewBilling";
+
+export const isSameAsDeliveryValue = "isSameAsDelivery";
+export type TIsSameAsDeliveryValue = "isSameAsDelivery";
+
 
 export interface IDeliverySelection {
   selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
@@ -56,22 +130,39 @@ export interface IBillingSelection {
   isSameAsDelivery: ISameAsDelivery["isSameAsDelivery"];
 }
 
-// All possibles names of input
-export interface ICheckoutFormInputs extends ICheckoutAddress,
-                                             ISameAsDelivery,
-                                             IUsageSavedAddress,
-                                             IAddNewAddressActions {
-
-}
-
-export interface ICheckoutFieldInput {
-  name: (keyof ICheckoutFormInputs);
-  value: TFormInputValue;
+export interface ICheckoutStepsCompletion {
+  first: boolean;
+  second: boolean;
+  third: boolean;
+  fourth: boolean;
 }
 
 // Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
-  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   isBillingSameAsDelivery: boolean;
+  deliveryNewAddress: IDeliveryAddressState;
+  billingNewAddress: IBillingAddressState;
+  deliveryAddressInputsConfig: IDeliveryObjectConfigInputStable;
+  billingAddressInputsConfig: IBillingObjectConfigInputStable;
+  addressesCollection: IAddressItem[] | null;
+  countriesCollection: ICountries[] | null;
+  selections: IAddressesSelections | null;
+  currentValuesInSelections: ICurrentValuesInSelections;
+  isAddressesFulfilled: boolean;
+  extraAddressesOptions: IExtraAddressesOptions | null;
+  isUserLoggedIn: boolean;
 };
+
+export interface IParamInputValidity {
+  value: TFormInputValue;
+  fieldConfig: IConfigInputStable;
+}
+
+export interface IParamFormValidity {
+  form: IDeliveryAddressState | IBillingAddressState;
+  fieldsConfig: IDeliveryObjectConfigInputStable | IBillingObjectConfigInputStable;
+}

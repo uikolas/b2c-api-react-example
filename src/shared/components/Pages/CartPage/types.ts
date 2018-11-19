@@ -8,6 +8,7 @@ export interface CartPageProps extends WithStyles<typeof styles> {
   items: Array<ICartItem>;
   totals: ICartTotals;
   cartId: TCartId;
+  totalQty: number;
   isUserLoggedIn: boolean;
   anonymId: string;
   updateItemInCartAction: Function;

@@ -18,15 +18,17 @@ import { createCartItemAddToCart } from 'src/shared/helpers/cart/item';
 import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { CartImage } from 'src/shared/components/Common/CartImage';
+import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { CartTotal } from 'src/shared/components/Common/CartTotal';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
+import {MatchedRoute} from "react-router-config";
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
   private listRef: React.RefObject<HTMLDivElement> = React.createRef();
+  private designImgWidth: number = 0.2;
 
   public state: CartPageState = {
     heightListItem: 129,
@@ -47,8 +49,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   }
 
   private setListItemHeight = () => {
-    if (this.listRef && this.listRef.current && this.listRef.current.offsetWidth * 0.2 !== this.state.heightListItem) {
-      this.setState({heightListItem: this.listRef.current.offsetWidth * 0.2});
+    if (this.listRef
+      && this.listRef.current
+      && Math.floor(this.listRef.current.offsetWidth * this.designImgWidth) !== Math.floor(this.state.heightListItem)) {
+        this.setState({heightListItem: this.listRef.current.offsetWidth * this.designImgWidth});
     }
   };
 
@@ -103,7 +107,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
   };
 
   public render() {
-    const {classes, items, totals, isUserLoggedIn} = this.props;
+    const {classes, items, totals, isUserLoggedIn, totalQty} = this.props;
 
     if (!items || !items.length) {
       return (
@@ -123,7 +127,9 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
     const rows = items.map((item: ICartItem) => {
       const quantities: number[] = [];
-      const maxItems = item.availableQuantity < 10 ? item.availableQuantity : 10;
+      const maxItems = item.availableQuantity <= 10
+        ? item.availableQuantity
+        : item.quantity > 10 ? item.quantity : 10;
 
       for (let i = 0; i <= maxItems; i++) {
         quantities.push(i);
@@ -136,9 +142,10 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
           divider
           className={ classes.listItem }
         >
-          <CartImage
+          <SquareImage
             image={ item.image }
-            size={this.state.heightListItem}
+            size={ this.state.heightListItem }
+            alt={ item.name }
           />
           <div className={classes.itemWrapper}>
             <div className={classes.itemName}>{ item.name }</div>
@@ -173,8 +180,8 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               value={item.quantity}
               onChange={this.handleChangeQty}
               variant="outlined"
-              InputProps={{
-                className: classes.select,
+              SelectProps={{
+                SelectDisplayProps: {className: classes.select}
               }}
             >
               {
@@ -222,9 +229,9 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               <span>
                 { isUserLoggedIn ? 'Cart' : 'Cart (guest)' }
               </span>
-              <span>{ ` has ${items.length} ` }</span>
+              <span>{ ` has ${totalQty} ` }</span>
               <FormattedPlural
-                value={items.length}
+                value={totalQty}
                 one='item'
                 other='items'
               />

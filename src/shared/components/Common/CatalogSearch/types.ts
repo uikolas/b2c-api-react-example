@@ -18,5 +18,6 @@ export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, Fly
 
 export interface CatalogState {
   value: string;
+  completionValue?: string;
   heightListItem: number;
 }

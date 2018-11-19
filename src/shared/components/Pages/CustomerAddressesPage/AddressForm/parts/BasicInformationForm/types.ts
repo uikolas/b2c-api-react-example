@@ -7,4 +7,5 @@ export interface BasicInformationFormProps extends WithStyles<typeof styles> {
   firstName: string;
   lastName: string;
   handleChange(): void;
+  handleChangeSalutation(): void;
 }

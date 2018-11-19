@@ -1,22 +1,11 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import {
-  getCheckoutDataInitFulfilledStateAction,
-  getCheckoutDataInitPendingStateAction,
-  getCheckoutDataInitRejectedStateAction,
-  sendCheckoutDataFulfilledStateAction,
-  sendCheckoutDataPendingStateAction,
-  sendCheckoutDataRejectedStateAction,
-} from 'src/shared/actions/Pages/Checkout';
-import {
-  IBillingAddress,
-  IShippingAddress,
-} from 'src/shared/interfaces/checkout';
+import {ICheckoutRequest} from "src/shared/interfaces/checkout/index";
 
 
 export class CheckoutService {
-  public static async getCheckoutData(dispatch: Function, payload: any): Promise<any> {
+  public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -48,7 +37,7 @@ export class CheckoutService {
     }
   }
 
-  public static async sendOrderData(dispatch: Function, payload: any): Promise<any> {
+  public static async sendOrderData(dispatch: Function, payload: ICheckoutRequest): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);

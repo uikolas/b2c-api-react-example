@@ -1,25 +1,30 @@
+import {ChangeEvent} from "react";
 import {
-  ICheckoutFormsProps,
+  ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {ICheckoutAddress, ISameAsDelivery} from "src/shared/interfaces/checkout/index";
+import {ISameAsDelivery} from "src/shared/interfaces/checkout/index";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
-  IBillingSelection,
-  IDeliverySelection,
+  ICheckoutAddressState,
+  IObjectConfigInputStable,
   TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {ICountries} from "src/shared/reducers/Common/Init";
 
 
 // Base handlers for checkout's page forms
 export interface IBaseCheckoutFormHandler {
   submitHandler: TCheckoutPageContext["submitHandler"];
-  inputChangeHandler: TCheckoutPageContext["inputChangeHandler"];
+  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
 }
 
 // Param to create address forms
 export interface IAddressParams extends IBaseCheckoutFormHandler {
-  addressData: ICheckoutAddress;
+  addressData: ICheckoutAddressState;
+  addressInputsConfig: IObjectConfigInputStable;
+  countriesCollection: ICountries[] | null;
   listFieldNameToChangeHandler?: {
     [key: string]: IFormField["onChangeOwnHandler"]
   };
@@ -32,15 +37,13 @@ export interface ISameAsDeliveryParams extends IBaseCheckoutFormHandler {
 
 // Param to create saved addresses form
 export interface IAddressesParams extends IBaseCheckoutFormHandler {
-  addressesCollection: ICheckoutFormsProps["addressesCollection"];
-  selections: IDeliverySelection | IBillingSelection;
+  addressesCollection: IAddressItem[] | null;
   extraAddressesOptions: IExtraAddressesOptions["delivery"] | IExtraAddressesOptions["billing"] | null;
+  currentValueInSelection: ICurrentValuesInSelections["delivery"] | ICurrentValuesInSelections["billing"];
 }
 
 export interface IDeliveryAddressesParams extends IAddressesParams {
-  selections: IDeliverySelection;
 }
 
 export interface IBillingAddressesParams extends IAddressesParams {
-  selections: IBillingSelection;
 }

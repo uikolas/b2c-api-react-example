@@ -48,8 +48,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   quantityForm: {
     width: '20%',
-    textAlign: 'right',
-    paddingRight: theme.spacing.unit,
+    paddingLeft: 'calc(20% - 60px)',
   },
   priceWrapper: {
     width: '20%',
@@ -69,16 +68,25 @@ export const styles = (theme: Theme) => createStyles({
   },
   mainCurrency: {
     fontSize: theme.appFixedDimensions.fontSize.large,
+    letterSpacing: '0.5px',
   },
   eachCurrency: {
     fontSize: theme.appFixedDimensions.fontSize.medium,
   },
   select: {
-    width: '50px',
+    width: '52px',
     height: '22px',
+    padding: 0,
+    paddingLeft: '8px',
   },
   shippingMsg: {
     textTransform: 'none',
     marginTop: `-${theme.spacing.unit * 3}px`,
   },
+  menuItem: {
+    padding: 0,
+    paddingLeft: '6px',
+    textAlign: 'left',
+  }
+
 });

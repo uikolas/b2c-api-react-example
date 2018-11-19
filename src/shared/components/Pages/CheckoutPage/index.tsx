@@ -7,13 +7,34 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from './connect';
 import { styles } from './styles';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
-import {ICheckoutFieldInput, ICheckoutPageProps, ICheckoutPageState} from "./types";
+import {
+  ICheckoutPageProps,
+  ICheckoutPageState,
+  isAddNewBillingValue,
+  isAddNewDeliveryValue,
+  isSameAsDeliveryValue
+} from "./types";
 import {CheckoutPageContext} from "./context";
-import {getExtraAddressesOptions} from "src/shared/components/Pages/CheckoutPage/helpers";
+import {
+  checkAddressFormValidity,
+  checkFormInputValidity,
+  getDefaultAddressId,
+  getExtraAddressesOptions,
+} from "src/shared/components/Pages/CheckoutPage/helpers";
+import {
+  billingConfigInputStable,
+  billingNewAddressDefault,
+  deliveryConfigInputStable,
+  deliveryNewAddressDefault,
+  stepCompletionCheckoutDefault,
+} from "src/shared/components/Pages/CheckoutPage/constants";
+import {inputSaveErrorText} from "src/shared/constants/messages/errors";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 
 @connect
@@ -28,6 +49,15 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       selectedAddressId: null,
       isAddNew: false,
       isSameAsDelivery: false,
+    },
+    deliveryNewAddress: {
+      ...deliveryNewAddressDefault
+    },
+    billingNewAddress: {
+      ...billingNewAddressDefault
+    },
+    stepsCompletion: {
+      ...stepCompletionCheckoutDefault
     }
   };
 
@@ -39,8 +69,24 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
     this.initRequestAddressesData();
+
+    // If we get saved addressesCollection
+    if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
+
+      const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
+      if (defaultValueDelivery) {
+        this.handleDeliverySelection(defaultValueDelivery);
+      }
+
+      const defaultValueBilling = getDefaultAddressId(this.props.addressesCollection, 'billing');
+      if (defaultValueBilling) {
+        this.handleBillingSelection(defaultValueBilling);
+      }
+    }
+
   }
 
+  // TODO: Remove it after we get access to checkout endpoint
   private initRequestAddressesData = (): void => {
     const {customerReference,
       addressesCollection,
@@ -62,30 +108,130 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('handleSubmit ');
   }
 
-  public handleInputChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>): void => {
-    // const { name, value }: ICheckoutFieldInput = event.target;
+  public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                  ): void => {
     const { name, value } = event.target;
-    console.info('handleInputChange name', event.target.name);
-    console.info('handleInputChange value', event.target.value);
     if (name === 'deliverySelection') {
-      this.handleDeliverySelection(event.target.name, event.target.value);
-    } else if (name === 'billingSelection' || name === 'sameAsDelivery') {
-      this.handleBillingSelection(event.target.name, event.target.value);
+      this.handleDeliverySelection(value);
+    } else if (name === 'billingSelection' || name === isSameAsDeliveryValue) {
+      this.handleBillingSelection(value);
     }
-
   }
 
-  private handleDeliverySelection = (name: string, value: string): boolean => {
-    console.info('handleDeliverySelection name', name);
-    console.info('handleDeliverySelection value', value);
+  public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                ): void => {
+    // TODO: checkAddressFormValidity change on blur event
+    const name: any = event.target.name;
+    const cleanValue = event.target.value.trim();
+    if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
+    const key: any = name;
 
-    if (value === 'isAddNewDelivery') {
+    const isInputValid = checkFormInputValidity({
+      value: cleanValue,
+      fieldConfig: deliveryConfigInputStable[key],
+    });
+
+    const newInputState = {
+      [key]: {
+        value: cleanValue,
+        isError: !isInputValid,
+      }
+    };
+
+    const isFormValid = checkAddressFormValidity({
+      form: {
+        ...this.state.deliveryNewAddress,
+        ...newInputState,
+      },
+      fieldsConfig: deliveryConfigInputStable,
+    });
+
+    this.setState((prevState: ICheckoutPageState) => {
+      if (prevState.deliveryNewAddress[key].value === cleanValue) {
+        return;
+      }
+      return ({
+        ...prevState,
+        deliveryNewAddress: {
+          ...prevState.deliveryNewAddress,
+          ...newInputState,
+        },
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          first: isFormValid,
+        }
+      });
+    });
+  }
+
+  public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                ): void => {
+    // TODO: checkAddressFormValidity change on blur event
+    const name: any = event.target.name;
+    const cleanValue = event.target.value.trim();
+    if (!this.state.billingNewAddress.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
+    const key: any = name;
+
+    const isInputValid = checkFormInputValidity({
+      value: cleanValue,
+      fieldConfig: billingConfigInputStable[key],
+    });
+
+    const newInputState = {
+      [key]: {
+        value: cleanValue,
+        isError: !isInputValid,
+      }
+    };
+
+    const isFormValid = checkAddressFormValidity({
+      form: {
+        ...this.state.billingNewAddress,
+        ...newInputState,
+      },
+      fieldsConfig: billingConfigInputStable,
+    });
+
+    this.setState((prevState: ICheckoutPageState) => {
+
+      if (prevState.billingNewAddress[key].value === cleanValue) {
+        return;
+      }
+
+      return ({
+        ...prevState,
+        billingNewAddress: {
+          ...prevState.billingNewAddress,
+          ...newInputState,
+          [key]: {
+            value: cleanValue,
+            isError: false,
+          },
+        },
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          second: isFormValid,
+        }
+      });
+    });
+  }
+
+  private handleDeliverySelection = (value: string): boolean => {
+    if (value === isAddNewDeliveryValue) {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
           deliverySelection: {
             selectedAddressId: null,
             isAddNew: true,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            first: false,
+          },
         });
       });
       return true;
@@ -95,38 +241,46 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           deliverySelection: {
             selectedAddressId: value,
             isAddNew: false,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            first: true,
+          },
         });
       });
       return true;
     }
-    return false;
   }
 
-  private handleBillingSelection = (name: string, value: string): boolean => {
-    console.info('handleBillingSelection name', name);
-    console.info('handleBillingSelection value', value);
-
-    if (value === 'isAddNewBilling') {
+  private handleBillingSelection = (value: string): boolean => {
+    if (value === isAddNewBillingValue) {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
           billingSelection: {
             selectedAddressId: null,
             isAddNew: true,
             isSameAsDelivery: false,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            second: false,
+          },
         });
       });
       return true;
-    } else if (value === 'sameAsDelivery') {
+    } else if (value === isSameAsDeliveryValue) {
       this.setState( (prevState: ICheckoutPageState) => {
         const newSameValue = !prevState.billingSelection.isSameAsDelivery;
         return ({
           billingSelection: {
             selectedAddressId: null,
-            isAddNew: newSameValue ? false : true,
+            isAddNew: !newSameValue,
             isSameAsDelivery: newSameValue,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            second: true,
+          },
         });
       });
       return true;
@@ -137,12 +291,35 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             selectedAddressId: value,
             isAddNew: false,
             isSameAsDelivery: false,
-          }
+          },
+          stepsCompletion: {
+            ...prevState.stepsCompletion,
+            second: true,
+          },
         });
       });
       return true;
     }
-    return false;
+  }
+
+  private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
+    return this.state.billingSelection.selectedAddressId
+           || (this.state.billingSelection.isAddNew && isAddNewBillingValue)
+           || (this.state.billingSelection.isSameAsDelivery && isSameAsDeliveryValue)
+           || null;
+  }
+
+  private getCurrentValueInDeliverySelection = (): IAddressItem["id"] | string | null => {
+    return this.state.deliverySelection.selectedAddressId
+           || (this.state.deliverySelection.isAddNew && isAddNewDeliveryValue)
+           || null;
+  }
+
+  public sendCheckoutDataForOrder = (event: ClickEvent) => {
+    event.preventDefault();
+    console.info('Send checkout data');
+
+    // this.props.sendCheckoutData();
   }
 
   public render(): JSX.Element {
@@ -152,15 +329,19 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       products,
       totals,
       addressesCollection,
-      isAddressesLoading,
+      isAddressesCollectionExist,
       isAddressesFulfilled,
       isUserLoggedIn,
+      countriesCollection,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
     console.info('CheckoutPage props: ', this.props);
-    console.info('products: ', this.props.products);
-    const isAddressesCollectionExist = Boolean(Array.isArray(addressesCollection) && addressesCollection.length > 0);
+
+    const isFirstPanelDisabled = false;
+    const isSecondPanelDisabled = !this.state.stepsCompletion.first;
+    const isThirdPanelDisabled = !this.state.stepsCompletion.second;
+    const isFourthPanelDisabled = !this.state.stepsCompletion.third;
 
     return (
       <AppMain>
@@ -169,50 +350,55 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         <CheckoutPageContext.Provider
           value={{
             submitHandler: this.handleSubmit,
-            inputChangeHandler: this.handleInputChange,
+            selectionsChangeHandler: this.handleSelectionsChange,
+            handleDeliveryInputs: this.handleDeliveryInputs,
+            handleBillingInputs: this.handleBillingInputs,
             isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
+            deliveryNewAddress: this.state.deliveryNewAddress,
+            billingNewAddress: this.state.billingNewAddress,
+            deliveryAddressInputsConfig: deliveryConfigInputStable,
+            billingAddressInputsConfig: billingConfigInputStable,
+            addressesCollection,
+            countriesCollection,
+            selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},
+            currentValuesInSelections: {
+              delivery: this.getCurrentValueInDeliverySelection(),
+              billing: this.getCurrentValueInBillingSelection(),
+            },
+            extraAddressesOptions: getExtraAddressesOptions(isAddressesCollectionExist),
+            isAddressesFulfilled,
+            isUserLoggedIn,
           }}
         >
           <Grid container className={classes.container}>
             <Grid item xs={12} md={7}>
               <CheckoutForms
-                shippingAddress={{
-                  firstName: 'firstName',
-                  lastName: 'lastName',
-                  salutation: 'Mr',
-                  address1: 'address1 str',
-                  address2: '37',
-                  address3: '',
-                  zipCode: '33222',
-                  city: 'Bochum',
-                  country: 'USA',
-                  company: '',
-                  phone: '+49 1234 5060',
-                  iso2Code: 'RRR'
+                panels={{
+                  first: {
+                    title: "Delivery Address",
+                    isDisabled: isFirstPanelDisabled
+                  },
+                  second: {
+                    title: "Billing Address",
+                    isDisabled: isSecondPanelDisabled
+                  },
+                  third: {
+                    title: "Shipment",
+                    isDisabled: isThirdPanelDisabled
+                  },
+                  fourth: {
+                    title: "Payment",
+                    isDisabled: isFourthPanelDisabled
+                  },
                 }}
-                billingAddress={{
-                  firstName: 'billing firstName',
-                  lastName: 'billing lastName',
-                  salutation: 'Mr',
-                  address1: 'address1 str billing',
-                  address2: '32',
-                  address3: '',
-                  zipCode: '344422',
-                  city: 'Bochum',
-                  country: 'USA',
-                  company: '',
-                  phone: '+49 1234 5060',
-                  iso2Code: 'RRR'
-                }}
-                addressesCollection={addressesCollection}
-                selections={{delivery: this.state.deliverySelection, billing: this.state.billingSelection}}
-                extraAddressesOptions={getExtraAddressesOptions(isAddressesCollectionExist)}
-                isAddressesFulfilled={isAddressesFulfilled}
-                isUserLoggedIn={isUserLoggedIn}
               />
             </Grid>
             <Grid item xs={12} md={5}>
-              <CartData products={products} totals={totals}/>
+              <CartData
+                products={products}
+                totals={totals}
+                sendData={this.sendCheckoutDataForOrder}
+              />
             </Grid>
           </Grid>
         </CheckoutPageContext.Provider>

@@ -49,15 +49,18 @@ export class AddressForm extends React.Component<Props, State> {
   ): void => this.setState(() => ({iso2Code: event.target.value}));
   public handleChange = ({target: {name, value}}: any) => this.setState(state => ({...state, [name]: value}));
   public handleCheckbox = (
-    event: any, checked: boolean,
-  ) => this.setState(state => ({...state, [event.target.id]: checked}));
+    event: React.ChangeEvent<HTMLInputElement>, checked: boolean,
+  ) => {
+    event.persist();
+    this.setState(state => ({...state, [event.target.id]: checked}));
+  }
   public handleSubmitForm = (e: any) => {
     e.preventDefault();
     const {salutation, firstName, lastName, address1, address2, zipCode, city, iso2Code} = this.state;
 
     this.setState(() => ({submitted: true}));
 
-    if (!salutation || firstName || lastName || address1 || address2 || zipCode || city || iso2Code) {
+    if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
       toast.warn(emptyRequiredFieldsErrorText);
       return;
     }
@@ -76,7 +79,9 @@ export class AddressForm extends React.Component<Props, State> {
     const {classes, currentAddress, countries, routerGoBack} = this.props;
     const {submitted, salutation, firstName, lastName, iso2Code, zipCode, city} = this.state;
     const pageTitle = `${currentAddress ? 'Edit' : 'Add'} Address Information`;
-    const basicInformationFormProps = {submitted, salutation, firstName, lastName, handleChange: this.handleChange};
+    const basicInformationFormProps = {
+      submitted, salutation, firstName, lastName,
+      handleChange: this.handleChange, handleChangeSalutation: this.handleChangeSalutation};
     const addressInformationForm = {zipCode, submitted, city, iso2Code, countries};
 
     return (

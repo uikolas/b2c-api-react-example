@@ -164,7 +164,7 @@
     "cpy:local:dev": "cpy local_dev.env ./ --rename=.env",
     "cpy:local:docker": "cpy local_docker.env ./ --rename=.env",
     "cpy:prod": "cpy prod.env ./ --rename=.env",
-    "build:web": "node --max_old_space_size=4096 node_modules/.bin/webpack-cli --config ./web-webpack-config.js --progress --profile --colors",
+    "build:web": "node --max_old_space_size=3072 node_modules/.bin/webpack-cli --config ./web-webpack-config.js --progress --profile --colors",
     "build:web:prod": "cross-env NODE_ENV=production npm run build:web",
     "dist": "npm run build:web:prod",
     "dist:dev": "npm run cpy:local:dev && npm run build:web",

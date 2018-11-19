@@ -6,22 +6,27 @@ import {
 import {
   IReduxState,
 } from 'src/typings/app';
+import { IAddressItem } from "src/shared/interfaces/addresses";
 import {
-  IBillingAddress,
-  IShippingAddress,
+  IPayment,
+  IShipment,
 } from 'src/shared/interfaces/checkout';
 
 export interface ICheckoutState extends IReduxState {
   data: {
-    billingAddress?: IBillingAddress;
-    shippingAddress?: IShippingAddress;
+    billingAddress?: IAddressItem | null;
+    deliveryAddress?: IAddressItem | null;
+    payments?: Array<IPayment>;
+    shipments?: Array<IShipment>;
   };
 }
 
 export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
-    shippingAddress: null,
+    deliveryAddress: null,
+    payments: [],
+    shipments: [],
   },
 };
 
@@ -46,7 +51,7 @@ export const pageCheckout = produce<ICheckoutState>(
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
         draft.data.billingAddress = action.billingAddress || null;
-        draft.data.shippingAddress = action.shippingAddress || null;
+        draft.data.deliveryAddress = action.deliveryAddress || null;
 
         draft.error = false;
         draft.pending = false;

@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppPrice } from '../AppPrice';
-import { CartImage } from '../CartImage';
+import { SquareImage } from '../SquareImage';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
@@ -114,9 +114,40 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   private renderInputComponent = (inputProps: any) => {
     const {classes, ref, ...other} = inputProps;
+    let suggestQuery: string = this.state.value;
+
+    if (this.props.completion.length) {
+      this.props.completion.some((data: string) => {
+        if (data.startsWith(suggestQuery.toLowerCase())) {
+          suggestQuery = data;
+          return true;
+        }
+
+        return false;
+      });
+    }
+    const matches = match(suggestQuery, this.state.value);
+    const parts = parse(suggestQuery, matches);
 
     return (
       <form action="/" method="GET" onSubmit={this.handleFullSearch}>
+        <div className={classes.completionInput}>
+          {
+            parts.length
+              ? parts.map((part, index: number) => {
+                return part.highlight ? (
+                  <span key={ String(index) } className={classes.hiddenPart}>
+                    { part.text }
+                  </span>)
+                  : (
+                    <strong key={ String(index) } className={classes.visiblePart}>
+                      { part.text }
+                    </strong>
+                  );
+                })
+              : null
+          }
+        </div>
         <TextField
           type="text"
           variant="outlined"
@@ -157,9 +188,10 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         style={{ textDecoration: 'none' }}
       >
         <MenuItem selected={ isHighlighted } component="div" className={classes.menuItem}>
-          <CartImage
+          <SquareImage
             image={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
             size={this.state.heightListItem}
+            alt={suggestion.abstract_name}
           />
 
           <div className={ classes.description }>
@@ -266,20 +298,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
     return (
       <div { ...options.containerProps }>
-        <Typography variant="title" className={classes.searchTitle}>
-          { parts.map((part, index: number) => {
-            return part.highlight ? (
-              <span key={ String(index) } style={ {fontWeight: 500} }>
-                    { part.text }
-                  </span>
-            ) : (
-              <strong key={ String(index) } style={ {fontWeight: 300, color: '#D3D3D3'} }>
-                { part.text }
-              </strong>
-            );
-          })
-          }
-        </Typography>
         <div className={classes.insideContWrapper}>
           <div>
             {completions}

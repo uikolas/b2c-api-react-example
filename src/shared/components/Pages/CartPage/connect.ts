@@ -16,7 +16,7 @@ import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
 const mapStateToProps = (state: any, ownProps: any) => {
   const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);
   const routerProps: RouteProps = state.routing ? state.routing : {};
-  const items: ICartItem[] = getProductsFromCart(state, ownProps);
+  const {items, totalQty}: {items: ICartItem[], totalQty: number} = getProductsFromCart(state, ownProps);
   const cartId: TCartId = getCartId(state, ownProps);
   const totals: ICartTotals = getCartTotals(state, ownProps);
   const anonymId: string = getAnonymId(state, ownProps);
@@ -29,6 +29,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
       cartId,
       isUserLoggedIn,
       anonymId,
+      totalQty,
     }
   );
 };

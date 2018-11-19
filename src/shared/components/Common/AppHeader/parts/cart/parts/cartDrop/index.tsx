@@ -4,6 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
 import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
 
 import { ProductItem } from '../productItem';
 import { CartDropProps as Props } from './types';
@@ -31,7 +32,7 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         <ul className={ classes.cartDropProductsList }>
           { cartItems.map(cartItem => (
-            <li key={ cartItem.sku }>
+            <li key={cartItem.sku}>
               <ProductItem productData={ cartItem } deleteItem={ this.deleteFromCart }/>
             </li>
           )) }
@@ -39,7 +40,10 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         <div className={ classes.cartTotal }>
           <span>Total</span>
-          <span>{ totals.grandTotal }</span>
+          <AppPrice
+            value={ totals.grandTotal }
+            extraClassName={ classes.priceTotal }
+          />
         </div>
 
         <div className={ classes.cartBtns }>

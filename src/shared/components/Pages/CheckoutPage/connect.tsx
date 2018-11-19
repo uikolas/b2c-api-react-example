@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getCounties, ICountries, isAppInitiated,} from 'src/shared/reducers/Common/Init';
+import {getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Common/Init';
 import {
   isPageProductStateFulfilled,
   isPageProductStateInitiated,
   isPageProductStateLoading,
   isPageProductStateRejected,
 } from "src/shared/reducers/Pages/Product";
-import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
+import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
+import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
   getProductsFromCart,
@@ -19,12 +20,15 @@ import {
 import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer";
 import {getAddressesAction} from "src/shared/actions/Pages/Addresses";
 import {
+  checkAddressesCollectionExist,
   getAddressesCollectionFromStore,
   getCurrentAddressFromStore,
   isPageAddressesFulfilled,
   isPageAddressesStateLoading
 } from "src/shared/reducers/Pages/Addresses";
 import {isStateLoading} from "src/shared/reducers/index";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -35,15 +39,16 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
   const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
 
-  const products: ICartItem[] = getProductsFromCart(state, ownProps);
+  const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
   const totals: ICartTotals = getCartTotals(state, ownProps);
   const isCartFulfilled: boolean = isCartStateFulfilled(state, ownProps);
   const isCartRejected: boolean = isCartStateRejected(state, ownProps);
   const isCartLoading = isCartStateLoading(state, ownProps);
   // from ILoginState
   const customerReference = getCustomerReference(state, ownProps);
-  const currentAddress = getCurrentAddressFromStore(state, ownProps);
-  const addressesCollection = getAddressesCollectionFromStore(state, ownProps);
+  const currentAddress: IAddressItem | null  = getCurrentAddressFromStore(state, ownProps);
+  const addressesCollection: IAddressItem[] | null = getAddressesCollectionFromStore(state, ownProps);
+  const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
   const isAddressesLoading = isPageAddressesStateLoading(state, ownProps);
   const isAddressesFulfilled = isPageAddressesFulfilled(state, ownProps);
   // from global state
@@ -58,7 +63,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isLoading,
     isRejected,
     isFulfilled,
-    products,
+    products: items,
     totals,
     isCartFulfilled,
     isCartRejected,
@@ -66,6 +71,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     customerReference,
     currentAddress,
     addressesCollection,
+    isAddressesCollectionExist,
     isAddressesLoading,
     isAddressesFulfilled,
     isAppStateLoading,
@@ -78,5 +84,7 @@ export const connect = reduxify(
   (dispatch: Function) => ({
     dispatch,
     getAddressesList: (customerRef: TCustomerReference) => dispatch(getAddressesAction(customerRef)),
+    getCheckoutData: (payload: ICheckoutRequest) => dispatch(getCheckoutDataAction(payload)),
+    sendCheckoutData: (payload: ICheckoutRequest) => dispatch(sendCheckoutDataAction(payload)),
   }),
 );
