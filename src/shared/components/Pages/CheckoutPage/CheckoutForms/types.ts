@@ -1,24 +1,23 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
 import {
-  ISameAsDelivery,
-} from "src/shared/interfaces/checkout";
-import { IAddressItem } from "src/shared/interfaces/addresses";
-import {
   IBillingSelection,
   IDeliverySelection,
+  TIsAddNewBillingValue,
+  TIsAddNewDeliveryValue,
+  TIsSameAsDeliveryValue,
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
-import {ICountries} from "src/shared/reducers/Common/Init";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
+
 
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
-  shippingAddress: IAddressItem;
-  billingAddress: IAddressItem;
-  addressesCollection: IAddressItem[] | null;
-  selections: IAddressesSelections;
-  isAddressesFulfilled: boolean;
-  extraAddressesOptions: IExtraAddressesOptions | null;
-  isUserLoggedIn: boolean;
+  panels: {
+    first: IPanelData;
+    second: IPanelData;
+    third: IPanelData;
+    fourth: IPanelData;
+  };
 }
 
 export type TAddressType = 'delivery' | 'billing';
@@ -31,4 +30,14 @@ export interface IExtraAddressesOptions {
 export interface IAddressesSelections {
   delivery: IDeliverySelection;
   billing: IBillingSelection;
+}
+
+export interface ICurrentValuesInSelections {
+  delivery: TIsAddNewDeliveryValue | IAddressItem["id"] | null;
+  billing: TIsAddNewBillingValue | TIsSameAsDeliveryValue | IAddressItem["id"] | null;
+}
+
+export interface IPanelData {
+  title: string;
+  isDisabled: boolean;
 }

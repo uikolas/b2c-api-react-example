@@ -1,5 +1,19 @@
-import { ICustomerProfileIdentity } from "src/shared/interfaces/customer";
-import { IAddressItem } from "src/shared/interfaces/addresses";
+import {
+  ICustomerProfileIdentity,
+  TCustomerFirstName,
+  TCustomerLastName,
+  TCustomerSalutation
+} from "src/shared/interfaces/customer";
+import {
+  IAddressItem,
+  TAddress,
+  TAddressCity,
+  TAddressCompany,
+  TAddressCountry,
+  TAddressPhone,
+  TAddressZipCode,
+  TIso2Code
+} from "src/shared/interfaces/addresses";
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;
@@ -33,6 +47,17 @@ export interface ICheckoutRequest {
     method: IShipment,
   };
 }
+
+export type TAddressInputValue = TCustomerFirstName
+  | TCustomerLastName
+  | TCustomerSalutation
+  | TAddress
+  | TAddressZipCode
+  | TAddressCity
+  | TAddressCountry
+  | TAddressCompany
+  | TAddressPhone
+  | TIso2Code;
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;

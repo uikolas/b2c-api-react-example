@@ -32,7 +32,7 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         <ul className={ classes.cartDropProductsList }>
           { cartItems.map(cartItem => (
-            <li key={ cartItem.sku }>
+            <li key={cartItem.sku}>
               <ProductItem productData={ cartItem } deleteItem={ this.deleteFromCart }/>
             </li>
           )) }

@@ -18,24 +18,37 @@ import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/inde
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
   const {
     classes,
-    addressData,
-    selections,
-    addressesCollection,
-    extraAddressesOptions,
-    isAddressesFulfilled,
-    isUserLoggedIn,
   }  = props;
 
   return (
     <CheckoutPageContext.Consumer>
-      {({submitHandler, inputChangeHandler}) => {
-        const deliveryParams = {addressData, submitHandler, inputChangeHandler};
-        const savedDeliveryParams = {
+      {({
+          submitHandler,
+          selectionsChangeHandler,
+          handleDeliveryInputs,
+          deliveryNewAddress,
+          deliveryAddressInputsConfig,
           selections,
+          currentValuesInSelections,
           addressesCollection,
           extraAddressesOptions,
+          isAddressesFulfilled,
+          isUserLoggedIn,
+          countriesCollection,
+      }) => {
+        const deliveryParams = {
+          addressData: deliveryNewAddress,
+          addressInputsConfig: deliveryAddressInputsConfig,
+          countriesCollection,
           submitHandler,
-          inputChangeHandler
+          inputChangeHandler: handleDeliveryInputs,
+        };
+        const savedDeliveryParams = {
+          currentValueInSelection: currentValuesInSelections.delivery,
+          addressesCollection,
+          extraAddressesOptions: extraAddressesOptions.delivery,
+          submitHandler,
+          inputChangeHandler: selectionsChangeHandler,
         };
         const deliveryFormSettings = getAddressFormSettings('delivery', deliveryParams);
         const savedAddressFormSettings = getDeliverySavedAddressFormSettings('savedDelivery', savedDeliveryParams);
@@ -50,7 +63,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : inputsForm}
-                    {selections.isAddNew ? inputsForm : null}
+                    {selections.delivery.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : inputsForm
               }

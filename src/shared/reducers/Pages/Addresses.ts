@@ -138,6 +138,13 @@ export function getAddressesCollectionFromStore(state: any, props: any): IAddres
     : null;
 }
 
+export const checkAddressesCollectionExist = (state: any, props: any): boolean => {
+  return Boolean(isStateExist(state, props)
+    && state.pageAddresses.data.addresses
+    && state.pageAddresses.data.addresses.length
+  );
+};
+
 function isStateExist(state: any, props: any): boolean {
   return Boolean(state.pageAddresses.data);
 }

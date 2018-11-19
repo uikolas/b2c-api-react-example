@@ -15,7 +15,7 @@ import {
 export interface ICheckoutState extends IReduxState {
   data: {
     billingAddress?: IAddressItem | null;
-    shippingAddress?: IAddressItem | null;
+    deliveryAddress?: IAddressItem | null;
     payments?: Array<IPayment>;
     shipments?: Array<IShipment>;
   };
@@ -24,7 +24,7 @@ export interface ICheckoutState extends IReduxState {
 export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
-    shippingAddress: null,
+    deliveryAddress: null,
     payments: [],
     shipments: [],
   },
@@ -51,7 +51,7 @@ export const pageCheckout = produce<ICheckoutState>(
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
         draft.data.billingAddress = action.billingAddress || null;
-        draft.data.shippingAddress = action.shippingAddress || null;
+        draft.data.deliveryAddress = action.deliveryAddress || null;
 
         draft.error = false;
         draft.pending = false;
