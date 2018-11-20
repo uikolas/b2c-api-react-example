@@ -24,6 +24,10 @@ export const formStyles = (theme: Theme) => createStyles({
     "& legend svg": {
       height: 15,
       minWidth: 100,
+      "& path": {
+        fill: theme.appColors.black,
+        opacity: 1,
+      },
     }
   },
 });

@@ -22,7 +22,8 @@ import {
 import {CheckoutPageContext} from "./context";
 import {
   checkAddressFormValidity,
-  checkFormInputValidity, getCheckoutPanelsSettings,
+  checkFormInputValidity,
+  getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraAddressesOptions,
 } from "src/shared/components/Pages/CheckoutPage/helpers";
