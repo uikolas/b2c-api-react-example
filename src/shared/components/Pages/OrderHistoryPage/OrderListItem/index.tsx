@@ -35,10 +35,6 @@ export const OrderListItemBase: React.SFC<OrderListItemProps> = (props): JSX.Ele
               value={ id }
               onClick={ viewClickHandler }
             />
-            <SprykerButton
-              title={ reorderButton }
-              value={ id }
-            />
           </TableCell>
         </TableRow>
       ) }
