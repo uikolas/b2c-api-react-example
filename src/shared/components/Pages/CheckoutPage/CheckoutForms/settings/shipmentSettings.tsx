@@ -1,6 +1,6 @@
-import {
-  IShippingMethodsParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import * as React from 'react';
+
+import {IShippingMethodsParams} from "./types";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IShipmentMethod} from "src/shared/interfaces/checkout/index";
 
@@ -8,6 +8,8 @@ export const getShipmentMethodsFormSettings = (formName: string, params: IShippi
   const {
     shipmentMethods,
     currentValueShipmentMethod,
+    carrierName,
+    shipmentCarrierNameToIcon,
     submitHandler,
     inputChangeHandler,
   } = params;
@@ -23,8 +25,10 @@ export const getShipmentMethodsFormSettings = (formName: string, params: IShippi
           inputName: 'shipmentMethodSelection',
           inputValue: currentValueShipmentMethod,
           spaceNumber: 12,
+          isItemsInRow: true,
           isRequired: false,
-          label: 'Test',
+          label: carrierName,
+          labelIcon: shipmentCarrierNameToIcon[carrierName] ? shipmentCarrierNameToIcon[carrierName] : null,
           isError: false,
           radioItems: getRadioItems(shipmentMethods),
         }
@@ -60,8 +64,8 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
   if (shipmentMethod.price) {
     response += `${shipmentMethod.price}`;
   }
-  if (shipmentMethod.name) {
-    response += `${shipmentMethod.name}`;
+  if (shipmentMethod.shipmentDeliveryTime) {
+    response += `${shipmentMethod.shipmentDeliveryTime}`;
   }
 
   return response;

@@ -11,12 +11,20 @@ import {IShipmentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/
 import {
   getShipmentMethodsFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/shipmentSettings";
+import {PartnerIconDhl} from "src/shared/assets/icons/partnerIconDhl";
+import {PartnerIconHermes} from "src/shared/assets/icons/partnerIconHermes";
+import {IShippingMethodsParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
 export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.Element => {
   const {
     classes,
   }  = props;
+
+  const shipmentCarrierNameToIcon: IShippingMethodsParams["shipmentCarrierNameToIcon"] = {
+    DHL: <PartnerIconDhl />,
+    Hermes: <PartnerIconHermes />,
+  };
 
   return (
     <CheckoutPageContext.Consumer>
@@ -42,25 +50,25 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
           shipmentMethodsGrouped[shipmentMethod.carrierName].push(shipmentMethod);
         }
 
-        // TODO: Change any
         const shipmentMethodsForms: Array<JSX.Element> = [];
-        for (let groupName in shipmentMethodsGrouped) {
+        for (let carrierName in shipmentMethodsGrouped) {
           const shipmentMethodsParams = {
-            shipmentMethods: shipmentMethodsGrouped[groupName],
+            shipmentMethods: shipmentMethodsGrouped[carrierName],
             currentValueShipmentMethod,
+            carrierName,
+            shipmentCarrierNameToIcon,
             submitHandler,
             inputChangeHandler: selectionsChangeHandler,
           };
-          const shipmentMethodFormSettings = getShipmentMethodsFormSettings(`shipmentMethod-${groupName}`,
+          const shipmentMethodFormSettings = getShipmentMethodsFormSettings(`shipmentMethod-${carrierName}`,
                                                                             shipmentMethodsParams
           );
-          shipmentMethodsForms.push(<SprykerForm key={groupName} form={shipmentMethodFormSettings} />);
+          shipmentMethodsForms.push(<SprykerForm key={carrierName} form={shipmentMethodFormSettings} />);
         }
 
         return (
           <Grid container className={classes.root}>
-            <Grid item xs={12}>
-              Shipment
+            <Grid item xs={12} className={classes.shipmentMethodsParentForms}>
               {shipmentMethodsForms}
             </Grid>
           </Grid>

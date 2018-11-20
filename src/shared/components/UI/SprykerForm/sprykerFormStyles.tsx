@@ -74,6 +74,8 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
       border: `solid 1px ${theme.appColors.blue}`,
     },
   },
+  radioGroupLabel: {
+  },
   inputRadio: {
     padding: 0,
     border: `solid 1px ${theme.appColors.weakGrey}`,
@@ -81,6 +83,17 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     marginBottom: theme.spacing.unit * 1.5,
     marginLeft: 0,
     marginRight: 0,
+    width: "100%",
+  },
+  radioGroupInRow: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: theme.spacing.unit * 3,
+  },
+  inputItemsInRow: {
+    display: "flex",
+    width: "auto",
+    marginRight: theme.spacing.unit * 3,
   },
   checkedInputRadio: {
     border: `solid 1px ${theme.appColors.blue}`,

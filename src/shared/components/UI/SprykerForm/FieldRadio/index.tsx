@@ -18,7 +18,9 @@ export const FieldRadioBase: React.SFC<IFieldRadioProps> = (props): JSX.Element 
     currentMode,
     radioItems,
     label,
-    changeHandler
+    labelIcon,
+    changeHandler,
+    isItemsInRow,
   } = props;
 
   const isRadioItemsExist = (radioItems.length > 0);
@@ -30,31 +32,39 @@ export const FieldRadioBase: React.SFC<IFieldRadioProps> = (props): JSX.Element 
     <React.Fragment>
       <FormLabel
         component="legend"
-        classes={{root: classes.label}}
+        classes={{root: `${classes.label} ${classes.radioGroupLabel}`}}
       >
-        {label}
+        {labelIcon ? labelIcon : label}
       </FormLabel>
       <RadioGroup
         aria-label={label}
         name={inputName}
         value={currentMode}
         onChange={changeHandler}
+        classes={{root: `${isItemsInRow ? classes.radioGroupInRow : ''}`}}
       >
-        {radioItems.map((item: IRadioItem) => (
-          <FormControlLabel
-            value={item.value}
-            key={`${item.value}`}
-            classes={{
-              root: `${classes.inputRadio} ${ (currentMode === item.value) ? classes.checkedInputRadio : '' }`,
-              label: `${(currentMode === item.value) ? classes.checkedRadioLabel : '' }`,
-            }}
-            control={<Radio
-                      classes={{root: classes.radio, checked: classes.checkedRadio}}
-                     />
-            }
-            label={item.label}
-          />
-        ))}
+
+        {radioItems.map((item: IRadioItem) => {
+          return (
+            <FormControlLabel
+              value={item.value}
+              key={`${item.value}`}
+              classes={{
+                root: `${classes.inputRadio}
+                      ${ (currentMode === item.value) ? classes.checkedInputRadio : '' }
+                      ${isItemsInRow ? classes.inputItemsInRow : ''}
+                `,
+                label: `${(currentMode === item.value) ? classes.checkedRadioLabel : '' }`,
+              }}
+              control={<Radio
+                classes={{root: classes.radio, checked: classes.checkedRadio}}
+              />
+              }
+              label={item.label}
+            />
+          );
+        })}
+
       </RadioGroup>
     </React.Fragment>
   );

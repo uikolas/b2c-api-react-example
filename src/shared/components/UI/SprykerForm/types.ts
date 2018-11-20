@@ -37,6 +37,10 @@ export interface IFormField {
   menuItemFirst?: SprykerSelectProps["menuItemFirst"];
   title?: SprykerSelectProps["title"];
   radioItems?: Array<IRadioItem>;
+  isItemsInRow?: boolean;
+  labelIcon?: JSX.Element | null;
+  WrapperParentComponent?: React.SFC | null;
+  WrapperChildComponent?: React.SFC | null;
 }
 
 export interface IFormSettings {

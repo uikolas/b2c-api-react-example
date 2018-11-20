@@ -52,4 +52,8 @@ export interface IBillingAddressesParams extends IAddressesParams {
 export interface IShippingMethodsParams extends IBaseCheckoutFormHandler {
   shipmentMethods: Array<IShipmentMethod> | null;
   currentValueShipmentMethod: IShipmentMethod["id"] | null;
+  carrierName: IShipmentMethod["carrierName"];
+  shipmentCarrierNameToIcon: {
+    [key: string]: JSX.Element;
+  };
 }
