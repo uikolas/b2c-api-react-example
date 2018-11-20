@@ -330,8 +330,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       isAddressesFulfilled,
       isAppStateLoading,
       isCartFulfilled,
+      isAppDataSet,
     } = this.props;
-    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled) {
+    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled || !isAppDataSet) {
       return;
     }
     if (customerReference && !addressesCollection) {

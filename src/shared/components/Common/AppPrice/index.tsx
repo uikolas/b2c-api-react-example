@@ -18,6 +18,9 @@ interface AppPriceProps extends WithStyles<typeof styles> {
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
   const {classes, currency, value, specificCurrency, priceType, title, extraClassName, isStylesInherited} = props;
+  if (!currency) {
+    return null;
+  }
   const valueFormatted = value ? (value / 100) : 0;
   let priceClassName = '';
   if (priceType === priceTypeNameOriginal) {

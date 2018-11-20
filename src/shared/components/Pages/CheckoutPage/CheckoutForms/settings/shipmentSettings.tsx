@@ -76,13 +76,11 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
     );
   }
 
-  // TODO: fix currency
   if (shipmentMethod.price) {
     response.push(<AppPrice
                     key={`price-${shipmentMethod.id}`}
                     value={shipmentMethod.price}
                     isStylesInherited
-                    specificCurrency="EUR"
                   />
     );
   }
