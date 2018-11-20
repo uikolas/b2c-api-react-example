@@ -4,7 +4,7 @@ import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/typ
 import {
   billingConfigInputStable,
   billingNewAddressDefault, deliveryConfigInputStable,
-  deliveryNewAddressDefault
+  deliveryNewAddressDefault, paymentMethodDataDefault
 } from "src/shared/components/Pages/CheckoutPage/constants";
 
 
@@ -35,4 +35,7 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   isUserLoggedIn: false,
   shipmentMethods: null,
   currentValueShipmentMethod: null,
+  paymentMethods: null,
+  currentValuePaymentMethod: null,
+  paymentMethodDataInputs: {...paymentMethodDataDefault},
 });

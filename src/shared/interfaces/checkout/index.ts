@@ -15,6 +15,12 @@ export type TPaymentProvider = string;
 export type TPaymentSelection = string;
 export type TPaymentAmount = number;
 export type TPaymentMethodName = TPaymentMethodInvoice | TPaymentMethodCreditCard;
+export type TPaymentCardNumber = string;
+export type TPaymentCardName = string;
+export type TPaymentCardExpiryMonth = string;
+export type TPaymentCardExpiryYear = string;
+export type TPaymentCardCVC = string;
+export type TPaymentInvoiceDateOfBirth = string;
 
 export type TPaymentMethodInvoice = 'invoice';
 export const PaymentMethodInvoice = 'invoice';
@@ -31,6 +37,16 @@ export interface IPaymentMethod {
   paymentMethod: TPaymentMethodName;
   paymentSelection: TPaymentSelection;
   amount: TPaymentAmount;
+}
+
+export interface IPaymentMethodData {
+  paymentProvider: TPaymentProvider | null;
+  cardNumber: TPaymentCardNumber | null;
+  cardName: TPaymentCardName | null;
+  cardExpiryMonth: TPaymentCardExpiryMonth | null;
+  cardExpiryYear: TPaymentCardExpiryYear | null;
+  cardCVC: TPaymentCardCVC | null;
+  invoiceDateOfBirth: TPaymentInvoiceDateOfBirth | null;
 }
 
 export interface IShipmentMethod {

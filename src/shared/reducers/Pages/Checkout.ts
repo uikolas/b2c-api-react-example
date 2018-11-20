@@ -63,12 +63,32 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
     shipmentDeliveryTime: 'Same Day'
   }
 ];
+const paymentMethodsFixture: Array<IPaymentMethod> = [
+  {
+    paymentProvider: 'Visa',
+    paymentMethod: 'creditCard',
+    paymentSelection: '1',
+    amount: 0,
+  },
+  {
+    paymentProvider: 'Master Card',
+    paymentMethod: 'creditCard',
+    paymentSelection: '2',
+    amount: 0,
+  },
+  {
+    paymentProvider: '?????',
+    paymentMethod: 'invoice',
+    paymentSelection: '3',
+    amount: 0,
+  },
+];
 
 export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
     deliveryAddress: null,
-    payments: [],
+    payments: paymentMethodsFixture || [],
     shipments: shipmentMethodsFixture || [],
   },
 };
@@ -136,6 +156,14 @@ export function getShipmentMethodsFromStore(state: any, props: any): Array<IShip
 
 export function isShipmentMethodsExist(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.data.shipments);
+}
+
+export function getPaymentMethodsFromStore(state: any, props: any): Array<IPaymentMethod> | null {
+  return isPaymentMethodsExist(state, props) ? state.pageCheckout.data.payments : null;
+}
+
+export function isPaymentMethodsExist(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageCheckout.data.payments);
 }
 
 function isStateExist(state: any, props: any): boolean {

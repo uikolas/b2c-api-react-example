@@ -6,12 +6,13 @@ import Grid from '@material-ui/core/Grid';
 
 import { connect } from './connect';
 import { styles } from './styles';
-
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+import {
+  billingConfigInputStable,
+  billingNewAddressDefault,
+  deliveryConfigInputStable,
+  deliveryNewAddressDefault, paymentMethodDataDefault,
+  stepCompletionCheckoutDefault,
+} from "./constants";
 import {
   ICheckoutPageProps,
   ICheckoutPageState,
@@ -26,14 +27,13 @@ import {
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraAddressesOptions,
-} from "src/shared/components/Pages/CheckoutPage/helpers";
-import {
-  billingConfigInputStable,
-  billingNewAddressDefault,
-  deliveryConfigInputStable,
-  deliveryNewAddressDefault,
-  stepCompletionCheckoutDefault,
-} from "src/shared/components/Pages/CheckoutPage/constants";
+} from "./helpers";
+
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
+import {AppMain} from "src/shared/components/Common/AppMain/index";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
@@ -61,6 +61,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       ...stepCompletionCheckoutDefault
     },
     shipmentMethod: null,
+    paymentMethod: null,
+    paymentMethodData: {
+      ...paymentMethodDataDefault
+    },
   };
 
   public componentDidMount() {
@@ -341,8 +345,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
-  private isCheckoutFormValid = (): boolean => {
-    return false;
+  private checkCheckoutFormValidity = (): boolean => {
+    const {first, second, third, fourth} = this.state.stepsCompletion;
+    if (!first || !second || !third || !fourth) {
+      return false;
+    }
+    return true;
   }
 
   public render(): JSX.Element {
@@ -396,6 +404,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             isUserLoggedIn,
             shipmentMethods,
             currentValueShipmentMethod: this.state.shipmentMethod,
+            paymentMethods: null,
+            currentValuePaymentMethod: this.state.paymentMethod,
+            paymentMethodDataInputs: this.state.paymentMethodData,
           }}
         >
           <Grid container className={classes.container}>
@@ -413,6 +424,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
               <CartData
                 products={products}
                 totals={totals}
+                isSendBtnDisabled={!this.checkCheckoutFormValidity()}
                 sendData={this.sendCheckoutDataForOrder}
               />
             </Grid>
