@@ -14,7 +14,7 @@ import {IFormWrapperProps} from "src/shared/components/Pages/CheckoutPage/Checko
 
 export const FormWrapperBase: React.SFC<IFormWrapperProps> = (props): JSX.Element => {
   const {classes, title, isDisabled}  = props;
-
+  {/*... (isDisabled ? {expanded: false} : {})*/}
   return (
     <Grid container className={ classes.root }>
       <Grid item xs={12}>

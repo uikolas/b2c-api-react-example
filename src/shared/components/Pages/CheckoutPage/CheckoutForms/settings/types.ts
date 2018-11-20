@@ -3,7 +3,7 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {ISameAsDelivery} from "src/shared/interfaces/checkout/index";
+import {ISameAsDelivery, IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
   ICheckoutAddressState,
@@ -46,4 +46,14 @@ export interface IDeliveryAddressesParams extends IAddressesParams {
 }
 
 export interface IBillingAddressesParams extends IAddressesParams {
+}
+
+// Param to create shipping methods form
+export interface IShippingMethodsParams extends IBaseCheckoutFormHandler {
+  shipmentMethods: Array<IShipmentMethod> | null;
+  currentValueShipmentMethod: IShipmentMethod["id"] | null;
+  carrierName: IShipmentMethod["carrierName"];
+  shipmentCarrierNameToIcon: {
+    [key: string]: JSX.Element;
+  };
 }

@@ -33,4 +33,6 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   isAddressesFulfilled: false,
   extraAddressesOptions: {delivery: null, billing: null},
   isUserLoggedIn: false,
+  shipmentMethods: null,
+  currentValueShipmentMethod: null,
 });

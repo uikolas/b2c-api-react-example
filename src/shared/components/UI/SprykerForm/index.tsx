@@ -93,6 +93,8 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                     currentMode={field.inputValue}
                     radioItems={field.radioItems}
                     label={field.label ? field.label : null}
+                    labelIcon={field.labelIcon ? field.labelIcon : null}
+                    isItemsInRow={field.isItemsInRow}
                     changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
                   />
                 );

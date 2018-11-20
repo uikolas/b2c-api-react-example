@@ -8,7 +8,7 @@ import {
   isPageProductStateRejected,
 } from "src/shared/reducers/Pages/Product";
 import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
-import {ICheckoutRequest} from "src/shared/interfaces/checkout";
+import {ICheckoutRequest, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
   getProductsFromCart,
@@ -29,6 +29,7 @@ import {
 import {isStateLoading} from "src/shared/reducers/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
+import {getShipmentMethodsFromStore} from "src/shared/reducers/Pages/Checkout";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -55,6 +56,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isAppStateLoading = isStateLoading(state, ownProps);
   // Countries from init state
   const countriesCollection: ICountries[] = getCounties(state, ownProps);
+  // From pageCheckout state
+  const shipmentMethods: Array<IShipmentMethod> | null = getShipmentMethodsFromStore(state, ownProps);
 
   return ({
     isAppDataSet,
@@ -76,6 +79,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isAddressesFulfilled,
     isAppStateLoading,
     countriesCollection,
+    shipmentMethods,
   });
 };
 

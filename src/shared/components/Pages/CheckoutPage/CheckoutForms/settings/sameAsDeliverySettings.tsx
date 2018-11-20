@@ -5,7 +5,7 @@ import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {ISameAsDeliveryParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getSameAsDeliveryFormSettings = ( formName: string, params: ISameAsDeliveryParams) => {
+export const getSameAsDeliveryFormSettings = ( formName: string, params: ISameAsDeliveryParams): IFormSettings => {
   const {
     isSameAsDelivery,
     submitHandler,

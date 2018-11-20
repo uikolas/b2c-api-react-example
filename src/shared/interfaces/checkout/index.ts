@@ -1,38 +1,39 @@
 import {
   ICustomerProfileIdentity,
-  TCustomerFirstName,
-  TCustomerLastName,
-  TCustomerSalutation
 } from "src/shared/interfaces/customer";
 import {
   IAddressItem,
-  TAddress,
-  TAddressCity,
-  TAddressCompany,
-  TAddressCountry,
-  TAddressPhone,
-  TAddressZipCode,
-  TIso2Code
 } from "src/shared/interfaces/addresses";
+
+export type TShipmentCarrierName = string;
+export type TShipmentId = string;
+export type TShipmentName = string;
+export type TShipmentPrice = number;
+export type TShipmentTaxRate = number;
+export type TShipmentShipmentDeliveryTime = string;
+export type TPaymentProvider = string;
+export type TPaymentMethodName = string;
+export type TPaymentSelection = string;
+export type TPaymentAmount = number;
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;
 }
 
-export interface IPayment {
-  paymentProvider: string;
-  paymentMethod: string;
-  paymentSelection: string;
-  amount: number;
+export interface IPaymentMethod {
+  paymentProvider: TPaymentProvider;
+  paymentMethod: TPaymentMethodName;
+  paymentSelection: TPaymentSelection;
+  amount: TPaymentAmount;
 }
 
-export interface IShipment {
-  carrierName?: string;
-  id: string;
-  name?: string;
-  price?: number;
-  taxRate?: number;
-  shipmentDeliveryTime?: string;
+export interface IShipmentMethod {
+  carrierName: TShipmentCarrierName;
+  id: TShipmentId;
+  name: TShipmentName;
+  price: TShipmentPrice;
+  taxRate: TShipmentTaxRate;
+  shipmentDeliveryTime: TShipmentShipmentDeliveryTime;
 }
 
 export interface ICheckoutRequest {
@@ -40,24 +41,13 @@ export interface ICheckoutRequest {
   id?: string;
   billingAddress?: IAddressItem;
   shippingAddress?: IAddressItem;
-  payment?: IPayment;
-  payments?: Array<IPayment>;
+  payment?: IPaymentMethod;
+  payments?: Array<IPaymentMethod>;
   shipment?: {
     shipmentSelection: string,
-    method: IShipment,
+    method: IShipmentMethod,
   };
 }
-
-export type TAddressInputValue = TCustomerFirstName
-  | TCustomerLastName
-  | TCustomerSalutation
-  | TAddress
-  | TAddressZipCode
-  | TAddressCity
-  | TAddressCountry
-  | TAddressCompany
-  | TAddressPhone
-  | TIso2Code;
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;

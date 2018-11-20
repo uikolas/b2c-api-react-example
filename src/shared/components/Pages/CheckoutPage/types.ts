@@ -8,7 +8,7 @@ import {
   IAddNewAddressActions,
   ISameAsDelivery,
   IUsageSavedAddress,
-  ICheckoutRequest,
+  ICheckoutRequest, IShipmentMethod,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
@@ -42,6 +42,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 
   isAppStateLoading: boolean;
   countriesCollection: ICountries[];
+  shipmentMethods: Array<IShipmentMethod> | null;
   getCheckoutData: (payload: ICheckoutRequest) => void;
   sendCheckoutData: (payload: ICheckoutRequest) => void;
 }
@@ -52,6 +53,7 @@ export interface ICheckoutPageState {
   deliveryNewAddress: IDeliveryAddressState;
   billingNewAddress: IBillingAddressState;
   stepsCompletion: ICheckoutStepsCompletion;
+  shipmentMethod: IShipmentMethod["id"] | null;
 }
 
 export interface ICheckoutAddressState {
@@ -155,6 +157,8 @@ export type TCheckoutPageContext = {
   isAddressesFulfilled: boolean;
   extraAddressesOptions: IExtraAddressesOptions | null;
   isUserLoggedIn: boolean;
+  shipmentMethods: Array<IShipmentMethod> | null;
+  currentValueShipmentMethod: IShipmentMethod["id"] | null;
 };
 
 export interface IParamInputValidity {
@@ -165,4 +169,15 @@ export interface IParamInputValidity {
 export interface IParamFormValidity {
   form: IDeliveryAddressState | IBillingAddressState;
   fieldsConfig: IDeliveryObjectConfigInputStable | IBillingObjectConfigInputStable;
+}
+
+export interface ICheckoutPanelsSettings {
+  isFirstPanelDisabled: boolean;
+  isSecondPanelDisabled: boolean;
+  isThirdPanelDisabled: boolean;
+  isFourthPanelDisabled: boolean;
+}
+
+export interface IShipmentMethodsGrouped {
+  [key: string]: Array<IShipmentMethod>;
 }

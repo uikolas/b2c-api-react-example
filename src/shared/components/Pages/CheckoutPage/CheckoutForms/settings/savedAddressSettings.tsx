@@ -1,9 +1,9 @@
+import * as React from 'react';
 import {
   InputLabelSelectSavedBillingAddress,
   InputLabelSelectSavedDeliveryAddress
 } from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {TAddressType} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
@@ -14,7 +14,8 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
-export const getDeliverySavedAddressFormSettings = (formName: string, params: IDeliveryAddressesParams) => {
+export const getDeliverySavedAddressFormSettings = (formName: string,
+                                                    params: IDeliveryAddressesParams): IFormSettings => {
 
   const {
     addressesCollection,
@@ -47,7 +48,8 @@ export const getDeliverySavedAddressFormSettings = (formName: string, params: ID
   return formSettings;
 };
 
-export const getBillingSavedAddressFormSettings = (formName: string, params: IBillingAddressesParams) => {
+export const getBillingSavedAddressFormSettings = (formName: string,
+                                                   params: IBillingAddressesParams): IFormSettings => {
 
   const {
     addressesCollection,
@@ -106,7 +108,7 @@ const isAddressesCollectionExist = (collection: IAddressesParams["addressesColle
 
 
 const createRadioItemLabel = (address: IAddressItem) => {
-  let response: string = '';
+  let response: React.ReactNode = '';
 
   if (address.salutation) {
     const variantData = salutationVariants.filter((item: TSalutationVariant) => (item.value === address.salutation));

@@ -20,7 +20,7 @@ import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/CheckoutF
 import {ICountries} from "src/shared/reducers/Common/Init";
 
 
-export const getAddressFormSettings = ( formName: string, params: IAddressParams) => {
+export const getAddressFormSettings = ( formName: string, params: IAddressParams): IFormSettings => {
   const {
     addressData: {
       firstName,

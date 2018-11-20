@@ -13,10 +13,11 @@ interface AppPriceProps extends WithStyles<typeof styles> {
   priceType?: TPriceTypeName;
   title?: string;
   extraClassName?: string;
+  isStylesInherited?: boolean;
 }
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
-  const {classes, currency, value, specificCurrency, priceType, title, extraClassName} = props;
+  const {classes, currency, value, specificCurrency, priceType, title, extraClassName, isStylesInherited} = props;
   const valueFormatted = value ? (value / 100) : 0;
   let priceClassName = '';
   if (priceType === priceTypeNameOriginal) {
@@ -25,9 +26,17 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
     priceClassName = classes.defaultPrice;
   }
 
+  let classNames = priceClassName;
+  if (extraClassName) {
+    classNames += ` ${extraClassName}`;
+  }
+  if (isStylesInherited) {
+    classNames += ` ${classes.stylesInherited}`;
+  }
+
   return (
     value
-      ? <span className={ extraClassName ? `${priceClassName} ${extraClassName}` : priceClassName }>
+      ? <span className={classNames}>
           { title ? title : null }
         <FormattedNumber
           value={ valueFormatted }
