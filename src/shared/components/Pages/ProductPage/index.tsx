@@ -368,11 +368,12 @@ export class ProductPageBase extends React.Component<Props, State> {
                     : null
                   }
 
-                  <Grid container justify="center" className={ classes.buyBtnArea }>
+                  <Grid container justify="center">
                     <Grid item xs={ 12 } sm={ 12 }>
                       { this.isBuyBtnDisabled()
                         ? null
                         : <DropdownControlled
+                          classes = {{root: classes.quantityRoot, formControl: classes.quantityControl}}
                           nameAttr="quantity"
                           nameToShow="Quantity"
                           value={ this.state.quantitySelected }
@@ -393,20 +394,12 @@ export class ProductPageBase extends React.Component<Props, State> {
                   </Grid>
 
                   { this.props.isUserLoggedIn
-                    ? (<Grid container justify="center" className={ classes.wishlistBtnArea }>
-                        <Grid item xs={ 12 } sm={ this.state.wishListSelected ? 6 : 12 }
-                              className={ classes.buyBtnParent }>
-                          <SprykerButton
-                            title={ wishlistBtnTitle }
-                            extraClasses={ `${classes.productBtn} ${classes.wishListBtn}` }
-                            onClick={ this.handleAddToWishlist }
-                            disabled={ this.isAddToWishListBtnDisabled() }
-                          />
-                        </Grid>
+                    ? (<Grid container justify="center" spacing={24} className={ classes.wishlistBtnArea }>
                         { this.state.wishListSelected
                           ?
                           <Grid item xs={ 12 } sm={ 6 }>
                             <DropdownControlled
+                              classes = {{root: classes.wishlistRoot}}
                               nameAttr="wishlists"
                               value={ this.state.wishListSelected }
                               handleChange={ this.handleWishListChange }
@@ -420,6 +413,15 @@ export class ProductPageBase extends React.Component<Props, State> {
                           </Grid>
                           : null
                         }
+                        <Grid item xs={ 12 } sm={ this.state.wishListSelected ? 6 : 12 }
+                              className={ classes.buyBtnParent }>
+                          <SprykerButton
+                            title={ wishlistBtnTitle }
+                            extraClasses={ `${classes.productBtn} ${classes.wishListBtn}` }
+                            onClick={ this.handleAddToWishlist }
+                            disabled={ this.isAddToWishListBtnDisabled() }
+                          />
+                        </Grid>
                       </Grid>
                     )
                     : null

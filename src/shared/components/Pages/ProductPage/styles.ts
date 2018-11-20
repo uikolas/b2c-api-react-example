@@ -7,9 +7,6 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: '1400px',
     margin: 'auto',
   },
-  buyBtnArea: {
-    padding: '24px 0 0',
-  },
   wishlistBtnArea: {
     marginTop: theme.spacing.unit * 3,
   },
@@ -54,7 +51,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   sliderParent: {},
   sliderParentContainer: {
-    height: '70vh',
     marginBottom: 30,
     '& *': {
       maxHeight: '70vh',
@@ -90,6 +86,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   productMain: {
     marginBottom: 114,
+    paddingTop: '1.25rem',
   },
   descriptionContainer: {
     [theme.breakpoints.up('lg')]: {
@@ -118,4 +115,14 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: 'uppercase',
     paddingTop: 25,
   },
+  quantityControl: {
+    maxWidth: '8.0625rem'
+  },
+  quantityRoot: {
+    margin: '1.5rem 0'
+  },
+  wishlistRoot: {
+    margin: 0
+  }
+
 });

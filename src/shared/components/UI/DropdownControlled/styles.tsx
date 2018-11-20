@@ -8,12 +8,10 @@ export const styles = (theme: Theme) => createStyles({
   },
   button: {
     display: 'block',
-    marginLeft: theme.spacing.unit,
     paddingLeft: 0,
     paddingRight: 0,
   },
   formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 300,
+    width: '100%'
   },
 });
