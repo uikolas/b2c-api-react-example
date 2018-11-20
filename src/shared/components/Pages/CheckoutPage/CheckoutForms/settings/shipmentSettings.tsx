@@ -64,14 +64,14 @@ const convertShipmentsToRadioItems = (collection: IShippingMethodsParams["shipme
 const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
   let response: Array<React.ReactNode> = [];
 
-  if (shipmentMethod.shipmentDeliveryTime) {
+  if (shipmentMethod.name) {
     response.push(<Typography key={`text-${shipmentMethod.id}`}
                               align="left"
                               component="p"
                               color="inherit"
                               gutterBottom={true}
                   >
-                    {shipmentMethod.shipmentDeliveryTime}
+                    {shipmentMethod.name}
                   </Typography>
     );
   }

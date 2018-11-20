@@ -25,41 +25,41 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
   {
     carrierName: 'DHL',
     id: '1',
-    name: 'DHL-1',
-    price: 5,
+    name: 'Standard',
+    price: 500,
     taxRate: 2,
     shipmentDeliveryTime: 'Standard'
   },
   {
     carrierName: 'DHL',
     id: '2',
-    name: 'DHL-2',
-    price: 5,
-    taxRate: 2,
+    name: 'Standard',
+    price: 600,
+    taxRate: null,
     shipmentDeliveryTime: 'Standard'
   },
   {
     carrierName: 'Hermes',
     id: '3',
-    name: 'Hermes-3',
-    price: 5.6,
+    name: 'Next Day',
+    price: 560,
     taxRate: 2,
     shipmentDeliveryTime: 'Next Day'
   },
   {
     carrierName: 'Hermes',
     id: '4',
-    name: 'Hermes-4',
-    price: 15,
-    taxRate: 2,
+    name: 'Same Day',
+    price: 1500,
+    taxRate: null,
     shipmentDeliveryTime: 'Same Day'
   },
   {
     carrierName: 'Hermes',
     id: '5',
-    name: 'Hermes-5',
-    price: 15,
-    taxRate: 2,
+    name: 'Same Day',
+    price: 490,
+    taxRate: null,
     shipmentDeliveryTime: 'Same Day'
   }
 ];

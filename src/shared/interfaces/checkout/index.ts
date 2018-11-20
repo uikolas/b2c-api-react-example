@@ -12,9 +12,15 @@ export type TShipmentPrice = number;
 export type TShipmentTaxRate = number;
 export type TShipmentShipmentDeliveryTime = string;
 export type TPaymentProvider = string;
-export type TPaymentMethodName = string;
 export type TPaymentSelection = string;
 export type TPaymentAmount = number;
+export type TPaymentMethodName = TPaymentMethodInvoice | TPaymentMethodCreditCard;
+
+export type TPaymentMethodInvoice = 'invoice';
+export const PaymentMethodInvoice = 'invoice';
+
+export type TPaymentMethodCreditCard = 'creditCard';
+export const PaymentMethodCreditCard = 'creditCard';
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;
@@ -47,10 +53,6 @@ export interface ICheckoutRequest {
     shipmentSelection: string,
     method: IShipmentMethod,
   };
-}
-
-export interface ISameAsDelivery {
-  isSameAsDelivery: boolean;
 }
 
 export interface IUsageSavedAddress {

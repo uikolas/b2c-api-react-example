@@ -8,6 +8,7 @@ import {DeliveryForm} from "src/shared/components/Pages/CheckoutPage/CheckoutFor
 import {FormWrapper} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/index";
 import {BillingForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/index";
 import {ShipmentMethod} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod/index";
+import {PaymentMethod} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/index";
 
 
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
@@ -41,7 +42,7 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
           title={panels.fourth.title}
           isDisabled={panels.fourth.isDisabled}
         >
-          second
+          <PaymentMethod />
         </FormWrapper>
       </Grid>
     </Grid>
