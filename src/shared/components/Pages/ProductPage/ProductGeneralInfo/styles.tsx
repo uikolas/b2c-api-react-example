@@ -17,7 +17,7 @@ export const styles = (theme: Theme) => createStyles({
     flexGrow: 1,
   },
   price: {
-    color: '#b12704',
+    color: theme.appColors.black,
     fonsSize: '24px',
     lineHeight: '28px',
     margin: '0 8px 0 0',
