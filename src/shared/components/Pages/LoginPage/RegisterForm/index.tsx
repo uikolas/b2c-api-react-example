@@ -250,7 +250,7 @@ export class RegisterFormBase extends React.Component<RegisterFormProps, Registe
                 name="acceptedTerms"
               />
             }
-            label="I agree with ..."
+            label="Accept terms"
           />
 
 
