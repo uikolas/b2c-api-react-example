@@ -22,8 +22,7 @@ export const styles = (theme: Theme) => createStyles({
     letterSpacing: '0.2px',
     color: theme.appColors.grey,
   },
-  calcDivider: {
-    width: '100%',
+  cartTotalIndent: {
     marginTop: '58px'
   },
   itemWrapper: {
@@ -78,10 +77,6 @@ export const styles = (theme: Theme) => createStyles({
     height: '22px',
     padding: 0,
     paddingLeft: '8px',
-  },
-  shippingMsg: {
-    textTransform: 'none',
-    marginTop: `-${theme.spacing.unit * 3}px`,
   },
   menuItem: {
     padding: 0,

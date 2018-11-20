@@ -10,6 +10,9 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     justifyContent: 'space-between',
     marginTop: theme.spacing.unit * 3,
+    '&:last-of-type': {
+      marginBottom: theme.spacing.unit * 3
+    }
   },
   currency: {
     fontSize: theme.appFixedDimensions.fontSize.medium,

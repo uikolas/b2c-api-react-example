@@ -257,44 +257,8 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
             >
               { 'Order summary' }
             </Typography>
-            <Divider className={ classes.calcDivider} />
 
-            <Grid container spacing={24}>
-              <Grid item xs={8}>
-                <form
-                  noValidate
-                  autoComplete="off"
-                  className={`${classes.fullWidth} ${classes.btnWrapper}`}
-                >
-                  <TextField
-                    name="voucher"
-                    label="Apply voucher code"
-                    value={this.state.voucherCode}
-                    onChange={this.handleChangeVouchercode}
-                    fullWidth
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    InputProps={{
-                      style: {height: '44px'},
-                    }}
-                    variant="outlined"
-                  />
-                </form>
-              </Grid>
-              <Grid item xs={4}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  fullWidth
-                  className={ classes.btnWrapper }
-                >
-                  apply
-                </Button>
-              </Grid>
-            </Grid>
-
-            <CartTotal totals={totals} />
+            <CartTotal extraClass={classes.cartTotalIndent} totals={totals} />
 
             <NavLink
               to={ pathCheckoutPage }
@@ -311,9 +275,6 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               </Button>
             </NavLink>
 
-            <div className={`${classes.itemAttr} ${classes.shippingMsg}`}>
-              Shipping fee will be calculated based on Shipping address
-            </div>
           </Grid>
         </Grid>
       </AppMain>
