@@ -65,14 +65,26 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
   let response: Array<React.ReactNode> = [];
 
   if (shipmentMethod.shipmentDeliveryTime) {
-    response.push(<Typography align="left" component="p" color="inherit" gutterBottom={true}>
+    response.push(<Typography key={`text-${shipmentMethod.id}`}
+                              align="left"
+                              component="p"
+                              color="inherit"
+                              gutterBottom={true}
+                  >
                     {shipmentMethod.shipmentDeliveryTime}
                   </Typography>
     );
   }
 
+  // TODO: fix currency
   if (shipmentMethod.price) {
-    response.push(<AppPrice value={shipmentMethod.price} isStylesInherited />);
+    response.push(<AppPrice
+                    key={`price-${shipmentMethod.id}`}
+                    value={shipmentMethod.price}
+                    isStylesInherited
+                    specificCurrency="EUR"
+                  />
+    );
   }
 
   return response;
