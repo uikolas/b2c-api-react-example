@@ -1,8 +1,11 @@
 import * as React from 'react';
 
+import Typography from '@material-ui/core/Typography';
 import {IShippingMethodsParams} from "./types";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IShipmentMethod} from "src/shared/interfaces/checkout/index";
+import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+
 
 export const getShipmentMethodsFormSettings = (formName: string, params: IShippingMethodsParams): IFormSettings => {
   const {
@@ -59,13 +62,17 @@ const convertShipmentsToRadioItems = (collection: IShippingMethodsParams["shipme
 };
 
 const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
-  let response: string = '';
+  let response: Array<React.ReactNode> = [];
+
+  if (shipmentMethod.shipmentDeliveryTime) {
+    response.push(<Typography align="left" component="p" color="inherit" gutterBottom={true}>
+                    {shipmentMethod.shipmentDeliveryTime}
+                  </Typography>
+    );
+  }
 
   if (shipmentMethod.price) {
-    response += `${shipmentMethod.price}`;
-  }
-  if (shipmentMethod.shipmentDeliveryTime) {
-    response += `${shipmentMethod.shipmentDeliveryTime}`;
+    response.push(<AppPrice value={shipmentMethod.price} isStylesInherited />);
   }
 
   return response;

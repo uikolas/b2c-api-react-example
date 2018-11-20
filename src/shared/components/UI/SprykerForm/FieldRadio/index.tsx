@@ -45,15 +45,20 @@ export const FieldRadioBase: React.SFC<IFieldRadioProps> = (props): JSX.Element 
       >
 
         {radioItems.map((item: IRadioItem) => {
+          let itemClasses = `${classes.inputRadio}`;
+          if (currentMode === item.value) {
+            itemClasses += ` ${classes.checkedInputRadio}`;
+          }
+          if (isItemsInRow) {
+            itemClasses += ` ${classes.inputItemsInRow}`;
+          }
+
           return (
             <FormControlLabel
               value={item.value}
               key={`${item.value}`}
               classes={{
-                root: `${classes.inputRadio}
-                      ${ (currentMode === item.value) ? classes.checkedInputRadio : '' }
-                      ${isItemsInRow ? classes.inputItemsInRow : ''}
-                `,
+                root: itemClasses,
                 label: `${(currentMode === item.value) ? classes.checkedRadioLabel : '' }`,
               }}
               control={<Radio

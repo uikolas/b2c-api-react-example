@@ -12,4 +12,8 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.big,
     fontWeight: 600,
   },
+  stylesInherited: {
+    fontSize: "inherit",
+    fontWeight: "inherit",
+  },
 });

@@ -57,7 +57,7 @@ export interface ISprykerFormProps extends WithStyles<typeof sprykerFormStyles> 
 
 export interface IRadioItem {
   value: string;
-  label: string;
+  label: React.ReactNode;
 }
 
 export type TFormInputValue = TCustomerFirstName

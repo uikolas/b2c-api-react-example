@@ -13,6 +13,13 @@ export const formStyles = (theme: Theme) => createStyles({
     "& label": {
       minWidth: 130,
       height: 70,
+      alignItems: "flex-start",
+      "&>span:not(:first-child)": {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }
     },
     "& legend svg": {
       height: 15,
