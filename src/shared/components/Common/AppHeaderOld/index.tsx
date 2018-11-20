@@ -10,18 +10,18 @@ import { NavLink } from 'react-router-dom';
 import { AppLogo } from '../AppLogo';
 import CatalogSearch from '../CatalogSearch';
 import { styles } from './styles';
-import { reduxify } from '../../../lib/redux-helper';
-import { isUserAuthenticated } from '../../../reducers/Pages/Login';
+import { reduxify } from 'src/shared/lib/redux-helper';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { RouteProps } from 'react-router';
-import { getSearchTerm, getSuggestions } from '../../../reducers/Pages/Search';
-import { getTotalItemsQuantity, getTotalProductsQuantity } from '../../../reducers/Common/Cart';
-import { IProductCard, TProductQuantity } from '../../../interfaces/product';
+import { getSearchTerm, getSuggestions } from 'src/shared/reducers/Pages/Search';
+import { getTotalItemsQuantity, getTotalProductsQuantity } from 'src/shared/reducers/Common/Cart';
+import { IProductCard, TProductQuantity } from 'src/shared/interfaces/product';
 import { SprykerButton } from '../../UI/SprykerButton';
-import { logout } from '../../../actions/Pages/Login';
+import { logout } from 'src/shared/actions/Pages/Login';
 import { ShoppingCart } from '../ShoppingCart';
 import { SprykerNotification } from '../../UI/SprykerNotification';
 import { Preloader } from '../Preloader';
-import { pathCartPage, pathCustomerPage, pathHomePage, pathLoginPage } from '../../../routes/contentRoutes';
+import { pathCartPage, pathCustomerPage, pathHomePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
 
 interface AppHeaderProps extends WithStyles<typeof styles>, RouteProps {
   dispatch?: Function;

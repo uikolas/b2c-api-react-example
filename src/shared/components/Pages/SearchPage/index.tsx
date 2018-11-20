@@ -1,33 +1,14 @@
 import * as React from 'react';
 import { ChangeEvent, ReactNode } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-
 import { toast } from 'react-toastify';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
 import { RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
 import { ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
-import { AppMain } from '../../Common/AppMain';
-import { connect } from './connect';
-import { styles } from './styles';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
-import { SearchIntro } from './SearchIntro';
-import { CategoriesList } from './CategoriesList';
-import { SearchFilterList } from './SearchFilterList';
-import { SearchPageContext } from './context';
-import {
-  filterTypeFilter,
-  filterTypeRange,
-  IFilterItemToDelete,
-  ISearchPageProps,
-  ISearchPageState,
-  ISearchQuery,
-  RangeType,
-  TCategoryId,
-  TFilterItemValue,
-} from './types';
 import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
 import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
@@ -39,7 +20,24 @@ import { ProductsList } from 'src/shared/components/Pages/SearchPage/ProductsLis
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { AppPagination } from 'src/shared/components/Common/AppPagination';
 import { isValidRangeInput } from 'src/shared/components/Pages/SearchPage/helper';
-
+import { AppMain } from '../../Common/AppMain';
+import {
+  filterTypeFilter,
+  filterTypeRange,
+  IFilterItemToDelete,
+  ISearchPageProps,
+  ISearchPageState,
+  ISearchQuery,
+  RangeType,
+  TCategoryId,
+  TFilterItemValue,
+} from './types';
+import { connect } from './connect';
+import { styles } from './styles';
+import { SearchIntro } from './SearchIntro';
+import { CategoriesList } from './CategoriesList';
+import { SearchFilterList } from './SearchFilterList';
+import { SearchPageContext } from './context';
 
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';
@@ -450,7 +448,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         menuItems={ pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item})) }
         menuItemFirst={ {value: ' ', name: 'products per page', disabled: true} }
         name="pages"
-      />);
+      />
+    );
 
     const sortPanelSorterMode = (
       <SprykerSelect
@@ -481,7 +480,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
               deleteActiveFilterHandler: this.deleteActiveFilterHandler,
             } }
           >
-
             <Grid item xs={ isCategoriesExist ? 12 : null } md={ isCategoriesExist ? 3 : null }>
               <CategoriesList
                 categories={ category }
@@ -492,7 +490,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
             <Grid item xs={ 12 } md={ isCategoriesExist ? 9 : 12 }>
               <Grid container>
-
                 <SearchFilterList
                   filters={ filters }
                   updateFilterHandler={ this.updateActiveFilters }
@@ -526,12 +523,9 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                   availableLabels={ availableLabels }
                 />
                 <AppPagination pagination={ pagination } onChangeHandler={ this.handlePagination }/>
-
               </Grid>
             </Grid>
-
           </SearchPageContext.Provider>
-
         </Grid>
       </AppMain>
     );

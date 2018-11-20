@@ -13,7 +13,6 @@ import {
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 
 export class InitAppService {
-
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<any> {
     let anonymId: string;
     try {
