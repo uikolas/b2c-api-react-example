@@ -135,9 +135,9 @@ export class WishlistDetailBase extends React.Component<WishlistPageProps, Wishl
 
       item.prices.forEach((price: any) => {
         if (price.priceTypeName.toLowerCase() === 'default') {
-          prices.default = price.grossAmount / 100 + '';
+          prices.default = price.grossAmount + '';
         } else if (price.priceTypeName.toLowerCase() === 'original') {
-          prices.original = price.grossAmount / 100 + '';
+          prices.original = price.grossAmount + '';
         }
       });
 
