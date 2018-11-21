@@ -112,7 +112,13 @@ export class CartService {
         return responseParsed;
       } else {
         dispatch(cartActions.cartAddItemRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
+        let errMessage: string = '';
+        try {
+          errMessage = response.originalError.response.data.errors[0].detail;
+        } catch (e) {
+          errMessage = response.problem;
+        }
+        toast.error('Request Error: ' + errMessage);
         return null;
       }
 
