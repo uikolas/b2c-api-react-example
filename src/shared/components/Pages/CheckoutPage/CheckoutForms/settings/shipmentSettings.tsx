@@ -5,6 +5,7 @@ import {IShippingMethodsParams} from "./types";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import {InputLabelShipmentTaxRate} from "src/shared/constants/forms/labels";
 
 
 export const getShipmentMethodsFormSettings = (formName: string, params: IShippingMethodsParams): IFormSettings => {
@@ -64,26 +65,34 @@ const convertShipmentsToRadioItems = (collection: IShippingMethodsParams["shipme
 const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
   let response: Array<React.ReactNode> = [];
 
-  if (shipmentMethod.shipmentDeliveryTime) {
+  if (shipmentMethod.name) {
     response.push(<Typography key={`text-${shipmentMethod.id}`}
                               align="left"
                               component="p"
                               color="inherit"
-                              gutterBottom={true}
                   >
-                    {shipmentMethod.shipmentDeliveryTime}
+                    {shipmentMethod.name}
                   </Typography>
     );
   }
 
-  // TODO: fix currency
   if (shipmentMethod.price) {
     response.push(<AppPrice
                     key={`price-${shipmentMethod.id}`}
                     value={shipmentMethod.price}
                     isStylesInherited
-                    specificCurrency="EUR"
                   />
+    );
+  }
+
+  if (shipmentMethod.taxRate) {
+    response.push(<Typography key={`taxRate-${shipmentMethod.id}`}
+                              align="left"
+                              component="p"
+                              color="inherit"
+                  >
+                    {`${InputLabelShipmentTaxRate}: ${shipmentMethod.taxRate}`}
+                  </Typography>
     );
   }
 

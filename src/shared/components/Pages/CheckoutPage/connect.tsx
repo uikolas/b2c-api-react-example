@@ -7,8 +7,8 @@ import {
   isPageProductStateLoading,
   isPageProductStateRejected,
 } from "src/shared/reducers/Pages/Product";
-import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
-import {ICheckoutRequest, IShipmentMethod} from "src/shared/interfaces/checkout";
+import {ICartTotals, ICartItem} from "src/shared/interfaces/cart";
+import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
   getProductsFromCart,
@@ -17,7 +17,7 @@ import {
   isCartStateFulfilled,
   isCartStateRejected
 } from "src/shared/reducers/Common/Cart";
-import {TCustomerId, TCustomerReference} from "src/shared/interfaces/customer";
+import {TCustomerReference} from "src/shared/interfaces/customer";
 import {getAddressesAction} from "src/shared/actions/Pages/Addresses";
 import {
   checkAddressesCollectionExist,
@@ -29,7 +29,7 @@ import {
 import {isStateLoading} from "src/shared/reducers/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
-import {getShipmentMethodsFromStore} from "src/shared/reducers/Pages/Checkout";
+import {getPaymentMethodsFromStore, getShipmentMethodsFromStore} from "src/shared/reducers/Pages/Checkout";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -58,6 +58,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const countriesCollection: ICountries[] = getCounties(state, ownProps);
   // From pageCheckout state
   const shipmentMethods: Array<IShipmentMethod> | null = getShipmentMethodsFromStore(state, ownProps);
+  const paymentMethods: Array<IPaymentMethod> | null = getPaymentMethodsFromStore(state, ownProps);
 
   return ({
     isAppDataSet,
@@ -80,6 +81,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isAppStateLoading,
     countriesCollection,
     shipmentMethods,
+    paymentMethods,
   });
 };
 

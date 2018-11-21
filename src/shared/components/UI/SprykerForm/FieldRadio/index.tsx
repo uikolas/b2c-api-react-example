@@ -24,24 +24,32 @@ export const FieldRadioBase: React.SFC<IFieldRadioProps> = (props): JSX.Element 
   } = props;
 
   const isRadioItemsExist = (radioItems.length > 0);
+  const isGroupLabelExists = (labelIcon || label);
   if (!isRadioItemsExist) {
     return null;
   }
 
   return (
     <React.Fragment>
-      <FormLabel
-        component="legend"
-        classes={{root: `${classes.label} ${classes.radioGroupLabel}`}}
-      >
-        {labelIcon ? labelIcon : label}
-      </FormLabel>
+      { (isGroupLabelExists)
+        ? (<FormLabel
+              component="legend"
+              classes={{root: `${classes.label} ${classes.radioGroupLabel}`}}
+            >
+              {labelIcon ? labelIcon : label}
+            </FormLabel>
+        )
+        : null
+      }
+
       <RadioGroup
         aria-label={label}
         name={inputName}
         value={currentMode}
         onChange={changeHandler}
-        classes={{root: `${isItemsInRow ? classes.radioGroupInRow : ''}`}}
+        classes={{
+          root: `${isItemsInRow ? classes.radioGroupInRow : ''} ${isGroupLabelExists ? '' : classes.radioGroupNoLabel}`
+        }}
       >
 
         {radioItems.map((item: IRadioItem) => {

@@ -39,7 +39,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
   };
 
   public render() {
-    const { classes, products, totals, sendData }  = this.props;
+    const { classes, products, totals, isSendBtnDisabled, sendData }  = this.props;
 
     const rows = products.map((item: ICartItem) => (
       <ListItem
@@ -103,6 +103,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
         <Button
           variant="contained"
           color="primary"
+          disabled={isSendBtnDisabled}
           fullWidth
           className={ classes.btnWrapper }
           onClick={ sendData }

@@ -21,8 +21,6 @@ export class CheckoutService {
 
       if (response.ok) {
 
-        console.info(response.data.data);
-
         return response.ok;
       } else {
 
@@ -52,8 +50,6 @@ export class CheckoutService {
       const response: any = await api.post('checkout', body, { withCredentials: true });
 
       if (response.ok) {
-        console.info(response.data.data);
-
         toast.success('Order created successfull');
         return response.data.data;
       } else {

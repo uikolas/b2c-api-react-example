@@ -37,7 +37,6 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
 
 
         const isShipmentMethodsExist = Boolean(Array.isArray(shipmentMethods) && shipmentMethods.length > 0);
-
         if (!isShipmentMethodsExist) {
           return null;
         }

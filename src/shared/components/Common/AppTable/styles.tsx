@@ -13,9 +13,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   headerCell: {
     padding: '0.875rem 1rem',
-    fontSize: '0.875rem',
+    fontSize: theme.appFixedDimensions.fontSize.small,
     fontWeight: 'bold',
-    color: theme.palette.common.black,
+    color: theme.appColors.black,
     borderBottom: 'none'
   },
   body: {
@@ -32,7 +32,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   bodyCell: {
     padding: '1.4375rem 1rem',
-    fontSize: '0.875rem',
+    fontSize: theme.appFixedDimensions.fontSize.small,
   },
   footerCell: {
 
