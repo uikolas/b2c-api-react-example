@@ -1,7 +1,7 @@
-import api, { setAuthToken } from '../api';
+import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../Common/RefreshToken';
-import { IAddressItem } from '../../interfaces/addresses';
+import {RefreshTokenService} from '../Common/RefreshToken';
+import {IAddressItem} from "../../interfaces/addresses";
 
 
 export class AddressesService {
@@ -10,13 +10,10 @@ export class AddressesService {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.get(`customers/${customerId}/addresses`, {}, {withCredentials: true});
+      const response: any = await api.get(`customers/${customerId}/addresses`, {}, { withCredentials: true });
 
       if (response.ok) {
-        const addresses = response.data.data.map((
-          address: any,
-        ): IAddressItem => ({id: address.id, ...address.attributes}));
-        console.info(addresses);
+        const addresses = response.data.data.map((address: any): IAddressItem => ({id: address.id, ...address.attributes}));
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
@@ -42,9 +39,7 @@ export class AddressesService {
     }
   }
 
-  public static async addAddress(
-    ACTION_TYPE: string, dispatch: Function, payload: IAddressItem, customerId: string,
-  ): Promise<any> {
+  public static async addAddress(ACTION_TYPE: string, dispatch: Function, payload: IAddressItem, customerId: string): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -53,15 +48,15 @@ export class AddressesService {
         data: {
           type: 'addresses',
           attributes: payload,
-        },
+        }
       };
 
-      const response: any = await api.post(`customers/${customerId}/addresses`, body, {withCredentials: true});
+      const response: any = await api.post(`customers/${customerId}/addresses`, body, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          address: {id: response.data.data.id, ...response.data.data.attributes},
+          address: {id: response.data.data.id, ...response.data.data.attributes}
 
         });
         toast.success('New address added successfull');
@@ -85,18 +80,12 @@ export class AddressesService {
     }
   }
 
-  public static async deleteAddress(
-    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string,
-  ): Promise<any> {
+  public static async deleteAddress(ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(
-        `customers/${customerId}/addresses/${addressId}`,
-        {},
-        {withCredentials: true},
-      );
+      const response: any = await api.delete(`customers/${customerId}/addresses/${addressId}`, {}, { withCredentials: true });
 
       if (response.ok) {
         dispatch({
@@ -123,9 +112,7 @@ export class AddressesService {
     }
   }
 
-  public static async updateAddress(
-    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: any,
-  ): Promise<any> {
+  public static async updateAddress(ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: any): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -134,15 +121,11 @@ export class AddressesService {
         data: {
           type: 'addresses',
           id: addressId,
-          attributes: payload,
-        },
+          attributes: payload
+        }
       };
 
-      const response: any = await api.patch(
-        `customers/${customerId}/addresses/${addressId}`,
-        body,
-        {withCredentials: true},
-      );
+      const response: any = await api.patch(`customers/${customerId}/addresses/${addressId}`, body, { withCredentials: true });
 
       if (response.ok) {
         dispatch({

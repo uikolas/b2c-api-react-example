@@ -27,6 +27,18 @@ interface AppTableProps extends WithStyles<typeof styles> {
   isRowHover?: boolean;
 }
 
+  /**
+   * TODO:
+   * 1. Move types to separate types file;
+   * 2. Try not to use index in an array loops -
+   * https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318   *
+   * 4. Fix styles.tsx
+   * - use properties from src/shared/theme/properties/new (colors, dimension) and theme.spacing.unit * 1.5
+   * 5. Is it necessary to use rowHover css class and isRowHover property?
+   * 6. Try to pass empty array to headerCells, bodyRows, footerCells
+   *
+   *  */
+
 export const AppTableBase: React.SFC<AppTableProps> = (props) => {
   const {classes, isRowHover, headerCells, bodyRows, footerCells} = props;
   const rowClass =  isRowHover ? `${classes.rowHover}  ${classes.bodyRow}` : classes.bodyRow;
@@ -36,7 +48,7 @@ export const AppTableBase: React.SFC<AppTableProps> = (props) => {
       {
         headerCells
         ? (<TableHead className={classes.header}>
-            <TableRow className={classes.headerRow}>
+            <TableRow className={classes.headerRow} classes={{hover: classes.rowHover}}>
               {headerCells.map((cell, index) => (
                 <TableCell
                   colSpan={cell.colSpan}
@@ -88,7 +100,7 @@ export const AppTableBase: React.SFC<AppTableProps> = (props) => {
           : null
       }
     </Table>
-  )
+  );
 };
 
 export const AppTable = withStyles(styles)(AppTableBase);

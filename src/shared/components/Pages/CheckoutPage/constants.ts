@@ -1,9 +1,11 @@
 import {
-  IBillingObjectConfigInputStable,
+  IBillingAddressState,
+  IBillingObjectConfigInputStable, ICheckoutStepsCompletion, IDeliveryAddressState,
   IDeliveryObjectConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/types";
+import {IPaymentMethodData} from "src/shared/interfaces/checkout/index";
 
-export const deliveryNewAddressDefault = {
+export const deliveryNewAddressDefault: IDeliveryAddressState = {
   firstName: {
     value: '',
     isError: false,
@@ -50,7 +52,7 @@ export const deliveryNewAddressDefault = {
   },
 };
 
-export const billingNewAddressDefault = {
+export const billingNewAddressDefault: IBillingAddressState = {
   ...deliveryNewAddressDefault,
 };
 
@@ -105,9 +107,19 @@ export const billingConfigInputStable: IBillingObjectConfigInputStable = {
   ...deliveryConfigInputStable
 };
 
-export const stepCompletionCheckoutDefault = {
+export const stepCompletionCheckoutDefault: ICheckoutStepsCompletion = {
   first: false,
   second: false,
   third: false,
   fourth: false,
+};
+
+export const paymentMethodDataDefault: IPaymentMethodData = {
+  paymentProvider: null,
+  cardNumber: null,
+  cardName: null,
+  cardExpiryMonth: null,
+  cardExpiryYear: null,
+  cardCVC: null,
+  invoiceDateOfBirth: null,
 };
