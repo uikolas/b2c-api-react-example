@@ -52,17 +52,17 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     const activeFilters: {[key: string]: string[]} = {};
     const activeRangeFilters: {[key: string]: RangeType} = {};
 
-    props.filters.forEach((filter: ValueFacets) => {
-      if (filter.activeValue && filter.activeValue.length) {
-        activeFilters[filter.name] = filter.activeValue;
-      }
-    });
+    // props.filters.forEach((filter: ValueFacets) => {
+    //   if (filter.activeValue && filter.activeValue.length) {
+    //     activeFilters[filter.name] = filter.activeValue;
+    //   }
+    // });
 
-    props.rangeFilters.forEach((filter: RangeFacets) => {
-      if (filter.activeMin && filter.activeMax) {
-        activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax};
-      }
-    });
+    // props.rangeFilters.forEach((filter: RangeFacets) => {
+    //   if (filter.activeMin && filter.activeMax) {
+    //     activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax};
+    //   }
+    // });
 
     this.state = {
       activeFilters,
@@ -99,6 +99,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
 
     if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.runResetActiveFilters(false);
       this.makeLocationSearch();
     }
 
