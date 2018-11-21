@@ -50,8 +50,10 @@ export const updateCustomerProfileFulfilledStateAction = (payload: ICustomerData
   payload,
 });
 
-export const updateCustomerProfileAction = function(customerReference: TCustomerReference,
-                                                    payload: ICustomerProfileIdentity) {
+export const updateCustomerProfileAction = function(
+  customerReference: TCustomerReference,
+  payload: ICustomerProfileIdentity
+) {
   return (dispatch: Function, getState: Function) => {
     CustomerProfileService.updateProfileData(dispatch, customerReference, payload);
   };

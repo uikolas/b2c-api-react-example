@@ -14,7 +14,7 @@ import {
   TProductQuantity,
   TProductSKU,
 } from 'src/shared/interfaces/product';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import {
   ICartDataResponse,
   ICartItemCalculation,

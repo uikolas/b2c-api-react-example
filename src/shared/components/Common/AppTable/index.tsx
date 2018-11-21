@@ -3,7 +3,7 @@ import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
-import TableFooter from '@material-ui/core/TableFooter'
+import TableFooter from '@material-ui/core/TableFooter';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 

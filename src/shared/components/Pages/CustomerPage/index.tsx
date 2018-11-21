@@ -28,7 +28,7 @@ import {
   pathWishListPage,
   pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
-import { ConnectedCustomerProfilePage } from '../CustomerProfilePage';
+import { CustomerProfilePage } from '../CustomerProfilePage';
 import { getRouterLocation } from 'src/shared/selectors/Common/router';
 
 
@@ -91,14 +91,14 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
           </Grid>
           <Grid item xs={ 12 } sm={ 7 }>
             <Switch>
-              <Route path={ pathCustomerPage } exact component={ ConnectedCustomerProfilePage }/>
+              <Route path={ pathCustomerPage } exact component={ CustomerProfilePage }/>
               <Route path={ pathCustomerAddressesPage } exact component={ CustomerAddressPage }/>
               <Route path={ pathAddressFormPage } component={ AddressFormPage }/>
               <Route path={ pathWishListsPage } component={ ConnectedWishlistPage }/>
               <Route path={ pathWishListPage } component={ ConnectedWishlistDetailPage }/>
               <Route path={ pathOrderHistoryPage } exact component={ ConnectedOrderHistoryPage }/>
               <Route path={ pathOrderDetailsPage } component={ ConnectedOrderDetailsPage }/>
-              <Route path={ pathCustomerProfilePage } component={ ConnectedCustomerProfilePage }/>
+              <Route path={ pathCustomerProfilePage } component={ CustomerProfilePage }/>
             </Switch>
           </Grid>
         </Grid>

@@ -1,7 +1,6 @@
 import {ChangeEvent, FormEvent} from "react";
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {styles} from "./styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
 import {TCustomerReference} from "src/shared/interfaces/customer/index";
 import {
@@ -18,6 +17,7 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {styles} from "./styles";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;

@@ -3,19 +3,11 @@ import {
   CUSTOMER_DATA_UPDATE,
   CUSTOMER_DELETE_ENTITY,
   CUSTOMER_PASSWORD_UPDATE,
-} from '../../constants/ActionTypes/Pages/CustomerProfile';
-import { IReduxState } from 'src/typings/app';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { ICustomerDataParsed } from '../../interfaces/customer';
-import { IPayloadError } from '../../interfaces/errors';
-
-
-export interface ICustomerDataState extends IReduxState {
-  data: {
-    profile: ICustomerDataParsed | null,
-    isPasswordUpdated: boolean | null;
-  };
-}
+} from '../../../constants/ActionTypes/Pages/CustomerProfile';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { ICustomerDataParsed } from 'src/shared/interfaces/customer';
+import { IPayloadError } from 'src/shared/interfaces/errors';
+import { ICustomerDataState } from './types';
 
 export const initialState: ICustomerDataState = {
   data: {

@@ -5,7 +5,6 @@ import { REFRESH_TOKEN_REQUEST } from '../../constants/ActionTypes/Pages/Login';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataResponse';
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
 
-
 export class RefreshTokenService {
   public static async getActualToken(dispatch: Function): Promise<any> {
     const accessToken: string = localStorage.getItem('accessToken');

@@ -1,19 +1,6 @@
 import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import {
-  deleteCustomerFulfilledStateAction,
-  deleteCustomerPendingStateAction,
-  deleteCustomerRejectedStateAction,
-  getCustomerProfileFulfilledStateAction,
-  getCustomerProfilePendingStateAction,
-  getCustomerProfileRejectedStateAction,
-  updateCustomerPasswordFulfilledStateAction,
-  updateCustomerPasswordPendingStateAction,
-  updateCustomerPasswordRejectedStateAction,
-  updateCustomerProfileFulfilledStateAction,
-  updateCustomerProfilePendingStateAction,
-  updateCustomerProfileRejectedStateAction,
-} from '../../actions/Pages/CustomerProfile';
+import * as CustomerProfileActions from '../../actions/Pages/CustomerProfile';
 import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
@@ -25,15 +12,13 @@ import { CustomerProfileAuthenticateErrorText } from '../../constants/messages/e
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { logout } from '../../actions/Pages/Login';
 
-
 export class CustomerProfileService extends ApiServiceAbstract {
-
   private static getCustomersEndpoint = (customerReference: TCustomerReference) => (`/customers/${customerReference}`);
 
   // Retrieve customer data.
   public static async getProfileData(dispatch: Function, customerReference: TCustomerReference): Promise<any> {
     try {
-      dispatch(getCustomerProfilePendingStateAction());
+      dispatch(CustomerProfileActions.getCustomerProfilePendingStateAction());
       let response: any;
 
       try {
@@ -53,29 +38,31 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       if (response.ok) {
         const responseParsed: any = parseCustomerDataResponse(response.data);
-        dispatch(getCustomerProfileFulfilledStateAction(responseParsed));
+        dispatch(CustomerProfileActions.getCustomerProfileFulfilledStateAction(responseParsed));
         return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
-        dispatch(getCustomerProfileRejectedStateAction(errorMessage));
+        dispatch(CustomerProfileActions.getCustomerProfileRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
     } catch (error) {
       console.error('getProfileData error', error);
-      dispatch(getCustomerProfileRejectedStateAction(error.message));
+      dispatch(CustomerProfileActions.getCustomerProfileRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
     }
   }
 
   // Update customer data
-  public static async updateProfileData(dispatch: Function,
-                                        customerReference: TCustomerReference,
-                                        payload: ICustomerProfileIdentity): Promise<any> {
+  public static async updateProfileData(
+    dispatch: Function,
+    customerReference: TCustomerReference,
+    payload: ICustomerProfileIdentity
+  ): Promise<any> {
     try {
-      dispatch(updateCustomerProfilePendingStateAction());
+      dispatch(CustomerProfileActions.updateCustomerProfilePendingStateAction());
       let response: any;
 
       try {
@@ -104,30 +91,32 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       if (response.ok) {
         const responseParsed: any = parseCustomerDataResponse(response.data);
-        dispatch(updateCustomerProfileFulfilledStateAction(responseParsed));
+        dispatch(CustomerProfileActions.updateCustomerProfileFulfilledStateAction(responseParsed));
         toast.success('Your Profile Data was successfully updated!');
         return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
-        dispatch(updateCustomerProfileRejectedStateAction(errorMessage));
+        dispatch(CustomerProfileActions.updateCustomerProfileRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
     } catch (error) {
       console.error('updateProfileData error', error);
-      dispatch(updateCustomerProfileRejectedStateAction(error.message));
+      dispatch(CustomerProfileActions.updateCustomerProfileRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
     }
   }
 
   // Update customer password.
-  public static async updatePasswordData(dispatch: Function,
-                                         customerReference: TCustomerReference,
-                                         payload: ICustomerProfilePassword): Promise<any> {
+  public static async updatePasswordData(
+    dispatch: Function,
+    customerReference: TCustomerReference,
+    payload: ICustomerProfilePassword
+  ): Promise<any> {
     try {
-      dispatch(updateCustomerPasswordPendingStateAction());
+      dispatch(CustomerProfileActions.updateCustomerPasswordPendingStateAction());
 
       let response: any;
 
@@ -151,19 +140,19 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       if (response.ok) {
         const responseParsed: any = response.data;
-        dispatch(updateCustomerPasswordFulfilledStateAction());
+        dispatch(CustomerProfileActions.updateCustomerPasswordFulfilledStateAction());
         toast.success('Your Password was successfully updated!');
         return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
-        dispatch(updateCustomerPasswordRejectedStateAction(errorMessage));
+        dispatch(CustomerProfileActions.updateCustomerPasswordRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
     } catch (error) {
       console.error('updatePasswordData error', error);
-      dispatch(updateCustomerPasswordRejectedStateAction(error.message));
+      dispatch(CustomerProfileActions.updateCustomerPasswordRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
     }
@@ -172,7 +161,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
   // Delete Customer Profile - Anonymize customers.
   public static async deleteCustomerEntity(dispatch: Function, customerReference: TCustomerReference): Promise<any> {
     try {
-      dispatch(deleteCustomerPendingStateAction());
+      dispatch(CustomerProfileActions.deleteCustomerPendingStateAction());
 
       let response: any;
 
@@ -190,19 +179,19 @@ export class CustomerProfileService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed: any = response.data;
         dispatch(logout());
-        dispatch(deleteCustomerFulfilledStateAction());
+        dispatch(CustomerProfileActions.deleteCustomerFulfilledStateAction());
         toast.success('Your account was deleted!');
         return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
-        dispatch(deleteCustomerRejectedStateAction(errorMessage));
+        dispatch(CustomerProfileActions.deleteCustomerRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
     } catch (error) {
       console.error('deleteCustomerEntity error', error);
-      dispatch(deleteCustomerRejectedStateAction(error.message));
+      dispatch(CustomerProfileActions.deleteCustomerRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
       return null;
     }
