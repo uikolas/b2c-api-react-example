@@ -4,7 +4,7 @@ import { RouteProps } from 'react-router';
 import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { TCartId } from 'src/shared/interfaces/cart';
-import { getCartId, getTotalItemsQuantity, isCartLoading } from 'src/shared/reducers/Common/Cart';
+import { getCartId, getTotalItemsQuantity, isCartStateLoading } from 'src/shared/reducers/Common/Cart';
 import { deleteItemAction } from 'src/shared/actions/Pages/Wishlist';
 import { addItemToCartAction } from 'src/shared/actions/Common/Cart';
 import { push } from 'react-router-redux';
@@ -15,7 +15,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
   const cartId: TCartId = getCartId(state, ownProps);
   const cartItemsLength: number = getTotalItemsQuantity(state, ownProps);
-  const cartLoading: boolean = isCartLoading(state, ownProps);
+  const cartLoading: boolean = isCartStateLoading(state, ownProps);
 
   return ({
     location: routerProps.location ? routerProps.location : ownProps.location,

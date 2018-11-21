@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField/TextField';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ICartItem } from 'src/shared/reducers/Common/Cart/types';
+import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { styles } from '../styles';
 import { CartRowsProps as Props } from './types';
 
@@ -29,24 +30,22 @@ export const CartRowsComponent: React.SFC<Props> = (
           divider
           className={ classes.listItem }
         >
-          <div className={ classes.imgWrapper } style={ {height: heightListItem} }>
-            <img src={ item.image } style={ {maxWidth: heightListItem * 0.82, maxHeight: heightListItem * 0.82} }/>
-            <div className={ classes.actionAreaOverlay }/>
-          </div>
-
+          <SquareImage
+            image={ item.image }
+            size={ heightListItem }
+            alt={ item.name }
+          />
           <div className={ classes.itemWrapper }>
             <div className={ classes.itemName }>{ item.name }</div>
             { item.superAttributes
               ? item.superAttributes.map((attr: {[key: string]: string}, idx: number) => (
-                <div
-                  key={ `${item.sku}-attr-${idx}` }
-                  className={ `${classes.itemAttr} ${classes.textCapitalize}` }
-                >
+                <div key={ `${item.sku}-attr-${idx}` } className={ `${classes.itemAttr} ${classes.textCapitalize}` }>
                   <span>{ Object.keys(attr)[0].split('_').join(' ') }</span>
                   <span style={ {marginRight: '5px'} }>:</span>
                   <span>{ Object.values(attr)[0] }</span>
                 </div>
-              )) : null
+              ))
+              : null
             }
             <div>
               <span className={ `${classes.itemAttr} ${classes.remove}` }>remove</span>
@@ -68,11 +67,16 @@ export const CartRowsComponent: React.SFC<Props> = (
               value={ item.quantity }
               onChange={ handleChangeQty }
               variant="outlined"
-              InputProps={ {
-                className: classes.select,
+              SelectProps={ {
+                SelectDisplayProps: {className: classes.select},
               } }
             >
-              { quantities.map((i: number) => <MenuItem value={ i } key={ `qty-${item.sku}-${i}` }>{ i }</MenuItem>) }
+              { quantities.map((i: number) => (
+                <MenuItem
+                  value={ i }
+                  key={ `qty-${item.sku}-${i}` }
+                >{ i }</MenuItem>
+              )) }
             </TextField>
           </form>
 
@@ -80,9 +84,9 @@ export const CartRowsComponent: React.SFC<Props> = (
             <div className={ classes.sumWrapper }>
               <AppPrice value={ item.calculations.sumPriceToPayAggregation } extraClassName={ classes.mainCurrency }/>
             </div>
-            {
-              item.quantity > 1
-                ? <div className={ classes.itemAttr }>
+            { item.quantity > 1
+              ? (
+                <div className={ classes.itemAttr }>
                   <span>(</span>
                   <AppPrice
                     value={ item.calculations.unitPriceToPayAggregation }
@@ -90,7 +94,7 @@ export const CartRowsComponent: React.SFC<Props> = (
                   />
                   <span> each)</span>
                 </div>
-                : null
+              ) : null
             }
           </div>
         </ListItem>

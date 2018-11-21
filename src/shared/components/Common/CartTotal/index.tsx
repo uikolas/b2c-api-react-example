@@ -12,46 +12,50 @@ interface CartTotalProps extends WithStyles<typeof styles> {
 }
 
 export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
-  const { classes, totals, extraClass } = props;
+  const {classes, totals, extraClass} = props;
 
   return (
-    <div className={`${classes.fullWidth} ${extraClass ? extraClass : null}`}>
-      <Divider className={ classes.fullWidth } />
+    <div className={ `${classes.fullWidth} ${extraClass ? extraClass : null}` }>
+      <Divider className={ classes.fullWidth }/>
 
-      <div className={`${classes.totalMsg} ${((totals && totals.discountTotal) || (totals && totals.taxTotal)) ? null : classes.marginBottom}`}>
-        <div className={classes.currency}>Subtotal</div>
-        <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={classes.currency} /> }</div>
+      <div className={
+        `${classes.totalMsg} ${((totals && totals.discountTotal) || (totals && totals.taxTotal))
+          ? null
+          : classes.marginBottom}`
+      }>
+        <div className={ classes.currency }>Subtotal</div>
+        <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={ classes.currency }/> }</div>
       </div>
       {
         totals && totals.taxTotal ?
-          <div className={`${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} `}>
-            <div className={classes.currency}>Tax</div>
-            <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={classes.currency} /> }</div>
+          <div className={ `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} ` }>
+            <div className={ classes.currency }>Tax</div>
+            <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={ classes.currency }/> }</div>
           </div> :
           null
       }
       {
         totals && totals.discountTotal ?
-          <div className={`${classes.totalMsg} ${classes.marginBottom}`}>
-            <div className={classes.currency}>Discount</div>
+          <div className={ `${classes.totalMsg} ${classes.marginBottom}` }>
+            <div className={ classes.currency }>Discount</div>
             <div>
               <span>- </span>
-              <AppPrice value={ totals.discountTotal } extraClassName={classes.currency} />
+              <AppPrice value={ totals.discountTotal } extraClassName={ classes.currency }/>
             </div>
           </div> :
           null
       }
 
-      <Divider className={ classes.fullWidth } />
+      <Divider className={ classes.fullWidth }/>
 
-      <div className={`${classes.totalMsg}`}>
-        <div className={classes.grandTotal}>
+      <div className={ `${classes.totalMsg}` }>
+        <div className={ classes.grandTotal }>
           Grand Total
         </div>
-        <div>{ totals && <AppPrice value={ totals.grandTotal } extraClassName={classes.grandTotal} /> }</div>
+        <div>{ totals && <AppPrice value={ totals.grandTotal } extraClassName={ classes.grandTotal }/> }</div>
       </div>
 
-      <Divider className={ classes.fullWidth } />
+      <Divider className={ classes.fullWidth }/>
     </div>
   );
 };
