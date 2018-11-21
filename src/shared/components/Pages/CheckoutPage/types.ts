@@ -8,10 +8,10 @@ import {
   IAddNewAddressActions,
   ISameAsDelivery,
   IUsageSavedAddress,
-  ICheckoutRequest, IShipmentMethod,
+  ICheckoutRequest, IShipmentMethod, IPaymentMethod, IPaymentMethodData,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
-import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
+import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {
   IAddressesSelections,
@@ -43,6 +43,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isAppStateLoading: boolean;
   countriesCollection: ICountries[];
   shipmentMethods: Array<IShipmentMethod> | null;
+  paymentMethods: Array<IPaymentMethod> | null;
   getCheckoutData: (payload: ICheckoutRequest) => void;
   sendCheckoutData: (payload: ICheckoutRequest) => void;
 }
@@ -54,6 +55,8 @@ export interface ICheckoutPageState {
   billingNewAddress: IBillingAddressState;
   stepsCompletion: ICheckoutStepsCompletion;
   shipmentMethod: IShipmentMethod["id"] | null;
+  paymentMethod: IPaymentMethod["paymentMethod"] | null;
+  paymentMethodData: IPaymentMethodData;
 }
 
 export interface ICheckoutAddressState {
@@ -159,6 +162,9 @@ export type TCheckoutPageContext = {
   isUserLoggedIn: boolean;
   shipmentMethods: Array<IShipmentMethod> | null;
   currentValueShipmentMethod: IShipmentMethod["id"] | null;
+  paymentMethods: Array<IPaymentMethod> | null;
+  currentValuePaymentMethod: IPaymentMethod["paymentMethod"] | null;
+  paymentMethodDataInputs: IPaymentMethodData;
 };
 
 export interface IParamInputValidity {
@@ -180,4 +186,12 @@ export interface ICheckoutPanelsSettings {
 
 export interface IShipmentMethodsGrouped {
   [key: string]: Array<IShipmentMethod>;
+}
+
+export interface IPaymentMethodsGrouped {
+  [key: string]: Array<IPaymentMethod>;
+}
+
+export interface IPaymentMethodGroupItem extends IRadioItem {
+
 }

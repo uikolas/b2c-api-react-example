@@ -6,6 +6,7 @@ import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 export interface CartDataProps extends WithStyles<typeof styles> {
   products: Array<ICartItem>;
   totals: ICartTotals;
+  isSendBtnDisabled: boolean;
   sendData: (event: ClickEvent) => void;
 }
 

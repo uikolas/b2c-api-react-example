@@ -6,12 +6,13 @@ import Grid from '@material-ui/core/Grid';
 
 import { connect } from './connect';
 import { styles } from './styles';
-
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+import {
+  billingConfigInputStable,
+  billingNewAddressDefault,
+  deliveryConfigInputStable,
+  deliveryNewAddressDefault, paymentMethodDataDefault,
+  stepCompletionCheckoutDefault,
+} from "./constants";
 import {
   ICheckoutPageProps,
   ICheckoutPageState,
@@ -22,17 +23,17 @@ import {
 import {CheckoutPageContext} from "./context";
 import {
   checkAddressFormValidity,
-  checkFormInputValidity, getCheckoutPanelsSettings,
+  checkFormInputValidity,
+  getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraAddressesOptions,
-} from "src/shared/components/Pages/CheckoutPage/helpers";
-import {
-  billingConfigInputStable,
-  billingNewAddressDefault,
-  deliveryConfigInputStable,
-  deliveryNewAddressDefault,
-  stepCompletionCheckoutDefault,
-} from "src/shared/components/Pages/CheckoutPage/constants";
+} from "./helpers";
+
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
+import {AppMain} from "src/shared/components/Common/AppMain/index";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
@@ -60,11 +61,16 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       ...stepCompletionCheckoutDefault
     },
     shipmentMethod: null,
+    paymentMethod: null,
+    paymentMethodData: {
+      ...paymentMethodDataDefault
+    },
   };
 
   public componentDidMount() {
     console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
     this.initRequestAddressesData();
+    this.setDefaultAddresses();
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
@@ -73,16 +79,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     // If we get saved addressesCollection
     if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
-
-      const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
-      if (defaultValueDelivery) {
-        this.handleDeliverySelection(defaultValueDelivery);
-      }
-
-      const defaultValueBilling = getDefaultAddressId(this.props.addressesCollection, 'billing');
-      if (defaultValueBilling) {
-        this.handleBillingSelection(defaultValueBilling);
-      }
+      this.setDefaultAddresses();
     }
 
   }
@@ -109,6 +106,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       this.handleBillingSelection(value);
     } else if (name === 'shipmentMethodSelection') {
       this.handleShipmentMethodSelection(value);
+    } else if (name === 'paymentMethodSelection') {
+      this.handlePaymentMethodSelection(value);
     } else {
       throw new Error(`Undefined type of forms: ${name}`);
     }
@@ -308,6 +307,19 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     return true;
   }
 
+  private handlePaymentMethodSelection = (value: string ): boolean => {
+    this.setState( (prevState: ICheckoutPageState) => {
+      return ({
+        paymentMethod: value,
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          fourth: true,
+        },
+      });
+    });
+    return true;
+  }
+
   private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
            || (this.state.billingSelection.isAddNew && isAddNewBillingValue)
@@ -330,8 +342,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       isAddressesFulfilled,
       isAppStateLoading,
       isCartFulfilled,
+      isAppDataSet,
     } = this.props;
-    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled) {
+    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled || !isAppDataSet) {
       return;
     }
     if (customerReference && !addressesCollection) {
@@ -339,8 +352,24 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
-  private isCheckoutFormValid = (): boolean => {
-    return false;
+  private setDefaultAddresses = (): void => {
+    const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
+    if (defaultValueDelivery) {
+      this.handleDeliverySelection(defaultValueDelivery);
+    }
+
+    const defaultValueBilling = getDefaultAddressId(this.props.addressesCollection, 'billing');
+    if (defaultValueBilling) {
+      this.handleBillingSelection(defaultValueBilling);
+    }
+  }
+
+  private checkCheckoutFormValidity = (): boolean => {
+    const {first, second, third, fourth} = this.state.stepsCompletion;
+    if (!first || !second || !third || !fourth) {
+      return false;
+    }
+    return true;
   }
 
   public render(): JSX.Element {
@@ -355,6 +384,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       isUserLoggedIn,
       countriesCollection,
       shipmentMethods,
+      paymentMethods,
     } = this.props;
 
     console.info('CheckoutPage state: ', this.state);
@@ -394,10 +424,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             isUserLoggedIn,
             shipmentMethods,
             currentValueShipmentMethod: this.state.shipmentMethod,
+            paymentMethods,
+            currentValuePaymentMethod: this.state.paymentMethod,
+            paymentMethodDataInputs: this.state.paymentMethodData,
           }}
         >
           <Grid container className={classes.container}>
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12} md={7} className={classes.leftColumn}>
               <CheckoutForms
                 panels={getCheckoutPanelsSettings({
                   isFirstPanelDisabled,
@@ -407,10 +440,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 })}
               />
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={5} className={classes.rightColumn}>
               <CartData
                 products={products}
                 totals={totals}
+                isSendBtnDisabled={!this.checkCheckoutFormValidity()}
                 sendData={this.sendCheckoutDataForOrder}
               />
             </Grid>

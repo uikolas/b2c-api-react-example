@@ -25,50 +25,70 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
   {
     carrierName: 'DHL',
     id: '1',
-    name: 'DHL-1',
-    price: 5,
+    name: 'Standard',
+    price: 500,
     taxRate: 2,
     shipmentDeliveryTime: 'Standard'
   },
   {
     carrierName: 'DHL',
     id: '2',
-    name: 'DHL-2',
-    price: 5,
-    taxRate: 2,
+    name: 'Standard',
+    price: 600,
+    taxRate: null,
     shipmentDeliveryTime: 'Standard'
   },
   {
     carrierName: 'Hermes',
     id: '3',
-    name: 'Hermes-3',
-    price: 5.6,
+    name: 'Next Day',
+    price: 560,
     taxRate: 2,
     shipmentDeliveryTime: 'Next Day'
   },
   {
     carrierName: 'Hermes',
     id: '4',
-    name: 'Hermes-4',
-    price: 15,
-    taxRate: 2,
+    name: 'Same Day',
+    price: 1500,
+    taxRate: null,
     shipmentDeliveryTime: 'Same Day'
   },
   {
     carrierName: 'Hermes',
     id: '5',
-    name: 'Hermes-5',
-    price: 15,
-    taxRate: 2,
+    name: 'Same Day',
+    price: 490,
+    taxRate: null,
     shipmentDeliveryTime: 'Same Day'
   }
+];
+const paymentMethodsFixture: Array<IPaymentMethod> = [
+  {
+    paymentProvider: 'visa',
+    paymentMethod: 'creditCard',
+    paymentSelection: '1',
+    amount: 0,
+  },
+  {
+    paymentProvider: 'masterCard',
+    paymentMethod: 'creditCard',
+    paymentSelection: '2',
+    amount: 0,
+  },
+  {
+    paymentProvider: '?????',
+    paymentMethod: 'invoice',
+    paymentSelection: '3',
+    amount: 0,
+  },
 ];
 
 export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
     deliveryAddress: null,
-    payments: [],
+    payments: paymentMethodsFixture || [],
     shipments: shipmentMethodsFixture || [],
   },
 };
@@ -136,6 +156,14 @@ export function getShipmentMethodsFromStore(state: any, props: any): Array<IShip
 
 export function isShipmentMethodsExist(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.data.shipments);
+}
+
+export function getPaymentMethodsFromStore(state: any, props: any): Array<IPaymentMethod> | null {
+  return isPaymentMethodsExist(state, props) ? state.pageCheckout.data.payments : null;
+}
+
+export function isPaymentMethodsExist(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageCheckout.data.payments);
 }
 
 function isStateExist(state: any, props: any): boolean {
