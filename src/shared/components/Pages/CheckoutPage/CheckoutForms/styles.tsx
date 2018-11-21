@@ -12,13 +12,22 @@ export const formStyles = (theme: Theme) => createStyles({
     },
     "& label": {
       minWidth: 130,
-      height: 70,
+      minHeight: 70,
       alignItems: "flex-start",
       "&>span:not(:first-child)": {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 1.5,
+        "&>*": {
+          marginBottom: theme.spacing.unit,
+          lineHeight: 1,
+          "&:last-child": {
+            marginBottom: 0,
+          },
+        },
       },
     },
     "& legend svg": {
@@ -64,7 +73,8 @@ export const formStyles = (theme: Theme) => createStyles({
             flexGrow: 1,
           },
           "& svg": {
-            height: 44,
+            height: "70%",
+            width: 40,
             "&:not(:last-child)": {
               marginRight: theme.spacing.unit * 1.25,
             },

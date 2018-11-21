@@ -108,6 +108,8 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
   },
   radio: {
     color: theme.appColors.weakGrey,
+    paddingRight: theme.spacing.unit,
+    letterSpacing: 0.5,
   },
   checkedRadio: {
     "& svg": {

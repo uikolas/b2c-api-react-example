@@ -72,7 +72,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
                                               align="left"
                                               component="p"
                                               color="inherit"
-                                              gutterBottom={true}
                                   >
                                     {groupName}
                                   </Typography>

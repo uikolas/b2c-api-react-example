@@ -22,6 +22,8 @@ export const FormTextWaitingForResponse = "Waiting for data.";
 
 export const InputSelectCountryFirstItem = "please select";
 export const InputSelectSalutationFirstItem = "please select";
+export const InputLabelShipmentTaxRate = "Tax Rate";
+
 export const InputLabelPaymentCreditCard = "Credit Card";
 export const InputLabelPaymentInvoice = "Invoice";
 export const InputLabelPaymentProvider = "Card Type";

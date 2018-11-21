@@ -5,6 +5,7 @@ import {IShippingMethodsParams} from "./types";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import {InputLabelShipmentTaxRate} from "src/shared/constants/forms/labels";
 
 
 export const getShipmentMethodsFormSettings = (formName: string, params: IShippingMethodsParams): IFormSettings => {
@@ -69,7 +70,6 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
                               align="left"
                               component="p"
                               color="inherit"
-                              gutterBottom={true}
                   >
                     {shipmentMethod.name}
                   </Typography>
@@ -82,6 +82,17 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
                     value={shipmentMethod.price}
                     isStylesInherited
                   />
+    );
+  }
+
+  if (shipmentMethod.taxRate) {
+    response.push(<Typography key={`taxRate-${shipmentMethod.id}`}
+                              align="left"
+                              component="p"
+                              color="inherit"
+                  >
+                    {`${InputLabelShipmentTaxRate}: ${shipmentMethod.taxRate}`}
+                  </Typography>
     );
   }
 
