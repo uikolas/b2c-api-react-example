@@ -3,11 +3,12 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {ISameAsDelivery, IShipmentMethod} from "src/shared/interfaces/checkout/index";
+import {IPaymentMethod, ISameAsDelivery, IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
   ICheckoutAddressState,
   IObjectConfigInputStable,
+  IPaymentMethodGroupItem,
   TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
@@ -56,4 +57,14 @@ export interface IShippingMethodsParams extends IBaseCheckoutFormHandler {
   shipmentCarrierNameToIcon: {
     [key: string]: JSX.Element;
   };
+}
+
+export interface IPaymentProviderToIcon {
+  [key: string]: JSX.Element;
+}
+
+// Param to create payment methods form
+export interface IPaymentMethodsParams extends IBaseCheckoutFormHandler {
+  paymentMethodGroupItems: Array<IPaymentMethodGroupItem> | null;
+  currentValuePaymentMethod: IPaymentMethod["paymentMethod"] | null;
 }

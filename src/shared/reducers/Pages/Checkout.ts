@@ -65,13 +65,13 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
 ];
 const paymentMethodsFixture: Array<IPaymentMethod> = [
   {
-    paymentProvider: 'Visa',
+    paymentProvider: 'visa',
     paymentMethod: 'creditCard',
     paymentSelection: '1',
     amount: 0,
   },
   {
-    paymentProvider: 'Master Card',
+    paymentProvider: 'masterCard',
     paymentMethod: 'creditCard',
     paymentSelection: '2',
     amount: 0,

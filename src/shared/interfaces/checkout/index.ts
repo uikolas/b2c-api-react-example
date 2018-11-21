@@ -14,19 +14,13 @@ export type TShipmentShipmentDeliveryTime = string;
 export type TPaymentProvider = string;
 export type TPaymentSelection = string;
 export type TPaymentAmount = number;
-export type TPaymentMethodName = TPaymentMethodInvoice | TPaymentMethodCreditCard;
+export type TPaymentMethodName = string;
 export type TPaymentCardNumber = string;
 export type TPaymentCardName = string;
 export type TPaymentCardExpiryMonth = string;
 export type TPaymentCardExpiryYear = string;
 export type TPaymentCardCVC = string;
 export type TPaymentInvoiceDateOfBirth = string;
-
-export type TPaymentMethodInvoice = 'invoice';
-export const PaymentMethodInvoice = 'invoice';
-
-export type TPaymentMethodCreditCard = 'creditCard';
-export const PaymentMethodCreditCard = 'creditCard';
 
 export interface ISameAsDelivery {
   isSameAsDelivery: boolean;

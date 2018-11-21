@@ -11,7 +11,7 @@ import {
   ICheckoutRequest, IShipmentMethod, IPaymentMethod, IPaymentMethodData,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
-import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
+import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {
   IAddressesSelections,
@@ -186,4 +186,12 @@ export interface ICheckoutPanelsSettings {
 
 export interface IShipmentMethodsGrouped {
   [key: string]: Array<IShipmentMethod>;
+}
+
+export interface IPaymentMethodsGrouped {
+  [key: string]: Array<IPaymentMethod>;
+}
+
+export interface IPaymentMethodGroupItem extends IRadioItem {
+
 }
