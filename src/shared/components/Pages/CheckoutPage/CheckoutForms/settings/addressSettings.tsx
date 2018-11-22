@@ -51,6 +51,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
     countriesCollection,
     submitHandler,
     inputChangeHandler,
+    onBlurHandler,
   } = params;
 
   const isCountriesCollectionExist = Boolean(Array.isArray(countriesCollection) && countriesCollection.length > 0);
@@ -59,6 +60,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
     formName,
     onChangeHandler: inputChangeHandler,
     onSubmitHandler: submitHandler,
+    onBlurHandler,
     fields: [
       [
         {

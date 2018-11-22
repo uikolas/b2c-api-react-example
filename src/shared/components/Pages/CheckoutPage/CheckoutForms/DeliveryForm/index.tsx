@@ -13,6 +13,7 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
+import {checkoutInputsFormNames} from "src/shared/components/Pages/CheckoutPage/constants";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -24,6 +25,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
     <CheckoutPageContext.Consumer>
       {({
           submitHandler,
+          onBlurHandler,
           selectionsChangeHandler,
           handleDeliveryInputs,
           deliveryNewAddress,
@@ -42,6 +44,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleDeliveryInputs,
+          onBlurHandler: onBlurHandler(checkoutInputsFormNames.delivery),
         };
         const savedDeliveryParams = {
           currentValueInSelection: currentValuesInSelections.delivery,
@@ -50,14 +53,14 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const deliveryFormSettings = getAddressFormSettings('delivery', deliveryParams);
+        const deliveryFormSettings = getAddressFormSettings(checkoutInputsFormNames.delivery, deliveryParams);
         const savedAddressFormSettings = getDeliverySavedAddressFormSettings('savedDelivery', savedDeliveryParams);
         const selectionForm = <SprykerForm form={savedAddressFormSettings} />;
         const inputsForm = <SprykerForm form={deliveryFormSettings} />;
 
         return (
           <Grid container className={ classes.root }>
-            <Grid item xs={ 12 }>
+            <Grid item xs={12}>
               { isUserLoggedIn
                 ? (!isAddressesFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />

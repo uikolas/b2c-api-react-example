@@ -1,6 +1,6 @@
 import {
   IBillingAddressState,
-  IBillingObjectConfigInputStable, ICheckoutStepsCompletion, IDeliveryAddressState,
+  IBillingObjectConfigInputStable, ICheckoutInputsFormNames, ICheckoutStepsCompletion, IDeliveryAddressState,
   IDeliveryObjectConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IPaymentMethodData} from "src/shared/interfaces/checkout/index";
@@ -122,4 +122,9 @@ export const paymentMethodDataDefault: IPaymentMethodData = {
   cardExpiryYear: null,
   cardCVC: null,
   invoiceDateOfBirth: null,
+};
+
+export const checkoutInputsFormNames: ICheckoutInputsFormNames = {
+  billing: 'billing',
+  delivery: 'delivery',
 };

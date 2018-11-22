@@ -20,7 +20,7 @@ import {
   TIso2Code
 } from "src/shared/interfaces/addresses/index";
 import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
-import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
+import {sprykerFormStyles} from "./sprykerFormStyles";
 
 
 export interface IFormField {
@@ -29,7 +29,7 @@ export interface IFormField {
   inputValue: TFormInputValue;
   spaceNumber: GridSize;
   isRequired?: boolean;
-  onChangeOwnHandler?: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  onChangeOwnHandler?: React.EventHandler<any>;
   onBlurOwnHandler?: React.EventHandler<any>;
   label?: string;
   isError?: boolean;

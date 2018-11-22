@@ -18,9 +18,11 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
       formName,
       onChangeHandler,
       onSubmitHandler,
+      onBlurHandler,
       fields,
     },
   }  = props;
+
 
   const isRowsExist = (fields.length > 0);
 
@@ -54,6 +56,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                     inputValue={field.inputValue}
                     isRequired={field.isRequired ? field.isRequired : false}
                     onChangeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
+                    onBlurHandler={field.onBlurOwnHandler ? field.onBlurOwnHandler : onBlurHandler}
                     label={field.label ? field.label : null}
                     isError={field.isError ? field.isError : false}
                   />

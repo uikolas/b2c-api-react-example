@@ -8,9 +8,10 @@ import { connect } from './connect';
 import { styles } from './styles';
 import {
   billingConfigInputStable,
-  billingNewAddressDefault,
+  billingNewAddressDefault, checkoutInputsFormNames,
   deliveryConfigInputStable,
-  deliveryNewAddressDefault, paymentMethodDataDefault,
+  deliveryNewAddressDefault,
+  paymentMethodDataDefault,
   stepCompletionCheckoutDefault,
 } from "./constants";
 import {
@@ -28,8 +29,6 @@ import {
   getDefaultAddressId,
   getExtraAddressesOptions,
 } from "./helpers";
-
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
@@ -89,13 +88,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('handleSubmit ');
   }
 
-  public sendCheckoutDataForOrder = (event: ClickEvent) => {
-    event.preventDefault();
-    console.info('Send checkout data');
-
-    // this.props.sendCheckoutData();
-  }
-
   public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                   ): void => {
     const { name, value } = event.target;
@@ -113,14 +105,19 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
+  public handleFormValidityOnBlur = (formName: string) => (event: any): void => {
+    if (formName === checkoutInputsFormNames.delivery) {
+      this.handleDeliveryNewAddressValidity();
+    } else if (formName === checkoutInputsFormNames.billing) {
+      this.handleBillingNewAddressValidity();
+    }
+  }
+
   public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                 ): void => {
-    // TODO: checkAddressFormValidity change on blur event
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
-    if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
-      throw new Error(inputSaveErrorText);
-    }
+    if (!this.state.deliveryNewAddress.hasOwnProperty(name)) { throw new Error(inputSaveErrorText);}
     const key: any = name;
 
     const isInputValid = checkFormInputValidity({
@@ -135,14 +132,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       }
     };
 
-    const isFormValid = checkAddressFormValidity({
-      form: {
-        ...this.state.deliveryNewAddress,
-        ...newInputState,
-      },
-      fieldsConfig: deliveryConfigInputStable,
-    });
-
     this.setState((prevState: ICheckoutPageState) => {
       if (prevState.deliveryNewAddress[key].value === cleanValue) {
         return;
@@ -152,19 +141,20 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         deliveryNewAddress: {
           ...prevState.deliveryNewAddress,
           ...newInputState,
-        },
-        stepsCompletion: {
-          ...prevState.stepsCompletion,
-          first: isFormValid,
         }
       });
+    }, () => {
+      // Validate form when select input is changed
+      if (key === deliveryConfigInputStable.salutation.inputName
+          || key === deliveryConfigInputStable.country.inputName
+      ) {
+        this.handleDeliveryNewAddressValidity();
+      }
     });
   }
 
   public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                 ): void => {
-    // TODO: checkAddressFormValidity change on blur event
-
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
@@ -184,32 +174,56 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       }
     };
 
-    const isFormValid = checkAddressFormValidity({
-      form: {
-        ...this.state.billingNewAddress,
-        ...newInputState,
-      },
-      fieldsConfig: billingConfigInputStable,
-    });
-
     this.setState((prevState: ICheckoutPageState) => {
-
       if (prevState.billingNewAddress[key].value === cleanValue) {
         return;
       }
-
       return ({
         ...prevState,
         billingNewAddress: {
           ...prevState.billingNewAddress,
           ...newInputState,
-        },
+        } });
+    }, () => {
+      // Validate form when select input is changed
+      if (key === billingConfigInputStable.salutation.inputName
+          || key === billingConfigInputStable.country.inputName
+      ) {
+        this.handleBillingNewAddressValidity();
+      }
+    });
+  }
+
+  private handleBillingNewAddressValidity = (): boolean => {
+    const isFormValid = checkAddressFormValidity({
+      form: this.state.billingNewAddress,
+      fieldsConfig: billingConfigInputStable,
+    });
+    this.setState((prevState: ICheckoutPageState) => {
+      return ({
         stepsCompletion: {
           ...prevState.stepsCompletion,
           second: isFormValid,
         }
       });
     });
+    return isFormValid;
+  }
+
+  private handleDeliveryNewAddressValidity = (): boolean => {
+    const isFormValid = checkAddressFormValidity({
+      form: this.state.deliveryNewAddress,
+      fieldsConfig: deliveryConfigInputStable,
+    });
+    this.setState((prevState: ICheckoutPageState) => {
+      return ({
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          first: isFormValid,
+        }
+      });
+    });
+    return isFormValid;
   }
 
   private handleDeliverySelection = (value: string): boolean => {
@@ -404,6 +418,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         <CheckoutPageContext.Provider
           value={{
             submitHandler: this.handleSubmit,
+            onBlurHandler: this.handleFormValidityOnBlur,
             selectionsChangeHandler: this.handleSelectionsChange,
             handleDeliveryInputs: this.handleDeliveryInputs,
             handleBillingInputs: this.handleBillingInputs,
@@ -445,7 +460,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 products={products}
                 totals={totals}
                 isSendBtnDisabled={!this.checkCheckoutFormValidity()}
-                sendData={this.sendCheckoutDataForOrder}
+                sendData={this.handleSubmit}
               />
             </Grid>
           </Grid>

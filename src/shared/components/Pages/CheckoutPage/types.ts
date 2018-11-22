@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
@@ -8,7 +9,10 @@ import {
   IAddNewAddressActions,
   ISameAsDelivery,
   IUsageSavedAddress,
-  ICheckoutRequest, IShipmentMethod, IPaymentMethod, IPaymentMethodData,
+  ICheckoutRequest,
+  IShipmentMethod,
+  IPaymentMethod,
+  IPaymentMethodData,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
@@ -91,18 +95,13 @@ export interface IObjectConfigInputStable {
   [key: string]: IConfigInputStable;
 }
 
-export interface IDeliveryAddressState extends ICheckoutAddressState {
-}
+export interface IDeliveryAddressState extends ICheckoutAddressState {}
 
-export interface IBillingAddressState extends ICheckoutAddressState {
-}
+export interface IBillingAddressState extends ICheckoutAddressState {}
 
-export interface IDeliveryObjectConfigInputStable extends IObjectConfigInputStable {
-}
+export interface IDeliveryObjectConfigInputStable extends IObjectConfigInputStable {}
 
-export interface IBillingObjectConfigInputStable extends IObjectConfigInputStable {
-}
-
+export interface IBillingObjectConfigInputStable extends IObjectConfigInputStable {}
 
 export interface IConfigInputStable {
   isRequired: boolean;
@@ -116,13 +115,10 @@ export interface IConfigInputState {
 
 export const isAddNewDeliveryValue = "isAddNewDelivery";
 export type TIsAddNewDeliveryValue = "isAddNewDelivery";
-
 export const isAddNewBillingValue = "isAddNewBilling";
 export type TIsAddNewBillingValue = "isAddNewBilling";
-
 export const isSameAsDeliveryValue = "isSameAsDelivery";
 export type TIsSameAsDeliveryValue = "isSameAsDelivery";
-
 
 export interface IDeliverySelection {
   selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
@@ -145,6 +141,7 @@ export interface ICheckoutStepsCompletion {
 // Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
+  onBlurHandler: (formName: string) => React.EventHandler<any>;
   selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
@@ -192,6 +189,9 @@ export interface IPaymentMethodsGrouped {
   [key: string]: Array<IPaymentMethod>;
 }
 
-export interface IPaymentMethodGroupItem extends IRadioItem {
+export interface IPaymentMethodGroupItem extends IRadioItem {}
 
+export interface ICheckoutInputsFormNames {
+  billing: string;
+  delivery: string;
 }

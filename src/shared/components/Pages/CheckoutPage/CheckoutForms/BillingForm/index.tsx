@@ -16,6 +16,7 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
+import {checkoutInputsFormNames} from "src/shared/components/Pages/CheckoutPage/constants";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
@@ -27,6 +28,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
     <CheckoutPageContext.Consumer>
       {({
           submitHandler,
+          onBlurHandler,
           selectionsChangeHandler,
           handleBillingInputs,
           isBillingSameAsDelivery,
@@ -46,6 +48,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleBillingInputs,
+          onBlurHandler: onBlurHandler(checkoutInputsFormNames.billing),
         };
         const sameAsDeliveryParams = {
           isSameAsDelivery: isBillingSameAsDelivery,
@@ -59,7 +62,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const billingFormSettings = getAddressFormSettings('billing', billingParams);
+        const billingFormSettings = getAddressFormSettings(checkoutInputsFormNames.billing, billingParams);
         const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings('sameAsDeliveryForm', sameAsDeliveryParams);
         const savedAddressFormSettings = getBillingSavedAddressFormSettings('savedBilling', savedBillingParams);
 
@@ -69,7 +72,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
 
         return (
           <Grid container className={classes.root}>
-            <Grid item xs={ 12 }>
+            <Grid item xs={12}>
               { isUserLoggedIn
                 ? (!isAddressesFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />

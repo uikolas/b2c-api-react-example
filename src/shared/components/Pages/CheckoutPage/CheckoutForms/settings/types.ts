@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {ChangeEvent} from "react";
 import {
   ICurrentValuesInSelections,
@@ -19,6 +20,7 @@ import {ICountries} from "src/shared/reducers/Common/Init";
 export interface IBaseCheckoutFormHandler {
   submitHandler: TCheckoutPageContext["submitHandler"];
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  onBlurHandler?: React.EventHandler<any>;
 }
 
 // Param to create address forms

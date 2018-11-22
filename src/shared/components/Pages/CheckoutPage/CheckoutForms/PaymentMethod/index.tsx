@@ -57,8 +57,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           paymentMethodsGrouped[paymentMethod.paymentMethod].push(paymentMethod);
         }
 
-        console.log('++++++++ paymentMethodsGrouped ', paymentMethodsGrouped);
-
         const paymentMethodGroupItems: IPaymentMethodsParams["paymentMethodGroupItems"] = [];
         for (let groupName in paymentMethodsGrouped) {
           if (!paymentMethodsGrouped.hasOwnProperty(groupName)
