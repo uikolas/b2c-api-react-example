@@ -17,6 +17,10 @@ import {
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 import {billingConfigInputStable, checkoutInputsFormNames} from "src/shared/components/Pages/CheckoutPage/constants";
+import {
+  IAddressParams, IBillingAddressesParams,
+  ISameAsDeliveryParams
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
@@ -41,7 +45,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           isUserLoggedIn,
           countriesCollection
       }) => {
-        const billingParams = {
+        const billingParams: IAddressParams = {
           addressData: billingNewAddress,
           addressInputsConfig: billingConfigInputStable,
           countriesCollection,
@@ -49,12 +53,12 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           inputChangeHandler: handleBillingInputs,
           onBlurHandler: onBlurHandler(checkoutInputsFormNames.billing),
         };
-        const sameAsDeliveryParams = {
+        const sameAsDeliveryParams: ISameAsDeliveryParams = {
           isSameAsDelivery: isBillingSameAsDelivery,
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const savedBillingParams = {
+        const savedBillingParams: IBillingAddressesParams = {
           currentValueInSelection: currentValuesInSelections.billing,
           addressesCollection,
           extraAddressesOptions: extraAddressesOptions.billing,

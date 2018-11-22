@@ -14,6 +14,10 @@ import {
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 import {checkoutInputsFormNames, deliveryConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants";
+import {
+  IAddressParams,
+  IDeliveryAddressesParams
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -37,7 +41,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           isUserLoggedIn,
           countriesCollection,
       }) => {
-        const deliveryParams = {
+        const deliveryParams: IAddressParams = {
           addressData: deliveryNewAddress,
           addressInputsConfig: deliveryConfigInputStable,
           countriesCollection,
@@ -45,7 +49,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           inputChangeHandler: handleDeliveryInputs,
           onBlurHandler: onBlurHandler(checkoutInputsFormNames.delivery),
         };
-        const savedDeliveryParams = {
+        const savedDeliveryParams: IDeliveryAddressesParams = {
           currentValueInSelection: currentValuesInSelections.delivery,
           addressesCollection,
           extraAddressesOptions: extraAddressesOptions.delivery,
