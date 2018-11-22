@@ -12,7 +12,6 @@ import {
   ICheckoutRequest,
   IShipmentMethod,
   IPaymentMethod,
-  IPaymentMethodData,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
@@ -60,7 +59,8 @@ export interface ICheckoutPageState {
   stepsCompletion: ICheckoutStepsCompletion;
   shipmentMethod: IShipmentMethod["id"] | null;
   paymentMethod: IPaymentMethod["paymentMethod"] | null;
-  paymentMethodData: IPaymentMethodData;
+  paymentCreditCardData: ICheckoutCreditCardState;
+  paymentInvoiceData: ICheckoutInvoiceState;
 }
 
 export interface ICheckoutAddressState {
@@ -145,11 +145,11 @@ export type TCheckoutPageContext = {
   selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleInvoiceInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleCreditCardInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   isBillingSameAsDelivery: boolean;
   deliveryNewAddress: IDeliveryAddressState;
   billingNewAddress: IBillingAddressState;
-  deliveryAddressInputsConfig: IDeliveryObjectConfigInputStable;
-  billingAddressInputsConfig: IBillingObjectConfigInputStable;
   addressesCollection: IAddressItem[] | null;
   countriesCollection: ICountries[] | null;
   selections: IAddressesSelections | null;
@@ -161,7 +161,8 @@ export type TCheckoutPageContext = {
   currentValueShipmentMethod: IShipmentMethod["id"] | null;
   paymentMethods: Array<IPaymentMethod> | null;
   currentValuePaymentMethod: IPaymentMethod["paymentMethod"] | null;
-  paymentMethodDataInputs: IPaymentMethodData;
+  paymentCreditCardDataInputs: ICheckoutCreditCardState;
+  paymentInvoiceDataInputs: ICheckoutInvoiceState;
 };
 
 export interface IParamInputValidity {
@@ -170,8 +171,11 @@ export interface IParamInputValidity {
 }
 
 export interface IParamFormValidity {
-  form: IDeliveryAddressState | IBillingAddressState;
-  fieldsConfig: IDeliveryObjectConfigInputStable | IBillingObjectConfigInputStable;
+  form: IDeliveryAddressState | IBillingAddressState | ICheckoutInvoiceState | ICheckoutCreditCardState;
+  fieldsConfig: IDeliveryObjectConfigInputStable
+                | IBillingObjectConfigInputStable
+                | IInvoiceObjectConfigInputStable
+                | ICreditCardObjectConfigInputStable;
 }
 
 export interface ICheckoutPanelsSettings {
@@ -194,4 +198,45 @@ export interface IPaymentMethodGroupItem extends IRadioItem {}
 export interface ICheckoutInputsFormNames {
   billing: string;
   delivery: string;
+  invoice: string;
+  creditCard: string;
+}
+
+export interface ICheckoutPaymentMethodsNames {
+  invoice: string;
+  creditCard: string;
+}
+
+export interface ICheckoutCreditCardState {
+  paymentProvider: IConfigInputState;
+  cardNumber: IConfigInputState;
+  cardName: IConfigInputState;
+  cardExpiryMonth: IConfigInputState;
+  cardExpiryYear: IConfigInputState;
+  cardCVC: IConfigInputState;
+
+  [key: string]: IConfigInputState;
+}
+
+export interface ICheckoutInvoiceState {
+  dateOfBirth: IConfigInputState;
+
+  [key: string]: IConfigInputState;
+}
+
+export interface ICreditCardObjectConfigInputStable {
+  paymentProvider: IConfigInputStable;
+  cardNumber: IConfigInputStable;
+  cardName: IConfigInputStable;
+  cardExpiryMonth: IConfigInputStable;
+  cardExpiryYear: IConfigInputStable;
+  cardCVC: IConfigInputStable;
+
+  [key: string]: IConfigInputStable;
+}
+
+export interface IInvoiceObjectConfigInputStable {
+  dateOfBirth: IConfigInputStable;
+
+  [key: string]: IConfigInputStable;
 }

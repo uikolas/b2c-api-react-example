@@ -1,9 +1,15 @@
 import {
   IBillingAddressState,
-  IBillingObjectConfigInputStable, ICheckoutInputsFormNames, ICheckoutStepsCompletion, IDeliveryAddressState,
-  IDeliveryObjectConfigInputStable
+  IBillingObjectConfigInputStable,
+  ICheckoutCreditCardState,
+  ICheckoutInputsFormNames,
+  ICheckoutInvoiceState,
+  ICheckoutPaymentMethodsNames,
+  ICheckoutStepsCompletion, ICreditCardObjectConfigInputStable,
+  IDeliveryAddressState,
+  IDeliveryObjectConfigInputStable, IInvoiceObjectConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/types";
-import {IPaymentMethodData} from "src/shared/interfaces/checkout/index";
+
 
 export const deliveryNewAddressDefault: IDeliveryAddressState = {
   firstName: {
@@ -114,17 +120,82 @@ export const stepCompletionCheckoutDefault: ICheckoutStepsCompletion = {
   fourth: false,
 };
 
-export const paymentMethodDataDefault: IPaymentMethodData = {
-  paymentProvider: null,
-  cardNumber: null,
-  cardName: null,
-  cardExpiryMonth: null,
-  cardExpiryYear: null,
-  cardCVC: null,
-  invoiceDateOfBirth: null,
+export const paymentCreditCardDefault: ICheckoutCreditCardState = {
+  paymentProvider: {
+    value: '',
+    isError: false,
+  },
+  cardNumber: {
+    value: '',
+    isError: false,
+  },
+  cardName: {
+    value: '',
+    isError: false,
+  },
+  cardExpiryMonth: {
+    value: '',
+    isError: false,
+  },
+  cardExpiryYear: {
+    value: '',
+    isError: false,
+  },
+  cardCVC: {
+    value: '',
+    isError: false,
+  },
+};
+
+export const paymentInvoiceDefault: ICheckoutInvoiceState = {
+  dateOfBirth: {
+    value: '',
+    isError: false,
+  },
+};
+
+export const invoiceConfigInputStable: IInvoiceObjectConfigInputStable = {
+  dateOfBirth: {
+    isRequired: true,
+    inputName: 'dateOfBirth',
+  },
+};
+
+export const creditCardConfigInputStable: ICreditCardObjectConfigInputStable = {
+  paymentProvider: {
+    isRequired: true,
+    inputName: 'paymentProvider',
+  },
+  cardNumber: {
+    isRequired: true,
+    inputName: 'cardNumber',
+  },
+  cardName: {
+    isRequired: true,
+    inputName: 'cardName',
+  },
+  cardExpiryMonth: {
+    isRequired: true,
+    inputName: 'cardExpiryMonth',
+  },
+  cardExpiryYear: {
+    isRequired: true,
+    inputName: 'cardExpiryYear',
+  },
+  cardCVC: {
+    isRequired: true,
+    inputName: 'cardCVC',
+  },
 };
 
 export const checkoutInputsFormNames: ICheckoutInputsFormNames = {
   billing: 'billing',
   delivery: 'delivery',
+  invoice: 'invoice',
+  creditCard: 'creditCard',
+};
+
+export const checkoutPaymentMethodsNames: ICheckoutPaymentMethodsNames = {
+  invoice: 'invoice',
+  creditCard: 'creditCard',
 };

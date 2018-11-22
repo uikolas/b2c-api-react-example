@@ -20,6 +20,9 @@ import {
   getPaymentMethodsFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/paymentSettings";
 import {IPaymentMethod} from "src/shared/interfaces/checkout/index";
+import {checkoutPaymentMethodsNames} from "src/shared/components/Pages/CheckoutPage/constants";
+import {InvoicePaymentForm} from "./InvoicePaymentForm/index";
+import {CreditCardPaymentForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/CreditCardPaymentForm/index";
 
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {
@@ -33,7 +36,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
     visa: <PartnerIconVisa key="visa" />,
   };
 
-
   return (
     <CheckoutPageContext.Consumer>
       {({
@@ -41,7 +43,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           selectionsChangeHandler,
           paymentMethods,
           currentValuePaymentMethod,
-          paymentMethodDataInputs,
       }) => {
 
         const isPaymentMethodsExist = Boolean(Array.isArray(paymentMethods) && paymentMethods.length > 0);
@@ -96,8 +97,16 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
 
         return (
           <Grid container className={classes.root}>
-            <Grid item xs={12} className={classes.paymentMethodsParentForms}>
-              <SprykerForm form={paymentMethodFormSettings} />
+            <Grid item xs={12}>
+              <SprykerForm form={paymentMethodFormSettings} formClassName={classes.paymentMethodsForm} />
+              {currentValuePaymentMethod === checkoutPaymentMethodsNames.invoice
+                ? <InvoicePaymentForm />
+                : null
+              }
+              {currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard
+                ? <CreditCardPaymentForm />
+                : null
+              }
             </Grid>
           </Grid>
         );

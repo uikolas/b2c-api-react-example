@@ -8,10 +8,14 @@ import { connect } from './connect';
 import { styles } from './styles';
 import {
   billingConfigInputStable,
-  billingNewAddressDefault, checkoutInputsFormNames,
+  billingNewAddressDefault,
+  checkoutInputsFormNames,
+  creditCardConfigInputStable,
   deliveryConfigInputStable,
   deliveryNewAddressDefault,
-  paymentMethodDataDefault,
+  invoiceConfigInputStable,
+  paymentCreditCardDefault,
+  paymentInvoiceDefault,
   stepCompletionCheckoutDefault,
 } from "./constants";
 import {
@@ -61,8 +65,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     },
     shipmentMethod: null,
     paymentMethod: null,
-    paymentMethodData: {
-      ...paymentMethodDataDefault
+    paymentCreditCardData: {
+      ...paymentCreditCardDefault
+    },
+    paymentInvoiceData: {
+      ...paymentInvoiceDefault
     },
   };
 
@@ -93,23 +100,29 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const { name, value } = event.target;
     console.log(name, value);
     if (name === 'deliverySelection') {
-      this.handleDeliverySelection(value);
+        this.handleDeliverySelection(value);
     } else if (name === 'billingSelection' || name === isSameAsDeliveryValue) {
-      this.handleBillingSelection(value);
+        this.handleBillingSelection(value);
     } else if (name === 'shipmentMethodSelection') {
-      this.handleShipmentMethodSelection(value);
+        this.handleShipmentMethodSelection(value);
     } else if (name === 'paymentMethodSelection') {
-      this.handlePaymentMethodSelection(value);
+        this.handlePaymentMethodSelection(value);
     } else {
-      throw new Error(`Undefined type of forms: ${name}`);
+        throw new Error(`Undefined type of forms: ${name}`);
     }
   }
 
   public handleFormValidityOnBlur = (formName: string) => (event: any): void => {
     if (formName === checkoutInputsFormNames.delivery) {
-      this.handleDeliveryNewAddressValidity();
+        this.handleDeliveryNewAddressValidity();
     } else if (formName === checkoutInputsFormNames.billing) {
-      this.handleBillingNewAddressValidity();
+        this.handleBillingNewAddressValidity();
+    } else if (formName === checkoutInputsFormNames.invoice) {
+        this.handleInvoiceValidity();
+    } else if (formName === checkoutInputsFormNames.creditCard) {
+        this.handleCreditCardValidity();
+    } else {
+        throw new Error(`Undefined type of formName: ${formName}`);
     }
   }
 
@@ -117,7 +130,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                                 ): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
-    if (!this.state.deliveryNewAddress.hasOwnProperty(name)) { throw new Error(inputSaveErrorText);}
+    if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
     const key: any = name;
 
     const isInputValid = checkFormInputValidity({
@@ -154,7 +169,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                ): void => {
+                               ): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
@@ -194,6 +209,72 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
+  public handleInvoiceInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                               ): void => {
+    const name: any = event.target.name;
+    const cleanValue = event.target.value.trim();
+    if (!this.state.paymentInvoiceData.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
+    const key: any = name;
+    const isInputValid = checkFormInputValidity({
+      value: cleanValue,
+      fieldConfig: invoiceConfigInputStable[key],
+    });
+
+    const newInputState = {
+      [key]: {
+        value: cleanValue,
+        isError: !isInputValid,
+      }
+    };
+
+    this.setState((prevState: ICheckoutPageState) => {
+      if (prevState.paymentInvoiceData[key].value === cleanValue) {
+        return;
+      }
+      return ({
+        ...prevState,
+        paymentInvoiceData: {
+          ...prevState.paymentInvoiceData,
+          ...newInputState,
+        } });
+    });
+  }
+
+  public handleCreditCardInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+                                  ): void => {
+    const name: any = event.target.name;
+    const cleanValue = event.target.value.trim();
+    if (!this.state.paymentCreditCardData.hasOwnProperty(name)) {
+      throw new Error(inputSaveErrorText);
+    }
+    const key: any = name;
+    const isInputValid = checkFormInputValidity({
+      value: cleanValue,
+      fieldConfig: creditCardConfigInputStable[key],
+    });
+
+    const newInputState = {
+      [key]: {
+        value: cleanValue,
+        isError: !isInputValid,
+      }
+    };
+
+    this.setState((prevState: ICheckoutPageState) => {
+      if (prevState.paymentCreditCardData[key].value === cleanValue) {
+        return;
+      }
+      return ({
+        ...prevState,
+        paymentCreditCardData: {
+          ...prevState.paymentCreditCardData,
+          ...newInputState,
+        } });
+    });
+  }
+
   private handleBillingNewAddressValidity = (): boolean => {
     const isFormValid = checkAddressFormValidity({
       form: this.state.billingNewAddress,
@@ -220,6 +301,38 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         stepsCompletion: {
           ...prevState.stepsCompletion,
           first: isFormValid,
+        }
+      });
+    });
+    return isFormValid;
+  }
+
+  private handleInvoiceValidity = (): boolean => {
+    const isFormValid = checkAddressFormValidity({
+      form: this.state.paymentInvoiceData,
+      fieldsConfig: invoiceConfigInputStable,
+    });
+    this.setState((prevState: ICheckoutPageState) => {
+      return ({
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          fourth: isFormValid,
+        }
+      });
+    });
+    return isFormValid;
+  }
+
+  private handleCreditCardValidity = (): boolean => {
+    const isFormValid = checkAddressFormValidity({
+      form: this.state.paymentCreditCardData,
+      fieldsConfig: creditCardConfigInputStable,
+    });
+    this.setState((prevState: ICheckoutPageState) => {
+      return ({
+        stepsCompletion: {
+          ...prevState.stepsCompletion,
+          fourth: isFormValid,
         }
       });
     });
@@ -325,10 +438,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     this.setState( (prevState: ICheckoutPageState) => {
       return ({
         paymentMethod: value,
-        stepsCompletion: {
-          ...prevState.stepsCompletion,
-          fourth: true,
-        },
       });
     });
     return true;
@@ -422,11 +531,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             selectionsChangeHandler: this.handleSelectionsChange,
             handleDeliveryInputs: this.handleDeliveryInputs,
             handleBillingInputs: this.handleBillingInputs,
+            handleInvoiceInputs: this.handleInvoiceInputs,
+            handleCreditCardInputs: this.handleCreditCardInputs,
             isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
             deliveryNewAddress: this.state.deliveryNewAddress,
             billingNewAddress: this.state.billingNewAddress,
-            deliveryAddressInputsConfig: deliveryConfigInputStable,
-            billingAddressInputsConfig: billingConfigInputStable,
             addressesCollection,
             countriesCollection,
             selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},
@@ -441,7 +550,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             currentValueShipmentMethod: this.state.shipmentMethod,
             paymentMethods,
             currentValuePaymentMethod: this.state.paymentMethod,
-            paymentMethodDataInputs: this.state.paymentMethodData,
+            paymentCreditCardDataInputs: this.state.paymentCreditCardData,
+            paymentInvoiceDataInputs: this.state.paymentInvoiceData,
           }}
         >
           <Grid container className={classes.container}>

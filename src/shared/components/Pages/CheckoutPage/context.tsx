@@ -2,11 +2,10 @@ import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
 import {
-  billingConfigInputStable,
   billingNewAddressDefault,
-  deliveryConfigInputStable,
   deliveryNewAddressDefault,
-  paymentMethodDataDefault
+  paymentCreditCardDefault,
+  paymentInvoiceDefault,
 } from "src/shared/components/Pages/CheckoutPage/constants";
 
 
@@ -26,11 +25,15 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
     throw new Error('handleBillingInputs() not implemented');
   },
+  handleInvoiceInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+    throw new Error('handleInvoiceInputs() not implemented');
+  },
+  handleCreditCardInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+    throw new Error('handleCreditCardInputs() not implemented');
+  },
   isBillingSameAsDelivery: false,
   deliveryNewAddress: {...deliveryNewAddressDefault},
   billingNewAddress: {...billingNewAddressDefault},
-  deliveryAddressInputsConfig: {...deliveryConfigInputStable},
-  billingAddressInputsConfig: {...billingConfigInputStable},
   addressesCollection: null,
   countriesCollection: null,
   selections: {delivery: null, billing: null},
@@ -42,5 +45,6 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   currentValueShipmentMethod: null,
   paymentMethods: null,
   currentValuePaymentMethod: null,
-  paymentMethodDataInputs: {...paymentMethodDataDefault},
+  paymentCreditCardDataInputs: {...paymentCreditCardDefault},
+  paymentInvoiceDataInputs: {...paymentInvoiceDefault},
 });

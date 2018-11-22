@@ -4,10 +4,16 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {IPaymentMethod, ISameAsDelivery, IShipmentMethod} from "src/shared/interfaces/checkout/index";
+import {
+  IPaymentMethod,
+  ISameAsDelivery,
+  IShipmentMethod
+} from "src/shared/interfaces/checkout/index";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
-  ICheckoutAddressState,
+  ICheckoutAddressState, ICheckoutCreditCardState,
+  ICheckoutInvoiceState, ICreditCardObjectConfigInputStable,
+  IInvoiceObjectConfigInputStable,
   IObjectConfigInputStable,
   IPaymentMethodGroupItem,
   TCheckoutPageContext
@@ -69,4 +75,16 @@ export interface IPaymentProviderToIcon {
 export interface IPaymentMethodsParams extends IBaseCheckoutFormHandler {
   paymentMethodGroupItems: Array<IPaymentMethodGroupItem> | null;
   currentValuePaymentMethod: IPaymentMethod["paymentMethod"] | null;
+}
+
+// Param to create invoice payment form
+export interface IPaymentInvoiceParams extends IBaseCheckoutFormHandler {
+  inputsData: ICheckoutInvoiceState;
+  inputsConfig: IInvoiceObjectConfigInputStable;
+}
+
+// Param to create creditCard payment form
+export interface IPaymentCreditCardParams extends IBaseCheckoutFormHandler {
+  inputsData: ICheckoutCreditCardState;
+  inputsConfig: ICreditCardObjectConfigInputStable;
 }

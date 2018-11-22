@@ -53,6 +53,7 @@ export interface IFormSettings {
 
 export interface ISprykerFormProps extends WithStyles<typeof sprykerFormStyles> {
   form: IFormSettings;
+  formClassName?: string;
 }
 
 export interface IRadioItem {

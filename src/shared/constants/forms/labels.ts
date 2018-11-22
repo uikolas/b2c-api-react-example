@@ -30,3 +30,5 @@ export const InputLabelPaymentProvider = "Card Type";
 export const InputLabelPaymentCreditCardNumber = "Card Number";
 export const InputLabelPaymentCreditCardName = "Name on Card";
 export const InputLabelPaymentCreditCardCVC = "CVC";
+export const InputLabelPaymentDateOfBirth = "Date of Birth";
+export const InputLabelPaymentExpiryDate = "Expiry Date";
