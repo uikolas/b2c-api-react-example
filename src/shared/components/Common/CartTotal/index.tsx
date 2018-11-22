@@ -27,10 +27,10 @@ export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
         <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={ classes.currency }/> }</div>
       </div>
       {
-        totals && totals.taxTotal ?
+        totals ?
           <div className={ `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} ` }>
             <div className={ classes.currency }>Tax</div>
-            <div>{ totals && <AppPrice value={ totals.taxTotal } extraClassName={ classes.currency }/> }</div>
+            <div>{ totals && <AppPrice value={ totals.taxTotal | 0 } extraClassName={ classes.currency }/> }</div>
           </div> :
           null
       }
