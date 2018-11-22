@@ -106,7 +106,12 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
               }
 
               return (
-                <Grid item xs={12} sm={field.spaceNumber} className={classes.control} key={field.inputName}>
+                <Grid
+                  item xs={12}
+                  sm={field.spaceNumber}
+                  className={`${classes.control} ${field.spaceNumber === 12 ? classes.controlFullWidth : ''}`}
+                  key={field.inputName}
+                >
                   {fieldComponent}
                 </Grid>
               );
