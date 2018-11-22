@@ -1,5 +1,5 @@
 import {GridSpacing} from "@material-ui/core/Grid";
-import {baseTheme} from "src/shared/theme/index";
+import {baseTheme} from "src/shared/theme";
 
 export interface IAppFixedDimensions {
   headerHeight: React.CSSProperties['height'];

@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
@@ -5,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { ICustomerProfile, TCustomerInputValue, } from 'src/shared/interfaces/customer';
+import { ICustomerProfile, TCustomerInputValue } from 'src/shared/interfaces/customer';
 import {
   emptyRequiredFieldsErrorText,
   inputSaveErrorText,
@@ -215,9 +217,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         <div className={ classes.root }>
           <Grid container justify="center">
             <Grid item xs={ 12 }>
-              <Typography align="center" variant="headline" gutterBottom={ true }>
-                { pageTitle }
-              </Typography>
+              <Typography align="center" variant="headline" gutterBottom={ true }>{ pageTitle }</Typography>
             </Grid>
           </Grid>
           <Grid container justify="center">
@@ -259,3 +259,5 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
 }
 
 export const CustomerProfilePage = withStyles(pageStyles)(CustomerProfilePageBase);
+
+export default CustomerProfilePage;

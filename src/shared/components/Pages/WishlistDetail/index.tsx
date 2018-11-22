@@ -41,25 +41,16 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
   };
 
-  public handleDeleteItem = (sku: string) => (e: any) => {
-    this.props.deleteItemAction(this.props.wishlist.id, sku);
-  };
+  public handleDeleteItem = (sku: string) => (e: any) => this.props.deleteItemAction(this.props.wishlist.id, sku);
 
   public moveToCart = (sku: string) => (e: any) => {
-    this.setState({movedItem: sku});
-    this.props.addItemToCartAction(
-      createCartItemAddToCart(sku, 1),
-      this.props.cartId,
-    );
+    this.setState(() => ({movedItem: sku}));
+    this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
   };
 
   public moveAllProductsToCart = (e: any) => {
-    const availableProducts: string[] = [];
-    this.props.products.forEach((product: IWishlistItem) => {
-      if (product.availability) {
-        availableProducts.push(product.sku);
-      }
-    });
+    const availableProducts: string[] =
+      this.props.products.filter(product => product.availability).map(product => product.sku);
 
     // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
   };
@@ -70,19 +61,15 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     return (
       <MenuList className={ classes.menu }>
         <MenuItem className={ classes.menuItem }>
-          <NavLink to={ pathWishListsPage } className={ classes.link }>
-            Wishlist
-          </NavLink>
+          <NavLink to={ pathWishListsPage } className={ classes.link }>Wishlist</NavLink>
         </MenuItem>
-        <MenuItem className={ classes.menuItem }>
-          { wishlist.name }
-        </MenuItem>
+        <MenuItem className={ classes.menuItem }>{ wishlist.name }</MenuItem>
       </MenuList>
     );
   };
 
   public render() {
-    const {classes, wishlist, products, isLoading, cartLoading, currency} = this.props;
+    const {classes, products, isLoading, cartLoading, currency} = this.props;
     const tableAction = cartLoading ? classes.tableActionDisabled : classes.tableAction;
 
     if (!products.length && isLoading) {
@@ -90,31 +77,23 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     }
 
     const headerCells: any[] = [
-      {
-        content: 'Product',
-      },
-      {
-        content: 'Price',
-      },
-      {
-        content: 'Availability',
-      },
-      {
-        content: '',
-      },
-      {
-        content: '',
-      },
+      {content: 'Product'},
+      {content: 'Price'},
+      {content: 'Availability'},
+      {content: ''},
+      {content: ''},
     ];
 
-    const bodyRows: any[] = products.map((item: IWishlistItem) => {
+    const bodyRows: any[] = products.map(item => {
       const prices: any = {default: '', original: ''};
 
       item.prices.forEach((price: any) => {
         if (price.priceTypeName.toLowerCase() === 'default') {
           prices.default = price.grossAmount + '';
-        } else if (price.priceTypeName.toLowerCase() === 'original') {
-          prices.original = price.grossAmount + '';
+        } else {
+          if (price.priceTypeName.toLowerCase() === 'original') {
+            prices.original = price.grossAmount + '';
+          }
         }
       });
 
@@ -132,13 +111,11 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                     { item.name }
                   </span>
                   <span className={ classes.attributes }>SKU: { item.sku }</span>
-                  {
-                    item.attributes.map((attr: any, idx: number) => (
-                      <span className={ classes.attributes } key={ `attr-${item.sku}-${idx}` }>
+                  { item.attributes.map((attr: any, idx: number) => (
+                    <span className={ classes.attributes } key={ `attr-${item.sku}-${idx}` }>
                       { `${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}` }
                     </span>
-                    ))
-                  }
+                  )) }
                 </div>
               </div>
             ),

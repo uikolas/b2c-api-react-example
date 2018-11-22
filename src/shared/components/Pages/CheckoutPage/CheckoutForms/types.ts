@@ -8,7 +8,7 @@ import {
   TIsSameAsDeliveryValue,
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 
 
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {

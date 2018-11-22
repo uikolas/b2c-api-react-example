@@ -1,7 +1,7 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import {ICheckoutRequest} from "src/shared/interfaces/checkout/index";
+import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 
 
 export class CheckoutService {

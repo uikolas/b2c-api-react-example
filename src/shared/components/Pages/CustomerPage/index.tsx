@@ -9,15 +9,6 @@ import MenuList from '@material-ui/core/MenuList';
 // import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import { reduxify } from '../../../lib/redux-helper';
-import { AppMain } from '../../Common/AppMain';
-import { styles } from './styles';
-import { ConnectedWishlistPage } from '../WishListPage';
-import { ConnectedWishlistDetailPage } from '../WishlistDetail';
-import { CustomerAddressPage } from '../CustomerAddressesPage';
-import { AddressFormPage } from '../CustomerAddressesPage/AddressForm';
-import { ConnectedOrderDetailsPage } from '../OrderDetailsPage/reduxified';
-import { ConnectedOrderHistoryPage } from '../OrderHistoryPage/reduxified';
 import {
   pathAddressFormPage,
   pathCustomerAddressesPage,
@@ -28,9 +19,17 @@ import {
   pathWishListPage,
   pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
-import { CustomerProfilePage } from '../CustomerProfilePage';
 import { getRouterLocation } from 'src/shared/selectors/Common/router';
-
+import { reduxify } from '../../../lib/redux-helper';
+import { AppMain } from '../../Common/AppMain';
+import { LoadableWishListPage } from '../WishListPage/loadable';
+import { LoadableWishlistDetail } from '../WishlistDetail/loadable';
+import { LoadableCustomerAddressPage } from '../CustomerAddressesPage/loadable';
+import { AddressFormPage } from '../CustomerAddressesPage/AddressForm';
+import { LoadableConnectedOrderDetailsPage } from '../OrderDetailsPage/loadable';
+import { LoadableConnectedOrderHistoryPage } from '../OrderHistoryPage/loadable';
+import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
+import { styles } from './styles';
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
   location: Location;
@@ -39,7 +38,6 @@ interface CustomerPageProps extends WithStyles<typeof styles> {
 interface CustomerPageState {
 
 }
-
 
 export class CustomerPageBase extends React.Component<CustomerPageProps, CustomerPageState> {
 
@@ -91,14 +89,14 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
           </Grid>
           <Grid item xs={ 12 } sm={ 7 }>
             <Switch>
-              <Route path={ pathCustomerPage } exact component={ CustomerProfilePage }/>
-              <Route path={ pathCustomerAddressesPage } exact component={ CustomerAddressPage }/>
+              <Route path={ pathCustomerPage } exact component={ LoadableCustomerProfilePage }/>
+              <Route path={ pathCustomerAddressesPage } exact component={ LoadableCustomerAddressPage }/>
               <Route path={ pathAddressFormPage } component={ AddressFormPage }/>
-              <Route path={ pathWishListsPage } component={ ConnectedWishlistPage }/>
-              <Route path={ pathWishListPage } component={ ConnectedWishlistDetailPage }/>
-              <Route path={ pathOrderHistoryPage } exact component={ ConnectedOrderHistoryPage }/>
-              <Route path={ pathOrderDetailsPage } component={ ConnectedOrderDetailsPage }/>
-              <Route path={ pathCustomerProfilePage } component={ CustomerProfilePage }/>
+              <Route path={ pathWishListsPage } component={ LoadableWishListPage }/>
+              <Route path={ pathWishListPage } component={ LoadableWishlistDetail }/>
+              <Route path={ pathOrderHistoryPage } exact component={ LoadableConnectedOrderHistoryPage }/>
+              <Route path={ pathOrderDetailsPage } component={ LoadableConnectedOrderDetailsPage }/>
+              <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage }/>
             </Switch>
           </Grid>
         </Grid>

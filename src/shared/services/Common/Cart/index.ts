@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';

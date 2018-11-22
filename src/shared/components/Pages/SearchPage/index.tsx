@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import { ChangeEvent, ReactNode } from 'react';
 import { toast } from 'react-toastify';

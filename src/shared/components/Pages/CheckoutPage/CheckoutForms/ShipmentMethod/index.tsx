@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 import {CheckoutPageContext} from '../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm";
 import {IShipmentMethodProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod/types";
 import {IShipmentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/types";
 import {

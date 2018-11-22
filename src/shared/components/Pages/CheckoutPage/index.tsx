@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import {FormEvent, ChangeEvent} from "react";
 
@@ -30,17 +32,15 @@ import {
 } from "./helpers";
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop";
+import {AppMain} from "src/shared/components/Common/AppMain";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
-
+import {IAddressItem} from "src/shared/interfaces/addresses";
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
-
   public state: ICheckoutPageState = {
     deliverySelection: {
       selectedAddressId: null,
@@ -82,24 +82,25 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       this.setDefaultAddresses();
     }
 
-  }
+  };
 
   public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     console.info('handleSubmit ');
-  }
+  };
 
   public sendCheckoutDataForOrder = (event: ClickEvent) => {
     event.preventDefault();
     console.info('Send checkout data');
 
     // this.props.sendCheckoutData();
-  }
+  };
 
-  public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                  ): void => {
+  public handleSelectionsChange = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+  ): void => {
     const { name, value } = event.target;
-    console.log(name, value);
+    console.info(name, value);
     if (name === 'deliverySelection') {
       this.handleDeliverySelection(value);
     } else if (name === 'billingSelection' || name === isSameAsDeliveryValue) {
@@ -111,10 +112,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     } else {
       throw new Error(`Undefined type of forms: ${name}`);
     }
-  }
+  };
 
-  public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                ): void => {
+  public handleDeliveryInputs = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+  ): void => {
     // TODO: checkAddressFormValidity change on blur event
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
@@ -159,10 +161,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         }
       });
     });
-  }
+  };
 
-  public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                ): void => {
+  public handleBillingInputs = (
+    event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+  ): void => {
     // TODO: checkAddressFormValidity change on blur event
 
     const name: any = event.target.name;
@@ -210,7 +213,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         }
       });
     });
-  }
+  };
 
   private handleDeliverySelection = (value: string): boolean => {
     if (value === isAddNewDeliveryValue) {
@@ -242,7 +245,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
       return true;
     }
-  }
+  };
 
   private handleBillingSelection = (value: string): boolean => {
     if (value === isAddNewBillingValue) {
@@ -292,7 +295,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
       return true;
     }
-  }
+  };
 
   private handleShipmentMethodSelection = (value: string): boolean => {
     this.setState( (prevState: ICheckoutPageState) => {
@@ -305,7 +308,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
     });
     return true;
-  }
+  };
 
   private handlePaymentMethodSelection = (value: string ): boolean => {
     this.setState( (prevState: ICheckoutPageState) => {
@@ -318,20 +321,20 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
     });
     return true;
-  }
+  };
 
   private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
            || (this.state.billingSelection.isAddNew && isAddNewBillingValue)
            || (this.state.billingSelection.isSameAsDelivery && isSameAsDeliveryValue)
            || null;
-  }
+  };
 
   private getCurrentValueInDeliverySelection = (): IAddressItem["id"] | string | null => {
     return this.state.deliverySelection.selectedAddressId
            || (this.state.deliverySelection.isAddNew && isAddNewDeliveryValue)
            || null;
-  }
+  };
 
   // TODO: Remove it after we get access to checkout endpoint
   private initRequestAddressesData = (): void => {
@@ -350,7 +353,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     if (customerReference && !addressesCollection) {
       this.props.getAddressesList(customerReference);
     }
-  }
+  };
 
   private setDefaultAddresses = (): void => {
     const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
@@ -362,7 +365,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     if (defaultValueBilling) {
       this.handleBillingSelection(defaultValueBilling);
     }
-  }
+  };
 
   private checkCheckoutFormValidity = (): boolean => {
     const {first, second, third, fourth} = this.state.stepsCompletion;
@@ -370,7 +373,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       return false;
     }
     return true;
-  }
+  };
 
   public render(): JSX.Element {
     const {
@@ -450,11 +453,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             </Grid>
           </Grid>
         </CheckoutPageContext.Provider>
-
       </AppMain>
     );
   }
 }
 
 export const CheckoutPage = withStyles(styles)(CheckoutPageBase);
+
 export default CheckoutPage;

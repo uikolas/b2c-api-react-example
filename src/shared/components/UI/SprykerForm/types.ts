@@ -9,7 +9,7 @@ import {
   TCustomerPassword,
   TCustomerSalutation,
   TCustomerUsername
-} from "src/shared/interfaces/customer/index";
+} from "src/shared/interfaces/customer";
 import {
   TAddress,
   TAddressCity,
@@ -18,8 +18,8 @@ import {
   TAddressPhone,
   TAddressZipCode,
   TIso2Code
-} from "src/shared/interfaces/addresses/index";
-import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
+} from "src/shared/interfaces/addresses";
+import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect";
 import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
 
 

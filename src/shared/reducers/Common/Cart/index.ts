@@ -5,32 +5,11 @@ import {
   CART_UPDATE_ITEM,
   GET_CARTS,
 } from 'src/shared/constants/ActionTypes/Common/Cart';
-import { IReduxState } from 'src/typings/app';
-import {
-  TProductAvailability,
-  TProductImageSRC,
-  TProductName,
-  TProductPrice,
-  TProductQuantity,
-  TProductSKU,
-} from 'src/shared/interfaces/product';
+import { PAGES_CUSTOMER_LOGOUT } from 'src/shared/constants/ActionTypes/Pages/Login';
+import { TProductQuantity, TProductSKU } from 'src/shared/interfaces/product';
+import { ICartDataResponse, ICartItem, ICartTotals, TCartId } from 'src/shared/interfaces/cart';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import {
-  ICartDataResponse,
-  ICartItemCalculation,
-  ICartItem,
-  ICartTotals,
-  TCartId,
-} from 'src/shared/interfaces/cart';
-import {PAGES_CUSTOMER_LOGOUT} from "src/shared/constants/ActionTypes/Pages/Login";
-
-export interface ICartData extends ICartDataResponse {
-  cartCreated: boolean;
-}
-
-export interface ICartState extends IReduxState {
-  data: ICartData;
-}
+import { ICartState } from './types';
 
 export const initialState: ICartState = {
   data: {
@@ -77,7 +56,9 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
         ...getReducerPartRejected(action.error),
       };
     case `${CART_DELETE_ITEM}_FULFILLED`:
-      const itemsAfterDelete: Array<ICartItem> = state.data.items.filter((item) => item.sku !== action.itemId);
+      const itemsAfterDelete: Array<ICartItem> = state.data.items.filter((
+        item: ICartItem
+      ) => item.sku !== action.itemId);
       return {
         ...state,
         data: {...state.data, items: itemsAfterDelete},
@@ -182,11 +163,11 @@ export function getCartId(state: any, props: any): TCartId {
 }
 
 export function getCartTotals(state: any, props: any): ICartTotals | null {
-  return isStateExist(state, props) ? state.cart.data.totals: null;
+  return isStateExist(state, props) ? state.cart.data.totals : null;
 }
 
 export function getProductsFromCart(state: any, props: any): {items: ICartItem[], totalQty: number} {
-  const items: ICartItem[] = isStateExist(state, props) ? state.cart.data.items: [];
+  const items: ICartItem[] = isStateExist(state, props) ? state.cart.data.items : [];
   const totalQty: number = isStateExist(state, props) ? state.cart.data.totalQty : 0;
 
   return ({

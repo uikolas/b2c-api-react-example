@@ -158,3 +158,5 @@ export const CustomerAddressPage = reduxify(
     deleteAddress: (addressId: string, customerId: string) => dispatch(deleteAddressAction(addressId, customerId)),
   }),
 )(CustomerAddress);
+
+export default CustomerAddressPage;

@@ -3,7 +3,7 @@ import {
   IBillingObjectConfigInputStable, ICheckoutStepsCompletion, IDeliveryAddressState,
   IDeliveryObjectConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/types";
-import {IPaymentMethodData} from "src/shared/interfaces/checkout/index";
+import {IPaymentMethodData} from "src/shared/interfaces/checkout";
 
 export const deliveryNewAddressDefault: IDeliveryAddressState = {
   firstName: {

@@ -60,3 +60,5 @@ export const ConnectedOrderDetailsPage = reduxify(
     ) => dispatch(addMultipleItemsToCartAction(payload, cartId, payloadCartCreate)),
   }),
 )(OrderDetailsPage);
+
+export default ConnectedOrderDetailsPage;

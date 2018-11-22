@@ -4,9 +4,9 @@ import {
   InputLabelSelectSavedDeliveryAddress
 } from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
-import {salutationVariants} from "src/shared/constants/customer/index";
-import {TSalutationVariant} from "src/shared/interfaces/customer/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
+import {salutationVariants} from "src/shared/constants/customer";
+import {TSalutationVariant} from "src/shared/interfaces/customer";
 import {
   IAddressesParams,
   IBillingAddressesParams,

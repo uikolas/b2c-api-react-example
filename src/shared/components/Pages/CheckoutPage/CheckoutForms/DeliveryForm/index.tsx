@@ -6,13 +6,13 @@ import Grid from '@material-ui/core/Grid';
 import {IDeliveryFormProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types";
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {CheckoutPageContext} from '../../context';
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm";
 import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings";
 import {
   getDeliverySavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {

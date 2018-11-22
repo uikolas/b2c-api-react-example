@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import {IBillingFormProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/types";
 import {CheckoutPageContext} from '../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm";
 import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings";
 import {
   getSameAsDeliveryFormSettings
@@ -15,7 +15,7 @@ import {
   getBillingSavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {

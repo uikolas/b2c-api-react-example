@@ -3,7 +3,7 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {IPaymentMethod, ISameAsDelivery, IShipmentMethod} from "src/shared/interfaces/checkout/index";
+import {IPaymentMethod, ISameAsDelivery, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
   ICheckoutAddressState,
@@ -11,7 +11,7 @@ import {
   IPaymentMethodGroupItem,
   TCheckoutPageContext
 } from "src/shared/components/Pages/CheckoutPage/types";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {ICountries} from "src/shared/reducers/Common/Init";
 
 

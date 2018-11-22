@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';

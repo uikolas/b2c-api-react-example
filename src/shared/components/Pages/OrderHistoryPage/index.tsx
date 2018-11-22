@@ -4,13 +4,13 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { styles } from './styles';
 import { TOrderCollection } from '../../../interfaces/order';
 import { noOrderText } from '../../../constants/messages/orders';
-import { OrderList } from './OrderList';
-import { OrderHistoryContext } from './context';
 import { pathOrderDetailsPageBase } from '../../../routes/contentRoutes';
 import { emptyValueErrorText } from '../../../constants/messages/errors';
+import { OrderHistoryContext } from './context';
+import { styles } from './styles';
+import { OrderList } from './OrderList';
 
 export const pageTitle = 'Orders History';
 

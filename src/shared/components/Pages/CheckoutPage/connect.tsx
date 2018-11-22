@@ -26,8 +26,8 @@ import {
   isPageAddressesFulfilled,
   isPageAddressesStateLoading
 } from "src/shared/reducers/Pages/Addresses";
-import {isStateLoading} from "src/shared/reducers/index";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {isStateLoading} from "src/shared/reducers";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
 import {getPaymentMethodsFromStore, getShipmentMethodsFromStore} from "src/shared/reducers/Pages/Checkout";
 

@@ -3,8 +3,8 @@ import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import {IShippingMethodsParams} from "./types";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IShipmentMethod} from "src/shared/interfaces/checkout/index";
-import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import {IShipmentMethod} from "src/shared/interfaces/checkout";
+import {AppPrice} from "src/shared/components/Common/AppPrice";
 import {InputLabelShipmentTaxRate} from "src/shared/constants/forms/labels";
 
 

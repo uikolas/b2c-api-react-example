@@ -13,8 +13,8 @@ import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
 import { LoadableCustomerPage } from '../components/Pages/CustomerPage/loadable';
 import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
 
-import { ConnectedWishlistPage } from '../components/Pages/WishListPage';
-import { ConnectedWishlistDetailPage } from '../components/Pages/WishlistDetail';
+import { LoadableWishListPage } from '../components/Pages/WishListPage/loadable';
+import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loadable';
 
 import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
 
@@ -65,8 +65,8 @@ export const getContentRoutes = function() {
       <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
       <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
 
-      <ProtectedRoute path={ pathWishlistPage } component={ ConnectedWishlistPage }/>
-      <ProtectedRoute path={ pathWishlistDetailPage } component={ ConnectedWishlistDetailPage }/>
+      <ProtectedRoute path={ pathWishlistPage } component={ LoadableWishListPage }/>
+      <ProtectedRoute path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
 
       { /*TODO: Change to ProtectedRoute */ }
       <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>

@@ -95,9 +95,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     return true;
   };
 
-  public isReorderAllDisabled = (): boolean => {
-    return Boolean(!this.props.order.items.length);
-  };
+  public isReorderAllDisabled = (): boolean => Boolean(!this.props.order.items.length);
 
   private getSelectedItemsData = (selectedItems: IOrderDetailsSelectedItems): TCartAddItemCollection => {
     const result = [];
@@ -117,7 +115,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
       return;
     }
     if (this.props.isAppDataSet && this.props.orderIdParam) {
-      this.props.getOrderData(this.props.orderIdParam);
+      this.props.getOrderData(this.props.orderIdParam as string);
       return true;
     }
     return false;

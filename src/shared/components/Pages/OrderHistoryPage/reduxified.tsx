@@ -44,3 +44,5 @@ export const ConnectedOrderHistoryPage = reduxify(
     getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
   }),
 )(OrderHistoryPage);
+
+export default ConnectedOrderHistoryPage;
