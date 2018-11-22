@@ -39,7 +39,7 @@ export class HomePageBase extends React.Component<HomePageProps, HomePageState> 
               className={ classes.heroBlock }
         >
           <Grid item xs={ 12 } sm={ 6 }>
-            <CatalogSearchComponent/>
+            <CatalogSearchComponent id={'1'}/>
           </Grid>
         </Grid>
 

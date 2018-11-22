@@ -8,6 +8,7 @@ export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, Fly
   // connect
   currency?: TAppCurrency;
   isLoading?: boolean;
+  id?: string;
 
   sendSuggestionAction?(query: string): void;
   clearSuggestions?(query: string): void;

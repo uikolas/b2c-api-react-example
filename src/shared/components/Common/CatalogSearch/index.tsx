@@ -135,7 +135,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
       <form action="/" method="GET" onSubmit={this.handleFullSearch}>
         <div className={classes.completionInput}>
           {
-            parts.length
+            parts.length && matches.length
               ? parts.map((part, index: number) => {
                 return part.highlight ? (
                   <span key={ String(index) } className={classes.hiddenPart}>
@@ -335,9 +335,10 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   /* RENDER */
 
   public render() {
-    const {classes, suggestions, /*isLoading*/} = this.props;
+    const {classes, suggestions, /*isLoading*/ id} = this.props;
 
     const autosuggestProps = {
+      id,
       suggestions,
       renderInputComponent: this.renderInputComponent,
       onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,

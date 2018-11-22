@@ -104,7 +104,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                     </div>
 
                     <div className={ classes.headerSearchContainer }>
-                      <CatalogSearch/>
+                      <CatalogSearch id={'2'}/>
                     </div>
                   </div>
                 </div>
