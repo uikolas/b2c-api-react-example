@@ -8,7 +8,10 @@ import {CheckoutPageContext} from '../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {IPaymentMethodProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types";
-import {IPaymentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/types";
+import {
+  IPaymentMethodsGrouped,
+  TPaymentProvidersCollection
+} from "src/shared/components/Pages/CheckoutPage/types";
 import {
   IPaymentMethodsParams,
   IPaymentProviderToIcon
@@ -50,6 +53,8 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           return null;
         }
 
+        const paymentProvidersCollection: TPaymentProvidersCollection = [];
+
         const paymentMethodsGrouped: IPaymentMethodsGrouped = {};
         for (let paymentMethod of paymentMethods) {
           if (!paymentMethodsGrouped[paymentMethod.paymentMethod]) {
@@ -81,6 +86,7 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
             if (paymentProviderToIcon[item.paymentProvider]) {
               paymentMethodLabel.push(paymentProviderToIcon[item.paymentProvider]);
             }
+            paymentProvidersCollection.push({name: item.paymentProvider, value: item.paymentProvider});
           });
 
           paymentMethodGroupItems.push({value: groupName, label: paymentMethodLabel});
@@ -104,7 +110,9 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
                 : null
               }
               {currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard
-                ? <CreditCardPaymentForm />
+                ? <CreditCardPaymentForm
+                    providersCollection = {paymentProvidersCollection}
+                  />
                 : null
               }
             </Grid>

@@ -51,7 +51,7 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
 
         const shipmentMethodsForms: Array<JSX.Element> = [];
         for (let carrierName in shipmentMethodsGrouped) {
-          const shipmentMethodsParams = {
+          const shipmentMethodsParams: IShippingMethodsParams = {
             shipmentMethods: shipmentMethodsGrouped[carrierName],
             currentValueShipmentMethod,
             carrierName,

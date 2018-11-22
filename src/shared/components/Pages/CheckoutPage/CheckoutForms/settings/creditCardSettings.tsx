@@ -7,8 +7,12 @@ import {
   InputLabelPaymentCreditCardName,
   InputLabelPaymentCreditCardNumber,
   InputLabelPaymentExpiryDate,
-  InputLabelPaymentProvider
+  InputLabelPaymentProvider,
+  InputSelectPaymentExpiryMonthFirstItem,
+  InputSelectPaymentExpiryYearFirstItem,
+  InputSelectPaymentProviderFirstItem
 } from "src/shared/constants/forms/labels";
+import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 
 
 export const getCreditCardFormSettings = ( formName: string, params: IPaymentCreditCardParams): IFormSettings => {
@@ -29,6 +33,7 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
       cardExpiryYear: cardExpiryYearConfig,
       cardCVC: cardCVCConfig,
     },
+    providersCollection,
     submitHandler,
     inputChangeHandler,
     onBlurHandler,
@@ -43,13 +48,20 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
     fields: [
       [
         {
-          type: 'input',
+          type: 'select',
           inputName: paymentProviderConfig.inputName,
           inputValue: paymentProvider.value,
           spaceNumber: 6,
           isRequired: paymentProviderConfig.isRequired,
           label: InputLabelPaymentProvider,
           isError: paymentProvider.isError,
+          menuItems: providersCollection,
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectPaymentProviderFirstItem,
+            selected: true,
+            disabled: true,
+          },
         },
       ],
       [
@@ -74,22 +86,36 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
       ],
       [
         {
-          type: 'input',
+          type: 'select',
           inputName: cardExpiryMonthConfig.inputName,
           inputValue: cardExpiryMonth.value,
           spaceNumber: 3,
           isRequired: cardExpiryMonthConfig.isRequired,
           label: InputLabelPaymentExpiryDate,
           isError: cardExpiryMonth.isError,
+          menuItems: createItemsForExpiryMonth(),
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectPaymentExpiryMonthFirstItem,
+            selected: true,
+            disabled: true,
+          },
         },
         {
-          type: 'input',
+          type: 'select',
           inputName: cardExpiryYearConfig.inputName,
           inputValue: cardExpiryYear.value,
           spaceNumber: 3,
           isRequired: cardExpiryYearConfig.isRequired,
-          label: InputLabelPaymentExpiryDate,
+          label: null,
           isError: cardExpiryYear.isError,
+          menuItems: createItemsForExpiryYear(),
+          menuItemFirst: {
+            value: " ",
+            name: InputSelectPaymentExpiryYearFirstItem,
+            selected: true,
+            disabled: true,
+          },
         },
         {
           type: 'input',
@@ -104,4 +130,26 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
     ],
   };
   return formSettings;
+};
+
+
+const createItemsForExpiryMonth = (): Array<IMenuItemSelect>  => {
+  const data = getRange(1, 12);
+  const result = data.map((item: number) => ({value: item, name: item}));
+  return result;
+};
+
+const createItemsForExpiryYear = (): Array<IMenuItemSelect>  => {
+  const currentYear = (new Date()).getFullYear();
+  const data = getRange(currentYear, currentYear + 5);
+  const result = data.map((item: number) => ({value: item, name: item}));
+  return result;
+};
+
+const getRange = (start: number, end: number): Array<number> => {
+  const list = [];
+  for (let i = start; i <= end; i++) {
+    list.push(i);
+  }
+  return list;
 };

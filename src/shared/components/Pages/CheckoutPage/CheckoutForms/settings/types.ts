@@ -16,7 +16,7 @@ import {
   IInvoiceObjectConfigInputStable,
   IObjectConfigInputStable,
   IPaymentMethodGroupItem,
-  TCheckoutPageContext
+  TCheckoutPageContext, TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
@@ -87,4 +87,5 @@ export interface IPaymentInvoiceParams extends IBaseCheckoutFormHandler {
 export interface IPaymentCreditCardParams extends IBaseCheckoutFormHandler {
   inputsData: ICheckoutCreditCardState;
   inputsConfig: ICreditCardObjectConfigInputStable;
+  providersCollection: TPaymentProvidersCollection;
 }

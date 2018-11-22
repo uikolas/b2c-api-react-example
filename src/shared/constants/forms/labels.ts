@@ -1,4 +1,5 @@
 export const OptionalPlaceholder = "Optional";
+export const FirstItemInSelect = "please select";
 
 export const InputLabelFirstName = "First Name";
 export const InputLabelLastName = "Last Name";
@@ -20,10 +21,13 @@ export const InputLabelSameAsCurrentDelivery = "Same as current delivery Address
 
 export const FormTextWaitingForResponse = "Waiting for data.";
 
-export const InputSelectCountryFirstItem = "please select";
-export const InputSelectSalutationFirstItem = "please select";
-export const InputLabelShipmentTaxRate = "Tax Rate";
+export const InputSelectCountryFirstItem = FirstItemInSelect;
+export const InputSelectSalutationFirstItem = FirstItemInSelect;
+export const InputSelectPaymentProviderFirstItem = FirstItemInSelect;
+export const InputSelectPaymentExpiryMonthFirstItem = FirstItemInSelect;
+export const InputSelectPaymentExpiryYearFirstItem = FirstItemInSelect;
 
+export const InputLabelShipmentTaxRate = "Tax Rate";
 export const InputLabelPaymentCreditCard = "Credit Card";
 export const InputLabelPaymentInvoice = "Invoice";
 export const InputLabelPaymentProvider = "Card Type";

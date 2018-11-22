@@ -122,7 +122,7 @@ export const stepCompletionCheckoutDefault: ICheckoutStepsCompletion = {
 
 export const paymentCreditCardDefault: ICheckoutCreditCardState = {
   paymentProvider: {
-    value: '',
+    value: ' ',
     isError: false,
   },
   cardNumber: {
@@ -134,11 +134,11 @@ export const paymentCreditCardDefault: ICheckoutCreditCardState = {
     isError: false,
   },
   cardExpiryMonth: {
-    value: '',
+    value: ' ',
     isError: false,
   },
   cardExpiryYear: {
-    value: '',
+    value: ' ',
     isError: false,
   },
   cardCVC: {

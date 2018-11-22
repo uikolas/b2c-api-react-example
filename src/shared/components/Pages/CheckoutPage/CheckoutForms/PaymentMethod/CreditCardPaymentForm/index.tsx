@@ -14,11 +14,13 @@ import {ICreditCardPaymentFormProps} from "./types";
 import {
   getCreditCardFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/creditCardSettings";
+import {IPaymentCreditCardParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
 
 
 export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> = (props): JSX.Element => {
   const {
     classes,
+    providersCollection,
   }  = props;
 
   return (
@@ -29,9 +31,10 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
           handleCreditCardInputs,
           paymentCreditCardDataInputs,
       }) => {
-        const creditCardParams = {
+        const creditCardParams: IPaymentCreditCardParams = {
           inputsData: paymentCreditCardDataInputs,
           inputsConfig: creditCardConfigInputStable,
+          providersCollection,
           submitHandler,
           inputChangeHandler: handleCreditCardInputs,
           onBlurHandler: onBlurHandler(checkoutInputsFormNames.creditCard),

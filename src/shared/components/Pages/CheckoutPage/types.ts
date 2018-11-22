@@ -21,6 +21,7 @@ import {
   ICurrentValuesInSelections,
   IExtraAddressesOptions
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
@@ -240,3 +241,5 @@ export interface IInvoiceObjectConfigInputStable {
 
   [key: string]: IConfigInputStable;
 }
+
+export type TPaymentProvidersCollection = Array<IMenuItemSelect>;
