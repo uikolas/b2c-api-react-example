@@ -13,8 +13,6 @@ import {
 import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
 import {CheckoutPageContext} from "./context";
 import {
-  checkFormValidity,
-  checkFormInputValidity,
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraOptionsToSelection,
@@ -38,7 +36,6 @@ import {
   billingConfigInputStable,
   creditCardConfigInputStable,
   deliveryConfigInputStable,
-  invoiceConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
 import {
   mutateBillingNewAddressValidity,
@@ -60,6 +57,16 @@ import {
   mutateDeliverySelectionAddressId
 } from "src/shared/components/Pages/CheckoutPage/stateMutations/selections";
 import {mutatePaymentMethod, mutateShipmentMethod} from "src/shared/components/Pages/CheckoutPage/stateMutations/index";
+import {
+  validateBillingInput,
+  validateBillingNewAddressForm,
+  validateCreditCardForm,
+  validateCreditCardInput,
+  validateDeliveryInput,
+  validateDeliveryNewAddressForm,
+  validateInvoiceForm,
+  validateInvoiceInput
+} from "src/shared/components/Pages/CheckoutPage/helpers/validation";
 
 
 @connect
@@ -137,11 +144,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       throw new Error(inputSaveErrorText);
     }
     const key: any = name;
-
-    const isInputValid = checkFormInputValidity({
-      value: cleanValue,
-      fieldConfig: deliveryConfigInputStable[key],
-    });
+    const isInputValid = validateDeliveryInput(key, cleanValue);
 
     this.setState((prevState: ICheckoutPageState) => {
       return mutateDeliveryInputs(prevState, key, cleanValue, !isInputValid);
@@ -163,16 +166,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       throw new Error(inputSaveErrorText);
     }
     const key: any = name;
-
-    const isInputValid = checkFormInputValidity({
-      value: cleanValue,
-      fieldConfig: billingConfigInputStable[key],
-    });
+    const isInputValid = validateBillingInput(key, cleanValue);
 
     this.setState((prevState: ICheckoutPageState) => {
-      if (prevState.billingNewAddress[key].value === cleanValue) {
-        return;
-      }
       return mutateBillingInputs(prevState, key, cleanValue, !isInputValid);
     }, () => {
       // Validate form when select input is changed
@@ -192,14 +188,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       throw new Error(inputSaveErrorText);
     }
     const key: any = name;
-    const isInputValid = checkFormInputValidity({
-      value: cleanValue,
-      fieldConfig: invoiceConfigInputStable[key],
-    });
+    const isInputValid = validateInvoiceInput(key, cleanValue);
     this.setState((prevState: ICheckoutPageState) => {
-      if (prevState.paymentInvoiceData[key].value === cleanValue) {
-        return;
-      }
       return mutateInvoiceInputs(prevState, key, cleanValue, !isInputValid);
     });
   }
@@ -212,10 +202,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       throw new Error(inputSaveErrorText);
     }
     const key: any = name;
-    const isInputValid = checkFormInputValidity({
-      value: cleanValue,
-      fieldConfig: creditCardConfigInputStable[key],
-    });
+    const isInputValid = validateCreditCardInput(key, cleanValue);
     this.setState((prevState: ICheckoutPageState) => {
       return mutateCreditCardInputs(prevState, key, cleanValue, !isInputValid);
     }, () => {
@@ -230,10 +217,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handleBillingNewAddressValidity = (): boolean => {
-    const isFormValid = checkFormValidity({
-      form: this.state.billingNewAddress,
-      fieldsConfig: billingConfigInputStable,
-    });
+    const isFormValid = validateBillingNewAddressForm(this.state.billingNewAddress);
     this.setState((prevState: ICheckoutPageState) => {
       return mutateBillingNewAddressValidity(prevState, isFormValid);
     });
@@ -241,30 +225,21 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handleDeliveryNewAddressValidity = (): void => {
-    const isFormValid = checkFormValidity({
-      form: this.state.deliveryNewAddress,
-      fieldsConfig: deliveryConfigInputStable,
-    });
+    const isFormValid = validateDeliveryNewAddressForm(this.state.deliveryNewAddress);
     this.setState((prevState: ICheckoutPageState) => {
       return mutateDeliveryNewAddressValidity(prevState, isFormValid);
     });
   }
 
   private handleInvoiceValidity = (): void => {
-    const isFormValid = checkFormValidity({
-      form: this.state.paymentInvoiceData,
-      fieldsConfig: invoiceConfigInputStable,
-    });
+    const isFormValid = validateInvoiceForm(this.state.paymentInvoiceData);
     this.setState((prevState: ICheckoutPageState) => {
       return mutateInvoiceValidity(prevState, isFormValid);
     });
   }
 
   private handleCreditCardValidity = (): void => {
-    const isFormValid = checkFormValidity({
-      form: this.state.paymentCreditCardData,
-      fieldsConfig: creditCardConfigInputStable,
-    });
+    const isFormValid = validateCreditCardForm(this.state.paymentCreditCardData);
     this.setState((prevState: ICheckoutPageState) => {
       return mutateCreditCardValidity(prevState, isFormValid);
     });
