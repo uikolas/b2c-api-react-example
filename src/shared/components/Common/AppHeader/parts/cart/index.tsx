@@ -14,17 +14,23 @@ import { CartProps as Props, CartState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
+import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
 
 @(withRouter as any)
 @connect
 export class CartComponent extends React.PureComponent<Props, State> {
   public state: State = {
     anchorEl: null,
+    isCartNotificationOpen: true,
   };
 
   public componentDidUpdate(prevProps: Props) {
     if (this.props.location !== prevProps.location) {
       this.closePopover();
+    }
+
+    if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
+      this.handleOpenCartNotification();
     }
   }
 
@@ -41,8 +47,16 @@ export class CartComponent extends React.PureComponent<Props, State> {
   };
   private closePopover = () => this.setState(() => ({anchorEl: null}));
 
+  private handleCloseCartNotification = () => {
+    this.setState(() => ({isCartNotificationOpen: false}));
+  };
+
+  private handleOpenCartNotification = () => {
+    this.setState(() => ({isCartNotificationOpen: true}));
+  };
+
   public render() {
-    const {anchorEl} = this.state;
+    const {anchorEl, isCartNotificationOpen} = this.state;
     const {classes, cartItemsQuantity} = this.props;
     const open = Boolean(anchorEl);
     const popoverProps = {
@@ -83,6 +97,16 @@ export class CartComponent extends React.PureComponent<Props, State> {
             <CartDrop/>
           </PopoverDrop>
         </Popover>
+
+        <SprykerNotification
+          message="Your product was added to your cart"
+          extraClasses={ classes.cartNotification }
+          isOpen={ isCartNotificationOpen }
+          onClickClose={ this.handleCloseCartNotification }
+          onClickOpen={ this.handleOpenCartNotification }
+          vertical="top"
+          horizontal="right"
+        />
       </div>
     );
   }

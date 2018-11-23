@@ -20,7 +20,6 @@ import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/l
 
 import config from '../config';
 
-
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
 
@@ -68,7 +67,7 @@ export const getContentRoutes = function() {
       <ProtectedRoute path={ pathWishlistPage } component={ LoadableWishListPage }/>
       <ProtectedRoute path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
 
-      { /*TODO: Change to ProtectedRoute */ }
+      { /* TODO: Change to ProtectedRoute */ }
       <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
 
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>

@@ -4,19 +4,19 @@ import {pathSearchPage} from "src/shared/routes/contentRoutes";
 export const categoriesLinks: link[] = [
   {
     name: 'Computers',
-    path: `${pathSearchPage}/5`,
+    path: `${pathSearchPage}/Computer`,
   },
   {
     name: 'Notebooks',
-    path: `${pathSearchPage}/6`,
+    path: `${pathSearchPage}/Computer/Notebooks`,
   },
   {
     name: 'Pcs & Workstations',
-    path: `${pathSearchPage}/7`,
+    path: `${pathSearchPage}/Computer/Pc's/Workstations`,
   },
   {
     name: 'Tablets',
-    path: `${pathSearchPage}/8`,
+    path: `${pathSearchPage}/Computer/Tablets`,
   },
   {
     name: 'Sale %',
@@ -31,26 +31,26 @@ export const categoriesLinks: link[] = [
 export const socialMediaLinks: link[] = [
   {
     name: 'Instagram',
-    path: 'https://www.instagram.com',
+    path: 'https://www.instagram.com/spryker/',
   },
   {
     name: 'YouTube',
-    path: 'https://youtube.com',
+    path: 'https://www.youtube.com/channel/UC6lVOEbqXxUh0W5FMTvlPDQ',
   },
   {
     name: 'Facebook',
-    path: 'https://facebook.com',
+    path: 'https://www.facebook.com/Spryker/',
   },
   {
     name: 'Twitter',
-    path: 'https://twitter.com',
+    path: 'https://twitter.com/sprysys',
   },
   {
     name: 'LinkedIn',
-    path: 'https://linkedin.com',
+    path: 'https://www.linkedin.com/company/spryker-systems-gmbh',
   },
   {
     name: 'Xing',
-    path: 'https://www.xing.com',
+    path: 'https://www.xing.com/companies/sprykersystemsgmbh',
   },
 ];

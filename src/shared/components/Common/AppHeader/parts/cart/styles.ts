@@ -17,4 +17,8 @@ export const styles = (theme: Theme) => createStyles({
   hideBadge: {
     transform: 'scale(0)',
   },
+  cartNotification: {
+    top: '70px',
+    right: '21px',
+  },
 });

@@ -118,10 +118,9 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                       <span/>
                     </div>
 
-                    {
-                      this.props.location.pathname.endsWith(pathCheckoutPage)
-                        ? <div className={ classes.checkout }>Checkout</div>
-                       : <MainNav mobileNavState={ isMobileNavOpened }/>
+                    {this.props.location.pathname.endsWith(pathCheckoutPage)
+                      ? <div className={ classes.checkout }>Checkout</div>
+                      : <MainNav mobileNavState={ isMobileNavOpened }/>
                     }
 
                     <AddNav showSearch={ showSearch } handleSearch={ this.handleSearch }/>
