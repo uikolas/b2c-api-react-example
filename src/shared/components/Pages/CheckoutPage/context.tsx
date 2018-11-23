@@ -36,10 +36,15 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   billingNewAddress: {...billingNewAddressDefault},
   addressesCollection: null,
   countriesCollection: null,
-  selections: {delivery: null, billing: null},
-  currentValuesInSelections: {delivery: null, billing: null},
+  deliverySelections: null,
+  billingSelections: null,
+  currentValueDeliverySelection: null,
+  currentValueBillingSelection: null,
   isAddressesFulfilled: false,
-  extraAddressesOptions: {delivery: null, billing: null},
+  extraOptionsDeliverySelection: null,
+  extraOptionsBillingSelection: null,
+
+
   isUserLoggedIn: false,
   shipmentMethods: null,
   currentValueShipmentMethod: null,

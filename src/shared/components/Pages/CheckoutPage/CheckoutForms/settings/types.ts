@@ -20,9 +20,10 @@ import {
   IObjectConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes";
 import {
-  ICurrentValuesInSelections,
-  IExtraAddressesOptions,
   IPaymentMethodGroupItem,
+  TCurrentValueBillingSelection,
+  TCurrentValueDeliverySelection,
+  TExtraOptionsToSelection,
   TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
@@ -52,8 +53,8 @@ export interface ISameAsDeliveryParams extends IBaseCheckoutFormHandler {
 // Param to create saved addresses form
 export interface IAddressesParams extends IBaseCheckoutFormHandler {
   addressesCollection: IAddressItem[] | null;
-  extraAddressesOptions: IExtraAddressesOptions["delivery"] | IExtraAddressesOptions["billing"] | null;
-  currentValueInSelection: ICurrentValuesInSelections["delivery"] | ICurrentValuesInSelections["billing"];
+  extraOptionsToSelection: TExtraOptionsToSelection;
+  currentValueInSelection: TCurrentValueDeliverySelection | TCurrentValueBillingSelection;
 }
 
 export interface IDeliveryAddressesParams extends IAddressesParams {

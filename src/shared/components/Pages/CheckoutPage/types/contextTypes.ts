@@ -2,17 +2,19 @@ import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
 import {
   IBillingAddressState,
+  IBillingSelectionState,
   ICheckoutCreditCardState,
   ICheckoutInvoiceState,
-  IDeliveryAddressState
+  IDeliveryAddressState,
+  IDeliverySelectionState
 } from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {
-  IAddressesSelections,
-  ICurrentValuesInSelections,
-  IExtraAddressesOptions
+  TCurrentValueBillingSelection,
+  TCurrentValueDeliverySelection,
+  TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
 // Type for Context Provider of the Checkout Page
@@ -29,10 +31,13 @@ export type TCheckoutPageContext = {
   billingNewAddress: IBillingAddressState;
   addressesCollection: IAddressItem[] | null;
   countriesCollection: ICountries[] | null;
-  selections: IAddressesSelections | null;
-  currentValuesInSelections: ICurrentValuesInSelections;
+  deliverySelections: IDeliverySelectionState | null;
+  billingSelections: IBillingSelectionState | null;
+  currentValueDeliverySelection: TCurrentValueDeliverySelection;
+  currentValueBillingSelection: TCurrentValueBillingSelection;
   isAddressesFulfilled: boolean;
-  extraAddressesOptions: IExtraAddressesOptions | null;
+  extraOptionsDeliverySelection: TExtraOptionsToSelection;
+  extraOptionsBillingSelection: TExtraOptionsToSelection;
   isUserLoggedIn: boolean;
   shipmentMethods: Array<IShipmentMethod> | null;
   currentValueShipmentMethod: IShipmentMethod["id"] | null;

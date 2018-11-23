@@ -33,10 +33,10 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           selectionsChangeHandler,
           handleDeliveryInputs,
           deliveryNewAddress,
-          selections,
-          currentValuesInSelections,
+          deliverySelections,
+          currentValueDeliverySelection,
           addressesCollection,
-          extraAddressesOptions,
+          extraOptionsDeliverySelection,
           isAddressesFulfilled,
           isUserLoggedIn,
           countriesCollection,
@@ -50,9 +50,9 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           onBlurHandler: onBlurHandler(checkoutInputsFormNames.delivery),
         };
         const savedDeliveryParams: IDeliveryAddressesParams = {
-          currentValueInSelection: currentValuesInSelections.delivery,
+          currentValueInSelection: currentValueDeliverySelection,
           addressesCollection,
-          extraAddressesOptions: extraAddressesOptions.delivery,
+          extraOptionsToSelection: extraOptionsDeliverySelection,
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
@@ -69,7 +69,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : inputsForm}
-                    {selections.delivery.isAddNew ? inputsForm : null}
+                    {deliverySelections.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : inputsForm
               }

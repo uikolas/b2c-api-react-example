@@ -42,23 +42,15 @@ export interface ICheckoutPanelsSettings {
 }
 
 // Can be moved
-
 export type TAddressType = 'delivery' | 'billing';
 
-export interface IExtraAddressesOptions {
-  delivery: Array<IRadioItem> | null;
-  billing: Array<IRadioItem> | null;
-}
+export type TExtraOptionsToSelection = Array<IRadioItem> | null;
 
-export interface IAddressesSelections {
-  delivery: IDeliverySelectionState;
-  billing: IBillingSelectionState;
-}
+export type TCurrentValueDeliverySelection = ICheckoutSelectionInputs["isAddNewDeliveryValue"]
+                                             | IAddressItem["id"]
+                                             | null;
 
-export interface ICurrentValuesInSelections {
-  delivery: ICheckoutSelectionInputs["isAddNewDeliveryValue"] | IAddressItem["id"] | null;
-  billing: ICheckoutSelectionInputs["isAddNewBillingValue"]
-    | ICheckoutSelectionInputs["isSameAsDeliveryValue"]
-    | IAddressItem["id"]
-    | null;
-}
+export type TCurrentValueBillingSelection = ICheckoutSelectionInputs["isAddNewBillingValue"]
+                                            | ICheckoutSelectionInputs["isSameAsDeliveryValue"]
+                                            | IAddressItem["id"]
+                                            | null;

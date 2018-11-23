@@ -38,10 +38,10 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           handleBillingInputs,
           isBillingSameAsDelivery,
           billingNewAddress,
-          selections,
-          currentValuesInSelections,
+          billingSelections,
+          currentValueBillingSelection,
           addressesCollection,
-          extraAddressesOptions,
+          extraOptionsBillingSelection,
           isAddressesFulfilled,
           isUserLoggedIn,
           countriesCollection
@@ -60,9 +60,9 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           inputChangeHandler: selectionsChangeHandler,
         };
         const savedBillingParams: IBillingAddressesParams = {
-          currentValueInSelection: currentValuesInSelections.billing,
+          currentValueInSelection: currentValueBillingSelection,
           addressesCollection,
-          extraAddressesOptions: extraAddressesOptions.billing,
+          extraOptionsToSelection: extraOptionsBillingSelection,
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
@@ -82,7 +82,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
-                    {selections.billing.isAddNew ? inputsForm : null}
+                    {billingSelections.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : [sameAsDeliveryForm, inputsForm]
               }

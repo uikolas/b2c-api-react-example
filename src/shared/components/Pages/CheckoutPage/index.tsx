@@ -26,7 +26,7 @@ import {
   checkFormInputValidity,
   getCheckoutPanelsSettings,
   getDefaultAddressId,
-  getExtraAddressesOptions,
+  getExtraOptionsToSelection,
 } from "./helpers";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
@@ -540,12 +540,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             billingNewAddress: this.state.billingNewAddress,
             addressesCollection,
             countriesCollection,
-            selections: {delivery: this.state.deliverySelection, billing: this.state.billingSelection},
-            currentValuesInSelections: {
-              delivery: this.getCurrentValueInDeliverySelection(),
-              billing: this.getCurrentValueInBillingSelection(),
-            },
-            extraAddressesOptions: getExtraAddressesOptions(isAddressesCollectionExist),
+            deliverySelections: this.state.deliverySelection,
+            billingSelections: this.state.billingSelection,
+            currentValueDeliverySelection: this.getCurrentValueInDeliverySelection(),
+            currentValueBillingSelection: this.getCurrentValueInBillingSelection(),
+            extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
+            extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
             isAddressesFulfilled,
             isUserLoggedIn,
             shipmentMethods,
