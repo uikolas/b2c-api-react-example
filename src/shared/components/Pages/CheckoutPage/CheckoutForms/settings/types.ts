@@ -11,15 +11,18 @@ import {
 } from "src/shared/interfaces/checkout/index";
 import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 import {
-  ICheckoutAddressState, ICheckoutCreditCardState,
-  ICheckoutInvoiceState, ICreditCardObjectConfigInputStable,
+  ICheckoutAddressState,
+  ICheckoutCreditCardState,
+  ICheckoutInvoiceState,
+  ICreditCardObjectConfigInputStable,
   IInvoiceObjectConfigInputStable,
   IObjectConfigInputStable,
   IPaymentMethodGroupItem,
-  TCheckoutPageContext, TPaymentProvidersCollection
+  TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
+import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/context/types";
 
 
 // Base handlers for checkout's page forms

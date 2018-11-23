@@ -25,7 +25,7 @@ import {
   isAddNewDeliveryValue,
   isSameAsDeliveryValue
 } from "./types";
-import {CheckoutPageContext} from "./context";
+import {CheckoutPageContext} from "./context/index";
 import {
   checkAddressFormValidity,
   checkFormInputValidity,

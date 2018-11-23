@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import {CheckoutPageContext} from '../../context';
+import {CheckoutPageContext} from '../../context/index';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {IPaymentMethodProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types";
