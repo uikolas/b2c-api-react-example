@@ -11,7 +11,7 @@ import {IPaymentMethodProps} from "src/shared/components/Pages/CheckoutPage/Chec
 import {
   IPaymentMethodsGrouped,
   TPaymentProvidersCollection
-} from "src/shared/components/Pages/CheckoutPage/types";
+} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {
   IPaymentMethodsParams,
   IPaymentProviderToIcon

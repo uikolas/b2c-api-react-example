@@ -19,7 +19,7 @@ import {
   IObjectConfigInputStable,
   IPaymentMethodGroupItem,
   TPaymentProvidersCollection
-} from "src/shared/components/Pages/CheckoutPage/types";
+} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/context/types";

@@ -7,7 +7,7 @@ import {CheckoutPageContext} from '../../context/index';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {IShipmentMethodProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod/types";
-import {IShipmentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/types";
+import {IShipmentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {
   getShipmentMethodsFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/shipmentSettings";

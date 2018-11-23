@@ -24,7 +24,7 @@ import {
   isAddNewBillingValue,
   isAddNewDeliveryValue,
   isSameAsDeliveryValue
-} from "./types";
+} from "./types/index";
 import {CheckoutPageContext} from "./context/index";
 import {
   checkAddressFormValidity,

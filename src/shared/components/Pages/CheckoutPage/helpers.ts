@@ -14,7 +14,7 @@ import {
   isAddNewBillingValue,
   isAddNewDeliveryValue,
   isSameAsDeliveryValue
-} from "src/shared/components/Pages/CheckoutPage/types";
+} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
 export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions => {

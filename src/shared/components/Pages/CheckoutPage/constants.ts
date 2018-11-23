@@ -5,10 +5,12 @@ import {
   ICheckoutInputsFormNames,
   ICheckoutInvoiceState,
   ICheckoutPaymentMethodsNames,
-  ICheckoutStepsCompletion, ICreditCardObjectConfigInputStable,
+  ICheckoutStepsCompletion,
+  ICreditCardObjectConfigInputStable,
   IDeliveryAddressState,
-  IDeliveryObjectConfigInputStable, IInvoiceObjectConfigInputStable
-} from "src/shared/components/Pages/CheckoutPage/types";
+  IDeliveryObjectConfigInputStable,
+  IInvoiceObjectConfigInputStable
+} from "src/shared/components/Pages/CheckoutPage/types/index";
 
 
 export const deliveryNewAddressDefault: IDeliveryAddressState = {

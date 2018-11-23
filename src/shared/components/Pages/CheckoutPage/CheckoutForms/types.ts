@@ -6,7 +6,7 @@ import {
   TIsAddNewBillingValue,
   TIsAddNewDeliveryValue,
   TIsSameAsDeliveryValue,
-} from "src/shared/components/Pages/CheckoutPage/types";
+} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 

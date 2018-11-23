@@ -6,7 +6,7 @@ import {
   ICheckoutCreditCardState,
   ICheckoutInvoiceState,
   IDeliveryAddressState
-} from "src/shared/components/Pages/CheckoutPage/types";
+} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {
