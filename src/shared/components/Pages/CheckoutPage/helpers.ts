@@ -61,7 +61,7 @@ export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
   return true;
 };
 
-export const checkAddressFormValidity = (param: IParamFormValidity): boolean => {
+export const checkFormValidity = (param: IParamFormValidity): boolean => {
   const {form, fieldsConfig} = param;
   let result: boolean = true;
 
