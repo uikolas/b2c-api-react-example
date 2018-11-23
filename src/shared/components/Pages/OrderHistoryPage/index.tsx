@@ -39,7 +39,7 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
     this.initRequestData();
   };
 
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
+  public componentDidUpdate = (prevProps: OrderHistoryPageProps, prevState: OrderHistoryPageState) => {
     this.initRequestData();
   };
 

@@ -57,7 +57,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     }
   };
 
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
+  public componentDidUpdate = (prevProps: Props, prevState: State) => {
     console.info('%c ---- componentDidUpdate ----', 'background: #4cab50; color: #cada55');
     if (!this.props.isRejected && !this.props.isCustomerDataExist) {
       this.initRequestData();
@@ -107,7 +107,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
-    const profileData = {firstName, lastName, salutation, email};
+    const profileData = {salutation, firstName, lastName, email};
     this.props.updateCustomerData(this.props.customerReference, profileData);
     // TODO: remove after fixing an email bug
     if (email !== this.props.customerData.email) {
@@ -158,7 +158,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     this.handleDeleteProfileDialogShowing(event);
   };
 
-  private getCurrentDataField = (fieldName: (keyof ICustomerProfile)) => {
+  private getCurrentDataField = (fieldName: (keyof ICustomerProfile)): string => {
     const emptyValue = '';
     if (!this.props.isCustomerDataExist || !fieldName) {
       return emptyValue;
@@ -166,13 +166,13 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
 
     const key: (keyof ICustomerProfile) = fieldName;
     const stateValue = this.state.inputs[key];
-    const propsValue: any = this.props.customerData[key];
+    const propsValue = this.props.customerData[key];
 
     if (stateValue) {
       return stateValue;
     } else {
       if (propsValue) {
-        return propsValue;
+        return propsValue as string;
       } else {
         return emptyValue;
       }

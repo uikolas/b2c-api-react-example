@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
@@ -52,7 +53,7 @@ export class WishListBase extends React.Component<Props, State> {
     this.setState(() => ({name: ''}));
   };
 
-  public handleUpdateWishlist = (e: any) => {
+  public handleUpdateWishlist = (e: ClickEvent) => {
     this.props.updateWishlistAction(this.state.updatedList, this.state.updatedName);
     this.setState(() => ({updatedList: '', updatedName: ''}));
   };

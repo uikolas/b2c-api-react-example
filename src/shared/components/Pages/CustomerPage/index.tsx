@@ -9,6 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 // import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import {
   pathAddressFormPage,
   pathCustomerAddressesPage,
@@ -43,7 +44,7 @@ export class CustomerPageBase extends React.Component<CustomerPageProps, Custome
 
   public state: CustomerPageState = {};
 
-  public handleMenuItemClick = (option: string) => (e: any) => {
+  public handleMenuItemClick = (option: string) => (e: ClickEvent) => {
     this.setState({selectedMenu: option});
   };
 

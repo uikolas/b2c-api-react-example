@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { deleteAddressAction, getAddressesAction, setCurrentAddressAction } from 'src/shared/actions/Pages/Addresses';
 import { IAddressesState } from 'src/shared/reducers/Pages/Addresses';
@@ -37,7 +38,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     this.props.routerPush(`${pathCustomerAddressesPage}/new`);
   };
 
-  public setUpdatedAddress = (addressId: string) => (e: any) => {
+  public setUpdatedAddress = (addressId: string) => (e: ClickEvent) => {
     this.props.dispatch(setCurrentAddressAction(addressId));
     this.props.routerPush(`${pathCustomerAddressesPage}/update`);
   };
@@ -45,7 +46,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
   public render(): JSX.Element {
     const {classes, addresses, isLoading, deleteAddress} = this.props;
 
-    const rows: any[] = addresses.map((item: any) => (
+    const rows: any[] = addresses.map(item => (
       <TableRow
         hover
         key={ item.id }

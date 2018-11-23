@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -78,7 +80,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
   }
 
-  public componentDidUpdate(prevProps: any, prevState: any) {
+  public componentDidUpdate(prevProps: Props, prevState: State) {
     if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
       console.info('%c ---- componentDidUpdate RETURN ----', 'background: #4caf50; color: #cada55');
       return;

@@ -22,7 +22,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
     anchorEl: null,
   };
 
-  public componentDidUpdate(prevProps: any) {
+  public componentDidUpdate(prevProps: Props) {
     if (this.props.location !== prevProps.location) {
       this.closePopover();
     }

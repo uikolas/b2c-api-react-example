@@ -10,7 +10,6 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { IWishlistItem } from 'src/shared/interfaces/wishlist';
 import { priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { pathProductPageBase, pathWishListsPage } from 'src/shared/routes/contentRoutes';
@@ -31,7 +30,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
   public componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
       this.props.deleteItemAction(this.props.wishlist.id, prevState.movedItem);
-      this.setState({movedItem: ''});
+      this.setState(() => ({movedItem: ''}));
     }
   }
 
@@ -49,8 +48,8 @@ export class WishlistDetailBase extends React.Component<Props, State> {
   };
 
   public moveAllProductsToCart = (e: any) => {
-    const availableProducts: string[] =
-      this.props.products.filter(product => product.availability).map(product => product.sku);
+    const {products} = this.props;
+    const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
 
     // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
   };

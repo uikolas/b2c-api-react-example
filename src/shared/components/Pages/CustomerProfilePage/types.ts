@@ -3,7 +3,10 @@ import { RouteProps } from 'react-router';
 import { pageStyles } from './styles';
 import {
   ICustomerDataParsed,
-  ICustomerProfile, ICustomerProfileIdentity, ICustomerProfilePassword, ILoginDataToLocalStorage,
+  ICustomerProfile,
+  ICustomerProfileIdentity,
+  ICustomerProfilePassword,
+  ILoginDataToLocalStorage,
   TCustomerInputValue,
   TCustomerReference,
 } from 'src/shared/interfaces/customer';

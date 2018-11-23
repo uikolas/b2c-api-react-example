@@ -35,7 +35,6 @@ export interface SprykerRangeState {
 }
 
 export class SprykerRangeFilter extends React.Component<SprykerRangeProps, SprykerRangeState> {
-
   public state: SprykerRangeState = {
     isMinError: {
       isMoreError: false,
@@ -47,7 +46,7 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
     },
   };
 
-  public componentDidUpdate = (prevProps: any, prevState: any): void => {
+  public componentDidUpdate = (prevProps: SprykerRangeProps, prevState: SprykerRangeState): void => {
 
     if (this.props.isReset && !prevProps.isReset) {
 

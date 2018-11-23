@@ -31,7 +31,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     }
   };
 
-  public componentDidUpdate = (prevProps: any, prevState: any) => {
+  public componentDidUpdate = (prevProps: Props, prevState: State) => {
     if (!this.props.isRejected && !this.props.isOrderExist) {
       this.initRequestData();
     }
