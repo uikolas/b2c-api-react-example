@@ -1,5 +1,6 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {formStyles} from "./styles";
+<<<<<<< HEAD
 import {
   IBillingSelection,
   IDeliverySelection,
@@ -9,6 +10,8 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressItem} from "src/shared/interfaces/addresses";
+=======
+>>>>>>> epic/checkout/dev
 
 
 export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
@@ -18,23 +21,6 @@ export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
     third: IPanelData;
     fourth: IPanelData;
   };
-}
-
-export type TAddressType = 'delivery' | 'billing';
-
-export interface IExtraAddressesOptions {
-  delivery: Array<IRadioItem> | null;
-  billing: Array<IRadioItem> | null;
-}
-
-export interface IAddressesSelections {
-  delivery: IDeliverySelection;
-  billing: IBillingSelection;
-}
-
-export interface ICurrentValuesInSelections {
-  delivery: TIsAddNewDeliveryValue | IAddressItem["id"] | null;
-  billing: TIsAddNewBillingValue | TIsSameAsDeliveryValue | IAddressItem["id"] | null;
 }
 
 export interface IPanelData {

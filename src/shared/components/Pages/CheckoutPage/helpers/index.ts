@@ -1,32 +1,34 @@
 import {
-  ICheckoutFormsProps, IExtraAddressesOptions,
-  TAddressType
+  ICheckoutFormsProps,
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {
   InputLabelAddNewBillingAddress,
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
+import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
-  ICheckoutPageProps, ICheckoutPanelsSettings,
-  IParamFormValidity,
-  IParamInputValidity,
-  isAddNewBillingValue,
-  isAddNewDeliveryValue,
-  isSameAsDeliveryValue
-} from "src/shared/components/Pages/CheckoutPage/types";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+  TAddressType,
+  TExtraOptionsToSelection
+} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
+import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/helpersTypes";
 
-export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions => {
-  const response: IExtraAddressesOptions = {delivery: null, billing: null};
+export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
+                                           addressType: TAddressType): TExtraOptionsToSelection | null => {
+  let response: TExtraOptionsToSelection = [];
+  if (!isAddressesCollectionExist) {
+    return null;
+  }
 
-  if (isAddressesCollectionExist) {
-    response.delivery = [];
-    response.billing = [];
-    response.delivery.push({value: isAddNewDeliveryValue, label: InputLabelAddNewDeliveryAddress});
-    response.billing.push(
-      {value: isAddNewBillingValue, label: InputLabelAddNewBillingAddress},
-      {value: isSameAsDeliveryValue, label: InputLabelSameAsCurrentDelivery}
+  if (addressType === 'delivery') {
+    response.push({value: checkoutSelectionInputs.isAddNewDeliveryValue, label: InputLabelAddNewDeliveryAddress});
+  } else if (addressType === 'billing') {
+    response.push(
+      {value: checkoutSelectionInputs.isAddNewBillingValue, label: InputLabelAddNewBillingAddress},
+      {value: checkoutSelectionInputs.isSameAsDeliveryValue, label: InputLabelSameAsCurrentDelivery}
     );
   }
 
@@ -59,7 +61,7 @@ export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
   return true;
 };
 
-export const checkAddressFormValidity = (param: IParamFormValidity): boolean => {
+export const checkFormValidity = (param: IParamFormValidity): boolean => {
   const {form, fieldsConfig} = param;
   let result: boolean = true;
 

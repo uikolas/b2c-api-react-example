@@ -24,7 +24,14 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
       paddingRight: theme.spacing.unit * 1.5,
       paddingLeft: 0,
     },
-
+  },
+  controlFullWidthOnlyChild: {
+    "&:only-child": {
+      paddingRight: 0,
+      paddingLeft: 0,
+    },
+  },
+  controlFullWidth: {
     "&:only-child": {
       paddingRight: 0,
       paddingLeft: 0,

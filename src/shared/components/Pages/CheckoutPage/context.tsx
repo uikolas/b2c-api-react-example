@@ -1,16 +1,20 @@
 import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
-import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types";
+import {TCheckoutPageContext} from "./types/contextTypes";
 import {
-  billingConfigInputStable,
-  billingNewAddressDefault, deliveryConfigInputStable,
-  deliveryNewAddressDefault, paymentMethodDataDefault
-} from "src/shared/components/Pages/CheckoutPage/constants";
+  billingNewAddressDefault,
+  deliveryNewAddressDefault,
+  paymentCreditCardDefault,
+  paymentInvoiceDefault
+} from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
 
 
 export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   submitHandler: (event: FormEvent<HTMLFormElement>) => {
     throw new Error('submitHandler() not implemented');
+  },
+  onBlurHandler: (formName: string) => (event: any): void => {
+    throw new Error('onBlurHandler() not implemented');
   },
   selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
     throw new Error('selectionsChangeHandler() not implemented');
@@ -21,21 +25,29 @@ export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
   handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
     throw new Error('handleBillingInputs() not implemented');
   },
+  handleInvoiceInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+    throw new Error('handleInvoiceInputs() not implemented');
+  },
+  handleCreditCardInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+    throw new Error('handleCreditCardInputs() not implemented');
+  },
   isBillingSameAsDelivery: false,
   deliveryNewAddress: {...deliveryNewAddressDefault},
   billingNewAddress: {...billingNewAddressDefault},
-  deliveryAddressInputsConfig: {...deliveryConfigInputStable},
-  billingAddressInputsConfig: {...billingConfigInputStable},
   addressesCollection: null,
   countriesCollection: null,
-  selections: {delivery: null, billing: null},
-  currentValuesInSelections: {delivery: null, billing: null},
+  deliverySelections: null,
+  billingSelections: null,
+  currentValueDeliverySelection: null,
+  currentValueBillingSelection: null,
   isAddressesFulfilled: false,
-  extraAddressesOptions: {delivery: null, billing: null},
+  extraOptionsDeliverySelection: null,
+  extraOptionsBillingSelection: null,
   isUserLoggedIn: false,
   shipmentMethods: null,
   currentValueShipmentMethod: null,
   paymentMethods: null,
   currentValuePaymentMethod: null,
-  paymentMethodDataInputs: {...paymentMethodDataDefault},
+  paymentCreditCardDataInputs: {...paymentCreditCardDefault},
+  paymentInvoiceDataInputs: {...paymentInvoiceDefault},
 });

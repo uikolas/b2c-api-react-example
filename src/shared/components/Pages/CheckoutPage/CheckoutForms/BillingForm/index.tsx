@@ -15,7 +15,18 @@ import {
   getBillingSavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
+<<<<<<< HEAD
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
+=======
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {
+  IAddressParams,
+  IBillingAddressesParams,
+  ISameAsDeliveryParams
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import {billingConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
+>>>>>>> epic/checkout/dev
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
@@ -27,41 +38,46 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
     <CheckoutPageContext.Consumer>
       {({
           submitHandler,
+          onBlurHandler,
           selectionsChangeHandler,
           handleBillingInputs,
           isBillingSameAsDelivery,
           billingNewAddress,
-          billingAddressInputsConfig,
-          selections,
-          currentValuesInSelections,
+          billingSelections,
+          currentValueBillingSelection,
           addressesCollection,
-          extraAddressesOptions,
+          extraOptionsBillingSelection,
           isAddressesFulfilled,
           isUserLoggedIn,
           countriesCollection
       }) => {
-        const billingParams = {
-          addressData: billingNewAddress,
-          addressInputsConfig: billingAddressInputsConfig,
+        const billingParams: IAddressParams = {
+          inputsData: billingNewAddress,
+          inputsConfig: billingConfigInputStable,
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleBillingInputs,
+          onBlurHandler: onBlurHandler(checkoutFormsNames.billing),
         };
-        const sameAsDeliveryParams = {
+        const sameAsDeliveryParams: ISameAsDeliveryParams = {
           isSameAsDelivery: isBillingSameAsDelivery,
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const savedBillingParams = {
-          currentValueInSelection: currentValuesInSelections.billing,
+        const savedBillingParams: IBillingAddressesParams = {
+          currentValueInSelection: currentValueBillingSelection,
           addressesCollection,
-          extraAddressesOptions: extraAddressesOptions.billing,
+          extraOptionsToSelection: extraOptionsBillingSelection,
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const billingFormSettings = getAddressFormSettings('billing', billingParams);
-        const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings('sameAsDeliveryForm', sameAsDeliveryParams);
-        const savedAddressFormSettings = getBillingSavedAddressFormSettings('savedBilling', savedBillingParams);
+        const billingFormSettings = getAddressFormSettings(checkoutFormsNames.billing, billingParams);
+        const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings(checkoutFormsNames.sameAsDeliveryForm,
+                                                                         sameAsDeliveryParams
+                                                                         );
+        const savedAddressFormSettings = getBillingSavedAddressFormSettings(checkoutFormsNames.savedBilling,
+                                                                            savedBillingParams
+                                                                            );
 
         const inputsForm = isBillingSameAsDelivery ? null : <SprykerForm form={billingFormSettings} />;
         const sameAsDeliveryForm = <SprykerForm form={sameAsDeliveryFormSettings} />;
@@ -69,13 +85,13 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
 
         return (
           <Grid container className={classes.root}>
-            <Grid item xs={ 12 }>
+            <Grid item xs={12}>
               { isUserLoggedIn
                 ? (!isAddressesFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
-                    {selections.billing.isAddNew ? inputsForm : null}
+                    {billingSelections.isAddNew ? inputsForm : null}
                   </React.Fragment>
                 : [sameAsDeliveryForm, inputsForm]
               }

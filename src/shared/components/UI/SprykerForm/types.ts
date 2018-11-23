@@ -18,9 +18,15 @@ import {
   TAddressPhone,
   TAddressZipCode,
   TIso2Code
+<<<<<<< HEAD
 } from "src/shared/interfaces/addresses";
 import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect";
 import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
+=======
+} from "src/shared/interfaces/addresses/index";
+import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
+import {sprykerFormStyles} from "./sprykerFormStyles";
+>>>>>>> epic/checkout/dev
 
 
 export interface IFormField {
@@ -29,7 +35,7 @@ export interface IFormField {
   inputValue: TFormInputValue;
   spaceNumber: GridSize;
   isRequired?: boolean;
-  onChangeOwnHandler?: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  onChangeOwnHandler?: React.EventHandler<any>;
   onBlurOwnHandler?: React.EventHandler<any>;
   label?: string;
   isError?: boolean;
@@ -53,6 +59,7 @@ export interface IFormSettings {
 
 export interface ISprykerFormProps extends WithStyles<typeof sprykerFormStyles> {
   form: IFormSettings;
+  formClassName?: string;
 }
 
 export interface IRadioItem {

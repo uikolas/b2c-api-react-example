@@ -11,7 +11,7 @@ import {
   IAddressesParams,
   IBillingAddressesParams,
   IDeliveryAddressesParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 
 
 export const getDeliverySavedAddressFormSettings = (formName: string,
@@ -21,7 +21,7 @@ export const getDeliverySavedAddressFormSettings = (formName: string,
     addressesCollection,
     submitHandler,
     inputChangeHandler,
-    extraAddressesOptions,
+    extraOptionsToSelection,
     currentValueInSelection,
   } = params;
 
@@ -39,7 +39,7 @@ export const getDeliverySavedAddressFormSettings = (formName: string,
           isRequired: false,
           label: InputLabelSelectSavedDeliveryAddress,
           isError: false,
-          radioItems: getRadioItems(addressesCollection, extraAddressesOptions),
+          radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
         }
       ]
     ],
@@ -55,7 +55,7 @@ export const getBillingSavedAddressFormSettings = (formName: string,
     addressesCollection,
     submitHandler,
     inputChangeHandler,
-    extraAddressesOptions,
+    extraOptionsToSelection,
     currentValueInSelection,
   } = params;
 
@@ -73,7 +73,7 @@ export const getBillingSavedAddressFormSettings = (formName: string,
           isRequired: false,
           label: InputLabelSelectSavedBillingAddress,
           isError: false,
-          radioItems: getRadioItems(addressesCollection, extraAddressesOptions),
+          radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
         }
       ]
     ],
@@ -83,7 +83,7 @@ export const getBillingSavedAddressFormSettings = (formName: string,
 };
 
 const getRadioItems = (collection: IAddressesParams["addressesCollection"],
-                       extraOptions: IAddressesParams["extraAddressesOptions"]) => {
+                       extraOptions: IAddressesParams["extraOptionsToSelection"]) => {
   let items = convertAddressesToRadioItems(collection);
   if (!items) {
     return null;

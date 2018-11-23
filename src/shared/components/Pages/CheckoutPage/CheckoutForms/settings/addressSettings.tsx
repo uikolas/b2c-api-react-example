@@ -16,13 +16,13 @@ import {
 import {salutationVariants} from "src/shared/constants/customer";
 import {TSalutationVariant} from "src/shared/interfaces/customer";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {ICountries} from "src/shared/reducers/Common/Init";
 
 
 export const getAddressFormSettings = ( formName: string, params: IAddressParams): IFormSettings => {
   const {
-    addressData: {
+    inputsData: {
       firstName,
       lastName,
       salutation,
@@ -35,7 +35,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       company,
       phone,
     },
-    addressInputsConfig: {
+    inputsConfig: {
       firstName: firstNameConfig,
       lastName: lastNameConfig,
       salutation: salutationConfig,
@@ -51,6 +51,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
     countriesCollection,
     submitHandler,
     inputChangeHandler,
+    onBlurHandler,
   } = params;
 
   const isCountriesCollectionExist = Boolean(Array.isArray(countriesCollection) && countriesCollection.length > 0);
@@ -59,6 +60,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
     formName,
     onChangeHandler: inputChangeHandler,
     onSubmitHandler: submitHandler,
+    onBlurHandler,
     fields: [
       [
         {

@@ -33,13 +33,16 @@ export interface IPaymentMethod {
   amount: TPaymentAmount;
 }
 
-export interface IPaymentMethodData {
+export interface IPaymentCreditCardData {
   paymentProvider: TPaymentProvider | null;
   cardNumber: TPaymentCardNumber | null;
   cardName: TPaymentCardName | null;
   cardExpiryMonth: TPaymentCardExpiryMonth | null;
   cardExpiryYear: TPaymentCardExpiryYear | null;
   cardCVC: TPaymentCardCVC | null;
+}
+
+export interface IPaymentInvoiceData {
   invoiceDateOfBirth: TPaymentInvoiceDateOfBirth | null;
 }
 

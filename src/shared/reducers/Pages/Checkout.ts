@@ -77,7 +77,7 @@ const paymentMethodsFixture: Array<IPaymentMethod> = [
     amount: 0,
   },
   {
-    paymentProvider: '?????',
+    paymentProvider: 'Dummy name invoice',
     paymentMethod: 'invoice',
     paymentSelection: '3',
     amount: 0,
