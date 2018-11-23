@@ -38,7 +38,7 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
   }
 
   return (
-    value
+    value || value === 0
       ? <span className={classNames}>
           { title ? title : null }
         <FormattedNumber
