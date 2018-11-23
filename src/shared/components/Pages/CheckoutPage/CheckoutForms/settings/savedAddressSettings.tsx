@@ -11,7 +11,7 @@ import {
   IAddressesParams,
   IBillingAddressesParams,
   IDeliveryAddressesParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 
 
 export const getDeliverySavedAddressFormSettings = (formName: string,

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {IPaymentMethodsParams} from "./types";
+import {IPaymentMethodsParams} from "../../types/formSettingsTypes";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IPaymentMethodGroupItem} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 

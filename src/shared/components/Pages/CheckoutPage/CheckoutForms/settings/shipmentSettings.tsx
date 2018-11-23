@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Typography from '@material-ui/core/Typography';
-import {IShippingMethodsParams} from "./types";
+import {IShippingMethodsParams} from "../../types/formSettingsTypes";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";

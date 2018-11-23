@@ -14,7 +14,7 @@ import {ICreditCardPaymentFormProps} from "./types";
 import {
   getCreditCardFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/creditCardSettings";
-import {IPaymentCreditCardParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {IPaymentCreditCardParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 
 
 export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> = (props): JSX.Element => {

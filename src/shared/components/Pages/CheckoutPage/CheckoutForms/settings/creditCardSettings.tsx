@@ -1,7 +1,7 @@
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {
   IPaymentCreditCardParams
-} from "./types";
+} from "../../types/formSettingsTypes";
 import {
   InputLabelPaymentCreditCardCVC,
   InputLabelPaymentCreditCardName,

@@ -12,7 +12,7 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/shipmentSettings";
 import {PartnerIconDhl} from "src/shared/assets/icons/partnerIconDhl";
 import {PartnerIconHermes} from "src/shared/assets/icons/partnerIconHermes";
-import {IShippingMethodsParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {IShippingMethodsParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {IShipmentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
 

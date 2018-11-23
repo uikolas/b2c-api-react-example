@@ -9,7 +9,7 @@ import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {checkoutInputsFormNames, invoiceConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants";
 import {IInvoicePaymentFormProps} from "./types";
 import {getInvoiceFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/invoiceSettings";
-import {IPaymentInvoiceParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {IPaymentInvoiceParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 
 
 export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (props): JSX.Element => {

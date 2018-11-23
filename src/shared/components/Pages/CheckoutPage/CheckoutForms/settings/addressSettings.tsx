@@ -16,7 +16,7 @@ import {
 import {salutationVariants} from "src/shared/constants/customer/index";
 import {TSalutationVariant} from "src/shared/interfaces/customer/index";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {ICountries} from "src/shared/reducers/Common/Init";
 
 

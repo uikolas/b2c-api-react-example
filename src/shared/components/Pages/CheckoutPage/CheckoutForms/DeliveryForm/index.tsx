@@ -17,7 +17,7 @@ import {checkoutInputsFormNames, deliveryConfigInputStable} from "src/shared/com
 import {
   IAddressParams,
   IDeliveryAddressesParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {

@@ -445,14 +445,14 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     return true;
   }
 
-  private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
+  private getCurrentValueBillingSelection = (): IAddressItem["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
            || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
            || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
            || null;
   }
 
-  private getCurrentValueInDeliverySelection = (): IAddressItem["id"] | string | null => {
+  private getCurrentValueDeliverySelection = (): IAddressItem["id"] | string | null => {
     return this.state.deliverySelection.selectedAddressId
            || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
            || null;
@@ -542,8 +542,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             countriesCollection,
             deliverySelections: this.state.deliverySelection,
             billingSelections: this.state.billingSelection,
-            currentValueDeliverySelection: this.getCurrentValueInDeliverySelection(),
-            currentValueBillingSelection: this.getCurrentValueInBillingSelection(),
+            currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
+            currentValueBillingSelection: this.getCurrentValueBillingSelection(),
             extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
             extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
             isAddressesFulfilled,

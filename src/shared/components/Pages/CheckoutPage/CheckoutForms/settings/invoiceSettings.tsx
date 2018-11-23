@@ -1,7 +1,7 @@
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {
   IPaymentInvoiceParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {InputLabelPaymentDateOfBirth} from "src/shared/constants/forms/labels";
 
 

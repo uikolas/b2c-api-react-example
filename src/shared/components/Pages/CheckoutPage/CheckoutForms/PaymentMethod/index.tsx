@@ -11,7 +11,7 @@ import {IPaymentMethodProps} from "src/shared/components/Pages/CheckoutPage/Chec
 import {
   IPaymentMethodsParams,
   IPaymentProviderToIcon
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {PartnerIconMasterCard} from "src/shared/assets/icons/partnerIconMasterCard";
 import {PartnerIconPaypal} from "src/shared/assets/icons/partnerIconPaypal";
 import {PartnerIconVisa} from "src/shared/assets/icons/partnerIconVisa";

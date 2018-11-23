@@ -21,7 +21,7 @@ import {
   IAddressParams,
   IBillingAddressesParams,
   ISameAsDeliveryParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
