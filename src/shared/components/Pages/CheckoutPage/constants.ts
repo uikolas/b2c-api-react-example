@@ -1,16 +1,21 @@
 import {
   IBillingAddressState,
-  IBillingObjectConfigInputStable,
   ICheckoutCreditCardState,
-  ICheckoutInputsFormNames,
   ICheckoutInvoiceState,
-  ICheckoutPaymentMethodsNames,
-  ICheckoutStepsCompletion,
-  ICreditCardObjectConfigInputStable,
+  ICheckoutStepsCompletionState,
   IDeliveryAddressState,
+} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {
+  IBillingObjectConfigInputStable,
+  ICreditCardObjectConfigInputStable,
   IDeliveryObjectConfigInputStable,
   IInvoiceObjectConfigInputStable
-} from "src/shared/components/Pages/CheckoutPage/types/index";
+} from "src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes";
+import {
+  ICheckoutInputsFormNames,
+  ICheckoutPaymentMethodsNames,
+  ICheckoutSelectionInputs
+} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
 
 export const deliveryNewAddressDefault: IDeliveryAddressState = {
@@ -115,7 +120,7 @@ export const billingConfigInputStable: IBillingObjectConfigInputStable = {
   ...deliveryConfigInputStable
 };
 
-export const stepCompletionCheckoutDefault: ICheckoutStepsCompletion = {
+export const stepCompletionCheckoutDefault: ICheckoutStepsCompletionState = {
   first: false,
   second: false,
   third: false,
@@ -188,6 +193,12 @@ export const creditCardConfigInputStable: ICreditCardObjectConfigInputStable = {
     isRequired: true,
     inputName: 'cardCVC',
   },
+};
+
+export const checkoutSelectionInputs: ICheckoutSelectionInputs = {
+  isAddNewDeliveryValue: 'isAddNewDeliveryValue',
+  isAddNewBillingValue: 'isAddNewBillingValue',
+  isSameAsDeliveryValue: 'isSameAsDeliveryValue',
 };
 
 export const checkoutInputsFormNames: ICheckoutInputsFormNames = {

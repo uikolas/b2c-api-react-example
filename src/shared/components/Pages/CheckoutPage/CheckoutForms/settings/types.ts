@@ -14,15 +14,19 @@ import {
   ICheckoutAddressState,
   ICheckoutCreditCardState,
   ICheckoutInvoiceState,
-  ICreditCardObjectConfigInputStable,
-  IInvoiceObjectConfigInputStable,
-  IObjectConfigInputStable,
-  IPaymentMethodGroupItem,
-  TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/context/types";
+import {
+  ICreditCardObjectConfigInputStable,
+  IInvoiceObjectConfigInputStable,
+  IObjectConfigInputStable
+} from "src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes";
+import {
+  IPaymentMethodGroupItem,
+  TPaymentProvidersCollection
+} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
 
 // Base handlers for checkout's page forms

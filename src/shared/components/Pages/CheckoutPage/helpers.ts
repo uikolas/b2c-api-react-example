@@ -1,5 +1,6 @@
 import {
-  ICheckoutFormsProps, IExtraAddressesOptions,
+  ICheckoutFormsProps,
+  IExtraAddressesOptions,
   TAddressType
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {
@@ -7,15 +8,11 @@ import {
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
-import {
-  ICheckoutPageProps, ICheckoutPanelsSettings,
-  IParamFormValidity,
-  IParamInputValidity,
-  isAddNewBillingValue,
-  isAddNewDeliveryValue,
-  isSameAsDeliveryValue
-} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
+import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
+import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
 
 export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions => {
   const response: IExtraAddressesOptions = {delivery: null, billing: null};
@@ -23,10 +20,10 @@ export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): I
   if (isAddressesCollectionExist) {
     response.delivery = [];
     response.billing = [];
-    response.delivery.push({value: isAddNewDeliveryValue, label: InputLabelAddNewDeliveryAddress});
+    response.delivery.push({value: checkoutSelectionInputs.isAddNewDeliveryValue, label: InputLabelAddNewDeliveryAddress});
     response.billing.push(
-      {value: isAddNewBillingValue, label: InputLabelAddNewBillingAddress},
-      {value: isSameAsDeliveryValue, label: InputLabelSameAsCurrentDelivery}
+      {value: checkoutSelectionInputs.isAddNewBillingValue, label: InputLabelAddNewBillingAddress},
+      {value: checkoutSelectionInputs.isSameAsDeliveryValue, label: InputLabelSameAsCurrentDelivery}
     );
   }
 

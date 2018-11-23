@@ -9,10 +9,6 @@ import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {IPaymentMethodProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types";
 import {
-  IPaymentMethodsGrouped,
-  TPaymentProvidersCollection
-} from "src/shared/components/Pages/CheckoutPage/types/index";
-import {
   IPaymentMethodsParams,
   IPaymentProviderToIcon
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
@@ -26,6 +22,10 @@ import {IPaymentMethod} from "src/shared/interfaces/checkout/index";
 import {checkoutPaymentMethodsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {InvoicePaymentForm} from "./InvoicePaymentForm/index";
 import {CreditCardPaymentForm} from "./CreditCardPaymentForm/index";
+import {
+  IPaymentMethodsGrouped,
+  TPaymentProvidersCollection
+} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {

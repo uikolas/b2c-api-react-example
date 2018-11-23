@@ -12,9 +12,8 @@ import {
   IPaymentMethod,
 } from "src/shared/interfaces/checkout";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
-import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
+import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
-import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
@@ -46,11 +45,11 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
 }
 
 export interface ICheckoutPageState {
-  deliverySelection: IDeliverySelection;
-  billingSelection: IBillingSelection;
+  deliverySelection: IDeliverySelectionState;
+  billingSelection: IBillingSelectionState;
   deliveryNewAddress: IDeliveryAddressState;
   billingNewAddress: IBillingAddressState;
-  stepsCompletion: ICheckoutStepsCompletion;
+  stepsCompletion: ICheckoutStepsCompletionState;
   shipmentMethod: IShipmentMethod["id"] | null;
   paymentMethod: IPaymentMethod["paymentMethod"] | null;
   paymentCreditCardData: ICheckoutCreditCardState;
@@ -73,105 +72,31 @@ export interface ICheckoutAddressState {
   [key: string]: IConfigInputState;
 }
 
-export interface IObjectConfigInputStable {
-  firstName: IConfigInputStable;
-  lastName: IConfigInputStable;
-  salutation: IConfigInputStable;
-  address1: IConfigInputStable;
-  address2: IConfigInputStable;
-  address3: IConfigInputStable;
-  zipCode: IConfigInputStable;
-  city: IConfigInputStable;
-  country: IConfigInputStable;
-  company: IConfigInputStable;
-  phone: IConfigInputStable;
-
-  [key: string]: IConfigInputStable;
-}
-
 export interface IDeliveryAddressState extends ICheckoutAddressState {}
 
 export interface IBillingAddressState extends ICheckoutAddressState {}
-
-export interface IDeliveryObjectConfigInputStable extends IObjectConfigInputStable {}
-
-export interface IBillingObjectConfigInputStable extends IObjectConfigInputStable {}
-
-export interface IConfigInputStable {
-  isRequired: boolean;
-  inputName: string;
-}
 
 export interface IConfigInputState {
   value: TFormInputValue;
   isError: boolean;
 }
 
-export const isAddNewDeliveryValue = "isAddNewDelivery";
-export type TIsAddNewDeliveryValue = "isAddNewDelivery";
-export const isAddNewBillingValue = "isAddNewBilling";
-export type TIsAddNewBillingValue = "isAddNewBilling";
-export const isSameAsDeliveryValue = "isSameAsDelivery";
-export type TIsSameAsDeliveryValue = "isSameAsDelivery";
-
-export interface IDeliverySelection {
+export interface IDeliverySelectionState {
   selectedAddressId: IUsageSavedAddress["deliverySelectedAddressId"];
   isAddNew: IAddNewAddressActions["isAddNewDelivery"];
 }
 
-export interface IBillingSelection {
+export interface IBillingSelectionState {
   selectedAddressId: IUsageSavedAddress["billingSelectedAddressId"];
   isAddNew: IAddNewAddressActions["isAddNewBilling"];
   isSameAsDelivery: ISameAsDelivery["isSameAsDelivery"];
 }
 
-export interface ICheckoutStepsCompletion {
+export interface ICheckoutStepsCompletionState {
   first: boolean;
   second: boolean;
   third: boolean;
   fourth: boolean;
-}
-
-export interface IParamInputValidity {
-  value: TFormInputValue;
-  fieldConfig: IConfigInputStable;
-}
-
-export interface IParamFormValidity {
-  form: IDeliveryAddressState | IBillingAddressState | ICheckoutInvoiceState | ICheckoutCreditCardState;
-  fieldsConfig: IDeliveryObjectConfigInputStable
-                | IBillingObjectConfigInputStable
-                | IInvoiceObjectConfigInputStable
-                | ICreditCardObjectConfigInputStable;
-}
-
-export interface ICheckoutPanelsSettings {
-  isFirstPanelDisabled: boolean;
-  isSecondPanelDisabled: boolean;
-  isThirdPanelDisabled: boolean;
-  isFourthPanelDisabled: boolean;
-}
-
-export interface IShipmentMethodsGrouped {
-  [key: string]: Array<IShipmentMethod>;
-}
-
-export interface IPaymentMethodsGrouped {
-  [key: string]: Array<IPaymentMethod>;
-}
-
-export interface IPaymentMethodGroupItem extends IRadioItem {}
-
-export interface ICheckoutInputsFormNames {
-  billing: string;
-  delivery: string;
-  invoice: string;
-  creditCard: string;
-}
-
-export interface ICheckoutPaymentMethodsNames {
-  invoice: string;
-  creditCard: string;
 }
 
 export interface ICheckoutCreditCardState {
@@ -190,22 +115,3 @@ export interface ICheckoutInvoiceState {
 
   [key: string]: IConfigInputState;
 }
-
-export interface ICreditCardObjectConfigInputStable {
-  paymentProvider: IConfigInputStable;
-  cardNumber: IConfigInputStable;
-  cardName: IConfigInputStable;
-  cardExpiryMonth: IConfigInputStable;
-  cardExpiryYear: IConfigInputStable;
-  cardCVC: IConfigInputStable;
-
-  [key: string]: IConfigInputStable;
-}
-
-export interface IInvoiceObjectConfigInputStable {
-  dateOfBirth: IConfigInputStable;
-
-  [key: string]: IConfigInputStable;
-}
-
-export type TPaymentProvidersCollection = Array<IMenuItemSelect>;

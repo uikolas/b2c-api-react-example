@@ -10,6 +10,7 @@ import {
   billingConfigInputStable,
   billingNewAddressDefault,
   checkoutInputsFormNames,
+  checkoutSelectionInputs,
   creditCardConfigInputStable,
   deliveryConfigInputStable,
   deliveryNewAddressDefault,
@@ -18,13 +19,7 @@ import {
   paymentInvoiceDefault,
   stepCompletionCheckoutDefault,
 } from "./constants";
-import {
-  ICheckoutPageProps,
-  ICheckoutPageState,
-  isAddNewBillingValue,
-  isAddNewDeliveryValue,
-  isSameAsDeliveryValue
-} from "./types/index";
+import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
 import {CheckoutPageContext} from "./context/index";
 import {
   checkAddressFormValidity,
@@ -98,10 +93,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
                                   ): void => {
     const { name, value } = event.target;
-    console.log(name, value);
     if (name === 'deliverySelection') {
         this.handleDeliverySelection(value);
-    } else if (name === 'billingSelection' || name === isSameAsDeliveryValue) {
+    } else if (name === 'billingSelection' || name === checkoutSelectionInputs.isSameAsDeliveryValue) {
         this.handleBillingSelection(value);
     } else if (name === 'shipmentMethodSelection') {
         this.handleShipmentMethodSelection(value);
@@ -348,7 +342,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handleDeliverySelection = (value: string): boolean => {
-    if (value === isAddNewDeliveryValue) {
+    if (value === checkoutSelectionInputs.isAddNewDeliveryValue) {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
           deliverySelection: {
@@ -380,7 +374,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handleBillingSelection = (value: string): boolean => {
-    if (value === isAddNewBillingValue) {
+    if (value === checkoutSelectionInputs.isAddNewBillingValue) {
       this.setState( (prevState: ICheckoutPageState) => {
         return ({
           billingSelection: {
@@ -395,7 +389,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         });
       });
       return true;
-    } else if (value === isSameAsDeliveryValue) {
+    } else if (value === checkoutSelectionInputs.isSameAsDeliveryValue) {
       this.setState( (prevState: ICheckoutPageState) => {
         const newSameValue = !prevState.billingSelection.isSameAsDelivery;
         return ({
@@ -453,14 +447,14 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   private getCurrentValueInBillingSelection = (): IAddressItem["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
-           || (this.state.billingSelection.isAddNew && isAddNewBillingValue)
-           || (this.state.billingSelection.isSameAsDelivery && isSameAsDeliveryValue)
+           || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
+           || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
            || null;
   }
 
   private getCurrentValueInDeliverySelection = (): IAddressItem["id"] | string | null => {
     return this.state.deliverySelection.selectedAddressId
-           || (this.state.deliverySelection.isAddNew && isAddNewDeliveryValue)
+           || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
            || null;
   }
 
