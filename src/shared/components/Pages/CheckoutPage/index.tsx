@@ -16,7 +16,7 @@ import {
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraOptionsToSelection,
-} from "./helpers";
+} from "./helpers/index";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";

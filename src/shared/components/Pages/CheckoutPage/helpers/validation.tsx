@@ -4,7 +4,7 @@ import {
   deliveryConfigInputStable,
   invoiceConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
-import {checkFormInputValidity, checkFormValidity} from "src/shared/components/Pages/CheckoutPage/helpers";
+import {checkFormInputValidity, checkFormValidity} from "src/shared/components/Pages/CheckoutPage/helpers/index";
 import {
   IBillingAddressState,
   ICheckoutCreditCardState,
