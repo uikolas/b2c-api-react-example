@@ -6,15 +6,13 @@ import Grid from '@material-ui/core/Grid';
 import {CheckoutPageContext} from '../../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {
-  checkoutInputsFormNames,
-  creditCardConfigInputStable,
-} from "src/shared/components/Pages/CheckoutPage/constants";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {ICreditCardPaymentFormProps} from "./types";
 import {
   getCreditCardFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/creditCardSettings";
 import {IPaymentCreditCardParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import {creditCardConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
 
 
 export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> = (props): JSX.Element => {
@@ -37,10 +35,10 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
           providersCollection,
           submitHandler,
           inputChangeHandler: handleCreditCardInputs,
-          onBlurHandler: onBlurHandler(checkoutInputsFormNames.creditCard),
+          onBlurHandler: onBlurHandler(checkoutFormsNames.creditCard),
         };
 
-        const creditCardFormSettings = getCreditCardFormSettings(checkoutInputsFormNames.creditCard, creditCardParams);
+        const creditCardFormSettings = getCreditCardFormSettings(checkoutFormsNames.creditCard, creditCardParams);
 
         return (
           <Grid container className={classes.root}>

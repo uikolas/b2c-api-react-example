@@ -16,12 +16,13 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {billingConfigInputStable, checkoutInputsFormNames} from "src/shared/components/Pages/CheckoutPage/constants";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {
   IAddressParams,
   IBillingAddressesParams,
   ISameAsDeliveryParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import {billingConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
@@ -52,7 +53,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleBillingInputs,
-          onBlurHandler: onBlurHandler(checkoutInputsFormNames.billing),
+          onBlurHandler: onBlurHandler(checkoutFormsNames.billing),
         };
         const sameAsDeliveryParams: ISameAsDeliveryParams = {
           isSameAsDelivery: isBillingSameAsDelivery,
@@ -66,9 +67,13 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const billingFormSettings = getAddressFormSettings(checkoutInputsFormNames.billing, billingParams);
-        const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings('sameAsDeliveryForm', sameAsDeliveryParams);
-        const savedAddressFormSettings = getBillingSavedAddressFormSettings('savedBilling', savedBillingParams);
+        const billingFormSettings = getAddressFormSettings(checkoutFormsNames.billing, billingParams);
+        const sameAsDeliveryFormSettings = getSameAsDeliveryFormSettings(checkoutFormsNames.sameAsDeliveryForm,
+                                                                         sameAsDeliveryParams
+                                                                         );
+        const savedAddressFormSettings = getBillingSavedAddressFormSettings(checkoutFormsNames.savedBilling,
+                                                                            savedBillingParams
+                                                                            );
 
         const inputsForm = isBillingSameAsDelivery ? null : <SprykerForm form={billingFormSettings} />;
         const sameAsDeliveryForm = <SprykerForm form={sameAsDeliveryFormSettings} />;

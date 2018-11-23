@@ -5,8 +5,8 @@ import {
   billingNewAddressDefault,
   deliveryNewAddressDefault,
   paymentCreditCardDefault,
-  paymentInvoiceDefault,
-} from "src/shared/components/Pages/CheckoutPage/constants";
+  paymentInvoiceDefault
+} from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
 
 
 export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({

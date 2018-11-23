@@ -7,18 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from './connect';
 import { styles } from './styles';
 import {
-  billingConfigInputStable,
-  billingNewAddressDefault,
-  checkoutInputsFormNames,
+  checkoutFormsNames,
   checkoutSelectionInputs,
-  creditCardConfigInputStable,
-  deliveryConfigInputStable,
-  deliveryNewAddressDefault,
-  invoiceConfigInputStable,
-  paymentCreditCardDefault,
-  paymentInvoiceDefault,
-  stepCompletionCheckoutDefault,
-} from "./constants";
+} from "./constants/index";
 import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
 import {CheckoutPageContext} from "./context";
 import {
@@ -34,38 +25,36 @@ import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutFo
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {
+  billingNewAddressDefault,
+  billingSelectionDefault,
+  deliveryNewAddressDefault,
+  deliverySelectionDefault,
+  paymentCreditCardDefault,
+  paymentInvoiceDefault,
+  stepCompletionCheckoutDefault
+} from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
+import {
+  billingConfigInputStable,
+  creditCardConfigInputStable,
+  deliveryConfigInputStable,
+  invoiceConfigInputStable
+} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
 
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
 
   public state: ICheckoutPageState = {
-    deliverySelection: {
-      selectedAddressId: null,
-      isAddNew: false,
-    },
-    billingSelection: {
-      selectedAddressId: null,
-      isAddNew: false,
-      isSameAsDelivery: false,
-    },
-    deliveryNewAddress: {
-      ...deliveryNewAddressDefault
-    },
-    billingNewAddress: {
-      ...billingNewAddressDefault
-    },
-    stepsCompletion: {
-      ...stepCompletionCheckoutDefault
-    },
+    deliverySelection: {...deliverySelectionDefault},
+    billingSelection: {...billingSelectionDefault},
+    deliveryNewAddress: {...deliveryNewAddressDefault},
+    billingNewAddress: {...billingNewAddressDefault},
+    stepsCompletion: {...stepCompletionCheckoutDefault},
     shipmentMethod: null,
     paymentMethod: null,
-    paymentCreditCardData: {
-      ...paymentCreditCardDefault
-    },
-    paymentInvoiceData: {
-      ...paymentInvoiceDefault
-    },
+    paymentCreditCardData: {...paymentCreditCardDefault},
+    paymentInvoiceData: {...paymentInvoiceDefault},
   };
 
   public componentDidMount() {
@@ -102,18 +91,18 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     } else if (name === 'paymentMethodSelection') {
         this.handlePaymentMethodSelection(value);
     } else {
-        throw new Error(`Undefined type of forms: ${name}`);
+        throw new Error(`Undefined type of Selection: ${name}`);
     }
   }
 
   public handleFormValidityOnBlur = (formName: string) => (event: any): void => {
-    if (formName === checkoutInputsFormNames.delivery) {
+    if (formName === checkoutFormsNames.delivery) {
         this.handleDeliveryNewAddressValidity();
-    } else if (formName === checkoutInputsFormNames.billing) {
+    } else if (formName === checkoutFormsNames.billing) {
         this.handleBillingNewAddressValidity();
-    } else if (formName === checkoutInputsFormNames.invoice) {
+    } else if (formName === checkoutFormsNames.invoice) {
         this.handleInvoiceValidity();
-    } else if (formName === checkoutInputsFormNames.creditCard) {
+    } else if (formName === checkoutFormsNames.creditCard) {
         this.handleCreditCardValidity();
     } else {
         throw new Error(`Undefined type of formName: ${formName}`);

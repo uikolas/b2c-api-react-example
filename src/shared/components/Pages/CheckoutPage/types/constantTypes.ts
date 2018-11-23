@@ -1,25 +1,23 @@
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
-import {IBillingSelectionState, IDeliverySelectionState} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 
-export interface ICheckoutInputsFormNames {
+export interface ICheckoutFormsNames {
   billing: string;
   delivery: string;
   invoice: string;
   creditCard: string;
+  savedDelivery: string;
+  sameAsDeliveryForm: string;
+  savedBilling: string;
+  shipmentMethodBase: string;
+  paymentMethod: string;
 }
 
 export interface ICheckoutPaymentMethodsNames {
   invoice: string;
   creditCard: string;
-}
-
-export interface IPaymentMethodGroupItem extends IRadioItem {}
-
-export interface IShipmentMethodsGrouped {
-  [key: string]: Array<IShipmentMethod>;
 }
 
 export interface IPaymentMethodsGrouped {
@@ -28,17 +26,16 @@ export interface IPaymentMethodsGrouped {
 
 export type TPaymentProvidersCollection = Array<IMenuItemSelect>;
 
+export interface IPaymentMethodGroupItem extends IRadioItem {}
+
+export interface IShipmentMethodsGrouped {
+  [key: string]: Array<IShipmentMethod>;
+}
+
 export interface ICheckoutSelectionInputs {
   isAddNewDeliveryValue: string;
   isAddNewBillingValue: string;
   isSameAsDeliveryValue: string;
-}
-
-export interface ICheckoutPanelsSettings {
-  isFirstPanelDisabled: boolean;
-  isSecondPanelDisabled: boolean;
-  isThirdPanelDisabled: boolean;
-  isFourthPanelDisabled: boolean;
 }
 
 // Can be moved

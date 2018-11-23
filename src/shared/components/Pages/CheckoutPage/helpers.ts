@@ -10,11 +10,11 @@ import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
-  ICheckoutPanelsSettings,
   TAddressType,
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
+import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/helpersTypes";
 
 export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
                                            addressType: TAddressType): TExtraOptionsToSelection | null => {

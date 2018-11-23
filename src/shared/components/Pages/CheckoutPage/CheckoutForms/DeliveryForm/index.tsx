@@ -13,11 +13,12 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {checkoutInputsFormNames, deliveryConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {
   IAddressParams,
   IDeliveryAddressesParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import {deliveryConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -47,7 +48,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           countriesCollection,
           submitHandler,
           inputChangeHandler: handleDeliveryInputs,
-          onBlurHandler: onBlurHandler(checkoutInputsFormNames.delivery),
+          onBlurHandler: onBlurHandler(checkoutFormsNames.delivery),
         };
         const savedDeliveryParams: IDeliveryAddressesParams = {
           currentValueInSelection: currentValueDeliverySelection,
@@ -56,8 +57,10 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const deliveryFormSettings = getAddressFormSettings(checkoutInputsFormNames.delivery, deliveryParams);
-        const savedAddressFormSettings = getDeliverySavedAddressFormSettings('savedDelivery', savedDeliveryParams);
+        const deliveryFormSettings = getAddressFormSettings(checkoutFormsNames.delivery, deliveryParams);
+        const savedAddressFormSettings = getDeliverySavedAddressFormSettings(checkoutFormsNames.savedDelivery,
+                                                                             savedDeliveryParams
+        );
         const selectionForm = <SprykerForm form={savedAddressFormSettings} />;
         const inputsForm = <SprykerForm form={deliveryFormSettings} />;
 

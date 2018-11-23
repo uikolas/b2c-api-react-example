@@ -19,7 +19,10 @@ import {
   getPaymentMethodsFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/paymentSettings";
 import {IPaymentMethod} from "src/shared/interfaces/checkout/index";
-import {checkoutPaymentMethodsNames} from "src/shared/components/Pages/CheckoutPage/constants";
+import {
+  checkoutFormsNames,
+  checkoutPaymentMethodsNames
+} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {InvoicePaymentForm} from "./InvoicePaymentForm/index";
 import {CreditCardPaymentForm} from "./CreditCardPaymentForm/index";
 import {
@@ -101,7 +104,9 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           submitHandler,
           inputChangeHandler: selectionsChangeHandler,
         };
-        const paymentMethodFormSettings = getPaymentMethodsFormSettings('paymentMethod', paymentMethodsParams);
+        const paymentMethodFormSettings = getPaymentMethodsFormSettings(checkoutFormsNames.paymentMethod,
+                                                                        paymentMethodsParams
+        );
 
         return (
           <Grid container className={classes.root}>

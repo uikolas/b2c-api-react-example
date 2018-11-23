@@ -6,10 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import {CheckoutPageContext} from '../../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {checkoutInputsFormNames, invoiceConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {IInvoicePaymentFormProps} from "./types";
 import {getInvoiceFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/invoiceSettings";
 import {IPaymentInvoiceParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import {invoiceConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
 
 
 export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (props): JSX.Element => {
@@ -30,10 +31,10 @@ export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (prop
           inputsConfig: invoiceConfigInputStable,
           submitHandler,
           inputChangeHandler: handleInvoiceInputs,
-          onBlurHandler: onBlurHandler(checkoutInputsFormNames.invoice),
+          onBlurHandler: onBlurHandler(checkoutFormsNames.invoice),
         };
 
-        const invoiceFormSettings = getInvoiceFormSettings(checkoutInputsFormNames.invoice, invoiceParams);
+        const invoiceFormSettings = getInvoiceFormSettings(checkoutFormsNames.invoice, invoiceParams);
 
         return (
           <Grid container className={classes.root}>
