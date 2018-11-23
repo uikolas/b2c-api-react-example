@@ -4,19 +4,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-<<<<<<< HEAD
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { IPaymentMethodsGrouped } from 'src/shared/components/Pages/CheckoutPage/types';
-import { PartnerIconMasterCard } from 'src/shared/assets/icons/partnerIconMasterCard';
-import { PartnerIconPaypal } from 'src/shared/assets/icons/partnerIconPaypal';
-import { PartnerIconVisa } from 'src/shared/assets/icons/partnerIconVisa';
-import { IPaymentMethod } from 'src/shared/interfaces/checkout';
-import { CheckoutPageContext } from '../../context';
-import { IPaymentMethodsParams, IPaymentProviderToIcon } from '../settings/types';
-import { getPaymentMethodsFormSettings } from '../settings/paymentSettings';
-import { formStyles } from '../styles';
-import { IPaymentMethodProps } from './types';
-=======
 import {CheckoutPageContext} from '../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
@@ -43,7 +30,6 @@ import {
   TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
->>>>>>> epic/checkout/dev
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {
   const {
@@ -58,11 +44,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
 
   return (
     <CheckoutPageContext.Consumer>
-<<<<<<< HEAD
-      { (
-        {submitHandler, selectionsChangeHandler, paymentMethods, currentValuePaymentMethod, paymentMethodDataInputs},
-      ) => {
-=======
       {({
           submitHandler,
           selectionsChangeHandler,
@@ -70,7 +51,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           currentValuePaymentMethod,
       }) => {
 
->>>>>>> epic/checkout/dev
         const isPaymentMethodsExist = Boolean(Array.isArray(paymentMethods) && paymentMethods.length > 0);
         if (!isPaymentMethodsExist) {
           return null;
@@ -86,13 +66,8 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           paymentMethodsGrouped[paymentMethod.paymentMethod].push(paymentMethod);
         }
 
-<<<<<<< HEAD
-        console.info('++++++++ paymentMethodsGrouped ', paymentMethodsGrouped);
-
-        const paymentMethodGroupItems: IPaymentMethodsParams['paymentMethodGroupItems'] = [];
-=======
         const paymentMethodGroupItems: IPaymentMethodsParams["paymentMethodGroupItems"] = [];
->>>>>>> epic/checkout/dev
+
         for (let groupName in paymentMethodsGrouped) {
           if (!paymentMethodsGrouped.hasOwnProperty(groupName)
             || !Array.isArray(paymentMethodsGrouped[groupName])
@@ -137,11 +112,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
         );
 
         return (
-<<<<<<< HEAD
-          <Grid container className={ classes.root }>
-            <Grid item xs={ 12 } className={ classes.paymentMethodsParentForms }>
-              <SprykerForm form={ paymentMethodFormSettings }/>
-=======
           <Grid container className={classes.root}>
             <Grid item xs={12}>
               <SprykerForm form={paymentMethodFormSettings} formClassName={classes.paymentMethodsForm} />
@@ -155,7 +125,6 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
                   />
                 : null
               }
->>>>>>> epic/checkout/dev
             </Grid>
           </Grid>
         );

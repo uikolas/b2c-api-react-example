@@ -18,15 +18,10 @@ import {
   TAddressPhone,
   TAddressZipCode,
   TIso2Code
-<<<<<<< HEAD
-} from "src/shared/interfaces/addresses";
-import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect";
-import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
-=======
 } from "src/shared/interfaces/addresses/index";
 import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
 import {sprykerFormStyles} from "./sprykerFormStyles";
->>>>>>> epic/checkout/dev
+
 
 
 export interface IFormField {

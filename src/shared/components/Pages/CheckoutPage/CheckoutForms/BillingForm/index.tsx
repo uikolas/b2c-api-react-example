@@ -15,9 +15,7 @@ import {
   getBillingSavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
-<<<<<<< HEAD
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
-=======
+
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {
@@ -26,7 +24,6 @@ import {
   ISameAsDeliveryParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {billingConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
->>>>>>> epic/checkout/dev
 
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {

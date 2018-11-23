@@ -12,9 +12,7 @@ import {
   getDeliverySavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
-<<<<<<< HEAD
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
-=======
+
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 import {
@@ -22,7 +20,7 @@ import {
   IDeliveryAddressesParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {deliveryConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
->>>>>>> epic/checkout/dev
+
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
