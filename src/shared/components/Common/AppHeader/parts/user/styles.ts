@@ -31,6 +31,9 @@ export const styles = (theme: Theme) => createStyles({
     '& a': {
       color: theme.appColors.black,
       textDecoration: 'none',
+      '&:hover': {
+        color: theme.appColors.blue
+      }
     },
   },
   userBtns: {
