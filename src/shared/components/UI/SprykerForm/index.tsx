@@ -24,7 +24,6 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
     formClassName,
   }  = props;
 
-
   const isRowsExist = (fields.length > 0);
 
   const getTextInput = (field: IFormField) => {
@@ -103,7 +102,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
           <Grid
             container
             justify="flex-start"
-            alignItems="center"
+            alignItems="flex-end"
             className={classes.controlsGroup}
             key={`${formName}-${row[0].inputName}`}
           >
@@ -123,7 +122,8 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
 
               return (
                 <Grid
-                  item xs={12}
+                  item
+                  xs={12}
                   sm={field.spaceNumber}
                   className={`${classes.control} ${field.spaceNumber === 12 ? classes.controlFullWidth : ''}`}
                   key={field.inputName}
