@@ -53,7 +53,7 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           return null;
         }
 
-        const paymentProvidersCollection: TPaymentProvidersCollection = [];
+        const creditCardProvidersCollection: TPaymentProvidersCollection = [];
 
         const paymentMethodsGrouped: IPaymentMethodsGrouped = {};
         for (let paymentMethod of paymentMethods) {
@@ -86,7 +86,9 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
             if (paymentProviderToIcon[item.paymentProvider]) {
               paymentMethodLabel.push(paymentProviderToIcon[item.paymentProvider]);
             }
-            paymentProvidersCollection.push({name: item.paymentProvider, value: item.paymentProvider});
+            if (groupName === checkoutPaymentMethodsNames.creditCard) {
+              creditCardProvidersCollection.push({name: item.paymentProvider, value: item.paymentProvider});
+            }
           });
 
           paymentMethodGroupItems.push({value: groupName, label: paymentMethodLabel});
@@ -111,7 +113,7 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
               }
               {currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard
                 ? <CreditCardPaymentForm
-                    providersCollection = {paymentProvidersCollection}
+                    providersCollection={creditCardProvidersCollection}
                   />
                 : null
               }

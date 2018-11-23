@@ -94,12 +94,12 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
           label: InputLabelPaymentExpiryDate,
           isError: cardExpiryMonth.isError,
           menuItems: createItemsForExpiryMonth(),
-          menuItemFirst: {
+         /* menuItemFirst: {
             value: " ",
             name: InputSelectPaymentExpiryMonthFirstItem,
             selected: true,
             disabled: true,
-          },
+          },*/
         },
         {
           type: 'select',
@@ -110,12 +110,12 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
           label: null,
           isError: cardExpiryYear.isError,
           menuItems: createItemsForExpiryYear(),
-          menuItemFirst: {
+          /*menuItemFirst: {
             value: " ",
             name: InputSelectPaymentExpiryYearFirstItem,
             selected: true,
             disabled: true,
-          },
+          },*/
         },
         {
           type: 'input',

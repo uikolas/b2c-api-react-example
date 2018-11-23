@@ -272,6 +272,14 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           ...prevState.paymentCreditCardData,
           ...newInputState,
         } });
+    }, () => {
+      // Validate form when select input is changed
+      if (key === creditCardConfigInputStable.paymentProvider.inputName
+          || key === creditCardConfigInputStable.cardExpiryMonth.inputName
+          || key === creditCardConfigInputStable.cardExpiryYear.inputName
+      ) {
+        this.handleCreditCardValidity();
+      }
     });
   }
 
