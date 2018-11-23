@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
-import {TCheckoutPageContext} from "./types";
+import {TCheckoutPageContext} from "./types/contextTypes";
 import {
   billingNewAddressDefault,
   deliveryNewAddressDefault,

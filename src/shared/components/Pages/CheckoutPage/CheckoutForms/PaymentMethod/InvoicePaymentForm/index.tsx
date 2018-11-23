@@ -3,7 +3,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import {CheckoutPageContext} from '../../../context/index';
+import {CheckoutPageContext} from '../../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {checkoutInputsFormNames, invoiceConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants";

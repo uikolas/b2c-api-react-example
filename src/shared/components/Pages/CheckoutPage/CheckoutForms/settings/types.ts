@@ -1,10 +1,6 @@
 import * as React from 'react';
 import {ChangeEvent} from "react";
 import {
-  ICurrentValuesInSelections,
-  IExtraAddressesOptions
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {
   IPaymentMethod,
   ISameAsDelivery,
   IShipmentMethod
@@ -17,13 +13,15 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
-import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/context/types";
+import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types/contextTypes";
 import {
   ICreditCardObjectConfigInputStable,
   IInvoiceObjectConfigInputStable,
   IObjectConfigInputStable
 } from "src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes";
 import {
+  ICurrentValuesInSelections,
+  IExtraAddressesOptions,
   IPaymentMethodGroupItem,
   TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
@@ -38,8 +36,8 @@ export interface IBaseCheckoutFormHandler {
 
 // Param to create address forms
 export interface IAddressParams extends IBaseCheckoutFormHandler {
-  addressData: ICheckoutAddressState;
-  addressInputsConfig: IObjectConfigInputStable;
+  inputsData: ICheckoutAddressState;
+  inputsConfig: IObjectConfigInputStable;
   countriesCollection: ICountries[] | null;
   listFieldNameToChangeHandler?: {
     [key: string]: IFormField["onChangeOwnHandler"]

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {ChangeEvent, FormEvent} from "react";
-// Type for Context Provider of the Checkout Page
 import {
   IBillingAddressState,
   ICheckoutCreditCardState,
@@ -9,13 +8,14 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {ICountries} from "src/shared/reducers/Common/Init";
+import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
 import {
   IAddressesSelections,
   ICurrentValuesInSelections,
   IExtraAddressesOptions
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
-import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
+} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 
+// Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   onBlurHandler: (formName: string) => React.EventHandler<any>;

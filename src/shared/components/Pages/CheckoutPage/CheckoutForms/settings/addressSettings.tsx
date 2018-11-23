@@ -22,7 +22,7 @@ import {ICountries} from "src/shared/reducers/Common/Init";
 
 export const getAddressFormSettings = ( formName: string, params: IAddressParams): IFormSettings => {
   const {
-    addressData: {
+    inputsData: {
       firstName,
       lastName,
       salutation,
@@ -35,7 +35,7 @@ export const getAddressFormSettings = ( formName: string, params: IAddressParams
       company,
       phone,
     },
-    addressInputsConfig: {
+    inputsConfig: {
       firstName: firstNameConfig,
       lastName: lastNameConfig,
       salutation: salutationConfig,

@@ -1,7 +1,5 @@
 import {
   ICheckoutFormsProps,
-  IExtraAddressesOptions,
-  TAddressType
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
 import {
   InputLabelAddNewBillingAddress,
@@ -11,7 +9,11 @@ import {
 import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types/index";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
-import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
+import {
+  ICheckoutPanelsSettings,
+  IExtraAddressesOptions,
+  TAddressType
+} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
 
 export const getExtraAddressesOptions = (isAddressesCollectionExist: boolean): IExtraAddressesOptions => {

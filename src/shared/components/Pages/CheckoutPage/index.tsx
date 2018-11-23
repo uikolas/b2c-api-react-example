@@ -20,7 +20,7 @@ import {
   stepCompletionCheckoutDefault,
 } from "./constants";
 import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
-import {CheckoutPageContext} from "./context/index";
+import {CheckoutPageContext} from "./context";
 import {
   checkAddressFormValidity,
   checkFormInputValidity,
