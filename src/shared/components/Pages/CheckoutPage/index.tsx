@@ -4,8 +4,8 @@ import {FormEvent, ChangeEvent} from "react";
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { connect } from './connect';
-import { styles } from './styles';
+import {connect} from './connect';
+import {styles} from './styles';
 import {
   checkoutFormsNames,
   checkoutSelectionInputs,
