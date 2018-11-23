@@ -41,14 +41,13 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
               <Typography variant="subheading" gutterBottom={ true } className={ classes.oldPrice }>
                 { oldPrice }
               </Typography>
-            )
-            : null
+            ) : null
           }
+          <span className={ classes.vat }>(Inc. 20% VAT)</span>
         </div>
         <ProductAvailability availability={ availability }/>
       </div>
     </div>
-
   );
 };
 

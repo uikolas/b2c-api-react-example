@@ -124,5 +124,4 @@ export const styles = (theme: Theme) => createStyles({
   wishlistRoot: {
     margin: 0
   }
-
 });

@@ -15,17 +15,26 @@ export const styles = (theme: Theme) => createStyles({
     display: 'flex',
     alignItems: 'baseline',
     flexGrow: 1,
+    '& > *': {
+      marginRight: '8px !important',
+      display: 'block',
+    }
   },
   price: {
     color: theme.appColors.black,
     fonsSize: '24px',
     lineHeight: '28px',
-    margin: '0 8px 0 0',
   },
   oldPrice: {
     color: theme.appColors.grey,
-    fonsSize: '14px',
+    fontSize: '14px',
     lineHeight: '18px',
     margin: 0,
   },
+  vat: {
+    color: theme.appColors.grey,
+    fontSize: '14px',
+    lineHeight: '18px',
+    margin: 0,
+  }
 });
