@@ -1,7 +1,7 @@
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {
   IPaymentCreditCardParams
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/types";
+} from "./types";
 import {
   InputLabelPaymentCreditCardCVC,
   InputLabelPaymentCreditCardName,
@@ -135,15 +135,13 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
 
 const createItemsForExpiryMonth = (): Array<IMenuItemSelect>  => {
   const data = getRange(1, 12);
-  const result = data.map((item: number) => ({value: item, name: item}));
-  return result;
+  return data.map((item: number) => ({value: `${item}`, name: item}));
 };
 
 const createItemsForExpiryYear = (): Array<IMenuItemSelect>  => {
   const currentYear = (new Date()).getFullYear();
   const data = getRange(currentYear, currentYear + 5);
-  const result = data.map((item: number) => ({value: item, name: item}));
-  return result;
+  return data.map((item: number) => ({value: `${item}`, name: item}));
 };
 
 const getRange = (start: number, end: number): Array<number> => {

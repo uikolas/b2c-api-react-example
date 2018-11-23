@@ -25,7 +25,7 @@ import {
 import {IPaymentMethod} from "src/shared/interfaces/checkout/index";
 import {checkoutPaymentMethodsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {InvoicePaymentForm} from "./InvoicePaymentForm/index";
-import {CreditCardPaymentForm} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/CreditCardPaymentForm/index";
+import {CreditCardPaymentForm} from "./CreditCardPaymentForm/index";
 
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {
