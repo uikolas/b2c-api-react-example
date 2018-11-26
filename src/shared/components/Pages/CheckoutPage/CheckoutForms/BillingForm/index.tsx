@@ -16,8 +16,8 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {
   IAddressParams,
   IBillingAddressesParams,

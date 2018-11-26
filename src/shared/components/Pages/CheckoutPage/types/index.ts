@@ -2,7 +2,7 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "../styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TCustomerReference} from "src/shared/interfaces/customer/index";
+import {TCustomerReference} from "src/shared/interfaces/customer";
 import {
   IAddNewAddressActions,
   ISameAsDelivery,
@@ -11,7 +11,7 @@ import {
   IShipmentMethod,
   IPaymentMethod,
 } from "src/shared/interfaces/checkout";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 

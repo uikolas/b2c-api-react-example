@@ -1,7 +1,7 @@
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
-import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 
 export interface ICheckoutFormsNames {
   billing: string;

@@ -19,7 +19,7 @@ export class FormWrapperBase extends React.Component<IFormWrapperProps, IFormWra
 
   public state: IFormWrapperState = {
     expanded: false,
-  }
+  };
 
   public componentDidUpdate = (prevProps: IFormWrapperProps, prevState: IFormWrapperState) => {
     if (!prevProps.isDisabled && this.props.isDisabled) {

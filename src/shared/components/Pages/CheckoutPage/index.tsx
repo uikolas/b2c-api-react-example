@@ -11,20 +11,20 @@ import {styles} from './styles';
 import {
   checkoutFormsNames,
   checkoutSelectionInputs,
-} from "./constants/index";
-import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
+} from "./constants";
+import {ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
 import {
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraOptionsToSelection,
-} from "./helpers/index";
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+} from "./helpers";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop";
+import {AppMain} from "src/shared/components/Common/AppMain";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,

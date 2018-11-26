@@ -7,7 +7,7 @@ import {
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
 import {ICheckoutPageProps, ICheckoutStepsCompletionState} from "src/shared/components/Pages/CheckoutPage/types";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
   TAddressType,

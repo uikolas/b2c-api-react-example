@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid';
 
 import {CheckoutPageContext} from '../../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {ICreditCardPaymentFormProps} from "./types";
 import {
   getCreditCardFormSettings
