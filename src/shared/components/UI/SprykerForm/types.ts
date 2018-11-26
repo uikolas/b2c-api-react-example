@@ -23,7 +23,6 @@ import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
 import {sprykerFormStyles} from "./sprykerFormStyles";
 
 
-
 export interface IFormField {
   type: 'input' | 'select' | 'checkbox' | 'radio';
   inputName: string;
@@ -55,6 +54,7 @@ export interface IFormSettings {
 export interface ISprykerFormProps extends WithStyles<typeof sprykerFormStyles> {
   form: IFormSettings;
   formClassName?: string;
+  SubmitButton?: JSX.Element | null;
 }
 
 export interface IRadioItem {

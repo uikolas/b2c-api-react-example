@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Grid, {GridSize} from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 
 import { pageStyles } from '../styles';
-import { SprykerButton } from '../../../UI/SprykerButton';
+import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { submitBtnTitle } from 'src/shared/constants/buttons';
+import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
   TCustomerFirstName,
   TCustomerLastName,
@@ -16,7 +18,8 @@ import {
   TSalutationVariant,
 } from 'src/shared/interfaces/customer';
 import { salutationVariants } from 'src/shared/constants/customer';
-
+import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect";
+import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 
 interface UpdateProfileProps extends WithStyles<typeof pageStyles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
@@ -41,132 +44,58 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
   } = props;
 
   return (
-    <Grid container justify="flex-start" className={ classes.section }>
-      <Grid item xs={ 12 }>
-        <Typography variant="title" color="inherit" gutterBottom={ true } className={ classes.sectionTitle }>
-          { sectionTitle }
-        </Typography>
-        <form
-          className={ classes.form }
-          noValidate
-          autoComplete="off"
-          onSubmit={ submitHandler }
-          id="updateProfile"
-          name="updateProfile"
-        >
-
-          <Grid container justify="flex-start" className={ classes.controlsGroup }>
-            <Grid item xs={ 12 } sm={ 2 } className={ classes.control }>
-              <TextField
-                required
-                id="update-salutation"
-                select
-                label="Salutation"
-                name="salutation"
-                className={ classes.textField }
-                value={ salutation }
-                onChange={ inputChangeHandler }
-                fullWidth
-                SelectProps={ {
-                  MenuProps: {
-                    className: classes.menu,
-                  },
-                } }
-                margin="normal"
-                InputLabelProps={ {
-                  shrink: true,
-                  className: classes.label,
-                } }
-              >
-                { salutationVariants.map((option: TSalutationVariant) => (
-                  <MenuItem
-                    key={ option.value }
-                    value={ option.value }
-
-                  >
-                    { option.label }
-                  </MenuItem>
-                )) }
-              </TextField>
-            </Grid>
-
-            <Grid item xs={ 12 } sm={ 5 } className={ classes.control }>
-              <TextField
-                required
-                id="update-first-name"
-                label="First Name"
-                name="firstName"
-                type="text"
-                value={ firstName }
-                className={ classes.textField }
-                margin="normal"
-                onChange={ inputChangeHandler }
-                fullWidth
-                InputLabelProps={ {
-                  shrink: true,
-                } }
-                InputProps={ {
-                  className: classes.input,
-                } }
-              />
-            </Grid>
-
-            <Grid item xs={ 12 } sm={ 5 } className={ classes.control }>
-              <TextField
-                required
-                id="update-last-name"
-                label="Last Name"
-                name="lastName"
-                type="text"
-                value={ lastName }
-                onChange={ inputChangeHandler }
-                className={ classes.textField }
-                margin="normal"
-                fullWidth
-                InputLabelProps={ {
-                  shrink: true,
-                } }
-                InputProps={ {
-                  className: classes.input,
-                } }
-              />
-            </Grid>
+    <SprykerForm
+      form={{
+        formName: 'profileForm',
+        onChangeHandler: inputChangeHandler,
+        onSubmitHandler: submitHandler,
+        fields: [
+          [{
+            type: 'select',
+            inputName: 'salutation',
+            inputValue: salutation,
+            spaceNumber: 2,
+            isRequired: true,
+            label: 'Salutation',
+            isError: false,
+            menuItems: salutationVariants
+              .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
+          }, {
+            type: 'input',
+            inputName: 'firstName',
+            inputValue: firstName,
+            spaceNumber: 5,
+            isRequired: true,
+            label: 'First Name',
+            isError: false,
+          }, {
+            type: 'input',
+            inputName: 'lastName',
+            inputValue: lastName,
+            spaceNumber: 5,
+            isRequired: true,
+            label: 'Last Name',
+            isError: false,
+          }], [{
+            type: 'input',
+            inputName: 'email',
+            inputValue: email,
+            spaceNumber: 5,
+            isRequired: true,
+            label: 'Email address',
+            isError: false,
+          }]
+        ]
+      }}
+      SubmitButton={
+        <Grid container>
+          <Grid item xs={12} sm={2}>
+            <SprykerButton title="update" btnType="submit" className={classes.button} />
           </Grid>
-
-          <Grid container justify="flex-start" className={ classes.controlsGroup }>
-            <Grid item xs={ 12 } sm={ 12 } className={ classes.control }>
-              <TextField
-                required
-                id="update-email"
-                label="Email"
-                name="email"
-                type="email"
-                value={ email }
-                onChange={ inputChangeHandler }
-                className={ classes.textField }
-                margin="normal"
-                fullWidth
-                InputLabelProps={ {
-                  shrink: true,
-                } }
-                InputProps={ {
-                  className: classes.input,
-                } }
-              />
-            </Grid>
-          </Grid>
-
-          <Grid item xs={ 12 } className={ `${classes.btnSubmitOuter} ${classes.controlsGroup}` }>
-            <SprykerButton
-              title={ submitBtnTitle }
-              btnType={ 'submit' }
-            />
-          </Grid>
-
-        </form>
-      </Grid>
-
-    </Grid>
+        </Grid>
+      }
+      formClassName={ classes.form }
+    />
   );
 };
 

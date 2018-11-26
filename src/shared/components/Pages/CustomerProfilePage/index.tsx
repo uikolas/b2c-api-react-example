@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import { ICustomerProfile, TCustomerInputValue } from 'src/shared/interfaces/customer';
 import {
@@ -19,12 +20,12 @@ import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
 import { ChangePassword } from './ChangePassword';
 import { AccountActions } from './AccountActions';
+import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { pageStyles } from './styles';
 import { connect } from './connect';
 
-export const pageTitle = 'Profile';
-
+const pageTitle = 'Profile';
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
 const keyLastName = 'lastName';
@@ -63,7 +64,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
       this.initRequestData();
     }
 
-    if (this.props.passwordUpdated === true && this.props.passwordUpdated !== prevProps.passwordUpdated) {
+    if (this.props.passwordUpdated && !prevProps.passwordUpdated) {
       this.clearPasswords();
     }
   };
@@ -208,51 +209,49 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
   };
 
   public render(): JSX.Element {
-    console.info('CustomerProfilePage props: ', this.props);
-    console.info('CustomerProfilePage state: ', this.state);
     const {classes} = this.props;
 
     return (
       <div>
-        <div className={ classes.root }>
-          <Grid container justify="center">
-            <Grid item xs={ 12 }>
-              <Typography align="center" variant="headline" gutterBottom={ true }>{ pageTitle }</Typography>
-            </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <UpdateProfile
-              submitHandler={ this.handleSubmitUpdateProfile }
-              inputChangeHandler={ this.handleProfileInputChange }
-              firstName={ this.getCurrentDataField(keyFirstName) }
-              lastName={ this.getCurrentDataField(keyLastName) }
-              salutation={ this.getCurrentDataField(keySalutation) }
-              email={ this.getCurrentDataField(keyEmail) }
+        <Typography component="h1"
+                    align="left"
+                    className={ classes.pageHeader }
+        >
+          { pageTitle }
+        </Typography>
+
+        <Divider />
+
+        <UpdateProfile
+          submitHandler={ this.handleSubmitUpdateProfile }
+          inputChangeHandler={ this.handleProfileInputChange }
+          firstName={ this.getCurrentDataField(keyFirstName) }
+          lastName={ this.getCurrentDataField(keyLastName) }
+          salutation={ this.getCurrentDataField(keySalutation) }
+          email={ this.getCurrentDataField(keyEmail) }
+        />
+
+        <ChangePassword
+          submitHandler={ this.handleSubmitPassword }
+          inputChangeHandler={ this.handleProfileInputChange }
+          password={ this.getCurrentDataField(keyOldPassword) }
+          newPassword={ this.getCurrentDataField(keyNewPassword) }
+          confirmPassword={ this.getCurrentDataField(keyConfirmPassword) }
+        />
+
+        <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount }/>
+
+        { this.state.isDeleteProfileDialogOpen
+          ? (
+            <SprykerDialog
+              handleShow={ this.handleDeleteProfileDialogShowing }
+              content={ deleteProfileContent }
+              isOpen={ this.state.isDeleteProfileDialogOpen }
+              handleAgree={ this.handleDeleteProfileDialogAgree }
+              handleDisagree={ this.handleDeleteProfileDialogDisagree }
             />
-
-            <ChangePassword
-              submitHandler={ this.handleSubmitPassword }
-              inputChangeHandler={ this.handleProfileInputChange }
-              password={ this.getCurrentDataField(keyOldPassword) }
-              newPassword={ this.getCurrentDataField(keyNewPassword) }
-              confirmPassword={ this.getCurrentDataField(keyConfirmPassword) }
-            />
-
-            <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount }/>
-
-            { this.state.isDeleteProfileDialogOpen
-              ? (
-                <SprykerDialog
-                  handleShow={ this.handleDeleteProfileDialogShowing }
-                  content={ deleteProfileContent }
-                  isOpen={ this.state.isDeleteProfileDialogOpen }
-                  handleAgree={ this.handleDeleteProfileDialogAgree }
-                  handleDisagree={ this.handleDeleteProfileDialogDisagree }
-                />
-              ) : null
-            }
-          </Grid>
-        </div>
+          ) : null
+        }
       </div>
     );
   }
