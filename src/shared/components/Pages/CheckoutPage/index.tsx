@@ -355,6 +355,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       paymentMethods,
     } = this.props;
 
+    console.info('CheckoutPage state', this.state);
+
     return (
       <AppMain>
         {isLoading ? <AppBackdrop isOpen={true} /> : null}
