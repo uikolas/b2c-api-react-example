@@ -88,7 +88,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   };
 
   public componentDidMount() {
-    console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
     this.initRequestAddressesData();
     this.setDefaultAddresses();
   }
@@ -355,9 +354,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       shipmentMethods,
       paymentMethods,
     } = this.props;
-
-    console.info('CheckoutPage state: ', this.state);
-    console.info('CheckoutPage props: ', this.props);
 
     return (
       <AppMain>
