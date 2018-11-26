@@ -85,4 +85,27 @@ export const formStyles = (theme: Theme) => createStyles({
       },
     },
   },
+  creditCardForm: {
+    "& div[data-form-row='2']": {
+      "& div[data-form-column='2-0']": {
+        "& .spryker-select": {
+          position: "relative",
+          "&:after": {
+            content: `"/"`,
+            position: "absolute",
+            display: "block",
+            right: -theme.spacing.unit * 2,
+            top: 11,
+            fontSize: 21,
+          },
+        },
+      },
+      "&>div": {
+        maxWidth: 141,
+        "&:last-child": {
+          paddingLeft: theme.spacing.unit * 3,
+        }
+      }
+    },
+  },
 });

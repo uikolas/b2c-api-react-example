@@ -43,7 +43,7 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
         return (
           <Grid container className={classes.root}>
             <Grid item xs={12}>
-              <SprykerForm form={creditCardFormSettings} />
+              <SprykerForm form={creditCardFormSettings} formClassName={classes.creditCardForm} />
             </Grid>
           </Grid>
         );
