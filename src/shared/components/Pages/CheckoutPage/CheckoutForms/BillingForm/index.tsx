@@ -88,7 +88,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : (<React.Fragment>
                       {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
-                      {(billingSelections.isAddNew) ? inputsForm : null}
+                      {(addressesCollection && billingSelections.isAddNew) ? inputsForm : null}
                     </React.Fragment>)
                 : [sameAsDeliveryForm, inputsForm]
               }

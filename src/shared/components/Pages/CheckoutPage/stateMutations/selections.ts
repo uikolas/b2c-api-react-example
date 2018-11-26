@@ -34,7 +34,7 @@ export const mutateDeliverySelectionAddressId = (prevState: ICheckoutPageState, 
 
 export const mutateBillingSelectionAddNew = (prevState: ICheckoutPageState):
   Pick<ICheckoutPageState, "billingSelection" | "stepsCompletion"> | null => {
-
+  console.log('mutateBillingSelectionAddNew ');
   return ({
     billingSelection: {
       selectedAddressId: null,
@@ -52,7 +52,6 @@ export const mutateBillingSelectionSameAsDelivery = (prevState: ICheckoutPageSta
   Pick<ICheckoutPageState, "billingSelection" | "stepsCompletion"> | null => {
 
   const newSameValue = !prevState.billingSelection.isSameAsDelivery;
-
   return ({
     billingSelection: {
       selectedAddressId: null,
@@ -61,7 +60,7 @@ export const mutateBillingSelectionSameAsDelivery = (prevState: ICheckoutPageSta
     },
     stepsCompletion: {
       ...prevState.stepsCompletion,
-      second: true,
+      second: newSameValue,
     },
   });
 };
