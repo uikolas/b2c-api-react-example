@@ -6,3 +6,7 @@ export interface IFormWrapperProps extends WithStyles<typeof styles> {
   title: string;
   isDisabled: boolean;
 }
+
+export interface IFormWrapperState {
+  expanded: boolean | null;
+}

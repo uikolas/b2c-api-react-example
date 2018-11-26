@@ -356,13 +356,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('CheckoutPage state: ', this.state);
     console.info('CheckoutPage props: ', this.props);
 
-    const isFirstPanelDisabled = false;
-    const isSecondPanelDisabled = !this.state.stepsCompletion.first;
-    const isThirdPanelDisabled = !this.state.stepsCompletion.second;
-    const isFourthPanelDisabled = !this.state.stepsCompletion.third;
-
-    // TODO: Handle isOpen param for panels
-
     return (
       <AppMain>
         {isLoading ? <AppBackdrop isOpen={true} /> : null}
@@ -400,12 +393,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           <Grid container className={classes.container}>
             <Grid item xs={12} md={7} className={classes.leftColumn}>
               <CheckoutForms
-                panels={getCheckoutPanelsSettings({
-                  isFirstPanelDisabled,
-                  isSecondPanelDisabled,
-                  isThirdPanelDisabled,
-                  isFourthPanelDisabled,
-                })}
+                panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
               />
             </Grid>
             <Grid item xs={12} md={5} className={classes.rightColumn}>

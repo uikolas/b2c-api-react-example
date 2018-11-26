@@ -6,14 +6,14 @@ import {
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
-import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {ICheckoutPageProps, ICheckoutStepsCompletionState} from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
   TAddressType,
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
 import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/helpersTypes";
 
 export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
@@ -78,14 +78,19 @@ export const checkFormValidity = (param: IParamFormValidity): boolean => {
   return result;
 };
 
-export const getCheckoutPanelsSettings = (params: ICheckoutPanelsSettings): ICheckoutFormsProps["panels"] => {
+export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState): ICheckoutFormsProps["panels"] => {
 
   const {
-    isFirstPanelDisabled,
-    isSecondPanelDisabled,
-    isThirdPanelDisabled,
-    isFourthPanelDisabled,
+    first,
+    second,
+    third,
+    fourth,
   } = params;
+
+  const isFirstPanelDisabled = false;
+  const isSecondPanelDisabled = !first;
+  const isThirdPanelDisabled = !first || !second;
+  const isFourthPanelDisabled = !first || !second || !third;
 
   const response = {
     first: {
