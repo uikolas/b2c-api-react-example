@@ -1,4 +1,5 @@
 import {ICheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {checkoutPaymentMethodsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
 
 
 export const mutateDeliverySelectionAddNew = (prevState: ICheckoutPageState):
@@ -77,6 +78,40 @@ export const mutateBillingSelectionAddressId = (prevState: ICheckoutPageState, v
     stepsCompletion: {
       ...prevState.stepsCompletion,
       second: true,
+    },
+  });
+};
+
+export const mutateShipmentMethod = (prevState: ICheckoutPageState, value: string):
+  Pick<ICheckoutPageState, "shipmentMethod" | "stepsCompletion"> | null => {
+
+  return ({
+    shipmentMethod: value,
+    stepsCompletion: {
+      ...prevState.stepsCompletion,
+      third: true,
+    },
+  });
+};
+
+export const mutatePaymentMethod = (prevState: ICheckoutPageState,
+                                    value: string,
+                                    isInvoiceFormValid: boolean,
+                                    isCreditCardFormValid: boolean):
+  Pick<ICheckoutPageState, "paymentMethod" | "stepsCompletion"> | null => {
+
+  let isFourthStepCompleted: boolean = false;
+  if (value === checkoutPaymentMethodsNames.invoice && isInvoiceFormValid) {
+    isFourthStepCompleted = true;
+  } else if (value === checkoutPaymentMethodsNames.creditCard && isCreditCardFormValid) {
+    isFourthStepCompleted = true;
+  }
+
+  return ({
+    paymentMethod: value,
+    stepsCompletion: {
+      ...prevState.stepsCompletion,
+      fourth: isFourthStepCompleted,
     },
   });
 };

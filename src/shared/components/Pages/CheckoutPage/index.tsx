@@ -56,9 +56,10 @@ import {
   mutateBillingSelectionAddressId,
   mutateBillingSelectionSameAsDelivery,
   mutateDeliverySelectionAddNew,
-  mutateDeliverySelectionAddressId
+  mutateDeliverySelectionAddressId,
+  mutatePaymentMethod,
+  mutateShipmentMethod,
 } from "src/shared/components/Pages/CheckoutPage/stateMutations/selections";
-import {mutatePaymentMethod, mutateShipmentMethod} from "src/shared/components/Pages/CheckoutPage/stateMutations/index";
 import {
   validateBillingInput,
   validateBillingNewAddressForm,
@@ -283,8 +284,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handlePaymentMethodSelection = (value: string ): void => {
+    const isInvoiceFormValid = validateInvoiceForm(this.state.paymentInvoiceData);
+    const isCreditCardFormValid = validateCreditCardForm(this.state.paymentCreditCardData);
     this.setState( (prevState: ICheckoutPageState) => {
-      return mutatePaymentMethod(prevState, value);
+      return mutatePaymentMethod(prevState, value, isInvoiceFormValid, isCreditCardFormValid);
     });
   }
 

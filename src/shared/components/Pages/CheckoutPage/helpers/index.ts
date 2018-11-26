@@ -14,7 +14,7 @@ import {
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
-import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/helpersTypes";
+
 
 export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
                                            addressType: TAddressType): TExtraOptionsToSelection | null => {
