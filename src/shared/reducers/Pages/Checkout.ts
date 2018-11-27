@@ -25,10 +25,10 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
   {
     carrierName: 'DHL',
     id: '1',
-    name: 'Standard',
+    name: 'Express',
     price: 500,
     taxRate: 2,
-    shipmentDeliveryTime: 'Standard'
+    shipmentDeliveryTime: null
   },
   {
     carrierName: 'DHL',
@@ -36,31 +36,31 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
     name: 'Standard',
     price: 600,
     taxRate: null,
-    shipmentDeliveryTime: 'Standard'
+    shipmentDeliveryTime: null
   },
   {
     carrierName: 'Hermes',
     id: '3',
-    name: 'Next Day',
+    name: 'Air Light',
     price: 560,
     taxRate: 2,
-    shipmentDeliveryTime: 'Next Day'
+    shipmentDeliveryTime: null
   },
   {
     carrierName: 'Hermes',
     id: '4',
-    name: 'Same Day',
+    name: 'Air Sonic',
     price: 1500,
     taxRate: null,
-    shipmentDeliveryTime: 'Same Day'
+    shipmentDeliveryTime: null
   },
   {
     carrierName: 'Hermes',
     id: '5',
-    name: 'Same Day',
+    name: 'Air Standard',
     price: 490,
     taxRate: null,
-    shipmentDeliveryTime: 'Same Day'
+    shipmentDeliveryTime: null
   }
 ];
 const paymentMethodsFixture: Array<IPaymentMethod> = [
