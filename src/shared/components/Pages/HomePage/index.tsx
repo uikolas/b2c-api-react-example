@@ -11,6 +11,7 @@ import {IHomePageProps, IHomePageState} from "./types";
 
 import CatalogSearchComponent from '../../Common/CatalogSearch';
 import {AppMain} from '../../Common/AppMain';
+import {Banner} from "src/shared/components/Pages/HomePage/Banner/index";
 
 
 @connect
@@ -24,18 +25,9 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
     console.info('HomePage this.state', this.state);
 
     return (
-      <AppMain>
-
-        <Grid container
-              justify="center"
-              alignItems="center"
-              className={ classes.heroBlock }
-        >
-          <Grid item xs={12} sm={6}>
-            <CatalogSearchComponent id={'1'}/>
-          </Grid>
-        </Grid>
-
+      <React.Fragment>
+        <Banner />
+        <AppMain>
         <Grid container
               justify="center"
               alignItems="center"
@@ -46,9 +38,7 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
               Content block
             </Typography>
           </Grid>
-
         </Grid>
-
         <Grid container
               justify="center"
               alignItems="center"
@@ -59,11 +49,9 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
               Footer
             </Typography>
           </Grid>
-
         </Grid>
-
-
       </AppMain>
+      </React.Fragment>
     );
   }
 }
