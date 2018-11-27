@@ -9,7 +9,7 @@ import {
   isCartStateLoading,
   getCartTotals,
   isCartStateFulfilled,
-  isCartStateRejected
+  isCartStateRejected,
 } from "src/shared/reducers/Common/Cart";
 import {
   checkAddressesCollectionExist,
@@ -38,6 +38,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isCheckoutFulfilled: boolean = true;
 
   const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
+  const isProductsExists = Boolean(items && items.length);
   const totals: ICartTotals = getCartTotals(state, ownProps);
   const isCartFulfilled: boolean = isCartStateFulfilled(state, ownProps);
   const isCartRejected: boolean = isCartStateRejected(state, ownProps);
@@ -65,6 +66,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     isCheckoutRejected,
     isCheckoutFulfilled,
     products: items,
+    isProductsExists,
     totals,
     isCartFulfilled,
     isCartRejected,

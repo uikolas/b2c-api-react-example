@@ -23,6 +23,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isCheckoutFulfilled: boolean;
 
   products: Array<ICartItem> | null;
+  isProductsExists: boolean;
   totals: ICartTotals;
   isCartFulfilled: boolean;
   isCartRejected: boolean;
