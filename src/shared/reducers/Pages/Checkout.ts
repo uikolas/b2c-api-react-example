@@ -47,7 +47,7 @@ const shipmentMethodsFixture: Array<IShipmentMethod> = [
     shipmentDeliveryTime: null
   },
   {
-    carrierName: 'Hermes',
+    carrierName: 'Spryker Drone Shipment',
     id: '4',
     name: 'Air Sonic',
     price: 1500,
