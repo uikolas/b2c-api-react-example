@@ -22,9 +22,6 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   buyBtn: {
-    color: '#fff',
-    backgroundColor: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
     '&:hover': {
       color: theme.palette.primary.main,
       backgroundColor: 'transparent',

@@ -1,15 +1,10 @@
 import * as React from 'react';
 import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
 import Grid, {GridSize} from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
 
 import { pageStyles } from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { submitBtnTitle } from 'src/shared/constants/buttons';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
   TCustomerFirstName,
@@ -18,8 +13,12 @@ import {
   TSalutationVariant,
 } from 'src/shared/interfaces/customer';
 import { salutationVariants } from 'src/shared/constants/customer';
-import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect";
-import {IRadioItem, TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
+import {
+  InputLabelSalutation,
+  InputLabelFirstName,
+  InputLabelLastName,
+  InputLabelEmail,
+} from 'src/shared/constants/forms/labels';
 
 interface UpdateProfileProps extends WithStyles<typeof pageStyles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
@@ -56,7 +55,7 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
             inputValue: salutation,
             spaceNumber: 2,
             isRequired: true,
-            label: 'Salutation',
+            label: InputLabelSalutation,
             isError: false,
             menuItems: salutationVariants
               .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
@@ -66,7 +65,7 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
             inputValue: firstName,
             spaceNumber: 5,
             isRequired: true,
-            label: 'First Name',
+            label: InputLabelFirstName,
             isError: false,
           }, {
             type: 'input',
@@ -74,15 +73,16 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
             inputValue: lastName,
             spaceNumber: 5,
             isRequired: true,
-            label: 'Last Name',
+            label: InputLabelLastName,
             isError: false,
           }], [{
             type: 'input',
             inputName: 'email',
             inputValue: email,
+            inputType: 'email',
             spaceNumber: 5,
             isRequired: true,
-            label: 'Email address',
+            label: InputLabelEmail,
             isError: false,
           }]
         ]
@@ -90,7 +90,7 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
       SubmitButton={
         <Grid container>
           <Grid item xs={12} sm={2}>
-            <SprykerButton title="update" btnType="submit" className={classes.button} />
+            <SprykerButton title="update" btnType="submit" extraClasses={classes.submitButton} />
           </Grid>
         </Grid>
       }

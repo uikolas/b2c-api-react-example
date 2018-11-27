@@ -21,11 +21,32 @@ export const styles = (theme: Theme) => createStyles({
   },
   link: {
     width: '100%',
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    lineHeight: 2,
+    letterSpacing: '0.5px',
+    color: theme.appColors.black,
+    textTransform: 'capitalize',
+    textDecoration: 'none',
   },
   customerContainer: {
     padding: '1.875rem 0 2.5rem',
     [theme.breakpoints.up('lg')]: {
       padding: '3.875rem 0 5rem'
     }
-  }
+  },
+  rootPaper: {
+    backgroundColor: theme.appColors.lightGrey,
+    padding: `${theme.spacing.unit * 6}px 70px`,
+    '& ul': {
+      marginBottom: theme.spacing.unit * 5,
+      marginTop: theme.spacing.unit * 5,
+    },
+    '& li': {
+      padding: '4px 0',
+    },
+  },
+  logoutLink: {
+    marginTop: theme.spacing.unit * 5,
+    cursor: 'pointer',
+  },
 });

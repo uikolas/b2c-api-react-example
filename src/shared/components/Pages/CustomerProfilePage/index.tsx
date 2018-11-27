@@ -1,12 +1,7 @@
-// tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 
 import { ICustomerProfile, TCustomerInputValue } from 'src/shared/interfaces/customer';
 import {
@@ -20,7 +15,7 @@ import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
 import { ChangePassword } from './ChangePassword';
 import { AccountActions } from './AccountActions';
-import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
+import { CustomerPageTitle } from './CustomerPageTitle';
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { pageStyles } from './styles';
 import { connect } from './connect';
@@ -52,14 +47,12 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
   };
 
   public componentDidMount = () => {
-    console.info('%c ---- componentDidMount ----', 'background: #1a5bfe; color: #bada55');
     if (!this.props.isCustomerDataExist) {
       this.initRequestData();
     }
   };
 
   public componentDidUpdate = (prevProps: Props, prevState: State) => {
-    console.info('%c ---- componentDidUpdate ----', 'background: #4cab50; color: #cada55');
     if (!this.props.isRejected && !this.props.isCustomerDataExist) {
       this.initRequestData();
     }
@@ -213,14 +206,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
 
     return (
       <div>
-        <Typography component="h1"
-                    align="left"
-                    className={ classes.pageHeader }
-        >
-          { pageTitle }
-        </Typography>
-
-        <Divider />
+        <CustomerPageTitle title='profile' />
 
         <UpdateProfile
           submitHandler={ this.handleSubmitUpdateProfile }
@@ -230,6 +216,8 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
           salutation={ this.getCurrentDataField(keySalutation) }
           email={ this.getCurrentDataField(keyEmail) }
         />
+
+        <CustomerPageTitle title='change password' />
 
         <ChangePassword
           submitHandler={ this.handleSubmitPassword }

@@ -10,38 +10,38 @@ export const pageStyles = (theme: Theme) => createStyles({
     marginBottom: theme.spacing.unit * 2,
   },
   section: {
-    borderBottom: `1px solid ${theme.palette.grey.A100}`,
-    paddingBottom: theme.spacing.unit * 2,
-    paddingTop: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4,
   },
   sectionTitle: {
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
+    color: theme.appColors.black,
+    fontSize: '20px',
+    marginBottom: theme.spacing.unit,
   },
-  textField: {},
-  controlsGroup: {
-    paddingBottom: theme.spacing.unit,
-    paddingTop: theme.spacing.unit,
-  },
-  control: {
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
-  },
-  label: {},
-  menu: {
-    width: 200,
-  },
-  btnSubmitOuter: {
-    textAlign: 'right',
+  warningTitle: {
+    color: theme.appColors.black,
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    letterSpacing: '-0.4px',
+    lineHeight: 1.63,
+    marginBottom: theme.spacing.unit * 1.5,
+    marginTop: theme.spacing.unit * 2,
   },
   form: {
     marginBottom: theme.spacing.unit * 4,
     marginTop: theme.spacing.unit * 1.5,
   },
-  input: {},
-  button: {
+  submitButton: {
     marginTop: theme.spacing.unit * 2.5,
+    marginBottom: theme.spacing.unit * 6,
+  },
+  deleteBtn: {
+    height: '32px',
+    backgroundColor: '#b12704',
+    fontSize: '10px',
+    fontWeight: 'bold',
+    lineHeight: 1.2,
+    letterSpacing: '1px',
+    color: '#ffffff',
+    marginBottom: theme.spacing.unit * 2,
+    padding: 0,
   },
 });

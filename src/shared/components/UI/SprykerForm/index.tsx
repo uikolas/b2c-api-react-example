@@ -33,6 +33,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
         formName={formName}
         inputName={field.inputName}
         inputValue={field.inputValue}
+        inputType={field.inputType}
         isRequired={field.isRequired ? field.isRequired : false}
         onChangeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
         onBlurHandler={field.onBlurOwnHandler ? field.onBlurOwnHandler : onBlurHandler}
