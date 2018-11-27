@@ -24,7 +24,7 @@ import {AppMain} from "src/shared/components/Common/AppMain";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -88,13 +88,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   };
 
   public componentDidMount() {
-    this.initRequestAddressesData();
     this.setDefaultAddresses();
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
-    this.initRequestAddressesData();
 
     // If we get saved addressesCollection
     if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
@@ -290,36 +288,17 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  private getCurrentValueBillingSelection = (): IAddressItem["id"] | string | null => {
+  private getCurrentValueBillingSelection = (): IAddressItemCollection["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
            || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
            || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
            || null;
   }
 
-  private getCurrentValueDeliverySelection = (): IAddressItem["id"] | string | null => {
+  private getCurrentValueDeliverySelection = (): IAddressItemCollection["id"] | string | null => {
     return this.state.deliverySelection.selectedAddressId
            || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
            || null;
-  }
-
-  // TODO: Remove it after we get access to checkout endpoint
-  private initRequestAddressesData = (): void => {
-    const {
-      customerReference,
-      addressesCollection,
-      isAddressesLoading,
-      isAddressesFulfilled,
-      isAppStateLoading,
-      isCartFulfilled,
-      isAppDataSet,
-    } = this.props;
-    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled || !isAppDataSet) {
-      return;
-    }
-    if (customerReference && !addressesCollection) {
-      this.props.getAddressesList(customerReference);
-    }
   }
 
   private setDefaultAddresses = (): void => {
@@ -343,12 +322,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public render(): JSX.Element {
     const {
       classes,
-      isLoading,
+      isCheckoutLoading,
+      isCheckoutFulfilled,
       products,
       totals,
       addressesCollection,
       isAddressesCollectionExist,
-      isAddressesFulfilled,
       isUserLoggedIn,
       countriesCollection,
       shipmentMethods,
@@ -359,7 +338,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     return (
       <AppMain>
-        {isLoading ? <AppBackdrop isOpen={true} /> : null}
+        {isCheckoutLoading ? <AppBackdrop isOpen={true} /> : null}
 
         <CheckoutPageContext.Provider
           value={{
@@ -381,7 +360,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             currentValueBillingSelection: this.getCurrentValueBillingSelection(),
             extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
             extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
-            isAddressesFulfilled,
+            isCheckoutFulfilled,
             isUserLoggedIn,
             shipmentMethods,
             currentValueShipmentMethod: this.state.shipmentMethod,

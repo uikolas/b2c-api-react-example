@@ -11,7 +11,7 @@ import {
   ICheckoutCreditCardState,
   ICheckoutInvoiceState,
 } from "src/shared/components/Pages/CheckoutPage/types";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {ICountries} from "src/shared/reducers/Common/Init";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types/contextTypes";
 import {
@@ -52,7 +52,7 @@ export interface ISameAsDeliveryParams extends IBaseCheckoutFormHandler {
 
 // Param to create saved addresses form
 export interface IAddressesParams extends IBaseCheckoutFormHandler {
-  addressesCollection: IAddressItem[] | null;
+  addressesCollection: IAddressItemCollection[] | null;
   extraOptionsToSelection: TExtraOptionsToSelection;
   currentValueInSelection: TCurrentValueDeliverySelection | TCurrentValueBillingSelection;
 }

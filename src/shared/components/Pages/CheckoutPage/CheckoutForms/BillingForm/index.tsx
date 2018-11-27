@@ -44,7 +44,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           currentValueBillingSelection,
           addressesCollection,
           extraOptionsBillingSelection,
-          isAddressesFulfilled,
+          isCheckoutFulfilled,
           isUserLoggedIn,
           countriesCollection
       }) => {
@@ -84,7 +84,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           <Grid container className={classes.root}>
             <Grid item xs={12}>
               { isUserLoggedIn
-                ? (!isAddressesFulfilled)
+                ? (!isCheckoutFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : (<React.Fragment>
                       {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
