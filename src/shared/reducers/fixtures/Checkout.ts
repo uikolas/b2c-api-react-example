@@ -52,44 +52,44 @@ export const addressesCollectionFixture: Array<IAddressItemCollection> = [
 
 export const shipmentMethodsFixture: Array<IShipmentMethod> = [
   {
-    carrierName: 'DHL',
-    id: '1',
-    name: 'Express',
-    price: 500,
-    taxRate: 2,
-    shipmentDeliveryTime: null
+    "carrierName": "Spryker Dummy Shipment",
+    "id": "2",
+    "name": "Express",
+    "price": 590,
+    "taxRate": null,
+    "shipmentDeliveryTime": null
   },
   {
-    carrierName: 'DHL',
-    id: '2',
-    name: 'Standard',
-    price: 600,
-    taxRate: null,
-    shipmentDeliveryTime: null
+    "carrierName": "Spryker Dummy Shipment",
+    "id": "1",
+    "name": "Standard",
+    "price": 490,
+    "taxRate": null,
+    "shipmentDeliveryTime": null
   },
   {
-    carrierName: 'Hermes',
-    id: '3',
-    name: 'Air Light',
-    price: 560,
-    taxRate: 2,
-    shipmentDeliveryTime: null
+    "carrierName": "Spryker Drone Shipment",
+    "id": "5",
+    "name": "Air Light",
+    "price": 1500,
+    "taxRate": null,
+    "shipmentDeliveryTime": null
   },
   {
-    carrierName: 'Spryker Drone Shipment',
-    id: '4',
-    name: 'Air Sonic',
-    price: 1500,
-    taxRate: null,
-    shipmentDeliveryTime: null
+    "carrierName": "Spryker Drone Shipment",
+    "id": "4",
+    "name": "Air Sonic",
+    "price": 1000,
+    "taxRate": null,
+    "shipmentDeliveryTime": null
   },
   {
-    carrierName: 'Hermes',
-    id: '5',
-    name: 'Air Standard',
-    price: 490,
-    taxRate: null,
-    shipmentDeliveryTime: null
+    "carrierName": "Spryker Drone Shipment",
+    "id": "3",
+    "name": "Air Standard",
+    "price": 500,
+    "taxRate": null,
+    "shipmentDeliveryTime": null
   }
 ];
 

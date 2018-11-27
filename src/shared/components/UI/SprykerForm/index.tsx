@@ -111,7 +111,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
               let fieldComponent: JSX.Element | null;
               if (field.type === 'input') {
                 fieldComponent = getTextInput(field);
-              } else if (field.type === 'select' && field.menuItems.length > 0) {
+              } else if (field.type === 'select' && field.menuItems && field.menuItems.length > 0) {
                 fieldComponent = getSelectField(field);
               } else if (field.type === 'checkbox') {
                  fieldComponent = getCheckboxField(field);
