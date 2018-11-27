@@ -11,20 +11,20 @@ import {styles} from './styles';
 import {
   checkoutFormsNames,
   checkoutSelectionInputs,
-} from "./constants/index";
-import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
+} from "./constants";
+import {ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
 import {
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraOptionsToSelection,
-} from "./helpers/index";
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+} from "./helpers";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop";
+import {AppMain} from "src/shared/components/Common/AppMain";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -56,9 +56,10 @@ import {
   mutateBillingSelectionAddressId,
   mutateBillingSelectionSameAsDelivery,
   mutateDeliverySelectionAddNew,
-  mutateDeliverySelectionAddressId
+  mutateDeliverySelectionAddressId,
+  mutatePaymentMethod,
+  mutateShipmentMethod,
 } from "src/shared/components/Pages/CheckoutPage/stateMutations/selections";
-import {mutatePaymentMethod, mutateShipmentMethod} from "src/shared/components/Pages/CheckoutPage/stateMutations/index";
 import {
   validateBillingInput,
   validateBillingNewAddressForm,
@@ -69,6 +70,8 @@ import {
   validateInvoiceForm,
   validateInvoiceInput
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
+import {AppPageTitle, AppPageTitleBase} from "src/shared/components/Common/AppPageTitle/index";
+import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
 
 
 @connect
@@ -87,14 +90,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   };
 
   public componentDidMount() {
-    console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
-    this.initRequestAddressesData();
     this.setDefaultAddresses();
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
-    this.initRequestAddressesData();
 
     // If we get saved addressesCollection
     if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
@@ -283,41 +283,24 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handlePaymentMethodSelection = (value: string ): void => {
+    const isInvoiceFormValid = validateInvoiceForm(this.state.paymentInvoiceData);
+    const isCreditCardFormValid = validateCreditCardForm(this.state.paymentCreditCardData);
     this.setState( (prevState: ICheckoutPageState) => {
-      return mutatePaymentMethod(prevState, value);
+      return mutatePaymentMethod(prevState, value, isInvoiceFormValid, isCreditCardFormValid);
     });
   }
 
-  private getCurrentValueBillingSelection = (): IAddressItem["id"] | string | null => {
+  private getCurrentValueBillingSelection = (): IAddressItemCollection["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
            || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
            || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
            || null;
   }
 
-  private getCurrentValueDeliverySelection = (): IAddressItem["id"] | string | null => {
+  private getCurrentValueDeliverySelection = (): IAddressItemCollection["id"] | string | null => {
     return this.state.deliverySelection.selectedAddressId
            || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
            || null;
-  }
-
-  // TODO: Remove it after we get access to checkout endpoint
-  private initRequestAddressesData = (): void => {
-    const {
-      customerReference,
-      addressesCollection,
-      isAddressesLoading,
-      isAddressesFulfilled,
-      isAppStateLoading,
-      isCartFulfilled,
-      isAppDataSet,
-    } = this.props;
-    if (isAddressesLoading || isAddressesFulfilled || isAppStateLoading || !isCartFulfilled || !isAppDataSet) {
-      return;
-    }
-    if (customerReference && !addressesCollection) {
-      this.props.getAddressesList(customerReference);
-    }
   }
 
   private setDefaultAddresses = (): void => {
@@ -341,84 +324,78 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public render(): JSX.Element {
     const {
       classes,
-      isLoading,
+      isAppStateLoading,
+      isCheckoutLoading,
+      isCheckoutFulfilled,
       products,
+      isProductsExists,
       totals,
       addressesCollection,
       isAddressesCollectionExist,
-      isAddressesFulfilled,
       isUserLoggedIn,
       countriesCollection,
       shipmentMethods,
       paymentMethods,
     } = this.props;
 
-    console.info('CheckoutPage state: ', this.state);
-    console.info('CheckoutPage props: ', this.props);
+    console.info('CheckoutPage state', this.state);
 
-    const isFirstPanelDisabled = false;
-    const isSecondPanelDisabled = !this.state.stepsCompletion.first;
-    const isThirdPanelDisabled = !this.state.stepsCompletion.second;
-    const isFourthPanelDisabled = !this.state.stepsCompletion.third;
-
-    // TODO: Handle isOpen param for panels
+    if (isAppStateLoading) {
+      return <AppMain><AppBackdrop isOpen={true} /></AppMain>;
+    }
 
     return (
       <AppMain>
-        {isLoading ? <AppBackdrop isOpen={true} /> : null}
-
-        <CheckoutPageContext.Provider
-          value={{
-            submitHandler: this.handleSubmit,
-            onBlurHandler: this.handleFormValidityOnBlur,
-            selectionsChangeHandler: this.handleSelectionsChange,
-            handleDeliveryInputs: this.handleDeliveryInputs,
-            handleBillingInputs: this.handleBillingInputs,
-            handleInvoiceInputs: this.handleInvoiceInputs,
-            handleCreditCardInputs: this.handleCreditCardInputs,
-            isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
-            deliveryNewAddress: this.state.deliveryNewAddress,
-            billingNewAddress: this.state.billingNewAddress,
-            addressesCollection,
-            countriesCollection,
-            deliverySelections: this.state.deliverySelection,
-            billingSelections: this.state.billingSelection,
-            currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
-            currentValueBillingSelection: this.getCurrentValueBillingSelection(),
-            extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
-            extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
-            isAddressesFulfilled,
-            isUserLoggedIn,
-            shipmentMethods,
-            currentValueShipmentMethod: this.state.shipmentMethod,
-            paymentMethods,
-            currentValuePaymentMethod: this.state.paymentMethod,
-            paymentCreditCardDataInputs: this.state.paymentCreditCardData,
-            paymentInvoiceDataInputs: this.state.paymentInvoiceData,
-          }}
-        >
-          <Grid container className={classes.container}>
-            <Grid item xs={12} md={7} className={classes.leftColumn}>
-              <CheckoutForms
-                panels={getCheckoutPanelsSettings({
-                  isFirstPanelDisabled,
-                  isSecondPanelDisabled,
-                  isThirdPanelDisabled,
-                  isFourthPanelDisabled,
-                })}
-              />
-            </Grid>
-            <Grid item xs={12} md={5} className={classes.rightColumn}>
-              <CartData
-                products={products}
-                totals={totals}
-                isSendBtnDisabled={!this.checkCheckoutFormValidity()}
-                sendData={this.handleSubmit}
-              />
-            </Grid>
-          </Grid>
-        </CheckoutPageContext.Provider>
-
+        {isCheckoutLoading ? <AppBackdrop isOpen={true} /> : null}
+        {isProductsExists
+          ? <CheckoutPageContext.Provider
+              value={{
+                submitHandler: this.handleSubmit,
+                onBlurHandler: this.handleFormValidityOnBlur,
+                selectionsChangeHandler: this.handleSelectionsChange,
+                handleDeliveryInputs: this.handleDeliveryInputs,
+                handleBillingInputs: this.handleBillingInputs,
+                handleInvoiceInputs: this.handleInvoiceInputs,
+                handleCreditCardInputs: this.handleCreditCardInputs,
+                isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
+                deliveryNewAddress: this.state.deliveryNewAddress,
+                billingNewAddress: this.state.billingNewAddress,
+                addressesCollection,
+                countriesCollection,
+                deliverySelections: this.state.deliverySelection,
+                billingSelections: this.state.billingSelection,
+                currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
+                currentValueBillingSelection: this.getCurrentValueBillingSelection(),
+                extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
+                extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
+                isCheckoutFulfilled,
+                isUserLoggedIn,
+                shipmentMethods,
+                currentValueShipmentMethod: this.state.shipmentMethod,
+                paymentMethods,
+                currentValuePaymentMethod: this.state.paymentMethod,
+                paymentCreditCardDataInputs: this.state.paymentCreditCardData,
+                paymentInvoiceDataInputs: this.state.paymentInvoiceData,
+              }}
+            >
+              <Grid container className={classes.container}>
+                <Grid item xs={12} md={7} className={classes.leftColumn}>
+                  <CheckoutForms
+                    panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
+                  />
+                </Grid>
+                <Grid item xs={12} md={5} className={classes.rightColumn}>
+                  <CartData
+                    products={products}
+                    totals={totals}
+                    isSendBtnDisabled={!this.checkCheckoutFormValidity()}
+                    sendData={this.handleSubmit}
+                  />
+                </Grid>
+              </Grid>
+            </CheckoutPageContext.Provider>
+          : <AppPageTitle title={noProductsInCheckoutText} />
+        }
       </AppMain>
     );
   }

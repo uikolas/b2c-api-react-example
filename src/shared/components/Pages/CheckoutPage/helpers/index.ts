@@ -6,15 +6,16 @@ import {
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
-import {ICheckoutPageProps} from "src/shared/components/Pages/CheckoutPage/types/index";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {ICheckoutPageProps, ICheckoutStepsCompletionState} from "src/shared/components/Pages/CheckoutPage/types";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
   TAddressType,
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants/index";
-import {ICheckoutPanelsSettings} from "src/shared/components/Pages/CheckoutPage/types/helpersTypes";
+import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
+import {RegExpZipCode} from "src/shared/constants/forms/regexp";
+
 
 export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
                                            addressType: TAddressType): TExtraOptionsToSelection | null => {
@@ -41,7 +42,7 @@ export const getDefaultAddressId = (collection: ICheckoutPageProps["addressesCol
     return null;
   }
   const variantData = collection
-    .filter((item: IAddressItem) => {
+    .filter((item: IAddressItemCollection) => {
       if (addressType === 'delivery') {
         return item.isDefaultShipping === true;
       } else if (addressType === 'billing') {
@@ -57,6 +58,11 @@ export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
   const {value, fieldConfig} = param;
   if (!value && fieldConfig.isRequired) {
     return false;
+  }
+  if (fieldConfig.inputName === 'zipCode' && typeof value === 'string') {
+    const regExp = new RegExp(RegExpZipCode);
+    const result = regExp.test(value);
+    return result;
   }
   return true;
 };
@@ -78,14 +84,19 @@ export const checkFormValidity = (param: IParamFormValidity): boolean => {
   return result;
 };
 
-export const getCheckoutPanelsSettings = (params: ICheckoutPanelsSettings): ICheckoutFormsProps["panels"] => {
+export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState): ICheckoutFormsProps["panels"] => {
 
   const {
-    isFirstPanelDisabled,
-    isSecondPanelDisabled,
-    isThirdPanelDisabled,
-    isFourthPanelDisabled,
+    first,
+    second,
+    third,
+    fourth,
   } = params;
+
+  const isFirstPanelDisabled = false;
+  const isSecondPanelDisabled = !first;
+  const isThirdPanelDisabled = !first || !second;
+  const isFourthPanelDisabled = !first || !second || !third;
 
   const response = {
     first: {

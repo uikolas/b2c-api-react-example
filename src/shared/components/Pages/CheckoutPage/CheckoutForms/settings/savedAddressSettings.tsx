@@ -4,7 +4,7 @@ import {
   InputLabelSelectSavedDeliveryAddress
 } from "src/shared/constants/forms/labels";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {salutationVariants} from "src/shared/constants/customer";
 import {TSalutationVariant} from "src/shared/interfaces/customer";
 import {
@@ -97,7 +97,7 @@ const getRadioItems = (collection: IAddressesParams["addressesCollection"],
 const convertAddressesToRadioItems = (collection: IAddressesParams["addressesCollection"]) => {
 
   return (isAddressesCollectionExist(collection)
-          ? collection.map((item: IAddressItem) => ({value: item.id, label: createRadioItemLabel(item)}))
+          ? collection.map((item: IAddressItemCollection) => ({value: item.id, label: createRadioItemLabel(item)}))
           : null
   );
 };
@@ -107,7 +107,7 @@ const isAddressesCollectionExist = (collection: IAddressesParams["addressesColle
 };
 
 
-const createRadioItemLabel = (address: IAddressItem) => {
+const createRadioItemLabel = (address: IAddressItemCollection) => {
   let response: React.ReactNode = '';
 
   if (address.salutation) {
@@ -132,8 +132,8 @@ const createRadioItemLabel = (address: IAddressItem) => {
   if (address.zipCode) {
     response += `, ${address.zipCode}`;
   }
-  if (address.country) {
-    response += `, ${address.country}`;
+  if (address.country && address.country.name) {
+    response += `, ${address.country.name}`;
   }
 
   return response;

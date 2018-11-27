@@ -11,9 +11,17 @@ export type TAddressCountry = string;
 export type TAddressCompany = string;
 export type TAddressPhone = string;
 export type TIso2Code = string;
+export interface IAddressCountryComposed {
+  id_country: number;
+  iso2_code: string;
+  iso3_code: string;
+  name: string;
+  postal_code_mandatory: boolean;
+  postal_code_regex: string;
+  regions: object;
+}
 
-
-export interface IAddressItem {
+interface IAbstractAddressItem {
   id?: string;
   salutation: TCustomerSalutation;
   firstName: TCustomerFirstName;
@@ -23,10 +31,17 @@ export interface IAddressItem {
   address3: TAddress;
   zipCode: TAddressZipCode;
   city: TAddressCity;
-  country: TAddressCountry;
   company?: TAddressCompany;
   phone?: TAddressPhone;
   isDefaultShipping?: boolean;
   isDefaultBilling?: boolean;
   iso2Code?: TIso2Code;
+}
+
+export interface IAddressItem extends IAbstractAddressItem {
+  country: TAddressCountry;
+}
+
+export interface IAddressItemCollection extends IAbstractAddressItem {
+  country: IAddressCountryComposed;
 }

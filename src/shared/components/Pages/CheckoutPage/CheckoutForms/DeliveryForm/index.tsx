@@ -13,14 +13,13 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {
   IAddressParams,
   IDeliveryAddressesParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {deliveryConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
-
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -40,7 +39,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           currentValueDeliverySelection,
           addressesCollection,
           extraOptionsDeliverySelection,
-          isAddressesFulfilled,
+          isCheckoutFulfilled,
           isUserLoggedIn,
           countriesCollection,
       }) => {
@@ -70,7 +69,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           <Grid container className={ classes.root }>
             <Grid item xs={12}>
               { isUserLoggedIn
-                ? (!isAddressesFulfilled)
+                ? (!isCheckoutFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : inputsForm}

@@ -15,6 +15,10 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     "&:last-child": {
       paddingBottom: 0,
     },
+    [theme.breakpoints.down('xs')]: {
+      paddingBottom: 0,
+      paddingTop: 0,
+    },
   },
   control: {
     paddingLeft: theme.spacing.unit * 1.5,
@@ -22,6 +26,13 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
 
     "&:first-child": {
       paddingRight: theme.spacing.unit * 1.5,
+      paddingLeft: 0,
+      [theme.breakpoints.down('xs')]: {
+        paddingRight: 0,
+      },
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing.unit * 2,
       paddingLeft: 0,
     },
   },
@@ -165,5 +176,11 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
   btnSubmitOuter: {},
   error: {
     color: theme.palette.error.main,
+    "& input": {
+      borderColor: theme.palette.error.main,
+    },
+    "& [role='button']": {
+      borderColor: theme.palette.error.main,
+    }
   },
 });

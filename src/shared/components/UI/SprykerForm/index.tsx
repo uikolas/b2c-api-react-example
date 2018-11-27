@@ -98,7 +98,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
       id={`${formName}`}
       name={`${formName}`}
     >
-      {isRowsExist && fields.map((row: Array<IFormField>) => {
+      {isRowsExist && fields.map((row: Array<IFormField>, indexRow: number) => {
         const isFieldsExist = (row.length > 0);
         return (
           <Grid
@@ -107,12 +107,13 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
             alignItems="flex-end"
             className={classes.controlsGroup}
             key={`${formName}-${row[0].inputName}`}
+            data-form-row={indexRow}
           >
-            {isFieldsExist && row.map((field: IFormField) => {
+            {isFieldsExist && row.map((field: IFormField, indexColumn: number) => {
               let fieldComponent: JSX.Element | null;
               if (field.type === 'input') {
                 fieldComponent = getTextInput(field);
-              } else if (field.type === 'select' && field.menuItems.length > 0) {
+              } else if (field.type === 'select' && field.menuItems && field.menuItems.length > 0) {
                 fieldComponent = getSelectField(field);
               } else if (field.type === 'checkbox') {
                  fieldComponent = getCheckboxField(field);
@@ -129,6 +130,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                   sm={field.spaceNumber}
                   className={`${classes.control} ${field.spaceNumber === 12 ? classes.controlFullWidth : ''}`}
                   key={field.inputName}
+                  data-form-column={`${indexRow}-${indexColumn}`}
                 >
                   {fieldComponent}
                 </Grid>

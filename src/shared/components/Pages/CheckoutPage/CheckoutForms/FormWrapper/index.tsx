@@ -9,48 +9,80 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { styles } from './styles';
-import {IFormWrapperProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/types";
+import {
+  IFormWrapperProps,
+  IFormWrapperState
+} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/types";
 
 
-export const FormWrapperBase: React.SFC<IFormWrapperProps> = (props): JSX.Element => {
-  const {classes, title, isDisabled}  = props;
-  {/*... (isDisabled ? {expanded: false} : {})*/}
-  return (
-    <Grid container className={ classes.root }>
-      <Grid item xs={12}>
+export class FormWrapperBase extends React.Component<IFormWrapperProps, IFormWrapperState> {
 
-        <ExpansionPanel
-          disabled={isDisabled}
-          classes={{
-            root: classes.panelRoot,
-            expanded: classes.panelExpanded,
-          }}
-        >
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
+  public state: IFormWrapperState = {
+    expanded: false,
+  };
+
+  public componentDidUpdate = (prevProps: IFormWrapperProps, prevState: IFormWrapperState) => {
+    if (!prevProps.isDisabled && this.props.isDisabled) {
+      this.setState((prevState: IFormWrapperState) => {
+        return {
+          expanded: false,
+        };
+      });
+    }
+  }
+
+  public handleShowing = (event: React.MouseEvent<{}>): void => {
+    if (this.props.isDisabled) {
+      return;
+    }
+    this.setState((prevState: IFormWrapperState) => {
+      return {
+        expanded: !prevState.expanded,
+      };
+    });
+  };
+
+  public render(): JSX.Element {
+    const {classes, title, isDisabled}  = this.props;
+    return (
+      <Grid container className={ classes.root }>
+        <Grid item xs={12}>
+
+          <ExpansionPanel
+            disabled={isDisabled}
             classes={{
-              expandIcon: classes.icon,
-              root: classes.panelSummaryRoot,
-              content: classes.panelSummaryContent,
-              expanded: classes.panelSummaryExpanded,
+              root: classes.panelRoot,
+              expanded: classes.panelExpanded,
             }}
+            expanded={this.state.expanded}
           >
-            <Typography className={classes.title} component="h3" >{title}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails
-            classes={{root: classes.panelDetailRoot}}
-          >
-            <Grid container >
-              <Grid item xs={12} className={classes.formOuter}>
-                {props.children}
+            <ExpansionPanelSummary
+              onClick={this.handleShowing}
+              expandIcon={<ExpandMoreIcon />}
+              classes={{
+                expandIcon: classes.icon,
+                root: classes.panelSummaryRoot,
+                content: classes.panelSummaryContent,
+                expanded: classes.panelSummaryExpanded,
+              }}
+            >
+              <Typography className={classes.title} component="h3" >{title}</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails
+              classes={{root: classes.panelDetailRoot}}
+            >
+              <Grid container >
+                <Grid item xs={12} className={classes.formOuter}>
+                  {this.props.children}
+                </Grid>
               </Grid>
-            </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
 
+        </Grid>
       </Grid>
-    </Grid>
-  );
-};
+    );
+  }
+}
 
 export const FormWrapper = withStyles(styles)(FormWrapperBase);

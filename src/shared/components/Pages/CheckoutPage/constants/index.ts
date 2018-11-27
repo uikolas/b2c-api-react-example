@@ -7,7 +7,7 @@ import {
 export const checkoutSelectionInputs: ICheckoutSelectionInputs = {
   isAddNewDeliveryValue: 'isAddNewDeliveryValue',
   isAddNewBillingValue: 'isAddNewBillingValue',
-  isSameAsDeliveryValue: 'isSameAsDeliveryValue',
+  isSameAsDeliveryValue: 'sameAsDelivery',
 };
 
 export const checkoutFormsNames: ICheckoutFormsNames = {

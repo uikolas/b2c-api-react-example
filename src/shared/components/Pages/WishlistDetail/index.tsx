@@ -15,6 +15,7 @@ import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { pathProductPageBase, pathWishListsPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
+import { WishlistItemBaseInfo } from './WishlistItemBaseInfo';
 import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
@@ -100,24 +101,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         id: item.sku,
         cells: [
           {
-            content: (
-              <div className={ classes.product }>
-                <span className={ classes.wrapProductImage }>
-                  <img src={ item.image } height={ 42 } width={ 42 }/>
-                </span>
-                <div className={ classes.productDescription }>
-                  <span className={ classes.tableAction } onClick={ this.renderProduct(item.sku, item.name) }>
-                    { item.name }
-                  </span>
-                  <span className={ classes.attributes }>SKU: { item.sku }</span>
-                  { item.attributes.map((attr: any, idx: number) => (
-                    <span className={ classes.attributes } key={ `attr-${item.sku}-${idx}` }>
-                      { `${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}` }
-                    </span>
-                  )) }
-                </div>
-              </div>
-            ),
+            content: (<WishlistItemBaseInfo productItem={item} />),
           },
           {
             content: (

@@ -63,17 +63,4 @@ export interface IRadioItem {
   label: React.ReactNode;
 }
 
-export type TFormInputValue = TCustomerFirstName
-  | TCustomerLastName
-  | TCustomerSalutation
-  | TCustomerEmail
-  | TCustomerPassword
-  | TCustomerUsername
-  | TAddress
-  | TAddressCity
-  | TAddressCompany
-  | TAddressCountry
-  | TAddressPhone
-  | TAddressZipCode
-  | TIso2Code
-  | boolean;
+export type TFormInputValue = string | number | boolean;

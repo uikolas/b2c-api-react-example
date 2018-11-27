@@ -1,4 +1,4 @@
-import {ICheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {ICheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types";
 
 export const mutateDeliveryInputs = (prevState: ICheckoutPageState,
                                      key: string,

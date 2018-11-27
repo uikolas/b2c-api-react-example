@@ -7,7 +7,6 @@ import { styles } from './styles';
 import { SearchPageContext } from '../context';
 import { ICategoryItemProps } from 'src/shared/components/Pages/SearchPage/CategoryItem/types';
 
-
 export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
   const {
     classes,

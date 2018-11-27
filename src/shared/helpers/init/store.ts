@@ -22,8 +22,10 @@ export const parseStoreResponse = (data: any): IInitData => {
   result.countries = attributes.countries;
 
   attributes.locales.forEach((row: any) => {
-    row.code === result.store.toLowerCase() ? result.locale = row.code : 'fr';
+    row.code === result.store.toLowerCase() ? result.locale = row.code : 'de';
   });
+  // For now it's hardcoded. Change if needed
+  result.locale = attributes.locales[0].code;
 
   return result;
 };

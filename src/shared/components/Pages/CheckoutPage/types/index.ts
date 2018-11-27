@@ -2,7 +2,7 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "../styles";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TCustomerReference} from "src/shared/interfaces/customer/index";
+import {TCustomerReference} from "src/shared/interfaces/customer";
 import {
   IAddNewAddressActions,
   ISameAsDelivery,
@@ -11,31 +11,26 @@ import {
   IShipmentMethod,
   IPaymentMethod,
 } from "src/shared/interfaces/checkout";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
-  isLoading: boolean;
-  isRejected: boolean;
-  isFulfilled: boolean;
-  isInitiated: boolean;
+  isCheckoutLoading: boolean;
+  isCheckoutRejected: boolean;
+  isCheckoutFulfilled: boolean;
 
   products: Array<ICartItem> | null;
+  isProductsExists: boolean;
   totals: ICartTotals;
   isCartFulfilled: boolean;
   isCartRejected: boolean;
   isCartLoading: boolean;
   isAddressesCollectionExist: boolean;
-  getAddressesList: (customerRef: TCustomerReference) => void;
   customerReference: TCustomerReference | null;
-  currentAddress: IAddressItem | null;
-  addressesCollection: IAddressItem[] | null;
-  isAddressesLoading: boolean;
-  isAddressesFulfilled: boolean;
-
+  addressesCollection: IAddressItemCollection[] | null;
   isAppStateLoading: boolean;
   countriesCollection: ICountries[];
   shipmentMethods: Array<IShipmentMethod> | null;

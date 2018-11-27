@@ -16,8 +16,8 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
 import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
 
-import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle/index";
-import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {
   IAddressParams,
   IBillingAddressesParams,
@@ -44,7 +44,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
           currentValueBillingSelection,
           addressesCollection,
           extraOptionsBillingSelection,
-          isAddressesFulfilled,
+          isCheckoutFulfilled,
           isUserLoggedIn,
           countriesCollection
       }) => {
@@ -76,20 +76,20 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                                                                             savedBillingParams
                                                                             );
 
-        const inputsForm = isBillingSameAsDelivery ? null : <SprykerForm form={billingFormSettings} />;
-        const sameAsDeliveryForm = <SprykerForm form={sameAsDeliveryFormSettings} />;
-        const selectionForm = <SprykerForm form={savedAddressFormSettings} />;
+        const inputsForm = isBillingSameAsDelivery ? null : <SprykerForm key="inputsForm" form={billingFormSettings} />;
+        const sameAsDeliveryForm = <SprykerForm key="sameAsDeliveryForm" form={sameAsDeliveryFormSettings} />;
+        const selectionForm = <SprykerForm key="selectionForm" form={savedAddressFormSettings} />;
 
         return (
           <Grid container className={classes.root}>
             <Grid item xs={12}>
               { isUserLoggedIn
-                ? (!isAddressesFulfilled)
+                ? (!isCheckoutFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
-                  : <React.Fragment>
-                    {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
-                    {billingSelections.isAddNew ? inputsForm : null}
-                  </React.Fragment>
+                  : (<React.Fragment>
+                      {addressesCollection ? selectionForm : [sameAsDeliveryForm, inputsForm]}
+                      {(addressesCollection && billingSelections.isAddNew) ? inputsForm : null}
+                    </React.Fragment>)
                 : [sameAsDeliveryForm, inputsForm]
               }
             </Grid>

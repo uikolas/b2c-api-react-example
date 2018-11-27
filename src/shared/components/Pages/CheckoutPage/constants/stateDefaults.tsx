@@ -6,7 +6,7 @@ import {
   ICheckoutStepsCompletionState,
   IDeliveryAddressState,
   IDeliverySelectionState
-} from "../types/index";
+} from "../types";
 
 export const deliverySelectionDefault: IDeliverySelectionState = {
   selectedAddressId: null,

@@ -1,7 +1,7 @@
 import {IRadioItem} from "src/shared/components/UI/SprykerForm/types";
 import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
-import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 
 export interface ICheckoutFormsNames {
   billing: string;
@@ -44,10 +44,10 @@ export type TAddressType = 'delivery' | 'billing';
 export type TExtraOptionsToSelection = Array<IRadioItem> | null;
 
 export type TCurrentValueDeliverySelection = ICheckoutSelectionInputs["isAddNewDeliveryValue"]
-                                             | IAddressItem["id"]
+                                             | IAddressItemCollection["id"]
                                              | null;
 
 export type TCurrentValueBillingSelection = ICheckoutSelectionInputs["isAddNewBillingValue"]
                                             | ICheckoutSelectionInputs["isSameAsDeliveryValue"]
-                                            | IAddressItem["id"]
+                                            | IAddressItemCollection["id"]
                                             | null;

@@ -11,7 +11,7 @@ import {
   ICheckoutCreditCardState,
   ICheckoutInvoiceState,
   IDeliveryAddressState
-} from "src/shared/components/Pages/CheckoutPage/types/index";
+} from "src/shared/components/Pages/CheckoutPage/types";
 
 export interface IParamInputValidity {
   value: TFormInputValue;

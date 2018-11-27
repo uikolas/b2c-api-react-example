@@ -6,11 +6,15 @@ import {
 import {
   IReduxState,
 } from 'src/typings/app';
-import { IAddressItem } from "src/shared/interfaces/addresses";
+import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   IPaymentMethod,
   IShipmentMethod,
 } from 'src/shared/interfaces/checkout';
+import {
+  addressesCollectionFixture, paymentMethodsFixture,
+  shipmentMethodsFixture
+} from "src/shared/reducers/fixtures/Checkout";
 
 export interface ICheckoutState extends IReduxState {
   data: {
@@ -18,71 +22,10 @@ export interface ICheckoutState extends IReduxState {
     deliveryAddress: IAddressItem | null;
     payments: Array<IPaymentMethod>;
     shipments: Array<IShipmentMethod>;
+    addressesCollection: Array<IAddressItemCollection>;
   };
 }
 
-const shipmentMethodsFixture: Array<IShipmentMethod> = [
-  {
-    carrierName: 'DHL',
-    id: '1',
-    name: 'Standard',
-    price: 500,
-    taxRate: 2,
-    shipmentDeliveryTime: 'Standard'
-  },
-  {
-    carrierName: 'DHL',
-    id: '2',
-    name: 'Standard',
-    price: 600,
-    taxRate: null,
-    shipmentDeliveryTime: 'Standard'
-  },
-  {
-    carrierName: 'Hermes',
-    id: '3',
-    name: 'Next Day',
-    price: 560,
-    taxRate: 2,
-    shipmentDeliveryTime: 'Next Day'
-  },
-  {
-    carrierName: 'Hermes',
-    id: '4',
-    name: 'Same Day',
-    price: 1500,
-    taxRate: null,
-    shipmentDeliveryTime: 'Same Day'
-  },
-  {
-    carrierName: 'Hermes',
-    id: '5',
-    name: 'Same Day',
-    price: 490,
-    taxRate: null,
-    shipmentDeliveryTime: 'Same Day'
-  }
-];
-const paymentMethodsFixture: Array<IPaymentMethod> = [
-  {
-    paymentProvider: 'visa',
-    paymentMethod: 'creditCard',
-    paymentSelection: '1',
-    amount: 0,
-  },
-  {
-    paymentProvider: 'masterCard',
-    paymentMethod: 'creditCard',
-    paymentSelection: '2',
-    amount: 0,
-  },
-  {
-    paymentProvider: 'Dummy name invoice',
-    paymentMethod: 'invoice',
-    paymentSelection: '3',
-    amount: 0,
-  },
-];
 
 export const initialState: ICheckoutState = {
   data: {
@@ -90,6 +33,7 @@ export const initialState: ICheckoutState = {
     deliveryAddress: null,
     payments: paymentMethodsFixture || [],
     shipments: shipmentMethodsFixture || [],
+    addressesCollection: addressesCollectionFixture || [],
   },
 };
 
@@ -164,6 +108,17 @@ export function getPaymentMethodsFromStore(state: any, props: any): Array<IPayme
 
 export function isPaymentMethodsExist(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.data.payments);
+}
+
+export function getAddressesCollectionFromCheckoutStore(state: any, props: any): Array<IAddressItemCollection> | null {
+  return checkAddressesCollectionExist(state, props) ? state.pageCheckout.data.addressesCollection : null;
+}
+
+export function checkAddressesCollectionExist(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props)
+    && state.pageCheckout.data.addressesCollection
+    && state.pageCheckout.data.addressesCollection.length
+  );
 }
 
 function isStateExist(state: any, props: any): boolean {
