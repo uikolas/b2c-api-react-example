@@ -35,8 +35,8 @@ export class WishListBase extends React.Component<Props, State> {
     }
   }
 
-  public handleChangeName = (event: any) => {
-    this.setState(() => ({name: event.target.value}));
+  public handleChangeName = ({target: {value}}: any) => {
+    this.setState(() => ({name: value}));
   };
 
   public handleChangeUpdatedName = (event: any) => {

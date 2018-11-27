@@ -1,22 +1,23 @@
 import * as React from 'react';
 import {
   InputLabelSelectSavedBillingAddress,
-  InputLabelSelectSavedDeliveryAddress
-} from "src/shared/constants/forms/labels";
-import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressItem} from "src/shared/interfaces/addresses";
-import {salutationVariants} from "src/shared/constants/customer";
-import {TSalutationVariant} from "src/shared/interfaces/customer";
+  InputLabelSelectSavedDeliveryAddress,
+} from 'src/shared/constants/forms/labels';
+import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
+import { IAddressItem } from 'src/shared/interfaces/addresses';
+import { salutationVariants } from 'src/shared/constants/customer';
+import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import {
   IAddressesParams,
   IBillingAddressesParams,
-  IDeliveryAddressesParams
-} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+  IDeliveryAddressesParams,
+} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 
 
-export const getDeliverySavedAddressFormSettings = (formName: string,
-                                                    params: IDeliveryAddressesParams): IFormSettings => {
-
+export const getDeliverySavedAddressFormSettings = (
+  formName: string,
+  params: IDeliveryAddressesParams
+): IFormSettings => {
   const {
     addressesCollection,
     submitHandler,
@@ -40,17 +41,18 @@ export const getDeliverySavedAddressFormSettings = (formName: string,
           label: InputLabelSelectSavedDeliveryAddress,
           isError: false,
           radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
-        }
-      ]
+        },
+      ],
     ],
   };
 
   return formSettings;
 };
 
-export const getBillingSavedAddressFormSettings = (formName: string,
-                                                   params: IBillingAddressesParams): IFormSettings => {
-
+export const getBillingSavedAddressFormSettings = (
+  formName: string,
+  params: IBillingAddressesParams
+): IFormSettings => {
   const {
     addressesCollection,
     submitHandler,
@@ -74,38 +76,38 @@ export const getBillingSavedAddressFormSettings = (formName: string,
           label: InputLabelSelectSavedBillingAddress,
           isError: false,
           radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
-        }
-      ]
+        },
+      ],
     ],
   };
 
   return formSettings;
 };
 
-const getRadioItems = (collection: IAddressesParams["addressesCollection"],
-                       extraOptions: IAddressesParams["extraOptionsToSelection"]) => {
+const getRadioItems = (
+  collection: IAddressesParams['addressesCollection'],
+  extraOptions: IAddressesParams['extraOptionsToSelection']
+) => {
   let items = convertAddressesToRadioItems(collection);
   if (!items) {
     return null;
   }
-  if(Array.isArray(extraOptions) && extraOptions.length > 0) {
+  if (Array.isArray(extraOptions) && extraOptions.length > 0) {
     items = items.concat(extraOptions);
   }
   return items;
 };
 
-const convertAddressesToRadioItems = (collection: IAddressesParams["addressesCollection"]) => {
-
+const convertAddressesToRadioItems = (collection: IAddressesParams['addressesCollection']) => {
   return (isAddressesCollectionExist(collection)
-          ? collection.map((item: IAddressItem) => ({value: item.id, label: createRadioItemLabel(item)}))
-          : null
+      ? collection.map((item: IAddressItem) => ({value: item.id, label: createRadioItemLabel(item)}))
+      : null
   );
 };
 
-const isAddressesCollectionExist = (collection: IAddressesParams["addressesCollection"]) => {
+const isAddressesCollectionExist = (collection: IAddressesParams['addressesCollection']) => {
   return Boolean(collection && Array.isArray(collection) && collection.length > 0);
 };
-
 
 const createRadioItemLabel = (address: IAddressItem) => {
   let response: React.ReactNode = '';
