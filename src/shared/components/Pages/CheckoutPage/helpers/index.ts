@@ -7,7 +7,7 @@ import {
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
 import {ICheckoutPageProps, ICheckoutStepsCompletionState} from "src/shared/components/Pages/CheckoutPage/types";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
   TAddressType,
@@ -41,7 +41,7 @@ export const getDefaultAddressId = (collection: ICheckoutPageProps["addressesCol
     return null;
   }
   const variantData = collection
-    .filter((item: IAddressItem) => {
+    .filter((item: IAddressItemCollection) => {
       if (addressType === 'delivery') {
         return item.isDefaultShipping === true;
       } else if (addressType === 'billing') {

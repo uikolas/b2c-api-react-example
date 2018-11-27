@@ -1,12 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Common/Init';
-import {
-  isPageProductStateFulfilled,
-  isPageProductStateInitiated,
-  isPageProductStateLoading,
-  isPageProductStateRejected,
-} from "src/shared/reducers/Pages/Product";
 import {ICartTotals, ICartItem} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
@@ -17,28 +11,31 @@ import {
   isCartStateFulfilled,
   isCartStateRejected
 } from "src/shared/reducers/Common/Cart";
-import {TCustomerReference} from "src/shared/interfaces/customer";
-import {getAddressesAction} from "src/shared/actions/Pages/Addresses";
 import {
   checkAddressesCollectionExist,
-  getAddressesCollectionFromStore,
-  getCurrentAddressFromStore,
-  isPageAddressesFulfilled,
-  isPageAddressesStateLoading
 } from "src/shared/reducers/Pages/Addresses";
 import {isStateLoading} from "src/shared/reducers";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
-import {getPaymentMethodsFromStore, getShipmentMethodsFromStore} from "src/shared/reducers/Pages/Checkout";
+import {
+  getAddressesCollectionFromCheckoutStore,
+  getPaymentMethodsFromStore,
+  getShipmentMethodsFromStore,
+  isPageCheckoutFulfilled,
+  isPageCheckoutStateLoading,
+  isPageCheckoutStateRejected
+} from "src/shared/reducers/Pages/Checkout";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);
   const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-  const isLoading: boolean = isPageProductStateLoading(state, ownProps);
-  const isRejected: boolean = isPageProductStateRejected(state, ownProps);
-  const isFulfilled: boolean = isPageProductStateFulfilled(state, ownProps);
-  const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
+  const isCheckoutLoading: boolean = isPageCheckoutStateLoading(state, ownProps);
+  const isCheckoutRejected: boolean = isPageCheckoutStateRejected(state, ownProps);
+
+  // TODO: Change it after we have real endpoint
+  // const isCheckoutFulfilled: boolean = isPageCheckoutFulfilled(state, ownProps);
+  const isCheckoutFulfilled: boolean = true;
 
   const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
   const totals: ICartTotals = getCartTotals(state, ownProps);
@@ -47,11 +44,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isCartLoading = isCartStateLoading(state, ownProps);
   // from ILoginState
   const customerReference = getCustomerReference(state, ownProps);
-  const currentAddress: IAddressItem | null  = getCurrentAddressFromStore(state, ownProps);
-  const addressesCollection: IAddressItem[] | null = getAddressesCollectionFromStore(state, ownProps);
+  const addressesCollection: IAddressItemCollection[] | null = getAddressesCollectionFromCheckoutStore(state, ownProps);
   const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
-  const isAddressesLoading = isPageAddressesStateLoading(state, ownProps);
-  const isAddressesFulfilled = isPageAddressesFulfilled(state, ownProps);
   // from global state
   const isAppStateLoading = isStateLoading(state, ownProps);
   // Countries from init state
@@ -63,21 +57,17 @@ const mapStateToProps = (state: any, ownProps: any) => {
   return ({
     isAppDataSet,
     isUserLoggedIn,
-    isInitiated,
-    isLoading,
-    isRejected,
-    isFulfilled,
+    isCheckoutLoading,
+    isCheckoutRejected,
+    isCheckoutFulfilled,
     products: items,
     totals,
     isCartFulfilled,
     isCartRejected,
     isCartLoading,
     customerReference,
-    currentAddress,
     addressesCollection,
     isAddressesCollectionExist,
-    isAddressesLoading,
-    isAddressesFulfilled,
     isAppStateLoading,
     countriesCollection,
     shipmentMethods,
@@ -89,7 +79,6 @@ export const connect = reduxify(
   mapStateToProps,
   (dispatch: Function) => ({
     dispatch,
-    getAddressesList: (customerRef: TCustomerReference) => dispatch(getAddressesAction(customerRef)),
     getCheckoutData: (payload: ICheckoutRequest) => dispatch(getCheckoutDataAction(payload)),
     sendCheckoutData: (payload: ICheckoutRequest) => dispatch(sendCheckoutDataAction(payload)),
   }),

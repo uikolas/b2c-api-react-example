@@ -39,7 +39,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           currentValueDeliverySelection,
           addressesCollection,
           extraOptionsDeliverySelection,
-          isAddressesFulfilled,
+          isCheckoutFulfilled,
           isUserLoggedIn,
           countriesCollection,
       }) => {
@@ -69,7 +69,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           <Grid container className={ classes.root }>
             <Grid item xs={12}>
               { isUserLoggedIn
-                ? (!isAddressesFulfilled)
+                ? (!isCheckoutFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
                     {addressesCollection ? selectionForm : inputsForm}

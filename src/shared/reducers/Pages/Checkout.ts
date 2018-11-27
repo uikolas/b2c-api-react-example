@@ -6,7 +6,7 @@ import {
 import {
   IReduxState,
 } from 'src/typings/app';
-import { IAddressItem } from "src/shared/interfaces/addresses";
+import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   IPaymentMethod,
   IShipmentMethod,
@@ -18,8 +18,58 @@ export interface ICheckoutState extends IReduxState {
     deliveryAddress: IAddressItem | null;
     payments: Array<IPaymentMethod>;
     shipments: Array<IShipmentMethod>;
+    addressesCollection: Array<IAddressItemCollection>;
   };
 }
+
+const addressesCollectionFixture: Array<IAddressItemCollection> = [
+  {
+    "id": "dd1ddd99-1315-5eae-aaaf-9e74f78a33d52",
+    "salutation": "Mr",
+    "firstName": "spencor",
+    "lastName": "hopkin",
+    "address1": "West road",
+    "address2": "212",
+    "address3": "",
+    "zipCode": "61000",
+    "city": "Berlin",
+    "country": {
+      "id_country": 60,
+      "iso2_code": "DE",
+      "iso3_code": "DEU",
+      "name": "Germany",
+      "postal_code_mandatory": true,
+      "postal_code_regex": "\\d{5}",
+      "regions": {}
+    },
+    "iso2Code": "DE",
+    "company": "Spryker",
+    "phone": "+380669455897"
+  },
+  {
+    "id": "dd1ddd99-1315-5eae-aaaf-9e74f78a33d53",
+    "salutation": "Mr",
+    "firstName": "spencor",
+    "lastName": "hopkin",
+    "address1": "West road",
+    "address2": "212",
+    "address3": "",
+    "zipCode": "61000",
+    "city": "Berlin",
+    "country": {
+      "id_country": 60,
+      "iso2_code": "DE",
+      "iso3_code": "DEU",
+      "name": "Germany",
+      "postal_code_mandatory": true,
+      "postal_code_regex": "\\d{5}",
+      "regions": {}
+    },
+    "iso2Code": "DE",
+    "company": "Spryker",
+    "phone": "+380669455897"
+  }
+];
 
 const shipmentMethodsFixture: Array<IShipmentMethod> = [
   {
@@ -90,6 +140,7 @@ export const initialState: ICheckoutState = {
     deliveryAddress: null,
     payments: paymentMethodsFixture || [],
     shipments: shipmentMethodsFixture || [],
+    addressesCollection: addressesCollectionFixture || [],
   },
 };
 
@@ -164,6 +215,17 @@ export function getPaymentMethodsFromStore(state: any, props: any): Array<IPayme
 
 export function isPaymentMethodsExist(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.data.payments);
+}
+
+export function getAddressesCollectionFromCheckoutStore(state: any, props: any): Array<IAddressItemCollection> | null {
+  return checkAddressesCollectionExist(state, props) ? state.pageCheckout.data.addressesCollection : null;
+}
+
+export function checkAddressesCollectionExist(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props)
+    && state.pageCheckout.data.addressesCollection
+    && state.pageCheckout.data.addressesCollection.length
+  );
 }
 
 function isStateExist(state: any, props: any): boolean {

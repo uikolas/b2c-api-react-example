@@ -11,17 +11,16 @@ import {
   IShipmentMethod,
   IPaymentMethod,
 } from "src/shared/interfaces/checkout";
-import {IAddressItem} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountries} from "src/shared/reducers/Common/Init";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;
-  isLoading: boolean;
-  isRejected: boolean;
-  isFulfilled: boolean;
-  isInitiated: boolean;
+  isCheckoutLoading: boolean;
+  isCheckoutRejected: boolean;
+  isCheckoutFulfilled: boolean;
 
   products: Array<ICartItem> | null;
   totals: ICartTotals;
@@ -29,13 +28,8 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isCartRejected: boolean;
   isCartLoading: boolean;
   isAddressesCollectionExist: boolean;
-  getAddressesList: (customerRef: TCustomerReference) => void;
   customerReference: TCustomerReference | null;
-  currentAddress: IAddressItem | null;
-  addressesCollection: IAddressItem[] | null;
-  isAddressesLoading: boolean;
-  isAddressesFulfilled: boolean;
-
+  addressesCollection: IAddressItemCollection[] | null;
   isAppStateLoading: boolean;
   countriesCollection: ICountries[];
   shipmentMethods: Array<IShipmentMethod> | null;
