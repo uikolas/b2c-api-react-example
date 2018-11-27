@@ -4,19 +4,19 @@ import {pathSearchPage} from "src/shared/routes/contentRoutes";
 export const categoriesLinks: link[] = [
   {
     name: 'Computers',
-    path: `${pathSearchPage}/Computer`,
+    path: `${pathSearchPage}/5`,
   },
   {
     name: 'Notebooks',
-    path: `${pathSearchPage}/Computer/Notebooks`,
+    path: `${pathSearchPage}/6`,
   },
   {
     name: 'Pcs & Workstations',
-    path: `${pathSearchPage}/Computer/Pc's/Workstations`,
+    path: `${pathSearchPage}/7`,
   },
   {
     name: 'Tablets',
-    path: `${pathSearchPage}/Computer/Tablets`,
+    path: `${pathSearchPage}/8`,
   },
   {
     name: 'Sale %',
