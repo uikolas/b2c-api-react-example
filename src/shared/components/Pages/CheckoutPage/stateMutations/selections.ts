@@ -34,7 +34,7 @@ export const mutateDeliverySelectionAddressId = (prevState: ICheckoutPageState, 
 
 export const mutateBillingSelectionAddNew = (prevState: ICheckoutPageState):
   Pick<ICheckoutPageState, "billingSelection" | "stepsCompletion"> | null => {
-  console.log('mutateBillingSelectionAddNew ');
+
   return ({
     billingSelection: {
       selectedAddressId: null,
