@@ -83,6 +83,10 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
   };
 
   const isMenuItemsExist = (menuItems.length > 0);
+  let selectClassNames: string = `spryker-select ${classes.menuItem}`;
+  if (extraSelectFieldClassName) {
+    selectClassNames += ` ${extraSelectFieldClassName}`;
+  }
 
   return (
     <Grid container
@@ -125,7 +129,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
             disableUnderline= {true}
             IconComponent={ChevronLeft}
             fullWidth={isFullWidth ? isFullWidth : false}
-            className={`${classes.selectField} ${extraSelectFieldClassName ? extraSelectFieldClassName : ''}`}
+            className={selectClassNames}
           >
             { getMenuItemFirst() }
             {isMenuItemsExist && menuItems.map((item) => (

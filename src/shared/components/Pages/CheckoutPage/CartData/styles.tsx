@@ -6,6 +6,10 @@ export const styles = (theme: Theme) => createStyles({
     width: '90%',
     marginTop: '18px',
     marginLeft: '10%',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      marginLeft: '0',
+    },
   },
   title: {
     fontSize: theme.appFixedDimensions.fontSize.xl,

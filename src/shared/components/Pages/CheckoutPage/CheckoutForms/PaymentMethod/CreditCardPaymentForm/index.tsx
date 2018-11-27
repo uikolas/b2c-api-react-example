@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid';
 
 import {CheckoutPageContext} from '../../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 import {ICreditCardPaymentFormProps} from "./types";
 import {
   getCreditCardFormSettings
@@ -43,7 +43,7 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
         return (
           <Grid container className={classes.root}>
             <Grid item xs={12}>
-              <SprykerForm form={creditCardFormSettings} />
+              <SprykerForm form={creditCardFormSettings} formClassName={classes.creditCardForm} />
             </Grid>
           </Grid>
         );

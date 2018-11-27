@@ -7,10 +7,7 @@ import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import { FormTextWaitingForResponse } from 'src/shared/constants/forms/labels';
 
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
-import {
-  IAddressParams,
-  IDeliveryAddressesParams,
-} from '../../types/formSettingsTypes';
+import { IAddressParams, IDeliveryAddressesParams } from '../../types/formSettingsTypes';
 import { deliveryConfigInputStable } from '../../constants/inputsConfig';
 import { checkoutFormsNames } from '../../constants';
 import { CheckoutPageContext } from '../../context';

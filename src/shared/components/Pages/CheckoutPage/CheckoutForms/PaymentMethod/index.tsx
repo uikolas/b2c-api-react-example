@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 import {CheckoutPageContext} from '../../context';
 import {formStyles} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm";
 import {IPaymentMethodProps} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types";
 import {
   IPaymentMethodsParams,
@@ -18,13 +18,13 @@ import {PartnerIconVisa} from "src/shared/assets/icons/partnerIconVisa";
 import {
   getPaymentMethodsFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/paymentSettings";
-import {IPaymentMethod} from "src/shared/interfaces/checkout/index";
+import {IPaymentMethod} from "src/shared/interfaces/checkout";
 import {
   checkoutFormsNames,
   checkoutPaymentMethodsNames
-} from "src/shared/components/Pages/CheckoutPage/constants/index";
-import {InvoicePaymentForm} from "./InvoicePaymentForm/index";
-import {CreditCardPaymentForm} from "./CreditCardPaymentForm/index";
+} from "src/shared/components/Pages/CheckoutPage/constants";
+import {InvoicePaymentForm} from "./InvoicePaymentForm";
+import {CreditCardPaymentForm} from "./CreditCardPaymentForm";
 import {
   IPaymentMethodsGrouped,
   TPaymentProvidersCollection

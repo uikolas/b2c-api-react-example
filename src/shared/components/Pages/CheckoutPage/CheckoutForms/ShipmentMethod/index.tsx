@@ -14,7 +14,7 @@ import {PartnerIconDhl} from "src/shared/assets/icons/partnerIconDhl";
 import {PartnerIconHermes} from "src/shared/assets/icons/partnerIconHermes";
 import {IShippingMethodsParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {IShipmentMethodsGrouped} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants/index";
+import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 
 
 export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.Element => {

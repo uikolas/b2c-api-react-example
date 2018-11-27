@@ -11,20 +11,20 @@ import {styles} from './styles';
 import {
   checkoutFormsNames,
   checkoutSelectionInputs,
-} from "./constants/index";
-import {ICheckoutPageProps, ICheckoutPageState} from "./types/index";
+} from "./constants";
+import {ICheckoutPageProps, ICheckoutPageState} from "./types";
 import {CheckoutPageContext} from "./context";
 import {
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraOptionsToSelection,
-} from "./helpers/index";
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/index";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData/index";
+} from "./helpers";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop";
+import {AppMain} from "src/shared/components/Common/AppMain";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -56,9 +56,10 @@ import {
   mutateBillingSelectionAddressId,
   mutateBillingSelectionSameAsDelivery,
   mutateDeliverySelectionAddNew,
-  mutateDeliverySelectionAddressId
+  mutateDeliverySelectionAddressId,
+  mutatePaymentMethod,
+  mutateShipmentMethod,
 } from "src/shared/components/Pages/CheckoutPage/stateMutations/selections";
-import {mutatePaymentMethod, mutateShipmentMethod} from "src/shared/components/Pages/CheckoutPage/stateMutations/index";
 import {
   validateBillingInput,
   validateBillingNewAddressForm,
@@ -87,7 +88,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   };
 
   public componentDidMount() {
-    console.info('%c ++ CheckoutPage componentDidMount ++', 'background: #3d5afe; color: #ffea00');
     this.initRequestAddressesData();
     this.setDefaultAddresses();
   }
@@ -283,8 +283,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handlePaymentMethodSelection = (value: string ): void => {
+    const isInvoiceFormValid = validateInvoiceForm(this.state.paymentInvoiceData);
+    const isCreditCardFormValid = validateCreditCardForm(this.state.paymentCreditCardData);
     this.setState( (prevState: ICheckoutPageState) => {
-      return mutatePaymentMethod(prevState, value);
+      return mutatePaymentMethod(prevState, value, isInvoiceFormValid, isCreditCardFormValid);
     });
   }
 
@@ -353,15 +355,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       paymentMethods,
     } = this.props;
 
-    console.info('CheckoutPage state: ', this.state);
-    console.info('CheckoutPage props: ', this.props);
-
-    const isFirstPanelDisabled = false;
-    const isSecondPanelDisabled = !this.state.stepsCompletion.first;
-    const isThirdPanelDisabled = !this.state.stepsCompletion.second;
-    const isFourthPanelDisabled = !this.state.stepsCompletion.third;
-
-    // TODO: Handle isOpen param for panels
+    console.info('CheckoutPage state', this.state);
 
     return (
       <AppMain>
@@ -400,12 +394,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
           <Grid container className={classes.container}>
             <Grid item xs={12} md={7} className={classes.leftColumn}>
               <CheckoutForms
-                panels={getCheckoutPanelsSettings({
-                  isFirstPanelDisabled,
-                  isSecondPanelDisabled,
-                  isThirdPanelDisabled,
-                  isFourthPanelDisabled,
-                })}
+                panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
               />
             </Grid>
             <Grid item xs={12} md={5} className={classes.rightColumn}>

@@ -1,4 +1,5 @@
-import {ICheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types/index";
+import {ICheckoutPageState} from "src/shared/components/Pages/CheckoutPage/types";
+import {checkoutPaymentMethodsNames} from "src/shared/components/Pages/CheckoutPage/constants";
 
 
 export const mutateDeliverySelectionAddNew = (prevState: ICheckoutPageState):
@@ -51,7 +52,6 @@ export const mutateBillingSelectionSameAsDelivery = (prevState: ICheckoutPageSta
   Pick<ICheckoutPageState, "billingSelection" | "stepsCompletion"> | null => {
 
   const newSameValue = !prevState.billingSelection.isSameAsDelivery;
-
   return ({
     billingSelection: {
       selectedAddressId: null,
@@ -60,7 +60,7 @@ export const mutateBillingSelectionSameAsDelivery = (prevState: ICheckoutPageSta
     },
     stepsCompletion: {
       ...prevState.stepsCompletion,
-      second: true,
+      second: newSameValue,
     },
   });
 };
@@ -77,6 +77,40 @@ export const mutateBillingSelectionAddressId = (prevState: ICheckoutPageState, v
     stepsCompletion: {
       ...prevState.stepsCompletion,
       second: true,
+    },
+  });
+};
+
+export const mutateShipmentMethod = (prevState: ICheckoutPageState, value: string):
+  Pick<ICheckoutPageState, "shipmentMethod" | "stepsCompletion"> | null => {
+
+  return ({
+    shipmentMethod: value,
+    stepsCompletion: {
+      ...prevState.stepsCompletion,
+      third: true,
+    },
+  });
+};
+
+export const mutatePaymentMethod = (prevState: ICheckoutPageState,
+                                    value: string,
+                                    isInvoiceFormValid: boolean,
+                                    isCreditCardFormValid: boolean):
+  Pick<ICheckoutPageState, "paymentMethod" | "stepsCompletion"> | null => {
+
+  let isFourthStepCompleted: boolean = false;
+  if (value === checkoutPaymentMethodsNames.invoice && isInvoiceFormValid) {
+    isFourthStepCompleted = true;
+  } else if (value === checkoutPaymentMethodsNames.creditCard && isCreditCardFormValid) {
+    isFourthStepCompleted = true;
+  }
+
+  return ({
+    paymentMethod: value,
+    stepsCompletion: {
+      ...prevState.stepsCompletion,
+      fourth: isFourthStepCompleted,
     },
   });
 };

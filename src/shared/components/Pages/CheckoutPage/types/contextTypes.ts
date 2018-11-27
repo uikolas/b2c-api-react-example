@@ -7,10 +7,10 @@ import {
   ICheckoutInvoiceState,
   IDeliveryAddressState,
   IDeliverySelectionState
-} from "src/shared/components/Pages/CheckoutPage/types/index";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+} from "src/shared/components/Pages/CheckoutPage/types";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 import {ICountries} from "src/shared/reducers/Common/Init";
-import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout/index";
+import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {
   TCurrentValueBillingSelection,
   TCurrentValueDeliverySelection,

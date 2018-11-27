@@ -10,7 +10,13 @@ export const styles = (theme: Theme) => createStyles({
     },
     "&:last-child": {
       marginBottom: theme.spacing.unit * 8,
-    }
+      [theme.breakpoints.down('xs')]: {
+        marginBottom: theme.spacing.unit * 3,
+      },
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing.unit * 3,
+    },
   },
   panelRoot: {
     padding: 0,

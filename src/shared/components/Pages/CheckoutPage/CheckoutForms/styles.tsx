@@ -14,6 +14,10 @@ export const formStyles = (theme: Theme) => createStyles({
       minWidth: 130,
       minHeight: 70,
       alignItems: "flex-start",
+      [theme.breakpoints.down('xs')]: {
+        minWidth: "100%",
+        minHeight: "auto",
+      },
       "&>span:not(:first-child)": {
         height: "100%",
         display: "flex",
@@ -21,9 +25,15 @@ export const formStyles = (theme: Theme) => createStyles({
         justifyContent: "flex-start",
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 1.5,
+        [theme.breakpoints.down('xs')]: {
+          flexDirection: "row",
+        },
         "&>*": {
           marginBottom: theme.spacing.unit,
           lineHeight: 1,
+          [theme.breakpoints.down('xs')]: {
+            marginRight: theme.spacing.unit,
+          },
           "&:last-child": {
             marginBottom: 0,
           },
@@ -83,6 +93,38 @@ export const formStyles = (theme: Theme) => createStyles({
           },
         }
       },
+    },
+  },
+  creditCardForm: {
+    "& div[data-form-row='2']": {
+      [theme.breakpoints.down('xs')]: {
+        justifyContent: "space-between",
+      },
+      "& div[data-form-column='2-0']": {
+        "& .spryker-select": {
+          position: "relative",
+          "&:after": {
+            content: `"/"`,
+            position: "absolute",
+            display: "block",
+            right: -theme.spacing.unit * 2,
+            top: 11,
+            fontSize: 21,
+          },
+        },
+      },
+      "&>div": {
+        maxWidth: 141,
+        [theme.breakpoints.down('xs')]: {
+          maxWidth: `calc(50% - ${theme.spacing.unit * 1.5}px)`,
+        },
+        "&:last-child": {
+          paddingLeft: theme.spacing.unit * 3,
+          [theme.breakpoints.down('xs')]: {
+            paddingLeft: 0
+          },
+        }
+      }
     },
   },
 });
