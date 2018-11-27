@@ -14,6 +14,7 @@ import {
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
+import {RegExpZipCode} from "src/shared/constants/forms/regexp";
 
 
 export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
@@ -57,6 +58,11 @@ export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
   const {value, fieldConfig} = param;
   if (!value && fieldConfig.isRequired) {
     return false;
+  }
+  if (fieldConfig.inputName === 'zipCode' && typeof value === 'string') {
+    const regExp = new RegExp(RegExpZipCode);
+    const result = regExp.test(value);
+    return result;
   }
   return true;
 };

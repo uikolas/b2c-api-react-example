@@ -45,7 +45,11 @@ const mapStateToProps = (state: any, ownProps: any) => {
   // from ILoginState
   const customerReference = getCustomerReference(state, ownProps);
   const addressesCollection: IAddressItemCollection[] | null = getAddressesCollectionFromCheckoutStore(state, ownProps);
-  const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
+
+  // TODO: Change it after we have real endpoint
+  // const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
+  const isAddressesCollectionExist: boolean = true;
+
   // from global state
   const isAppStateLoading = isStateLoading(state, ownProps);
   // Countries from init state

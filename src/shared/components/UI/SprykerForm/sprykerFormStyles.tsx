@@ -176,5 +176,11 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
   btnSubmitOuter: {},
   error: {
     color: theme.palette.error.main,
+    "& input": {
+      borderColor: theme.palette.error.main,
+    },
+    "& [role='button']": {
+      borderColor: theme.palette.error.main,
+    }
   },
 });

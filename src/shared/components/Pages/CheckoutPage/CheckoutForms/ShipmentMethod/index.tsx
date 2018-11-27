@@ -23,8 +23,8 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
   }  = props;
 
   const shipmentCarrierNameToIcon: IShippingMethodsParams["shipmentCarrierNameToIcon"] = {
-    DHL: <PartnerIconDhl />,
-    Hermes: <PartnerIconHermes />,
+    "Spryker Dummy Shipment": <PartnerIconDhl />,
+    "Spryker Drone Shipment": <PartnerIconHermes />,
   };
 
   return (
