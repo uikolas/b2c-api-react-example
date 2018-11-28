@@ -2,11 +2,8 @@ import * as React from 'react';
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-import { ICustomerProfile, TCustomerInputValue } from 'src/shared/interfaces/customer';
 import {
   emptyRequiredFieldsErrorText,
-  inputSaveErrorText,
   passwordsNotEqualErrorText,
 } from 'src/shared/constants/messages/errors';
 import { saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
@@ -15,12 +12,11 @@ import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
 import { ChangePassword } from './ChangePassword';
 import { AccountActions } from './AccountActions';
-import { CustomerPageTitle } from './CustomerPageTitle';
+import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { pageStyles } from './styles';
 import { connect } from './connect';
 
-const pageTitle = 'Profile';
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
 const keyLastName = 'lastName';
@@ -28,23 +24,25 @@ const keyEmail = 'email';
 const keyNewPassword = 'newPassword';
 const keyOldPassword = 'password';
 const keyConfirmPassword = 'confirmPassword';
-
 const deleteProfileContent = 'Are you sure you want to delete your account?';
 
 @connect
 export class CustomerProfilePageBase extends React.Component<Props, State> {
-  public state: State = {
-    inputs: {
-      salutation: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      newPassword: '',
-      password: '',
-      confirmPassword: '',
-    },
-    isDeleteProfileDialogOpen: false,
-  };
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      inputs: {
+        salutation: props.customerData ? props.customerData.salutation : '',
+        firstName: props.customerData ? props.customerData.firstName : '',
+        lastName: props.customerData ? props.customerData.lastName : '',
+        email: props.customerData ? props.customerData.email : '',
+        newPassword: '',
+        password: '',
+        confirmPassword: '',
+      },
+      isDeleteProfileDialogOpen: false,
+    };
+  }
 
   public componentDidMount = () => {
     if (!this.props.isCustomerDataExist) {
@@ -56,35 +54,28 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     if (!this.props.isRejected && !this.props.isCustomerDataExist) {
       this.initRequestData();
     }
-
     if (this.props.passwordUpdated && !prevProps.passwordUpdated) {
       this.clearPasswords();
+    }
+    if (!prevProps.isCustomerDataExist && this.props.isCustomerDataExist) {
+      this.setState({inputs: {
+          ...prevState.inputs,
+          salutation: this.props.customerData.salutation,
+          firstName: this.props.customerData.firstName,
+          lastName: this.props.customerData.lastName,
+          email: this.props.customerData.email,
+        }});
     }
   };
 
   public handleProfileInputChange = (event: {target: IProfileFieldInput}): void => {
     const {name, value}: IProfileFieldInput = event.target;
     const cleanValue = value.trim();
-    if (!this.state.inputs.hasOwnProperty(name)) {
-      throw new Error(inputSaveErrorText);
-      return;
+    const {inputs} = this.state;
+
+    if (inputs.hasOwnProperty(name) && inputs[name] !== cleanValue) {
+      this.setState({ inputs: {...inputs, [name]: cleanValue} });
     }
-
-    this.setState((prevState: State) => {
-      const key: (keyof ICustomerProfile) = name;
-      const prevValue: TCustomerInputValue = prevState.inputs[key];
-      if (prevValue === cleanValue) {
-        return;
-      }
-
-      return ({
-        ...prevState,
-        inputs: {
-          ...prevState.inputs,
-          [name]: cleanValue,
-        },
-      });
-    });
   };
 
   public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
@@ -92,10 +83,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     if (this.props.isLoading || !this.props.customerReference) {
       return;
     }
-    const firstName = this.getCurrentDataField(keyFirstName);
-    const lastName = this.getCurrentDataField(keyLastName);
-    const salutation = this.getCurrentDataField(keySalutation);
-    const email = this.getCurrentDataField(keyEmail);
+    const {firstName, lastName, salutation, email} = this.state.inputs;
 
     if (!firstName || !lastName || !email || !salutation) {
       toast.warn(emptyRequiredFieldsErrorText);
@@ -114,14 +102,11 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
 
   public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const password = this.getCurrentDataField(keyOldPassword);
-    const newPassword = this.getCurrentDataField(keyNewPassword);
-    const confirmPassword = this.getCurrentDataField(keyConfirmPassword);
+    const {password, newPassword, confirmPassword}  = this.state.inputs;
     if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
-
     if (newPassword !== confirmPassword) {
       toast.warn(passwordsNotEqualErrorText);
       return null;
@@ -152,53 +137,19 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     this.handleDeleteProfileDialogShowing(event);
   };
 
-  private getCurrentDataField = (fieldName: (keyof ICustomerProfile)): string => {
-    const emptyValue = '';
-    if (!this.props.isCustomerDataExist || !fieldName) {
-      return emptyValue;
-    }
-
-    const key: (keyof ICustomerProfile) = fieldName;
-    const stateValue = this.state.inputs[key];
-    const propsValue = this.props.customerData[key];
-
-    if (stateValue) {
-      return stateValue;
-    } else {
-      if (propsValue) {
-        return propsValue as string;
-      } else {
-        return emptyValue;
-      }
-    }
-  };
-
   private clearPasswords = (): void => {
-    if (this.props.isLoading) {
-      return;
-    }
-
-    this.setState((prevState: State) => ({
-      ...prevState,
-      inputs: {
-        ...prevState.inputs,
+    this.setState({inputs: {
+        ...this.state.inputs,
         newPassword: '',
         password: '',
         confirmPassword: '',
-      },
-    }));
+      }});
   };
 
   private initRequestData = () => {
-    if (this.props.isLoading) {
-      return;
-    }
-    if (this.props.isAppDataSet && this.props.customerReference) {
-      console.info('%c *** initRequestData ***', 'background: #3d5afe; color: #ffea00');
+    if (!this.props.isLoading && this.props.isAppDataSet && this.props.customerReference) {
       this.props.getCustomerData(this.props.customerReference);
-      return true;
     }
-    return false;
   };
 
   public render(): JSX.Element {
@@ -207,24 +158,22 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     return (
       <div>
         <CustomerPageTitle title='profile' />
-
         <UpdateProfile
           submitHandler={ this.handleSubmitUpdateProfile }
           inputChangeHandler={ this.handleProfileInputChange }
-          firstName={ this.getCurrentDataField(keyFirstName) }
-          lastName={ this.getCurrentDataField(keyLastName) }
-          salutation={ this.getCurrentDataField(keySalutation) }
-          email={ this.getCurrentDataField(keyEmail) }
+          firstName={ this.state.inputs[keyFirstName] }
+          lastName={ this.state.inputs[keyLastName] }
+          salutation={ this.state.inputs[keySalutation] }
+          email={ this.state.inputs[keyEmail] }
         />
 
         <CustomerPageTitle title='change password' />
-
         <ChangePassword
           submitHandler={ this.handleSubmitPassword }
           inputChangeHandler={ this.handleProfileInputChange }
-          password={ this.getCurrentDataField(keyOldPassword) }
-          newPassword={ this.getCurrentDataField(keyNewPassword) }
-          confirmPassword={ this.getCurrentDataField(keyConfirmPassword) }
+          password={ this.state.inputs[keyOldPassword] }
+          newPassword={ this.state.inputs[keyNewPassword] }
+          confirmPassword={ this.state.inputs[keyConfirmPassword] }
         />
 
         <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount }/>
@@ -246,5 +195,4 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
 }
 
 export const CustomerProfilePage = withStyles(pageStyles)(CustomerProfilePageBase);
-
 export default CustomerProfilePage;

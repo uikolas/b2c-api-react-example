@@ -4,6 +4,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { LogoProfileProps as Props } from './types';
 import { styles } from './styles';
 
+/* tslint:disable */
+
 const logoProfileImage = (
   <svg width="64" height="64" viewBox="0 0 64 64">
     <g fill="none" fillRule="evenodd" strokeWidth=".8">
