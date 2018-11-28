@@ -8,10 +8,15 @@ import Typography from '@material-ui/core/Typography';
 import {homePageStyles} from './homePageStyles';
 import {connect} from './connect';
 import {IHomePageProps, IHomePageState} from "./types";
-
-import CatalogSearchComponent from '../../Common/CatalogSearch';
 import {AppMain} from '../../Common/AppMain';
 import {Banner} from "src/shared/components/Pages/HomePage/Banner/index";
+import {
+  HomePageBannerBtnText,
+  HomePageBannerIntro,
+  HomePageBannerTitleFirst,
+  HomePageBannerTitleSecond
+} from "src/shared/constants/content/homePage";
+import {pathCategoryComputers} from "src/shared/routes/categoriesRoutes";
 
 
 @connect
@@ -26,7 +31,13 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
 
     return (
       <React.Fragment>
-        <Banner />
+        <Banner
+          titleFirst={HomePageBannerTitleFirst}
+          titleSecond={HomePageBannerTitleSecond}
+          intro={HomePageBannerIntro}
+          linkPath={pathCategoryComputers}
+          linkTitle={HomePageBannerBtnText}
+        />
         <AppMain>
         <Grid container
               justify="center"
@@ -39,17 +50,7 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
             </Typography>
           </Grid>
         </Grid>
-        <Grid container
-              justify="center"
-              alignItems="center"
-              className={classes.footerBlock}
-        >
-          <Grid item xs={12} sm={6}>
-            <Typography variant="title" color="textPrimary" align="center">
-              Footer
-            </Typography>
-          </Grid>
-        </Grid>
+
       </AppMain>
       </React.Fragment>
     );

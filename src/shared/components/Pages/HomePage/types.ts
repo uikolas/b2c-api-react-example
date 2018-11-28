@@ -8,3 +8,11 @@ export interface IHomePageProps extends WithStyles<typeof homePageStyles> {
 
 export interface IHomePageState {
 }
+
+export interface ICategoriesTeasersData {
+  title: string;
+  text: string;
+  img: string;
+  path: string;
+  linkTitle: string;
+}

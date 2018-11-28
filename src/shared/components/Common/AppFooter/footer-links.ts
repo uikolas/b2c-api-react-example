@@ -1,30 +1,45 @@
 import { link } from './parts/Links/types';
-import {pathSearchPage} from "src/shared/routes/contentRoutes";
+import {
+  pathCategoryComputers,
+  pathCategoryNew,
+  pathCategoryNotebooks,
+  pathCategorySale,
+  pathCategoryTablets,
+  pathCategoryWorkstations
+} from "src/shared/routes/categoriesRoutes";
+import {
+  CategoryNameComputers,
+  CategoryNameNew,
+  CategoryNameNotebooks,
+  CategoryNameSale,
+  CategoryNameTablets,
+  CategoryNameWorkstations
+} from "src/shared/constants/categories";
 
 export const categoriesLinks: link[] = [
   {
-    name: 'Computers',
-    path: `${pathSearchPage}/5`,
+    name: CategoryNameComputers,
+    path: pathCategoryComputers,
   },
   {
-    name: 'Notebooks',
-    path: `${pathSearchPage}/6`,
+    name: CategoryNameNotebooks,
+    path: pathCategoryNotebooks,
   },
   {
-    name: 'Pcs & Workstations',
-    path: `${pathSearchPage}/7`,
+    name: CategoryNameWorkstations,
+    path: pathCategoryWorkstations,
   },
   {
-    name: 'Tablets',
-    path: `${pathSearchPage}/8`,
+    name: CategoryNameTablets,
+    path: pathCategoryTablets,
   },
   {
-    name: 'Sale %',
-    path: `${pathSearchPage}/outlet`,
+    name: CategoryNameSale,
+    path: pathCategorySale,
   },
   {
-    name: 'New',
-    path: `${pathSearchPage}/new`,
+    name: CategoryNameNew,
+    path: pathCategoryNew,
   },
 ];
 
