@@ -31,7 +31,8 @@ export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Ele
   return (
     <Button
       variant="contained"
-      component="button"
+      color="primary"
+      fullWidth
       disabled={ !!disabled }
       className={ `${classes.button} ${extraClasses}` }
       value={ value }

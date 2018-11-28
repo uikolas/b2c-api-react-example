@@ -1,11 +1,7 @@
-// tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import { ICustomerProfile, TCustomerInputValue } from 'src/shared/interfaces/customer';
 import {
@@ -19,12 +15,12 @@ import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
 import { ChangePassword } from './ChangePassword';
 import { AccountActions } from './AccountActions';
+import { CustomerPageTitle } from './CustomerPageTitle';
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { pageStyles } from './styles';
 import { connect } from './connect';
 
-export const pageTitle = 'Profile';
-
+const pageTitle = 'Profile';
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
 const keyLastName = 'lastName';
@@ -51,19 +47,17 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
   };
 
   public componentDidMount = () => {
-    console.info('%c ---- componentDidMount ----', 'background: #1a5bfe; color: #bada55');
     if (!this.props.isCustomerDataExist) {
       this.initRequestData();
     }
   };
 
   public componentDidUpdate = (prevProps: Props, prevState: State) => {
-    console.info('%c ---- componentDidUpdate ----', 'background: #4cab50; color: #cada55');
     if (!this.props.isRejected && !this.props.isCustomerDataExist) {
       this.initRequestData();
     }
 
-    if (this.props.passwordUpdated === true && this.props.passwordUpdated !== prevProps.passwordUpdated) {
+    if (this.props.passwordUpdated && !prevProps.passwordUpdated) {
       this.clearPasswords();
     }
   };
@@ -208,51 +202,44 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
   };
 
   public render(): JSX.Element {
-    console.info('CustomerProfilePage props: ', this.props);
-    console.info('CustomerProfilePage state: ', this.state);
     const {classes} = this.props;
 
     return (
       <div>
-        <div className={ classes.root }>
-          <Grid container justify="center">
-            <Grid item xs={ 12 }>
-              <Typography align="center" variant="headline" gutterBottom={ true }>{ pageTitle }</Typography>
-            </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <UpdateProfile
-              submitHandler={ this.handleSubmitUpdateProfile }
-              inputChangeHandler={ this.handleProfileInputChange }
-              firstName={ this.getCurrentDataField(keyFirstName) }
-              lastName={ this.getCurrentDataField(keyLastName) }
-              salutation={ this.getCurrentDataField(keySalutation) }
-              email={ this.getCurrentDataField(keyEmail) }
+        <CustomerPageTitle title='profile' />
+
+        <UpdateProfile
+          submitHandler={ this.handleSubmitUpdateProfile }
+          inputChangeHandler={ this.handleProfileInputChange }
+          firstName={ this.getCurrentDataField(keyFirstName) }
+          lastName={ this.getCurrentDataField(keyLastName) }
+          salutation={ this.getCurrentDataField(keySalutation) }
+          email={ this.getCurrentDataField(keyEmail) }
+        />
+
+        <CustomerPageTitle title='change password' />
+
+        <ChangePassword
+          submitHandler={ this.handleSubmitPassword }
+          inputChangeHandler={ this.handleProfileInputChange }
+          password={ this.getCurrentDataField(keyOldPassword) }
+          newPassword={ this.getCurrentDataField(keyNewPassword) }
+          confirmPassword={ this.getCurrentDataField(keyConfirmPassword) }
+        />
+
+        <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount }/>
+
+        { this.state.isDeleteProfileDialogOpen
+          ? (
+            <SprykerDialog
+              handleShow={ this.handleDeleteProfileDialogShowing }
+              content={ deleteProfileContent }
+              isOpen={ this.state.isDeleteProfileDialogOpen }
+              handleAgree={ this.handleDeleteProfileDialogAgree }
+              handleDisagree={ this.handleDeleteProfileDialogDisagree }
             />
-
-            <ChangePassword
-              submitHandler={ this.handleSubmitPassword }
-              inputChangeHandler={ this.handleProfileInputChange }
-              password={ this.getCurrentDataField(keyOldPassword) }
-              newPassword={ this.getCurrentDataField(keyNewPassword) }
-              confirmPassword={ this.getCurrentDataField(keyConfirmPassword) }
-            />
-
-            <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount }/>
-
-            { this.state.isDeleteProfileDialogOpen
-              ? (
-                <SprykerDialog
-                  handleShow={ this.handleDeleteProfileDialogShowing }
-                  content={ deleteProfileContent }
-                  isOpen={ this.state.isDeleteProfileDialogOpen }
-                  handleAgree={ this.handleDeleteProfileDialogAgree }
-                  handleDisagree={ this.handleDeleteProfileDialogDisagree }
-                />
-              ) : null
-            }
-          </Grid>
-        </div>
+          ) : null
+        }
       </div>
     );
   }

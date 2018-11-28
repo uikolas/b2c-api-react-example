@@ -36,3 +36,8 @@ export const InputLabelPaymentCreditCardName = "Name on Card";
 export const InputLabelPaymentCreditCardCVC = "CVC";
 export const InputLabelPaymentDateOfBirth = "Date of Birth";
 export const InputLabelPaymentExpiryDate = "Expiry Date";
+
+export const InputLabelEmail = "Email address";
+export const InputLabelPassword = "Current Password";
+export const InputLabelNewPassword = "New Password";
+export const InputLabelConfirmPassword = "Confirm New Password";

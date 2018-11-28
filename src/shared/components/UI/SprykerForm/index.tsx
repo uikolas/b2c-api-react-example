@@ -22,6 +22,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
       fields,
     },
     formClassName,
+    SubmitButton,
   }  = props;
 
   const isRowsExist = (fields.length > 0);
@@ -32,6 +33,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
         formName={formName}
         inputName={field.inputName}
         inputValue={field.inputValue}
+        inputType={field.inputType}
         isRequired={field.isRequired ? field.isRequired : false}
         onChangeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
         onBlurHandler={field.onBlurOwnHandler ? field.onBlurOwnHandler : onBlurHandler}
@@ -137,6 +139,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
           </Grid>
         );
       })}
+      { SubmitButton || null }
     </form>
   );
 };

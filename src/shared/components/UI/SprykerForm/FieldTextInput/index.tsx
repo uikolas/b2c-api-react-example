@@ -11,6 +11,7 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
   const {
     classes,
     inputValue,
+    inputType,
     formName,
     inputName,
     onChangeHandler,
@@ -40,7 +41,7 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
           root: classes.label
         }
       }}
-      type="text"
+      type={inputType || 'text'}
       value={inputValue}
       placeholder={placeholder}
       className={classes.textField}

@@ -12,4 +12,5 @@ export interface IFieldTextInputProps extends WithStyles<typeof sprykerFormStyle
   isError: IFormField["isError"];
   isRequired: IFormField["isRequired"];
   placeholderText?: string | null;
+  inputType: IFormField["inputType"];
 }

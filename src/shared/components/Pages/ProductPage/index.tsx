@@ -393,7 +393,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                     <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
                       <SprykerButton
                         title={ buyBtnTitle }
-                        extraClasses={ `${classes.productBtn} ${classes.buyBtn}` }
+                        extraClasses={ classes.buyBtn }
                         onClick={ this.handleBuyBtnClick }
                         disabled={ this.isBuyBtnDisabled() }
                       />
@@ -424,7 +424,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                               className={ classes.buyBtnParent }>
                           <SprykerButton
                             title={ wishlistBtnTitle }
-                            extraClasses={ `${classes.productBtn} ${classes.wishListBtn}` }
+                            extraClasses={ classes.wishListBtn }
                             onClick={ this.handleAddToWishlist }
                             disabled={ this.isAddToWishListBtnDisabled() }
                           />

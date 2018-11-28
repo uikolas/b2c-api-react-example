@@ -3,9 +3,10 @@ import { FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 
 import { pageStyles } from '../styles';
-import { SprykerButton } from '../../../UI/SprykerButton';
+import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 
 
 interface AccountActionsProps extends WithStyles<typeof pageStyles> {
@@ -14,7 +15,7 @@ interface AccountActionsProps extends WithStyles<typeof pageStyles> {
 
 export const sectionTitle = 'Delete Account';
 export const submitDeleteBtnTitle = 'Delete Account';
-export const deleteAccountText = 'This will delete all of the account information.';
+export const deleteAccountText = 'All personal information and account history will be permanently deleted.';
 
 export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.Element => {
   const {
@@ -25,36 +26,25 @@ export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.E
   return (
     <Grid container justify="flex-start" className={ classes.section }>
       <Grid item xs={ 12 }>
-        <Typography variant="title" color="inherit" gutterBottom={ true } className={ classes.sectionTitle }>
+        <Typography variant="title" className={ classes.sectionTitle }>
           { sectionTitle }
         </Typography>
-        <form
-          className={ classes.form }
-          noValidate
-          autoComplete="off"
-          onSubmit={ submitDeleteHandler }
-          id="deleteAccount"
-          name="deleteAccount"
-        >
 
-          <Grid container justify="flex-start" alignItems="center" className={ classes.controlsGroup }>
+        <Divider />
+      </Grid>
 
-            <Grid item xs={ 12 } sm={ 6 } className={ classes.control }>
-              <Typography variant="body1" color="inherit" gutterBottom={ true }>
-                { deleteAccountText }
-              </Typography>
-            </Grid>
+      <Grid item xs={ 12 }>
+        <Typography variant="body1" className={ classes.warningTitle }>
+          { deleteAccountText }
+        </Typography>
+      </Grid>
 
-            <Grid item xs={ 12 } sm={ 6 } className={ `${classes.btnSubmitOuter} ${classes.controlsGroup}` }>
-              <SprykerButton
-                title={ submitDeleteBtnTitle }
-                btnType={ 'submit' }
-              />
-            </Grid>
-
-          </Grid>
-
-        </form>
+      <Grid item xs={ 12 } sm={ 2 }>
+        <SprykerButton
+          title={ submitDeleteBtnTitle }
+          onClick={ submitDeleteHandler }
+          extraClasses={ classes.deleteBtn }
+        />
       </Grid>
     </Grid>
   );

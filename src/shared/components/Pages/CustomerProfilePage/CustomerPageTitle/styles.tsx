@@ -2,14 +2,12 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  button: {
-    height: '44px',
-    borderRadius: '4px',
-    fontSize: '16px',
-    letterSpacing: '1.5px',
-    fontWeight: 500,
-  },
-  icon: {
-    marginLeft: theme.spacing.unit * 2,
+  pageHeader: {
+    color: theme.appColors.black,
+    fontSize: '32px',
+    lineHeight: 1.13,
+    letterSpacing: -0.8,
+    marginBottom: theme.spacing.unit * 2,
+    textTransform: 'capitalize',
   },
 });
