@@ -2,23 +2,31 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  paperContainer: {
-    width: '100%',
-    margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px ${theme.spacing.unit * 2}px`,
+  addressData: {
+    color: theme.appColors.black,
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    lineHeight: 2,
+    letterSpacing: '0.5px',
+    marginTop: theme.spacing.unit * 4,
   },
-  addButton: {
-    margin: theme.spacing.unit * 2,
-  },
-  customerName: {
-    fontWeight: 500,
-    fontSize: '0.86rem',
+  btnRow: {
+    display: 'flex',
+    alignItems: 'center',
     marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit / 2,
+    marginBottom: theme.spacing.unit * 4,
+    justifyContent: 'space-between',
   },
   chips: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit / 2,
+    color: theme.appColors.grey,
+    borderColor: theme.appColors.grey,
+    borderRadius: 2,
+    textTransform: 'uppercase',
+    marginRight: theme.spacing.unit * 2,
   },
+  addButton: {
+    marginTop: theme.spacing.unit * 4,
+  },
+
   marginRight: {
     marginRight: theme.spacing.unit,
   },
@@ -31,5 +39,13 @@ export const styles = (theme: Theme) => createStyles({
   },
   buttons: {
     margin: theme.spacing.unit,
+  },
+
+  emptyMsg: {
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    lineHeight: 2,
+    letterSpacing: '0.5px',
+    marginTop: theme.spacing.unit * 4,
+    marginBottom: theme.spacing.unit,
   },
 });

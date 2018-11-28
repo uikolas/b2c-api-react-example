@@ -120,7 +120,7 @@ export class AddressesService {
   }
 
   public static async updateAddress(
-    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: any,
+    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: IAddressItem,
   ): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);

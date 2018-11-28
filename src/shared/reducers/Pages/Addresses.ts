@@ -7,7 +7,7 @@ import {
   UPDATE_ADDRESS,
 } from '../../constants/ActionTypes/Pages/Addresses';
 import { IReduxState } from 'src/typings/app';
-import { IAddressItem } from '../../interfaces/addresses';
+import { IAddressItem } from 'src/shared/interfaces/addresses';
 
 export interface IAddressesState extends IReduxState {
   data: {
@@ -115,27 +115,27 @@ export const pageAddresses = produce<IAddressesState>(
 );
 
 export function isPageAddressesStateLoading(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.pageAddresses.pending && state.pageAddresses.pending === true);
+  return Boolean(isStateExist(state, props) && state.pageAddresses.pending);
 }
 
 export function isPageAddressesStateRejected(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.pageAddresses.rejected && state.pageAddresses.rejected === true);
+  return Boolean(isStateExist(state, props) && state.pageAddresses.rejected);
 }
 
 export function isPageAddressesFulfilled(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.pageAddresses.fulfilled && state.pageAddresses.fulfilled === true);
+  return Boolean(isStateExist(state, props) && state.pageAddresses.fulfilled);
 }
 
-export function getCurrentAddressFromStore(state: any, props: any): IAddressItem | null {
+export function getCurrentAddress(state: any, props: any): IAddressItem | null {
   return (isStateExist(state, props) && state.pageAddresses.data.currentAddress)
     ? state.pageAddresses.data.currentAddress
     : null;
 }
 
-export function getAddressesCollectionFromStore(state: any, props: any): IAddressItem[] | null {
-  return (isStateExist(state, props) && state.pageAddresses.data.addresses && state.pageAddresses.data.addresses.length)
+export function getAddressesCollection(state: any, props: any): IAddressItem[] {
+  return isStateExist(state, props)
     ? state.pageAddresses.data.addresses
-    : null;
+    : [];
 }
 
 export const checkAddressesCollectionExist = (state: any, props: any): boolean => {
