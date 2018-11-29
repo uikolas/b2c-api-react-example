@@ -9,41 +9,47 @@ import {
   CategoryNameTablets,
   CategoryNameWorkstations
 } from "src/shared/constants/categories";
-import {HomePageCategoryBtnText} from "src/shared/constants/content/homePage";
+import {
+  HomePageComputersBtnText,
+  HomePageNotebooksBtnText,
+  HomePageTabletsBtnText,
+  HomePageWorkstationsBtnText
+} from "src/shared/constants/content/homePage";
 import {
   pathCategoryComputers,
   pathCategoryNotebooks,
   pathCategoryTablets,
   pathCategoryWorkstations
 } from "src/shared/routes/categoriesRoutes";
+import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from "src/img/index";
 
-export const categoriesTeasers: Array<ICategoriesTeasersData> = [
+export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
   {
     title: CategoryNameComputers,
     text: CategoryIntroComputers,
-    img: 'ddd',
+    img: computersSrc,
     path: pathCategoryComputers,
-    linkTitle: `${HomePageCategoryBtnText} ${CategoryNameComputers}`,
+    linkTitle: HomePageComputersBtnText,
   },
   {
     title: CategoryNameNotebooks,
     text: CategoryIntroNotebooks,
-    img: 'dddd',
+    img: notebooksSrc,
     path: pathCategoryNotebooks,
-    linkTitle: `${HomePageCategoryBtnText} ${CategoryNameNotebooks}`,
-  },
-  {
-    title: CategoryNameWorkstations,
-    text: CategoryIntroWorkstations,
-    img: 'fdfdf',
-    path: pathCategoryWorkstations,
-    linkTitle: `${HomePageCategoryBtnText} ${CategoryNameWorkstations}`,
+    linkTitle: HomePageNotebooksBtnText,
   },
   {
     title: CategoryNameTablets,
     text: CategoryIntroTablets,
-    img: 'dfdf',
+    img: tabletsSrc,
     path: pathCategoryTablets,
-    linkTitle: `${HomePageCategoryBtnText} ${CategoryNameTablets}`,
+    linkTitle: HomePageTabletsBtnText,
+  },
+  {
+    title: CategoryNameWorkstations,
+    text: CategoryIntroWorkstations,
+    img: workstationsSrc,
+    path: pathCategoryWorkstations,
+    linkTitle: HomePageWorkstationsBtnText,
   },
 ];

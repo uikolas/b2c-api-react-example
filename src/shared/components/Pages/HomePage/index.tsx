@@ -1,13 +1,11 @@
 import * as React from 'react';
-import {FormEvent, ChangeEvent} from "react";
-
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import {homePageStyles} from './homePageStyles';
-import {connect} from './connect';
 import {IHomePageProps, IHomePageState} from "./types";
+import {connect} from './connect';
+import {categoriesTeasersData} from "./constants/categoriesTeasersData";
+import {CategoriesTeasers} from "./CategoriesTeasers";
 import {AppMain} from '../../Common/AppMain';
 import {Banner} from "src/shared/components/Pages/HomePage/Banner/index";
 import {
@@ -26,8 +24,6 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
 
   public render() {
     const {classes} = this.props;
-    console.info('HomePage this.props', this.props);
-    console.info('HomePage this.state', this.state);
 
     return (
       <React.Fragment>
@@ -39,19 +35,8 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
           linkTitle={HomePageBannerBtnText}
         />
         <AppMain>
-        <Grid container
-              justify="center"
-              alignItems="center"
-              className={classes.contentBlock}
-        >
-          <Grid item xs={12} sm={6}>
-            <Typography variant="title" color="textPrimary" align="center">
-              Content block
-            </Typography>
-          </Grid>
-        </Grid>
-
-      </AppMain>
+          <CategoriesTeasers teasers={categoriesTeasersData} />
+        </AppMain>
       </React.Fragment>
     );
   }

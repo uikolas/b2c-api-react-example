@@ -18,6 +18,11 @@ export const appBtnLinkStyles = (theme: Theme) => createStyles({
     paddingTop: theme.spacing.unit * 1.5,
     paddingBottom: theme.spacing.unit * 1.5,
     transition: "all 0.4s ease",
+    textAlign: "center",
+    [theme.breakpoints.down('xs')]: {
+      display: "flex",
+      justifyContent: "center",
+    },
 
     "&:hover": {
       backgroundColor: theme.appColors.black,

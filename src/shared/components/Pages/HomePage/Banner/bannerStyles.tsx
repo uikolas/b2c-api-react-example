@@ -1,20 +1,18 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
+import {homepageHeroSrc} from 'src/img';
 
-// TODO: Replace image path !!!!
+
 export const bannerStyles = (theme: Theme) => createStyles({
   root: {
-    backgroundImage: `url("http://glue.de.suite.local:3000/img/homepage_hero_image.jpg")`,
+    backgroundImage:  `url(${homepageHeroSrc})`,
     backgroundColor: theme.appColors.weakGrey,
     backgroundSize: 'cover',
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "0 40%",
+    backgroundPosition: "center center",
     height: 520,
     color: theme.appColors.white,
     [theme.breakpoints.down('md')]: {
-      height: 420,
-    },
-    [theme.breakpoints.down('sm')]: {
       height: 320,
     },
     [theme.breakpoints.down('xs')]: {
@@ -60,6 +58,6 @@ export const bannerStyles = (theme: Theme) => createStyles({
     marginTop: theme.spacing.unit * 1.5,
   },
   btn: {
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
 });
