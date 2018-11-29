@@ -2,7 +2,7 @@
   "name": "ReactSPA",
   "private": true,
   "version": "0.0.1",
-  "description": "React single page application forSpryker Glue.",
+  "description": "React single page application for Spryker Glue.",
   "main": "build/index.html",
   "engines": {
     "node": ">=8.9.3",
@@ -12,10 +12,10 @@
     "type": "git",
     "url": "git+https://github.com/spryker/react-app"
   },
-  "author": "Anatolii Hordiienko <gordienko@zfort.com> (http://www.zfort.com/)",
+  "author": "",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://bitbucket.org/gordienkotolik/boilerplate/issues"
+    "url": ""
   },
   "readmeFilename": "README.md",
   "tags": [
@@ -29,7 +29,7 @@
     "scss",
     "css modules"
   ],
-  "homepage": "https://bitbucket.org/gordienkotolik/boilerplate.git",
+  "homepage": "https://github.com/spryker/react-app",
   "dependencies": {
     "@material-ui/core": "3.1.0",
     "@material-ui/icons": "3.0.1",

@@ -85,17 +85,12 @@ const config = {
   },
 
   output: {
-    // the target directory for all output files
-    // must be an absolute path (use the Node.js path module)
     path: path.resolve(__dirname, 'build', 'web'), // string
 
-    // the filename template for entry chunks
-    filename: "[name].[hash].bundle.js", // string
+    filename: "[name].[hash].bundle.js",
 
     chunkFilename: "[name].[chunkhash].chunk.js",
 
-    // the url to the output directory resolved relative to the HTML page
-    // webpackDevServer ? "http://" + DEV_SERVER_HOST + WEB_PATH : WEB_PATH
     publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : WEB_PATH,
   },
   optimization: {
@@ -219,7 +214,7 @@ const config = {
   },
 
   stats: {
-    children: false, // Log spam
+    children: false,
     reasons: !PRODUCTION,
     hash: true,
     version: true,

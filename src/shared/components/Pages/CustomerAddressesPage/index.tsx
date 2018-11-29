@@ -23,6 +23,8 @@ export class CustomerAddressBase extends React.Component<Props, State> {
   public state: State = {};
 
   public componentDidMount() {
+    this.props.setCurrentAddressAction(null);
+
     if (!this.props.isAddressesInit && this.props.customer) {
       this.props.getAddressesAction(this.props.customer);
     }

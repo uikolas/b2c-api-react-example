@@ -15,9 +15,3 @@ export interface IReduxState {
   rejected?: boolean;
   initiated?: boolean;
 }
-
-export interface IRouterState {
-  routerPath?: string;
-  routerQuery?: {};
-  routerState?: {};
-}

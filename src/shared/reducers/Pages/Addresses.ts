@@ -81,7 +81,7 @@ export const pageAddresses = produce<IAddressesState>(
       case `${UPDATE_ADDRESS}_FULFILLED`: {
         const addresses: IAddressItem[] = draft.data.addresses.map((
           address: IAddressItem
-        ) => address.id === action.addressId ? action.data : address);
+        ) => address.id === action.addressId ? {...action.data, id: action.addressId} : address);
         draft.data.addresses = addresses;
         draft.data.currentAddress = null;
         draft.error = false;
@@ -96,7 +96,7 @@ export const pageAddresses = produce<IAddressesState>(
           const currentAddress: IAddressItem = draft.data.addresses.find((
             address: IAddressItem
           ) => address.id === action.addressId);
-          draft.data.currentAddress = currentAddress;
+          draft.data.currentAddress = currentAddress || null;
         } else {
           draft.data.currentAddress = null;
         }

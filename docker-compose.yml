@@ -1,6 +1,6 @@
 version: "3"
 services:
-  boilerplate-node:
+  spa-node:
     container_name: node-for-react
 
     build:
