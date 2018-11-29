@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router';
 
 import { ProtectedRoute } from './ProtectedRoute';
 
-import { ConnectedHomePage } from '../components/Pages/Home';
+import { LoadableHomePage } from '../components/Pages/HomePage/loadable';
 import { LoadableLoginPage } from '../components/Pages/LoginPage/loadable';
 import { LoadablePasswordForgotPage } from '../components/Pages/LoginPage/ForgotPasswordPage/loadable';
 import { LoadablePasswordResetPage } from '../components/Pages/LoginPage/ResetPassword/loadable';
@@ -55,7 +55,7 @@ export const pathNotFoundPage = `${config.WEB_PATH}*`;
 export const getContentRoutes = function() {
   return (
     <Switch>
-      <Route path={ pathHomePage } exact component={ ConnectedHomePage }/>
+      <Route path={ pathHomePage } exact component={ LoadableHomePage }/>
       <Route path={ pathSearchPage } component={ LoadableSearchPage }/>
       <Route path={ pathProductPage } component={ LoadableProductPage }/>
       <Route path={ pathLoginPage } component={ LoadableLoginPage }/>

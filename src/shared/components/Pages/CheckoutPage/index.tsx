@@ -70,7 +70,7 @@ import {
   validateInvoiceForm,
   validateInvoiceInput
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
-import {AppPageTitle, AppPageTitleBase} from "src/shared/components/Common/AppPageTitle/index";
+import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
 
 
