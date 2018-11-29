@@ -8,6 +8,7 @@ export interface AddressFormProps extends WithStyles<typeof styles> {
   currentAddress: IAddressItem;
   countries: ICountries[];
   routerGoBack: Function;
+  isLoading: boolean;
   dispatch: Function;
   addAddress(payload: IAddressItem, customerId: string): void;
   updateAddress(addressId: string, customerId: string, payload: any): void;

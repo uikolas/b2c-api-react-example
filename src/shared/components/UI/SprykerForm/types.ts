@@ -46,7 +46,7 @@ export interface IFormField {
 
 export interface IFormSettings {
   formName: string;
-  onChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  onChangeHandler?: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   onBlurHandler?: React.EventHandler<any>;
   onSubmitHandler: (event: FormEvent<HTMLFormElement>) => void;
   fields: Array<Array<IFormField>>;

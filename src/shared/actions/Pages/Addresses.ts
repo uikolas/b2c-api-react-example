@@ -46,7 +46,7 @@ export const deleteAddressAction = function (addressId: string, customerId: stri
   };
 };
 
-export const updateAddressAction = function (addressId: string, customerId: string, payload: any) {
+export const updateAddressAction = function (addressId: string, customerId: string, payload: IAddressItem) {
   return (dispatch: Function, getState: Function) => {
     dispatch(updateAddressPendingState);
     AddressesService.updateAddress(UPDATE_ADDRESS, dispatch, addressId, customerId, payload);

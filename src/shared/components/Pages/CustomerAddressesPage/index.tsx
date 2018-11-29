@@ -1,36 +1,30 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
-import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
-import { reduxify } from 'src/shared/lib/redux-helper';
-import { deleteAddressAction, getAddressesAction, setCurrentAddressAction } from 'src/shared/actions/Pages/Addresses';
-import { IAddressesState } from 'src/shared/reducers/Pages/Addresses';
-import { ILoginState } from 'src/shared/reducers/Pages/Login';
-import { getRouterHistoryPush, getRouterLocation } from 'src/shared/selectors/Common/router';
+import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
+import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { pathCustomerAddressesPage } from 'src/shared/routes/contentRoutes';
+import { IAddressItem } from 'src/shared/interfaces/addresses';
 
 import { styles } from './styles';
+import { connect } from './connect';
 import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
 
+const emptyAddressMessage: string = 'You do not have any saved addresses within your account.';
+
+
+@connect
 export class CustomerAddressBase extends React.Component<Props, State> {
   public state: State = {};
 
   public componentDidMount() {
-    if (this.props.customer) {
-      this.props.getAddressesList(this.props.customer);
+    if (!this.props.isAddressesInit && this.props.customer) {
+      this.props.getAddressesAction(this.props.customer);
     }
   }
 
@@ -39,92 +33,81 @@ export class CustomerAddressBase extends React.Component<Props, State> {
   };
 
   public setUpdatedAddress = (addressId: string) => (e: ClickEvent) => {
-    this.props.dispatch(setCurrentAddressAction(addressId));
+    this.props.setCurrentAddressAction(addressId);
     this.props.routerPush(`${pathCustomerAddressesPage}/update`);
   };
 
   public render(): JSX.Element {
-    const {classes, addresses, isLoading, deleteAddress} = this.props;
+    const {classes, addresses, isLoading, deleteAddressAction} = this.props;
 
-    const rows: any[] = addresses.map(item => (
-      <TableRow
-        hover
-        key={ item.id }
-      >
-        <TableCell component="th" scope="row">
-          <div className={ classes.customerName }>{ `${item.salutation} ${item.firstName} ${item.lastName}` }</div>
-          <div>{ `${item.company || ''}` }</div>
-          <div>{ `${item.address1} ${item.address2} ${item.address3}` }</div>
-          <div>{ `${item.zipCode} ${item.city}, ${item.country}` }</div>
-          <div>{ `${item.phone || ''}` }</div>
-          <div className={ classes.chips }>
+    const rows = addresses.map((item: IAddressItem) => (
+      <div key={ item.id || item.zipCode } className={classes.addressData}>
+        <div>{ `${item.salutation} ${item.firstName} ${item.lastName},` }</div>
+        <div>{ `${item.company || ''}` }</div>
+        <div>{ `${item.address1} ${item.address2} ${item.address3},` }</div>
+        <div>{ `${item.city} ${item.zipCode},` }</div>
+        <div>{ `${item.country}` }</div>
+        <div>{ `${item.phone || ''}` }</div>
+        <div className={ classes.btnRow }>
+          <div>
             {
               item.isDefaultShipping
                 ? <Chip
-                  label="Shipping address"
-                  color="primary"
-                  variant="outlined"
-                  className={ classes.marginRight }
+                    label="Shipping address"
+                    variant="outlined"
+                    className={ classes.chips }
                 />
                 : null
             }
             {
               item.isDefaultBilling
                 ? <Chip
-                  label="Billing address"
-                  color="primary"
-                  variant="outlined"
+                    label="Billing address"
+                    variant="outlined"
+                    className={ classes.chips }
                 />
                 : null
             }
-
           </div>
-        </TableCell>
-
-        <TableCell padding="checkbox">
-          <IconButton
-            color="primary"
-            onClick={ this.setUpdatedAddress(item.id) }
-            disabled={ isLoading }
-          >
-            <EditIcon/>
-          </IconButton>
-        </TableCell>
-        <TableCell padding="checkbox">
-          <IconButton
-            color="primary"
-            onClick={ () => deleteAddress(item.id, this.props.customer) }
-            disabled={ isLoading }
-          >
-            <DeleteIcon/>
-          </IconButton>
-        </TableCell>
-      </TableRow>
+          <div>
+            <Button
+              color="primary"
+              onClick={ this.setUpdatedAddress(item.id) }
+              disabled={ isLoading }
+            >
+              Edit
+            </Button>
+            <Button
+              color="primary"
+              onClick={ () => deleteAddressAction(item.id, this.props.customer) }
+              disabled={ isLoading }
+            >
+              Delete
+            </Button>
+          </div>
+        </div>
+        <Divider />
+      </div>
     ));
 
     return (
       <Grid container>
+        <Grid item xs={ 12 }>
+          <CustomerPageTitle title="manage addresses" />
 
-        <Grid item xs={ 12 } container justify="center">
-          <Typography
-            variant="headline"
-            children="Manage Addresses"
-          />
+          { addresses.length ? null : <div className={ classes.emptyMsg }>{ emptyAddressMessage }</div> }
         </Grid>
 
-        <Grid item xs={ 12 } container justify="center">
-          <Paper elevation={ 4 } className={ classes.paperContainer }>
-            <Button variant="contained" color="primary" className={ classes.addButton }
-                    onClick={ this.handleAddAddress }>
-              Add new address
-            </Button>
-            <Divider/>
-            <Table>
-              <TableBody>
-                { rows }
-              </TableBody>
-            </Table>
-          </Paper>
+        <Grid item xs={ 12 }>
+          { rows }
+        </Grid>
+
+        <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
+          <SprykerButton
+            title="add address"
+            onClick={ this.handleAddAddress }
+            disabled={ isLoading }
+          />
         </Grid>
 
       </Grid>
@@ -132,32 +115,6 @@ export class CustomerAddressBase extends React.Component<Props, State> {
   }
 }
 
-export const CustomerAddress = withStyles(styles)(CustomerAddressBase);
-
-export const CustomerAddressPage = reduxify(
-  (state: any, ownProps: any) => {
-    const location = getRouterLocation(state, ownProps);
-    const routerPush = getRouterHistoryPush(state, ownProps);
-    const customerProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
-    const addressesProps: IAddressesState = state.pageAddresses ? state.pageAddresses : null;
-
-    return ({
-      customer: customerProps && customerProps.data ? customerProps.data.customerRef : ownProps.customer,
-      addresses: addressesProps && addressesProps.data ? addressesProps.data.addresses : ownProps.addresses,
-      currentAddress: addressesProps && addressesProps.data
-        ? addressesProps.data.currentAddress
-        : ownProps.currentAddress,
-      isInitial: addressesProps && addressesProps.data ? addressesProps.data.isInitial : ownProps.isInitial,
-      isLoading: addressesProps ? addressesProps.pending : ownProps.isLoading,
-      location,
-      routerPush,
-    });
-  },
-  (dispatch: Function) => ({
-    dispatch,
-    getAddressesList: (customerId: string) => dispatch(getAddressesAction(customerId)),
-    deleteAddress: (addressId: string, customerId: string) => dispatch(deleteAddressAction(addressId, customerId)),
-  }),
-)(CustomerAddress);
+export const CustomerAddressPage = withStyles(styles)(CustomerAddressBase);
 
 export default CustomerAddressPage;

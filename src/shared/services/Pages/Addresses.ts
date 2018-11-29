@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import { IAddressItem } from '../../interfaces/addresses';
+import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import api, { setAuthToken } from '../api';
 
@@ -63,7 +63,11 @@ export class AddressesService {
 
         });
         toast.success('New address added successfull');
-        return response.data.data;
+
+        // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
+        
+        // return response.data.data;
+        return AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
@@ -120,7 +124,7 @@ export class AddressesService {
   }
 
   public static async updateAddress(
-    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: any,
+    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: IAddressItem,
   ): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
