@@ -23,7 +23,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
   public state: State = {};
 
   public componentDidMount() {
-    if (this.props.customer) {
+    if (!this.props.isAddressesInit && this.props.customer) {
       this.props.getAddressesAction(this.props.customer);
     }
   }
@@ -41,7 +41,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     const {classes, addresses, isLoading, deleteAddressAction} = this.props;
 
     const rows = addresses.map((item: IAddressItem) => (
-      <div key={ item.id } className={classes.addressData}>
+      <div key={ item.id || item.zipCode } className={classes.addressData}>
         <div>{ `${item.salutation} ${item.firstName} ${item.lastName},` }</div>
         <div>{ `${item.company || ''}` }</div>
         <div>{ `${item.address1} ${item.address2} ${item.address3},` }</div>

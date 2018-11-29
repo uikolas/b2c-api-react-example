@@ -11,9 +11,9 @@ import { addAddressAction, updateAddressAction } from 'src/shared/actions/Pages/
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerGoBack = getRouterHistoryBack(state, ownProps);
   const countries: ICountries[] = getCounties(state, ownProps);
-  const isLoading: boolean = isPageAddressesStateLoading(state, ownProps);
   const currentAddress: IAddressItem = getCurrentAddress(state, ownProps);
   const customer: string | null = getCustomerReference(state, ownProps);
+  const isLoading: boolean = isPageAddressesStateLoading(state, ownProps);
 
   return ({
     customer,

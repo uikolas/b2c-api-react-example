@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import {
   InputLabelFirstName,
   InputLabelLastName,
@@ -17,9 +18,19 @@ import { salutationVariants } from "src/shared/constants/customer";
 import { TSalutationVariant } from "src/shared/interfaces/customer";
 import { ICountries } from "src/shared/reducers/Common/Init";
 import { IFormField } from "src/shared/components/UI/SprykerForm/types";
-import { IAddressItem } from 'src/shared/interfaces/addresses';
+import { AddressFormState } from './types';
 
-export const setFormFields = (currentState: IAddressItem, countries: ICountries[]): Array<IFormField[]> => {
+
+export interface IFieldInput {
+  name: string;
+  value: string;
+}
+
+export const setFormFields = (
+  currentState: AddressFormState,
+  countries: ICountries[],
+  handleCheckBox: (event: ChangeEvent<HTMLInputElement>) => void
+): Array<IFormField[]> => {
   const {
     salutation,
     firstName,
@@ -34,6 +45,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
     phone,
     isDefaultShipping,
     isDefaultBilling,
+    submitted,
   } = currentState;
 
   return ([
@@ -44,7 +56,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 3,
       isRequired: true,
       label: InputLabelSalutation,
-      isError: false,
+      isError: submitted && !salutation,
       menuItems: salutationVariants
         .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
     }], [{
@@ -54,7 +66,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 6,
       isRequired: true,
       label: InputLabelFirstName,
-      isError: false,
+      isError: submitted && !firstName,
     }, {
       type: 'input',
       inputName: 'lastName',
@@ -62,7 +74,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 6,
       isRequired: true,
       label: InputLabelLastName,
-      isError: false,
+      isError: submitted && !lastName,
     }], [{
       type: 'input',
       inputName: 'company',
@@ -76,7 +88,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 6,
       isRequired: true,
       label: InputLabelStreet,
-      isError: false,
+      isError: submitted && !address1,
     }, {
       type: 'input',
       inputName: 'address2',
@@ -84,7 +96,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 3,
       isRequired: true,
       label: InputLabelNumber,
-      isError: false,
+      isError: submitted && !address2,
     }], [{
       type: 'input',
       inputName: 'address3',
@@ -99,7 +111,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 6,
       isRequired: true,
       label: InputLabelCity,
-      isError: false,
+      isError: submitted && !city,
     }, {
       type: 'input',
       inputName: 'zipCode',
@@ -107,7 +119,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 3,
       isRequired: true,
       label: InputLabelZipCode,
-      isError: false,
+      isError: submitted && !zipCode,
     }], [{
       type: 'select',
       inputName: 'iso2Code',
@@ -115,7 +127,7 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       spaceNumber: 6,
       isRequired: true,
       label: InputLabelCountry,
-      isError: false,
+      isError: submitted && !iso2Code,
       menuItems: countries
         .map((country: ICountries) => ({value: country.iso2Code, name: country.name})),
     }, {
@@ -131,13 +143,14 @@ export const setFormFields = (currentState: IAddressItem, countries: ICountries[
       inputValue: isDefaultBilling,
       spaceNumber: 6,
       label: InputLabelDefaultDeliveryAddress,
+      onChangeOwnHandler: handleCheckBox,
     }, {
       type: 'checkbox',
       inputName: 'isDefaultShipping',
       inputValue: isDefaultShipping,
       spaceNumber: 6,
       label: InputLabelDefaultShippingAddress,
-      // onChangeOwnHandler: this.handleCheckbox,
+      onChangeOwnHandler: handleCheckBox,
     }],
   ]);
 };

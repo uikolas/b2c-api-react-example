@@ -6,7 +6,8 @@ import { getCustomerReference } from 'src/shared/reducers/Pages/Login';
 import {
   getAddressesCollection,
   getCurrentAddress,
-  isPageAddressesStateLoading
+  isPageAddressesStateLoading,
+  isAddressesInitiated,
 } from 'src/shared/reducers/Pages/Addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {
@@ -21,6 +22,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const addresses: IAddressItem[] = getAddressesCollection(state, ownProps);
   const currentAddress: IAddressItem = getCurrentAddress(state, ownProps);
   const isLoading: boolean = isPageAddressesStateLoading(state, ownProps);
+  const isAddressesInit: boolean = isAddressesInitiated(state, ownProps);
 
   return ({
     customer,
@@ -28,6 +30,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     addresses,
     routerPush,
     isLoading,
+    isAddressesInit,
   });
 };
 

@@ -7,6 +7,7 @@ export interface CustomerAddressPageProps extends WithStyles<typeof styles> {
   addresses: IAddressItem[];
   currentAddress: IAddressItem;
   isLoading: boolean;
+  isAddressesInit: boolean;
   dispatch: Function;
   getAddressesAction: Function;
   deleteAddressAction: Function;

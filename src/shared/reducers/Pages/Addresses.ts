@@ -13,7 +13,6 @@ export interface IAddressesState extends IReduxState {
   data: {
     addresses: IAddressItem[],
     currentAddress: IAddressItem | null,
-    isInitial: boolean,
   };
 }
 
@@ -21,7 +20,6 @@ export const initialState: IAddressesState = {
   data: {
     addresses: [],
     currentAddress: null,
-    isInitial: false,
   },
 };
 
@@ -36,23 +34,22 @@ export const pageAddresses = produce<IAddressesState>(
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
-        draft.initiated = true;
+        draft.initiated = false;
         break;
       case `${ADDRESSES_LIST}_REJECTED`:
       case `${ADD_ADDRESS}_REJECTED`:
       case `${DELETE_ADDRESS}_REJECTED`:
       case `${UPDATE_ADDRESS}_REJECTED`:
-        draft.data.isInitial = false;
         draft.error = action.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
-        draft.initiated = true;
+        draft.initiated = false;
+        draft.data.currentAddress = null;
         break;
       case `${ADDRESSES_LIST}_FULFILLED`:
         draft.data.addresses = action.addresses;
         draft.data.currentAddress = null;
-        draft.data.isInitial = true;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -62,7 +59,6 @@ export const pageAddresses = produce<IAddressesState>(
       case `${ADD_ADDRESS}_FULFILLED`: {
         const addresses: IAddressItem[] = [...draft.data.addresses, action.address];
         draft.data.addresses = addresses;
-        draft.data.isInitial = true;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -75,7 +71,6 @@ export const pageAddresses = produce<IAddressesState>(
           address: IAddressItem
         ) => address.id !== action.addressId);
         draft.data.addresses = addresses;
-        draft.data.isInitial = true;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -84,11 +79,11 @@ export const pageAddresses = produce<IAddressesState>(
         break;
       }
       case `${UPDATE_ADDRESS}_FULFILLED`: {
-        const addresses: IAddressItem[] = draft.data.addresses.filter((
+        const addresses: IAddressItem[] = draft.data.addresses.map((
           address: IAddressItem
         ) => address.id === action.addressId ? action.data : address);
         draft.data.addresses = addresses;
-        draft.data.isInitial = true;
+        draft.data.currentAddress = null;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -118,12 +113,12 @@ export function isPageAddressesStateLoading(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageAddresses.pending);
 }
 
-export function isPageAddressesStateRejected(state: any, props: any): boolean {
+export function isAddressesStateRejected(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props) && state.pageAddresses.rejected);
 }
 
-export function isPageAddressesFulfilled(state: any, props: any): boolean {
-  return Boolean(isStateExist(state, props) && state.pageAddresses.fulfilled);
+export function isAddressesInitiated(state: any, props: any): boolean {
+  return Boolean(isStateExist(state, props) && state.pageAddresses.initiated);
 }
 
 export function getCurrentAddress(state: any, props: any): IAddressItem | null {

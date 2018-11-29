@@ -8,34 +8,12 @@ import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/erro
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import {
-  InputLabelFirstName,
-  InputLabelLastName,
-  InputLabelSalutation,
-  InputLabelCompany,
-  InputLabelStreet,
-  InputLabelNumber,
-  InputLabelStreetExtra,
-  InputLabelCity,
-  InputLabelZipCode,
-  InputLabelCountry,
-  InputLabelPhone,
-  InputLabelDefaultDeliveryAddress,
-  InputLabelDefaultShippingAddress,
-} from "src/shared/constants/forms/labels";
-import { salutationVariants } from "src/shared/constants/customer";
-import { TSalutationVariant } from "src/shared/interfaces/customer";
-import { ICountries } from "src/shared/reducers/Common/Init";
 
 import { styles } from '../styles';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
-import { setFormFields } from './settings';
-
-interface IFieldInput {
-  name: string;
-  value: string;
-}
+import { setFormFields, IFieldInput } from './settings';
+import {FormEvent} from "react";
 
 
 @connect
@@ -62,20 +40,23 @@ export class AddressForm extends React.Component<Props, State> {
     };
   }
 
+  public componentDidUpdate = (prevProps: Props) => {
+    if (prevProps.isLoading && !this.props.isLoading) {
+      this.props.routerGoBack();
+    }
+  }
+
   public handleChange = (event: {target: IFieldInput}): void => {
     const {name, value}: IFieldInput = event.target;
     this.setState(state => ({...state, [name]: value}));
-    console.info(name, value);
   };
 
-  public handleCheckbox = (
-    event: React.ChangeEvent<HTMLInputElement>, checked: boolean,
-  ) => {
-    console.info(event.target);
-    // this.setState(state => ({...state, [event.target.id]: checked}));
+  public handleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.persist();
+    this.setState(state => ({...state, [event.target.name]: event.target.checked}));
   }
 
-  public handleSubmitForm = (e: any) => {
+  public handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {salutation, firstName, lastName, address1, address2, zipCode, city, iso2Code} = this.state;
     this.setState(() => ({submitted: true}));
@@ -98,26 +79,9 @@ export class AddressForm extends React.Component<Props, State> {
   public render(): JSX.Element {
     const { classes, currentAddress, countries, routerGoBack, isLoading } = this.props;
 
-    const {
-      salutation,
-      firstName,
-      lastName,
-      company,
-      address1,
-      address2,
-      address3,
-      zipCode,
-      city,
-      iso2Code,
-      phone,
-      isDefaultShipping,
-      isDefaultBilling,
-      submitted,
-    } = this.state;
-
     const pageTitle = `${currentAddress ? 'Edit' : 'Add New'} Address`;
     const currentState = { ...this.state };
-    delete currentState.submitted;
+   // delete currentState.submitted;
 
     return (
       <Grid container>
@@ -131,19 +95,22 @@ export class AddressForm extends React.Component<Props, State> {
               formName: 'addressForm',
               onChangeHandler: this.handleChange,
               onSubmitHandler: this.handleSubmitForm,
-              fields: setFormFields(currentState, countries),
+              fields: setFormFields(currentState, countries, this.handleCheckbox),
             }}
             SubmitButton={
               <Grid container>
                 <Grid item xs={12} sm={4}>
-                  <SprykerButton title="save" btnType="submit"
-                                 extraClasses={classes.addButton} disabled={ isLoading } />
+                  <SprykerButton
+                    title="save"
+                    btnType="submit"
+                    extraClasses={classes.addButton} disabled={ isLoading }
+                  />
                 </Grid>
               </Grid>
             }
           />
         </Grid>
-        <Grid item xs={ 12 }>
+        <Grid item xs={ 12 } className={ classes.addButton }>
           <Button
             color="primary"
             onClick={ () => routerGoBack() }

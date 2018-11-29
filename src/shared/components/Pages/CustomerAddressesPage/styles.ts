@@ -26,21 +26,6 @@ export const styles = (theme: Theme) => createStyles({
   addButton: {
     marginTop: theme.spacing.unit * 4,
   },
-
-  marginRight: {
-    marginRight: theme.spacing.unit,
-  },
-  addressForm: {
-    margin: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
-  },
-  textField: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
-  buttons: {
-    margin: theme.spacing.unit,
-  },
-
   emptyMsg: {
     fontSize: theme.appFixedDimensions.fontSize.medium,
     lineHeight: 2,
