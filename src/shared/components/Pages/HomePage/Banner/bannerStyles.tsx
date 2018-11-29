@@ -9,7 +9,7 @@ export const bannerStyles = (theme: Theme) => createStyles({
     backgroundColor: theme.appColors.weakGrey,
     backgroundSize: 'cover',
     backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
+    backgroundPosition: "center left",
     height: 520,
     color: theme.appColors.white,
     [theme.breakpoints.down('md')]: {
