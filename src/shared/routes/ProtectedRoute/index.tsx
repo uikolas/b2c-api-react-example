@@ -5,6 +5,7 @@ import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../contentRoutes';
 
+
 @connect
 @(withRouter as any)
 export class ProtectedRoute extends React.PureComponent<Props> {
@@ -14,20 +15,20 @@ export class ProtectedRoute extends React.PureComponent<Props> {
 
   // Component lifecycle methods
 
-  public componentWillMount(): void {
-    this.checkAuthorized();
+  public componentDidMount(): void {
+    this.checkAuthorized(false);
     this.setTitle();
   }
 
-  public componentDidUpdate(): void {
-    this.checkAuthorized();
+  public componentDidUpdate(prevProps: Props): void {
+    this.checkAuthorized(prevProps.isUserLoggedIn);
     this.setTitle();
   }
 
   // Helper functions
 
-  private checkAuthorized = (): void => {
-    if (!this.props.isUserLoggedIn) {
+  private checkAuthorized = (prevIsUserLoggedIn: boolean): void => {
+    if (!prevIsUserLoggedIn && !this.props.isUserLoggedIn) {
       this.props.history.push(pathLoginPage);
     }
   };

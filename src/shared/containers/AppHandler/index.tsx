@@ -12,13 +12,17 @@ import { AppHeader } from 'src/shared/components/Common/AppHeader';
 import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAnonymId, getAppLocale, isAppInitiated, TAppLocale } from 'src/shared/reducers/Common/Init';
+import {
+  getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled,
+  TAppLocale
+} from 'src/shared/reducers/Common/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
+import {isCartCreated} from "src/shared/reducers/Common/Cart/index";
 
 const styles = require('./style.scss');
 const className = styles.appHandler;
@@ -34,6 +38,8 @@ interface AppHandlerProps extends IComponent {
   isAppDataSet: boolean;
   isCustomerAuth: boolean;
   anonymId: string;
+  cartCreated: boolean;
+  isInitStateFulfilled: boolean;
 }
 
 interface AppHandlerState {
@@ -76,6 +82,10 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     }
   }
 
+  private isDataFulfilled = () => {
+    return Boolean(this.props.cartCreated && this.props.isInitStateFulfilled);
+  }
+
   private mobileNavToggle = () => this.setState(({mobileNavOpened}) => ({mobileNavOpened: !mobileNavOpened}));
 
   public render(): JSX.Element {
@@ -94,7 +104,7 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
                 onMobileNavToggle={ this.mobileNavToggle }
                 isMobileNavOpened={ mobileNavOpened }
               />
-              { getContentRoutes() }
+              { getContentRoutes(this.isDataFulfilled()) }
               <ToastContainer
                 autoClose={ 3000 }
                 transition={ Slide }
@@ -121,6 +131,8 @@ export const AppHandler = reduxify(
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);
     const anonymId = getAnonymId(state, ownProps);
+    const cartCreated: boolean = isCartCreated(state, ownProps);
+    const isInitStateFulfilled: boolean = isAppStateFulfilled(state, ownProps);
 
     return ({
       isLoading,
@@ -128,6 +140,8 @@ export const AppHandler = reduxify(
       isAppDataSet,
       isCustomerAuth,
       anonymId,
+      cartCreated,
+      isInitStateFulfilled,
     });
   },
   (dispatch: Function) => ({
