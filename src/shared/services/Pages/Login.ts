@@ -10,6 +10,7 @@ import {
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
+import { customerLogin, emailExist, registerSuccess } from 'src/shared/constants/messages/customer';
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
@@ -21,30 +22,35 @@ export class PagesLoginService extends ApiServiceAbstract {
         },
       };
       const response: any = await api.post('customers', body, {withCredentials: true});
-
+      console.info(response);
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
         });
 
-        toast.success('You have successfully registered');
+        toast.success(registerSuccess);
 
         return PagesLoginService.loginRequest(dispatch, {
           username: payload.email,
           password: payload.password,
         });
       } else {
-        console.error('register', response.problem);
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
+
+        if (response.status === 422) {
+          toast.warn(errorMessage);
+        } else {
+          toast.error(errorMessage);
+        }
+
         return null;
       }
 
     } catch (error) {
-      console.error('register', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
         error,
@@ -68,6 +74,7 @@ export class PagesLoginService extends ApiServiceAbstract {
       };
 
       response = await api.post('access-tokens', body, {withCredentials: true});
+
       if (response.ok) {
         const responseParsed = parseLoginDataResponse(response.data);
         dispatch(saveLoginDataToStoreAction({email: payload.username}));
@@ -77,7 +84,7 @@ export class PagesLoginService extends ApiServiceAbstract {
 
         saveAccessDataToLocalStorage(responseParsed);
         dispatch(loginCustomerFulfilledStateAction(responseParsed));
-        toast.success('You are now logged in');
+        toast.success(customerLogin);
         return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);

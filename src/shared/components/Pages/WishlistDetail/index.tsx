@@ -9,6 +9,7 @@ import Divider from '@material-ui/core/Divider/Divider';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
@@ -35,24 +36,28 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     }
   }
 
-  public renderProduct = (sku: string, name: string) => (e: any) => {
-    // this.props.dispatch(getProductDataAction(sku.split('_')[0]));
-    // this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
+  public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
+    event.persist();
     this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
   };
 
-  public handleDeleteItem = (sku: string) => (e: any) => this.props.deleteItemAction(this.props.wishlist.id, sku);
+  public handleDeleteItem = (sku: string) => (event: ClickEvent) => {
+    event.persist();
+    this.props.deleteItemAction(this.props.wishlist.id, sku);
+  };
 
-  public moveToCart = (sku: string) => (e: any) => {
+  public moveToCart = (sku: string) => (event: ClickEvent) => {
+    event.persist();
     this.setState(() => ({movedItem: sku}));
     this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
   };
 
-  public moveAllProductsToCart = (e: any) => {
+  public moveAllProductsToCart = (event: ClickEvent) => {
+    event.persist();
     const {products} = this.props;
     const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
 
-    // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
+    this.props.multiItemsCartAction(this.props.cartId, availableProducts);
   };
 
   public wishlistMenu = () => {
@@ -76,7 +81,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
       return null;
     }
 
-    const headerCells: any[] = [
+    const headerCells: {content: string}[] = [
       {content: 'Product'},
       {content: 'Price'},
       {content: 'Availability'},
@@ -101,7 +106,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         id: item.sku,
         cells: [
           {
-            content: (<WishlistItemBaseInfo productItem={item} />),
+            content: (<WishlistItemBaseInfo productItem={item} renderProduct={this.renderProduct}/>),
           },
           {
             content: (

@@ -1,9 +1,11 @@
 import * as React from 'react';
+import { toast } from 'react-toastify';
 import { Route, withRouter } from 'react-router';
 
 import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../contentRoutes';
+import {customerLogout} from "src/shared/constants/messages/customer";
 
 @connect
 @(withRouter as any)
@@ -19,8 +21,13 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     this.setTitle();
   }
 
-  public componentDidUpdate(): void {
+  public componentDidUpdate(prevProps: Props): void {
+    if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
+      toast.success(customerLogout);
+    }
+
     this.checkAuthorized();
+
     this.setTitle();
   }
 

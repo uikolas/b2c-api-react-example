@@ -5,13 +5,13 @@ import {
   PAGES_LOGIN_REQUEST,
   REFRESH_TOKEN_REQUEST,
   RESET_PASSWORD,
-} from '../../constants/ActionTypes/Pages/Login';
-import { SET_AUTH_FROM_STORAGE } from '../../constants/ActionTypes/Common/Init';
+} from 'src/shared/constants/ActionTypes/Pages/Login';
+import { SET_AUTH_FROM_STORAGE } from 'src/shared/constants/ActionTypes/Common/Init';
 import { IReduxState } from 'src/typings/app';
-import { TAccessToken } from '../../interfaces/login';
+import { TAccessToken } from 'src/shared/interfaces/login';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { TCustomerEmail, TCustomerReference, TCustomerUsername } from '../../interfaces/customer';
-import { LOGIN_DATA_SET_TO_STORE } from '../../constants/ActionTypes/Pages/CustomerProfile';
+import { LOGIN_DATA_SET_TO_STORE } from 'src/shared/constants/ActionTypes/Pages/CustomerProfile';
 
 export interface ILoginState extends IReduxState {
   data: {

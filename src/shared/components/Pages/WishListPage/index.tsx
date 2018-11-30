@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
 import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
@@ -35,15 +35,17 @@ export class WishListBase extends React.Component<Props, State> {
     }
   }
 
-  public handleChangeName = ({target: {value}}: any) => {
-    this.setState(() => ({name: value}));
+  public handleChangeName = (event: InputChangeEvent): void => {
+    event.persist();
+    this.setState(() => ({name: event.target.value}));
   };
 
-  public handleChangeUpdatedName = (event: any) => {
+  public handleChangeUpdatedName = (event: InputChangeEvent): void => {
+    event.persist();
     this.setState(() => ({updatedName: event.target.value}));
   };
 
-  public addWishlist = (e: any) => {
+  public addWishlist = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!this.state.name.trim()) {
@@ -58,15 +60,16 @@ export class WishListBase extends React.Component<Props, State> {
     this.setState(() => ({updatedList: '', updatedName: ''}));
   };
 
-  public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
+  public handleDeleteWishlist = (wishlistId: string) => (e: ClickEvent) => {
     this.props.deleteWishlistAction(wishlistId);
   };
 
-  private setUpdatedWishlist = (id: string, name: string) => (e: any) => {
+  private setUpdatedWishlist = (id: string, name: string) => (e: ClickEvent) => {
     this.setState(() => ({updatedList: id, updatedName: name}));
   };
 
-  public setCurrentWishlist = (wishlistId: string) => (e: any) => {
+  public setCurrentWishlist = (wishlistId: string) => (event: ClickEvent) => {
+    event.persist();
     this.props.getDetailWishlistAction(wishlistId);
   };
 
@@ -156,7 +159,6 @@ export class WishListBase extends React.Component<Props, State> {
         <Grid item xs={ 12 }>
           <form noValidate autoComplete="off" onSubmit={ this.addWishlist } className={ classes.form }>
             <Typography paragraph className={ classes.titleForm }>Add New Wishlist</Typography>
-
             <Paper elevation={ 0 } className={ classes.formItem }>
               <TextField
                 className={ classes.textFieldForm }
@@ -166,7 +168,6 @@ export class WishListBase extends React.Component<Props, State> {
                 onChange={ this.handleChangeName }
                 inputProps={ {className: classes.input} }
               />
-
               <Button type="submit" variant="contained" color="primary" className={ classes.formSubmit }>Add</Button>
             </Paper>
           </form>

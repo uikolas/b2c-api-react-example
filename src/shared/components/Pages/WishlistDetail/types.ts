@@ -16,6 +16,7 @@ export interface WishlistPageProps extends WithStyles<typeof styles> {
   cartItemsLength: number;
   deleteItemAction(wishlistId: string, sku: string): void;
   addItemToCartAction(payload: ICartAddItem, cartId: TCartId): void;
+  multiItemsCartAction(cartId: TCartId, listItems: string[]): void;
   changeLocation(location: LocationDescriptor, state?: LocationState): RouterAction;
 }
 
