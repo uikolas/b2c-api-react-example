@@ -37,16 +37,22 @@ export const styles = (theme: Theme) => createStyles({
       padding: '24px 0',
     },
   },
-  cartTotal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    fontSize: 16,
-    lineHeight: '20px',
-    fontWeight: 'bold',
+  cartTotalContainer: {
     padding: '16px 0',
     borderBottom: '1px solid #d8d8d8',
     marginBottom: 24,
+  },
+  cartTotal: {
+    fontSize: 16,
+    lineHeight: '20px',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    textTransform: 'uppercase',
+    '&:not(:last-child)': {
+      marginBottom: 10,
+    },
   },
   priceTotal: {
     fontSize: 16,

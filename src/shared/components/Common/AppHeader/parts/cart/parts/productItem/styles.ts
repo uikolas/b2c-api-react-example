@@ -1,25 +1,34 @@
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-export const styles = () => createStyles({
+export const styles = (theme: Theme) => createStyles({
   productItem: {
     display: 'flex',
     alignItems: 'stretch',
+    padding: '15px 0',
   },
   image: {
-    width: 100,
-    display: 'flex',
-    alignItems: 'center',
+    padding: 10,
+    background: theme.appColors.lightGrey,
+    borderRadius: 4,
     '& img': {
       display: 'block',
-      width: '100%',
+      maxWidth: '100%',
       maxHeight: '100%',
     },
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rowsContainer: {
     flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingLeft: 15,
   },
   topRow: {
@@ -31,5 +40,7 @@ export const styles = () => createStyles({
   price: {},
   bottomRow: {},
   quantity: {},
-  btnRemove: {},
+  btnRemove: {
+    marginLeft: '-16px'
+  },
 });

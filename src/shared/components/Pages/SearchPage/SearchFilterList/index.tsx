@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
 import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
-import { RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import { ValueFacets } from 'src/shared/interfaces/searchPageData';
 import { rangeMaxType, rangeMinType } from 'src/shared/components/Pages/SearchPage/types';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import { FilterWrapper } from 'src/shared/components/Pages/SearchPage/FilterWrapper';
@@ -66,9 +66,12 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
   if (!Array.isArray(ranges) || !ranges.length) {
     rangeItems = null;
   } else {
-    rangeItems = ranges.filter((item: RangeFacets) => (item.min !== 0 && item.max !== 0)).map((filter: RangeFacets) => {
+    rangeItems = ranges.filter(item => (
+      item.min !== 0 && item.max !== 0 && item.name !== 'rating' // rating filter temporary hidden
+    )).map(filter => {
       const valueFrom = rangeFilterValueToFront(filter.min, rangeMinType);
       const valueTo = rangeFilterValueToFront(filter.max, rangeMaxType);
+
       return (
         <FilterWrapper
           filter={
@@ -97,25 +100,26 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
   const isItemsExist = (filterItems && filterItems.length > 0) || (rangeItems && rangeItems.length > 0);
 
   return (
-    <Grid container
-          justify="flex-start"
-          alignItems="center"
-          className={ classes.root }
+    <Grid
+      container
+      justify="flex-start"
+      alignItems="center"
+      className={ classes.root }
     >
       { isItemsExist
-        ? <Grid item xs={ 12 }>
-          <AppPageSubTitle title={ title }/>
-        </Grid>
+        ? (
+          <Grid item xs={ 12 }>
+            <AppPageSubTitle title={ title }/>
+          </Grid>
+        )
         : null
       }
       <Grid container alignItems="flex-start" spacing={ sprykerTheme.appFixedDimensions.gridSpacing }>
         { filterItems }
         { rangeItems }
       </Grid>
-
     </Grid>
   );
-
 };
 
 export const SearchFilterList = withStyles(styles)(SearchFilterListBase);

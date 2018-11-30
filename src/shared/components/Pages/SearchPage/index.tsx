@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
-import { RangeFacets, ValueFacets } from 'src/shared/interfaces/searchPageData';
+import { RangeFacets } from 'src/shared/interfaces/searchPageData';
 import { ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
@@ -469,11 +469,20 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       />
     );
 
+    const categoryPath = this.getCategoryNameById(currentCategory);
+
     return (
       <AppMain>
         { isLoading ? <AppBackdrop isOpen={ true }/> : null }
         <AppPageTitle
-          title={ searchTerm ? `${pageTitle} "${searchTerm}"` : pageTitleDefault }
+          title={ searchTerm
+            ? `${pageTitle} "${searchTerm}"`
+            : (
+              currentCategory
+                ? categoryPath.substring(categoryPath.lastIndexOf('/') + 1).replace(/-/g, ' ')
+                : pageTitleDefault
+            )
+          }
           intro={ <SearchIntro className={ classes.spellingSuggestion } spellingSuggestion={ spellingSuggestion }/> }
         />
         <Grid container className={ classes.container }>
