@@ -27,7 +27,7 @@ interface OrderDetailsGeneralInfoProps extends WithStyles<typeof styles> {
 
 export const OrderDetailsGeneralInfoBase: React.SFC<OrderDetailsGeneralInfoProps> = (props): JSX.Element => {
   const {classes, btnBackHandler, orderId, date, priceMode} = props;
-  console.log('priceMode ', priceMode);
+
   return (
     <React.Fragment>
       <Grid container justify="space-between" className={classes.section}>
