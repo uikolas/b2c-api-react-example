@@ -12,6 +12,10 @@ export type TCustomerTime = string;
 export type TCustomerDateOfBirth = string;
 export type TCustomerGender = string;
 export type TAcceptedTerms = string;
+export type TCustomerMiddleName = string;
+export type TCustomerPoBox = string;
+export type TCustomerPhone = string;
+export type TCustomerCellPhone = string;
 
 export type TCustomerInputValue = TCustomerFirstName
   | TCustomerLastName

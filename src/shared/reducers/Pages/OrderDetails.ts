@@ -15,6 +15,9 @@ export const initialState: IOrderDetailsState = {
     totals: null,
     expenses: null,
     items: null,
+    billingAddress: null,
+    shippingAddress: null,
+    priceMode: null,
   },
 };
 

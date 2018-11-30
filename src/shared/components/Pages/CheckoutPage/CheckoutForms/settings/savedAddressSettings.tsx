@@ -12,6 +12,7 @@ import {
   IBillingAddressesParams,
   IDeliveryAddressesParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import {getSalutationToShow} from "src/shared/helpers/customer/salutation";
 
 
 export const getDeliverySavedAddressFormSettings = (formName: string,
@@ -111,8 +112,7 @@ const createRadioItemLabel = (address: IAddressItemCollection) => {
   let response: React.ReactNode = '';
 
   if (address.salutation) {
-    const variantData = salutationVariants.filter((item: TSalutationVariant) => (item.value === address.salutation));
-    response += (variantData && variantData[0]) ? variantData[0].label : address.salutation;
+    response += getSalutationToShow(address.salutation);
   }
   if (address.firstName) {
     response += ` ${address.firstName}`;

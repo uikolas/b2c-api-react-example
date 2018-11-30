@@ -55,13 +55,16 @@ export const parseGetOrderDetailsResponse = (data: IOrderDetailsResponse): IOrde
     return acc;
   }, accumulator);
 
-  const response = {
+  const response: IOrderDetailsParsed = {
     id: data.id,
     dateCreated: attributes.createdAt,
     currency: attributes.currencyIsoCode,
     totals: attributes.totals,
     expenses: attributes.expenses,
     items: Object.values(itemsParsed),
+    billingAddress: attributes.billingAddress,
+    shippingAddress: attributes.shippingAddress,
+    priceMode: attributes.priceMode,
   };
   return response;
 };
