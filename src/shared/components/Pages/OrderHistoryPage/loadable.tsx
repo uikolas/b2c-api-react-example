@@ -2,10 +2,10 @@
 import * as React from 'react';
 import Loadable from 'react-loadable';
 
-export const LoadableConnectedOrderHistoryPage = Loadable({
+export const LoadableOrderHistoryPage = Loadable({
   loader: () =>
-    import(/* webpackPrefetch: true, webpackChunkName: "LoadableConnectedOrderHistoryPage" */ 'src/shared/components/Pages/OrderHistoryPage/reduxified').then(
+    import(/* webpackPrefetch: true, webpackChunkName: "LoadableOrderHistoryPage" */ 'src/shared/components/Pages/OrderHistoryPage').then(
       module => module.default,
     ),
-  loading: () => <div>Loading...</div>,
+  loading: () => <div style={ {minHeight: '100vh', textAlign: 'center'} }>Loading...</div>,
 });

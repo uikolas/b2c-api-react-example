@@ -1,45 +1,29 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { TOrderCollection } from '../../../interfaces/order';
-import { noOrderText } from '../../../constants/messages/orders';
-import { pathOrderDetailsPageBase } from '../../../routes/contentRoutes';
-import { emptyValueErrorText } from '../../../constants/messages/errors';
-import { OrderHistoryContext } from './context';
-import { styles } from './styles';
-import { OrderList } from './OrderList';
+import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
+import {connect} from './connect';
+import {OrderHistoryContext} from './context';
+import {orderHistoryStyles} from './orderHistoryStyles';
+import {noOrderText} from '../../../constants/messages/orders';
+import {pathOrderDetailsPageBase} from '../../../routes/contentRoutes';
+import {emptyValueErrorText} from '../../../constants/messages/errors';
+import {OrderList} from './OrderList';
+import {OrdersHistoryPageTitle} from "src/shared/constants/orders";
 
-export const pageTitle = 'Orders History';
 
-interface OrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
-  getOrdersCollection: Function;
-  isLoading: boolean;
-  isRejected: boolean;
-  isFulfilled: boolean;
-  isAppDataSet: boolean;
-  isUserLoggedIn: boolean;
-  isInitiated: boolean;
-  isHasOrders: boolean;
-  orders: TOrderCollection;
-  routerPush: Function;
-}
+@connect
+export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps, IOrderHistoryPageState> {
 
-interface OrderHistoryPageState {
-
-}
-
-export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps, OrderHistoryPageState> {
-
-  public state: OrderHistoryPageState = {};
+  public state: IOrderHistoryPageState = {};
 
   public componentDidMount = () => {
     this.initRequestData();
   };
 
-  public componentDidUpdate = (prevProps: OrderHistoryPageProps, prevState: OrderHistoryPageState) => {
+  public componentDidUpdate = (prevProps: IOrderHistoryPageProps, prevState: IOrderHistoryPageState) => {
     this.initRequestData();
   };
 
@@ -60,8 +44,8 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   };
 
   public render(): JSX.Element {
-    console.info('props: ', this.props);
-    console.info('state: ', this.state);
+    console.info('OrderHistoryPage props: ', this.props);
+    console.info('OrderHistoryPage state: ', this.state);
     const {classes, isHasOrders, isFulfilled, orders} = this.props;
 
     return (
@@ -75,21 +59,21 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
               } }
             >
 
-              <div className={ classes.root }>
+              <div className={classes.root}>
                 <Grid container justify="center">
-                  <Grid item xs={ 12 }>
-                    <Typography align="center" variant="headline" gutterBottom={ true }>
-                      { pageTitle }
+                  <Grid item xs={12}>
+                    <Typography align="center" variant="headline" gutterBottom={true}>
+                      {OrdersHistoryPageTitle}
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid container justify="center">
                   { isHasOrders
-                    ? <Grid item xs={ 12 }>
-                      <OrderList items={ orders }/>
+                    ? <Grid item xs={12}>
+                      <OrderList items={orders}/>
                     </Grid>
-                    : <Typography variant="title" color="inherit" gutterBottom={ true }>
-                      { noOrderText }
+                    : <Typography variant="title" color="inherit" gutterBottom={true}>
+                      {noOrderText}
                     </Typography>
                   }
 
@@ -103,4 +87,5 @@ export class OrderHistoryPageBase extends React.Component<OrderHistoryPageProps,
   }
 }
 
-export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
+export const OrderHistoryPage = withStyles(orderHistoryStyles)(OrderHistoryPageBase);
+export default OrderHistoryPage;

@@ -7,3 +7,5 @@ export const OrderDetailSectionTitle = 'Order Details';
 export const OrderDetailOrderIdTitle = 'Order Id: ';
 export const OrderDetailDateTitle = 'Order Date: ';
 export const OrderDetailPriceModeTitle = 'Price Mode: ';
+export const OrdersHistoryPageTitle = 'Orders History';
+
