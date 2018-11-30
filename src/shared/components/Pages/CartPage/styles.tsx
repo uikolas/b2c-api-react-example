@@ -83,5 +83,4 @@ export const styles = (theme: Theme) => createStyles({
     paddingLeft: '6px',
     textAlign: 'left',
   }
-
 });

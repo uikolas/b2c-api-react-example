@@ -4,7 +4,7 @@ import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 
 import { merge } from 'src/shared/helpers/common';
-import { Lang } from '../lang';
+// import { Lang } from '../lang';
 import { User } from '../user';
 import { Cart } from '../cart';
 import { AddNavProps as Props } from './types';
@@ -17,7 +17,7 @@ export const AddNavComponent: React.SFC<Props> = ({classes, showSearch, handleSe
         <Search/>
       </IconButton>
     </div>
-    <div className={ classes.addNavItem }><Lang/></div>
+    {/*<div className={ classes.addNavItem }><Lang/></div>*/}
     <div className={ classes.addNavItem }><User/></div>
     <div className={ classes.addNavItem }><Cart/></div>
   </div>

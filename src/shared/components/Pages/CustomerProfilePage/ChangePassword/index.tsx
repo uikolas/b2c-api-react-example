@@ -13,7 +13,6 @@ import {
   InputLabelConfirmPassword,
 } from 'src/shared/constants/forms/labels';
 
-
 interface ChangePasswordProps extends WithStyles<typeof pageStyles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;

@@ -3,28 +3,21 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
-import { styles } from './styles';
-import { FilterValue } from 'src/shared/interfaces/searchPageData';
 import { CategoryItem } from 'src/shared/components/Pages/SearchPage/CategoryItem';
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
 import { ICategoriesListProps } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
-
+import { styles } from './styles';
 
 const title = 'Categories';
 
-export const CategoriesListBase: React.SFC<ICategoriesListProps> = (props) => {
-  const {
-    classes,
-    categories,
-    categoriesTree,
-    selectedCategory,
-  } = props;
-
+export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
+  {classes, categories, categoriesTree, selectedCategory},
+) => {
   if (!Array.isArray(categories) || !categories.length) {
     return null;
   }
 
-  const categoryList = categories.map((category: FilterValue) => {
+  const categoryList = categories.map(category => {
     let name: string;
     const searchName = (leaf: any) => {
       if (leaf.nodeId === category.value) {
@@ -51,10 +44,11 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (props) => {
   });
 
   return (
-    <Grid container
-          justify="flex-start"
-          alignItems="center"
-          className={ classes.root }
+    <Grid
+      container
+      justify="flex-start"
+      alignItems="center"
+      className={ classes.root }
     >
       <Grid item xs={ 12 }>
         <AppPageSubTitle title={ title } extraClass={ classes.title }/>

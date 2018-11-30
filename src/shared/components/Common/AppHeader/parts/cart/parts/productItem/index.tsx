@@ -7,11 +7,10 @@ import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ProductItemProps as Props } from './types';
 import { styles } from './styles';
 
-
 export const ProductItemComponent: React.SFC<Props> = ({classes, productData, deleteItem}) => (
   <div className={ classes.productItem }>
     <div className={ classes.image }>
-      <div>
+      <div className={ classes.imageContainer }>
         <img src={ productData.image } alt={ productData.name }/>
       </div>
     </div>
