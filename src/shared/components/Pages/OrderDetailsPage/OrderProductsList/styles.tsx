@@ -17,6 +17,6 @@ export const styles = (theme: Theme) => createStyles({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: "100%",
   },
 });

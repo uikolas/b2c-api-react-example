@@ -145,6 +145,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                         orderId={order.id}
                         date={order.dateCreated}
                         btnBackHandler={routerGoBack}
+                        priceMode={order.priceMode}
                       />
                       <OrderProductList items={ order.items }/>
                       <OrderDetailsTotals
