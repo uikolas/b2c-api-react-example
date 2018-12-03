@@ -1,4 +1,3 @@
-import * as React from "react";
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {homePageStyles} from "src/shared/components/Pages/HomePage/styles";
 
