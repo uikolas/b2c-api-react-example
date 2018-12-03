@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {IBannerProps} from "./types";
-import {bannerStyles} from "./styles";
+import {styles} from "./styles";
 
 import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
 
@@ -43,4 +43,4 @@ export const BannerBase: React.SFC<IBannerProps> = (props): JSX.Element => {
   );
 };
 
-export const Banner = withStyles(bannerStyles)(BannerBase);
+export const Banner = withStyles(styles)(BannerBase);

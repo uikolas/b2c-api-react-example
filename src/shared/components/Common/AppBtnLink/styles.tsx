@@ -1,7 +1,7 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
-export const appBtnLinkStyles = (theme: Theme) => createStyles({
+export const styles = (theme: Theme) => createStyles({
   root: {
     display: "inline-flex",
     border: `1px solid ${theme.appColors.black}`,

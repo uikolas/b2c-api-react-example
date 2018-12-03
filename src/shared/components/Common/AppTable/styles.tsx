@@ -12,7 +12,10 @@ export const styles = (theme: Theme) => createStyles({
     height: 'auto'
   },
   headerCell: {
-    padding: '0.875rem 1rem',
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 1.5,
+    paddingBottom: theme.spacing.unit * 1.5,
     fontSize: theme.appFixedDimensions.fontSize.small,
     fontWeight: 'bold',
     color: theme.appColors.black,
@@ -31,7 +34,11 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   bodyCell: {
-    padding: '1.4375rem 1rem',
+    // padding: '1.4375rem 1rem',
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
     fontSize: theme.appFixedDimensions.fontSize.small,
   },
   footerCell: {

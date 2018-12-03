@@ -1,5 +1,5 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {addressPartStyles} from "./styles";
+import {styles} from "./styles";
 
 export interface IAddressPart {
   text: string | number | null;
@@ -11,6 +11,6 @@ export interface IAddressPartRow {
   data: Array<IAddressPart>;
 }
 
-export interface IAddressPartProps extends WithStyles<typeof addressPartStyles> {
+export interface IAddressPartProps extends WithStyles<typeof styles> {
   row: IAddressPartRow;
 }

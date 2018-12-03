@@ -6,12 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
 import {connect} from './connect';
 import {OrderHistoryContext} from './context';
-import {orderHistoryStyles} from './styles';
+import {styles} from './styles';
 import {noOrderText} from '../../../constants/messages/orders';
 import {pathOrderDetailsPageBase} from '../../../routes/contentRoutes';
 import {emptyValueErrorText} from '../../../constants/messages/errors';
 import {OrderList} from './OrderList';
 import {OrdersHistoryPageTitle} from "src/shared/constants/orders";
+import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
 
 
 @connect
@@ -27,7 +28,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
     this.initRequestData();
   };
 
-  public viewClickHandler = (event: any): any => {
+  public viewClickHandler = (event: React.MouseEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;
     if (!value) {
       throw new Error(emptyValueErrorText);
@@ -35,7 +36,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
     this.props.routerPush(`${pathOrderDetailsPageBase}/${value}`);
   };
 
-  private initRequestData = () => {
+  private initRequestData = (): boolean => {
     if (!this.props.isInitiated && this.props.isAppDataSet) {
       this.props.getOrdersCollection();
       return true;
@@ -62,16 +63,14 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
               <div className={classes.root}>
                 <Grid container justify="center">
                   <Grid item xs={12}>
-                    <Typography align="center" variant="headline" gutterBottom={true}>
-                      {OrdersHistoryPageTitle}
-                    </Typography>
+                    <CustomerPageTitle title={OrdersHistoryPageTitle} />
                   </Grid>
                 </Grid>
-                <Grid container justify="center">
+                <Grid container>
                   { isHasOrders
                     ? <Grid item xs={12}>
-                      <OrderList items={orders}/>
-                    </Grid>
+                        <OrderList orders={orders} viewClickHandler={this.viewClickHandler} />
+                      </Grid>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>
                       {noOrderText}
                     </Typography>
@@ -87,5 +86,5 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
   }
 }
 
-export const OrderHistoryPage = withStyles(orderHistoryStyles)(OrderHistoryPageBase);
+export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
 export default OrderHistoryPage;

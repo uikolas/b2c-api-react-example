@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Grid, {GridSize} from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 
-import { pageStyles } from '../styles';
+import {styles} from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
@@ -20,7 +20,7 @@ import {
   InputLabelEmail,
 } from 'src/shared/constants/forms/labels';
 
-interface UpdateProfileProps extends WithStyles<typeof pageStyles> {
+interface UpdateProfileProps extends WithStyles<typeof styles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   firstName: TCustomerFirstName;
@@ -99,5 +99,4 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
   );
 };
 
-export const UpdateProfile = withStyles(pageStyles)(UpdateProfileBase);
-
+export const UpdateProfile = withStyles(styles)(UpdateProfileBase);
