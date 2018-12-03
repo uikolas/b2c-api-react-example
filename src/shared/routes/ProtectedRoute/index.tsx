@@ -18,7 +18,6 @@ export class ProtectedRoute extends React.PureComponent<Props> {
 
   public componentDidMount(): void {
     this.checkAuthorized(false);
-    this.setTitle();
   }
 
   public componentDidUpdate(prevProps: Props): void {
@@ -27,8 +26,6 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     }
 
     this.checkAuthorized(prevProps.isUserLoggedIn);
-
-    this.setTitle();
   }
 
   // Helper functions
@@ -37,10 +34,6 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     if (!prevIsUserLoggedIn && !this.props.isUserLoggedIn) {
       this.props.history.push(pathLoginPage);
     }
-  };
-
-  private setTitle = (): void => {
-    document.title = this.props.pageTitle;
   };
 
   // RENDER
