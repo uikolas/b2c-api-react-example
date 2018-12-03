@@ -1,9 +1,9 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {orderAddressesStyles} from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/styles";
+import {styles} from "./styles";
 import {IAddressItemOrder} from "src/shared/interfaces/addresses/index";
 
 
-export interface IOrderAddressesProps extends WithStyles<typeof orderAddressesStyles> {
+export interface IOrderAddressesProps extends WithStyles<typeof styles> {
   billingAddress: IAddressItemOrder;
   shippingAddress: IAddressItemOrder;
   billingBlockTitle: string;

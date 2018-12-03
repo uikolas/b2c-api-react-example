@@ -3,7 +3,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import {orderAddressesStyles} from "./styles";
+import {styles} from "./styles";
 import {IOrderAddressesProps} from "./types";
 import {AddressItem} from "src/shared/components/Pages/OrderDetailsPage/AddressItem/index";
 
@@ -23,4 +23,4 @@ export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = (props): JSX.
   );
 };
 
-export const OrderAddresses = withStyles(orderAddressesStyles)(OrderAddressesBase);
+export const OrderAddresses = withStyles(styles)(OrderAddressesBase);

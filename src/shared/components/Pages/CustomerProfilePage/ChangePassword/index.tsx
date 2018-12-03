@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { pageStyles } from '../styles';
+import {styles} from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import { TCustomerPassword } from 'src/shared/interfaces/customer';
@@ -13,7 +13,7 @@ import {
   InputLabelConfirmPassword,
 } from 'src/shared/constants/forms/labels';
 
-interface ChangePasswordProps extends WithStyles<typeof pageStyles> {
+interface ChangePasswordProps extends WithStyles<typeof styles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
   inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
   password: TCustomerPassword;
@@ -80,4 +80,4 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
   );
 };
 
-export const ChangePassword = withStyles(pageStyles)(ChangePasswordBase);
+export const ChangePassword = withStyles(styles)(ChangePasswordBase);

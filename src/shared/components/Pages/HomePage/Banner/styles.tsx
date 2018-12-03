@@ -3,7 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 import {homepageHeroSrc} from 'src/img';
 
 
-export const bannerStyles = (theme: Theme) => createStyles({
+export const styles = (theme: Theme) => createStyles({
   root: {
     backgroundImage:  `url(${homepageHeroSrc})`,
     backgroundColor: theme.appColors.weakGrey,

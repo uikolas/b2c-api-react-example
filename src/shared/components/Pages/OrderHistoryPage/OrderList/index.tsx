@@ -1,64 +1,60 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import { styles } from './styles';
-import { IOrderCollectionParsed } from 'src/shared/interfaces/order';
-import { OrderListItem } from '../OrderListItem';
+import {styles} from './styles';
+import {IOrderItem} from 'src/shared/interfaces/order';
+import {
+  OrdersHistoryTableHeaderDate,
+  OrdersHistoryTableHeaderID,
+  OrdersHistoryTableHeaderTotal,
+  OrdersHistoryViewDetailBtnTitle
+} from "src/shared/constants/orders/index";
+import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
+import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
+import {AppDate} from "src/shared/components/Common/AppDate/index";
+import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
+import {AppTable} from "src/shared/components/Common/AppTable/index";
 
-interface OrderListProps extends WithStyles<typeof styles>, IOrderCollectionParsed {
 
-}
+export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
+  const {classes, orders, viewClickHandler} = props;
 
-export const title = 'View orders';
-export const orderIdTitle = 'Order Id';
-export const orderDateTitle = 'Order Date';
-export const orderTotalTitle = 'Total';
-export const orderActionsTitle = 'Actions';
+  const headerCellPart = 'header-';
+  const rowPart = 'order-';
 
-export const OrderListBase: React.SFC<OrderListProps> = (props): JSX.Element => {
-  const {classes, items} = props;
+  const headerCells:  Array<ICellInfo> = [
+    {id: `${headerCellPart}1`, content: OrdersHistoryTableHeaderID},
+    {id: `${headerCellPart}2`, content: OrdersHistoryTableHeaderDate},
+    {id: `${headerCellPart}3`, content: OrdersHistoryTableHeaderTotal},
+    {id: `${headerCellPart}4`, content: ''},
+  ];
+
+  const bodyRows: Array<ITableRow> = orders.map((item: IOrderItem) => {
+    return {
+      id: `${rowPart}${item.id}`,
+      cells: [
+        {id: `id-${item.id}`, content: `${item.id}`},
+        {id: `date-${item.id}`, content: <AppDate value={item.dateCreated}/>},
+        { id: `price-${item.id}`,
+          content: <AppPrice value={item.totals.grandTotal} specificCurrency={item.currency}/>
+        },
+        { id: `actions-${item.id}`,
+          content: <SprykerButton
+                      title={OrdersHistoryViewDetailBtnTitle}
+                      value={item.id}
+                      onClick={viewClickHandler}
+                   />
+        },
+      ],
+    };
+  });
 
   return (
-    <div className={ classes.root }>
-      <Typography variant="title" color="inherit" gutterBottom={ true } className={ classes.title }>
-        { title }
-      </Typography>
-
-      <Paper className={ classes.tableOuter }>
-        <Table className={ classes.table }>
-          <TableHead>
-            <TableRow>
-              <TableCell>{ orderIdTitle }</TableCell>
-              <TableCell>{ orderDateTitle }</TableCell>
-              <TableCell>{ orderTotalTitle }</TableCell>
-              <TableCell>{ orderActionsTitle }</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            { items.map(item => (
-              <OrderListItem
-                key={ item.id }
-                id={ item.id }
-                dateCreated={ item.dateCreated }
-                currency={ item.currency }
-                totals={ item.totals }
-              />
-            )) }
-          </TableBody>
-        </Table>
-      </Paper>
-
+    <div className={classes.root}>
+      <AppTable headerCells={headerCells} bodyRows={bodyRows} />
     </div>
-
   );
 };
 
 export const OrderList = withStyles(styles)(OrderListBase);
-

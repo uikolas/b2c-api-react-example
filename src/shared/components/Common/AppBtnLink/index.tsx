@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import {NavLink} from 'react-router-dom';
-import {IAppBtnLinkProps} from "src/shared/components/Common/AppBtnLink/types";
-import {appBtnLinkStyles} from "src/shared/components/Common/AppBtnLink/appBtnLinkStyles";
+import {IAppBtnLinkProps} from "./types";
+import {styles} from "./styles";
 
 
 export const AppBtnLinkBase: React.SFC<IAppBtnLinkProps> = (props): JSX.Element => {
@@ -16,4 +16,4 @@ export const AppBtnLinkBase: React.SFC<IAppBtnLinkProps> = (props): JSX.Element 
   );
 };
 
-export const AppBtnLink = withStyles(appBtnLinkStyles)(AppBtnLinkBase);
+export const AppBtnLink = withStyles(styles)(AppBtnLinkBase);

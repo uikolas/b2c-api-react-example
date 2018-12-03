@@ -1,8 +1,8 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {homePageStyles} from "src/shared/components/Pages/HomePage/styles";
+import {styles} from "src/shared/components/Pages/HomePage/styles";
 
 
-export interface IHomePageProps extends WithStyles<typeof homePageStyles> {
+export interface IHomePageProps extends WithStyles<typeof styles> {
 
 }
 
