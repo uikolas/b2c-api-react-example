@@ -16,8 +16,8 @@ export class ProtectedRoute extends React.PureComponent<Props> {
 
   // Component lifecycle methods
 
-  public componentWillMount(): void {
-    this.checkAuthorized();
+  public componentDidMount(): void {
+    this.checkAuthorized(false);
     this.setTitle();
   }
 
@@ -26,7 +26,7 @@ export class ProtectedRoute extends React.PureComponent<Props> {
       toast.success(customerLogout);
     }
 
-    this.checkAuthorized();
+    this.checkAuthorized(prevProps.isUserLoggedIn);
 
     this.setTitle();
   }
