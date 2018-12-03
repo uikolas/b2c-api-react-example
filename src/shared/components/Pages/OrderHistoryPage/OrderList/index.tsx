@@ -9,46 +9,42 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { styles } from './styles';
-import { IOrderCollectionParsed } from 'src/shared/interfaces/order';
+import {IOrderItem} from 'src/shared/interfaces/order';
 import { OrderListItem } from '../OrderListItem';
+import {
+  OrdersHistoryTableHeaderDate,
+  OrdersHistoryTableHeaderID,
+  OrdersHistoryTableHeaderTotal
+} from "src/shared/constants/orders/index";
+import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
 
-interface OrderListProps extends WithStyles<typeof styles>, IOrderCollectionParsed {
 
-}
 
-export const title = 'View orders';
-export const orderIdTitle = 'Order Id';
-export const orderDateTitle = 'Order Date';
-export const orderTotalTitle = 'Total';
-export const orderActionsTitle = 'Actions';
-
-export const OrderListBase: React.SFC<OrderListProps> = (props): JSX.Element => {
+export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
   const {classes, items} = props;
 
   return (
-    <div className={ classes.root }>
-      <Typography variant="title" color="inherit" gutterBottom={ true } className={ classes.title }>
-        { title }
-      </Typography>
+    <div className={classes.root}>
 
-      <Paper className={ classes.tableOuter }>
-        <Table className={ classes.table }>
+
+      <Paper className={classes.tableOuter}>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell>{ orderIdTitle }</TableCell>
-              <TableCell>{ orderDateTitle }</TableCell>
-              <TableCell>{ orderTotalTitle }</TableCell>
-              <TableCell>{ orderActionsTitle }</TableCell>
+              <TableCell>{OrdersHistoryTableHeaderID}</TableCell>
+              <TableCell>{OrdersHistoryTableHeaderDate}</TableCell>
+              <TableCell>{OrdersHistoryTableHeaderTotal}</TableCell>
+              <TableCell> </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            { items.map(item => (
+            { items.map((item: IOrderItem) => (
               <OrderListItem
-                key={ item.id }
-                id={ item.id }
-                dateCreated={ item.dateCreated }
-                currency={ item.currency }
-                totals={ item.totals }
+                key={item.id}
+                id={item.id}
+                dateCreated={item.dateCreated}
+                currency={item.currency}
+                totals={item.totals}
               />
             )) }
           </TableBody>
@@ -61,4 +57,3 @@ export const OrderListBase: React.SFC<OrderListProps> = (props): JSX.Element => 
 };
 
 export const OrderList = withStyles(styles)(OrderListBase);
-

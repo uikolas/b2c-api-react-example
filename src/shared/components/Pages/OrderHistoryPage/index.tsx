@@ -12,6 +12,7 @@ import {pathOrderDetailsPageBase} from '../../../routes/contentRoutes';
 import {emptyValueErrorText} from '../../../constants/messages/errors';
 import {OrderList} from './OrderList';
 import {OrdersHistoryPageTitle} from "src/shared/constants/orders";
+import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
 
 
 @connect
@@ -62,16 +63,14 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
               <div className={classes.root}>
                 <Grid container justify="center">
                   <Grid item xs={12}>
-                    <Typography align="center" variant="headline" gutterBottom={true}>
-                      {OrdersHistoryPageTitle}
-                    </Typography>
+                    <CustomerPageTitle title={OrdersHistoryPageTitle} />
                   </Grid>
                 </Grid>
-                <Grid container justify="center">
+                <Grid container>
                   { isHasOrders
                     ? <Grid item xs={12}>
-                      <OrderList items={orders}/>
-                    </Grid>
+                        <OrderList items={orders}/>
+                      </Grid>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>
                       {noOrderText}
                     </Typography>

@@ -8,4 +8,8 @@ export const OrderDetailOrderIdTitle = 'Order Id: ';
 export const OrderDetailDateTitle = 'Order Date: ';
 export const OrderDetailPriceModeTitle = 'Price Mode: ';
 export const OrdersHistoryPageTitle = 'Orders History';
+export const OrdersHistoryTableHeaderID = 'Order ID';
+export const OrdersHistoryTableHeaderDate = 'Order Date';
+export const OrdersHistoryTableHeaderTotal = 'Total';
+export const OrdersHistoryTableHeader = 'Order ID';
 
