@@ -3,7 +3,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import {orderAddressesStyles} from "./orderAddressesStyles";
+import {orderAddressesStyles} from "./styles";
 import {IOrderAddressesProps} from "./types";
 import {AddressItem} from "src/shared/components/Pages/OrderDetailsPage/AddressItem/index";
 

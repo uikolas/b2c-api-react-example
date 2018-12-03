@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {IBannerProps} from "./types";
-import {bannerStyles} from "./bannerStyles";
+import {bannerStyles} from "./styles";
 
 import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
 

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
 import {connect} from './connect';
 import {OrderHistoryContext} from './context';
-import {orderHistoryStyles} from './orderHistoryStyles';
+import {orderHistoryStyles} from './styles';
 import {noOrderText} from '../../../constants/messages/orders';
 import {pathOrderDetailsPageBase} from '../../../routes/contentRoutes';
 import {emptyValueErrorText} from '../../../constants/messages/errors';

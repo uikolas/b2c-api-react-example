@@ -1,7 +1,7 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import {homePageStyles} from './homePageStyles';
+import {homePageStyles} from './styles';
 import {IHomePageProps, IHomePageState} from "./types";
 import {connect} from './connect';
 import {categoriesTeasersData} from "./constants/categoriesTeasersData";

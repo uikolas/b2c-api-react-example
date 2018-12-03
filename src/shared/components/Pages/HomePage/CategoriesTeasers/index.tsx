@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import {ICategoriesTeasersProps} from "./types";
-import {categoriesTeasersStyles} from "./categoriesTeasersStyles";
+import {categoriesTeasersStyles} from "./styles";
 
 import {ICategoriesTeasersData} from "src/shared/components/Pages/HomePage/types";
 import {CategoryTeaser} from "src/shared/components/Pages/HomePage/CategoryTeaser/index";

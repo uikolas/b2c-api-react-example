@@ -1,6 +1,6 @@
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {orderHistoryStyles} from "./orderHistoryStyles";
+import {orderHistoryStyles} from "./styles";
 import {TOrderCollection} from "src/shared/interfaces/order/index";
 
 

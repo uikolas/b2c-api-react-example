@@ -1,5 +1,5 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {orderAddressesStyles} from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/orderAddressesStyles";
+import {orderAddressesStyles} from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/styles";
 import {IAddressItemOrder} from "src/shared/interfaces/addresses/index";
 
 

@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import {addressItemStyles} from "./addressItemStyles";
+import {addressItemStyles} from "./styles";
 import {IAddressItemProps} from "./types";
 import {getSalutationToShow} from "src/shared/helpers/customer/salutation";
 import {AddressPart} from "src/shared/components/Pages/OrderDetailsPage/AddressPart/index";

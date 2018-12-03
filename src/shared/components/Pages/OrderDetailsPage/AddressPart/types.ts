@@ -1,5 +1,5 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {addressPartStyles} from "./addressPartStyles";
+import {addressPartStyles} from "./styles";
 
 export interface IAddressPart {
   text: string | number | null;
