@@ -14,7 +14,7 @@ import { ChangePassword } from './ChangePassword';
 import { AccountActions } from './AccountActions';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
-import { pageStyles } from './styles';
+import { styles } from './styles';
 import { connect } from './connect';
 
 const keySalutation = 'salutation';
@@ -194,5 +194,5 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
   }
 }
 
-export const CustomerProfilePage = withStyles(pageStyles)(CustomerProfilePageBase);
+export const CustomerProfilePage = withStyles(styles)(CustomerProfilePageBase);
 export default CustomerProfilePage;

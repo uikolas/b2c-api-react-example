@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
 import {connect} from './connect';
 import {OrderHistoryContext} from './context';
-import {orderHistoryStyles} from './styles';
+import {styles} from './styles';
 import {noOrderText} from '../../../constants/messages/orders';
 import {pathOrderDetailsPageBase} from '../../../routes/contentRoutes';
 import {emptyValueErrorText} from '../../../constants/messages/errors';
@@ -69,7 +69,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
                 <Grid container>
                   { isHasOrders
                     ? <Grid item xs={12}>
-                        <OrderList items={orders}/>
+                        <OrderList orders={orders}/>
                       </Grid>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>
                       {noOrderText}
@@ -86,5 +86,5 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
   }
 }
 
-export const OrderHistoryPage = withStyles(orderHistoryStyles)(OrderHistoryPageBase);
+export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
 export default OrderHistoryPage;

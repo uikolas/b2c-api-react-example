@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { styles } from './styles';
+import {styles} from './styles';
 import {IOrderItem} from 'src/shared/interfaces/order';
 import { OrderListItem } from '../OrderListItem';
 import {
@@ -19,13 +19,11 @@ import {
 import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
 
 
-
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
-  const {classes, items} = props;
+  const {classes, orders} = props;
 
   return (
     <div className={classes.root}>
-
 
       <Paper className={classes.tableOuter}>
         <Table className={classes.table}>
@@ -38,7 +36,7 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
             </TableRow>
           </TableHead>
           <TableBody>
-            { items.map((item: IOrderItem) => (
+            { orders.map((item: IOrderItem) => (
               <OrderListItem
                 key={item.id}
                 id={item.id}
