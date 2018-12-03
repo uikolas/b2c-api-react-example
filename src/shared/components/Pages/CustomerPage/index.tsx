@@ -26,7 +26,7 @@ import { LoadableWishListPage } from '../WishListPage/loadable';
 import { LoadableWishlistDetail } from '../WishlistDetail/loadable';
 import { LoadableCustomerAddressPage } from '../CustomerAddressesPage/loadable';
 import { AddressFormPage } from '../CustomerAddressesPage/AddressForm';
-import { LoadableConnectedOrderDetailsPage } from '../OrderDetailsPage/loadable';
+import { LoadableOrderDetailsPage } from '../OrderDetailsPage/loadable';
 import { LoadableOrderHistoryPage } from '../OrderHistoryPage/loadable';
 import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
 import { Logo } from './logo';
@@ -106,7 +106,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
               <Route path={ pathWishListsPage } component={ LoadableWishListPage }/>
               <Route path={ pathWishListPage } component={ LoadableWishlistDetail }/>
               <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage }/>
-              <Route path={ pathOrderDetailsPage } component={ LoadableConnectedOrderDetailsPage }/>
+              <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
               <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage }/>
             </Switch>
           </Grid>

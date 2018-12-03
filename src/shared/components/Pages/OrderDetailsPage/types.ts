@@ -7,7 +7,7 @@ import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
 
-export interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
+export interface IOrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;
   isRejected: boolean;
   isFulfilled: boolean;
@@ -26,7 +26,7 @@ export interface OrderDetailsPageProps extends WithStyles<typeof styles>, RouteP
   addMultipleItemsToCart: Function;
 }
 
-export interface OrderDetailsPageState {
+export interface IOrderDetailsPageState {
   selectedItems: IOrderDetailsSelectedItems;
   selectedItemsData: TCartAddItemCollection;
 }

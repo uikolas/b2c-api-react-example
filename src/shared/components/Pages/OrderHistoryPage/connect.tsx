@@ -11,7 +11,6 @@ import {
 } from '../../../reducers/Pages/OrderHistory';
 import { isAppInitiated } from '../../../reducers/Common/Init';
 import { isUserAuthenticated } from '../../../reducers/Pages/Login';
-import { OrderHistoryPage } from '.';
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -47,36 +46,3 @@ export const connect = reduxify(
     getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
   }),
 );
-
-/*export const ConnectedOrderHistoryPage = reduxify(
-  (state: any, ownProps: any) => {
-    const location = getRouterLocation(state, ownProps);
-    const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
-    const isRejected: boolean = isOrderHistoryStateRejected(state, ownProps);
-    const isFulfilled = isOrderHistoryFulfilled(state, ownProps);
-    const isInitiated = isOrderHistoryInitiated(state, ownProps);
-    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const isHasOrders = isOrderHistoryItems(state, ownProps);
-    const orders = getOrdersCollectionFromStore(state, ownProps);
-    const routerPush = getRouterHistoryPush(state, ownProps);
-
-    return ({
-      location,
-      isLoading,
-      isRejected,
-      isFulfilled,
-      isAppDataSet,
-      isUserLoggedIn,
-      isInitiated,
-      isHasOrders,
-      orders,
-      routerPush,
-    });
-  },
-  (dispatch: Function) => ({
-    getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-  }),
-)(OrderHistoryPage);
-
-export default ConnectedOrderHistoryPage;*/

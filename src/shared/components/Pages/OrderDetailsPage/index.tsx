@@ -3,6 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import {connect} from './connect';
 import { emptyOrderText } from 'src/shared/constants/messages/orders';
 import { IOrderDetailsItem, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
 import { emptyValueErrorText } from 'src/shared/constants/messages/errors';
@@ -13,7 +14,7 @@ import { OrderProductList } from './OrderProductsList';
 import { OrderDetailsTotals } from './OrderDetailsTotals';
 import { OrderDetailsContext } from './context';
 import { styles } from './styles';
-import { OrderDetailsPageProps as Props, OrderDetailsPageState as State } from './types';
+import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
 import {OrderAddresses} from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/index";
 import {getOrderSelectedItemsData} from "src/shared/components/Pages/OrderDetailsPage/helpers";
 import {
@@ -25,6 +26,7 @@ import {
 } from "src/shared/constants/orders/index";
 
 
+@connect
 export class OrderDetailsPageBase extends React.Component<Props, State> {
   public state: State = {
     selectedItems: {},
@@ -194,3 +196,4 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
 }
 
 export const OrderDetailsPage = withStyles(styles)(OrderDetailsPageBase);
+export default OrderDetailsPage;
