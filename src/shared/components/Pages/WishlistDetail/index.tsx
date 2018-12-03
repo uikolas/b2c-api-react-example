@@ -19,6 +19,8 @@ import { WishlistItemBaseInfo } from './WishlistItemBaseInfo';
 import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
+import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
+import {IWishlistItem} from "src/shared/interfaces/wishlist/index";
 
 export const pageTitle = 'Search results for ';
 
@@ -36,8 +38,6 @@ export class WishlistDetailBase extends React.Component<Props, State> {
   }
 
   public renderProduct = (sku: string, name: string) => (e: any) => {
-    // this.props.dispatch(getProductDataAction(sku.split('_')[0]));
-    // this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
     this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
   };
 
@@ -76,15 +76,18 @@ export class WishlistDetailBase extends React.Component<Props, State> {
       return null;
     }
 
-    const headerCells: any[] = [
-      {content: 'Product'},
-      {content: 'Price'},
-      {content: 'Availability'},
-      {content: ''},
-      {content: ''},
+    const headerCellPart = 'header-';
+    const bodyCellPart = 'body-';
+
+    const headerCells: Array<ICellInfo> = [
+      {content: 'Product', id: `${headerCellPart}1`},
+      {content: 'Price', id: `${headerCellPart}2`},
+      {content: 'Availability', id: `${headerCellPart}3`},
+      {content: '', id: `${headerCellPart}4`},
+      {content: '', id: `${headerCellPart}5`},
     ];
 
-    const bodyRows: any[] = products.map(item => {
+    const bodyRows: Array<ITableRow> = products.map((item: IWishlistItem) => {
       const prices: any = {default: '', original: ''};
 
       item.prices.forEach((price: any) => {
@@ -102,6 +105,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         cells: [
           {
             content: (<WishlistItemBaseInfo productItem={item} />),
+            id: `${bodyCellPart}1`
           },
           {
             content: (
@@ -120,6 +124,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 />
               </div>
             ),
+            id: `${bodyCellPart}2`
           },
           {
             content: (
@@ -127,6 +132,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 { item.availability ? 'Available' : 'Not available' }
               </span>
             ),
+            id: `${bodyCellPart}3`
           },
           {
             content: (
@@ -134,6 +140,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 Add to Cart
               </Typography>
             ),
+            id: `${bodyCellPart}4`
           },
           {
             content: (
@@ -141,6 +148,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 Remove
               </Typography>
             ),
+            id: `${bodyCellPart}5`
           },
         ],
       };
@@ -194,5 +202,4 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 }
 
 export const ConnectedWishlistDetailPage = withStyles(styles)(WishlistDetailBase);
-
 export default ConnectedWishlistDetailPage;

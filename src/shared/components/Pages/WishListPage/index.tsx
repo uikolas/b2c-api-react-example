@@ -18,6 +18,8 @@ import { AppTable } from '../../Common/AppTable';
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
+import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
+import {IWishlist} from "src/shared/interfaces/wishlist/index";
 
 export const pageTitle = 'Search results for ';
 
@@ -78,15 +80,18 @@ export class WishListBase extends React.Component<Props, State> {
       return null;
     }
 
-    const headerCells: any[] = [
-      {content: 'Name'},
-      {content: 'Items'},
-      {content: 'Created'},
-      {content: ''},
-      {content: ''},
+    const headerCellPart = 'header-';
+    const bodyCellPart = 'body-';
+
+    const headerCells: Array<ICellInfo> = [
+      {content: 'Name', id: `${headerCellPart}1`},
+      {content: 'Items', id: `${headerCellPart}2`},
+      {content: 'Created', id: `${headerCellPart}3`},
+      {content: '', id: `${headerCellPart}4`},
+      {content: '', id: `${headerCellPart}5`},
     ];
 
-    const bodyRows: any[] = wishlists.map((item: any) => (
+    const bodyRows: Array<ITableRow> = wishlists.map((item: IWishlist) => (
       {
         id: item.id,
         cells: [
@@ -117,10 +122,12 @@ export class WishListBase extends React.Component<Props, State> {
                   </NavLink>
                 )
             ),
+            id: `${bodyCellPart}1`
           },
-          {content: item.numberOfItems},
+          {content: item.numberOfItems, id: `${bodyCellPart}2`},
           {
             content: <FormattedDate value={ new Date(item.createdAt) } year='numeric' month='short' day='2-digit'/>,
+            id: `${bodyCellPart}3`
           },
           {
             content: (
@@ -132,6 +139,7 @@ export class WishListBase extends React.Component<Props, State> {
                 Edit
               </Typography>
             ),
+            id: `${bodyCellPart}4`
           },
           {
             content: (
@@ -139,6 +147,7 @@ export class WishListBase extends React.Component<Props, State> {
                 Delete
               </Typography>
             ),
+            id: `${bodyCellPart}5`
           },
         ],
       }
