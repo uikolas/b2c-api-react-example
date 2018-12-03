@@ -1,5 +1,5 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {addressItemStyles} from "./addressItemStyles";
+import {addressItemStyles} from "./styles";
 import {IAddressItemOrder} from "src/shared/interfaces/addresses/index";
 
 

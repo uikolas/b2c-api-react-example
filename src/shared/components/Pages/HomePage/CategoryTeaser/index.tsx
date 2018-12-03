@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {ICategoryTeaserProps} from "./types";
-import {categoryTeaserStyles} from "./categoryTeaserStyles";
+import {categoryTeaserStyles} from "./styles";
 
 import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
 

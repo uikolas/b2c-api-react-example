@@ -1,5 +1,5 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {bannerStyles} from "./bannerStyles";
+import {bannerStyles} from "./styles";
 
 
 export interface IBannerProps extends WithStyles<typeof bannerStyles> {

@@ -3,7 +3,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 
-import {addressPartStyles} from "./addressPartStyles";
+import {addressPartStyles} from "./styles";
 import {IAddressPart, IAddressPartProps} from "./types";
 
 
