@@ -1,21 +1,34 @@
 import * as React from 'react';
+import { toast } from 'react-toastify';
+import { withRouter } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
 import {
+  pathCustomerAddressesPage,
   pathCustomerProfilePage,
   pathHomePage,
   pathLoginPage,
   pathOrderHistoryPage,
+  pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
 
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
+import {customerLogout} from "src/shared/constants/messages/customer";
 
 @connect
+@(withRouter as any)
 export class UserDropComponent extends React.PureComponent<Props> {
+
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
+      this.props.history.push(pathLoginPage);
+      toast.success(customerLogout);
+    }
+  }
 
   public customerLogout = (e: any) => {
     e.preventDefault();
@@ -24,19 +37,22 @@ export class UserDropComponent extends React.PureComponent<Props> {
   };
 
   public render() {
-    const {classes, isUserLoggedIn, logout} = this.props;
+    const {classes, isUserLoggedIn} = this.props;
     const loggedInUser = (
       <div className={ classes.userDrop }>
         <p className={ classes.title }><strong>Your Account</strong></p>
         <ul className={ classes.userDropNav }>
           <li>
-            <NavLink to={ pathCustomerProfilePage }>Account Details</NavLink>
+            <NavLink to={ pathCustomerProfilePage }>Profile</NavLink>
+          </li>
+          <li>
+            <NavLink to={ pathCustomerAddressesPage }>Addresses</NavLink>
           </li>
           <li>
             <NavLink to={ pathOrderHistoryPage }>Order History</NavLink>
           </li>
           <li>
-            <NavLink to={ pathCustomerProfilePage }>Profile</NavLink>
+            <NavLink to={ pathWishListsPage }>Wishlist</NavLink>
           </li>
         </ul>
         <div className={ classes.userBtns }>

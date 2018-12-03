@@ -4,4 +4,5 @@ import { styles } from '../styles';
 
 export interface WishListRowsProps extends WithStyles<typeof styles> {
   productItem: IWishlistItem;
+  renderProduct: Function;
 }

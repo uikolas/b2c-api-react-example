@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
 import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
@@ -18,6 +18,8 @@ import { AppTable } from '../../Common/AppTable';
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
+import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
+import {IWishlist} from "src/shared/interfaces/wishlist/index";
 
 export const pageTitle = 'Search results for ';
 
@@ -35,15 +37,17 @@ export class WishListBase extends React.Component<Props, State> {
     }
   }
 
-  public handleChangeName = ({target: {value}}: any) => {
-    this.setState(() => ({name: value}));
+  public handleChangeName = (event: InputChangeEvent): void => {
+    event.persist();
+    this.setState(() => ({name: event.target.value}));
   };
 
-  public handleChangeUpdatedName = (event: any) => {
+  public handleChangeUpdatedName = (event: InputChangeEvent): void => {
+    event.persist();
     this.setState(() => ({updatedName: event.target.value}));
   };
 
-  public addWishlist = (e: any) => {
+  public addWishlist = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!this.state.name.trim()) {
@@ -58,15 +62,16 @@ export class WishListBase extends React.Component<Props, State> {
     this.setState(() => ({updatedList: '', updatedName: ''}));
   };
 
-  public handleDeleteWishlist = (wishlistId: string) => (e: any) => {
+  public handleDeleteWishlist = (wishlistId: string) => (e: ClickEvent) => {
     this.props.deleteWishlistAction(wishlistId);
   };
 
-  private setUpdatedWishlist = (id: string, name: string) => (e: any) => {
+  private setUpdatedWishlist = (id: string, name: string) => (e: ClickEvent) => {
     this.setState(() => ({updatedList: id, updatedName: name}));
   };
 
-  public setCurrentWishlist = (wishlistId: string) => (e: any) => {
+  public setCurrentWishlist = (wishlistId: string) => (event: ClickEvent) => {
+    event.persist();
     this.props.getDetailWishlistAction(wishlistId);
   };
 
@@ -78,15 +83,18 @@ export class WishListBase extends React.Component<Props, State> {
       return null;
     }
 
-    const headerCells: any[] = [
-      {content: 'Name'},
-      {content: 'Items'},
-      {content: 'Created'},
-      {content: ''},
-      {content: ''},
+    const headerCellPart = 'header-';
+    const bodyCellPart = 'body-';
+
+    const headerCells: Array<ICellInfo> = [
+      {content: 'Name', id: `${headerCellPart}1`},
+      {content: 'Items', id: `${headerCellPart}2`},
+      {content: 'Created', id: `${headerCellPart}3`},
+      {content: '', id: `${headerCellPart}4`},
+      {content: '', id: `${headerCellPart}5`},
     ];
 
-    const bodyRows: any[] = wishlists.map((item: any) => (
+    const bodyRows: Array<ITableRow> = wishlists.map((item: IWishlist) => (
       {
         id: item.id,
         cells: [
@@ -99,11 +107,7 @@ export class WishListBase extends React.Component<Props, State> {
                       value={ this.state.updatedName }
                       onChange={ this.handleChangeUpdatedName }
                     />
-                    <IconButton
-                      color="primary"
-                      onClick={ this.handleUpdateWishlist }
-                      disabled={ isLoading }
-                    >
+                    <IconButton color="primary" onClick={this.handleUpdateWishlist} disabled={isLoading}>
                       <SaveIcon/>
                     </IconButton>
                   </form>
@@ -117,10 +121,12 @@ export class WishListBase extends React.Component<Props, State> {
                   </NavLink>
                 )
             ),
+            id: `${bodyCellPart}1`
           },
-          {content: item.numberOfItems},
+          {content: item.numberOfItems, id: `${bodyCellPart}2`},
           {
             content: <FormattedDate value={ new Date(item.createdAt) } year='numeric' month='short' day='2-digit'/>,
+            id: `${bodyCellPart}3`
           },
           {
             content: (
@@ -132,6 +138,7 @@ export class WishListBase extends React.Component<Props, State> {
                 Edit
               </Typography>
             ),
+            id: `${bodyCellPart}4`
           },
           {
             content: (
@@ -139,6 +146,7 @@ export class WishListBase extends React.Component<Props, State> {
                 Delete
               </Typography>
             ),
+            id: `${bodyCellPart}5`
           },
         ],
       }
@@ -156,7 +164,6 @@ export class WishListBase extends React.Component<Props, State> {
         <Grid item xs={ 12 }>
           <form noValidate autoComplete="off" onSubmit={ this.addWishlist } className={ classes.form }>
             <Typography paragraph className={ classes.titleForm }>Add New Wishlist</Typography>
-
             <Paper elevation={ 0 } className={ classes.formItem }>
               <TextField
                 className={ classes.textFieldForm }
@@ -166,21 +173,16 @@ export class WishListBase extends React.Component<Props, State> {
                 onChange={ this.handleChangeName }
                 inputProps={ {className: classes.input} }
               />
-
               <Button type="submit" variant="contained" color="primary" className={ classes.formSubmit }>Add</Button>
             </Paper>
           </form>
 
           { bodyRows.length
             ? (
-              <AppTable
-                headerCells={ headerCells }
-                bodyRows={ bodyRows }
-              />
+              <AppTable headerCells={headerCells} bodyRows={bodyRows}/>
             ) : (
               <Paper elevation={ 0 }>
                 <Divider/>
-
                 <Typography paragraph className={ classes.noItems }>
                   You do not have any lists yet, create one above to get started.
                 </Typography>
@@ -194,5 +196,4 @@ export class WishListBase extends React.Component<Props, State> {
 }
 
 export const ConnectedWishlistPage = withStyles(styles)(WishListBase);
-
 export default ConnectedWishlistPage;

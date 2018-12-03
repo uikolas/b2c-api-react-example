@@ -14,7 +14,6 @@ export const FilterWrapperBase: React.SFC<IFilterWrapperProps> = (props) => {
       { filter }
     </Grid>
   );
-
 };
 
 export const FilterWrapper = withStyles(styles)(FilterWrapperBase);

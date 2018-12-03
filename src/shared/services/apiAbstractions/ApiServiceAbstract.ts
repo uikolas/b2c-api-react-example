@@ -10,7 +10,7 @@ interface IResponseError {
 export class ApiServiceAbstract {
 
   protected static getParsedAPIError = (response: IResponseError) => {
-    let errorMessage: any;
+    let errorMessage: string;
     if (!response || !response.problem) {
       errorMessage = unexpectedServerError;
     } else {
@@ -23,5 +23,4 @@ export class ApiServiceAbstract {
     }
     return errorMessage;
   };
-
 }

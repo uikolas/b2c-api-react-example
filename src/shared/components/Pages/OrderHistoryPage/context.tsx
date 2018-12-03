@@ -1,8 +1,6 @@
 import * as React from 'react';
+import {TOrderHistoryContext} from "src/shared/components/Pages/OrderHistoryPage/types";
 
-type TOrderHistoryContext = {
-  viewClickHandler(event: any): any,
-};
 
 export const OrderHistoryContext = React.createContext<TOrderHistoryContext>({
   viewClickHandler: (event: any) => {

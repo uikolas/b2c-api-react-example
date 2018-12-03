@@ -5,4 +5,5 @@ export interface Props extends RouteProps, WithRouter {
   pageTitle?: string;
   // @connect
   isUserLoggedIn?: boolean;
+  isInitStateFulfilled?: boolean;
 }

@@ -1,6 +1,8 @@
 import { TAppCurrency } from '../../reducers/Common/Init';
 import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '../product';
 import { IAbstractTotals, TCanceledTotal } from '../abstract/totals';
+import {TCartPriceMode} from "src/shared/interfaces/cart/index";
+import {IAddressItemOrder} from "src/shared/interfaces/addresses/index";
 
 type TOrderCreatedAt = string;
 export type TOrderDate = string;
@@ -53,6 +55,9 @@ export interface IOrderDetailsResponse {
     expenses: TOrderExpenses;
     items: Array<IOrderDetailsItem>;
     totals: IOrderTotals;
+    billingAddress: IAddressItemOrder;
+    shippingAddress: IAddressItemOrder;
+    priceMode: TCartPriceMode;
   };
   id: TOrderId;
 }
@@ -60,6 +65,9 @@ export interface IOrderDetailsResponse {
 export interface IOrderDetailsParsed extends IOrderItem {
   expenses: TOrderExpenses;
   items: TOrderProducts;
+  billingAddress: IAddressItemOrder;
+  shippingAddress: IAddressItemOrder;
+  priceMode: TCartPriceMode;
 }
 
 export interface IOrderDetailsExpenseItem {

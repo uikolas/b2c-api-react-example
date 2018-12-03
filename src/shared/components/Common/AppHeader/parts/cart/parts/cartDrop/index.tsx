@@ -38,12 +38,21 @@ export class CartDropComponent extends React.PureComponent<Props> {
           )) }
         </ul>
 
-        <div className={ classes.cartTotal }>
-          <span>Total</span>
-          <AppPrice
-            value={ totals.grandTotal }
-            extraClassName={ classes.priceTotal }
-          />
+        <div className={ classes.cartTotalContainer }>
+          <div className={ classes.cartTotal }>
+            <span>Discounts</span>
+            <AppPrice
+              value={ -totals.discountTotal }
+              extraClassName={ classes.priceTotal }
+            />
+          </div>
+          <div className={ classes.cartTotal }>
+            <span>Total</span>
+            <AppPrice
+              value={ totals.grandTotal }
+              extraClassName={ classes.priceTotal }
+            />
+          </div>
         </div>
 
         <div className={ classes.cartBtns }>

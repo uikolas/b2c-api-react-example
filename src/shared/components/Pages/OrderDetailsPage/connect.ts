@@ -19,6 +19,53 @@ import { getOrderDetailsAction } from 'src/shared/actions/Pages/Order';
 import { addMultipleItemsToCartAction } from 'src/shared/actions/Common/Cart';
 import { OrderDetailsPage } from './';
 
+
+const mapStateToProps = (state: any, ownProps: any) => {
+  const location = getRouterLocation(state, ownProps);
+  const isLoading = isOrderDetailsLoading(state, ownProps);
+  const isRejected = isOrderDetailsStateRejected(state, ownProps);
+  const isFulfilled = isOrderDetailsFulfilled(state, ownProps);
+  const isInitiated = isOrderDetailsInitiated(state, ownProps);
+  const isAppDataSet = isAppInitiated(state, ownProps);
+  const isUserLoggedIn = isUserAuthenticated(state, ownProps);
+  const isOrderExist = isOrderDetailsPresent(state, ownProps);
+  const order = getOrderDetailsFromStore(state, ownProps);
+  const orderIdParam = getRouterMatchParam(state, ownProps, 'orderId');
+  const routerGoBack = getRouterHistoryBack(state, ownProps);
+  const currency = getAppCurrency(state, ownProps);
+  const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
+  const cartId: TCartId = getCartId(state, ownProps);
+
+  return ({
+    location,
+    isLoading,
+    isRejected,
+    isFulfilled,
+    isAppDataSet,
+    isUserLoggedIn,
+    isInitiated,
+    isOrderExist,
+    orderIdParam,
+    order,
+    routerGoBack,
+    currency,
+    payloadForCreateCart,
+    cartId,
+  });
+};
+
+export const connect = reduxify(
+  mapStateToProps,
+  (dispatch: Function) => ({
+    dispatch,
+    getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId)),
+    addMultipleItemsToCart: (
+      payload: TCartAddItemCollection, cartId: TCartId, payloadCartCreate: ICartCreatePayload,
+    ) => dispatch(addMultipleItemsToCartAction(payload, cartId, payloadCartCreate)),
+  }),
+);
+
+/*
 export const ConnectedOrderDetailsPage = reduxify(
   (state: any, ownProps: any) => {
     const location = getRouterLocation(state, ownProps);
@@ -59,6 +106,6 @@ export const ConnectedOrderDetailsPage = reduxify(
       payload: TCartAddItemCollection, cartId: TCartId, payloadCartCreate: ICartCreatePayload,
     ) => dispatch(addMultipleItemsToCartAction(payload, cartId, payloadCartCreate)),
   }),
-)(OrderDetailsPage);
+)(OrderDetailsPage);*/
 
-export default ConnectedOrderDetailsPage;
+/*export default ConnectedOrderDetailsPage;*/

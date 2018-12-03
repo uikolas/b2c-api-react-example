@@ -1,8 +1,8 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {bannerStyles} from "./bannerStyles";
+import {styles} from "./styles";
 
 
-export interface IBannerProps extends WithStyles<typeof bannerStyles> {
+export interface IBannerProps extends WithStyles<typeof styles> {
   titleFirst: string;
   titleSecond?: string;
   intro: string;

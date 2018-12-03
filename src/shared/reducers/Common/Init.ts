@@ -129,6 +129,10 @@ export function isAppLoading(state: any, props: any): boolean {
   return (state.init && state.init.pending && state.init.pending === true);
 }
 
+export function isAppStateFulfilled(state: any, props: any): boolean {
+  return Boolean(state.init && state.init.fulfilled && state.init.fulfilled === true);
+}
+
 export function getAppCurrency(state: any, props: any): TAppCurrency {
   return isAppInitiated(state, props) ? state.init.data.currency : null;
 }

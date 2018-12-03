@@ -3,22 +3,30 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import {connect} from './connect';
 import { emptyOrderText } from 'src/shared/constants/messages/orders';
 import { IOrderDetailsItem, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
 import { emptyValueErrorText } from 'src/shared/constants/messages/errors';
-import { ICartAddItem, TCartAddItemCollection } from 'src/shared/interfaces/cart';
+import { ICartAddItem } from 'src/shared/interfaces/cart';
 import { SprykerButton } from '../../UI/SprykerButton';
 import { OrderDetailsGeneralInfo } from './OrderDetailsGeneralInfo';
 import { OrderProductList } from './OrderProductsList';
 import { OrderDetailsTotals } from './OrderDetailsTotals';
 import { OrderDetailsContext } from './context';
 import { styles } from './styles';
-import { OrderDetailsPageProps as Props, OrderDetailsPageState as State } from './types';
+import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
+import {OrderAddresses} from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/index";
+import {getOrderSelectedItemsData} from "src/shared/components/Pages/OrderDetailsPage/helpers";
+import {
+  OrderDetailBillingAddressTitle,
+  OrderDetailPageTitle,
+  OrderDetailReorderAllBtnTitle,
+  OrderDetailReorderSelectedBtnTitle,
+  OrderDetailShippingAddressTitle
+} from "src/shared/constants/orders/index";
 
-export const pageTitle = 'Orders History';
-const reorderSelectedBtnTitle = 'Reorder selected items';
-const reorderAllBtnTitle = 'Reorder all';
 
+@connect
 export class OrderDetailsPageBase extends React.Component<Props, State> {
   public state: State = {
     selectedItems: {},
@@ -42,7 +50,6 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
 
     if (!key) {
       throw new Error(emptyValueErrorText);
-      return;
     }
 
     this.setState((prevState: State) => {
@@ -54,7 +61,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
       return ({
         ...prevState,
         selectedItems: newSelectedItems,
-        selectedItemsData: this.getSelectedItemsData(newSelectedItems),
+        selectedItemsData: getOrderSelectedItemsData(newSelectedItems),
       });
     });
   };
@@ -68,7 +75,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     return true;
   };
 
-  public isReorderSelectedDisabled = (): boolean => {
+  private isReorderSelectedDisabled = (): boolean => {
     return Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length);
   };
 
@@ -95,20 +102,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     return true;
   };
 
-  public isReorderAllDisabled = (): boolean => Boolean(!this.props.order.items.length);
-
-  private getSelectedItemsData = (selectedItems: IOrderDetailsSelectedItems): TCartAddItemCollection => {
-    const result = [];
-    for (let sku in selectedItems) {
-      if (selectedItems[sku]) {
-        result.push({
-          sku,
-          quantity: this.props.order.items.filter((item: IOrderDetailsItem) => (item.sku === sku))[0].quantity,
-        });
-      }
-    }
-    return result.length ? result : null;
-  };
+  private isReorderAllDisabled = (): boolean => Boolean(!this.props.order.items.length);
 
   private initRequestData = () => {
     if (this.props.isLoading) {
@@ -138,50 +132,57 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                 selectedItems: this.state.selectedItems,
               } }
             >
-              <div className={ classes.root }>
+              <div className={classes.root}>
                 <Grid container justify="center">
-                  <Grid item xs={ 12 }>
-                    <Typography align="center" variant="headline" gutterBottom={ true }>
-                      { pageTitle }
+                  <Grid item xs={12}>
+                    <Typography align="center" variant="headline" gutterBottom={true}>
+                      {OrderDetailPageTitle}
                     </Typography>
                   </Grid>
                 </Grid>
                 <Grid container justify="center">
                   { isOrderExist
-                    ? <Grid item xs={ 12 }>
+                    ? <Grid item xs={12}>
                       <OrderDetailsGeneralInfo
-                        orderId={ order.id }
-                        date={ order.dateCreated }
-                        btnBackHandler={ routerGoBack }
+                        orderId={order.id}
+                        date={order.dateCreated}
+                        btnBackHandler={routerGoBack}
+                        priceMode={order.priceMode}
                       />
                       <OrderProductList items={ order.items }/>
                       <OrderDetailsTotals
-                        currency={ currency }
-                        expenses={ order.expenses }
-                        canceledTotal={ order.totals.canceledTotal }
-                        expenseTotal={ order.totals.expenseTotal }
-                        discountTotal={ order.totals.discountTotal }
-                        taxTotal={ order.totals.taxTotal }
-                        subtotal={ order.totals.subtotal }
-                        grandTotal={ order.totals.grandTotal }
+                        currency={currency}
+                        expenses={order.expenses}
+                        canceledTotal={order.totals.canceledTotal}
+                        expenseTotal={order.totals.expenseTotal}
+                        discountTotal={order.totals.discountTotal}
+                        taxTotal={order.totals.taxTotal}
+                        subtotal={order.totals.subtotal}
+                        grandTotal={order.totals.grandTotal}
                       />
-                      <Grid item xs={ 12 } className={ `${classes.section} ${classes.btnOuter}` }>
+                      <OrderAddresses
+                        billingAddress={order.billingAddress}
+                        shippingAddress={order.shippingAddress}
+                        billingBlockTitle={OrderDetailBillingAddressTitle}
+                        shippingBlockTitle={OrderDetailShippingAddressTitle}
+                      />
+                      <Grid item xs={12} className={`${classes.section} ${classes.btnOuter}`}>
                         <SprykerButton
-                          title={ reorderSelectedBtnTitle }
-                          extraClasses={ classes.reorderBtn }
-                          onClick={ this.reorderSelectedClickHandler }
-                          disabled={ this.isReorderSelectedDisabled() }
+                          title={OrderDetailReorderSelectedBtnTitle}
+                          extraClasses={classes.reorderBtn}
+                          onClick={this.reorderSelectedClickHandler}
+                          disabled={this.isReorderSelectedDisabled()}
                         />
                         <SprykerButton
-                          title={ reorderAllBtnTitle }
-                          extraClasses={ classes.reorderBtn }
-                          onClick={ this.reorderAllClickHandler }
-                          disabled={ this.isReorderAllDisabled() }
+                          title={OrderDetailReorderAllBtnTitle}
+                          extraClasses={classes.reorderBtn}
+                          onClick={this.reorderAllClickHandler}
+                          disabled={this.isReorderAllDisabled()}
                         />
                       </Grid>
                     </Grid>
-                    : <Typography variant="title" color="inherit" gutterBottom={ true }>
-                      { emptyOrderText }
+                    : <Typography variant="title" color="inherit" gutterBottom={true}>
+                      {emptyOrderText}
                     </Typography>
                   }
                 </Grid>
@@ -195,3 +196,4 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
 }
 
 export const OrderDetailsPage = withStyles(styles)(OrderDetailsPageBase);
+export default OrderDetailsPage;

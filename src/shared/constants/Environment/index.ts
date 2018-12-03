@@ -8,5 +8,3 @@ export const APP_LOCALE_DE = 'de';
 export const APP_LOCALE_EN = 'en';
 export const APP_LOCALE_DEFAULT = APP_LOCALE_DE;
 
-
-export const API_WITH_FIXTURES = false;

@@ -1,8 +1,8 @@
 import {WithStyles} from '@material-ui/core/styles/withStyles';
-import {appBtnLinkStyles} from "./appBtnLinkStyles";
+import {styles} from "./styles";
 
 
-export interface IAppBtnLinkProps extends WithStyles<typeof appBtnLinkStyles> {
+export interface IAppBtnLinkProps extends WithStyles<typeof styles> {
   title: string;
   path: string;
   extraClassName?: string;

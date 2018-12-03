@@ -1,7 +1,7 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import {homePageStyles} from './homePageStyles';
+import {styles} from './styles';
 import {IHomePageProps, IHomePageState} from "./types";
 import {connect} from './connect';
 import {categoriesTeasersData} from "./constants/categoriesTeasersData";
@@ -42,5 +42,5 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
   }
 }
 
-export const HomePage = withStyles(homePageStyles)(HomePageBase);
+export const HomePage = withStyles(styles)(HomePageBase);
 export default HomePage;
