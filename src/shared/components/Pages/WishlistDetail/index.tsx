@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -9,6 +11,7 @@ import Divider from '@material-ui/core/Divider/Divider';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
@@ -26,33 +29,46 @@ export const pageTitle = 'Search results for ';
 export class WishlistDetailBase extends React.Component<Props, State> {
   public state: State = {
     movedItem: '',
+    multiProducts: [],
   };
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
-    if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
-      this.props.deleteItemAction(this.props.wishlist.id, prevState.movedItem);
-      this.setState(() => ({movedItem: ''}));
+    const { cartItemsLength, cartId, wishlist } = this.props;
+    if (prevState.movedItem && cartItemsLength > prevProps.cartItemsLength) {
+      this.props.deleteItemAction(wishlist.id, prevState.movedItem);
+      this.setState({ movedItem: '' });
+    }
+
+    if (prevState.multiProducts.length && cartItemsLength > prevProps.cartItemsLength) {
+      this.props.deleteMultiItemsAction(wishlist.id, prevState.multiProducts);
+      this.setState({ multiProducts: [] });
     }
   }
 
-  public renderProduct = (sku: string, name: string) => (e: any) => {
-    // this.props.dispatch(getProductDataAction(sku.split('_')[0]));
-    // this.props.dispatch(push(`${config.WEB_PATH}product/${name}`));
+  public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
+    event.persist();
     this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
   };
 
-  public handleDeleteItem = (sku: string) => (e: any) => this.props.deleteItemAction(this.props.wishlist.id, sku);
+  public handleDeleteItem = (sku: string) => (event: ClickEvent) => {
+    event.persist();
+    this.props.deleteItemAction(this.props.wishlist.id, sku);
+  };
 
-  public moveToCart = (sku: string) => (e: any) => {
-    this.setState(() => ({movedItem: sku}));
+  public moveToCart = (sku: string) => (event: ClickEvent) => {
+    event.persist();
+    this.setState(() => ({ movedItem: sku }));
     this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
   };
 
-  public moveAllProductsToCart = (e: any) => {
-    const {products} = this.props;
+  public moveAllProductsToCart = (event: ClickEvent) => {
+    event.persist();
+    const { products, cartId, wishlist } = this.props;
     const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
 
-    // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
+    this.props.multiItemsCartAction(cartId, availableProducts);
+
+    this.setState({ multiProducts: availableProducts });
   };
 
   public wishlistMenu = () => {
@@ -76,7 +92,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
       return null;
     }
 
-    const headerCells: any[] = [
+    const headerCells: {content: string}[] = [
       {content: 'Product'},
       {content: 'Price'},
       {content: 'Availability'},
@@ -101,7 +117,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         id: item.sku,
         cells: [
           {
-            content: (<WishlistItemBaseInfo productItem={item} />),
+            content: (<WishlistItemBaseInfo productItem={item} renderProduct={this.renderProduct}/>),
           },
           {
             content: (

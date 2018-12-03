@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, RouteProps, Switch } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { Location } from 'history';
 import { NavLink } from 'react-router-dom';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
@@ -35,6 +35,7 @@ import { connect } from './connect';
 
 interface CustomerPageProps extends WithStyles<typeof styles> {
   location: Location;
+  isUserLoggedIn: boolean;
   logout?(): void;
 }
 
@@ -43,7 +44,6 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
 
   public handleLogout = (e: ClickEvent) => {
     e.preventDefault();
-
     this.props.logout();
   };
 

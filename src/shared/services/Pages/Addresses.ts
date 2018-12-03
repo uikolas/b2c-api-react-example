@@ -2,8 +2,15 @@ import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import api, { setAuthToken } from '../api';
+import {
+  addressAdd,
+  addressDelete,
+  addressUpdate,
+} from 'src/shared/constants/messages/addresses';
+import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 
-export class AddressesService {
+
+export class AddressesService extends ApiServiceAbstract {
   public static async getCustomerAddresses(ACTION_TYPE: string, dispatch: Function, customerId: string): Promise<any> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
@@ -22,11 +29,12 @@ export class AddressesService {
         });
         return addresses;
       } else {
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
@@ -62,18 +70,19 @@ export class AddressesService {
           address: {id: response.data.data.id, ...response.data.data.attributes},
 
         });
-        toast.success('New address added successfull');
+        toast.success(addressAdd);
 
         // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
-        
+
         // return response.data.data;
         return AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
       } else {
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
@@ -99,17 +108,19 @@ export class AddressesService {
       );
 
       if (response.ok) {
+        toast.success(addressDelete);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           addressId,
         });
         return response.ok;
       } else {
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
@@ -148,14 +159,15 @@ export class AddressesService {
           addressId,
           data: response.data.data.attributes,
         });
-        toast.success('Address updated successfull');
+        toast.success(addressUpdate);
         return response.data.data;
       } else {
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 

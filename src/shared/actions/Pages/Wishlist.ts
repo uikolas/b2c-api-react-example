@@ -6,8 +6,8 @@ import {
   DETAIL_WISHLIST,
   UPDATE_WISHLIST,
   WISHLIST_ALL_LISTS,
-} from '../../constants/ActionTypes/Pages/Wishlist';
-import { WishlistService } from '../../services/Pages/Wishlist';
+} from 'src/shared/constants/ActionTypes/Pages/Wishlist';
+import { WishlistService } from 'src/shared/services/Pages/Wishlist';
 
 
 export const getAllListPendingState = {
@@ -84,5 +84,11 @@ export const addItemAction = function(wishlistId: string, sku: string) {
   return (dispatch: Function, getState: Function) => {
     dispatch(addItemPendingState);
     WishlistService.addItemWishlist(ADD_ITEM_WISHLIST, dispatch, wishlistId, sku);
+  };
+};
+
+export const deleteMultiItemsAction = function(wishlistId: string, items: string[]) {
+  return (dispatch: Function, getState: Function) => {
+    WishlistService.removeMultiItems(dispatch, wishlistId, items);
   };
 };

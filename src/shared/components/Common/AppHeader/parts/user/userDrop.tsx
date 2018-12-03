@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { toast } from 'react-toastify';
+import { withRouter } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
@@ -15,9 +17,18 @@ import {
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
+import {customerLogout} from "src/shared/constants/messages/customer";
 
 @connect
+@(withRouter as any)
 export class UserDropComponent extends React.PureComponent<Props> {
+
+  public componentDidUpdate(prevProps: Props) {
+    if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
+      this.props.history.push(pathLoginPage);
+      toast.success(customerLogout);
+    }
+  }
 
   public customerLogout = (e: any) => {
     e.preventDefault();

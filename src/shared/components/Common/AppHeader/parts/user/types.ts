@@ -11,7 +11,7 @@ export interface UserState {
   anchorEl: HTMLElement | null;
 }
 
-export interface UserDropProps extends WithStyles<typeof styles> {
+export interface UserDropProps extends WithStyles<typeof styles>, WithRouter {
   // connect
   isUserLoggedIn?: boolean;
   anonymId?: string;

@@ -5,8 +5,8 @@ import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { TCartId } from 'src/shared/interfaces/cart';
 import { getCartId, getTotalItemsQuantity, isCartStateLoading } from 'src/shared/reducers/Common/Cart';
-import { deleteItemAction } from 'src/shared/actions/Pages/Wishlist';
-import { addItemToCartAction } from 'src/shared/actions/Common/Cart';
+import { deleteItemAction, deleteMultiItemsAction } from 'src/shared/actions/Pages/Wishlist';
+import { addItemToCartAction, multiItemsCartAction } from 'src/shared/actions/Common/Cart';
 import { push } from 'react-router-redux';
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -35,6 +35,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       changeLocation: (location: string) => push(location),
       deleteItemAction,
       addItemToCartAction,
+      multiItemsCartAction,
+      deleteMultiItemsAction,
     },
     dispatch,
   );
