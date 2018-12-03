@@ -35,16 +35,22 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
     return {
       id: `${rowPart}${item.id}`,
       cells: [
-        {id: `id-${item.id}`, content: `${item.id}`},
+        {id: `id-${item.id}`, content: `#${item.id}`},
         {id: `date-${item.id}`, content: formatDateToString(new Date(item.dateCreated))},
         { id: `price-${item.id}`,
-          content: <AppPrice value={item.totals.grandTotal} specificCurrency={item.currency}/>
+          content: <AppPrice
+                      value={item.totals.grandTotal}
+                      specificCurrency={item.currency}
+                      extraClassName={classes.price}
+                      isStylesInherited={true}
+                    />
         },
         { id: `actions-${item.id}`,
           content: <SprykerButton
                       title={OrdersHistoryViewDetailBtnTitle}
                       value={item.id}
                       onClick={viewClickHandler}
+                      extraClasses={classes.orderBtn}
                    />
         },
       ],
