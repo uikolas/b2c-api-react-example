@@ -12,11 +12,16 @@ import {IAppTableProps, ICellInfo, ITableRow} from "./types";
 
 
 export const AppTableBase: React.SFC<IAppTableProps> = (props) => {
-  const {classes, isRowHover, headerCells, bodyRows, footerCells} = props;
-  const rowClass =  isRowHover ? `${classes.rowHover}  ${classes.bodyRow}` : classes.bodyRow;
+  const {classes, headerCells, bodyRows, footerCells, isResponsive, width} = props;
+  const rowClass =  classes.bodyRow;
+
+  const tableStyles: React.CSSProperties = {
+    width: isResponsive ? width : '100%',
+  };
 
   return (
-    <Table className={classes.root}>
+    <div className={`${classes.tableOuter} ${isResponsive ? classes.responsive : ''}`}>
+      <Table className={classes.root}  style={tableStyles} >
       {
         headerCells
         ? (<TableHead className={classes.header}>
@@ -72,6 +77,7 @@ export const AppTableBase: React.SFC<IAppTableProps> = (props) => {
           : null
       }
     </Table>
+    </div>
   );
 };
 

@@ -13,11 +13,13 @@ export interface ICellInfo {
 export interface ITableRow {
   id: string;
   cells?: Array<ICellInfo>;
+  isRowHover?: boolean;
 }
 
 export interface IAppTableProps extends WithStyles<typeof styles> {
   headerCells: Array<ICellInfo> | null;
   bodyRows: Array<ITableRow>;
   footerCells?: Array<ICellInfo> | null;
-  isRowHover?: boolean;
+  isResponsive?: boolean;
+  width?: number;
 }

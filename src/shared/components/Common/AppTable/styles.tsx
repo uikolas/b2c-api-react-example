@@ -34,7 +34,6 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   bodyCell: {
-    // padding: '1.4375rem 1rem',
     paddingRight: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 2,
     paddingTop: theme.spacing.unit * 3,
@@ -43,5 +42,11 @@ export const styles = (theme: Theme) => createStyles({
   },
   footerCell: {
 
-  }
+  },
+  tableOuter: {
+    width: '100%',
+  },
+  responsive: {
+    overflowX: 'auto',
+  },
 });

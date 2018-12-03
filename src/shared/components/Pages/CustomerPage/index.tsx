@@ -54,7 +54,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
     return (
       <AppMain>
         <Grid container justify="space-between" className={classes.customerContainer}>
-          <Grid item xs={ 12 } sm={ 3 } container direction="column">
+          <Grid item xs={12} sm={4} md={3} container direction="column">
             <Paper className={classes.rootPaper}>
               <Logo />
 
@@ -98,17 +98,21 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={ 12 } sm={ 7 }>
-            <Switch>
-              <Route path={ pathCustomerPage } exact component={ LoadableCustomerProfilePage }/>
-              <Route path={ pathCustomerAddressesPage } exact component={ LoadableCustomerAddressPage }/>
-              <Route path={ pathAddressFormPage } component={ AddressFormPage }/>
-              <Route path={ pathWishListsPage } component={ LoadableWishListPage }/>
-              <Route path={ pathWishListPage } component={ LoadableWishlistDetail }/>
-              <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage }/>
-              <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
-              <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage }/>
-            </Switch>
+          <Grid item xs={12} sm={8} md={9}>
+            <Grid container className={classes.rightPart}>
+              <Grid item xs={12}>
+                <Switch>
+                  <Route path={ pathCustomerPage } exact component={ LoadableCustomerProfilePage }/>
+                  <Route path={ pathCustomerAddressesPage } exact component={ LoadableCustomerAddressPage }/>
+                  <Route path={ pathAddressFormPage } component={ AddressFormPage }/>
+                  <Route path={ pathWishListsPage } component={ LoadableWishListPage }/>
+                  <Route path={ pathWishListPage } component={ LoadableWishlistDetail }/>
+                  <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage }/>
+                  <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
+                  <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage }/>
+                </Switch>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </AppMain>

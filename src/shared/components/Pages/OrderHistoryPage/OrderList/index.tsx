@@ -11,10 +11,11 @@ import {
 } from "src/shared/constants/orders/index";
 import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
-import {AppDate} from "src/shared/components/Common/AppDate/index";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
 import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
 import {AppTable} from "src/shared/components/Common/AppTable/index";
+import {formatDateToString} from "src/shared/helpers/common/dates";
+import {appFixedDimensions} from "src/shared/theme/properties/new/appFixedDimensions";
 
 
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
@@ -35,7 +36,7 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
       id: `${rowPart}${item.id}`,
       cells: [
         {id: `id-${item.id}`, content: `${item.id}`},
-        {id: `date-${item.id}`, content: <AppDate value={item.dateCreated}/>},
+        {id: `date-${item.id}`, content: formatDateToString(new Date(item.dateCreated))},
         { id: `price-${item.id}`,
           content: <AppPrice value={item.totals.grandTotal} specificCurrency={item.currency}/>
         },
@@ -52,7 +53,12 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
 
   return (
     <div className={classes.root}>
-      <AppTable headerCells={headerCells} bodyRows={bodyRows} />
+      <AppTable
+        headerCells={headerCells}
+        bodyRows={bodyRows}
+        isResponsive={true}
+        width={appFixedDimensions.customerSubPageWidth}
+      />
     </div>
   );
 };
