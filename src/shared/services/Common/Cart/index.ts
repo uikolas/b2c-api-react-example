@@ -204,14 +204,14 @@ export class CartService extends ApiServiceAbstract {
     }
   }
 
-  public static async moveItemsToCart(
-    dispatch: Function, cartId: TCartId, productsList: string[]): Promise<any> {
+  public static async moveItemsToCart(dispatch: Function, cartId: TCartId, productsList: string[]): Promise<any> {
     try {
       for (const sku of productsList) {
         const payload = { sku, quantity: 1 };
 
         await CartService.cartAddItem(dispatch, payload, cartId);
       }
+      return true;
     } catch (err) {
       dispatch(cartActions.cartAddItemRejectedStateAction(err.message));
       toast.error('Unexpected Error: ' + err.message);

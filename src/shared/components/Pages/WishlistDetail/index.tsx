@@ -1,3 +1,5 @@
+// tslint:disable:max-file-line-count
+
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -27,12 +29,19 @@ export const pageTitle = 'Search results for ';
 export class WishlistDetailBase extends React.Component<Props, State> {
   public state: State = {
     movedItem: '',
+    multiProducts: [],
   };
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
-    if (prevState.movedItem && this.props.cartItemsLength > prevProps.cartItemsLength) {
-      this.props.deleteItemAction(this.props.wishlist.id, prevState.movedItem);
-      this.setState(() => ({movedItem: ''}));
+    const { cartItemsLength, cartId, wishlist } = this.props;
+    if (prevState.movedItem && cartItemsLength > prevProps.cartItemsLength) {
+      this.props.deleteItemAction(wishlist.id, prevState.movedItem);
+      this.setState({ movedItem: '' });
+    }
+
+    if (prevState.multiProducts.length && cartItemsLength > prevProps.cartItemsLength) {
+      this.props.deleteMultiItemsAction(wishlist.id, prevState.multiProducts);
+      this.setState({ multiProducts: [] });
     }
   }
 
@@ -48,16 +57,18 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 
   public moveToCart = (sku: string) => (event: ClickEvent) => {
     event.persist();
-    this.setState(() => ({movedItem: sku}));
+    this.setState(() => ({ movedItem: sku }));
     this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
   };
 
   public moveAllProductsToCart = (event: ClickEvent) => {
     event.persist();
-    const {products} = this.props;
+    const { products, cartId, wishlist } = this.props;
     const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
 
-    this.props.multiItemsCartAction(this.props.cartId, availableProducts);
+    this.props.multiItemsCartAction(cartId, availableProducts);
+
+    this.setState({ multiProducts: availableProducts });
   };
 
   public wishlistMenu = () => {

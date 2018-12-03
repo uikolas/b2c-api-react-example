@@ -178,7 +178,7 @@ const config = {
       filename: `index.html`,
       hash: true,
       compile: true,
-      favicon: path.resolve(__dirname, `favicon.ico`),
+      favicon: path.resolve(__dirname, `favicon.png`),
       minify: false,
       cache: true,
       showErrors: true,

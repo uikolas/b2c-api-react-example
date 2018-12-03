@@ -17,9 +17,11 @@ export interface WishlistPageProps extends WithStyles<typeof styles> {
   deleteItemAction(wishlistId: string, sku: string): void;
   addItemToCartAction(payload: ICartAddItem, cartId: TCartId): void;
   multiItemsCartAction(cartId: TCartId, listItems: string[]): void;
+  deleteMultiItemsAction(wishlistId: string, items: string[]): void;
   changeLocation(location: LocationDescriptor, state?: LocationState): RouterAction;
 }
 
 export interface WishlistPageState {
   movedItem: string;
+  multiProducts: string[];
 }

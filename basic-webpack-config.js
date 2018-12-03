@@ -162,7 +162,7 @@ const htmlLoader = {
 };
 const staticLoaders = [
   {test: /\.gif(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
-  {test: /\.(jpg|png)$/, loader: "url-loader?limit=100000"},
+  {test: /\.(jpg|png|svg)$/, loader: "url-loader?limit=100000"},
   {
     test: /\.(ttf|otf|eot|svg|woff(2)?)$/,
     use: [{

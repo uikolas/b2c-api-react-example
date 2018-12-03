@@ -13,6 +13,8 @@ import {
   wishlistRemoveItems,
 } from 'src/shared/constants/messages/wishlist';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import * as cartActions from "src/shared/actions/Common/Cart";
+import {CartService} from "src/shared/services/Common/Cart";
 
 export class WishlistService extends ApiServiceAbstract {
   public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
@@ -309,6 +311,27 @@ export class WishlistService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
+      return null;
+    }
+  }
+
+  public static async removeMultiItems(dispatch: Function, wishlistId: string, productsList: string[]): Promise<any> {
+    try {
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      setAuthToken(token);
+
+      for (const sku of productsList) {
+        await api.delete(
+          `wishlists/${wishlistId}/wishlist-items/${sku}`,
+          {},
+          {withCredentials: true}
+        );
+      }
+
+      return WishlistService.getWishlist('DETAIL_WISHLIST', dispatch, wishlistId);
+    } catch (err) {
+      dispatch(cartActions.cartAddItemRejectedStateAction(err.message));
+      toast.error('Unexpected Error: ' + err.message);
       return null;
     }
   }
