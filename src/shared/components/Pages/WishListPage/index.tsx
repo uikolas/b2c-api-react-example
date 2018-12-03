@@ -104,11 +104,7 @@ export class WishListBase extends React.Component<Props, State> {
                       value={ this.state.updatedName }
                       onChange={ this.handleChangeUpdatedName }
                     />
-                    <IconButton
-                      color="primary"
-                      onClick={ this.handleUpdateWishlist }
-                      disabled={ isLoading }
-                    >
+                    <IconButton color="primary" onClick={this.handleUpdateWishlist} disabled={isLoading}>
                       <SaveIcon/>
                     </IconButton>
                   </form>
@@ -182,14 +178,10 @@ export class WishListBase extends React.Component<Props, State> {
 
           { bodyRows.length
             ? (
-              <AppTable
-                headerCells={ headerCells }
-                bodyRows={ bodyRows }
-              />
+              <AppTable headerCells={headerCells} bodyRows={bodyRows}/>
             ) : (
               <Paper elevation={ 0 }>
                 <Divider/>
-
                 <Typography paragraph className={ classes.noItems }>
                   You do not have any lists yet, create one above to get started.
                 </Typography>
@@ -203,5 +195,4 @@ export class WishListBase extends React.Component<Props, State> {
 }
 
 export const ConnectedWishlistPage = withStyles(styles)(WishListBase);
-
 export default ConnectedWishlistPage;

@@ -1,56 +1,59 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import {styles} from './styles';
 import {IOrderItem} from 'src/shared/interfaces/order';
-import { OrderListItem } from '../OrderListItem';
 import {
   OrdersHistoryTableHeaderDate,
   OrdersHistoryTableHeaderID,
-  OrdersHistoryTableHeaderTotal
+  OrdersHistoryTableHeaderTotal,
+  OrdersHistoryViewDetailBtnTitle
 } from "src/shared/constants/orders/index";
 import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
+import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
+import {AppDate} from "src/shared/components/Common/AppDate/index";
+import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
+import {AppTable} from "src/shared/components/Common/AppTable/index";
 
 
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
-  const {classes, orders} = props;
+  const {classes, orders, viewClickHandler} = props;
+
+  const headerCellPart = 'header-';
+  const rowPart = 'order-';
+
+  const headerCells:  Array<ICellInfo> = [
+    {id: `${headerCellPart}1`, content: OrdersHistoryTableHeaderID},
+    {id: `${headerCellPart}2`, content: OrdersHistoryTableHeaderDate},
+    {id: `${headerCellPart}3`, content: OrdersHistoryTableHeaderTotal},
+    {id: `${headerCellPart}4`, content: ''},
+  ];
+
+  const bodyRows: Array<ITableRow> = orders.map((item: IOrderItem) => {
+    return {
+      id: `${rowPart}${item.id}`,
+      cells: [
+        {id: `id-${item.id}`, content: `${item.id}`},
+        {id: `date-${item.id}`, content: <AppDate value={item.dateCreated}/>},
+        { id: `price-${item.id}`,
+          content: <AppPrice value={item.totals.grandTotal} specificCurrency={item.currency}/>
+        },
+        { id: `actions-${item.id}`,
+          content: <SprykerButton
+                      title={OrdersHistoryViewDetailBtnTitle}
+                      value={item.id}
+                      onClick={viewClickHandler}
+                   />
+        },
+      ],
+    };
+  });
 
   return (
     <div className={classes.root}>
-
-      <Paper className={classes.tableOuter}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>{OrdersHistoryTableHeaderID}</TableCell>
-              <TableCell>{OrdersHistoryTableHeaderDate}</TableCell>
-              <TableCell>{OrdersHistoryTableHeaderTotal}</TableCell>
-              <TableCell> </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            { orders.map((item: IOrderItem) => (
-              <OrderListItem
-                key={item.id}
-                id={item.id}
-                dateCreated={item.dateCreated}
-                currency={item.currency}
-                totals={item.totals}
-              />
-            )) }
-          </TableBody>
-        </Table>
-      </Paper>
-
+      <AppTable headerCells={headerCells} bodyRows={bodyRows} />
     </div>
-
   );
 };
 

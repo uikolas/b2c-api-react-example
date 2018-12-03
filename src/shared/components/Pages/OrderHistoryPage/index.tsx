@@ -28,7 +28,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
     this.initRequestData();
   };
 
-  public viewClickHandler = (event: any): any => {
+  public viewClickHandler = (event: React.MouseEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;
     if (!value) {
       throw new Error(emptyValueErrorText);
@@ -36,7 +36,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
     this.props.routerPush(`${pathOrderDetailsPageBase}/${value}`);
   };
 
-  private initRequestData = () => {
+  private initRequestData = (): boolean => {
     if (!this.props.isInitiated && this.props.isAppDataSet) {
       this.props.getOrdersCollection();
       return true;
@@ -69,7 +69,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
                 <Grid container>
                   { isHasOrders
                     ? <Grid item xs={12}>
-                        <OrderList orders={orders}/>
+                        <OrderList orders={orders} viewClickHandler={this.viewClickHandler} />
                       </Grid>
                     : <Typography variant="title" color="inherit" gutterBottom={true}>
                       {noOrderText}

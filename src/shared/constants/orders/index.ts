@@ -11,3 +11,5 @@ export const OrdersHistoryPageTitle = 'Orders History';
 export const OrdersHistoryTableHeaderID = 'Order ID';
 export const OrdersHistoryTableHeaderDate = 'Order Date';
 export const OrdersHistoryTableHeaderTotal = 'Total';
+export const OrdersHistoryViewDetailBtnTitle = 'View Order';
+export const OrdersHistoryReorderBtnTitle = 'Reorder';

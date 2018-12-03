@@ -22,7 +22,6 @@ import { connect } from './connect';
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
 import {IWishlistItem} from "src/shared/interfaces/wishlist/index";
 
-export const pageTitle = 'Search results for ';
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {
@@ -51,8 +50,6 @@ export class WishlistDetailBase extends React.Component<Props, State> {
   public moveAllProductsToCart = (e: any) => {
     const {products} = this.props;
     const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
-
-    // this.props.dispatch(multiItemsCartAction(this.props.cartId, this.props.payloadForCreateCart, availableProducts));
   };
 
   public wishlistMenu = () => {
@@ -169,11 +166,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
           { bodyRows.length
             ? (
               <Paper elevation={ 0 }>
-                <AppTable
-                  classes={ {bodyCell: classes.bodyCell} }
-                  headerCells={ headerCells }
-                  bodyRows={ bodyRows }
-                />
+                <AppTable classes={{bodyCell: classes.bodyCell}} headerCells={headerCells} bodyRows={bodyRows}/>
 
                 <Button
                   className={ classes.addAllBtn }
