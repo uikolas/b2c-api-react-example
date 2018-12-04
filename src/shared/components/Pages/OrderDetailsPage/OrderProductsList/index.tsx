@@ -1,5 +1,5 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,12 +8,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import { styles } from './styles';
-import { IOrderDetailsItem, TOrderProducts } from 'src/shared/interfaces/order';
+import { IOrderDetailsItem } from 'src/shared/interfaces/order';
 import { OrderProductListItem } from '../OrderProductListItem';
+import {IOrderProductListProps} from "src/shared/components/Pages/OrderDetailsPage/OrderProductsList/types";
 
-interface OrderProductListProps extends WithStyles<typeof styles> {
-  items: TOrderProducts;
-}
 
 export const productSkuTitle = 'SKU';
 export const productNameTitle = 'Product name';
@@ -21,7 +19,7 @@ export const productPriceTitle = 'Price';
 export const productQuantityTitle = 'Quantity';
 export const productTotalTitle = 'Item total';
 
-export const OrderProductListBase: React.SFC<OrderProductListProps> = (props): JSX.Element => {
+export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): JSX.Element => {
   const {classes, items} = props;
 
   return (

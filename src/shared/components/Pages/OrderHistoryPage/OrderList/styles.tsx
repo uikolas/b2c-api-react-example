@@ -17,10 +17,7 @@ export const styles = (theme: Theme) => createStyles({
     textDecoration: "none",
     padding: 0,
     "&:hover": {
-      color: theme.appColors.black,
+      color: theme.appColors.blue,
     },
-    "&:visited": {
-      color: theme.appColors.black,
-    }
   },
 });

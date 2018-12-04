@@ -4,16 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { styles } from './styles';
+import {IOrderDetailsTotalsProps} from "./types";
 import { IOrderDetailsExpenseItem, IOrderTotals, TOrderExpenses } from 'src/shared/interfaces/order';
 import { AppPrice } from '../../../Common/AppPrice';
 import { TAppCurrency } from '../../../../reducers/Common/Init';
 import { TAbstractTotal } from 'src/shared/interfaces/abstract/totals';
 
-
-interface OrderDetailsTotalsProps extends WithStyles<typeof styles>, IOrderTotals {
-  currency: TAppCurrency;
-  expenses: TOrderExpenses;
-}
 
 export const subtotalTitle = 'Subtotal: ';
 export const expensesTitle = 'Shipment ';
@@ -23,7 +19,7 @@ export const taxTitle = 'Tax: ';
 export const canceledTitle = 'Canceled: ';
 export const totalTitle = 'Grand Total: ';
 
-export const OrderDetailsTotalsBase: React.SFC<OrderDetailsTotalsProps> = (props): JSX.Element => {
+export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (props): JSX.Element => {
   const {
     classes,
     expenses,

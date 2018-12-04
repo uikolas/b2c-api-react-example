@@ -5,14 +5,14 @@ import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { styles } from './styles';
+import {IOrderProductListItemProps} from "./types";
 import { IOrderDetailsItem } from 'src/shared/interfaces/order';
 import { AppPrice } from '../../../Common/AppPrice';
 import { OrderDetailsContext } from '../context';
 
-interface OrderProductListItemProps extends WithStyles<typeof styles>, IOrderDetailsItem {
-}
 
-export const OrderProductListItemBase: React.SFC<OrderProductListItemProps> = (props): JSX.Element => {
+
+export const OrderProductListItemBase: React.SFC<IOrderProductListItemProps> = (props): JSX.Element => {
   const {classes, name, quantity, sku, sumPrice, sumPriceToPayAggregation} = props;
 
   return (

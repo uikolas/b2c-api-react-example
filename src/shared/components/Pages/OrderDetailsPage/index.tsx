@@ -24,6 +24,7 @@ import {
   OrderDetailReorderSelectedBtnTitle,
   OrderDetailShippingAddressTitle
 } from "src/shared/constants/orders/index";
+import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
 
 
 @connect
@@ -133,13 +134,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
               } }
             >
               <div className={classes.root}>
-                <Grid container justify="center">
-                  <Grid item xs={12}>
-                    <Typography align="center" variant="headline" gutterBottom={true}>
-                      {OrderDetailPageTitle}
-                    </Typography>
-                  </Grid>
-                </Grid>
+
                 <Grid container justify="center">
                   { isOrderExist
                     ? <Grid item xs={12}>
