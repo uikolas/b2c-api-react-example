@@ -13,7 +13,7 @@ import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from
 import { customerLogin, emailExist, registerSuccess } from 'src/shared/constants/messages/customer';
 
 export class PagesLoginService extends ApiServiceAbstract {
-  public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
+  public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<void> {
     try {
       const body = {
         data: {
@@ -22,7 +22,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         },
       };
       const response: any = await api.post('customers', body, {withCredentials: true});
-      console.info(response);
+
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
@@ -30,7 +30,7 @@ export class PagesLoginService extends ApiServiceAbstract {
 
         toast.success(registerSuccess);
 
-        return PagesLoginService.loginRequest(dispatch, {
+        await PagesLoginService.loginRequest(dispatch, {
           username: payload.email,
           password: payload.password,
         });
@@ -46,8 +46,6 @@ export class PagesLoginService extends ApiServiceAbstract {
         } else {
           toast.error(errorMessage);
         }
-
-        return null;
       }
 
     } catch (error) {
@@ -56,11 +54,10 @@ export class PagesLoginService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async loginRequest(dispatch: Function, payload: ICustomerLoginData): Promise<any> {
+  public static async loginRequest(dispatch: Function, payload: ICustomerLoginData): Promise<void> {
     try {
       dispatch(loginCustomerPendingStateAction());
 
@@ -85,23 +82,19 @@ export class PagesLoginService extends ApiServiceAbstract {
         saveAccessDataToLocalStorage(responseParsed);
         dispatch(loginCustomerFulfilledStateAction(responseParsed));
         toast.success(customerLogin);
-        return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(loginCustomerRejectedStateAction(errorMessage));
-        toast.error('Request Error: ' + errorMessage);
-        return null;
+        toast.error(errorMessage);
       }
 
     } catch (error) {
-      console.error('loginRequest error', error);
       dispatch(loginCustomerRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
-      return null;
     }
   }
 
-  public static async forgotPassword(ACTION_TYPE: string, dispatch: Function, email: string): Promise<any> {
+  public static async forgotPassword(ACTION_TYPE: string, dispatch: Function, email: string): Promise<void> {
     try {
       const body = {
         data: {
@@ -117,14 +110,12 @@ export class PagesLoginService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
         });
         toast.success('Link for restore password sended to your Email.');
-        return response.ok;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
         });
-        toast.error('Request Error: ' + response.problem);
-        return null;
+        toast.error(response.problem);
       }
 
     } catch (error) {
@@ -133,11 +124,10 @@ export class PagesLoginService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async resetPassword(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<any> {
+  public static async resetPassword(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<void> {
     try {
       const body = {
         data: {
@@ -153,14 +143,12 @@ export class PagesLoginService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
         });
         toast.success('Password updated successfull.');
-        return response.ok;
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
           error: response.problem,
         });
         toast.error('Request Error: ' + response.problem);
-        return null;
       }
 
     } catch (error) {
@@ -169,7 +157,6 @@ export class PagesLoginService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 }

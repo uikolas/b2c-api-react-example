@@ -9,11 +9,12 @@ import {
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction,
-} from '../../actions/Common/Init';
+} from 'src/shared/actions/Common/Init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
+import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 
-export class InitAppService {
-  public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<any> {
+export class InitAppService extends ApiServiceAbstract {
+  public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
     let anonymId: string;
     try {
       const nodeResponse: any = await api.get('react/getUniqueUser');
@@ -38,21 +39,19 @@ export class InitAppService {
         dispatch(initApplicationDataFulfilledStateAction({...responseParsed, anonymId}));
 
         dispatch(getCategoriesAction());
-        return response.data;
       } else {
-        dispatch(initApplicationDataRejectedStateAction(response.problem));
-        toast.error('Request Error: ' + response.problem);
-        return null;
+        const errorMessage = this.getParsedAPIError(response);
+        dispatch(initApplicationDataRejectedStateAction(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
       dispatch(initApplicationDataRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async getCategoriesTree(dispatch: Function): Promise<any> {
+  public static async getCategoriesTree(dispatch: Function): Promise<void> {
     try {
       dispatch(categoriesPendingState());
       const response: any = await api.get('category-trees', {}, {withCredentials: true});
@@ -64,18 +63,15 @@ export class InitAppService {
           tree = [];
         }
         dispatch(categoriesFulfilledState(tree));
-        return response.data.data[0];
       } else {
-        dispatch(categoriesRejectedState(response.problem));
-        toast.error('Request Error: ' + response.problem);
-        return null;
+        const errorMessage = this.getParsedAPIError(response);
+        dispatch(categoriesRejectedState(errorMessage));
+        toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
-      console.error('Categories catch:', error);
       dispatch(categoriesRejectedState(error.message));
-      toast.error('Unexpected Error: ' + error);
-      return null;
+      toast.error('Unexpected Error: ' + error.message);
     }
   }
 }

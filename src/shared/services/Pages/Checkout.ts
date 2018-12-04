@@ -2,15 +2,24 @@ import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
 import {ICheckoutRequest} from "src/shared/interfaces/checkout";
+import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+
+interface IRequestBody {
+  data: {
+    type: string;
+    include?: string;
+    attributes: ICheckoutRequest;
+  };
+}
 
 
-export class CheckoutService {
-  public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest): Promise<any> {
+export class CheckoutService extends ApiServiceAbstract {
+  public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const body: any = {
+      const body: IRequestBody = {
         data: {
           type: 'checkout-data',
           attributes: payload,
@@ -20,27 +29,24 @@ export class CheckoutService {
       const response: any = await api.post('checkout-data', body, { withCredentials: true });
 
       if (response.ok) {
-
-        return response.ok;
+        console.info(response.data);
       } else {
-
-        toast.error('Request Error: ' + response.problem);
-        return null;
+        const errorMessage = this.getParsedAPIError(response);
+        toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
 
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async sendOrderData(dispatch: Function, payload: ICheckoutRequest): Promise<any> {
+  public static async sendOrderData(dispatch: Function, payload: ICheckoutRequest): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const body: any = {
+      const body: IRequestBody = {
         data: {
           type: 'checkout',
           attributes: payload,
@@ -51,17 +57,13 @@ export class CheckoutService {
 
       if (response.ok) {
         toast.success('Order created successfull');
-        return response.data.data;
       } else {
-
-        toast.error('Request Error: ' + response.problem);
-        return null;
+        const errorMessage = this.getParsedAPIError(response);
+        toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
-
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 }
