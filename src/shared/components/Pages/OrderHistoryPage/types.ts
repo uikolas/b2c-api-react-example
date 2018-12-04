@@ -1,10 +1,9 @@
-import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
 import {TOrderCollection} from "src/shared/interfaces/order/index";
 
 
-export interface IOrderHistoryPageProps extends WithStyles<typeof styles>, RouteProps {
+export interface IOrderHistoryPageProps extends WithStyles<typeof styles> {
   getOrdersCollection: Function;
   isLoading: boolean;
   isRejected: boolean;
@@ -14,7 +13,6 @@ export interface IOrderHistoryPageProps extends WithStyles<typeof styles>, Route
   isInitiated: boolean;
   isHasOrders: boolean;
   orders: TOrderCollection;
-  routerPush: Function;
 }
 
 export interface IOrderHistoryPageState {

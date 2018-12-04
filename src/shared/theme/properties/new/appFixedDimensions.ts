@@ -22,6 +22,7 @@ export interface IAppFixedDimensions {
   customBreakpoints: {
     tablet: number;
   };
+  customerSubPageWidth: React.CSSProperties['width'];
 }
 
 export const appFixedDimensions: IAppFixedDimensions = {
@@ -44,5 +45,6 @@ export const appFixedDimensions: IAppFixedDimensions = {
   },
   customBreakpoints: {
     tablet: 1280,
-  }
+  },
+  customerSubPageWidth: 740,
 };

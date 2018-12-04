@@ -1,5 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {NavLink} from 'react-router-dom';
 
 import {styles} from './styles';
 import {IOrderItem} from 'src/shared/interfaces/order';
@@ -11,14 +12,15 @@ import {
 } from "src/shared/constants/orders/index";
 import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
-import {AppDate} from "src/shared/components/Common/AppDate/index";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
 import {AppTable} from "src/shared/components/Common/AppTable/index";
+import {formatDateToString} from "src/shared/helpers/common/dates";
+import {appFixedDimensions} from "src/shared/theme/properties/new/appFixedDimensions";
+import {pathOrderDetailsPageBase} from "src/shared/routes/contentRoutes";
 
 
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
-  const {classes, orders, viewClickHandler} = props;
+  const {classes, orders} = props;
 
   const headerCellPart = 'header-';
   const rowPart = 'order-';
@@ -34,17 +36,23 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
     return {
       id: `${rowPart}${item.id}`,
       cells: [
-        {id: `id-${item.id}`, content: `${item.id}`},
-        {id: `date-${item.id}`, content: <AppDate value={item.dateCreated}/>},
+        {id: `id-${item.id}`, content: `#${item.id}`},
+        {id: `date-${item.id}`, content: formatDateToString(new Date(item.dateCreated))},
         { id: `price-${item.id}`,
-          content: <AppPrice value={item.totals.grandTotal} specificCurrency={item.currency}/>
+          content: <AppPrice
+                      value={item.totals.grandTotal}
+                      specificCurrency={item.currency}
+                      extraClassName={classes.price}
+                      isStylesInherited={true}
+                    />
         },
         { id: `actions-${item.id}`,
-          content: <SprykerButton
-                      title={OrdersHistoryViewDetailBtnTitle}
-                      value={item.id}
-                      onClick={viewClickHandler}
-                   />
+          content: <NavLink
+                    to={`${pathOrderDetailsPageBase}/${item.id}`}
+                    className={classes.orderBtn}
+                    >
+                    {OrdersHistoryViewDetailBtnTitle}
+                  </NavLink>
         },
       ],
     };
@@ -52,7 +60,12 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
 
   return (
     <div className={classes.root}>
-      <AppTable headerCells={headerCells} bodyRows={bodyRows} />
+      <AppTable
+        headerCells={headerCells}
+        bodyRows={bodyRows}
+        isResponsive={true}
+        width={appFixedDimensions.customerSubPageWidth}
+      />
     </div>
   );
 };

@@ -35,8 +35,15 @@ export const styles = (theme: Theme) => createStyles({
     }
   },
   rootPaper: {
+    maxWidth: 282,
     backgroundColor: theme.appColors.lightGrey,
     padding: `${theme.spacing.unit * 6}px 70px`,
+    [theme.breakpoints.down('md')]: {
+      padding: `${theme.spacing.unit * 6}px 20px`,
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: "100%",
+    },
     '& ul': {
       marginBottom: theme.spacing.unit * 5,
       marginTop: theme.spacing.unit * 5,
@@ -48,5 +55,18 @@ export const styles = (theme: Theme) => createStyles({
   logoutLink: {
     marginTop: theme.spacing.unit * 5,
     cursor: 'pointer',
+  },
+  rightPart: {
+    maxWidth: theme.appFixedDimensions.customerSubPageWidth,
+    marginLeft: "auto",
+
+    [theme.breakpoints.down('md')]: {
+      paddingLeft: theme.spacing.unit * 2,
+    },
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: "100%",
+      marginTop: theme.spacing.unit * 2,
+      paddingLeft: 0,
+    }
   },
 });

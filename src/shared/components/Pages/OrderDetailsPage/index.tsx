@@ -4,26 +4,22 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {connect} from './connect';
-import { emptyOrderText } from 'src/shared/constants/messages/orders';
-import { IOrderDetailsItem, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
-import { emptyValueErrorText } from 'src/shared/constants/messages/errors';
-import { ICartAddItem } from 'src/shared/interfaces/cart';
-import { SprykerButton } from '../../UI/SprykerButton';
-import { OrderDetailsGeneralInfo } from './OrderDetailsGeneralInfo';
-import { OrderProductList } from './OrderProductsList';
-import { OrderDetailsTotals } from './OrderDetailsTotals';
-import { OrderDetailsContext } from './context';
-import { styles } from './styles';
-import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
+import {noOrderText} from 'src/shared/constants/messages/orders';
+import {IOrderDetailsItem, IOrderDetailsSelectedItems} from 'src/shared/interfaces/order';
+import {emptyValueErrorText} from 'src/shared/constants/messages/errors';
+import {ICartAddItem} from 'src/shared/interfaces/cart';
+import {OrderDetailsGeneralInfo} from './OrderDetailsGeneralInfo';
+import {OrderProductList} from './OrderProductsList';
+import {OrderDetailsTotals} from './OrderDetailsTotals';
+import {styles} from './styles';
+import {IOrderDetailsPageProps as Props, IOrderDetailsPageState as State} from './types';
 import {OrderAddresses} from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/index";
 import {getOrderSelectedItemsData} from "src/shared/components/Pages/OrderDetailsPage/helpers";
 import {
   OrderDetailBillingAddressTitle,
-  OrderDetailPageTitle,
-  OrderDetailReorderAllBtnTitle,
-  OrderDetailReorderSelectedBtnTitle,
   OrderDetailShippingAddressTitle
 } from "src/shared/constants/orders/index";
+import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
 
 
 @connect
@@ -118,76 +114,38 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
   public render(): JSX.Element {
     console.info('props: ', this.props);
     console.info('state: ', this.state);
-    const {classes, isOrderExist, isFulfilled, routerGoBack, currency, order} = this.props;
+    const {classes, isOrderExist, isFulfilled, currency, order, timeZone} = this.props;
 
     return (
-      <div>
+      <div className={classes.root}>
         { (isFulfilled === false)
           ? null
           : (
-            <OrderDetailsContext.Provider
-              value={ {
-                selectItemHandler: this.selectItemHandler,
-                currency,
-                selectedItems: this.state.selectedItems,
-              } }
-            >
-              <div className={classes.root}>
-                <Grid container justify="center">
-                  <Grid item xs={12}>
-                    <Typography align="center" variant="headline" gutterBottom={true}>
-                      {OrderDetailPageTitle}
-                    </Typography>
+            <Grid container>
+              { isOrderExist
+                ? <Grid item xs={12}>
+                    <OrderDetailsGeneralInfo
+                      orderId={order.id}
+                      date={order.dateCreated}
+                      priceMode={order.priceMode}
+                      timeZone={timeZone}
+                    />
+                    <OrderProductList items={order.items}/>
+                    <OrderDetailsTotals
+                      currency={currency}
+                      expenses={order.expenses}
+                      totals={order.totals}
+                    />
+                    <OrderAddresses
+                      billingAddress={order.billingAddress}
+                      shippingAddress={order.shippingAddress}
+                      billingBlockTitle={OrderDetailBillingAddressTitle}
+                      shippingBlockTitle={OrderDetailShippingAddressTitle}
+                    />
                   </Grid>
-                </Grid>
-                <Grid container justify="center">
-                  { isOrderExist
-                    ? <Grid item xs={12}>
-                      <OrderDetailsGeneralInfo
-                        orderId={order.id}
-                        date={order.dateCreated}
-                        btnBackHandler={routerGoBack}
-                        priceMode={order.priceMode}
-                      />
-                      <OrderProductList items={ order.items }/>
-                      <OrderDetailsTotals
-                        currency={currency}
-                        expenses={order.expenses}
-                        canceledTotal={order.totals.canceledTotal}
-                        expenseTotal={order.totals.expenseTotal}
-                        discountTotal={order.totals.discountTotal}
-                        taxTotal={order.totals.taxTotal}
-                        subtotal={order.totals.subtotal}
-                        grandTotal={order.totals.grandTotal}
-                      />
-                      <OrderAddresses
-                        billingAddress={order.billingAddress}
-                        shippingAddress={order.shippingAddress}
-                        billingBlockTitle={OrderDetailBillingAddressTitle}
-                        shippingBlockTitle={OrderDetailShippingAddressTitle}
-                      />
-                      <Grid item xs={12} className={`${classes.section} ${classes.btnOuter}`}>
-                        <SprykerButton
-                          title={OrderDetailReorderSelectedBtnTitle}
-                          extraClasses={classes.reorderBtn}
-                          onClick={this.reorderSelectedClickHandler}
-                          disabled={this.isReorderSelectedDisabled()}
-                        />
-                        <SprykerButton
-                          title={OrderDetailReorderAllBtnTitle}
-                          extraClasses={classes.reorderBtn}
-                          onClick={this.reorderAllClickHandler}
-                          disabled={this.isReorderAllDisabled()}
-                        />
-                      </Grid>
-                    </Grid>
-                    : <Typography variant="title" color="inherit" gutterBottom={true}>
-                      {emptyOrderText}
-                    </Typography>
-                  }
-                </Grid>
-              </div>
-            </OrderDetailsContext.Provider>
+                : <EmptyOrder intro={noOrderText} />
+              }
+            </Grid>
           )
         }
       </div>

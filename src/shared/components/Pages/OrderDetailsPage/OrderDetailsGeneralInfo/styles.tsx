@@ -3,17 +3,28 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {},
-  section: {
-    borderBottom: `1px solid ${theme.palette.grey.A100}`,
+  titleContainer: {
+    borderBottom: `1px solid ${theme.appColors.blockDivider}`,
+    alignItems: "flex-end",
+  },
+  title: {
+    borderBottom: 0,
+  },
+  linkBackOuter: {
     paddingBottom: theme.spacing.unit * 2,
-    paddingTop: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit,
+    textAlign: "right",
+    [theme.breakpoints.down('xs')]: {
+      textAlign: "center",
+    },
   },
-  btnBackOuter: {
-    justifyContent: 'flex-end',
-    display: 'flex',
-  },
-  value: {
-    display: 'inline',
+  linkBack: {
+    color: theme.appColors.black,
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    letterSpacing: 0.2,
+    textDecoration: "none",
+    padding: 0,
+    "&:hover": {
+      color: theme.appColors.blue,
+    },
   },
 });
