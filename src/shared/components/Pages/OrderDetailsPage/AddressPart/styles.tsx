@@ -11,5 +11,6 @@ export const styles = (theme: Theme) => createStyles({
   },
   item: {
     marginRight: theme.spacing.unit / 2,
+    paddingBottom: theme.spacing.unit,
   }
 });

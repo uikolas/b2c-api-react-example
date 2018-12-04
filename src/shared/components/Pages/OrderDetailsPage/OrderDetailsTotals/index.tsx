@@ -1,86 +1,60 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
-import { styles } from './styles';
+import {styles} from './styles';
 import {IOrderDetailsTotalsProps} from "./types";
-import { IOrderDetailsExpenseItem, IOrderTotals, TOrderExpenses } from 'src/shared/interfaces/order';
-import { AppPrice } from '../../../Common/AppPrice';
-import { TAppCurrency } from '../../../../reducers/Common/Init';
-import { TAbstractTotal } from 'src/shared/interfaces/abstract/totals';
+import {IOrderDetailsExpenseItem} from 'src/shared/interfaces/order';
+import {TotalItem} from "src/shared/components/Pages/OrderDetailsPage/TotalItem/index";
+import {
+  OrderDetailCanceled,
+  OrderDetailDiscount,
+  OrderDetailGrandTotal,
+  OrderDetailShipment,
+  OrderDetailShipmentTotal,
+  OrderDetailSubtotal,
+  OrderDetailTax
+} from "src/shared/constants/orders/index";
 
-
-export const subtotalTitle = 'Subtotal: ';
-export const expensesTitle = 'Shipment ';
-export const shipmentTitle = `${expensesTitle} Total: `;
-export const discountTitle = 'Discount: ';
-export const taxTitle = 'Tax: ';
-export const canceledTitle = 'Canceled: ';
-export const totalTitle = 'Grand Total: ';
 
 export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (props): JSX.Element => {
   const {
     classes,
     expenses,
     currency,
-    canceledTotal,
-    expenseTotal,
-    discountTotal,
-    taxTotal,
-    subtotal,
-    grandTotal,
+    totals: {
+      canceledTotal,
+      expenseTotal,
+      discountTotal,
+      taxTotal,
+      subtotal,
+      grandTotal,
+    }
   } = props;
 
-  const renderTotalItem = (
-    value: TAbstractTotal,
-    title: string = '',
-    valueSign: string | null = null,
-    extraClassName: string | null = null,
-  ): JSX.Element | null => {
-
-    if (!value) {
-      return null;
-    }
-
-    return (
-      <Typography
-        variant="subheading"
-        color="inherit"
-        align="right"
-        gutterBottom={ true }
-        className={ extraClassName ? extraClassName : null }
-      >
-        { title }
-        { valueSign ? valueSign : null }
-        <AppPrice value={ value } specificCurrency={ currency }/>
-      </Typography>
-    );
-  };
-
   return (
-    <Grid container justify="flex-end" className={ classes.root }>
-      <Grid item xs={ 12 }>
-        { renderTotalItem(subtotal, subtotalTitle) }
-        { (!expenses || !expenses.length)
+    <Grid container justify="flex-end" className={classes.root}>
+      <Grid item xs={12} sm={7} md={4}>
+        <TotalItem value={subtotal} title={OrderDetailSubtotal} />
+        {(!expenses || !expenses.length)
           ? null
           : expenses.map((item: IOrderDetailsExpenseItem) => {
             return (
-              <React.Fragment key={ item.name }>
-                { renderTotalItem(item.sumPrice, `${expensesTitle} ${item.name}: `) }
-              </React.Fragment>
+              <TotalItem key={item.name} value={item.sumPrice} title={`${OrderDetailShipment}`} />
             );
           })
         }
-        { expenses.length > 1 ? renderTotalItem(expenseTotal, shipmentTitle) : null }
-        { renderTotalItem(canceledTotal, canceledTitle) }
-        { /*renderTotalItem(taxTotal, taxTitle)*/ }
-        { renderTotalItem(discountTotal, discountTitle, '-') }
-        { renderTotalItem(grandTotal, totalTitle, null, classes.bold) }
+        {expenses.length > 1
+          ? <TotalItem value={expenseTotal} title={OrderDetailShipmentTotal} />
+          : null
+        }
+        <TotalItem value={canceledTotal} title={OrderDetailCanceled} />
+        <TotalItem value={taxTotal} title={OrderDetailTax} />
+        <TotalItem value={discountTotal} title={OrderDetailDiscount} valueSign="-" />
+        <TotalItem value={grandTotal} title={OrderDetailGrandTotal} extraClassName={classes.bold} />
       </Grid>
     </Grid>
   );
 };
 
 export const OrderDetailsTotals = withStyles(styles)(OrderDetailsTotalsBase);
-

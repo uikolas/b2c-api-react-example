@@ -5,3 +5,10 @@ export const formatDateToString = (date: Date): string => {
   // create the format you want
   return (dd + "." + MM + "." + yyyy);
 };
+
+export const getDateUtcUnix = (date: Date): number => {
+  const dateUtcUnix = Date.UTC(
+    date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(),
+  );
+  return dateUtcUnix;
+};

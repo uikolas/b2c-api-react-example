@@ -3,11 +3,12 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    borderBottom: `1px solid ${theme.palette.grey.A100}`,
-    paddingBottom: theme.spacing.unit * 2,
-    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 3,
+    paddingRight: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
   },
   bold: {
     fontWeight: 'bold',
+    fontSize: theme.appFixedDimensions.fontSize.big
   },
 });

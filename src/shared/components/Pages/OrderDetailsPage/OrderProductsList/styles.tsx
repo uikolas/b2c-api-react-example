@@ -8,5 +8,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   price: {
 
-  }
+  },
+  total: {
+    textAlign: "right",
+  },
 });

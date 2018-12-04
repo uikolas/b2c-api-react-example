@@ -31,7 +31,7 @@ export const AppTableBase: React.SFC<IAppTableProps> = (props) => {
                   colSpan={cell.colSpan}
                   rowSpan={cell.rowSpan}
                   key={cell.id}
-                  className={classes.headerCell}
+                  className={`${classes.headerCell} ${cell.extraClassName ? cell.extraClassName : ''}`}
                 >
                   {cell.content}
                 </TableCell>
@@ -49,7 +49,7 @@ export const AppTableBase: React.SFC<IAppTableProps> = (props) => {
                 colSpan={cell.colSpan}
                 rowSpan={cell.rowSpan}
                 key={`${row.id}-${cell.id}`}
-                className={classes.bodyCell}
+                className={`${classes.bodyCell} ${cell.extraClassName ? cell.extraClassName : ''}`}
               >
                 {cell.content}
               </TableCell>
@@ -67,7 +67,7 @@ export const AppTableBase: React.SFC<IAppTableProps> = (props) => {
                     colSpan={cell.colSpan}
                     rowSpan={cell.rowSpan}
                     key={cell.id}
-                    className={classes.footerCell}
+                    className={`${classes.footerCell} ${cell.extraClassName ? cell.extraClassName : ''}`}
                   >
                     {cell.content}
                   </TableCell>

@@ -8,6 +8,7 @@ export interface ICellInfo {
   colSpan?: number | null;
   rowSpan?: number | null;
   content: JSX.Element | string | number;
+  extraClassName?: string;
 }
 
 export interface ITableRow {

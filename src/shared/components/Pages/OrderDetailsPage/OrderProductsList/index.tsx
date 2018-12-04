@@ -27,7 +27,7 @@ export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): 
     {id: `${headerCellPart}1`, content: OrderDetailTableHeaderItems},
     {id: `${headerCellPart}2`, content: OrderDetailTableHeaderPrice},
     {id: `${headerCellPart}3`, content: OrderDetailTableHeaderQuantity},
-    {id: `${headerCellPart}4`, content: OrderDetailTableHeaderTotal},
+    {id: `${headerCellPart}4`, content: OrderDetailTableHeaderTotal, extraClassName: classes.total},
   ];
 
   const bodyRows: Array<ITableRow> = items.map((item: IOrderDetailsItem) => {
@@ -54,7 +54,8 @@ export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): 
             value={item.sumPriceToPayAggregation}
             extraClassName={classes.price}
             isStylesInherited={true}
-          />
+          />,
+          extraClassName: classes.total
         },
       ],
     };
