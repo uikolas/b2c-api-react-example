@@ -10,6 +10,7 @@ import {noOrderText} from '../../../constants/messages/orders';
 import {OrderList} from './OrderList';
 import {OrdersHistoryPageTitle} from "src/shared/constants/orders";
 import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
+import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
 
 
 @connect
@@ -52,9 +53,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
                     ? <Grid item xs={12}>
                         <OrderList orders={orders} />
                       </Grid>
-                    : <Typography variant="title" color="inherit" gutterBottom={true}>
-                      {noOrderText}
-                    </Typography>
+                    : <EmptyOrder intro={noOrderText} />
                   }
                 </Grid>
               </div>

@@ -19,6 +19,7 @@ import {
   OrderDetailBillingAddressTitle,
   OrderDetailShippingAddressTitle
 } from "src/shared/constants/orders/index";
+import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
 
 
 @connect
@@ -142,9 +143,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                       shippingBlockTitle={OrderDetailShippingAddressTitle}
                     />
                   </Grid>
-                : <Typography component="p" color="inherit" className={classes.noOrders} >
-                    {noOrderText}
-                  </Typography>
+                : <EmptyOrder intro={noOrderText} />
               }
             </Grid>
           )
