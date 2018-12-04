@@ -7,8 +7,14 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.xl,
     lineHeight: 1.13,
     letterSpacing: -0.8,
-    paddingBottom: theme.spacing.unit * 2,
     textTransform: 'capitalize',
+  },
+  container: {
+    paddingBottom: theme.spacing.unit * 2,
     borderBottom: `1px solid ${theme.appColors.blockDivider}`
   },
+  intro: {
+    marginTop: theme.spacing.unit,
+    marginBottom: 0,
+  }
 });

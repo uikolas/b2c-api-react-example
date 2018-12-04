@@ -6,18 +6,22 @@ import { styles } from './styles';
 
 interface CustomerPageTitleProps extends WithStyles<typeof styles> {
   title: string;
+  intro?: string | JSX.Element | null;
   extraClasses?: string;
+  containerExtraClasses?: string;
 }
 
 export const CustomerPageTitleBase: React.SFC<CustomerPageTitleProps> = (props): JSX.Element => {
   const {
     classes,
     extraClasses = '',
+    containerExtraClasses,
     title,
+    intro,
   } = props;
 
   return (
-    <React.Fragment>
+    <div className={`${classes.container} ${containerExtraClasses ? containerExtraClasses : ''}`}>
       <Typography
         component="h1"
         align="left"
@@ -25,7 +29,15 @@ export const CustomerPageTitleBase: React.SFC<CustomerPageTitleProps> = (props):
       >
         { title }
       </Typography>
-    </React.Fragment>
+      { intro
+        ? (
+          <Typography color="inherit" component="p" className={classes.intro} >
+            { intro }
+          </Typography>
+        )
+        : null
+      }
+    </div>
   );
 };
 
