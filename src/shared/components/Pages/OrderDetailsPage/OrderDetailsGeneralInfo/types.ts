@@ -1,12 +1,13 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
-import {IOrderDetailsParsed, TOrderDate, TOrderId} from "src/shared/interfaces/order/index";
+import {IOrderDetailsParsed} from "src/shared/interfaces/order/index";
+import {TAppTimeZone} from "src/shared/reducers/Common/Init";
 
 
 export interface IOrderDetailsGeneralInfoProps extends WithStyles<typeof styles> {
-  orderId: TOrderId;
-  date: TOrderDate;
-  btnBackHandler: Function;
+  orderId: IOrderDetailsParsed["id"];
+  date: IOrderDetailsParsed["dateCreated"];
   priceMode: IOrderDetailsParsed["priceMode"];
+  timeZone: TAppTimeZone;
 }
 
