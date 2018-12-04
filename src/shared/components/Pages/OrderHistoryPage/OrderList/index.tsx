@@ -1,5 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {NavLink} from 'react-router-dom';
 
 import {styles} from './styles';
 import {IOrderItem} from 'src/shared/interfaces/order';
@@ -12,14 +13,14 @@ import {
 import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
 import {AppTable} from "src/shared/components/Common/AppTable/index";
 import {formatDateToString} from "src/shared/helpers/common/dates";
 import {appFixedDimensions} from "src/shared/theme/properties/new/appFixedDimensions";
+import {pathOrderDetailsPageBase} from "src/shared/routes/contentRoutes";
 
 
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
-  const {classes, orders, viewClickHandler} = props;
+  const {classes, orders} = props;
 
   const headerCellPart = 'header-';
   const rowPart = 'order-';
@@ -46,12 +47,12 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
                     />
         },
         { id: `actions-${item.id}`,
-          content: <SprykerButton
-                      title={OrdersHistoryViewDetailBtnTitle}
-                      value={item.id}
-                      onClick={viewClickHandler}
-                      extraClasses={classes.orderBtn}
-                   />
+          content: <NavLink
+                    to={`${pathOrderDetailsPageBase}/${item.id}`}
+                    className={classes.orderBtn}
+                    >
+                    {OrdersHistoryViewDetailBtnTitle}
+                  </NavLink>
         },
       ],
     };

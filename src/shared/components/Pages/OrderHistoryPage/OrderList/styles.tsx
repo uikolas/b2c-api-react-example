@@ -9,20 +9,17 @@ export const styles = (theme: Theme) => createStyles({
     fontWeight: "bold",
   },
   orderBtn: {
-    backgroundColor: "transparent",
     color: theme.appColors.black,
     fontSize: theme.appFixedDimensions.fontSize.small,
     letterSpacing: 0.2,
-    height: "auto",
-    width: "auto",
-    border: "none",
-    boxShadow: "none",
     marginLeft: theme.spacing.unit * 1.5,
     marginRight: theme.spacing.unit * 1.5,
-    textTransform: "none",
+    textDecoration: "none",
     padding: 0,
     "&:hover": {
-      backgroundColor: "transparent",
+      color: theme.appColors.black,
+    },
+    "&:visited": {
       color: theme.appColors.black,
     }
   },
