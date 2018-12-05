@@ -3,9 +3,10 @@ import { toast } from 'react-toastify';
 import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
+import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 
 export class CatalogService extends ApiServiceAbstract {
-  public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<void> {
+  public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
     try {
 
       params.include = 'abstract-products,product-labels,';

@@ -17,6 +17,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
+import { IProductCard } from 'src/shared/interfaces/product';
 import { AppPrice } from '../AppPrice';
 import { SquareImage } from '../SquareImage';
 import { styles } from './styles';
@@ -25,11 +27,12 @@ import { connect } from './connect';
 
 export const buttonTitle = 'Search';
 
+
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
   private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
   private designImgWidth: number = 0.23;
-  public timer: any;
+  public timer: number | null;
 
   public state: State = {
     value: '',
@@ -45,7 +48,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     window.removeEventListener('resize', this.setListItemHeight);
   }
 
-  private setListItemHeight = () => {
+  private setListItemHeight = (): void => {
     if (this.containerRef && this.containerRef.current) {
       this.setState({heightListItem: this.containerRef.current.offsetWidth * this.designImgWidth});
     }
@@ -53,7 +56,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   // Action handlers
 
-  private getSuggestionValue = (suggestion: any): string => suggestion.abstract_name;
+  private getSuggestionValue = (suggestion: IProductCard): string => suggestion.abstract_name;
 
   private handleSuggestionsFetchRequested = ({value}: {value: string}) => {
     const {value: currentValue} = this.state;
@@ -61,21 +64,21 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     if (!this.props.isLoading && value !== currentValue) {
       clearTimeout(this.timer);
 
-      this.timer = setTimeout(() => {
+      this.timer = window.setTimeout(() => {
         if (this.state.value === value) {
           this.props.sendSuggestionAction(value);
         }
-      }, 350);
+      }, 500);
     }
   };
 
-  private handleSuggestionsClearRequested = () => {
+  private handleSuggestionsClearRequested = (): void => {
     // if (!this.props.isLoading) {
     //   this.props.clearSuggestions(this.state.value);
     // }
   };
 
-  private handleChange = (event: any, {newValue}: any) => {
+  private handleChange = (event: InputChangeEvent, {newValue}: {newValue: string}): void => {
     if (newValue.trim().length < 4) {
       this.props.clearSuggestions(newValue);
     }
@@ -85,7 +88,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     });
   };
 
-  private handleFullSearch = (e: any) => {
+  private handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { value } = this.state;
     if (!this.props.isLoading && value.length > 2) {
@@ -95,14 +98,14 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     }
   };
 
-  private handleSearchCompletion = (e: any) => {
+  private handleSearchCompletion = (e: ClickEvent): void => {
     const query = e.currentTarget.dataset.query.trim();
     this.setState({value: query});
     this.props.sendSearchAction({q: query, currency: this.props.currency});
     this.props.clearSuggestions(query);
   };
 
-  private handleCategoryLink = (e: any) => {
+  private handleCategoryLink = (e: ClickEvent): void => {
     const { name, nodeid } = e.currentTarget.dataset;
 
     this.props.sendSearchAction({q: '', currency: this.props.currency, category: nodeid});
@@ -114,7 +117,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
-  private renderInputComponent = (inputProps: any) => {
+  private renderInputComponent = (inputProps: any): JSX.Element => {
     const {classes, ref, ...other} = inputProps;
     let suggestQuery: string = this.state.value;
 
@@ -167,7 +170,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 position="start"
                 classes={{ root: classes.inputIconContainer }}
               >
-                <IconButton onClick={this.handleFullSearch} aria-label="Search" type="submit">
+                <IconButton aria-label="Search" type="submit">
                   <SearchIcon classes={{ root: classes.inputIcon }} />
                 </IconButton>
               </InputAdornment>
@@ -179,7 +182,10 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     );
   };
 
-  private renderSuggestion = (suggestion: any, {query, isHighlighted}: any) => {
+  private renderSuggestion = (
+    suggestion: IProductCard,
+    {query, isHighlighted}: {query: string, isHighlighted: boolean}
+    ) => {
     const matches = match(suggestion.abstract_name, query);
     const parts = parse(suggestion.abstract_name, matches);
     const { classes } = this.props;

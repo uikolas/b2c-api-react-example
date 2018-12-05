@@ -58,6 +58,7 @@ export const styles = (theme: Theme) => createStyles({
     padding: 13,
     zIndex: 3,
     background: 'transparent',
+    letterSpacing: '0.5px',
   },
   inputIconContainer: {
     position: 'relative',
@@ -137,7 +138,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   completionInput: {
     position: 'absolute',
-    left: 25,
+    left: 15,
     top: 12,
     zIndex: 2,
   },

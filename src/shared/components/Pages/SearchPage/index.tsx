@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
-import { RangeFacets } from 'src/shared/interfaces/searchPageData';
+import { RangeFacets, ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
@@ -29,7 +29,6 @@ import {
   IFilterItemToDelete,
   ISearchPageProps,
   ISearchPageState,
-  ISearchQuery,
   RangeType,
   TCategoryId,
   TFilterItemValue,

@@ -23,13 +23,6 @@ export interface ISearchPageState {
   selectedCategory?: string | null;
 }
 
-export type IQuery = {
-  q?: string,
-  currency: TAppCurrency,
-  sort?: string,
-  [key: string]: string | number,
-};
-
 export type RangeType = {min: number, max: number};
 export type TCategoryId = number | string;
 export type TActiveFilters = {[name: string]: string[]};
@@ -47,14 +40,6 @@ export type TRangeMaxType = 'max';
 export const rangeMinType: TRangeMinType = 'min';
 export const rangeMaxType: TRangeMaxType = 'max';
 export type TRangeType = TRangeMinType | TRangeMaxType;
-
-export type ISearchQuery = {
-  q?: string,
-  currency: TAppCurrency,
-  sort?: string,
-  category?: TCategoryId,
-  [key: string]: string | number,
-};
 
 export interface IFilterItem extends IFilterItemToDelete {
   label: string | JSX.Element;

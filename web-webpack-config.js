@@ -47,20 +47,6 @@ if(webpackDevServer) {
     hot: true,
     inline: true,
     noInfo: false, // if true, bundling messages will be hidden. Errors and warnings will still be shown.
-    proxy: {
-      '^/**': {  //catch all other requests
-        target: '/index.html',  //default target
-        secure: false,
-        bypass: (req, res, opt) => {
-          if(req.path.match(staticPattern)){
-            return '/';
-          }
-          if (req.headers.accept.indexOf('html') !== -1) {
-            return '/index.html';
-          }
-        }
-      }
-    }
   };
 }
 
@@ -90,6 +76,7 @@ const config = {
     filename: "[name].[hash].bundle.js",
 
     chunkFilename: "[name].[chunkhash].chunk.js",
+
 
     publicPath: webpackDevServer ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : WEB_PATH,
   },

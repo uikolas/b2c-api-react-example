@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core';
 import { RouteProps } from 'react-router';
 import { styles } from './styles';
-import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
+import { FlyoutSearch, ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 
 export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, FlyoutSearch {
@@ -12,7 +12,7 @@ export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, Fly
 
   sendSuggestionAction?(query: string): void;
   clearSuggestions?(query: string): void;
-  sendSearchAction?(params: any): void;
+  sendSearchAction?(params: ISearchQuery): void;
   getProductDataAction?(sku: string): void;
   push?(query: string): void;
 }

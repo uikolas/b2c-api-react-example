@@ -12,7 +12,7 @@ import { IPagination } from './types';
 
 interface AppPaginationProps extends WithStyles<typeof styles> {
   pagination: IPagination;
-  onChangeHandler: (event: ChangeEvent<{}>, value: any) => void;
+  onChangeHandler: (event: ChangeEvent<{}>, value: number | string) => void;
   step?: number;
 }
 

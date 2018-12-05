@@ -1,6 +1,7 @@
 import { IProductCard } from '../product';
 import { TAppCurrency } from '../../reducers/Common/Init';
 import { IPagination } from 'src/shared/components/Common/AppPagination/types';
+import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 
 export type TSpellingSuggestion = string;
 
@@ -74,4 +75,12 @@ export interface ISearchPageData extends ICatalogSearchDataParsed {
   flyoutSearch?: FlyoutSearch;
   searchTerm?: string;
   currency?: TAppCurrency;
+}
+
+export interface ISearchQuery {
+  q?: string;
+  currency?: TAppCurrency;
+  sort?: string;
+  category?: TCategoryId;
+  [key: string]: string | number;
 }

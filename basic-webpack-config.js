@@ -162,13 +162,16 @@ const htmlLoader = {
 };
 const staticLoaders = [
   {test: /\.gif(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
-  {test: /\.(jpg|png|svg)$/, loader: "url-loader?limit=100000"},
+  {test: /\.(jpg|png|svg)$/, loader: "url-loader?limit=8000"},
   {
-    test: /\.(ttf|otf|eot|svg|ico|woff(2)?)(\?[a-z0-9]+)?$/,
+    test: /\.(ttf|otf|eot|svg|ico|woff(2)?)$/,
+    include: [
+      path.join(__dirname, 'src'),
+    ],
     use: [{
       loader: 'file-loader',
       options: {
-        name: 'fonts/[name].[ext]',
+        name: '[name].[ext]',
       },
     }],
   },

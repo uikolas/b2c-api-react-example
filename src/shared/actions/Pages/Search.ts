@@ -2,8 +2,9 @@ import {
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
   PAGES_SUGGESTION_REQUEST,
-} from '../../constants/ActionTypes/Pages/Search';
-import { CatalogService } from '../../services/Common/Catalog';
+} from 'src/shared/constants/ActionTypes/Pages/Search';
+import { CatalogService } from 'src/shared/services/Common/Catalog';
+import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 
 
 export const suggestPendingState = {
@@ -17,7 +18,7 @@ export const sendSuggestionAction = function(query: string) {
   };
 };
 
-export const sendSearchAction = function(params: any) {
+export const sendSearchAction = function(params: ISearchQuery) {
   return (dispatch: Function, getState: Function) => {
     dispatch({
       type: PAGES_SEARCH_REQUEST + '_PENDING',

@@ -4,7 +4,6 @@ import 'raf/polyfill';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
-import 'typeface-roboto';
 import 'normalize.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
