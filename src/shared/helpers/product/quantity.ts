@@ -1,6 +1,6 @@
-import { IMenuItemsDropdown } from '../../components/UI/DropdownControlled';
+import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 
-export const createQuantityVariants = (quantity: number | null): Array<IMenuItemsDropdown> | boolean => {
+export const createQuantityVariants = (quantity: number | null):  Array<IMenuItemSelect> | null => {
   if (!quantity) {
     return null;
   }
@@ -10,7 +10,7 @@ export const createQuantityVariants = (quantity: number | null): Array<IMenuItem
     arr[ii] = ii + 1;
   }
 
-  const data: Array<IMenuItemsDropdown> = [];
+  const data: Array<IMenuItemSelect> = [];
   arr.forEach((value: string) => {
     data.push(
       {

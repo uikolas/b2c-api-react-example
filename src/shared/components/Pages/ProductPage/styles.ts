@@ -116,7 +116,7 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: '8.0625rem'
   },
   quantityRoot: {
-    margin: '1.5rem 0'
+    maxWidth: 130,
   },
   wishlistRoot: {
     margin: 0

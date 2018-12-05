@@ -44,3 +44,6 @@ export const InputLabelEmail = "Email address";
 export const InputLabelPassword = "Current Password";
 export const InputLabelNewPassword = "New Password";
 export const InputLabelConfirmPassword = "Confirm New Password";
+
+export const InputLabelProductQuantity = "Quantity";
+export const InputLabelProductSelectWishList = "Select wish list";

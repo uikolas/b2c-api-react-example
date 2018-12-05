@@ -16,7 +16,6 @@ import {
 import { IImageSlide } from 'src/shared/components/Common/ImageSlider';
 import {
   createPathToIdProductConcrete,
-  createQuantityVariants,
   findIdProductConcreteByPath,
   getAvailabilityDisplay,
   getInitialSuperAttrSelected,
@@ -26,10 +25,8 @@ import { ICartAddItem } from 'src/shared/interfaces/cart';
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
-import { DropdownControlled } from '../../UI/DropdownControlled';
 import { SprykerButton } from '../../UI/SprykerButton';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { ProductAttributes } from './ProductAttributes';
@@ -37,6 +34,10 @@ import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
+import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
+import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
+import {ChangeEvent} from "react";
+import {getQuantityFormSettings, getWishListFormSettings} from "src/shared/components/Pages/ProductPage/settings/forms";
 
 export const buyBtnTitle = 'Add to cart';
 export const wishlistBtnTitle = 'Add to Wishlist';
@@ -88,8 +89,11 @@ export class ProductPageBase extends React.Component<Props, State> {
 
     // First load of the App
     // tslint:disable:max-line-length
-    if (!this.props.isFulfilled && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)) {
-      console.info('%c ---- First load of the App in componentDidUpdate getProductData ----', 'background: #4caf50; color: #bada55');
+    if (!this.props.isFulfilled
+        && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)
+    ) {
+      console.info('%c ---- First load of the App in componentDidUpdate getProductData ----',
+        'background: #4caf50; color: #bada55');
       this.props.getProductData(this.props.locationProductSKU);
       return;
     }
@@ -150,20 +154,24 @@ export class ProductPageBase extends React.Component<Props, State> {
     });
   };
 
-  public handleProductQuantityChange = (event: any, child: React.ReactNode): void => {
-    const value = event.target.value;
+  public handleProductQuantityChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
+    : void => {
+
+    const valueParsed: number = Number.parseInt(event.target.value, 10);
     this.setState((prevState: State) => {
-      if (prevState.quantitySelected === value) {
+      if (prevState.quantitySelected === valueParsed) {
         return;
       }
       return ({
         ...prevState,
-        quantitySelected: value,
+        quantitySelected: valueParsed,
       });
     });
   };
 
-  public handleWishListChange = (event: any): void => {
+  public handleWishListChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
+    : void => {
+
     const value = event.target.value;
     this.setState((prevState: State) => {
       if (this.state.wishListSelected === value) {
@@ -337,6 +345,21 @@ export class ProductPageBase extends React.Component<Props, State> {
     const images = this.getImageData(this.state.images);
     console.info('render this.state.wishListSelected ', this.state.wishListSelected);
 
+    const formQuantitySettings: IFormSettings = getQuantityFormSettings(
+      {
+        inputValue: this.state.quantitySelected,
+        quantity: this.state.quantity,
+        onChangeHandler: this.handleProductQuantityChange,
+      }
+    );
+    const formWishListSettings: IFormSettings = getWishListFormSettings(
+      {
+        inputValue: this.state.wishListSelected,
+        wishLists: this.props.wishLists,
+        onChangeHandler: this.handleWishListChange,
+      }
+    );
+
     return (
       <AppMain>
         { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
@@ -375,19 +398,11 @@ export class ProductPageBase extends React.Component<Props, State> {
                     : null
                   }
 
-                  <Grid container justify="center">
-                    <Grid item xs={ 12 } sm={ 12 }>
+                  <Grid container>
+                    <Grid item xs={12} sm={12}>
                       { this.isBuyBtnDisabled()
                         ? null
-                        : <DropdownControlled
-                          classes = {{root: classes.quantityRoot, formControl: classes.quantityControl}}
-                          nameAttr="quantity"
-                          nameToShow="Quantity"
-                          value={ this.state.quantitySelected }
-                          handleChange={ this.handleProductQuantityChange }
-                          menuItems={ createQuantityVariants(this.state.quantity) }
-                          isHiddenMenuItemFirst={ true }
-                        />
+                        : <SprykerForm form={formQuantitySettings} />
                       }
                     </Grid>
                     <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
@@ -405,18 +420,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                         { this.state.wishListSelected
                           ?
                           <Grid item xs={ 12 } sm={ 6 }>
-                            <DropdownControlled
-                              classes = {{root: classes.wishlistRoot}}
-                              nameAttr="wishlists"
-                              value={ this.state.wishListSelected }
-                              handleChange={ this.handleWishListChange }
-                              menuItems={ createWishListMenuVariants(this.props.wishLists) }
-                              menuItemFirst={ {
-                                value: defaultItemValueDropdown,
-                                name: 'Select wishlist',
-                              } }
-                              isHiddenMenuItemFirst={ true }
-                            />
+                            <SprykerForm form={formWishListSettings} />
                           </Grid>
                           : null
                         }
