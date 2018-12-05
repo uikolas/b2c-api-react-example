@@ -1,9 +1,11 @@
 import api from '../api';
 import { toast } from 'react-toastify';
 import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
+import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { IProductCard } from 'src/shared/interfaces/product';
 
-export class CatalogService {
-  public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<any> {
+export class CatalogService extends ApiServiceAbstract {
+  public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: any): Promise<void> {
     try {
 
       params.include = 'abstract-products,product-labels,';
@@ -17,29 +19,25 @@ export class CatalogService {
           type: ACTION_TYPE + '_FULFILLED',
           ...responseParsed,
         });
-        return response.data;
       } else {
-        // console.error('Catalog search', response.problem);
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
-        return null;
+        toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
-      console.error('Catalog catch search', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        error: error.message,
       });
-      toast.error('Unexpected Error: ' + error);
-      return null;
+      toast.error('Unexpected Error: ' + error.message);
     }
   }
 
-  public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<any> {
+  public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<void> {
     try {
 
       const response: any = await api.get(
@@ -51,12 +49,12 @@ export class CatalogService {
       if (response.ok) {
         const {data}: any = response;
 
-        const products: any[] = data.data[0].attributes.products.slice(0, 4);
+        const products: IProductCard[] = data.data[0].attributes.products.slice(0, 4);
         let counter = 0;
 
         data.included && data.included.some((row: any) => {
           if (row.type === 'abstract-product-prices') {
-            const product: any = products.find((prod: any) => prod.abstract_sku === row.id);
+            const product: IProductCard = products.find((prod: IProductCard) => prod.abstract_sku === row.id);
             if (product && row.attributes.prices && row.attributes.prices.length) {
               counter++;
               product.prices = row.attributes.prices;
@@ -74,24 +72,22 @@ export class CatalogService {
           currency: data.data[0].attributes.currency || '',
           completion: data.data[0].attributes.completion,
         });
-        return products;
       } else {
+        const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          error: errorMessage,
         });
-        toast.error('Request Error: ' + response.problem);
+        toast.error('Request Error: ' + errorMessage);
         return null;
       }
 
     } catch (error) {
-      console.error('Catalog suggestion', error);
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        error: error.message,
       });
-      toast.error('Unexpected Error: ' + error);
-      return null;
+      toast.error('Unexpected Error: ' + error.message);
     }
   }
 }

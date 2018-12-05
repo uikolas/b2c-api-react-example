@@ -164,7 +164,7 @@ const staticLoaders = [
   {test: /\.gif(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
   {test: /\.(jpg|png|svg)$/, loader: "url-loader?limit=100000"},
   {
-    test: /\.(ttf|otf|eot|svg|woff(2)?)$/,
+    test: /\.(ttf|otf|eot|svg|ico|woff(2)?)(\?[a-z0-9]+)?$/,
     use: [{
       loader: 'file-loader',
       options: {

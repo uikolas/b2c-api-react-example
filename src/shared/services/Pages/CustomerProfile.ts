@@ -5,53 +5,54 @@ import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
   TCustomerReference,
-} from '../../interfaces/customer';
+} from 'src/shared/interfaces/customer';
 import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerDataResponse';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import { CustomerProfileAuthenticateErrorText } from '../../constants/messages/errors';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { logout } from '../../actions/Pages/Login';
 
+interface IRequestBody {
+  data: {
+    type: string;
+    id?: TCustomerReference;
+    include?: string;
+    attributes: ICustomerProfileIdentity | ICustomerProfilePassword;
+  };
+}
+
 export class CustomerProfileService extends ApiServiceAbstract {
   private static getCustomersEndpoint = (customerReference: TCustomerReference) => (`/customers/${customerReference}`);
 
   // Retrieve customer data.
-  public static async getProfileData(dispatch: Function, customerReference: TCustomerReference): Promise<any> {
+  public static async getProfileData(dispatch: Function, customerReference: TCustomerReference): Promise<void> {
     try {
       dispatch(CustomerProfileActions.getCustomerProfilePendingStateAction());
       let response: any;
 
-      try {
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(CustomerProfileAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.get(
-          this.getCustomersEndpoint(customerReference),
-          {include: ''},
-          {withCredentials: true},
-        );
-      } catch (err) {
-        console.error('CustomerProfileService: getProfileData: err', err);
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      if (!token) {
+        throw new Error(CustomerProfileAuthenticateErrorText);
       }
+      setAuthToken(token);
+      response = await api.get(
+        this.getCustomersEndpoint(customerReference),
+        {include: ''},
+        {withCredentials: true},
+      );
 
       if (response.ok) {
         const responseParsed: any = parseCustomerDataResponse(response.data);
         dispatch(CustomerProfileActions.getCustomerProfileFulfilledStateAction(responseParsed));
-        return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.getCustomerProfileRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
-      console.error('getProfileData error', error);
       dispatch(CustomerProfileActions.getCustomerProfileRejectedStateAction(error.message));
-      toast.error('Unexpected Error: ' + error);
-      return null;
+      toast.error('Unexpected Error: ' + error.message);
     }
   }
 
@@ -60,52 +61,44 @@ export class CustomerProfileService extends ApiServiceAbstract {
     dispatch: Function,
     customerReference: TCustomerReference,
     payload: ICustomerProfileIdentity
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       dispatch(CustomerProfileActions.updateCustomerProfilePendingStateAction());
       let response: any;
 
-      try {
-        const body: any = {
-          data: {
-            type: 'customers',
-            id: customerReference,
-            attributes: payload,
-            include: '',
-          },
-        };
+      const body: IRequestBody = {
+        data: {
+          type: 'customers',
+          id: customerReference,
+          attributes: payload,
+          include: '',
+        },
+      };
 
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(CustomerProfileAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.patch(
-          this.getCustomersEndpoint(customerReference),
-          body,
-          {withCredentials: true},
-        );
-      } catch (err) {
-        console.error('CustomerProfileService: updateProfileData: err', err);
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      if (!token) {
+        throw new Error(CustomerProfileAuthenticateErrorText);
       }
+      setAuthToken(token);
+      response = await api.patch(
+        this.getCustomersEndpoint(customerReference),
+        body,
+        {withCredentials: true},
+      );
 
       if (response.ok) {
         const responseParsed: any = parseCustomerDataResponse(response.data);
         dispatch(CustomerProfileActions.updateCustomerProfileFulfilledStateAction(responseParsed));
         toast.success('Your Profile Data was successfully updated!');
-        return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.updateCustomerProfileRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
-      console.error('updateProfileData error', error);
       dispatch(CustomerProfileActions.updateCustomerProfileRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
-      return null;
     }
   }
 
@@ -114,86 +107,70 @@ export class CustomerProfileService extends ApiServiceAbstract {
     dispatch: Function,
     customerReference: TCustomerReference,
     payload: ICustomerProfilePassword
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       dispatch(CustomerProfileActions.updateCustomerPasswordPendingStateAction());
 
       let response: any;
 
-      try {
-        const body: any = {
-          data: {
-            type: 'customer-password',
-            attributes: payload,
-          },
-        };
+      const body: IRequestBody = {
+        data: {
+          type: 'customer-password',
+          attributes: payload,
+        },
+      };
 
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(CustomerProfileAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.patch(`customer-password/${customerReference}`, body, {withCredentials: true});
-      } catch (err) {
-        console.error('CustomerProfileService: updatePasswordData: err', err);
+      const token: string = await RefreshTokenService.getActualToken(dispatch);
+      if (!token) {
+        throw new Error(CustomerProfileAuthenticateErrorText);
       }
+      setAuthToken(token);
+      response = await api.patch(`customer-password/${customerReference}`, body, {withCredentials: true});
 
       if (response.ok) {
         const responseParsed: any = response.data;
         dispatch(CustomerProfileActions.updateCustomerPasswordFulfilledStateAction());
         toast.success('Your Password was successfully updated!');
-        return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.updateCustomerPasswordRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
-      console.error('updatePasswordData error', error);
       dispatch(CustomerProfileActions.updateCustomerPasswordRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
-      return null;
     }
   }
 
   // Delete Customer Profile - Anonymize customers.
-  public static async deleteCustomerEntity(dispatch: Function, customerReference: TCustomerReference): Promise<any> {
+  public static async deleteCustomerEntity(dispatch: Function, customerReference: TCustomerReference): Promise<void> {
     try {
       dispatch(CustomerProfileActions.deleteCustomerPendingStateAction());
 
       let response: any;
 
-      try {
-        const token = await RefreshTokenService.getActualToken(dispatch);
-        if (!token) {
-          throw new Error(CustomerProfileAuthenticateErrorText);
-        }
-        setAuthToken(token);
-        response = await api.delete(`customers/${customerReference}`, null, {withCredentials: true});
-      } catch (err) {
-        console.error('CustomerProfileService: deleteCustomerEntity: err', err);
+      const token = await RefreshTokenService.getActualToken(dispatch);
+      if (!token) {
+        throw new Error(CustomerProfileAuthenticateErrorText);
       }
+      setAuthToken(token);
+      response = await api.delete(`customers/${customerReference}`, null, {withCredentials: true});
 
       if (response.ok) {
-        const responseParsed: any = response.data;
         dispatch(logout());
         dispatch(CustomerProfileActions.deleteCustomerFulfilledStateAction());
         toast.success('Your account was deleted!');
-        return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.deleteCustomerRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
       console.error('deleteCustomerEntity error', error);
       dispatch(CustomerProfileActions.deleteCustomerRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
-      return null;
     }
   }
 }

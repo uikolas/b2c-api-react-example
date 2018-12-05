@@ -11,7 +11,7 @@ import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 
 
 export class AddressesService extends ApiServiceAbstract {
-  public static async getCustomerAddresses(ACTION_TYPE: string, dispatch: Function, customerId: string): Promise<any> {
+  public static async getCustomerAddresses(ACTION_TYPE: string, dispatch: Function, customerId: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -27,7 +27,6 @@ export class AddressesService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
           addresses,
         });
-        return addresses;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -35,7 +34,6 @@ export class AddressesService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -44,13 +42,12 @@ export class AddressesService extends ApiServiceAbstract {
         error: error.message,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async addAddress(
     ACTION_TYPE: string, dispatch: Function, payload: IAddressItem, customerId: string
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -73,9 +70,7 @@ export class AddressesService extends ApiServiceAbstract {
         toast.success(addressAdd);
 
         // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
-
-        // return response.data.data;
-        return AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
+        await AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -83,7 +78,6 @@ export class AddressesService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -92,13 +86,12 @@ export class AddressesService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async deleteAddress(
     ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string,
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -113,7 +106,6 @@ export class AddressesService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
           addressId,
         });
-        return response.ok;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -121,7 +113,6 @@ export class AddressesService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -130,13 +121,12 @@ export class AddressesService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async updateAddress(
     ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: IAddressItem,
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -160,7 +150,6 @@ export class AddressesService extends ApiServiceAbstract {
           data: response.data.data.attributes,
         });
         toast.success(addressUpdate);
-        return response.data.data;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -168,7 +157,6 @@ export class AddressesService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -177,7 +165,6 @@ export class AddressesService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 }

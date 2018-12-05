@@ -14,19 +14,25 @@ import {
 } from 'src/shared/constants/messages/wishlist';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import * as cartActions from "src/shared/actions/Common/Cart";
-import {CartService} from "src/shared/services/Common/Cart";
+
+interface IRequestBody {
+  data: {
+    type: string;
+    include?: string;
+    attributes: {};
+  };
+}
+
 
 export class WishlistService extends ApiServiceAbstract {
-  public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<any> {
+  public static async getLists(ACTION_TYPE: string, dispatch: Function): Promise<void> {
     try {
-
-      let response: any;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
         throw new Error(wishlistAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.get('wishlists', {}, {withCredentials: true});
+      const response: any = await api.get('wishlists', {}, {withCredentials: true});
 
       if (response.ok) {
         const wishlists: IWishlist[] = response.data.data.map((
@@ -37,8 +43,6 @@ export class WishlistService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
           wishlists,
         });
-
-        return response.data.data;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -46,7 +50,6 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -55,11 +58,10 @@ export class WishlistService extends ApiServiceAbstract {
         error: error.message,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async getWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<any> {
+  public static async getWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -79,7 +81,6 @@ export class WishlistService extends ApiServiceAbstract {
           wishlist,
           items,
         });
-        return response.data.data;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -87,7 +88,6 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -96,16 +96,15 @@ export class WishlistService extends ApiServiceAbstract {
         error: error.message,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async addWishlist(ACTION_TYPE: string, dispatch: Function, name: string): Promise<any> {
+  public static async addWishlist(ACTION_TYPE: string, dispatch: Function, name: string): Promise<string> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const body: any = {
+      const body: IRequestBody = {
         data: {
           type: 'wishlists',
           attributes: {name},
@@ -129,7 +128,7 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
+        return '';
       }
 
     } catch (error) {
@@ -138,11 +137,11 @@ export class WishlistService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
+      return '';
     }
   }
 
-  public static async deleteWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<any> {
+  public static async deleteWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -155,7 +154,6 @@ export class WishlistService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
           wishlistId,
         });
-        return response.ok;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -163,7 +161,6 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -172,18 +169,17 @@ export class WishlistService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async updateWishlist(
     ACTION_TYPE: string, dispatch: Function, wishlistId: string, name: string
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const body: any = {
+      const body: IRequestBody = {
         data: {
           type: 'wishlists',
           attributes: {name},
@@ -198,7 +194,6 @@ export class WishlistService extends ApiServiceAbstract {
           data: WishlistService.parseWishlistResponse(response.data.data),
           wishlistId,
         });
-        return response.data.data;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -206,7 +201,6 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -215,13 +209,12 @@ export class WishlistService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async addItemWishlist(
     ACTION_TYPE: string, dispatch: Function, wishlistId: string | null, sku: string
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -235,7 +228,7 @@ export class WishlistService extends ApiServiceAbstract {
         throw new Error('Wishlist doesn`t created.');
       }
 
-      const body: any = {
+      const body: IRequestBody = {
         data: {
           type: 'wishlist-items',
           attributes: {sku},
@@ -253,7 +246,6 @@ export class WishlistService extends ApiServiceAbstract {
           wishlist,
         });
         toast.success(`${wishlistAddProduct} ${wishlist.name}.`);
-        return wishlist;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -261,7 +253,6 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -270,13 +261,12 @@ export class WishlistService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async deleteItemWishlist(
     ACTION_TYPE: string, dispatch: Function, wishlistId: string, sku: string
-  ): Promise<any> {
+  ): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -294,7 +284,6 @@ export class WishlistService extends ApiServiceAbstract {
           wishlistId,
           sku,
         });
-        return response.ok;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -302,7 +291,6 @@ export class WishlistService extends ApiServiceAbstract {
           error: errorMessage,
         });
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
@@ -311,11 +299,10 @@ export class WishlistService extends ApiServiceAbstract {
         error,
       });
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async removeMultiItems(dispatch: Function, wishlistId: string, productsList: string[]): Promise<any> {
+  public static async removeMultiItems(dispatch: Function, wishlistId: string, productsList: string[]): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -328,11 +315,10 @@ export class WishlistService extends ApiServiceAbstract {
         );
       }
 
-      return WishlistService.getWishlist('DETAIL_WISHLIST', dispatch, wishlistId);
+      await WishlistService.getWishlist('DETAIL_WISHLIST', dispatch, wishlistId);
     } catch (err) {
       dispatch(cartActions.cartAddItemRejectedStateAction(err.message));
       toast.error('Unexpected Error: ' + err.message);
-      return null;
     }
   }
 

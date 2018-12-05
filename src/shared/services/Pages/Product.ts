@@ -5,11 +5,12 @@ import {
   getProductDataFulfilledStateAction,
   getProductDataItemPendingStateAction,
   getProductDataRejectedStateAction,
-} from '../../actions/Pages/Product';
+} from 'src/shared/actions/Pages/Product';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 
+
 export class ProductService extends ApiServiceAbstract {
-  public static async getAbstractData(dispatch: Function, sku: string): Promise<any> {
+  public static async getAbstractData(dispatch: Function, sku: string): Promise<void> {
     try {
       dispatch(getProductDataItemPendingStateAction());
       let response: any;
@@ -26,19 +27,15 @@ export class ProductService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed: any = parseProductResponse(response.data);
         dispatch(getProductDataFulfilledStateAction(responseParsed));
-        return responseParsed;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(getProductDataRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
-        return null;
       }
 
     } catch (error) {
-      console.error('Catalog catch search', error);
       dispatch(getProductDataRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error);
-      return null;
     }
   }
 }

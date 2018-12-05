@@ -3,14 +3,14 @@ import {
   PAGES_SEARCH_REQUEST,
   PAGES_SEARCH_REQUEST_CLEAR,
   PAGES_SUGGESTION_REQUEST,
-} from '../../constants/ActionTypes/Pages/Search';
+} from 'src/shared/constants/ActionTypes/Pages/Search';
 import { IReduxState } from 'src/typings/app';
 import {
   IAvailableLabelsCollection,
   IProductsLabeledCollection,
   ISearchPageData,
   TSpellingSuggestion,
-} from '../../interfaces/searchPageData';
+} from 'src/shared/interfaces/searchPageData';
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
