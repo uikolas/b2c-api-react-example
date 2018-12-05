@@ -6,6 +6,7 @@ export interface AppHeaderState {
   showSearch: boolean;
   stickyTriggerOffset: number;
 }
+
 export interface AppHeaderProps extends WithStyles<typeof styles>, WithRouter {
   isLoading: boolean;
   onMobileNavToggle(): void;

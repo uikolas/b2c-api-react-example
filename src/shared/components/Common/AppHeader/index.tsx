@@ -29,7 +29,6 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
   public componentDidMount() {
     window.addEventListener('resize', this.onWindowResize);
     window.addEventListener('scroll', this.onWindowScroll);
-    console.info(this.props);
   }
 
   public componentDidUpdate() {
