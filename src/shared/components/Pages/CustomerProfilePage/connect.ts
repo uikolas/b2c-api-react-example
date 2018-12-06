@@ -2,14 +2,15 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getRouterHistoryPush, getRouterLocation } from 'src/shared/selectors/Common/router';
 import {
-  getCustomerProfile, isCustomerPasswordUpdated,
+  getCustomerProfile,
+  isCustomerPasswordUpdated,
   isCustomerProfilePresent,
   isPageCustomerProfileFulfilled,
   isPageCustomerProfileLoading,
   isPageCustomerProfileRejected,
 } from 'src/shared/reducers/Pages/CustomerProfile';
 import { isAppInitiated } from 'src/shared/reducers/Common/Init';
-import { getCustomerReference, getCustomerUsername, isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { getCustomerReference, isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
@@ -34,13 +35,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);
   const customerReference = getCustomerReference(state, ownProps);
   const customerData = getCustomerProfile(state, ownProps);
-  const customerEmail = getCustomerUsername(state, ownProps);
   const passwordUpdated = isCustomerPasswordUpdated(state, ownProps);
   const routerPush = getRouterHistoryPush(state, ownProps);
-
-  if (customerData) {
-    customerData.email = customerEmail;
-  }
 
   return ({
     location,
@@ -64,7 +60,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
       updateCustomerData: (
         customerReference: TCustomerReference, payload: ICustomerProfileIdentity
       ) => updateCustomerProfileAction(customerReference, payload),
-      saveLoginDataToStore: (payload: ILoginDataToLocalStorage) => saveLoginDataToStoreAction(payload),
       updateCustomerPassword: (
         customerReference: TCustomerReference, payload: ICustomerProfilePassword
       ) => updateCustomerPasswordAction(customerReference, payload),

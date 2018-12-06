@@ -2,6 +2,7 @@ import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
 import * as CustomerProfileActions from '../../actions/Pages/CustomerProfile';
 import {
+  ICustomerDataParsed,
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
   TCustomerReference,
@@ -42,7 +43,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        const responseParsed: any = parseCustomerDataResponse(response.data);
+        const responseParsed: ICustomerDataParsed | null = parseCustomerDataResponse(response.data);
         dispatch(CustomerProfileActions.getCustomerProfileFulfilledStateAction(responseParsed));
       } else {
         const errorMessage = this.getParsedAPIError(response);

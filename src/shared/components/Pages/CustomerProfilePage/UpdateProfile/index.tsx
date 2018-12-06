@@ -7,6 +7,7 @@ import {styles} from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
+  TCustomerEmail,
   TCustomerFirstName,
   TCustomerLastName,
   TCustomerSalutation,
@@ -26,10 +27,9 @@ interface UpdateProfileProps extends WithStyles<typeof styles> {
   firstName: TCustomerFirstName;
   lastName: TCustomerLastName;
   salutation: TCustomerSalutation;
-  email: TCustomerSalutation;
+  email: TCustomerEmail;
 }
 
-export const sectionTitle = 'Update Profile';
 
 export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Element => {
   const {

@@ -6,7 +6,6 @@ import {
   emptyRequiredFieldsErrorText,
   passwordsNotEqualErrorText,
 } from 'src/shared/constants/messages/errors';
-import { saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
@@ -91,13 +90,6 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     }
     const profileData = {salutation, firstName, lastName, email};
     this.props.updateCustomerData(this.props.customerReference, profileData);
-    // TODO: remove after fixing an email bug
-    if (email !== this.props.customerData.email) {
-      toast.warn('We can\'t show your updated email. To see it logout and login again!');
-      this.props.saveLoginDataToStore({email});
-      // TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
-      saveCustomerUsernameToLocalStorage({email});
-    }
   };
 
   public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {

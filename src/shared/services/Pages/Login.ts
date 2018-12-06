@@ -75,10 +75,6 @@ export class PagesLoginService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed = parseLoginDataResponse(response.data);
         dispatch(saveLoginDataToStoreAction({email: payload.username}));
-
-        // TODO: it's a temporary solution. We do not have email in the /customers/{customerReference}
-        saveCustomerUsernameToLocalStorage({email: payload.username});
-
         saveAccessDataToLocalStorage(responseParsed);
         dispatch(loginCustomerFulfilledStateAction(responseParsed));
         toast.success(customerLogin);

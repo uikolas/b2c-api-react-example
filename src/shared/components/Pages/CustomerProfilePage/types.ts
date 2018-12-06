@@ -24,7 +24,6 @@ export interface ICustomerProfilePageProps extends WithStyles<typeof styles>, Ro
   routerPush: Function;
   getCustomerData(customerReference: TCustomerReference): void;
   updateCustomerData(customerReference: TCustomerReference, payload: ICustomerProfileIdentity): void;
-  saveLoginDataToStore(payload: ILoginDataToLocalStorage): void;
   updateCustomerPassword(customerReference: TCustomerReference, payload: ICustomerProfilePassword): void;
   deleteCustomerEntity(customerReference: TCustomerReference): void;
 }
