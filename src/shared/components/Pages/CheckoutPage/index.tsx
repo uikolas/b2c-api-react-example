@@ -1,8 +1,6 @@
 // tslint:disable:max-file-line-count
 
 import * as React from 'react';
-import {FormEvent, ChangeEvent} from "react";
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
@@ -72,6 +70,7 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
+import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/commoon/react";
 
 
 @connect
@@ -90,7 +89,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   };
 
   public componentDidMount() {
-    this.setDefaultAddresses();
+    this.props.getCheckoutData({idCart: this.props.cartId});
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
@@ -103,13 +102,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   }
 
-  public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+  public handleSubmit = (event: FormEvent): void => {
     event.preventDefault();
     console.info('handleSubmit ');
   }
 
-  public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                  ): void => {
+  public handleSelectionsChange = (event: InputChangeEvent): void => {
     const { name, value } = event.target;
     if (name === 'deliverySelection') {
         this.handleDeliverySelection(value);
@@ -138,8 +136,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
-  public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                ): void => {
+  public handleDeliveryInputs = (event: InputChangeEvent): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
@@ -160,14 +157,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                               ): void => {
-    const name: any = event.target.name;
-    const cleanValue = event.target.value.trim();
+  public handleBillingInputs = (event: InputChangeEvent): void => {
+    const {name, value} = event.target;
+    const cleanValue = value.trim();
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
-    const key: any = name;
+    const key: string = name;
     const isInputValid = validateBillingInput(key, cleanValue);
 
     this.setState((prevState: ICheckoutPageState) => {
@@ -182,8 +178,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  public handleInvoiceInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                               ): void => {
+  public handleInvoiceInputs = (event: InputChangeEvent): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.paymentInvoiceData.hasOwnProperty(name)) {
@@ -196,8 +191,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  public handleCreditCardInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                  ): void => {
+  public handleCreditCardInputs = (event: InputChangeEvent): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.paymentCreditCardData.hasOwnProperty(name)) {
@@ -317,8 +311,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   private checkCheckoutFormValidity = (): boolean => {
     const {first, second, third, fourth} = this.state.stepsCompletion;
-    if (!first || !second || !third || !fourth) { return false; }
-    return true;
+    return first && second && third && fourth;
   }
 
   public render(): JSX.Element {

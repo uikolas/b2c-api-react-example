@@ -12,7 +12,7 @@ import {
   IShipmentMethod,
 } from 'src/shared/interfaces/checkout';
 import {
-  addressesCollectionFixture, paymentMethodsFixture,
+  addressesCollectionFixture,
   shipmentMethodsFixture
 } from "src/shared/reducers/fixtures/Checkout";
 
@@ -31,9 +31,9 @@ export const initialState: ICheckoutState = {
   data: {
     billingAddress: null,
     deliveryAddress: null,
-    payments: paymentMethodsFixture || [],
-    shipments: shipmentMethodsFixture || [],
-    addressesCollection: addressesCollectionFixture || [],
+    payments: [],
+    shipments: [],
+    addressesCollection: [],
   },
 };
 
@@ -57,8 +57,11 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.initiated = true;
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
-        draft.data.billingAddress = action.billingAddress || null;
-        draft.data.deliveryAddress = action.deliveryAddress || null;
+        draft.data.billingAddress = action.payload.billingAddress || null;
+        draft.data.deliveryAddress = action.payload.deliveryAddress || null;
+        draft.data.payments = action.payload.payments || null;
+        draft.data.shipments = action.payload.shipments || null;
+        draft.data.addressesCollection = action.payload.addressesCollection || null;
 
         draft.error = false;
         draft.pending = false;

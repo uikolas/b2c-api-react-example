@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {ChangeEvent, FormEvent} from "react";
 import {GridSize} from "@material-ui/core/Grid";
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {
@@ -21,6 +20,7 @@ import {
 } from "src/shared/interfaces/addresses/index";
 import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
 import {sprykerFormStyles} from "./sprykerFormStyles";
+import {InputChangeEvent, BlurEvent, FormEvent} from "src/shared/interfaces/commoon/react";
 
 
 export interface IFormField {
@@ -46,9 +46,9 @@ export interface IFormField {
 
 export interface IFormSettings {
   formName: string;
-  onChangeHandler?: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  onBlurHandler?: React.EventHandler<any>;
-  onSubmitHandler: (event: FormEvent<HTMLFormElement>) => void;
+  onChangeHandler?: (event: InputChangeEvent) => void;
+  onBlurHandler?: (event: BlurEvent) => void;
+  onSubmitHandler: (event: FormEvent) => void;
   fields: Array<Array<IFormField>>;
   controlsGroupClassName?: string;
 }

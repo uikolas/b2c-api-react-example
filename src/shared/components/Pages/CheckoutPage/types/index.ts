@@ -1,7 +1,7 @@
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "../styles";
-import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
+import {ICartItem, ICartTotals, TCartId} from "src/shared/interfaces/cart";
 import {TCustomerReference} from "src/shared/interfaces/customer";
 import {
   IAddNewAddressActions,
@@ -25,9 +25,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   products: Array<ICartItem> | null;
   isProductsExists: boolean;
   totals: ICartTotals;
-  isCartFulfilled: boolean;
-  isCartRejected: boolean;
-  isCartLoading: boolean;
+  cartId: TCartId;
   isAddressesCollectionExist: boolean;
   customerReference: TCustomerReference | null;
   addressesCollection: IAddressItemCollection[] | null;
@@ -46,7 +44,7 @@ export interface ICheckoutPageState {
   billingNewAddress: IBillingAddressState;
   stepsCompletion: ICheckoutStepsCompletionState;
   shipmentMethod: IShipmentMethod["id"] | null;
-  paymentMethod: IPaymentMethod["paymentMethod"] | null;
+  paymentMethod: IPaymentMethod["paymentMethodName"] | null;
   paymentCreditCardData: ICheckoutCreditCardState;
   paymentInvoiceData: ICheckoutInvoiceState;
 }

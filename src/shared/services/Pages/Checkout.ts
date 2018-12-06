@@ -1,8 +1,16 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import {ICheckoutRequest} from "src/shared/interfaces/checkout";
+import { ICheckoutRequest, IcheckoutResponse } from 'src/shared/interfaces/checkout';
+import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import {
+  getCheckoutDataInitPendingStateAction,
+  getCheckoutDataInitRejectedStateAction,
+  getCheckoutDataInitFulfilledStateAction,
+} from 'src/shared/actions/Pages/Checkout';
+
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+
 
 interface IRequestBody {
   data: {
@@ -11,7 +19,6 @@ interface IRequestBody {
     attributes: ICheckoutRequest;
   };
 }
-
 
 export class CheckoutService extends ApiServiceAbstract {
   public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest): Promise<void> {
@@ -26,17 +33,22 @@ export class CheckoutService extends ApiServiceAbstract {
         }
       };
 
+      getCheckoutDataInitPendingStateAction();
+
       const response: any = await api.post('checkout-data', body, { withCredentials: true });
 
       if (response.ok) {
-        console.info(response.data);
+        const payload = CheckoutService.parseCheckoutData(response.data.data.attributes);
+
+        dispatch(getCheckoutDataInitFulfilledStateAction(payload));
       } else {
         const errorMessage = this.getParsedAPIError(response);
+        dispatch(getCheckoutDataInitRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
-
+      dispatch(getCheckoutDataInitRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
     }
   }
@@ -65,5 +77,14 @@ export class CheckoutService extends ApiServiceAbstract {
     } catch (error) {
       toast.error('Unexpected Error: ' + error.message);
     }
+  }
+
+  private static parseCheckoutData(data: IcheckoutResponse) {
+
+    return ({
+      payments: data.paymentProviders[0].paymentMethods,
+      shipments: data.shipmentMethods,
+      addressesCollection: Array.isArray(data.addresses) ? data.addresses : [],
+    });
   }
 }

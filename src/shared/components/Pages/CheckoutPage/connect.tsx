@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Common/Init';
-import {ICartTotals, ICartItem} from "src/shared/interfaces/cart";
+import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {
   getProductsFromCart,
-  isCartStateLoading,
   getCartTotals,
-  isCartStateFulfilled,
-  isCartStateRejected,
+  getCartId,
 } from "src/shared/reducers/Common/Cart";
 import {
   checkAddressesCollectionExist,
@@ -32,20 +30,16 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const isAppDataSet: boolean = isAppInitiated(state, ownProps);
   const isCheckoutLoading: boolean = isPageCheckoutStateLoading(state, ownProps);
   const isCheckoutRejected: boolean = isPageCheckoutStateRejected(state, ownProps);
-
-  // TODO: Change it after we have real endpoint
-  // const isCheckoutFulfilled: boolean = isPageCheckoutFulfilled(state, ownProps);
-  const isCheckoutFulfilled: boolean = true;
+  const isCheckoutFulfilled: boolean = isPageCheckoutFulfilled(state, ownProps);
 
   const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
   const isProductsExists = Boolean(items && items.length);
   const totals: ICartTotals = getCartTotals(state, ownProps);
-  const isCartFulfilled: boolean = isCartStateFulfilled(state, ownProps);
-  const isCartRejected: boolean = isCartStateRejected(state, ownProps);
-  const isCartLoading = isCartStateLoading(state, ownProps);
+
+  const cartId: TCartId = getCartId(state, ownProps);
+
   // from ILoginState
   const customerReference = getCustomerReference(state, ownProps);
-  const addressesCollection: IAddressItemCollection[] | null = getAddressesCollectionFromCheckoutStore(state, ownProps);
 
   // TODO: Change it after we have real endpoint
   // const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
@@ -58,6 +52,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   // From pageCheckout state
   const shipmentMethods: Array<IShipmentMethod> | null = getShipmentMethodsFromStore(state, ownProps);
   const paymentMethods: Array<IPaymentMethod> | null = getPaymentMethodsFromStore(state, ownProps);
+  const addressesCollection: IAddressItemCollection[] | null = getAddressesCollectionFromCheckoutStore(state, ownProps);
 
   return ({
     isAppDataSet,
@@ -68,9 +63,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     products: items,
     isProductsExists,
     totals,
-    isCartFulfilled,
-    isCartRejected,
-    isCartLoading,
+    cartId,
     customerReference,
     addressesCollection,
     isAddressesCollectionExist,

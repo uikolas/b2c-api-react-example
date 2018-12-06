@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {ChangeEvent, FormEvent} from "react";
 import {
   IBillingAddressState,
   IBillingSelectionState,
@@ -16,16 +15,17 @@ import {
   TCurrentValueDeliverySelection,
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
+import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/commoon/react";
 
 // Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {
-  submitHandler: (event: FormEvent<HTMLFormElement>) => void;
-  onBlurHandler: (formName: string) => React.EventHandler<any>;
-  selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  handleInvoiceInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  handleCreditCardInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  submitHandler: (event: FormEvent) => void;
+  onBlurHandler: (formName: string) => (event: BlurEvent) => void;
+  selectionsChangeHandler: (event: InputChangeEvent) => void;
+  handleDeliveryInputs: (event: InputChangeEvent) => void;
+  handleBillingInputs: (event: InputChangeEvent) => void;
+  handleInvoiceInputs: (event: InputChangeEvent) => void;
+  handleCreditCardInputs: (event: InputChangeEvent) => void;
   isBillingSameAsDelivery: boolean;
   deliveryNewAddress: IDeliveryAddressState;
   billingNewAddress: IBillingAddressState;
@@ -42,7 +42,7 @@ export type TCheckoutPageContext = {
   shipmentMethods: Array<IShipmentMethod> | null;
   currentValueShipmentMethod: IShipmentMethod["id"] | null;
   paymentMethods: Array<IPaymentMethod> | null;
-  currentValuePaymentMethod: IPaymentMethod["paymentMethod"] | null;
+  currentValuePaymentMethod: IPaymentMethod["paymentMethodName"] | null;
   paymentCreditCardDataInputs: ICheckoutCreditCardState;
   paymentInvoiceDataInputs: ICheckoutInvoiceState;
 };

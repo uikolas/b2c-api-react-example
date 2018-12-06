@@ -60,10 +60,10 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
 
         const paymentMethodsGrouped: IPaymentMethodsGrouped = {};
         for (let paymentMethod of paymentMethods) {
-          if (!paymentMethodsGrouped[paymentMethod.paymentMethod]) {
-            paymentMethodsGrouped[paymentMethod.paymentMethod] = [];
+          if (!paymentMethodsGrouped[paymentMethod.paymentMethodName]) {
+            paymentMethodsGrouped[paymentMethod.paymentMethodName] = [];
           }
-          paymentMethodsGrouped[paymentMethod.paymentMethod].push(paymentMethod);
+          paymentMethodsGrouped[paymentMethod.paymentMethodName].push(paymentMethod);
         }
 
         const paymentMethodGroupItems: IPaymentMethodsParams["paymentMethodGroupItems"] = [];
@@ -88,14 +88,14 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
           );
           // TODO: Change value, when real data is provided
 
-          paymentMethodsGrouped[groupName].forEach((item: IPaymentMethod) => {
-            if (paymentProviderToIcon[item.paymentProvider]) {
-              paymentMethodLabel.push(paymentProviderToIcon[item.paymentProvider]);
-            }
-            if (groupName === checkoutPaymentMethodsNames.creditCard) {
-              creditCardProvidersCollection.push({name: item.paymentProvider, value: item.paymentProvider});
-            }
-          });
+          // paymentMethodsGrouped[groupName].forEach((item: IPaymentMethod) => {
+          //   if (paymentProviderToIcon[item.paymentProvider]) {
+          //     paymentMethodLabel.push(paymentProviderToIcon[item.paymentProvider]);
+          //   }
+          //   if (groupName === checkoutPaymentMethodsNames.creditCard) {
+          //     creditCardProvidersCollection.push({name: item.paymentProvider, value: item.paymentProvider});
+          //   }
+          // });
 
           paymentMethodGroupItems.push({value: groupName, label: paymentMethodLabel});
         }
