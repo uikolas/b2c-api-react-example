@@ -1,11 +1,5 @@
 import { unexpectedServerError } from 'src/shared/constants/messages/errors';
-
-interface IResponseError {
-  problem?: string;
-  data?: {
-    errors: [{detail: string}],
-  };
-}
+import {IErrorItem, IResponseError} from "./types";
 
 export class ApiServiceAbstract {
 
@@ -18,8 +12,11 @@ export class ApiServiceAbstract {
     }
 
     // TODO: If there are possible to be more than one error - loop them
-    if (response.data && response.data.errors && response.data.errors[0] && response.data.errors[0].detail) {
-      errorMessage = response.data.errors[0].detail;
+    if (response.data && response.data.errors && Array.isArray(response.data.errors) && response.data.errors.length) {
+
+      errorMessage = response.data.errors.reduce((accumulator: string, currentValue: IErrorItem) => {
+        return accumulator + ' ' + currentValue.detail;
+      }, '');
     }
     return errorMessage;
   };

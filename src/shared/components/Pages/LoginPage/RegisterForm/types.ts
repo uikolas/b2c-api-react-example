@@ -17,6 +17,6 @@ export interface RegisterFormState {
   lastName: TCustomerLastName;
   email: TCustomerEmail;
   password: TCustomerPassword;
-  passwordConfirmation: TCustomerPassword;
+  confirmPassword: TCustomerPassword;
   acceptedTerms: boolean;
 }
