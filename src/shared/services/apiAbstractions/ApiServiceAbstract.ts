@@ -11,7 +11,6 @@ export class ApiServiceAbstract {
       errorMessage = response.problem;
     }
 
-    // TODO: If there are possible to be more than one error - loop them
     if (response.data && response.data.errors && Array.isArray(response.data.errors) && response.data.errors.length) {
 
       errorMessage = response.data.errors.reduce((accumulator: string, currentValue: IErrorItem) => {

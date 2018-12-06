@@ -56,7 +56,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   // Action handlers
 
-  private getSuggestionValue = (suggestion: IProductCard): string => suggestion.abstract_name;
+  private getSuggestionValue = (suggestion: IProductCard): string => suggestion.abstractName;
 
   private handleSuggestionsFetchRequested = ({value}: {value: string}) => {
     const {value: currentValue} = this.state;
@@ -186,20 +186,20 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     suggestion: IProductCard,
     {query, isHighlighted}: {query: string, isHighlighted: boolean}
     ) => {
-    const matches = match(suggestion.abstract_name, query);
-    const parts = parse(suggestion.abstract_name, matches);
+    const matches = match(suggestion.abstractName, query);
+    const parts = parse(suggestion.abstractName, matches);
     const { classes } = this.props;
 
     return (
       <NavLink
-        to={ `${pathProductPageBase}/${suggestion.abstract_sku}` }
+        to={ `${pathProductPageBase}/${suggestion.abstractSku}` }
         style={{ textDecoration: 'none' }}
       >
         <MenuItem selected={ isHighlighted } component="div" className={classes.menuItem}>
           <SquareImage
-            image={ suggestion.images.length ? suggestion.images[0].external_url_small : '' }
+            image={ suggestion.images.length ? suggestion.images[0].externalUrlSmall : '' }
             size={this.state.heightListItem}
-            alt={suggestion.abstract_name}
+            alt={suggestion.abstractName}
           />
 
           <div className={ classes.description }>

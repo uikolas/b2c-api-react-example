@@ -24,7 +24,7 @@ export const getOneProductImage = (images: Array<IProductCardImages>): TProductI
   }
 
   const result = (images && images.length)
-    ? (images[0].external_url_small || images[0].externalUrlSmall || null)
+    ? (images[0].externalUrlSmall || null)
     : null;
 
   return result;

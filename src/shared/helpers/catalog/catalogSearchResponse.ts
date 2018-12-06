@@ -36,7 +36,7 @@ export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchD
   });
 
   let result: ICatalogSearchDataParsed = {
-    items: attributes.products,
+    items: attributes.abstractProducts,
     filters,
     category,
     currentCategory,
