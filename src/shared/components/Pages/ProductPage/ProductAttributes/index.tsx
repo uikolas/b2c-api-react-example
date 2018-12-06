@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { IProductAttributes } from 'src/shared/interfaces/product';
 
 import { styles } from './styles';
+import {ProductBlockTitleProductDetails} from "src/shared/constants/product/index";
 
 interface ProductAttributesProps extends WithStyles<typeof styles> {
   attributes: IProductAttributes;
@@ -19,7 +20,7 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = ({classe
   return (
     <div>
       <Typography variant="title" color="textPrimary" className={ classes.attributesTitle }>
-        Product details
+        {ProductBlockTitleProductDetails}
       </Typography>
       <Grid container justify="center" className={ classes.root }>
         { Object.entries(attributes).map((data: any) => {

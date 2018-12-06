@@ -8,7 +8,7 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: theme.spacing.unit * 6,
   },
   pageHeader: {
-    fontSize: '2.13rem',
+    fontSize: theme.appFixedDimensions.fontSize.xxl,
     lineHeight: 1.06,
     letterSpacing: -0.9,
     marginBottom: theme.spacing.unit * 2,

@@ -20,6 +20,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
       onSubmitHandler,
       onBlurHandler,
       fields,
+      controlsGroupClassName,
     },
     formClassName,
     SubmitButton,
@@ -105,7 +106,7 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
             container
             justify="flex-start"
             alignItems="flex-end"
-            className={classes.controlsGroup}
+            className={`${classes.controlsGroup} ${controlsGroupClassName ? controlsGroupClassName : ''}` }
             key={`${formName}-${row[0].inputName}`}
             data-form-row={indexRow}
           >

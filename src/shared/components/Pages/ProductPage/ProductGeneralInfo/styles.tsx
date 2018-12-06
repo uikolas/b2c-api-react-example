@@ -4,37 +4,43 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   root: {
     borderBottom: `1px solid ${theme.appColors.blockDivider}`,
-    paddingBottom: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit * 3,
+    paddingLeft: 0,
+  },
+  title: {
+    fontSize: theme.appFixedDimensions.fontSize.xl,
+    lineHeight: 1.13,
+    letterSpacing: -0.8,
+    marginBottom: theme.spacing.unit,
   },
   productInfo: {
     display: 'flex',
-    alignItems: 'center',
   },
   priceBlock: {
     display: 'flex',
-    alignItems: 'baseline',
+    alignItems: 'flex-end',
     flexGrow: 1,
     '& > *': {
-      marginRight: '8px !important',
+      marginRight: `${theme.spacing.unit}px !important`,
       display: 'block',
     }
   },
   price: {
     color: theme.appColors.black,
-    fonsSize: '24px',
-    lineHeight: '28px',
+    fontSize: theme.appFixedDimensions.fontSize.huge,
+    marginBottom: 0,
+    lineHeight: 1,
   },
   oldPrice: {
     color: theme.appColors.grey,
-    fontSize: '14px',
-    lineHeight: '18px',
+    fontSize: theme.appFixedDimensions.fontSize.small,
     margin: 0,
+    lineHeight: 1,
   },
   vat: {
     color: theme.appColors.grey,
-    fontSize: '14px',
-    lineHeight: '18px',
+    fontSize: theme.appFixedDimensions.fontSize.small,
     margin: 0,
+    lineHeight: 1,
   }
 });

@@ -14,9 +14,8 @@ export const styles = (theme: Theme) => createStyles({
     justifyContent: 'space-between',
   },
   attributeTitle: {
-    fontSize: '14px',
-    lineHeight: '18px',
-    color: '#000',
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    color: theme.appColors.black,
     margin: '0 0 7px',
   },
 });

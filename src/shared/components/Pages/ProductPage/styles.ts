@@ -7,8 +7,11 @@ export const styles = (theme: Theme) => createStyles({
     maxWidth: '1400px',
     margin: 'auto',
   },
+  infoParent: {
+
+  },
   wishlistBtnArea: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit / 2,
   },
   buyBtnParent: {
     display: 'flex',
@@ -112,11 +115,31 @@ export const styles = (theme: Theme) => createStyles({
     textTransform: 'uppercase',
     paddingTop: 25,
   },
-  quantityControl: {
-    maxWidth: '8.0625rem'
+  blockControl: {
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
   },
-  quantityRoot: {
-    margin: '1.5rem 0'
+  formQuantity: {
+    "&:first-child": {
+      paddingTop: 0,
+    },
+    "& [data-form-column='0-0']": {
+      maxWidth: 142,
+      [theme.breakpoints.down('xs')]: {
+        maxWidth: "100%",
+      },
+    }
+  },
+  formWishList: {
+    "&:first-child": {
+      paddingTop: 0,
+    },
+    "& > :first-child": {
+      paddingTop: 0,
+    },
+  },
+  controlsGroupQuantity: {
+    paddingTop: 0,
   },
   wishlistRoot: {
     margin: 0
