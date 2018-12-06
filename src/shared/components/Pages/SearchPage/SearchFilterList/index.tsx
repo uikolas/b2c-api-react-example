@@ -31,8 +31,8 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
     isFiltersReset,
   } = props;
 
-  let filterItems: any[] | null = [];
-  let rangeItems: any[] | null = [];
+  let filterItems: JSX.Element[] | null = [];
+  let rangeItems: JSX.Element[] | null = [];
 
   const priceValueFormatter = (value: number) => {
     return <AppPrice value={ value * 100 } extraClassName={ classes.priceClassName }/>;

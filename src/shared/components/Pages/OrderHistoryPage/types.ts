@@ -1,6 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "./styles";
-import {TOrderCollection} from "src/shared/interfaces/order/index";
+import {TOrderCollection} from "src/shared/interfaces/order";
+import {ClickEvent} from "src/shared/interfaces/commoon/react";
 
 
 export interface IOrderHistoryPageProps extends WithStyles<typeof styles> {
@@ -20,6 +21,6 @@ export interface IOrderHistoryPageState {
 }
 
 export type TOrderHistoryContext = {
-  viewClickHandler(event: any): any,
+  viewClickHandler(event: ClickEvent): void,
 };
 

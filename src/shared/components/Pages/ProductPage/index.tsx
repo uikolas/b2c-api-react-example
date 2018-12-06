@@ -16,17 +16,20 @@ import {
 import { IImageSlide } from 'src/shared/components/Common/ImageSlider';
 import {
   createPathToIdProductConcrete,
+  createQuantityVariants,
   findIdProductConcreteByPath,
   getAvailabilityDisplay,
   getInitialSuperAttrSelected,
 } from 'src/shared/helpers/product';
 import { TWishListName } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/commoon/react';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
+import { DropdownControlled } from '../../UI/DropdownControlled';
 import { SprykerButton } from '../../UI/SprykerButton';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { ProductAttributes } from './ProductAttributes';
@@ -318,7 +321,7 @@ export class ProductPageBase extends React.Component<Props, State> {
   };
 
   private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> | null => images
-    ? images.map((element: any, index: number) => ({
+    ? images.map((element: IProductCardImages, index: number) => ({
       id: index,
       src: element.externalUrlLarge,
     })) : null;

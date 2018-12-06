@@ -20,6 +20,7 @@ import { styles } from './styles';
 import { AppPrice } from '../AppPrice';
 import { ProductLabel } from 'src/shared/components/Common/ProductLabel';
 import { getOneProductImage } from 'src/shared/helpers/product/imageSetsParser';
+import { ClickEvent } from "src/shared/interfaces/commoon/react";
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
   onSelectProduct: Function;
@@ -52,7 +53,7 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
 
   const image = getOneProductImage(images);
 
-  const handleProductClick = (e: any) => {
+  const handleProductClick = (e: ClickEvent) => {
     e.preventDefault();
     props.onSelectProduct(sku);
   };

@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import {
   InputLabelFirstName,
   InputLabelLastName,
@@ -19,6 +18,7 @@ import { TSalutationVariant } from "src/shared/interfaces/customer";
 import { ICountries } from "src/shared/reducers/Common/Init";
 import { IFormField } from "src/shared/components/UI/SprykerForm/types";
 import { AddressFormState } from './types';
+import { InputChangeEvent } from "src/shared/interfaces/commoon/react";
 
 
 export interface IFieldInput {
@@ -29,7 +29,7 @@ export interface IFieldInput {
 export const setFormFields = (
   currentState: AddressFormState,
   countries: ICountries[],
-  handleCheckBox: (event: ChangeEvent<HTMLInputElement>) => void
+  handleCheckBox: (event: InputChangeEvent) => void
 ): Array<IFormField[]> => {
   const {
     salutation,

@@ -14,6 +14,7 @@ import { salutationVariants } from 'src/shared/constants/customer';
 import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/errors';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
+import { InputChangeEvent, FormEvent } from "src/shared/interfaces/commoon/react";
 
 export class RegisterFormBase extends React.Component<Props, State> {
   public state = {
@@ -26,21 +27,19 @@ export class RegisterFormBase extends React.Component<Props, State> {
     acceptedTerms: false,
   };
 
-  public handleChangeSalutation = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!event.target.value) {
-      return;
-    }
-
+  public handleChangeSalutation = (event: InputChangeEvent): void => {
     this.setState(() => ({salutation: event.target.value}));
   };
 
-  public handleChangeAgreement = (event: React.FormEvent<HTMLInputElement>): void => {
+  public handleChangeAgreement = (event: InputChangeEvent): void => {
     this.setState(() => ({acceptedTerms: !this.state.acceptedTerms}));
   };
 
-  public handleChange = ({target: {name, value}}: any) => this.setState(() => ({...this.state, [name]: value}));
+  public handleChange = ({target: {name, value}}: InputChangeEvent): void => {
+    this.setState(() => ({...this.state, [name]: value}));
+  }
 
-  public handleSubmitForm = (e: any): any => {
+  public handleSubmitForm = (e: FormEvent): void => {
     const {salutation, firstName, lastName, email, password, passwordConfirmation, acceptedTerms} = this.state;
     e.preventDefault();
     if (!salutation || !firstName || !lastName || !email || !password || !passwordConfirmation || !acceptedTerms) {
@@ -64,7 +63,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
         <Typography variant="title" color="inherit" noWrap>Register</Typography>
         <form
           className={ classes.container }
-          // noValidate
+          noValidate
           autoComplete="off"
           onSubmit={ this.handleSubmitForm }
           id="RegisterForm"

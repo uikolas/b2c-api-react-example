@@ -11,7 +11,9 @@ export interface Component extends Styles {
 }
 
 export type ClickEvent = React.MouseEvent<HTMLElement>;
-export type InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type InputChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>;
+export type FormEvent = React.FormEvent<HTMLFormElement>;
+export type BlurEvent = React.FocusEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>;
 
 export interface WithRouter extends Partial<RouteComponentProps<any>> {
 

@@ -4,7 +4,7 @@ export interface IAppTypography {
 
 export const appTypographyStyles: IAppTypography = {
   fontFamily: [
-    'CircularStd',
+    'Circular',
     'Segoe UI',
     'Roboto',
   ].join(','),

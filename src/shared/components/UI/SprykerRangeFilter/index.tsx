@@ -8,6 +8,7 @@ import {
   getSprykerRangeStateMoreError,
   getSprykerRangeStateNoError,
 } from 'src/shared/components/UI/SprykerRangeFilter/helpers';
+import { BlurEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
 
 
 export type TRangeInputName = 'min' | 'max';
@@ -25,7 +26,7 @@ interface SprykerRangeProps extends WithStyles<typeof styles> {
   max?: number;
   currentValue?: {min: number, max: number};
   Wrapper?: React.SFC<any>;
-  handleBlur: (event: any) => void;
+  handleBlur: (event: BlurEvent) => void;
   isReset: boolean;
 }
 
@@ -72,16 +73,14 @@ export class SprykerRangeFilter extends React.Component<SprykerRangeProps, Spryk
 
   };
 
-  public handleChangeValues = async (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>,
-                                     param: TRangeInputName): Promise<any> => {
-    const newValue = +event.target.value;
+  public handleChangeValues = async (event: InputChangeEvent, param: TRangeInputName): Promise<void> => {
+    const newValue: number = parseInt(event.target.value, 10);
     if (!newValue || newValue > 999999999) {
       return;
     }
 
     await this.validateInputs(param, newValue);
     this.props.handleChange(this.props.attributeName, {...this.props.currentValue, [param]: newValue});
-
   };
 
 

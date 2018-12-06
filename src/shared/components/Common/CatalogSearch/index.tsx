@@ -240,9 +240,9 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     );
   };
 
-  private renderSuggestionsContainer = (options: any) => {
+  private renderSuggestionsContainer = (options: any): JSX.Element => {
     const {categories, completion, suggestions, classes} = this.props;
-    let suggestQuery = options.query.trim();
+    let suggestQuery: string = options.query.trim();
 
     if (completion.length) {
       completion.some((data: string) => {
@@ -254,11 +254,9 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         return false;
       });
     }
-    const matches = match(suggestQuery, options.query);
-    const parts = parse(suggestQuery, matches);
 
-    const completions: any[] = [];
-    const renderedCategories: any[] = [];
+    const completions: JSX.Element[] = [];
+    const renderedCategories: JSX.Element[] = [];
 
     for (let i = 0; i < 4; i++) {
       if (completion[i]) {

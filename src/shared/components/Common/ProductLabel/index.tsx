@@ -15,7 +15,7 @@ export const ProductLabelBase: React.SFC<ProductLabelProps> = (props) => {
     return null;
   }
 
-  const labelData: {[key: string]: any} = {
+  const labelData: {[key: string]: {className: string}} = {
     '1': {
       className: classes.alternativeLabel,
     },
