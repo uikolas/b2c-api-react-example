@@ -78,7 +78,10 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         <MenuItem className={ classes.menuItem }>
           <NavLink to={ pathWishListsPage } className={ classes.link }>Wishlist</NavLink>
         </MenuItem>
-        <MenuItem className={ classes.menuItem }>{ wishlist.name }</MenuItem>
+        {(wishlist && wishlist.name)
+          ?  <MenuItem className={ classes.menuItem }>{wishlist.name}</MenuItem>
+          : null
+        }
       </MenuList>
     );
   };
