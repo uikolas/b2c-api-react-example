@@ -4,6 +4,7 @@ import { SuperAttributeItem } from '../SuperAttributeItem';
 
 import { SuperAttributeBlockProps as Props, SuperAttributeBlockState as State } from './types';
 import { styles } from './styles';
+import {ProductBlockTitleAttribute} from "src/shared/constants/product/index";
 
 export class SuperAttributeBlockComponent extends React.PureComponent<Props, State> {
   public state: State = {
@@ -23,7 +24,7 @@ export class SuperAttributeBlockComponent extends React.PureComponent<Props, Sta
 
     return (
       <div className={ classes.attributeBlock }>
-        <h4 className={ classes.attributeTitle }>{ attributeData.nameToShow }</h4>
+        <h4 className={ classes.attributeTitle }>{`${ProductBlockTitleAttribute} ${attributeData.nameToShow}`}</h4>
 
         <div className={ classes.attributesList }>
           { attributeData.data.map(attribute => (

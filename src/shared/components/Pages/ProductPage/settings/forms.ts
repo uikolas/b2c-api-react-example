@@ -11,9 +11,11 @@ export const getQuantityFormSettings = (params: IProductQuantityParams): IFormSe
     inputValue,
     quantity,
     onChangeHandler,
+    controlsGroupClassName,
   } = params;
   const formSettings: IFormSettings = {
     formName: 'quantityForm',
+    controlsGroupClassName,
     onChangeHandler,
     onSubmitHandler: (event: FormEvent<HTMLFormElement>) => { console.info('Empty quantity Submit'); },
     fields: [
@@ -22,7 +24,7 @@ export const getQuantityFormSettings = (params: IProductQuantityParams): IFormSe
           type: 'select',
           inputName: "quantity",
           inputValue,
-          spaceNumber: 3,
+          spaceNumber: 4,
           isRequired: false,
           label: InputLabelProductQuantity,
           isError: false,

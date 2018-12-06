@@ -10,10 +10,12 @@ export interface IBaseProductsFormHandler {
 export interface IProductQuantityParams extends IBaseProductsFormHandler {
   inputValue: ProductPageState["quantitySelected"];
   quantity: IProductPropFullData["quantity"];
+  controlsGroupClassName?: string;
 }
 
 // Param to create wish list form
 export interface IProductWishListParams extends IBaseProductsFormHandler {
   inputValue: ProductPageState["wishListSelected"];
   wishLists: ProductPageProps["wishLists"];
+  controlsGroupClassName?: string;
 }

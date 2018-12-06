@@ -50,6 +50,7 @@ export interface IFormSettings {
   onBlurHandler?: React.EventHandler<any>;
   onSubmitHandler: (event: FormEvent<HTMLFormElement>) => void;
   fields: Array<Array<IFormField>>;
+  controlsGroupClassName?: string;
 }
 
 export interface ISprykerFormProps extends WithStyles<typeof sprykerFormStyles> {

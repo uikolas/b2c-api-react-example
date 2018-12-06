@@ -3,14 +3,14 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit,
+    display: "flex",
+    flexGrow: 1,
+    justifyContent: "flex-end",
   },
   value: {
-    display: 'block',
-    fontSize: '11px',
-    lineHeight: '15px',
+    display: 'flex',
+    fontSize: theme.appFixedDimensions.fontSize.mini,
     textTransform: 'uppercase',
     borderWidth: '1px',
     borderStyle: 'solid',

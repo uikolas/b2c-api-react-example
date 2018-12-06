@@ -3,10 +3,10 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   button: {
-    height: '44px',
-    borderRadius: '4px',
-    fontSize: '16px',
-    letterSpacing: '1.5px',
+    height: 45,
+    borderRadius: theme.appFixedDimensions.borderRadius,
+    fontSize: theme.appFixedDimensions.fontSize.medium,
+    letterSpacing: 1.5,
     fontWeight: 500,
   },
   icon: {

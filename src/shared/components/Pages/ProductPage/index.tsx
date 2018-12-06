@@ -38,6 +38,7 @@ import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {ChangeEvent} from "react";
 import {getQuantityFormSettings, getWishListFormSettings} from "src/shared/components/Pages/ProductPage/settings/forms";
+import {ProductBlockTitleDescription} from "src/shared/constants/product/index";
 
 export const buyBtnTitle = 'Add to cart';
 export const wishlistBtnTitle = 'Add to Wishlist';
@@ -350,6 +351,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         inputValue: this.state.quantitySelected,
         quantity: this.state.quantity,
         onChangeHandler: this.handleProductQuantityChange,
+        controlsGroupClassName: classes.controlsGroupQuantity,
       }
     );
     const formWishListSettings: IFormSettings = getWishListFormSettings(
@@ -379,64 +381,71 @@ export class ProductPageBase extends React.Component<Props, State> {
                 </Grid>
 
                 <Grid item xs={ 12 } sm={ 5 }>
-                  <ProductGeneralInfo
-                    name={ this.state.name }
-                    sku={ this.state.sku }
-                    price={ <AppPrice value={ this.state.priceDefaultGross }/> }
-                    oldPrice={ this.state.priceOriginalGross
-                      ? <AppPrice value={ this.state.priceOriginalGross } priceType={ priceTypeNameOriginal }/>
+                  <div className={classes.infoParent}>
+                    <ProductGeneralInfo
+                      name={ this.state.name }
+                      sku={ this.state.sku }
+                      price={this.state.priceDefaultGross}
+                      oldPrice={this.state.priceOriginalGross ? this.state.priceOriginalGross : null}
+                      availability={ getAvailabilityDisplay(this.state.availability) }
+                    />
+
+                    { this.state.superAttributes
+                      ? <ProductSuperAttribute
+                        productData={ this.state.superAttributes }
+                        onChange={ this.handleSuperAttributesChange }
+                      />
                       : null
                     }
-                    availability={ getAvailabilityDisplay(this.state.availability) }
-                  />
 
-                  { this.state.superAttributes
-                    ? <ProductSuperAttribute
-                      productData={ this.state.superAttributes }
-                      onChange={ this.handleSuperAttributesChange }
-                    />
-                    : null
-                  }
-
-                  <Grid container>
-                    <Grid item xs={12} sm={12}>
+                    <Grid container>
                       { this.isBuyBtnDisabled()
                         ? null
-                        : <SprykerForm form={formQuantitySettings} />
-                      }
-                    </Grid>
-                    <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
-                      <SprykerButton
-                        title={ buyBtnTitle }
-                        extraClasses={ classes.buyBtn }
-                        onClick={ this.handleBuyBtnClick }
-                        disabled={ this.isBuyBtnDisabled() }
-                      />
-                    </Grid>
-                  </Grid>
-
-                  { this.props.isUserLoggedIn
-                    ? (<Grid container justify="center" spacing={24} className={ classes.wishlistBtnArea }>
-                        { this.state.wishListSelected
-                          ?
-                          <Grid item xs={ 12 } sm={ 6 }>
-                            <SprykerForm form={formWishListSettings} />
-                          </Grid>
-                          : null
-                        }
-                        <Grid item xs={ 12 } sm={ this.state.wishListSelected ? 6 : 12 }
-                              className={ classes.buyBtnParent }>
-                          <SprykerButton
-                            title={ wishlistBtnTitle }
-                            extraClasses={ classes.wishListBtn }
-                            onClick={ this.handleAddToWishlist }
-                            disabled={ this.isAddToWishListBtnDisabled() }
+                        : <Grid item xs={12} sm={12} className={classes.blockControl}>
+                          <SprykerForm
+                            form={formQuantitySettings}
+                            formClassName={classes.formQuantity}
                           />
                         </Grid>
+                      }
+                      <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
+                        <SprykerButton
+                          title={ buyBtnTitle }
+                          extraClasses={ classes.buyBtn }
+                          onClick={ this.handleBuyBtnClick }
+                          disabled={ this.isBuyBtnDisabled() }
+                        />
                       </Grid>
-                    )
-                    : null
-                  }
+                    </Grid>
+
+                    { this.props.isUserLoggedIn
+                      ? (<Grid container spacing={24} className={ classes.wishlistBtnArea }>
+                          { this.state.wishListSelected
+                            ?
+                            <Grid item xs={ 12 } sm={ 6 }>
+                              <SprykerForm
+                                form={formWishListSettings}
+                                formClassName={classes.formWishList}
+                              />
+                            </Grid>
+                            : null
+                          }
+                          <Grid item xs={ 12 }
+                                sm={ this.state.wishListSelected ? 6 : 12 }
+                                className={ classes.buyBtnParent }
+                          >
+                            <SprykerButton
+                              title={ wishlistBtnTitle }
+                              extraClasses={ classes.wishListBtn }
+                              onClick={ this.handleAddToWishlist }
+                              disabled={ this.isAddToWishListBtnDisabled() }
+                            />
+                          </Grid>
+                        </Grid>
+                      )
+                      : null
+                    }
+                  </div>
                 </Grid>
               </Grid>
 
@@ -447,7 +456,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                   </Grid>
                   <Grid item md={ 5 } sm={ 12 }>
                     <Typography variant="title" color="textPrimary" className={ classes.descriptionTitle }>
-                      Description
+                      {ProductBlockTitleDescription}
                     </Typography>
                     <Typography color="inherit" variant="body2" component="p" gutterBottom={ true }>
                       { this.state.description }

@@ -4,9 +4,10 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   button: {
-    margin: '0 7px 7px 0',
+    margin: `0 ${theme.spacing.unit}px ${theme.spacing.unit}px 0`,
+    padding: theme.spacing.unit * 1.7,
     textTransform: 'uppercase',
-    fontSize: 14,
+    fontSize: theme.appFixedDimensions.fontSize.small,
     '&:last-child': {
       marginRight: 'auto',
     },
