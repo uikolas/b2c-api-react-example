@@ -22,8 +22,8 @@ import { WishlistItemBaseInfo } from './WishlistItemBaseInfo';
 import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
-import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
-import {IWishlistItem} from "src/shared/interfaces/wishlist/index";
+import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
+import { IWishlistItem } from "src/shared/interfaces/wishlist";
 
 
 @connect

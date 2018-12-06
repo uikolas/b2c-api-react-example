@@ -23,7 +23,7 @@ import {
 } from 'src/shared/helpers/product';
 import { TWishListName } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/commoon/react';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
@@ -150,8 +150,8 @@ export class ProductPageBase extends React.Component<Props, State> {
     });
   };
 
-  public handleProductQuantityChange = (event: any, child: React.ReactNode): void => {
-    const value = event.target.value;
+  public handleProductQuantityChange = (event: InputChangeEvent, child: React.ReactNode): void => {
+    const value: number = parseInt(event.target.value, 10);
     this.setState((prevState: State) => {
       if (prevState.quantitySelected === value) {
         return;
@@ -163,8 +163,8 @@ export class ProductPageBase extends React.Component<Props, State> {
     });
   };
 
-  public handleWishListChange = (event: any): void => {
-    const value = event.target.value;
+  public handleWishListChange = (event: InputChangeEvent): void => {
+    const value: string = event.target.value;
     this.setState((prevState: State) => {
       if (this.state.wishListSelected === value) {
         return;
@@ -309,7 +309,7 @@ export class ProductPageBase extends React.Component<Props, State> {
   };
 
   private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> | null => images
-    ? images.map((element: any, index: number) => ({
+    ? images.map((element: IProductCardImages, index: number) => ({
       id: index,
       src: element.externalUrlLarge,
     })) : null;

@@ -89,7 +89,7 @@ export const ConnectedLogin = reduxify(
       }
     );
   },
-  (dispatch: Function, ownProps: any) => {
+  (dispatch: Function) => {
     return {
       dispatch,
       handleSubmitRegisterForm: (data: any): void => dispatch(customerRegisterAction(data)),

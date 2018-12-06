@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { formStyles } from '../styles';
 import { TCustomerPassword, TCustomerUsername } from 'src/shared/interfaces/customer';
+import { FormEvent, InputChangeEvent } from "src/shared/interfaces/commoon/react";
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
@@ -27,7 +28,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
     isSubmitted: false,
   };
 
-  public handleSubmit = (event: any): void => {
+  public handleSubmit = (event: FormEvent): void => {
     event.preventDefault();
     if (!this.state.username || !this.state.password) {
       return null;
@@ -39,7 +40,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
     this.props.handleSubmit(payload);
   };
 
-  public handleChange = (name: string) => (event: any) => {
+  public handleChange = (name: string) => (event: InputChangeEvent) => {
     this.setState({
       ...this.state, [name]: event.target.value,
     });

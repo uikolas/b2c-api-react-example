@@ -13,7 +13,7 @@ import { styles } from '../styles';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
-import {FormEvent} from "react";
+import { FormEvent, InputChangeEvent } from "src/shared/interfaces/commoon/react";
 
 
 @connect
@@ -51,12 +51,12 @@ export class AddressForm extends React.Component<Props, State> {
     this.setState(state => ({...state, [name]: value}));
   };
 
-  public handleCheckbox = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  public handleCheckbox = (event: any): void => {
     event.persist();
-    this.setState(state => ({...state, [event.target.name]: event.target.checked}));
+    this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));
   }
 
-  public handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+  public handleSubmitForm = (e: FormEvent) => {
     e.preventDefault();
     const {salutation, firstName, lastName, address1, address2, zipCode, city, iso2Code} = this.state;
     this.setState(() => ({submitted: true}));

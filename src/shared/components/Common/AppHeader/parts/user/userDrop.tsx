@@ -17,7 +17,8 @@ import {
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
-import {customerLogout} from "src/shared/constants/messages/customer";
+import { customerLogout } from "src/shared/constants/messages/customer";
+import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 
 @connect
 @(withRouter as any)
@@ -30,7 +31,7 @@ export class UserDropComponent extends React.PureComponent<Props> {
     }
   }
 
-  public customerLogout = (e: any) => {
+  public customerLogout = (e: ClickEvent) => {
     e.preventDefault();
     this.props.logout();
     this.props.getGuestCartAction(this.props.anonymId);

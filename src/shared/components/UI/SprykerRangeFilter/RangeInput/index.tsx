@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ChangeEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
 import { styles } from './styles';
@@ -8,17 +7,18 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
 import { IRangeInputError } from 'src/shared/components/UI/SprykerRangeFilter';
+import { BlurEvent, InputChangeEvent } from "src/shared/interfaces/commoon/react";
 
 interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
   title: string;
   className: string;
-  handleChangeValues: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+  handleChangeValues: (event: InputChangeEvent) => void;
   currentValue: string | number;
   max: number;
   min: number;
   attributeName: string;
   isMin: boolean;
-  handleBlur: (event: any) => void;
+  handleBlur: (event: BlurEvent) => void;
 }
 
 const titlePartMax = ' to';

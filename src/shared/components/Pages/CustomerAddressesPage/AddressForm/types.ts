@@ -11,7 +11,7 @@ export interface AddressFormProps extends WithStyles<typeof styles> {
   isLoading: boolean;
   dispatch: Function;
   addAddress(payload: IAddressItem, customerId: string): void;
-  updateAddress(addressId: string, customerId: string, payload: any): void;
+  updateAddress(addressId: string, customerId: string, payload: IAddressItem): void;
 }
 
 export interface AddressFormState extends IAddressItem {

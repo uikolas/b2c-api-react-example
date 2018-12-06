@@ -4,11 +4,13 @@ import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
+import {ClickEvent} from 'src/shared/interfaces/commoon/react';
 import { styles } from './styles';
+
 
 interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOrigin {
   message: string;
-  onClickClose: (event: React.SyntheticEvent<any>, reason?: string) => void;
+  onClickClose: (event: ClickEvent, reason?: string) => void;
   onClickOpen: Function;
   extraClasses?: string;
   isOpen?: boolean;
