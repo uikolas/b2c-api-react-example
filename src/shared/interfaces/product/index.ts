@@ -46,20 +46,16 @@ export interface IProductPricesItem {
 }
 
 export interface IProductCardImages {
-  external_url_small?: TProductImageSRC;
-  external_url_large?: TProductImageSRC;
   externalUrlLarge?: TProductImageSRC;
   externalUrlSmall?: TProductImageSRC;
 }
 
 export interface IProductCard {
-  images?: Array<IProductCardImages>;
-  price?: TProductPrice;
-  abstract_name?: TProductName;
-  abstractName?: TProductName;
-  abstract_sku?: TProductSKU;
-  abstractSku?: TProductSKU;
-  prices?: Array<IProductPricesItem>;
+  images?: Array<IProductCardImages> | null;
+  price: TProductPrice;
+  abstractName: TProductName;
+  abstractSku: TProductSKU;
+  prices: Array<IProductPricesItem>;
 
 }
 

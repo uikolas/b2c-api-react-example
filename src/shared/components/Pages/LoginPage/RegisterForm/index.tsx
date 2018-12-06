@@ -23,7 +23,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
     lastName: '',
     email: '',
     password: '',
-    passwordConfirmation: '',
+    confirmPassword: '',
     acceptedTerms: false,
   };
 
@@ -39,15 +39,17 @@ export class RegisterFormBase extends React.Component<Props, State> {
     this.setState(() => ({...this.state, [name]: value}));
   }
 
+  public handleSubmitForm = (e: any): any => {
+    const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
   public handleSubmitForm = (e: FormEvent): void => {
     const {salutation, firstName, lastName, email, password, passwordConfirmation, acceptedTerms} = this.state;
     e.preventDefault();
-    if (!salutation || !firstName || !lastName || !email || !password || !passwordConfirmation || !acceptedTerms) {
+    if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
       toast.warn(emptyRequiredFieldsErrorText);
       return null;
     }
 
-    if (password !== passwordConfirmation) {
+    if (password !== confirmPassword) {
       toast.warn('The passwords must match');
       return null;
     }
@@ -164,9 +166,9 @@ export class RegisterFormBase extends React.Component<Props, State> {
                 required
                 id="register-confirm-password"
                 label="Confirm password"
-                name="passwordConfirmation"
+                name="confirmPassword"
                 type="password"
-                value={ this.state.passwordConfirmation }
+                value={ this.state.confirmPassword }
                 onChange={ this.handleChange }
                 className={ classes.textField }
                 margin="normal"

@@ -33,19 +33,19 @@ export const ProductsListBase: React.SFC<IProductsListProps> = (props) => {
         ? products.map((product: IProductCard) => {
           let label: IProductLabel | null = null;
           if (productsLabeled) {
-            const labelsIdArr = productsLabeled[product.abstract_sku] || productsLabeled[product.abstractSku] || null;
+            const labelsIdArr = productsLabeled[product.abstractSku] || null;
             label = getProductLabel(labelsIdArr, availableLabels);
           }
 
           return (
-            <Grid item xs={ 12 } sm={ 6 } md={ 4 } key={ product.abstract_sku || product.abstractSku }>
+            <Grid item xs={ 12 } sm={ 6 } md={ 4 } key={ product.abstractSku }>
               <ProductCard
                 currency={ currency }
                 images={ product.images }
                 price={ product.price }
                 prices={ product.prices }
-                name={ product.abstract_name || product.abstractName }
-                sku={ product.abstract_sku || product.abstractSku }
+                name={ product.abstractName }
+                sku={ product.abstractSku }
                 onSelectProduct={ selectProductHandler }
                 label={ label }
               />

@@ -50,12 +50,12 @@ export class CatalogService extends ApiServiceAbstract {
       if (response.ok) {
         const {data}: any = response;
 
-        const products: IProductCard[] = data.data[0].attributes.products.slice(0, 4);
+        const products: IProductCard[] = data.data[0].attributes.abstractProducts.slice(0, 4);
         let counter = 0;
 
         data.included && data.included.some((row: any) => {
           if (row.type === 'abstract-product-prices') {
-            const product: IProductCard = products.find((prod: IProductCard) => prod.abstract_sku === row.id);
+            const product: IProductCard = products.find((prod: IProductCard) => prod.abstractSku === row.id);
             if (product && row.attributes.prices && row.attributes.prices.length) {
               counter++;
               product.prices = row.attributes.prices;
