@@ -41,6 +41,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
 
   public handleSubmitForm = (e: any): any => {
     const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
+  }
   public handleSubmitForm = (e: FormEvent): void => {
     const {salutation, firstName, lastName, email, password, passwordConfirmation, acceptedTerms} = this.state;
     e.preventDefault();
