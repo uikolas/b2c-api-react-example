@@ -29,6 +29,8 @@ import {
   IFilterItemToDelete,
   ISearchPageProps,
   ISearchPageState,
+  rangeMaxType,
+  rangeMinType,
   RangeType,
   TCategoryId,
   TFilterItemValue,
@@ -98,7 +100,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
 
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.runResetActiveFilters(false);
+      // this.runResetActiveFilters(false);
       this.makeLocationSearch();
     }
 
@@ -233,14 +235,29 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   };
 
   public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
-    this.setState((prevState: ISearchPageState) => ({
-      activeRangeFilters: {
-        ...prevState.activeRangeFilters,
-        [name]: {min, max},
-      },
-      isFiltersReset: false,
-      isNeedNewRequest: true,
-    }));
+    const currentData = this.props.rangeFilters.filter((filter: RangeFacets) => (filter.name === name))[0];
+    const currentDataActiveMin = rangeFilterValueToFront(currentData.activeMin, rangeMinType);
+    const currentDataActiveMax = rangeFilterValueToFront(currentData.activeMax, rangeMaxType);
+
+    if (currentData.activeMin === currentData.min || currentData.activeMax === currentData.max) {
+      console.info('*** 1 *** updateRangeFilters *** values are equals ');
+    }
+
+    if (currentDataActiveMin === min && currentDataActiveMax === max) {
+      return;
+    }
+
+
+    this.setState((prevState: ISearchPageState) => {
+      return {
+        activeRangeFilters: {
+          ...prevState.activeRangeFilters,
+          [name]: {min, max},
+        },
+        isFiltersReset: false,
+        isNeedNewRequest: true,
+      };
+    });
   };
 
   private validateData = (): boolean => {

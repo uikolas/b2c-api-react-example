@@ -14,7 +14,6 @@ import {ICategory} from "src/shared/reducers/Common/Init";
 import {CategoriesPanelTitle} from "src/shared/constants/search";
 import {getFormattedActiveCategories} from "src/shared/components/Pages/SearchPage/helper";
 
-const title = 'Categories';
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
   {classes, categories, categoriesTree, selectedCategory},
@@ -23,7 +22,6 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
   if (!Array.isArray(categories) || !categories.length) {
     return null;
   }
-
   const activeCategories = getFormattedActiveCategories(categories);
 
   const getCategoriesList = (data: Array<ICategory>,
