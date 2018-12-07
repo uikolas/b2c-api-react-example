@@ -1,6 +1,7 @@
-import { ISearchPageData, RangeFacets } from 'src/shared/interfaces/searchPageData';
+import {FilterValue, ISearchPageData, RangeFacets} from 'src/shared/interfaces/searchPageData';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { rangeMaxType, rangeMinType, TActiveRangeFilters } from 'src/shared/components/Pages/SearchPage/types';
+import {IActiveFilterCategories} from "src/shared/components/Pages/SearchPage/CategoriesList/types";
 
 export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
                                   defaultRanges: ISearchPageData['rangeFilters']): boolean => {
@@ -23,4 +24,15 @@ export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
     }
   });
   return canMakeNewRequest;
+};
+
+export const getFormattedActiveCategories = (data: Array<FilterValue>): IActiveFilterCategories | null => {
+  if (!Array.isArray(data) || !data.length) {
+    return null;
+  }
+  const response: IActiveFilterCategories = {};
+  data.forEach((item: FilterValue) => {
+    response[item.value] = item.doc_count;
+  });
+  return response;
 };

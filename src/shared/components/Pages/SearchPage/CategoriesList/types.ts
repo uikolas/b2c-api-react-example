@@ -10,3 +10,7 @@ export interface ICategoriesListProps extends WithStyles<typeof styles> {
   categoriesTree: Array<ICategory>;
   selectedCategory: TCategoryId;
 }
+
+export interface IActiveFilterCategories {
+  [key: string]: number;
+}

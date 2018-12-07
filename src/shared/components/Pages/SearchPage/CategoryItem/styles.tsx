@@ -20,4 +20,10 @@ export const styles = (theme: Theme) => createStyles({
   listItemOuter: {
     paddingRight: theme.spacing.unit,
   },
+  hasChildren: {
+
+  },
+  children: {
+    paddingLeft: theme.spacing.unit * 2,
+  },
 });

@@ -13,16 +13,19 @@ export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
     displayName,
     categoryValue,
     isSelected,
+    isActive,
+    children,
   } = props;
 
   return (
     <SearchPageContext.Consumer>
       { ({selectCategoryHandler}) => (
-        <div className={ classes.listItemOuter }>
+        <div className={`${classes.listItemOuter} ${children ? classes.hasChildren : null}`}>
           <ListItem
             button
             onClick={ (event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event) }
             selected={ isSelected }
+            disabled={!isActive}
             className={ classes.categoryItem }
             disableGutters
             classes={ {root: classes.root, selected: classes.selected} }
@@ -33,6 +36,10 @@ export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
               primary={ displayName }
             />
           </ListItem>
+          {children
+            ? <div className={classes.children}>{children}</div>
+            : null
+          }
         </div>
       ) }
     </SearchPageContext.Consumer>

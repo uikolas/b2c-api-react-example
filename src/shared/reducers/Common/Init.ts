@@ -11,10 +11,10 @@ export type TAppLocale = string | null;
 export type TAppTimeZone = string | null;
 
 export interface ICategory {
-  nodeId?: number | string;
-  order?: number | string;
-  name?: string;
-  children?: Array<ICategory> | object;
+  nodeId: number;
+  order: number;
+  name: string;
+  children: Array<ICategory> | object;
 }
 
 export interface ICountries {

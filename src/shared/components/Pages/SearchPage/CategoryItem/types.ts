@@ -7,4 +7,5 @@ export interface ICategoryItemProps extends WithStyles<typeof styles> {
   categoryValue: TCategoryId;
   displayName: string;
   isSelected: boolean;
+  isActive: boolean;
 }
