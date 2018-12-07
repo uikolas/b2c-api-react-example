@@ -86,16 +86,15 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
               { groupName }
             </Typography>,
           );
-          // TODO: Change value, when real data is provided
 
-          // paymentMethodsGrouped[groupName].forEach((item: IPaymentMethod) => {
-          //   if (paymentProviderToIcon[item.paymentProvider]) {
-          //     paymentMethodLabel.push(paymentProviderToIcon[item.paymentProvider]);
-          //   }
-          //   if (groupName === checkoutPaymentMethodsNames.creditCard) {
-          //     creditCardProvidersCollection.push({name: item.paymentProvider, value: item.paymentProvider});
-          //   }
-          // });
+          paymentMethodsGrouped[groupName].forEach((item: IPaymentMethod) => {
+            if (paymentProviderToIcon[item.paymentProviderName]) {
+              paymentMethodLabel.push(paymentProviderToIcon[item.paymentProviderName]);
+            }
+            if (groupName === checkoutPaymentMethodsNames.creditCard) {
+              creditCardProvidersCollection.push({name: item.paymentProviderName, value: item.paymentProviderName});
+            }
+          });
 
           paymentMethodGroupItems.push({value: groupName, label: paymentMethodLabel});
         }

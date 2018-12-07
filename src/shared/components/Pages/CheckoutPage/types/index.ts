@@ -2,7 +2,7 @@ import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import {styles} from "../styles";
 import {ICartItem, ICartTotals, TCartId} from "src/shared/interfaces/cart";
-import {TCustomerReference} from "src/shared/interfaces/customer";
+import {ICustomerDataParsed, TCustomerReference} from "src/shared/interfaces/customer";
 import {
   IAddNewAddressActions,
   ISameAsDelivery,
@@ -21,6 +21,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   isCheckoutLoading: boolean;
   isCheckoutRejected: boolean;
   isCheckoutFulfilled: boolean;
+  profile: ICustomerDataParsed | null;
 
   products: Array<ICartItem> | null;
   isProductsExists: boolean;
@@ -35,6 +36,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   paymentMethods: Array<IPaymentMethod> | null;
   getCheckoutData: (payload: ICheckoutRequest) => void;
   sendCheckoutData: (payload: ICheckoutRequest) => void;
+  getCustomerData: (customerReference: TCustomerReference) => void;
 }
 
 export interface ICheckoutPageState {

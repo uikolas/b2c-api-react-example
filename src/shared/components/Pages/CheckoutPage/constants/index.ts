@@ -24,5 +24,5 @@ export const checkoutFormsNames: ICheckoutFormsNames = {
 
 export const checkoutPaymentMethodsNames: ICheckoutPaymentMethodsNames = {
   invoice: 'invoice',
-  creditCard: 'creditCard',
+  creditCard: 'credit card',
 };

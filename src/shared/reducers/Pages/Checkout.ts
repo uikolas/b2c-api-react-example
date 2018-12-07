@@ -46,7 +46,7 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
-        draft.initiated = true;
+        draft.initiated = false;
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_REJECTED`:
       case `${SEND_CHECKOUT_DATA}_REJECTED`:
@@ -54,7 +54,7 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
-        draft.initiated = true;
+        draft.initiated = false;
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
         draft.data.billingAddress = action.payload.billingAddress || null;

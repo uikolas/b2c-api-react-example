@@ -4,14 +4,12 @@ import {getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Commo
 import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
+import {getCustomerProfile} from "src/shared/reducers/Pages/CustomerProfile";
 import {
   getProductsFromCart,
   getCartTotals,
   getCartId,
 } from "src/shared/reducers/Common/Cart";
-import {
-  checkAddressesCollectionExist,
-} from "src/shared/reducers/Pages/Addresses";
 import {isStateLoading} from "src/shared/reducers";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
@@ -23,6 +21,8 @@ import {
   isPageCheckoutStateLoading,
   isPageCheckoutStateRejected
 } from "src/shared/reducers/Pages/Checkout";
+import {getCustomerProfileAction} from "src/shared/actions/Pages/CustomerProfile";
+import {TCustomerReference} from "src/shared/interfaces/customer";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -40,10 +40,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
   // from ILoginState
   const customerReference = getCustomerReference(state, ownProps);
-
-  // TODO: Change it after we have real endpoint
-  // const isAddressesCollectionExist: boolean = checkAddressesCollectionExist(state, ownProps);
-  const isAddressesCollectionExist: boolean = true;
+  const profile = getCustomerProfile(state, ownProps);
 
   // from global state
   const isAppStateLoading = isStateLoading(state, ownProps);
@@ -53,6 +50,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const shipmentMethods: Array<IShipmentMethod> | null = getShipmentMethodsFromStore(state, ownProps);
   const paymentMethods: Array<IPaymentMethod> | null = getPaymentMethodsFromStore(state, ownProps);
   const addressesCollection: IAddressItemCollection[] | null = getAddressesCollectionFromCheckoutStore(state, ownProps);
+  const isAddressesCollectionExist: boolean = addressesCollection && addressesCollection.length > 0;
 
   return ({
     isAppDataSet,
@@ -71,6 +69,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     countriesCollection,
     shipmentMethods,
     paymentMethods,
+    profile,
   });
 };
 
@@ -80,5 +79,6 @@ export const connect = reduxify(
     dispatch,
     getCheckoutData: (payload: ICheckoutRequest) => dispatch(getCheckoutDataAction(payload)),
     sendCheckoutData: (payload: ICheckoutRequest) => dispatch(sendCheckoutDataAction(payload)),
+    getCustomerData: (customerReference: TCustomerReference) => getCustomerProfileAction(customerReference),
   }),
 );

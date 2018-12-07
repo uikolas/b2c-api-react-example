@@ -138,8 +138,8 @@ export const styles = (theme: Theme) => createStyles({
   },
   completionInput: {
     position: 'absolute',
-    left: 15,
-    top: 12,
+    left: 20,
+    top: 13,
     zIndex: 2,
   },
   hiddenPart: {

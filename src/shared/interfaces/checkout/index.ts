@@ -30,6 +30,7 @@ export interface ISameAsDelivery {
 }
 
 export interface IPaymentMethod {
+  paymentProviderName: TPaymentProvider;
   paymentMethodName: TPaymentMethodName;
   requiredRequestData?: string[];
 }
@@ -65,11 +66,9 @@ export interface ICheckoutRequest {
   idCart?: TCartId;
   billingAddress?: IAddressItem;
   shippingAddress?: IAddressItem;
-  payment?: IPaymentMethod;
   payments?: Array<IPaymentMethod>;
   shipment?: {
-    shipmentSelection: string,
-    method: IShipmentMethod,
+    idShipmentMethod: number,
   };
 }
 

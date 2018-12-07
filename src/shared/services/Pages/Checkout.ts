@@ -1,16 +1,17 @@
 import api, {setAuthToken} from '../api';
 import { toast } from 'react-toastify';
 import {RefreshTokenService} from '../Common/RefreshToken';
-import { ICheckoutRequest, IcheckoutResponse } from 'src/shared/interfaces/checkout';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import {ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod} from 'src/shared/interfaces/checkout';
 import {
   getCheckoutDataInitPendingStateAction,
   getCheckoutDataInitRejectedStateAction,
   getCheckoutDataInitFulfilledStateAction,
+  sendCheckoutDataPendingStateAction,
+  sendCheckoutDataRejectedStateAction,
+  sendCheckoutDataFulfilledStateAction,
 } from 'src/shared/actions/Pages/Checkout';
 
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
-
 
 interface IRequestBody {
   data: {
@@ -33,12 +34,14 @@ export class CheckoutService extends ApiServiceAbstract {
         }
       };
 
-      getCheckoutDataInitPendingStateAction();
+      dispatch(getCheckoutDataInitPendingStateAction());
 
       const response: any = await api.post('checkout-data', body, { withCredentials: true });
 
       if (response.ok) {
         const payload = CheckoutService.parseCheckoutData(response.data.data.attributes);
+
+        const customerRef: string = localStorage.getItem('customerRef');
 
         dispatch(getCheckoutDataInitFulfilledStateAction(payload));
       } else {
@@ -65,25 +68,40 @@ export class CheckoutService extends ApiServiceAbstract {
         }
       };
 
+      dispatch(sendCheckoutDataPendingStateAction());
+
       const response: any = await api.post('checkout', body, { withCredentials: true });
 
       if (response.ok) {
+        dispatch(sendCheckoutDataFulfilledStateAction({order: 'DE'}));
         toast.success('Order created successfull');
       } else {
         const errorMessage = this.getParsedAPIError(response);
+        dispatch(sendCheckoutDataRejectedStateAction(errorMessage));
         toast.error('Request Error: ' + errorMessage);
       }
 
     } catch (error) {
+      dispatch(sendCheckoutDataRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
     }
   }
 
   private static parseCheckoutData(data: IcheckoutResponse) {
+    let payments: IPaymentMethod[] = [];
+
+    Array.isArray(data.paymentProviders) && data.paymentProviders.forEach(provider => {
+      provider.paymentMethods.forEach(paymentMethod => {
+        payments.push({
+          ...paymentMethod,
+          paymentProviderName: provider.paymentProviderName,
+        });
+      });
+    });
 
     return ({
-      payments: data.paymentProviders[0].paymentMethods,
-      shipments: data.shipmentMethods,
+      payments,
+      shipments: data.shipmentMethods.map((method: IShipmentMethod) => ({...method, id: method.id.toString()})),
       addressesCollection: Array.isArray(data.addresses) ? data.addresses : [],
     });
   }

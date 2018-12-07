@@ -45,7 +45,7 @@ interface IAbstractAddressItem {
 }
 
 export interface IAddressItem extends IAbstractAddressItem {
-  country: TAddressCountry;
+  country?: TAddressCountry;
 }
 
 export interface IAddressItemCollection extends IAbstractAddressItem {

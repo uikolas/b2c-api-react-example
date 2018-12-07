@@ -3,7 +3,7 @@ import {
   CUSTOMER_DATA_UPDATE,
   CUSTOMER_DELETE_ENTITY,
   CUSTOMER_PASSWORD_UPDATE,
-} from '../../../constants/ActionTypes/Pages/CustomerProfile';
+} from 'src/shared/constants/ActionTypes/Pages/CustomerProfile';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICustomerDataParsed } from 'src/shared/interfaces/customer';
 import { IPayloadError } from 'src/shared/interfaces/errors';
@@ -147,7 +147,6 @@ const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload
 export function isPageCustomerProfileInitiated(state: any, props: any): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.initiated
-    && state.pageCustomerProfile.initiated === true,
   );
 }
 

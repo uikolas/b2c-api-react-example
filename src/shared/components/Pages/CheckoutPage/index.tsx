@@ -22,7 +22,7 @@ import {AppMain} from "src/shared/components/Common/AppMain";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItemCollection} from "src/shared/interfaces/addresses";
+import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -30,7 +30,8 @@ import {
   deliverySelectionDefault,
   paymentCreditCardDefault,
   paymentInvoiceDefault,
-  stepCompletionCheckoutDefault
+  stepCompletionCheckoutDefault,
+  addressDefault,
 } from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
 import {
   billingConfigInputStable,
@@ -71,6 +72,7 @@ import {
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
 import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/commoon/react";
+import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 
 
 @connect
@@ -96,15 +98,76 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
 
     // If we get saved addressesCollection
-    if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
+    if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
       this.setDefaultAddresses();
-    }
 
+      if (!this.props.profile && this.props.isUserLoggedIn && this.props.customerReference) {
+        this.props.getCustomerData(this.props.customerReference);
+      }
+    }
   }
 
   public handleSubmit = (event: FormEvent): void => {
     event.preventDefault();
-    console.info('handleSubmit ');
+    const {
+      deliverySelection,
+      billingSelection,
+      deliveryNewAddress,
+      billingNewAddress,
+      paymentMethod,
+      shipmentMethod,
+      paymentCreditCardData,
+      paymentInvoiceData,
+    } = this.state;
+    const {
+      addressesCollection,
+      isUserLoggedIn,
+      cartId,
+      sendCheckoutData,
+      profile,
+    } = this.props;
+
+    const payload: ICheckoutRequest = {};
+
+    if (deliverySelection.isAddNew) {
+      let shippingAddress: IAddressItem = addressDefault;
+      Object.keys(deliveryNewAddress).map((field: string) => {
+        shippingAddress = {...shippingAddress, [field]: deliveryNewAddress[field].value};
+      });
+      payload.shippingAddress = {...shippingAddress, iso2Code: shippingAddress.country, country: ''};
+    } else {
+      const shippingAddress = addressesCollection.find(address => address.id === deliverySelection.selectedAddressId);
+      payload.shippingAddress = {...shippingAddress, country: ''};
+    }
+
+    if (billingSelection.isAddNew) {
+      let billingAddress: IAddressItem = addressDefault;
+      Object.keys(billingNewAddress).map((field: string) => {
+        billingAddress = {...billingAddress, [field]: billingNewAddress[field].value};
+      });
+      payload.shippingAddress = {...billingAddress, iso2Code: billingAddress.country, country: ''};
+    } else {
+      const billingAddress = addressesCollection.find(address => address.id === deliverySelection.selectedAddressId);
+      payload.billingAddress = {...billingAddress, country: ''};
+    }
+
+    payload.idCart = cartId;
+
+    payload.payments = [{
+      paymentProviderName: 'DummyPayment',
+      paymentMethodName: paymentMethod,
+    }];
+
+    payload.shipment = {idShipmentMethod: parseInt(shipmentMethod, 10)};
+
+    payload.customer = {
+      email: profile.email,
+      salutation: profile.salutation,
+      firstName: profile.firstName,
+      lastName: profile.lastName,
+    };
+
+    sendCheckoutData(payload);
   }
 
   public handleSelectionsChange = (event: InputChangeEvent): void => {

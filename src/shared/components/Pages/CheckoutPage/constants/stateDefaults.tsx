@@ -7,6 +7,7 @@ import {
   IDeliveryAddressState,
   IDeliverySelectionState
 } from "../types";
+import {IAddressItem} from "src/shared/interfaces/addresses";
 
 export const deliverySelectionDefault: IDeliverySelectionState = {
   selectedAddressId: null,
@@ -110,4 +111,18 @@ export const paymentInvoiceDefault: ICheckoutInvoiceState = {
     value: '',
     isError: false,
   },
+};
+
+export const addressDefault: IAddressItem = {
+  firstName: '',
+  lastName: '',
+  salutation: '',
+  address1: '',
+  address2: '',
+  address3: '',
+  zipCode: '',
+  city: '',
+  country: '',
+  company: '',
+  phone: '',
 };
