@@ -17,4 +17,22 @@ export const styles = (theme: Theme) => createStyles({
       maxWidth: "100%",
     },
   },
+  link: {
+    color: theme.appColors.black,
+    fontWeight: 'bold',
+    transition: 'color 0.5s ease-in-out',
+    '&:hover': {
+      color: theme.appColors.blue
+    },
+  },
+  thank: {
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    letterSpacing: '0.2px',
+    lineHeight: '18px',
+    marginTop: theme.spacing.unit * 4,
+  },
+  order: {
+    fontWeight: 'bold',
+    marginTop: theme.spacing.unit * 2,
+  }
 });

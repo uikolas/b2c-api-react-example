@@ -46,10 +46,12 @@ interface IAbstractAddressItem {
 
 export interface IAddressItem extends IAbstractAddressItem {
   country?: TAddressCountry;
+  email?: TCustomerEmail;
 }
 
 export interface IAddressItemCollection extends IAbstractAddressItem {
   country: IAddressCountryComposed;
+  email?: TCustomerEmail;
 }
 
 export interface IAddressItemOrder extends IAbstractAddressItem {

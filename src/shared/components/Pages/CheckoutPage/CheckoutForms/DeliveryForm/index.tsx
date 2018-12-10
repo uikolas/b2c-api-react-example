@@ -11,7 +11,7 @@ import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/C
 import {
   getDeliverySavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
-import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
+import {FormTextWaitingForResponse, InputLabelEmail} from "src/shared/constants/forms/labels";
 
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
@@ -20,6 +20,7 @@ import {
   IDeliveryAddressesParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {deliveryConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
+import {IFormField} from "src/shared/components/UI/SprykerForm/types";
 
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
@@ -59,6 +60,22 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
           inputChangeHandler: selectionsChangeHandler,
         };
         const deliveryFormSettings = getAddressFormSettings(checkoutFormsNames.delivery, deliveryParams);
+
+        if (!isUserLoggedIn) {
+          const emailField: IFormField = {
+              type: 'input',
+              inputType: 'email',
+              inputName: 'email',
+              inputValue: deliveryNewAddress.email.value,
+              spaceNumber: 8,
+              isRequired: true,
+              label: InputLabelEmail,
+              isError: deliveryNewAddress.email.isError,
+            };
+
+          deliveryFormSettings.fields.splice(5, 0, [emailField]);
+        }
+
         const savedAddressFormSettings = getDeliverySavedAddressFormSettings(checkoutFormsNames.savedDelivery,
                                                                              savedDeliveryParams
         );

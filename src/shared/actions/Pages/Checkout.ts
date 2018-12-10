@@ -22,9 +22,9 @@ export const getCheckoutDataInitFulfilledStateAction = (payload: any) => ({
   payload,
 });
 
-export const getCheckoutDataAction = function(payload: ICheckoutRequest) {
+export const getCheckoutDataAction = function(payload: ICheckoutRequest, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CheckoutService.getCheckoutData(dispatch, payload);
+    CheckoutService.getCheckoutData(dispatch, payload, anonymId);
   };
 };
 
@@ -37,13 +37,13 @@ export const sendCheckoutDataRejectedStateAction = (message: string) => ({
   payload: {error: message},
 });
 
-export const sendCheckoutDataFulfilledStateAction = (payload: any) => ({
+export const sendCheckoutDataFulfilledStateAction = (orderId: string) => ({
   type: SEND_CHECKOUT_DATA + '_FULFILLED',
-  payload,
+  orderId,
 });
 
-export const sendCheckoutDataAction = function(payload: ICheckoutRequest) {
+export const sendCheckoutDataAction = function(payload: ICheckoutRequest, anonymId: string) {
   return (dispatch: Function, getState: Function) => {
-    CheckoutService.sendOrderData(dispatch, payload);
+    CheckoutService.sendOrderData(dispatch, payload, anonymId);
   };
 };

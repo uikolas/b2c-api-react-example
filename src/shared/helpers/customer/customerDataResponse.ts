@@ -11,17 +11,7 @@ export const parseCustomerDataResponse = (response: ICustomerDataResponse): ICus
   }
   const {data: {attributes, id}}: any = response;
 
-  let result: ICustomerDataParsed = {
-    id,
-    createdAt: attributes.createdAt,
-    dateOfBirth: attributes.dateOfBirth,
-    firstName: attributes.firstName,
-    lastName: attributes.lastName,
-    salutation: attributes.salutation,
-    updatedAt: attributes.updatedAt,
-    gender: attributes.gender,
-    email: '',
-  };
+  let result: ICustomerDataParsed = {...attributes, id};
 
   return result;
 };

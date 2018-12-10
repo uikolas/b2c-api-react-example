@@ -18,22 +18,20 @@ import {
 
 export interface ICheckoutState extends IReduxState {
   data: {
-    billingAddress: IAddressItem | null;
-    deliveryAddress: IAddressItem | null;
     payments: Array<IPaymentMethod>;
     shipments: Array<IShipmentMethod>;
     addressesCollection: Array<IAddressItemCollection>;
+    orderId: string;
   };
 }
 
 
 export const initialState: ICheckoutState = {
   data: {
-    billingAddress: null,
-    deliveryAddress: null,
     payments: [],
     shipments: [],
     addressesCollection: [],
+    orderId: '',
   },
 };
 
@@ -42,6 +40,7 @@ export const pageCheckout = produce<ICheckoutState>(
     switch (action.type) {
       case `${CHECKOUT_DATA_INIT_REQUEST}_PENDING`:
       case `${SEND_CHECKOUT_DATA}_PENDING`:
+        draft.data.orderId = '';
         draft.error = false;
         draft.pending = true;
         draft.fulfilled = false;
@@ -50,6 +49,7 @@ export const pageCheckout = produce<ICheckoutState>(
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_REJECTED`:
       case `${SEND_CHECKOUT_DATA}_REJECTED`:
+        draft.data.orderId = '';
         draft.error = action.error;
         draft.pending = false;
         draft.fulfilled = false;
@@ -57,8 +57,6 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.initiated = false;
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
-        draft.data.billingAddress = action.payload.billingAddress || null;
-        draft.data.deliveryAddress = action.payload.deliveryAddress || null;
         draft.data.payments = action.payload.payments || null;
         draft.data.shipments = action.payload.shipments || null;
         draft.data.addressesCollection = action.payload.addressesCollection || null;
@@ -70,7 +68,7 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.initiated = true;
         break;
       case `${SEND_CHECKOUT_DATA}_FULFILLED`: {
-
+        draft.data.orderId = action.orderId;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
@@ -122,6 +120,10 @@ export function checkAddressesCollectionExist(state: any, props: any): boolean {
     && state.pageCheckout.data.addressesCollection
     && state.pageCheckout.data.addressesCollection.length
   );
+}
+
+export function getCreatedOrder(state: any, props: any): string {
+  return isStateExist(state, props) ? state.pageCheckout.data.orderId : '';
 }
 
 function isStateExist(state: any, props: any): boolean {

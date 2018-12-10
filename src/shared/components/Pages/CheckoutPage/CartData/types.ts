@@ -8,6 +8,7 @@ export interface CartDataProps extends WithStyles<typeof styles> {
   totals: ICartTotals;
   isSendBtnDisabled: boolean;
   sendData: (event: ClickEvent) => void;
+  order: string;
 }
 
 export interface CartDataState {

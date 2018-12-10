@@ -22,10 +22,17 @@ interface IRequestBody {
 }
 
 export class CheckoutService extends ApiServiceAbstract {
-  public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest): Promise<void> {
+  public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest, anonymId: string): Promise<void> {
     try {
-      const token = await RefreshTokenService.getActualToken(dispatch);
-      setAuthToken(token);
+      let headers: {withCredentials: boolean, headers?: {}};
+
+      if (anonymId) {
+        headers = {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}};
+      } else {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        setAuthToken(token);
+        headers = { withCredentials: true };
+      }
 
       const body: IRequestBody = {
         data: {
@@ -36,12 +43,10 @@ export class CheckoutService extends ApiServiceAbstract {
 
       dispatch(getCheckoutDataInitPendingStateAction());
 
-      const response: any = await api.post('checkout-data', body, { withCredentials: true });
+      const response: any = await api.post('checkout-data', body, headers);
 
       if (response.ok) {
         const payload = CheckoutService.parseCheckoutData(response.data.data.attributes);
-
-        const customerRef: string = localStorage.getItem('customerRef');
 
         dispatch(getCheckoutDataInitFulfilledStateAction(payload));
       } else {
@@ -56,10 +61,17 @@ export class CheckoutService extends ApiServiceAbstract {
     }
   }
 
-  public static async sendOrderData(dispatch: Function, payload: ICheckoutRequest): Promise<void> {
+  public static async sendOrderData(dispatch: Function, payload: ICheckoutRequest, anonymId: string): Promise<void> {
     try {
-      const token = await RefreshTokenService.getActualToken(dispatch);
-      setAuthToken(token);
+      let headers: {withCredentials: boolean, headers?: {}};
+
+      if (anonymId) {
+        headers = {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}};
+      } else {
+        const token = await RefreshTokenService.getActualToken(dispatch);
+        setAuthToken(token);
+        headers = { withCredentials: true };
+      }
 
       const body: IRequestBody = {
         data: {
@@ -70,11 +82,11 @@ export class CheckoutService extends ApiServiceAbstract {
 
       dispatch(sendCheckoutDataPendingStateAction());
 
-      const response: any = await api.post('checkout', body, { withCredentials: true });
+      const response: any = await api.post('checkout', body, headers);
 
       if (response.ok) {
-        dispatch(sendCheckoutDataFulfilledStateAction({order: 'DE'}));
-        toast.success('Order created successfull');
+        dispatch(sendCheckoutDataFulfilledStateAction(response.data.data.attributes.orderReference));
+        toast.success('Order created successfully.');
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(sendCheckoutDataRejectedStateAction(errorMessage));

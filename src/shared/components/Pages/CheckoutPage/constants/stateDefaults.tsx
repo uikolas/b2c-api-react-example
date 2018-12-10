@@ -45,6 +45,10 @@ export const deliveryNewAddressDefault: IDeliveryAddressState = {
     value: '',
     isError: false,
   },
+  email: {
+    value: '',
+    isError: false,
+  },
   zipCode: {
     value: '',
     isError: false,

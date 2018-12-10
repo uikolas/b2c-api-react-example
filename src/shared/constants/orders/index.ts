@@ -26,3 +26,11 @@ export const OrderDetailDiscount = 'Discount';
 export const OrderDetailCanceled = 'Canceled';
 export const OrderDetailGrandTotal = 'Grand Total';
 export const OrderDetailTax = 'Tax';
+
+export const OrderCreatedSuccess = 'Success';
+export const OrderThank = 'Thank you for your order! You can view details of your order ';
+export const OrderId = 'Order ID: ';
+export const OrderSummary = 'Order summary';
+export const OrderAmount = 'Amount Paid';
+export const PlaceOrder = 'Place Order';
+export const Cart = 'Cart';

@@ -10,9 +10,16 @@ import { styles } from './styles';
 import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { CartTotal } from 'src/shared/components/Common/CartTotal';
+import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { CartDataProps, CartDataState } from './types';
 import { ICartItem } from 'src/shared/interfaces/cart';
 import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
+import {
+  OrderSummary,
+  OrderAmount,
+  Cart,
+  PlaceOrder,
+} from "src/shared/constants/orders";
 
 
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {
@@ -39,7 +46,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
   };
 
   public render() {
-    const { classes, products, totals, isSendBtnDisabled, sendData }  = this.props;
+    const { classes, products, totals, order, isSendBtnDisabled, sendData }  = this.props;
 
     const rows = products.map((item: ICartItem) => (
       <ListItem
@@ -74,42 +81,29 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
 
     return (
       <div className={ classes.root } ref={this.containerRef}>
-        <Typography
-          component="h3"
-          noWrap
-          align="left"
-          color="primary"
-          className={classes.title}
-        >
-          Cart
-        </Typography>
-        <Divider className={ classes.titleDivider} />
+        <CustomerPageTitle title={order ? OrderSummary : Cart} />
         <List>
           { rows }
         </List>
 
-        <Typography
-          component="h3"
-          noWrap
-          align="left"
-          color="primary"
-          className={`${classes.title} ${classes.summaryTitle}`}
-        >
-          Order summary
-        </Typography>
+        <CustomerPageTitle title={order ? OrderAmount : OrderSummary} />
 
         <CartTotal totals={totals} />
 
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={isSendBtnDisabled}
-          fullWidth
-          className={ classes.btnWrapper }
-          onClick={ sendData }
-        >
-          place order
-        </Button>
+        {
+          order
+            ? null
+            : <Button
+                variant="contained"
+                color="primary"
+                disabled={isSendBtnDisabled}
+                fullWidth
+                className={ classes.btnWrapper }
+                onClick={ sendData }
+              >
+                {PlaceOrder}
+              </Button>
+        }
       </div>
     );
   }
