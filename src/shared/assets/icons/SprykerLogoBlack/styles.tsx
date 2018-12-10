@@ -18,10 +18,4 @@ export const styles = (theme: Theme) => createStyles({
   st2: {
     fill: theme.appColors.weekRed,
   },
-  /*st3: {
-    fontFamily: "Replica-Bold",
-  },
-  st4: {
-    fontSize: 134,
-  },*/
 });

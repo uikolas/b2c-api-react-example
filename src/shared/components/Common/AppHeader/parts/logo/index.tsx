@@ -12,7 +12,7 @@ import {SprykerLogoWhite} from "src/shared/assets/icons/SprykerLogoWhite";
 export const LogoComponent: React.SFC<Props> = ({classes}) => (
   <div className={ classes.logoContainer }>
     <NavLink to={ pathHomePage } className={ classes.logo }>
-      <SprykerLogoWhite width={170} height={60} />
+      <SprykerLogoWhite />
     </NavLink>
   </div>
 );
