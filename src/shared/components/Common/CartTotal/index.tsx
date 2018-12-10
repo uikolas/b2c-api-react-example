@@ -13,11 +13,12 @@ import { styles } from './styles';
 
 interface CartTotalProps extends WithStyles<typeof styles> {
   totals: ICartTotals;
+  title: string;
   extraClass?: string;
 }
 
 export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
-  const {classes, totals, extraClass} = props;
+  const {classes, totals, title, extraClass} = props;
 
   return (
     <div className={ `${classes.fullWidth} ${extraClass ? extraClass : null}` }>
@@ -55,7 +56,7 @@ export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
 
       <div className={ `${classes.totalMsg}` }>
         <div className={ classes.grandTotal }>
-          Grand Total
+          {title}
         </div>
         <div>{ totals && <AppPrice value={ totals.grandTotal } extraClassName={ classes.grandTotal }/> }</div>
       </div>

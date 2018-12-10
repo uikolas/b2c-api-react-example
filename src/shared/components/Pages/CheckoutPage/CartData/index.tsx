@@ -19,6 +19,7 @@ import {
   OrderAmount,
   Cart,
   PlaceOrder,
+  OrderDetailGrandTotal,
 } from "src/shared/constants/orders";
 
 
@@ -86,9 +87,12 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
           { rows }
         </List>
 
-        <CustomerPageTitle title={order ? OrderAmount : OrderSummary} />
+        { order ? null : <CustomerPageTitle title={OrderSummary} /> }
 
-        <CartTotal totals={totals} />
+        <CartTotal
+          totals={totals}
+          title={order ? OrderAmount : OrderDetailGrandTotal}
+        />
 
         {
           order

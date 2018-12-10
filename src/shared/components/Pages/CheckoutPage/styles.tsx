@@ -2,7 +2,10 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
-  root: {},
+  success: {
+    marginTop: '18px',
+    position: 'relative',
+  },
   container: {
     justifyContent: "space-between",
   },
@@ -34,5 +37,15 @@ export const styles = (theme: Theme) => createStyles({
   order: {
     fontWeight: 'bold',
     marginTop: theme.spacing.unit * 2,
+  },
+  doneIcon: {
+    position: 'absolute',
+    width: theme.spacing.unit * 3,
+    height: theme.spacing.unit * 3,
+    borderRadius: '50%',
+    backgroundColor: theme.appColors.green,
+    top: '8px',
+    left: '124px',
+    color: theme.appColors.white,
   }
 });

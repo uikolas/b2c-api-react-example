@@ -1,15 +1,17 @@
 import * as React from 'react';
 import {NavLink} from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
+import DoneIcon from '@material-ui/icons/Done';
 import { styles } from '../styles';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { OrderSuccessProps } from './types';
 import { OrderCreatedSuccess, OrderThank, OrderId } from 'src/shared/constants/orders';
-import { pathCustomerPage, pathOrderDetailsPageBase } from "src/shared/routes/contentRoutes";
+import { pathOrderDetailsPageBase } from "src/shared/routes/contentRoutes";
+
 
 export const OrderSuccessBase: React.SFC<OrderSuccessProps> = ({classes, order}) => {
   return (
-    <React.Fragment>
+    <div className={classes.success}>
       <CustomerPageTitle title={OrderCreatedSuccess}/>
       <div className={classes.thank}>
         <span>{OrderThank}</span>
@@ -21,7 +23,10 @@ export const OrderSuccessBase: React.SFC<OrderSuccessProps> = ({classes, order})
         <span>{OrderId}</span>
         <span>{order}</span>
       </div>
-    </React.Fragment>
+      <div className={classes.doneIcon}>
+        <DoneIcon />
+      </div>
+    </div>
   );
 }
 
