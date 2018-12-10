@@ -53,18 +53,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     const activeFilters: {[key: string]: string[]} = {};
     const activeRangeFilters: {[key: string]: RangeType} = {};
 
-    // props.filters.forEach((filter: ValueFacets) => {
-    //   if (filter.activeValue && filter.activeValue.length) {
-    //     activeFilters[filter.name] = filter.activeValue;
-    //   }
-    // });
-
-    // props.rangeFilters.forEach((filter: RangeFacets) => {
-    //   if (filter.activeMin && filter.activeMax) {
-    //     activeRangeFilters[filter.name] = {min: filter.activeMin, max: filter.activeMax};
-    //   }
-    // });
-
     this.state = {
       activeFilters,
       activeRangeFilters,
@@ -100,7 +88,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
 
     if (prevProps.location.pathname !== this.props.location.pathname) {
-      // this.runResetActiveFilters(false);
       this.makeLocationSearch();
     }
 
@@ -247,7 +234,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       return;
     }
 
-
     this.setState((prevState: ISearchPageState) => {
       return {
         activeRangeFilters: {
@@ -264,24 +250,17 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     return isValidRangeInput(this.state.activeRangeFilters, this.props.rangeFilters);
   };
 
-  public resetRangeFilterOneValue = ({name, rangeSubType}: IFilterItemToDelete): boolean => {
-    if (!rangeSubType) {
-      return false;
-    }
-    const defaultValuesArr = this.props.rangeFilters.filter((item: RangeFacets) => (item.name === name));
-    if (!defaultValuesArr || !defaultValuesArr[0] || !defaultValuesArr[0][rangeSubType]) {
+  public resetRangeFilter = ({name}: IFilterItemToDelete): boolean => {
+    if (!name) {
       return;
     }
 
-    let defaultValue = rangeFilterValueToFront(defaultValuesArr[0][rangeSubType], rangeSubType);
+    const {...activeRanges} = this.state.activeRangeFilters;
+    delete activeRanges[name];
 
     this.setState((prevState: ISearchPageState) => ({
       activeRangeFilters: {
-        ...prevState.activeRangeFilters,
-        [name]: {
-          ...prevState.activeRangeFilters[name],
-          [rangeSubType]: defaultValue,
-        },
+        ...activeRanges,
       },
       isFiltersReset: false,
       isNeedNewRequest: true,
@@ -365,14 +344,11 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete): any =>
-    (event: React.MouseEvent<HTMLElement>) => {
+  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) => (event: React.MouseEvent<HTMLElement>) => {
       if (itemToDelete.type === filterTypeFilter) {
         this.resetFilterOneValue(itemToDelete);
-      } else {
-        if (itemToDelete.type === filterTypeRange) {
-          this.resetRangeFilterOneValue(itemToDelete);
-        }
+      } else if (itemToDelete.type === filterTypeRange) {
+        this.resetRangeFilter(itemToDelete);
       }
 
       this.setState({isReadyToNewRequest: true});

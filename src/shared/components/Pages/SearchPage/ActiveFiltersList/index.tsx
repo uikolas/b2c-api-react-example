@@ -7,15 +7,16 @@ import { styles } from './styles';
 import {
   filterTypeFilter,
   IFilterItem,
-  rangeMaxType,
-  rangeMinType,
   TFilterItemValue,
 } from 'src/shared/components/Pages/SearchPage/types';
 import { ActiveFilterItem } from 'src/shared/components/Pages/SearchPage/ActiveFilterItem';
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
-import { isWordHasPrice, rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
+import { isWordHasPrice } from 'src/shared/helpers/common/transform';
 import { RangeFacets } from 'src/shared/interfaces/searchPageData';
-import { createRangeFilterItem, transformName } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
+import {
+  createRangeFilterItemCombined,
+  transformName
+} from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
 
 
@@ -58,20 +59,14 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
         }
         const valueFrom = activeValuesRanges[rangeName].min;
         const valueTo = activeValuesRanges[rangeName].max;
-        const defaultFrom = rangeFilterValueToFront(defaultValuesArr[0].min, rangeMinType);
-        const defaultTo = rangeFilterValueToFront(defaultValuesArr[0].max, rangeMaxType);
+        // const defaultFrom = rangeFilterValueToFront(defaultValuesArr[0].min, rangeMinType);
+        // const defaultTo = rangeFilterValueToFront(defaultValuesArr[0].max, rangeMaxType);
 
-        if (defaultFrom !== valueFrom && valueFrom > 0) {
+        if (valueFrom > 0 && valueTo > 0) {
           itemsGlobalCollection.push(
-            createRangeFilterItem(isPrice, true, rangeName, valueFrom, classes.price),
+            createRangeFilterItemCombined(isPrice, activeValuesRanges[rangeName], rangeName, classes.price),
           );
         }
-        if (defaultTo !== valueTo && valueTo > 0) {
-          itemsGlobalCollection.push(
-            createRangeFilterItem(isPrice, false, rangeName, valueTo, classes.price),
-          );
-        }
-
       }
     }
   }
