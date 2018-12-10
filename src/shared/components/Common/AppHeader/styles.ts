@@ -13,7 +13,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   headerTop: {
     background: theme.palette.primary.main,
-    padding: '26px 0',
+    padding: '10px 0',
     position: 'relative',
     zIndex: 11,
   },

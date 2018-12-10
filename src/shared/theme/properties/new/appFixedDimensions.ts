@@ -24,6 +24,10 @@ export interface IAppFixedDimensions {
     tablet: number;
   };
   customerSubPageWidth: React.CSSProperties['width'];
+  sprykerLogo: {
+    width: number;
+    height: number;
+  };
 }
 
 export const appFixedDimensions: IAppFixedDimensions = {
@@ -49,4 +53,8 @@ export const appFixedDimensions: IAppFixedDimensions = {
     tablet: 1280,
   },
   customerSubPageWidth: 740,
+  sprykerLogo: {
+    width: 170,
+    height: 60
+  }
 };

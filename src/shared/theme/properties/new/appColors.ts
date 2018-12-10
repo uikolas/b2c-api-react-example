@@ -11,6 +11,7 @@ export interface IAppColors {
   blueTransparent: TAppColor;
   orange: TAppColor;
   red: TAppColor;
+  weekRed: TAppColor;
   green: TAppColor;
 
   blockDivider: TAppColor;
@@ -26,6 +27,7 @@ export const appColors: IAppColors = {
   blueTransparent: "rgba(53, 137, 234, 0.1)",
   orange: "#ea7a35",
   red: "#D50000",
+  weekRed: "#EB553C",
   green: "#008a00",
 
   blockDivider: "#e2e2e2",
