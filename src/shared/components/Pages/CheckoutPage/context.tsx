@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {ChangeEvent, FormEvent} from "react";
 import {TCheckoutPageContext} from "./types/contextTypes";
 import {
   billingNewAddressDefault,
@@ -7,28 +6,29 @@ import {
   paymentCreditCardDefault,
   paymentInvoiceDefault
 } from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
+import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/commoon/react";
 
 
 export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
-  submitHandler: (event: FormEvent<HTMLFormElement>) => {
+  submitHandler: (event: FormEvent) => {
     throw new Error('submitHandler() not implemented');
   },
-  onBlurHandler: (formName: string) => (event: any): void => {
+  onBlurHandler: (formName: string) => (event: BlurEvent): void => {
     throw new Error('onBlurHandler() not implemented');
   },
-  selectionsChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+  selectionsChangeHandler: (event: InputChangeEvent) => {
     throw new Error('selectionsChangeHandler() not implemented');
   },
-  handleDeliveryInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+  handleDeliveryInputs: (event: InputChangeEvent) => {
     throw new Error('handleDeliveryInputs() not implemented');
   },
-  handleBillingInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+  handleBillingInputs: (event: InputChangeEvent) => {
     throw new Error('handleBillingInputs() not implemented');
   },
-  handleInvoiceInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+  handleInvoiceInputs: (event: InputChangeEvent) => {
     throw new Error('handleInvoiceInputs() not implemented');
   },
-  handleCreditCardInputs: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
+  handleCreditCardInputs: (event: InputChangeEvent) => {
     throw new Error('handleCreditCardInputs() not implemented');
   },
   isBillingSameAsDelivery: false,

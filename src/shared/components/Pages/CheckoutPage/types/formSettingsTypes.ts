@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {ChangeEvent} from "react";
 import {
   IPaymentMethod,
   ISameAsDelivery,
@@ -26,13 +25,14 @@ import {
   TExtraOptionsToSelection,
   TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
+import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/commoon/react";
 
 
 // Base handlers for checkout's page forms
 export interface IBaseCheckoutFormHandler {
   submitHandler: TCheckoutPageContext["submitHandler"];
-  inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
-  onBlurHandler?: React.EventHandler<any>;
+  inputChangeHandler: (event: InputChangeEvent) => void;
+  onBlurHandler?: (event: BlurEvent) => void;
 }
 
 // Param to create address forms
@@ -80,7 +80,7 @@ export interface IPaymentProviderToIcon {
 // Param to create payment methods form
 export interface IPaymentMethodsParams extends IBaseCheckoutFormHandler {
   paymentMethodGroupItems: Array<IPaymentMethodGroupItem> | null;
-  currentValuePaymentMethod: IPaymentMethod["paymentMethod"] | null;
+  currentValuePaymentMethod: IPaymentMethod["paymentMethodName"] | null;
 }
 
 // Param to create invoice payment form

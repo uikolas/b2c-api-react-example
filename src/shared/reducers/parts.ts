@@ -13,7 +13,7 @@ export const getReducerPartPending = (): IReduxState => ({
   pending: true,
   fulfilled: false,
   rejected: false,
-  initiated: true,
+  initiated: false,
 });
 
 export const getReducerPartRejected = (errorMessage: string): IReduxState => ({
@@ -21,5 +21,5 @@ export const getReducerPartRejected = (errorMessage: string): IReduxState => ({
   pending: false,
   fulfilled: false,
   rejected: true,
-  initiated: true,
+  initiated: false,
 });

@@ -31,6 +31,10 @@ export const deliveryConfigInputStable: IDeliveryObjectConfigInputStable = {
     isRequired: false,
     inputName: 'address3',
   },
+  email: {
+    isRequired: false,
+    inputName: 'email',
+  },
   zipCode: {
     isRequired: true,
     inputName: 'zipCode',

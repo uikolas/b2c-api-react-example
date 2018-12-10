@@ -1,8 +1,6 @@
 // tslint:disable:max-file-line-count
 
 import * as React from 'react';
-import {FormEvent, ChangeEvent} from "react";
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
@@ -23,8 +21,9 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop";
 import {AppMain} from "src/shared/components/Common/AppMain";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
+import {OrderSuccess} from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItemCollection} from "src/shared/interfaces/addresses";
+import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -32,7 +31,8 @@ import {
   deliverySelectionDefault,
   paymentCreditCardDefault,
   paymentInvoiceDefault,
-  stepCompletionCheckoutDefault
+  stepCompletionCheckoutDefault,
+  addressDefault,
 } from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
 import {
   billingConfigInputStable,
@@ -72,6 +72,8 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
+import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/commoon/react";
+import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 
 
 @connect
@@ -90,26 +92,114 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   };
 
   public componentDidMount() {
-    this.setDefaultAddresses();
+    if (this.props.isUserLoggedIn) {
+      this.props.getCheckoutData({idCart: this.props.cartId}, '');
+    } else {
+      this.props.getCheckoutData({idCart: this.props.cartId}, this.props.anonymId);
+      this.setState({deliverySelection: {
+          selectedAddressId: null,
+          isAddNew: true,
+        }});
+    }
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
     console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
 
     // If we get saved addressesCollection
-    if (!prevProps.isAddressesCollectionExist && this.props.isAddressesCollectionExist) {
+    if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
       this.setDefaultAddresses();
+
+      if (!this.props.profile && this.props.isUserLoggedIn && this.props.customerReference) {
+        this.props.getCustomerData(this.props.customerReference);
+      }
+    }
+  }
+
+  public componentWillUnmount = () => {
+    if (this.props.orderId) {
+      this.props.isUserLoggedIn
+        ? this.props.updateCart()
+        : this.props.updateGuestCart(this.props.anonymId);
+    }
+  }
+
+  public handleSubmit = (event: FormEvent): void => {
+    event.preventDefault();
+    const {
+      deliverySelection,
+      billingSelection,
+      deliveryNewAddress,
+      billingNewAddress,
+      paymentMethod,
+      shipmentMethod,
+    } = this.state;
+    const {
+      addressesCollection,
+      isUserLoggedIn,
+      cartId,
+      sendCheckoutData,
+      profile,
+      anonymId,
+    } = this.props;
+
+    const payload: ICheckoutRequest = {};
+
+    if (deliverySelection.isAddNew) {
+      let shippingAddress: IAddressItem = addressDefault;
+      Object.keys(deliveryNewAddress).map((field: string) => {
+        shippingAddress = {...shippingAddress, [field]: deliveryNewAddress[field].value};
+      });
+      payload.shippingAddress = {...shippingAddress, iso2Code: shippingAddress.country, country: ''};
+    } else {
+      const shippingAddress = addressesCollection.find(address => address.id === deliverySelection.selectedAddressId);
+      payload.shippingAddress = {...shippingAddress, country: ''};
     }
 
+    if (billingSelection.isAddNew) {
+      let billingAddress: IAddressItem = addressDefault;
+      Object.keys(billingNewAddress).map((field: string) => {
+        billingAddress = {...billingAddress, [field]: billingNewAddress[field].value};
+      });
+      payload.billingAddress = {...billingAddress, iso2Code: billingAddress.country, country: ''};
+    } else if (billingSelection.isSameAsDelivery) {
+      payload.billingAddress = payload.shippingAddress;
+    } else {
+      const billingAddress = addressesCollection.find(address => address.id === deliverySelection.selectedAddressId);
+      payload.billingAddress = {...billingAddress, country: ''};
+    }
+
+    payload.idCart = cartId;
+
+    payload.payments = [{
+      paymentProviderName: 'DummyPayment',
+      paymentMethodName: paymentMethod,
+    }];
+
+    payload.shipment = {idShipmentMethod: parseInt(shipmentMethod, 10)};
+
+    if (isUserLoggedIn) {
+      payload.customer = {
+        email: profile.email,
+        salutation: profile.salutation,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+      };
+
+      sendCheckoutData(payload, '');
+    } else {
+      payload.customer = {
+        email: payload.shippingAddress.email,
+        salutation: payload.shippingAddress.salutation,
+        firstName: payload.shippingAddress.firstName,
+        lastName: payload.shippingAddress.lastName,
+      };
+
+      sendCheckoutData(payload, anonymId);
+    }
   }
 
-  public handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    console.info('handleSubmit ');
-  }
-
-  public handleSelectionsChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                  ): void => {
+  public handleSelectionsChange = (event: InputChangeEvent): void => {
     const { name, value } = event.target;
     if (name === 'deliverySelection') {
         this.handleDeliverySelection(value);
@@ -138,8 +228,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
-  public handleDeliveryInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                ): void => {
+  public handleDeliveryInputs = (event: InputChangeEvent): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
@@ -160,14 +249,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  public handleBillingInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                               ): void => {
-    const name: any = event.target.name;
-    const cleanValue = event.target.value.trim();
+  public handleBillingInputs = (event: InputChangeEvent): void => {
+    const {name, value} = event.target;
+    const cleanValue = value.trim();
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
-    const key: any = name;
+    const key: string = name;
     const isInputValid = validateBillingInput(key, cleanValue);
 
     this.setState((prevState: ICheckoutPageState) => {
@@ -182,8 +270,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  public handleInvoiceInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                               ): void => {
+  public handleInvoiceInputs = (event: InputChangeEvent): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.paymentInvoiceData.hasOwnProperty(name)) {
@@ -196,8 +283,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     });
   }
 
-  public handleCreditCardInputs = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
-                                  ): void => {
+  public handleCreditCardInputs = (event: InputChangeEvent): void => {
     const name: any = event.target.name;
     const cleanValue = event.target.value.trim();
     if (!this.state.paymentCreditCardData.hasOwnProperty(name)) {
@@ -317,8 +403,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   private checkCheckoutFormValidity = (): boolean => {
     const {first, second, third, fourth} = this.state.stepsCompletion;
-    if (!first || !second || !third || !fourth) { return false; }
-    return true;
+    return first && second && third && fourth;
   }
 
   public render(): JSX.Element {
@@ -331,6 +416,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       isProductsExists,
       totals,
       addressesCollection,
+      orderId,
       isAddressesCollectionExist,
       isUserLoggedIn,
       countriesCollection,
@@ -380,9 +466,13 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             >
               <Grid container className={classes.container}>
                 <Grid item xs={12} md={7} className={classes.leftColumn}>
-                  <CheckoutForms
-                    panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
-                  />
+                  {
+                    orderId
+                      ? <OrderSuccess order={orderId} />
+                      : <CheckoutForms
+                        panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
+                      />
+                  }
                 </Grid>
                 <Grid item xs={12} md={5} className={classes.rightColumn}>
                   <CartData
@@ -390,6 +480,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                     totals={totals}
                     isSendBtnDisabled={!this.checkCheckoutFormValidity()}
                     sendData={this.handleSubmit}
+                    order={orderId}
                   />
                 </Grid>
               </Grid>

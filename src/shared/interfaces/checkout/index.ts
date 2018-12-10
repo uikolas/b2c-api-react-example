@@ -3,18 +3,21 @@ import {
 } from "src/shared/interfaces/customer";
 import {
   IAddressItem,
+  IAddressItemCollection,
 } from "src/shared/interfaces/addresses";
+import { TCartId } from "src/shared/interfaces/cart";
 
 export type TShipmentCarrierName = string;
 export type TShipmentId = string;
 export type TShipmentName = string;
 export type TShipmentPrice = number;
-export type TShipmentTaxRate = number;
-export type TShipmentShipmentDeliveryTime = string;
+export type TShipmentTaxRate = number | null;
+export type TShipmentShipmentDeliveryTime = string | null;
 export type TPaymentProvider = string;
-export type TPaymentSelection = string;
+export type TPaymentMethod = string;
 export type TPaymentAmount = number;
 export type TPaymentMethodName = string;
+export type TPaymentCardType = string;
 export type TPaymentCardNumber = string;
 export type TPaymentCardName = string;
 export type TPaymentCardExpiryMonth = string;
@@ -27,14 +30,15 @@ export interface ISameAsDelivery {
 }
 
 export interface IPaymentMethod {
-  paymentProvider: TPaymentProvider;
-  paymentMethod: TPaymentMethodName;
-  paymentSelection: TPaymentSelection;
-  amount: TPaymentAmount;
+  paymentProviderName: TPaymentProvider;
+  paymentMethodName: TPaymentMethodName;
+  requiredRequestData?: string[];
 }
 
 export interface IPaymentCreditCardData {
+  paymentMethod?: TPaymentMethod;
   paymentProvider: TPaymentProvider | null;
+  cardType: TPaymentCardType;
   cardNumber: TPaymentCardNumber | null;
   cardName: TPaymentCardName | null;
   cardExpiryMonth: TPaymentCardExpiryMonth | null;
@@ -43,6 +47,8 @@ export interface IPaymentCreditCardData {
 }
 
 export interface IPaymentInvoiceData {
+  paymentMethod?: TPaymentMethod;
+  paymentProvider: TPaymentProvider | null;
   invoiceDateOfBirth: TPaymentInvoiceDateOfBirth | null;
 }
 
@@ -57,14 +63,12 @@ export interface IShipmentMethod {
 
 export interface ICheckoutRequest {
   customer?: ICustomerProfileIdentity;
-  id?: string;
+  idCart?: TCartId;
   billingAddress?: IAddressItem;
   shippingAddress?: IAddressItem;
-  payment?: IPaymentMethod;
   payments?: Array<IPaymentMethod>;
   shipment?: {
-    shipmentSelection: string,
-    method: IShipmentMethod,
+    idShipmentMethod: number,
   };
 }
 
@@ -76,4 +80,15 @@ export interface IUsageSavedAddress {
 export interface IAddNewAddressActions {
   isAddNewBilling: boolean;
   isAddNewDelivery: boolean;
+}
+
+export interface IPaymentProvider {
+  paymentProviderName: TPaymentProvider;
+  paymentMethods: IPaymentMethod[];
+}
+
+export interface IcheckoutResponse {
+  addresses: IAddressItemCollection[] | {};
+  paymentProviders: IPaymentProvider[];
+  shipmentMethods: IShipmentMethod[];
 }

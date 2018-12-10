@@ -11,7 +11,7 @@ import {IInvoicePaymentFormProps} from "./types";
 import {getInvoiceFormSettings} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/invoiceSettings";
 import {IPaymentInvoiceParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 import {invoiceConfigInputStable} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
-
+import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types/contextTypes";
 
 export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (props): JSX.Element => {
   const {
@@ -25,7 +25,7 @@ export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (prop
           onBlurHandler,
           handleInvoiceInputs,
           paymentInvoiceDataInputs,
-      }) => {
+      }: Partial<TCheckoutPageContext>) => {
         const invoiceParams: IPaymentInvoiceParams = {
           inputsData: paymentInvoiceDataInputs,
           inputsConfig: invoiceConfigInputStable,

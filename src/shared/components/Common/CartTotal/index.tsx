@@ -1,6 +1,11 @@
 import * as React from 'react';
 import Divider from '@material-ui/core/Divider';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import {
+  OrderDetailSubtotal,
+  OrderDetailTax,
+  OrderDetailDiscount,
+} from "src/shared/constants/orders";
 
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ICartTotals } from 'src/shared/interfaces/cart';
@@ -23,13 +28,13 @@ export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
           ? null
           : classes.marginBottom}`
       }>
-        <div className={ classes.currency }>Subtotal</div>
+        <div className={ classes.currency }>{OrderDetailSubtotal}</div>
         <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={ classes.currency }/> }</div>
       </div>
       { totals
         ? (
           <div className={ `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} ` }>
-            <div className={ classes.currency }>Tax</div>
+            <div className={ classes.currency }>{OrderDetailTax}</div>
             <div>{ totals && <AppPrice value={ totals.taxTotal | 0 } extraClassName={ classes.currency }/> }</div>
           </div>
         ) : null
@@ -37,7 +42,7 @@ export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
       { totals && totals.discountTotal
         ? (
           <div className={ `${classes.totalMsg} ${classes.marginBottom}` }>
-            <div className={ classes.currency }>Discount</div>
+            <div className={ classes.currency }>{OrderDetailDiscount}</div>
             <div>
               <span>- </span>
               <AppPrice value={ totals.discountTotal } extraClassName={ classes.currency }/>

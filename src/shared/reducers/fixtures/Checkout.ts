@@ -93,23 +93,23 @@ export const shipmentMethodsFixture: Array<IShipmentMethod> = [
   }
 ];
 
-export const paymentMethodsFixture: Array<IPaymentMethod> = [
-  {
-    paymentProvider: 'visa',
-    paymentMethod: 'creditCard',
-    paymentSelection: '1',
-    amount: 0,
-  },
-  {
-    paymentProvider: 'masterCard',
-    paymentMethod: 'creditCard',
-    paymentSelection: '2',
-    amount: 0,
-  },
-  {
-    paymentProvider: 'Dummy name invoice',
-    paymentMethod: 'invoice',
-    paymentSelection: '3',
-    amount: 0,
-  },
-];
+// export const paymentMethodsFixture: Array<IPaymentMethod> = [
+//   {
+//     paymentProvider: 'visa',
+//     paymentMethod: 'creditCard',
+//     paymentSelection: '1',
+//     amount: 0,
+//   },
+//   {
+//     paymentProvider: 'masterCard',
+//     paymentMethod: 'creditCard',
+//     paymentSelection: '2',
+//     amount: 0,
+//   },
+//   {
+//     paymentProvider: 'Dummy name invoice',
+//     paymentMethod: 'invoice',
+//     paymentSelection: '3',
+//     amount: 0,
+//   },
+// ];
