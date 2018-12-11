@@ -25,6 +25,7 @@ export type TProductAttributes = object;
 export type TProductImageSRC = string;
 export type TProductAttributeMap = object;
 export type TProductLabelPosition = number;
+export type TProductIsNeverOutOfStock = boolean;
 
 export const priceTypeNameDefault = 'DEFAULT';
 export type TPriceTypeNameDefault = 'DEFAULT';
@@ -69,18 +70,33 @@ export interface IProductAttributes {
   [key: string]: string | number;
 }
 
+// Translated version of the product's sttributes
+export interface IProductAttributeNames {
+  [key: string]: string;
+}
+
 export interface ISuperAttributes {
   superAttributes: Array<ISuperAttribute> | null;
 }
 
-export interface IProductPropFullData {
-  attributes: TProductAttributes | null;
+export interface IProductAvailability {
   availability: TProductAvailability | null;
   quantity: TProductQuantity | null;
+  isNeverOutOfStock?: TProductIsNeverOutOfStock;
+}
+
+export interface IConcreteProductAvailability extends IProductAvailability {
+  sku: TProductSKU | null;
+}
+
+export interface IProductPropFullData extends IProductAvailability {
+  attributes: TProductAttributes | null;
+  attributeNames: IProductAttributeNames | null;
   description: TProductDescription | null;
   images: Array<IProductCardImages> | null;
   name: TProductName | null;
   price: TProductPrice | null;
+  prices: Array<IProductPricesItem> | null;
   priceOriginalGross: TPriceTypeOriginalGross;
   priceOriginalNet: TPriceTypeOriginalNet;
   priceDefaultGross: TPriceTypeDefaultGross;

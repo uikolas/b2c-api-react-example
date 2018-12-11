@@ -8,6 +8,8 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.medium,
     letterSpacing: 1.5,
     fontWeight: 500,
+    lineHeight: 1,
+    backgroundColor: theme.appColors.deepBlack,
   },
   icon: {
     marginLeft: theme.spacing.unit * 2,

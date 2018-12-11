@@ -29,7 +29,7 @@ export const styles = (theme: Theme) => createStyles({
     color: theme.appColors.black,
     fontSize: theme.appFixedDimensions.fontSize.huge,
     marginBottom: 0,
-    lineHeight: 1,
+    lineHeight: 0.8,
   },
   oldPrice: {
     color: theme.appColors.grey,

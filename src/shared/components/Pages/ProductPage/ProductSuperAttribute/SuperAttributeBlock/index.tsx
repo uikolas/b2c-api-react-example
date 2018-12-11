@@ -22,9 +22,10 @@ export class SuperAttributeBlockComponent extends React.PureComponent<Props, Sta
     const {classes, attributeData} = this.props;
     const {selectedItemValue} = this.state;
 
+
     return (
       <div className={ classes.attributeBlock }>
-        <h4 className={ classes.attributeTitle }>{`${ProductBlockTitleAttribute} ${attributeData.nameToShow}`}</h4>
+        <h4 className={ classes.attributeTitle }>{`${ProductBlockTitleAttribute} ${attributeData.nameToShow}:`}</h4>
 
         <div className={ classes.attributesList }>
           { attributeData.data.map(attribute => (

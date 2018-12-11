@@ -40,6 +40,7 @@ export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps 
   isProductExist: boolean;
   isWishListLoading: boolean;
   anonymId: string;
+  getProductAvailability: Function;
 }
 
 export interface ProductPageState extends IProductPropFullData, ISuperAttributes {
@@ -47,4 +48,6 @@ export interface ProductPageState extends IProductPropFullData, ISuperAttributes
   superAttrSelected: IProductAttributes;
   quantitySelected: TProductQuantity;
   wishListSelected: TWishListName | null;
+  isBuyBtnDisabled: boolean;
+  isProcessCartLoading: boolean;
 }

@@ -3,9 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
   root: {
-    width: '100%',
-    maxWidth: '1400px',
-    margin: 'auto',
+    ...theme.appContainerStyles,
   },
   infoParent: {
 
@@ -25,28 +23,31 @@ export const styles = (theme: Theme) => createStyles({
     margin: 0,
   },
   buyBtn: {
+    paddingTop: theme.spacing.unit * 1.5,
+    paddingBottom: theme.spacing.unit * 1.5,
+    boxShadow: "none",
     '&:hover': {
-      color: theme.palette.primary.main,
+      color: theme.appColors.black,
       backgroundColor: 'transparent',
-      borderColor: theme.palette.primary.main,
+      border: `1px solid ${theme.appColors.deepBlack}`,
     },
     '&:disabled': {
-      opacity: .5,
       cursor: 'not-allowed',
     },
   },
   wishListBtn: {
-    color: theme.palette.primary.main,
+    color: theme.appColors.black,
     backgroundColor: 'transparent',
-    borderColor: theme.palette.primary.main,
+    border: `1px solid ${theme.appColors.deepBlack}`,
+    boxShadow: "none",
     '&:hover': {
-      color: '#fff',
-      backgroundColor: theme.palette.primary.main,
-      borderColor: theme.palette.primary.main,
+      color: theme.appColors.white,
+      backgroundColor: theme.appColors.deepBlack,
+      border: `1px solid ${theme.appColors.deepBlack}`,
     },
     '&:disabled': {
-      opacity: .5,
       cursor: 'not-allowed',
+      border: `1px solid ${theme.appColors.weakGrey}`,
     },
   },
   sliderParent: {},
@@ -99,25 +100,24 @@ export const styles = (theme: Theme) => createStyles({
     padding: '12vmin 2vmin',
   },
   description: {
-    fontSize: '16px',
+    fontSize: theme.appFixedDimensions.fontSize.medium,
     color: theme.appColors.black,
-    width: '100%',
-    maxWidth: '1400px',
-    margin: 'auto',
+    ...theme.appContainerStyles,
   },
   descriptionTitle: {
     fontSize: 34,
     margin: '0 0 38px',
   },
   descriptionSku: {
-    fontSize: 14,
+    fontSize: theme.appFixedDimensions.fontSize.small,
     color: theme.appColors.grey,
     textTransform: 'uppercase',
     paddingTop: 25,
   },
   blockControl: {
-    marginTop: theme.spacing.unit * 3,
-    marginBottom: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
+    borderTop: `1px solid ${theme.appColors.blockDivider}`,
   },
   formQuantity: {
     "&:first-child": {

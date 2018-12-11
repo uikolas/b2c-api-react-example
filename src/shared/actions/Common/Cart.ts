@@ -14,7 +14,7 @@ import { TProductSKU } from '../../interfaces/product';
 
 export const addItemToCartAction = function(payload: ICartAddItem, cartId: TCartId) {
   return (dispatch: Function, getState: Function) => {
-    CartService.cartAddItem(dispatch, payload, cartId);
+    return CartService.cartAddItem(dispatch, payload, cartId);
   };
 };
 
