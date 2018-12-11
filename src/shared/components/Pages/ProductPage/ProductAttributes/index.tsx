@@ -21,14 +21,14 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
 
   return (
     <div>
-      <Typography variant="title" color="textPrimary" className={ classes.attributesTitle }>
+      <Typography component="h3" color="inherit" className={ classes.attributesTitle }>
         {ProductBlockTitleProductDetails}
       </Typography>
       <Grid container justify="center" className={ classes.root }>
         { Object.entries(attributes).map((data: any) => {
           return (
             <Grid key={ data[0] } item xs={ 12 } sm={ 6 } className={ classes.element }>
-              <Typography variant="title" color="inherit" gutterBottom={ true } className={ classes.valuesBlock }>
+              <Typography component="div" color="inherit" gutterBottom={ true } className={ classes.valuesBlock }>
                 <p>
                   <Typography variant="subheading" component="strong">
                     { `${attributeNames[data[0]] ? attributeNames[data[0]] : 'No translation'}: ` }

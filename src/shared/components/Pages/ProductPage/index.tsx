@@ -497,7 +497,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                     <ProductAttributes attributes={ this.state.attributes } attributeNames={this.state.attributeNames} />
                   </Grid>
                   <Grid item md={ 5 } sm={ 12 }>
-                    <Typography variant="title" color="textPrimary" className={ classes.descriptionTitle }>
+                    <Typography component="h3" color="inherit" className={ classes.descriptionTitle }>
                       {ProductBlockTitleDescription}
                     </Typography>
                     <Typography color="inherit" variant="body2" component="p" gutterBottom={ true }>
