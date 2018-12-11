@@ -70,6 +70,11 @@ export interface IProductAttributes {
   [key: string]: string | number;
 }
 
+// Translated version of the product's sttributes
+export interface IProductAttributeNames {
+  [key: string]: string;
+}
+
 export interface ISuperAttributes {
   superAttributes: Array<ISuperAttribute> | null;
 }
@@ -86,10 +91,12 @@ export interface IConcreteProductAvailability extends IProductAvailability {
 
 export interface IProductPropFullData extends IProductAvailability {
   attributes: TProductAttributes | null;
+  attributeNames: IProductAttributeNames | null;
   description: TProductDescription | null;
   images: Array<IProductCardImages> | null;
   name: TProductName | null;
   price: TProductPrice | null;
+  prices: Array<IProductPricesItem> | null;
   priceOriginalGross: TPriceTypeOriginalGross;
   priceOriginalNet: TPriceTypeOriginalNet;
   priceDefaultGross: TPriceTypeDefaultGross;

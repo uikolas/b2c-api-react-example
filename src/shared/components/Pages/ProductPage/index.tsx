@@ -59,11 +59,13 @@ export class ProductPageBase extends React.Component<Props, State> {
     availability: null,
     description: null,
     price: null,
+    prices: null,
     priceOriginalGross: null,
     priceOriginalNet: null,
     priceDefaultGross: null,
     priceDefaultNet: null,
     attributes: null,
+    attributeNames: null,
     quantity: null,
     wishListSelected: null,
     isBuyBtnDisabled: false,
@@ -217,7 +219,6 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
   };
 
-
   private runAddToCart = async (): Promise<any> => {
     const item: ICartAddItem = createCartItemAddToCart(this.state.sku, this.state.quantitySelected);
     let result;
@@ -259,11 +260,13 @@ export class ProductPageBase extends React.Component<Props, State> {
       availability: data ? data.availability : false,
       description: data ? data.description : defaultValues.description,
       price: data ? data.price : null,
+      prices: data ? data.prices : null,
       priceOriginalGross: data ? data.priceOriginalGross : null,
       priceOriginalNet: data ? data.priceOriginalNet : null,
       priceDefaultGross: data ? data.priceDefaultGross : null,
       priceDefaultNet: data ? data.priceDefaultNet : null,
       attributes: data ? data.attributes : defaultValues.attributes,
+      attributeNames: data ? data.attributeNames : defaultValues.attributeNames,
       quantity: data ? data.quantity : defaultValues.quantity,
       productType: data ? data.productType : absentProductType,
     };
@@ -491,7 +494,7 @@ export class ProductPageBase extends React.Component<Props, State> {
               <div className={ classes.descriptionContainer }>
                 <Grid container justify="center" className={ classes.description }>
                   <Grid item md={ 7 } sm={ 12 }>
-                    <ProductAttributes attributes={ this.state.attributes }/>
+                    <ProductAttributes attributes={ this.state.attributes } attributeNames={this.state.attributeNames} />
                   </Grid>
                   <Grid item md={ 5 } sm={ 12 }>
                     <Typography variant="title" color="textPrimary" className={ classes.descriptionTitle }>

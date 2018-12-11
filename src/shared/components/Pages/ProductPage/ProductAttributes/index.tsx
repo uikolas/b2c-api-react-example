@@ -3,16 +3,18 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
-import { IProductAttributes } from 'src/shared/interfaces/product';
+import {IProductAttributeNames, IProductAttributes} from 'src/shared/interfaces/product';
 
 import { styles } from './styles';
 import {ProductBlockTitleProductDetails} from "src/shared/constants/product/index";
 
 interface ProductAttributesProps extends WithStyles<typeof styles> {
   attributes: IProductAttributes;
+  attributeNames: IProductAttributeNames | null;
 }
 
-export const ProductAttributesBase: React.SFC<ProductAttributesProps> = ({classes, attributes}): JSX.Element => {
+export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props): JSX.Element => {
+  const {classes, attributes, attributeNames} = props;
   if (!attributes) {
     return null;
   }
@@ -29,7 +31,7 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = ({classe
               <Typography variant="title" color="inherit" gutterBottom={ true } className={ classes.valuesBlock }>
                 <p>
                   <Typography variant="subheading" component="strong">
-                    { `${data[0]}: ` }
+                    { `${attributeNames[data[0]] ? attributeNames[data[0]] : 'No translation'}: ` }
                   </Typography>
                 </p>
                 <Typography variant="subheading" component="span">

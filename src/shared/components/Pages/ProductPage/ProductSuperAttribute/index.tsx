@@ -29,7 +29,7 @@ export class ProductSuperAttributeComponent extends React.PureComponent<Props, S
     return (
       <div>
         { productData.map(attribute => (
-          <SuperAttributeBlock attributeData={ attribute } onValueChanged={ this.onChange } key={ attribute.name }/>
+          <SuperAttributeBlock attributeData={ attribute } onValueChanged={ this.onChange } key={ attribute.name } />
         )) }
       </div>
     );

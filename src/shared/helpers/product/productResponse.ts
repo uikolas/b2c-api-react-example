@@ -1,7 +1,7 @@
 import { parseImageSets, parseSuperAttributes } from './';
 import {
   abstractProductType,
-  concreteProductType, IConcreteProductAvailability,
+  concreteProductType, IConcreteProductAvailability, IProductAttributeNames,
   IProductDataParsed,
   priceTypeNameDefault,
   priceTypeNameOriginal,
@@ -18,16 +18,18 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
   }
   const {data, included}: any = response;
 
-  let result: any = {
+  let result: IProductDataParsed = {
     attributeMap: data.attributes.attributeMap,
-    superAttributes: parseSuperAttributes(data.attributes.attributeMap),
+    superAttributes: null,
     abstractProduct: {
       sku: data.attributes.sku,
       name: data.attributes.name,
       description: data.attributes.description,
       attributes: data.attributes.attributes,
+      attributeNames: data.attributes.attributeNames,
       images: [],
       price: null,
+      prices: null,
       priceOriginalGross: null,
       priceOriginalNet: null,
       priceDefaultGross: null,
@@ -39,10 +41,28 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
     concreteProducts: {},
   };
 
+  let attributeNamesContainer: IProductAttributeNames = {};
+
   // Fill data with concrete products ids
   if (data.attributes.attributeMap.product_concrete_ids) {
     data.attributes.attributeMap.product_concrete_ids.forEach((id: any) => {
-      result.concreteProducts[id] = {};
+      result.concreteProducts[id] = {
+        sku: null,
+        name: null,
+        description: null,
+        attributes: null,
+        attributeNames: null,
+        images: [],
+        price: null,
+        prices: null,
+        priceOriginalGross: null,
+        priceOriginalNet: null,
+        priceDefaultGross: null,
+        priceDefaultNet: null,
+        availability: null,
+        quantity: null,
+        productType: concreteProductType,
+      };
     });
   }
 
@@ -63,7 +83,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
             }
             if (priceData.priceTypeName === priceTypeNameOriginal) {
               result.abstractProduct.priceOriginalGross = priceData.grossAmount;
-              result.abstractProduct.priceOriginaltNet = priceData.netAmount;
+              result.abstractProduct.priceOriginalNet = priceData.netAmount;
             }
           });
         }
@@ -81,7 +101,8 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
             result.concreteProducts[row.id].sku = row.attributes.sku;
             result.concreteProducts[row.id].description = row.attributes.description;
             result.concreteProducts[row.id].attributes = row.attributes.attributes;
-            result.concreteProducts[row.id].productType = concreteProductType;
+            result.concreteProducts[row.id].attributeNames = row.attributes.attributeNames;
+            attributeNamesContainer = {...attributeNamesContainer, ...row.attributes.attributeNames};
           } else {
             if (row.type === 'concrete-product-image-sets' && !result.concreteProducts[row.id].images) {
               result.concreteProducts[row.id].images = parseImageSets(row.attributes.imageSets);
@@ -97,7 +118,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
                     }
                     if (priceData.priceTypeName === priceTypeNameOriginal) {
                       result.concreteProducts[row.id].priceOriginalGross = priceData.grossAmount;
-                      result.concreteProducts[row.id].priceOriginaltNet = priceData.netAmount;
+                      result.concreteProducts[row.id].priceOriginalNet = priceData.netAmount;
                     }
                   });
                 }
@@ -116,6 +137,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
     // Concrete part end
   });
 
+  result.superAttributes = parseSuperAttributes(data.attributes.attributeMap, attributeNamesContainer);
   return result;
 };
 
