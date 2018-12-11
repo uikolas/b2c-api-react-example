@@ -83,7 +83,7 @@ export class CartService extends ApiServiceAbstract {
   }
 
   // Adds an item to the cart.
-  public static async cartAddItem(dispatch: Function, payload: ICartAddItem, cartId: TCartId): Promise<void> {
+  public static async cartAddItem(dispatch: Function, payload: ICartAddItem, cartId: TCartId): Promise<any> {
     try {
       dispatch(cartActions.cartAddItemPendingStateAction());
 
@@ -111,6 +111,7 @@ export class CartService extends ApiServiceAbstract {
       } else {
         this.errorMessageInform(response, dispatch);
       }
+      return response;
 
     } catch (error) {
       dispatch(cartActions.cartAddItemRejectedStateAction(error.message));

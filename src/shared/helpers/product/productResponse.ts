@@ -123,7 +123,7 @@ export const parseProductAvailabilityResponse = (response: IResponse): IConcrete
   if (!response) {
     return null;
   }
-  const {data, included}: any = response;
+  const {data}: any = response;
 
   if (!data || !data[0] || !data[0].attributes) {
     return null;
@@ -133,7 +133,6 @@ export const parseProductAvailabilityResponse = (response: IResponse): IConcrete
   return {
     sku: data[0].id,
     availability: attributes.availability,
-    // quantity: attributes.quantity,
-    quantity: 2,
+    quantity: attributes.quantity,
   };
 };

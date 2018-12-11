@@ -19,13 +19,14 @@ import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
-import { getProductDataAction } from 'src/shared/actions/Pages/Product';
+import {getProductAvailabilityAction, getProductDataAction} from 'src/shared/actions/Pages/Product';
 import { addItemAction, getWishlistsAction } from 'src/shared/actions/Pages/Wishlist';
 import {
   addItemGuestCartAction,
   addItemToCartAction,
   createCartAndAddItemAction,
 } from 'src/shared/actions/Common/Cart';
+import {TProductSKU} from "src/shared/interfaces/product/index";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const location = getRouterLocation(state, ownProps);
@@ -80,5 +81,6 @@ export const connect = reduxify(
     ) => dispatch(createCartAndAddItemAction(payload, item)),
     addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
     addItemGuestCart: (item: ICartAddItem, anonymId: string) => dispatch(addItemGuestCartAction(item, anonymId)),
+    getProductAvailability: (sku: TProductSKU) => dispatch(getProductAvailabilityAction(sku)),
   }),
 );

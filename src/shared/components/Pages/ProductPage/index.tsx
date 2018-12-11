@@ -4,6 +4,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { toast } from 'react-toastify';
 
 import {
   absentProductType,
@@ -11,25 +12,20 @@ import {
   defaultItemValueDropdown,
   IProductCardImages,
   IProductPropFullData,
-  priceTypeNameOriginal,
 } from 'src/shared/interfaces/product';
 import { IImageSlide } from 'src/shared/components/Common/ImageSlider';
 import {
   createPathToIdProductConcrete,
-  createQuantityVariants,
   findIdProductConcreteByPath,
   getAvailabilityDisplay,
   getInitialSuperAttrSelected,
 } from 'src/shared/helpers/product';
 import { TWishListName } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
-import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/commoon/react';
+import {ClickEvent} from 'src/shared/interfaces/commoon/react';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
-import { DropdownControlled } from '../../UI/DropdownControlled';
 import { SprykerButton } from '../../UI/SprykerButton';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { ProductAttributes } from './ProductAttributes';
@@ -70,6 +66,8 @@ export class ProductPageBase extends React.Component<Props, State> {
     attributes: null,
     quantity: null,
     wishListSelected: null,
+    isBuyBtnDisabled: false,
+    isProcessCartLoading: false,
   };
 
   // Component lifecycle methods
@@ -115,6 +113,7 @@ export class ProductPageBase extends React.Component<Props, State> {
 
     this.setInitialWishList();
     this.initRequestWishListsData();
+    this.checkBuyBtnStatus();
   }
 
   // Action handlers
@@ -189,30 +188,52 @@ export class ProductPageBase extends React.Component<Props, State> {
   };
 
   public handleBuyBtnClick = (event: ClickEvent): void => {
-    const item: ICartAddItem = createCartItemAddToCart(this.state.sku, this.state.quantitySelected);
+    const result = this.runProcessCart();
+  };
 
+  private runProcessCart = async (): Promise<any> => {
+    try {
+      await this.setState((prevState: State) => {
+        return ({
+          isBuyBtnDisabled: true,
+          isProcessCartLoading: true,
+        });
+      });
+      await this.runAddToCart();
+      await this.props.getProductAvailability(this.state.sku);
+      await this.setState((prevState: State) => {
+        return ({
+          ...prevState,
+          quantity: this.props.product.concreteProducts[this.state.sku].quantity,
+          availability: this.props.product.concreteProducts[this.state.sku].availability,
+          quantitySelected: quantitySelectedInitial,
+          isBuyBtnDisabled: false,
+          isProcessCartLoading: false,
+        });
+      });
+    } catch(error) {
+      console.error('runProcessCart error', error);
+      toast.error('Error occurs during the adding product to the cart ');
+    }
+  };
+
+
+  private runAddToCart = async (): Promise<any> => {
+    const item: ICartAddItem = createCartItemAddToCart(this.state.sku, this.state.quantitySelected);
+    let result;
     if (this.props.isUserLoggedIn && this.props.cartId) {
-      this.props.addItemToCart(
+      result = await this.props.addItemToCart(
         item,
         this.props.cartId,
       );
     } else {
       if (this.props.isUserLoggedIn) {
-        this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
+        result = await this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
       } else {
-        this.props.addItemGuestCart(item, this.props.anonymId);
+        result = await this.props.addItemGuestCart(item, this.props.anonymId);
       }
     }
-
-    this.setState((prevState: State) => {
-      if (this.state.quantitySelected === quantitySelectedInitial) {
-        return;
-      }
-      return ({
-        ...prevState,
-        quantitySelected: quantitySelectedInitial,
-      });
-    });
+    return result;
   };
 
   private initRequestWishListsData = (): boolean => {
@@ -326,11 +347,27 @@ export class ProductPageBase extends React.Component<Props, State> {
       src: element.externalUrlLarge,
     })) : null;
 
-  private isBuyBtnDisabled = () => {
-    if (this.state.productType === concreteProductType && this.state.availability) {
-      return false;
+  private canShowQuantity = () => {
+    return Boolean(this.state.productType === concreteProductType && this.state.availability);
+  };
+
+  private checkBuyBtnStatus = () => {
+    if (this.state.isProcessCartLoading) {
+      return;
     }
-    return true;
+    if (this.state.isBuyBtnDisabled && this.canShowQuantity()) {
+      this.setState((prevState: State) => {
+        return ({
+          isBuyBtnDisabled: false,
+        });
+      });
+    } else if (!this.state.isBuyBtnDisabled && !this.canShowQuantity()) {
+      this.setState((prevState: State) => {
+        return ({
+          isBuyBtnDisabled: true,
+        });
+      });
+    }
   };
 
   private handleAddToWishlist = (event: ClickEvent) => {
@@ -347,7 +384,6 @@ export class ProductPageBase extends React.Component<Props, State> {
     console.info('state: ', this.state);
     console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
-    console.info('render this.state.wishListSelected ', this.state.wishListSelected);
 
     const formQuantitySettings: IFormSettings = getQuantityFormSettings(
       {
@@ -402,21 +438,21 @@ export class ProductPageBase extends React.Component<Props, State> {
                     }
 
                     <Grid container>
-                      { this.isBuyBtnDisabled()
-                        ? null
-                        : <Grid item xs={12} sm={12} className={classes.blockControl}>
-                          <SprykerForm
-                            form={formQuantitySettings}
-                            formClassName={classes.formQuantity}
-                          />
-                        </Grid>
+                      { this.canShowQuantity()
+                        ? <Grid item xs={12} sm={12} className={classes.blockControl}>
+                            <SprykerForm
+                              form={formQuantitySettings}
+                              formClassName={classes.formQuantity}
+                            />
+                          </Grid>
+                        : null
                       }
                       <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
                         <SprykerButton
                           title={ buyBtnTitle }
                           extraClasses={ classes.buyBtn }
                           onClick={ this.handleBuyBtnClick }
-                          disabled={ this.isBuyBtnDisabled() }
+                          disabled={ this.state.isBuyBtnDisabled }
                         />
                       </Grid>
                     </Grid>
@@ -484,5 +520,4 @@ export class ProductPageBase extends React.Component<Props, State> {
 }
 
 export const ProductPage = withStyles(styles)(ProductPageBase);
-
 export default ProductPage;
