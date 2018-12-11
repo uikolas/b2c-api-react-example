@@ -1,7 +1,7 @@
-import { PAGES_PRODUCT_REQUEST } from '../../constants/ActionTypes/Pages/Product';
+import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '../../constants/ActionTypes/Pages/Product';
 import { IReduxState } from 'src/typings/app';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { IProductDataParsed } from '../../interfaces/product';
+import {IConcreteProductAvailability, IProductDataParsed} from '../../interfaces/product';
 
 
 export interface IProductState extends IReduxState {
@@ -56,11 +56,15 @@ export const initialState: IProductState = {
 export const pageProduct = function(state: IProductState = initialState, action: any): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
+    case `${PRODUCT_AVAILABILITY_REQUEST}_REJECTED`:
       return handleRejected(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
+    case `${PRODUCT_AVAILABILITY_REQUEST}_PENDING`:
       return handlePending(state, action.payload);
     case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
       return handleFulfilled(state, action.payload);
+    case `${PRODUCT_AVAILABILITY_REQUEST}_FULFILLED`:
+      return handleAvailabilityFulfilled(state, action.payload);
     default:
       return state;
   }
@@ -73,6 +77,30 @@ const handleFulfilled = (productState: IProductState, payload: IProductDataParse
     data: {
       ...productState.data,
       selectedProduct: {...payload},
+    },
+    ...getReducerPartFulfilled(),
+  };
+};
+
+const handleAvailabilityFulfilled = (productState: IProductState, payload: IConcreteProductAvailability | null) => {
+  if (!payload) {
+    return {...productState};
+  }
+  return {
+    ...productState,
+    data: {
+      ...productState.data,
+      selectedProduct: {
+        ...productState.data.selectedProduct,
+        concreteProducts: {
+          ...productState.data.selectedProduct.concreteProducts,
+          [payload.sku]: {
+            ...productState.data.selectedProduct.concreteProducts[payload.sku],
+            availability: payload.availability,
+            quantity: payload.quantity,
+          }
+        }
+      },
     },
     ...getReducerPartFulfilled(),
   };

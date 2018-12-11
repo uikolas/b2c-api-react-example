@@ -1,7 +1,7 @@
 import { parseImageSets, parseSuperAttributes } from './';
 import {
   abstractProductType,
-  concreteProductType,
+  concreteProductType, IConcreteProductAvailability,
   IProductDataParsed,
   priceTypeNameDefault,
   priceTypeNameOriginal,
@@ -117,4 +117,23 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
   });
 
   return result;
+};
+
+export const parseProductAvailabilityResponse = (response: IResponse): IConcreteProductAvailability | null => {
+  if (!response) {
+    return null;
+  }
+  const {data, included}: any = response;
+
+  if (!data || !data[0] || !data[0].attributes) {
+    return null;
+  }
+  const attributes = data[0].attributes;
+
+  return {
+    sku: data[0].id,
+    availability: attributes.availability,
+    // quantity: attributes.quantity,
+    quantity: 2,
+  };
 };

@@ -25,6 +25,7 @@ export type TProductAttributes = object;
 export type TProductImageSRC = string;
 export type TProductAttributeMap = object;
 export type TProductLabelPosition = number;
+export type TProductIsNeverOutOfStock = boolean;
 
 export const priceTypeNameDefault = 'DEFAULT';
 export type TPriceTypeNameDefault = 'DEFAULT';
@@ -73,10 +74,18 @@ export interface ISuperAttributes {
   superAttributes: Array<ISuperAttribute> | null;
 }
 
-export interface IProductPropFullData {
-  attributes: TProductAttributes | null;
+export interface IProductAvailability {
   availability: TProductAvailability | null;
   quantity: TProductQuantity | null;
+  isNeverOutOfStock?: TProductIsNeverOutOfStock;
+}
+
+export interface IConcreteProductAvailability extends IProductAvailability {
+  sku: TProductSKU | null;
+}
+
+export interface IProductPropFullData extends IProductAvailability {
+  attributes: TProductAttributes | null;
   description: TProductDescription | null;
   images: Array<IProductCardImages> | null;
   name: TProductName | null;
