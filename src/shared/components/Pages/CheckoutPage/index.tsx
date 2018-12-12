@@ -114,10 +114,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         this.props.getCustomerData(this.props.customerReference);
       }
     }
-  }
 
-  public componentWillUnmount = () => {
-    if (this.props.orderId) {
+    if (!prevProps.orderId && this.props.orderId) {
       this.props.isUserLoggedIn
         ? this.props.updateCart()
         : this.props.updateGuestCart(this.props.anonymId);
@@ -433,8 +431,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     return (
       <AppMain>
         {isCheckoutLoading ? <AppBackdrop isOpen={true} /> : null}
-        {isProductsExists
-          ? <CheckoutPageContext.Provider
+        {!isProductsExists && !orderId
+          ? <AppPageTitle title={noProductsInCheckoutText} />
+          : <CheckoutPageContext.Provider
               value={{
                 submitHandler: this.handleSubmit,
                 onBlurHandler: this.handleFormValidityOnBlur,
@@ -485,7 +484,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                 </Grid>
               </Grid>
             </CheckoutPageContext.Provider>
-          : <AppPageTitle title={noProductsInCheckoutText} />
         }
       </AppMain>
     );
