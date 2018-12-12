@@ -6,7 +6,7 @@ import { CloseOutlined } from '@material-ui/icons';
 
 import { styles } from './styles';
 import { SearchPageContext } from '../context';
-import { IActiveFilterItemProps } from 'src/shared/components/Pages/SearchPage/ActiveFilterItem/types';
+import { IActiveFilterItemProps } from './types';
 
 
 export const ActiveFilterItemBase: React.SFC<IActiveFilterItemProps> = (props) => {

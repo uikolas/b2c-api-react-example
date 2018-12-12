@@ -21,6 +21,7 @@ export interface SprykerFilterProps extends WithStyles<typeof styles> {
   extraClassName?: string;
   isShowSelected?: boolean;
   handleClose?: Function;
+  title?: string;
 }
 
 interface SprykerFilterState {
@@ -61,6 +62,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
       activeValues,
       extraClassName,
       isShowSelected,
+      title,
     } = this.props;
 
     return (
@@ -72,7 +74,7 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
               name: attributeName,
               id: `${attributeName}-filter`,
             } }
-            renderValue={ () => attributeName ? attributeName.split('_').join(' ') : '' }
+            renderValue={ title ? () => title : () => attributeName ? attributeName.split('_').join(' ') : '' }
             displayEmpty
             open={ this.state.isOpen }
             onClose={ this.handleChangeShowing }
