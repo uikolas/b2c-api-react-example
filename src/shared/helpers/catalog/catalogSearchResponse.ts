@@ -2,6 +2,7 @@ import {
   FilterValue,
   ICatalogSearchDataParsed,
   IProductLabelResponse,
+  TLocalizedName,
   ValueFacets,
 } from 'src/shared/interfaces/searchPageData';
 
@@ -25,11 +26,13 @@ export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchD
   const filters: Array<ValueFacets> = [];
   let category: Array<FilterValue> = [];
   let currentCategory: string = '';
+  let categoriesLocalizedName: TLocalizedName | null = null;
 
   attributes.valueFacets.forEach((filter: any) => {
     if (filter.name === 'category') {
       category = Array.isArray(filter.values) ? filter.values : [];
       currentCategory = filter.activeValue;
+      categoriesLocalizedName = filter.localizedName;
     } else {
       filters.push(filter);
     }
@@ -43,6 +46,8 @@ export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchD
     currentSort: attributes.sort.currentSortParam,
     rangeFilters: attributes.rangeFacets,
     sortParams: attributes.sort.sortParamNames,
+    sortParamLocalizedNames: attributes.sort.sortParamLocalizedNames,
+    categoriesLocalizedName,
     pagination: {
       numFound: pagination.numFound,
       currentPage: pagination.currentPage,

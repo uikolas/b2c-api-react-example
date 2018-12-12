@@ -50,12 +50,19 @@ export const styles = (theme: Theme) => createStyles({
       border: `1px solid ${theme.appColors.weakGrey}`,
     },
   },
-  sliderParent: {},
+  generalInfoParent: {
+    [theme.breakpoints.down('sm')]: {
+      order: 1,
+      marginBottom: theme.spacing.unit * 3,
+    },
+  },
+  sliderParent: {
+    [theme.breakpoints.down('sm')]: {
+      order: 2,
+    },
+  },
   sliderParentContainer: {
     marginBottom: 30,
-    '& *': {
-      maxHeight: '70vh',
-    },
     '& .slide': {
       background: 'transparent',
     },
@@ -86,33 +93,11 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   productMain: {
-    marginBottom: 114,
+    marginBottom: theme.spacing.unit * 14,
     paddingTop: '1.25rem',
-  },
-  descriptionContainer: {
-    [theme.breakpoints.up('lg')]: {
-      width: '98.7vw',
-      position: 'relative',
-      left: '50%',
-      transform: 'translateX(-50%)',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing.unit * 3,
     },
-    background: '#f8f8f8',
-    padding: '12vmin 2vmin',
-  },
-  description: {
-    fontSize: theme.appFixedDimensions.fontSize.medium,
-    color: theme.appColors.black,
-    ...theme.appContainerStyles,
-  },
-  descriptionTitle: {
-    fontSize: 34,
-    margin: '0 0 38px',
-  },
-  descriptionSku: {
-    fontSize: theme.appFixedDimensions.fontSize.small,
-    color: theme.appColors.grey,
-    textTransform: 'uppercase',
-    paddingTop: 25,
   },
   blockControl: {
     paddingTop: theme.spacing.unit * 3,
@@ -125,8 +110,10 @@ export const styles = (theme: Theme) => createStyles({
     },
     "& [data-form-column='0-0']": {
       maxWidth: 142,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         maxWidth: "100%",
+        flexBasis: "100%",
+        paddingRight: 0,
       },
     }
   },
@@ -143,5 +130,5 @@ export const styles = (theme: Theme) => createStyles({
   },
   wishlistRoot: {
     margin: 0
-  }
+  },
 });

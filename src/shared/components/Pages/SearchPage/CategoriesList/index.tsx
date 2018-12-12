@@ -16,7 +16,7 @@ import {getFormattedActiveCategories} from "src/shared/components/Pages/SearchPa
 
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
-  {classes, categories, categoriesTree, selectedCategory},
+  {classes, categories, categoriesTree, selectedCategory, localizedName},
 ) => {
 
   if (!Array.isArray(categories) || !categories.length) {
@@ -61,7 +61,7 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
       className={classes.root}
     >
       <Grid item xs={12}>
-        <AppPageSubTitle title={ CategoriesPanelTitle } extraClass={classes.title}/>
+        <AppPageSubTitle title={ localizedName ? localizedName : CategoriesPanelTitle } extraClass={classes.title}/>
         <List component="nav" className={classes.list}>
           {getCategoriesList(categoriesTree, activeCategories, selectedCategory)}
         </List>

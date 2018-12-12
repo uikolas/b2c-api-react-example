@@ -4,7 +4,9 @@ import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
   getAvailableLabels,
+  getCategoriesLocalizedName,
   getProductsLabeled,
+  getSortParamLocalizedNames,
   getSpellingSuggestion,
   SearchState,
 } from 'src/shared/reducers/Pages/Search';
@@ -19,6 +21,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const spellingSuggestion: TSpellingSuggestion = getSpellingSuggestion(state, ownProps);
   const productsLabeled = getProductsLabeled(state, ownProps);
   const availableLabels = getAvailableLabels(state, ownProps);
+  const sortParamLocalizedNames = getSortParamLocalizedNames(state, ownProps);
+  const categoriesLocalizedName = getCategoriesLocalizedName(state, ownProps);
 
   return ({
     location: routerProps.location ? routerProps.location : ownProps.location,
@@ -40,6 +44,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
     spellingSuggestion,
     productsLabeled,
     availableLabels,
+    sortParamLocalizedNames,
+    categoriesLocalizedName,
   });
 };
 

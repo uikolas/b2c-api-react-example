@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { sendSearchAction } from 'src/shared/actions/Pages/Search';
-import { RangeFacets, ISearchQuery } from 'src/shared/interfaces/searchPageData';
+import {RangeFacets, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import { ICategory } from 'src/shared/reducers/Common/Init';
 import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
@@ -21,7 +21,11 @@ import { SprykerSelect } from 'src/shared/components/UI/SprykerSelect';
 import { ProductsList } from 'src/shared/components/Pages/SearchPage/ProductsList';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { AppPagination } from 'src/shared/components/Common/AppPagination';
-import { isValidRangeInput } from 'src/shared/components/Pages/SearchPage/helper';
+import {
+  getFiltersLocalizedNames,
+  getRangeFiltersLocalizedNames,
+  isValidRangeInput
+} from 'src/shared/components/Pages/SearchPage/helper';
 import { AppMain } from '../../Common/AppMain';
 import {
   filterTypeFilter,
@@ -226,10 +230,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     const currentDataActiveMin = rangeFilterValueToFront(currentData.activeMin, rangeMinType);
     const currentDataActiveMax = rangeFilterValueToFront(currentData.activeMax, rangeMaxType);
 
-    if (currentData.activeMin === currentData.min || currentData.activeMax === currentData.max) {
-      console.info('*** 1 *** updateRangeFilters *** values are equals ');
-    }
-
     if (currentDataActiveMin === min && currentDataActiveMax === max) {
       return;
     }
@@ -423,10 +423,12 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       rangeFilters,
       isLoading,
       sortParams,
+      sortParamLocalizedNames,
       pagination,
       category,
       spellingSuggestion,
       categoriesTree,
+      categoriesLocalizedName,
       currentCategory,
       productsLabeled,
       availableLabels,
@@ -450,14 +452,17 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       <SprykerSelect
         currentMode={ this.state.sort || ' ' }
         changeHandler={ this.handleSetSorting }
-        menuItems={ sortParams.map((item: string) => ({value: item, name: `${item}`})) }
+        menuItems={ sortParams.map((item: string) => ({
+          value: item,
+          name: (sortParamLocalizedNames && sortParamLocalizedNames[item]) ? sortParamLocalizedNames[item] : `${item}`,
+        })) }
         menuItemFirst={ {
           value: ' ',
-          name: (!isSortParamsExist && !this.state.sort) ? 'Choose sort mode' : 'relevance',
+          name: (!isSortParamsExist && !this.state.sort) ? 'Choose sort mode' : 'Sort by relevance',
           disabled: !isSortParamsExist,
         } }
         name="sort"
-        title={ (isSortParamsExist) ? 'Sort by ' : null }
+        title={null}
       />
     );
 
@@ -487,6 +492,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             <Grid item xs={ isCategoriesExist ? 12 : null } md={ isCategoriesExist ? 3 : null }>
               <CategoriesList
                 categories={ category }
+                localizedName = {categoriesLocalizedName}
                 categoriesTree={ categoriesTree }
                 selectedCategory={ currentCategory }
               />
@@ -511,6 +517,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                   activeValuesRanges={ this.state.activeRangeFilters }
                   rangeFilters={ rangeFilters }
                   resetHandler={ this.resetActiveFilters }
+                  filtersLocalizedNames = {getFiltersLocalizedNames(filters)}
+                  rangesLocalizedNames = {getRangeFiltersLocalizedNames(rangeFilters)}
                 />
                 <SortPanel
                   foundItems={ <FoundItems numberFound={ pagination.numFound }/> }

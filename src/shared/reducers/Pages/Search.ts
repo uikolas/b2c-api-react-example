@@ -7,8 +7,10 @@ import {
 import { IReduxState } from 'src/typings/app';
 import {
   IAvailableLabelsCollection,
+  ILocalizedNamesMap,
   IProductsLabeledCollection,
   ISearchPageData,
+  TLocalizedName,
   TSpellingSuggestion,
 } from 'src/shared/interfaces/searchPageData';
 
@@ -29,6 +31,8 @@ export const initialState: SearchState = {
     filters: [],
     rangeFilters: [],
     sortParams: [],
+    sortParamLocalizedNames: null,
+    categoriesLocalizedName: null,
     currentSort: '',
     currentCategory: '',
     pagination: {
@@ -81,6 +85,8 @@ export const pageSearch = produce<SearchState>(
         draft.data.category = action.category;
         draft.data.rangeFilters = action.rangeFilters;
         draft.data.sortParams = action.sortParams;
+        draft.data.sortParamLocalizedNames = action.sortParamLocalizedNames;
+        draft.data.categoriesLocalizedName = action.categoriesLocalizedName;
         draft.data.currentSort = action.currentSort;
         draft.data.pagination = action.pagination;
         draft.data.currentCategory = action.currentCategory;
@@ -153,6 +159,22 @@ export function getAvailableLabels(state: any, props: any): IAvailableLabelsColl
   return (
     state.pageSearch.data && state.pageSearch.data.availableLabels
       ? state.pageSearch.data.availableLabels
+      : null
+  );
+}
+
+export function getSortParamLocalizedNames(state: any, props: any): ILocalizedNamesMap | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.sortParamLocalizedNames
+      ? state.pageSearch.data.sortParamLocalizedNames
+      : null
+  );
+}
+
+export function getCategoriesLocalizedName(state: any, props: any): TLocalizedName | null {
+  return (
+    state.pageSearch.data && state.pageSearch.data.categoriesLocalizedName
+      ? state.pageSearch.data.categoriesLocalizedName
       : null
   );
 }

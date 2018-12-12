@@ -86,13 +86,16 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
           >
             <AppPrice value={ actualPriceGross }/>
           </Typography>
-          <Typography
-            component="span"
-            color="textPrimary"
-            className={ classes.productOldPrice }
-          >
-            <AppPrice value={ oldPriceGross } priceType={ priceTypeNameOriginal }/>
-          </Typography>
+          {oldPriceGross
+            ?  <Typography
+                component="span"
+                color="textPrimary"
+                className={ classes.productOldPrice }
+                >
+                  <AppPrice value={ oldPriceGross } priceType={ priceTypeNameOriginal }/>
+                </Typography>
+            : null
+          }
         </div>
       </CardContent>
     </Card>

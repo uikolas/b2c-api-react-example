@@ -8,7 +8,7 @@ import { ValueFacets } from 'src/shared/interfaces/searchPageData';
 import { rangeMaxType, rangeMinType } from 'src/shared/components/Pages/SearchPage/types';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import { FilterWrapper } from 'src/shared/components/Pages/SearchPage/FilterWrapper';
-import { firstLetterToUpperCase, rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
+import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
 import { SprykerRangeSlider } from 'src/shared/components/UI/SprykerRangeSlider';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
@@ -53,6 +53,7 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
               extraClassName={ classes.filter }
               isShowSelected={ false }
               handleClose={ onCloseFilterHandler }
+              title={filter.localizedName}
             />
             }
             keyValue={ filter.name }
@@ -78,7 +79,7 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
             <SprykerRangeSlider
               key={ filter.name }
               attributeName={ filter.name }
-              title={ firstLetterToUpperCase(filter.name) }
+              title={filter.localizedName}
               min={ valueFrom }
               max={ valueTo }
               handleChange={ updateRangeHandler }
