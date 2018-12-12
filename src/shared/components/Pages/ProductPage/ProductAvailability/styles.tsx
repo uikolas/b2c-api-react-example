@@ -7,6 +7,10 @@ export const styles = (theme: Theme) => createStyles({
     display: "flex",
     flexGrow: 1,
     justifyContent: "flex-end",
+    [theme.breakpoints.down('xs')]: {
+      width: "100%",
+      paddingLeft: 0,
+    },
   },
   value: {
     display: 'flex',
@@ -15,6 +19,10 @@ export const styles = (theme: Theme) => createStyles({
     borderWidth: '1px',
     borderStyle: 'solid',
     padding: 7,
+    [theme.breakpoints.down('xs')]: {
+      width: "100%",
+      justifyContent: "center",
+    },
   },
   available: {
     borderColor: theme.appColors.green,

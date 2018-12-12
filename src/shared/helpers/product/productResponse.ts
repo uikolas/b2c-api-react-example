@@ -52,7 +52,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
         description: null,
         attributes: null,
         attributeNames: null,
-        images: [],
+        images: null,
         price: null,
         prices: null,
         priceOriginalGross: null,

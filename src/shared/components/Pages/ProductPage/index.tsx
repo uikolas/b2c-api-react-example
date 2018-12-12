@@ -376,7 +376,7 @@ export class ProductPageBase extends React.Component<Props, State> {
           : (
             <div className={ classes.root }>
               <Grid container justify="center" className={ classes.productMain }>
-                <Grid item xs={ 12 } sm={ 7 } className={ classes.sliderParent }>
+                <Grid item xs={ 12 } sm={ 12 } md={ 7 } className={ classes.sliderParent }>
                   <div className={ classes.sliderParentContainer }>
                     <ImageSlider
                       images={ images }
@@ -386,8 +386,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                     />
                   </div>
                 </Grid>
-
-                <Grid item xs={ 12 } sm={ 5 }>
+                <Grid item xs={ 12 } sm={ 12 } md={ 5 } className={classes.generalInfoParent} >
                   <div className={classes.infoParent}>
                     <ProductGeneralInfo
                       name={ this.state.name }
@@ -407,7 +406,7 @@ export class ProductPageBase extends React.Component<Props, State> {
 
                     <Grid container>
                       { this.canShowQuantity()
-                        ? <Grid item xs={12} sm={12} className={classes.blockControl}>
+                        ? <Grid item xs={12} md={ 12 } className={classes.blockControl}>
                             <SprykerForm
                               form={formQuantitySettings}
                               formClassName={classes.formQuantity}
@@ -415,7 +414,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                           </Grid>
                         : null
                       }
-                      <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
+                      <Grid item xs={ 12 } md={ 12 } className={ classes.buyBtnParent }>
                         <SprykerButton
                           title={ AddToCartBtnTitle }
                           extraClasses={ classes.buyBtn }
@@ -429,7 +428,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                       ? (<Grid container spacing={24} className={ classes.wishlistBtnArea }>
                           { this.state.wishListSelected
                             ?
-                            <Grid item xs={ 12 } sm={ 6 }>
+                            <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
                               <SprykerForm
                                 form={formWishListSettings}
                                 formClassName={classes.formWishList}
@@ -437,8 +436,9 @@ export class ProductPageBase extends React.Component<Props, State> {
                             </Grid>
                             : null
                           }
-                          <Grid item xs={ 12 }
-                                sm={ this.state.wishListSelected ? 6 : 12 }
+                          <Grid item
+                                xs={ 12 }
+                                md={ this.state.wishListSelected ? 6 : 12 }
                                 className={ classes.buyBtnParent }
                           >
                             <SprykerButton

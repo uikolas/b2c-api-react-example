@@ -4,13 +4,13 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   root: {},
   contentHelper: {
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('xs')]: {
       width: '98.7vw',
       position: 'relative',
       left: '50%',
       transform: 'translateX(-50%)',
     },
-    background: '#f8f8f8',
+    background: theme.appColors.greyBG,
     padding: '12vmin 2vmin',
   },
   contentContainer: {
@@ -21,13 +21,23 @@ export const styles = (theme: Theme) => createStyles({
   productDetailsBlock: {
     maxWidth: 435,
     marginRight: "auto",
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: "100%",
+      marginRight: 0,
+      marginLeft: 0,
+    },
   },
   descriptionBlock: {
     maxWidth: 435,
     marginLeft: "auto",
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: "100%",
+      marginRight: 0,
+      marginLeft: 0,
+    },
   },
   descriptionTitle: {
-    fontSize: 34,
+    fontSize: theme.appFixedDimensions.fontSize.xxl,
     margin: '0 0 38px',
   },
   descriptionSku: {

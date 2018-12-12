@@ -50,12 +50,19 @@ export const styles = (theme: Theme) => createStyles({
       border: `1px solid ${theme.appColors.weakGrey}`,
     },
   },
-  sliderParent: {},
+  generalInfoParent: {
+    [theme.breakpoints.down('sm')]: {
+      order: 1,
+      marginBottom: theme.spacing.unit * 3,
+    },
+  },
+  sliderParent: {
+    [theme.breakpoints.down('sm')]: {
+      order: 2,
+    },
+  },
   sliderParentContainer: {
     marginBottom: 30,
-    '& *': {
-      maxHeight: '70vh',
-    },
     '& .slide': {
       background: 'transparent',
     },
@@ -86,8 +93,11 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   productMain: {
-    marginBottom: 114,
+    marginBottom: theme.spacing.unit * 14,
     paddingTop: '1.25rem',
+    [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing.unit * 3,
+    },
   },
   blockControl: {
     paddingTop: theme.spacing.unit * 3,
@@ -100,8 +110,10 @@ export const styles = (theme: Theme) => createStyles({
     },
     "& [data-form-column='0-0']": {
       maxWidth: 142,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         maxWidth: "100%",
+        flexBasis: "100%",
+        paddingRight: 0,
       },
     }
   },

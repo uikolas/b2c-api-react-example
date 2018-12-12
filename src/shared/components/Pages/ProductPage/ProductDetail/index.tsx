@@ -21,10 +21,10 @@ export const ProductDetailBase: React.SFC<IProductDetailProps> = (props) => {
   return (
     <div className={classes.contentHelper}>
       <Grid container className={classes.contentContainer}>
-        <Grid item md={6} sm={12} className={classes.productDetailsBlock }>
+        <Grid item xs={12} sm={6} className={classes.productDetailsBlock }>
           <ProductAttributes attributes={attributes} attributeNames={attributeNames} />
         </Grid>
-        <Grid item md={6} sm={12} className={classes.descriptionBlock}>
+        <Grid item xs={12} sm={6} className={classes.descriptionBlock}>
           <Typography component="h3" color="inherit" className={ classes.descriptionTitle}>
             {ProductBlockTitleDescription}
           </Typography>

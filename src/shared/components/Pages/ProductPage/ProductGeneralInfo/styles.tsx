@@ -15,6 +15,9 @@ export const styles = (theme: Theme) => createStyles({
   },
   productInfo: {
     display: 'flex',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: "column",
+    },
   },
   priceBlock: {
     display: 'flex',
@@ -23,7 +26,11 @@ export const styles = (theme: Theme) => createStyles({
     '& > *': {
       marginRight: `${theme.spacing.unit}px !important`,
       display: 'block',
-    }
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: "100%",
+      marginBottom: theme.spacing.unit * 3,
+    },
   },
   price: {
     color: theme.appColors.black,

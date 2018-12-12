@@ -11,11 +11,15 @@ export const styles = (theme: Theme) => createStyles({
     '&:last-child': {
       marginRight: 'auto',
     },
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+      marginRight: 0,
+    },
   },
   buttonSelected: {
     pointerEvents: 'none',
     borderColor: theme.appColors.blue,
     color: theme.appColors.blue,
-    background: rgba(theme.appColors.blue, .1),
+    backgroundColor: theme.appColors.blueTransparent,
   },
 });

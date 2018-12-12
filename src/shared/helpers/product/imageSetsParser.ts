@@ -2,7 +2,7 @@ import { IProductCardImages, TProductImageSRC } from '../../interfaces/product';
 
 export const parseImageSets = (imageSets: any): Array<IProductCardImages> | null => {
 
-  if (!Array.isArray(imageSets)) {
+  if (!Array.isArray(imageSets) || !imageSets.length) {
     return null;
   }
 

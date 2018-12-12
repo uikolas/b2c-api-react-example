@@ -1,13 +1,19 @@
-import {absentProductType, IProductPropFullData} from "src/shared/interfaces/product/index";
+import {absentProductType, IProductCardImages, IProductPropFullData} from "src/shared/interfaces/product/index";
 
 export const getCurrentProductDataObject = (abstractProduct: IProductPropFullData,
                                             concreteProduct: IProductPropFullData | null, ): IProductPropFullData => {
+
+  let images: Array<IProductCardImages> = null;
+  if (concreteProduct && concreteProduct.images && concreteProduct.images.length) {
+    images = concreteProduct.images;
+  } else if (abstractProduct.images && abstractProduct.images.length) {
+    images = abstractProduct.images;
+  }
+
   return {
     sku: concreteProduct ? concreteProduct.sku : null,
     name: concreteProduct ? concreteProduct.name : abstractProduct.name,
-    images: concreteProduct
-      ? (concreteProduct.images && concreteProduct.images.length ? [...concreteProduct.images] : null)
-      : (abstractProduct.images.length ? [...abstractProduct.images] : null),
+    images,
     availability: concreteProduct ? concreteProduct.availability : false,
     description: concreteProduct ? concreteProduct.description : abstractProduct.description,
     price: concreteProduct ? concreteProduct.price : null,

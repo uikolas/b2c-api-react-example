@@ -27,7 +27,7 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
       <Grid container justify="center" className={ classes.root }>
         { Object.entries(attributes).map((data: any) => {
           return (
-            <Grid key={ data[0] } item xs={ 12 } sm={ 6 } className={ classes.element }>
+            <Grid key={ data[0] } item xs={ 12 } sm={ 12 } md={ 6 } className={ classes.element }>
               <Typography component="div" color="inherit" gutterBottom={ true } className={ classes.valuesBlock }>
                 <p>
                   <Typography variant="subheading" component="strong">
