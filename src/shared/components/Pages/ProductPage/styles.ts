@@ -89,31 +89,6 @@ export const styles = (theme: Theme) => createStyles({
     marginBottom: 114,
     paddingTop: '1.25rem',
   },
-  descriptionContainer: {
-    [theme.breakpoints.up('lg')]: {
-      width: '98.7vw',
-      position: 'relative',
-      left: '50%',
-      transform: 'translateX(-50%)',
-    },
-    background: '#f8f8f8',
-    padding: '12vmin 2vmin',
-  },
-  description: {
-    fontSize: theme.appFixedDimensions.fontSize.medium,
-    color: theme.appColors.black,
-    ...theme.appContainerStyles,
-  },
-  descriptionTitle: {
-    fontSize: 34,
-    margin: '0 0 38px',
-  },
-  descriptionSku: {
-    fontSize: theme.appFixedDimensions.fontSize.small,
-    color: theme.appColors.grey,
-    textTransform: 'uppercase',
-    paddingTop: 25,
-  },
   blockControl: {
     paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 3,
@@ -143,5 +118,5 @@ export const styles = (theme: Theme) => createStyles({
   },
   wishlistRoot: {
     margin: 0
-  }
+  },
 });

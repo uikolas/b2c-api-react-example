@@ -4,7 +4,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   root: {
     display: "inline-flex",
-    border: `1px solid ${theme.appColors.black}`,
+    border: `1px solid ${theme.appColors.deepBlack}`,
     textDecoration: "none",
     backgroundColor: theme.appColors.white,
     color: theme.appColors.black,
@@ -25,7 +25,7 @@ export const styles = (theme: Theme) => createStyles({
     },
 
     "&:hover": {
-      backgroundColor: theme.appColors.black,
+      backgroundColor: theme.appColors.deepBlack,
       color: theme.appColors.white,
       transition: "all 0.4s ease",
     }
