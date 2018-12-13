@@ -23,7 +23,6 @@ import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutFo
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {OrderSuccess} from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
 import {inputSaveErrorText} from "src/shared/constants/messages/errors";
-import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -73,11 +72,24 @@ import {
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
 import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/commoon/react";
+import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {ICheckoutRequest} from "src/shared/interfaces/checkout";
+import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
+import {TDiscountTotal, TExpenseTotal, TGrandTotal, TSubtotal, TTaxTotal} from "src/shared/interfaces/abstract/totals";
 
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
+
+  public successOrderTotals: ICartTotals = {
+    expenseTotal: 0,
+    discountTotal: 0,
+    taxTotal: 0,
+    subtotal: 0,
+    grandTotal: 0,
+  };
+
+  public successOrderProducts: ICartItem[] = [];
 
   public state: ICheckoutPageState = {
     deliverySelection: {...deliverySelectionDefault},
@@ -116,6 +128,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
 
     if (!prevProps.orderId && this.props.orderId) {
+      this.successOrderProducts = prevProps.products;
+      this.successOrderTotals = prevProps.totals;
       this.props.isUserLoggedIn
         ? this.props.updateCart()
         : this.props.updateGuestCart(this.props.anonymId);
@@ -150,7 +164,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       });
       payload.shippingAddress = {...shippingAddress, iso2Code: shippingAddress.country, country: ''};
     } else {
-      const shippingAddress = addressesCollection.find(address => address.id === deliverySelection.selectedAddressId);
+      const shippingAddress = addressesCollection.find((address: IAddressItemCollection) =>
+        address.id === deliverySelection.selectedAddressId);
       payload.shippingAddress = {...shippingAddress, country: ''};
     }
 
@@ -163,7 +178,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     } else if (billingSelection.isSameAsDelivery) {
       payload.billingAddress = payload.shippingAddress;
     } else {
-      const billingAddress = addressesCollection.find(address => address.id === deliverySelection.selectedAddressId);
+      const billingAddress = addressesCollection.find((address: IAddressItemCollection) =>
+        address.id === deliverySelection.selectedAddressId);
       payload.billingAddress = {...billingAddress, country: ''};
     }
 
@@ -475,8 +491,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
               </Grid>
               <Grid item xs={12} md={5} className={classes.rightColumn}>
                 <CartData
-                  products={products}
-                  totals={totals}
+                  products={orderId ? this.successOrderProducts : products}
+                  totals={orderId ? this.successOrderTotals : totals}
                   isSendBtnDisabled={!this.checkCheckoutFormValidity()}
                   sendData={this.handleSubmit}
                   order={orderId}
