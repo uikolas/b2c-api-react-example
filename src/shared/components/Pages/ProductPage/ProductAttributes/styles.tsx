@@ -12,13 +12,20 @@ export const styles = (theme: Theme) => createStyles({
   },
   element: {
     paddingBottom: theme.spacing.unit * 2,
+    "&:nth-child(even)": {
+      paddingLeft: "10%",
+
+      [theme.breakpoints.down('sm')]: {
+        paddingLeft: 0,
+      },
+    }
   },
   attributesTitle: {
-    fontSize: 34,
+    fontSize: theme.appFixedDimensions.fontSize.xxl,
     margin: '0 0 38px',
   },
   valuesBlock: {
-    fontSize: 16,
+    fontSize: theme.appFixedDimensions.fontSize.medium,
     '& strong': {
       fontWeight: 'bold',
       textTransform: 'capitalize',

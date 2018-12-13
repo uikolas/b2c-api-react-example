@@ -15,7 +15,6 @@ import { isWordHasPrice } from 'src/shared/helpers/common/transform';
 import { RangeFacets } from 'src/shared/interfaces/searchPageData';
 import {
   createRangeFilterItemCombined,
-  transformName
 } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
 
@@ -30,6 +29,8 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
     activeValuesRanges,
     rangeFilters,
     resetHandler,
+    filtersLocalizedNames,
+    rangesLocalizedNames,
   } = props;
 
   const isActiveRangesExist = ((Object.getOwnPropertyNames(activeValuesRanges).length > 0));
@@ -40,7 +41,9 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
       const itemsLocalCollection = activeValuesFilters[filter].map((value: TFilterItemValue) => ({
         name: filter,
         value,
-        label: `${transformName(filter, '_')}: ${value}`,
+        label: `${(filtersLocalizedNames && filtersLocalizedNames[filter]) 
+                    ? filtersLocalizedNames[filter]
+                    : ''}: ${value}`,
         type: filterTypeFilter,
       }));
       itemsGlobalCollection.push(...itemsLocalCollection);
@@ -59,12 +62,16 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
         }
         const valueFrom = activeValuesRanges[rangeName].min;
         const valueTo = activeValuesRanges[rangeName].max;
-        // const defaultFrom = rangeFilterValueToFront(defaultValuesArr[0].min, rangeMinType);
-        // const defaultTo = rangeFilterValueToFront(defaultValuesArr[0].max, rangeMaxType);
 
         if (valueFrom > 0 && valueTo > 0) {
           itemsGlobalCollection.push(
-            createRangeFilterItemCombined(isPrice, activeValuesRanges[rangeName], rangeName, classes.price),
+            createRangeFilterItemCombined({
+              isPrice,
+              value: activeValuesRanges[rangeName],
+              rangeName,
+              title: (rangesLocalizedNames && rangesLocalizedNames[rangeName]) ? rangesLocalizedNames[rangeName] : '',
+              priceClassName: classes.price
+            }),
           );
         }
       }

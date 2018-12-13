@@ -1,4 +1,10 @@
-import {FilterValue, ISearchPageData, RangeFacets} from 'src/shared/interfaces/searchPageData';
+import {
+  FilterValue,
+  ILocalizedNamesMap,
+  ISearchPageData,
+  RangeFacets,
+  ValueFacets
+} from 'src/shared/interfaces/searchPageData';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { rangeMaxType, rangeMinType, TActiveRangeFilters } from 'src/shared/components/Pages/SearchPage/types';
 import {IActiveFilterCategories} from "src/shared/components/Pages/SearchPage/CategoriesList/types";
@@ -33,6 +39,28 @@ export const getFormattedActiveCategories = (data: Array<FilterValue>): IActiveF
   const response: IActiveFilterCategories = {};
   data.forEach((item: FilterValue) => {
     response[item.value] = item.doc_count;
+  });
+  return response;
+};
+
+export const getRangeFiltersLocalizedNames = (data: Array<RangeFacets> | null): ILocalizedNamesMap | null => {
+  if (!Array.isArray(data) || !data.length) {
+    return null;
+  }
+  const response: ILocalizedNamesMap = {};
+  data.forEach((item: RangeFacets) => {
+    response[item.name] = item.localizedName;
+  });
+  return response;
+};
+
+export const getFiltersLocalizedNames = (data: Array<ValueFacets> | null): ILocalizedNamesMap | null => {
+  if (!Array.isArray(data) || !data.length) {
+    return null;
+  }
+  const response: ILocalizedNamesMap = {};
+  data.forEach((item: ValueFacets) => {
+    response[item.name] = item.localizedName;
   });
   return response;
 };

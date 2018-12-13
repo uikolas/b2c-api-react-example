@@ -4,6 +4,7 @@ import { IPagination } from 'src/shared/components/Common/AppPagination/types';
 import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 
 export type TSpellingSuggestion = string;
+export type TLocalizedName = string;
 
 export interface FilterValue {
   value: any;
@@ -15,6 +16,7 @@ export interface ValueFacets {
   docCount?: any;
   values?: Array<FilterValue>;
   activeValue?: Array<string> | null;
+  localizedName: TLocalizedName;
 }
 
 export interface RangeFacets {
@@ -24,6 +26,7 @@ export interface RangeFacets {
   activeMin?: number;
   activeMax?: number;
   docCount?: any;
+  localizedName: TLocalizedName;
 }
 
 export interface FlyoutSearch {
@@ -56,6 +59,10 @@ export interface IAvailableLabelsCollection {
   [id: string]: IAvailableLabel;
 }
 
+export interface ILocalizedNamesMap {
+  [key: string]: TLocalizedName;
+}
+
 export interface ICatalogSearchDataParsed {
   items?: Array<IProductCard>;
   filters?: Array<ValueFacets>;
@@ -64,6 +71,8 @@ export interface ICatalogSearchDataParsed {
   currentSort?: string;
   rangeFilters?: Array<RangeFacets>;
   sortParams?: Array<string>;
+  sortParamLocalizedNames: ILocalizedNamesMap | null;
+  categoriesLocalizedName: TLocalizedName | null;
   pagination: IPagination;
   spellingSuggestion: TSpellingSuggestion | null;
   productsLabeled: IProductsLabeledCollection | null;

@@ -3,11 +3,9 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { toast } from 'react-toastify';
 
 import {
-  absentProductType,
   concreteProductType,
   defaultItemValueDropdown,
   IProductCardImages,
@@ -19,6 +17,7 @@ import {
   findIdProductConcreteByPath,
   getAvailabilityDisplay,
   getInitialSuperAttrSelected,
+  getCurrentProductDataObject,
 } from 'src/shared/helpers/product';
 import { TWishListName } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
@@ -28,7 +27,6 @@ import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
 import { SprykerButton } from '../../UI/SprykerButton';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
-import { ProductAttributes } from './ProductAttributes';
 import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
@@ -37,12 +35,11 @@ import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
 import {ChangeEvent} from "react";
 import {getQuantityFormSettings, getWishListFormSettings} from "src/shared/components/Pages/ProductPage/settings/forms";
-import {ProductBlockTitleDescription} from "src/shared/constants/product/index";
+import {ProductDetail} from "src/shared/components/Pages/ProductPage/ProductDetail/index";
+import {AddToCartBtnTitle, AddToWishlistBtnTitle} from "src/shared/constants/buttons/index";
 
-export const buyBtnTitle = 'Add to cart';
-export const wishlistBtnTitle = 'Add to Wishlist';
+
 const quantitySelectedInitial = 1;
-export const skuTitle = 'SKU: ';
 
 @connect
 export class ProductPageBase extends React.Component<Props, State> {
@@ -125,8 +122,9 @@ export class ProductPageBase extends React.Component<Props, State> {
 
     if (value === defaultItemValueDropdown) {
       // If selected nothing
-      productData = this.getProductDataObject(
+      productData = getCurrentProductDataObject(
         this.props.product.abstractProduct,
+        null
       );
     } else {
       // If selected a concrete product
@@ -134,10 +132,11 @@ export class ProductPageBase extends React.Component<Props, State> {
 
       if (!idProductConcrete) {
         // Such product does not exist
-        productData = this.getProductDataObject(null);
+        productData = getCurrentProductDataObject(this.props.product.abstractProduct, null);
       } else {
         // Such product exists
-        productData = this.getProductDataObject(
+        productData = getCurrentProductDataObject(
+          this.props.product.abstractProduct,
           this.props.product.concreteProducts[idProductConcrete],
         );
       }
@@ -249,29 +248,6 @@ export class ProductPageBase extends React.Component<Props, State> {
     return false;
   };
 
-  private getProductDataObject = (data: IProductPropFullData | null): IProductPropFullData => {
-    const defaultValues = this.props.product.abstractProduct;
-    return {
-      sku: data ? data.sku : null,
-      name: data ? data.name : defaultValues.name,
-      images: data
-        ? (data.images && data.images.length ? [...data.images] : null)
-        : (defaultValues.images.length ? [...defaultValues.images] : null),
-      availability: data ? data.availability : false,
-      description: data ? data.description : defaultValues.description,
-      price: data ? data.price : null,
-      prices: data ? data.prices : null,
-      priceOriginalGross: data ? data.priceOriginalGross : null,
-      priceOriginalNet: data ? data.priceOriginalNet : null,
-      priceDefaultGross: data ? data.priceDefaultGross : null,
-      priceDefaultNet: data ? data.priceDefaultNet : null,
-      attributes: data ? data.attributes : defaultValues.attributes,
-      attributeNames: data ? data.attributeNames : defaultValues.attributeNames,
-      quantity: data ? data.quantity : defaultValues.quantity,
-      productType: data ? data.productType : absentProductType,
-    };
-  };
-
   private setInitialWishList = (): boolean => {
     if (this.state.wishListSelected) {
       return false;
@@ -295,10 +271,11 @@ export class ProductPageBase extends React.Component<Props, State> {
   private setInitialData = (): boolean => {
     const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
     const isOneConcreteProduct = Boolean(concreteProductsIds.length === 1);
-    const productData: IProductPropFullData | null = this.getProductDataObject(
+    const productData: IProductPropFullData | null = getCurrentProductDataObject(
+      this.props.product.abstractProduct,
       isOneConcreteProduct
         ? this.props.product.concreteProducts[concreteProductsIds[0]]
-        : this.getProductDataObject(this.props.product.abstractProduct),
+        : getCurrentProductDataObject(this.props.product.abstractProduct, null),
     );
 
     // Parsing superAttributes to set initial data for this.state.superAttrSelected
@@ -331,17 +308,6 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
 
     return findIdProductConcreteByPath(path, this.state.attributeMap.attribute_variants);
-  };
-
-  private getSuperAttrValue = (key: string) => {
-    if (!key) {
-      return defaultItemValueDropdown;
-    }
-    return (
-      this.state.superAttrSelected[key]
-        ? this.state.superAttrSelected[key]
-        : defaultItemValueDropdown
-    );
   };
 
   private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> | null => images
@@ -383,7 +349,6 @@ export class ProductPageBase extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     const {classes} = this.props;
-    const {sku = 'No SKU'} = this.state;
     console.info('state: ', this.state);
     console.info('props: ', this.props);
     const images = this.getImageData(this.state.images);
@@ -411,7 +376,7 @@ export class ProductPageBase extends React.Component<Props, State> {
           : (
             <div className={ classes.root }>
               <Grid container justify="center" className={ classes.productMain }>
-                <Grid item xs={ 12 } sm={ 7 } className={ classes.sliderParent }>
+                <Grid item xs={ 12 } sm={ 12 } md={ 7 } className={ classes.sliderParent }>
                   <div className={ classes.sliderParentContainer }>
                     <ImageSlider
                       images={ images }
@@ -421,8 +386,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                     />
                   </div>
                 </Grid>
-
-                <Grid item xs={ 12 } sm={ 5 }>
+                <Grid item xs={ 12 } sm={ 12 } md={ 5 } className={classes.generalInfoParent} >
                   <div className={classes.infoParent}>
                     <ProductGeneralInfo
                       name={ this.state.name }
@@ -442,7 +406,7 @@ export class ProductPageBase extends React.Component<Props, State> {
 
                     <Grid container>
                       { this.canShowQuantity()
-                        ? <Grid item xs={12} sm={12} className={classes.blockControl}>
+                        ? <Grid item xs={12} md={ 12 } className={classes.blockControl}>
                             <SprykerForm
                               form={formQuantitySettings}
                               formClassName={classes.formQuantity}
@@ -450,9 +414,9 @@ export class ProductPageBase extends React.Component<Props, State> {
                           </Grid>
                         : null
                       }
-                      <Grid item xs={ 12 } sm={ 12 } className={ classes.buyBtnParent }>
+                      <Grid item xs={ 12 } md={ 12 } className={ classes.buyBtnParent }>
                         <SprykerButton
-                          title={ buyBtnTitle }
+                          title={ AddToCartBtnTitle }
                           extraClasses={ classes.buyBtn }
                           onClick={ this.handleBuyBtnClick }
                           disabled={ this.state.isBuyBtnDisabled }
@@ -464,7 +428,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                       ? (<Grid container spacing={24} className={ classes.wishlistBtnArea }>
                           { this.state.wishListSelected
                             ?
-                            <Grid item xs={ 12 } sm={ 6 }>
+                            <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
                               <SprykerForm
                                 form={formWishListSettings}
                                 formClassName={classes.formWishList}
@@ -472,12 +436,13 @@ export class ProductPageBase extends React.Component<Props, State> {
                             </Grid>
                             : null
                           }
-                          <Grid item xs={ 12 }
-                                sm={ this.state.wishListSelected ? 6 : 12 }
+                          <Grid item
+                                xs={ 12 }
+                                md={ this.state.wishListSelected ? 6 : 12 }
                                 className={ classes.buyBtnParent }
                           >
                             <SprykerButton
-                              title={ wishlistBtnTitle }
+                              title={ AddToWishlistBtnTitle }
                               extraClasses={ classes.wishListBtn }
                               onClick={ this.handleAddToWishlist }
                               disabled={ this.isAddToWishListBtnDisabled() }
@@ -490,30 +455,12 @@ export class ProductPageBase extends React.Component<Props, State> {
                   </div>
                 </Grid>
               </Grid>
-
-              <div className={ classes.descriptionContainer }>
-                <Grid container justify="center" className={ classes.description }>
-                  <Grid item md={ 7 } sm={ 12 }>
-                    <ProductAttributes attributes={ this.state.attributes } attributeNames={this.state.attributeNames} />
-                  </Grid>
-                  <Grid item md={ 5 } sm={ 12 }>
-                    <Typography component="h3" color="inherit" className={ classes.descriptionTitle }>
-                      {ProductBlockTitleDescription}
-                    </Typography>
-                    <Typography color="inherit" variant="body2" component="p" gutterBottom={ true }>
-                      { this.state.description }
-                    </Typography>
-                    <Typography
-                      variant="subheading"
-                      color="inherit"
-                      gutterBottom={ true }
-                      className={ classes.descriptionSku }
-                    >
-                      { skuTitle }{ sku }
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </div>
+              <ProductDetail
+                attributes={this.state.attributes}
+                attributeNames={this.state.attributeNames}
+                description={this.state.description}
+                sku={this.state.sku ? this.state.sku : this.props.product.abstractProduct.sku}
+              />
             </div>
           )
         }
