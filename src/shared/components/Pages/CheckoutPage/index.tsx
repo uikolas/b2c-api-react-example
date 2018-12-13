@@ -114,10 +114,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         this.props.getCustomerData(this.props.customerReference);
       }
     }
-  }
 
-  public componentWillUnmount = () => {
-    if (this.props.orderId) {
+    if (!prevProps.orderId && this.props.orderId) {
       this.props.isUserLoggedIn
         ? this.props.updateCart()
         : this.props.updateGuestCart(this.props.anonymId);
@@ -202,29 +200,29 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public handleSelectionsChange = (event: InputChangeEvent): void => {
     const { name, value } = event.target;
     if (name === 'deliverySelection') {
-        this.handleDeliverySelection(value);
+      this.handleDeliverySelection(value);
     } else if (name === 'billingSelection' || name === checkoutSelectionInputs.isSameAsDeliveryValue) {
-        this.handleBillingSelection(value);
+      this.handleBillingSelection(value);
     } else if (name === 'shipmentMethodSelection') {
-        this.handleShipmentMethodSelection(value);
+      this.handleShipmentMethodSelection(value);
     } else if (name === 'paymentMethodSelection') {
-        this.handlePaymentMethodSelection(value);
+      this.handlePaymentMethodSelection(value);
     } else {
-        throw new Error(`Undefined type of Selection: ${name}`);
+      throw new Error(`Undefined type of Selection: ${name}`);
     }
   }
 
   public handleFormValidityOnBlur = (formName: string) => (event: any): void => {
     if (formName === checkoutFormsNames.delivery) {
-        this.handleDeliveryNewAddressValidity();
+      this.handleDeliveryNewAddressValidity();
     } else if (formName === checkoutFormsNames.billing) {
-        this.handleBillingNewAddressValidity();
+      this.handleBillingNewAddressValidity();
     } else if (formName === checkoutFormsNames.invoice) {
-        this.handleInvoiceValidity();
+      this.handleInvoiceValidity();
     } else if (formName === checkoutFormsNames.creditCard) {
-        this.handleCreditCardValidity();
+      this.handleCreditCardValidity();
     } else {
-        throw new Error(`Undefined type of formName: ${formName}`);
+      throw new Error(`Undefined type of formName: ${formName}`);
     }
   }
 
@@ -242,7 +240,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }, () => {
       // Validate form when select input is changed
       if (key === deliveryConfigInputStable.salutation.inputName
-          || key === deliveryConfigInputStable.country.inputName
+        || key === deliveryConfigInputStable.country.inputName
       ) {
         this.handleDeliveryNewAddressValidity();
       }
@@ -263,7 +261,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }, () => {
       // Validate form when select input is changed
       if (key === billingConfigInputStable.salutation.inputName
-          || key === billingConfigInputStable.country.inputName
+        || key === billingConfigInputStable.country.inputName
       ) {
         this.handleBillingNewAddressValidity();
       }
@@ -296,8 +294,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }, () => {
       // Validate form when select input is changed
       if (key === creditCardConfigInputStable.paymentProvider.inputName
-          || key === creditCardConfigInputStable.cardExpiryMonth.inputName
-          || key === creditCardConfigInputStable.cardExpiryYear.inputName
+        || key === creditCardConfigInputStable.cardExpiryMonth.inputName
+        || key === creditCardConfigInputStable.cardExpiryYear.inputName
       ) {
         this.handleCreditCardValidity();
       }
@@ -378,15 +376,15 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
   private getCurrentValueBillingSelection = (): IAddressItemCollection["id"] | string | null => {
     return this.state.billingSelection.selectedAddressId
-           || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
-           || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
-           || null;
+      || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
+      || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
+      || null;
   }
 
   private getCurrentValueDeliverySelection = (): IAddressItemCollection["id"] | string | null => {
     return this.state.deliverySelection.selectedAddressId
-           || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
-           || null;
+      || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
+      || null;
   }
 
   private setDefaultAddresses = (): void => {
@@ -433,59 +431,59 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     return (
       <AppMain>
         {isCheckoutLoading ? <AppBackdrop isOpen={true} /> : null}
-        {isProductsExists
-          ? <CheckoutPageContext.Provider
-              value={{
-                submitHandler: this.handleSubmit,
-                onBlurHandler: this.handleFormValidityOnBlur,
-                selectionsChangeHandler: this.handleSelectionsChange,
-                handleDeliveryInputs: this.handleDeliveryInputs,
-                handleBillingInputs: this.handleBillingInputs,
-                handleInvoiceInputs: this.handleInvoiceInputs,
-                handleCreditCardInputs: this.handleCreditCardInputs,
-                isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
-                deliveryNewAddress: this.state.deliveryNewAddress,
-                billingNewAddress: this.state.billingNewAddress,
-                addressesCollection,
-                countriesCollection,
-                deliverySelections: this.state.deliverySelection,
-                billingSelections: this.state.billingSelection,
-                currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
-                currentValueBillingSelection: this.getCurrentValueBillingSelection(),
-                extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
-                extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
-                isCheckoutFulfilled,
-                isUserLoggedIn,
-                shipmentMethods,
-                currentValueShipmentMethod: this.state.shipmentMethod,
-                paymentMethods,
-                currentValuePaymentMethod: this.state.paymentMethod,
-                paymentCreditCardDataInputs: this.state.paymentCreditCardData,
-                paymentInvoiceDataInputs: this.state.paymentInvoiceData,
-              }}
-            >
-              <Grid container className={classes.container}>
-                <Grid item xs={12} md={7} className={classes.leftColumn}>
-                  {
-                    orderId
-                      ? <OrderSuccess order={orderId} />
-                      : <CheckoutForms
-                        panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
-                      />
-                  }
-                </Grid>
-                <Grid item xs={12} md={5} className={classes.rightColumn}>
-                  <CartData
-                    products={products}
-                    totals={totals}
-                    isSendBtnDisabled={!this.checkCheckoutFormValidity()}
-                    sendData={this.handleSubmit}
-                    order={orderId}
-                  />
-                </Grid>
+        {!isProductsExists && !orderId
+          ? <AppPageTitle title={noProductsInCheckoutText} />
+          : <CheckoutPageContext.Provider
+            value={{
+              submitHandler: this.handleSubmit,
+              onBlurHandler: this.handleFormValidityOnBlur,
+              selectionsChangeHandler: this.handleSelectionsChange,
+              handleDeliveryInputs: this.handleDeliveryInputs,
+              handleBillingInputs: this.handleBillingInputs,
+              handleInvoiceInputs: this.handleInvoiceInputs,
+              handleCreditCardInputs: this.handleCreditCardInputs,
+              isBillingSameAsDelivery: this.state.billingSelection.isSameAsDelivery,
+              deliveryNewAddress: this.state.deliveryNewAddress,
+              billingNewAddress: this.state.billingNewAddress,
+              addressesCollection,
+              countriesCollection,
+              deliverySelections: this.state.deliverySelection,
+              billingSelections: this.state.billingSelection,
+              currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
+              currentValueBillingSelection: this.getCurrentValueBillingSelection(),
+              extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
+              extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
+              isCheckoutFulfilled,
+              isUserLoggedIn,
+              shipmentMethods,
+              currentValueShipmentMethod: this.state.shipmentMethod,
+              paymentMethods,
+              currentValuePaymentMethod: this.state.paymentMethod,
+              paymentCreditCardDataInputs: this.state.paymentCreditCardData,
+              paymentInvoiceDataInputs: this.state.paymentInvoiceData,
+            }}
+          >
+            <Grid container className={classes.container}>
+              <Grid item xs={12} md={7} className={classes.leftColumn}>
+                {
+                  orderId
+                    ? <OrderSuccess order={orderId} />
+                    : <CheckoutForms
+                      panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
+                    />
+                }
               </Grid>
-            </CheckoutPageContext.Provider>
-          : <AppPageTitle title={noProductsInCheckoutText} />
+              <Grid item xs={12} md={5} className={classes.rightColumn}>
+                <CartData
+                  products={products}
+                  totals={totals}
+                  isSendBtnDisabled={!this.checkCheckoutFormValidity()}
+                  sendData={this.handleSubmit}
+                  order={orderId}
+                />
+              </Grid>
+            </Grid>
+          </CheckoutPageContext.Provider>
         }
       </AppMain>
     );
