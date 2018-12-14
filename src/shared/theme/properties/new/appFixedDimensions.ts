@@ -77,7 +77,7 @@ export const appFixedDimensions: IAppFixedDimensions = {
   },
   cartDrop: {
     width: 418,
-    height: 530,
+    height: 550,
     overFlow: 42,
     triangle: 17,
 

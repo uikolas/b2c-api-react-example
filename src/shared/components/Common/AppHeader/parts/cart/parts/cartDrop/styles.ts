@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => createStyles({
     width: theme.appFixedDimensions.cartDrop.width,
     padding: theme.spacing.unit * 3,
     boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0.05)',
-    minHeight: theme.appFixedDimensions.cartDrop.height,
+    maxHeight: theme.appFixedDimensions.cartDrop.height,
     borderBottom: `1px solid ${theme.appColors.weakGrey}`,
     borderLeft: `1px solid ${theme.appColors.weakGrey}`,
     borderRight: `1px solid ${theme.appColors.weakGrey}`,

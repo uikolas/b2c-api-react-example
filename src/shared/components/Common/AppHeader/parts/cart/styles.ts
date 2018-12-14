@@ -28,7 +28,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   cartContent: {
     top: "0 !important",
-    minHeight: theme.appFixedDimensions.cartDrop.height,
+    maxHeight: theme.appFixedDimensions.cartDrop.height,
     overflow: "visible",
     borderRadius: 0,
   },
