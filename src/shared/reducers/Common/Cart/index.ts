@@ -155,7 +155,7 @@ export function isCartCreated(state: any, props: any): boolean {
 }
 
 export function isCartStateLoading(state: any, props: any): boolean {
-  return (state.cart && state.cart.pending && state.cart.pending === true);
+  return Boolean(state.cart && state.cart.pending && state.cart.pending === true);
 }
 
 export function isCartStateFulfilled(state: any, props: any): boolean {

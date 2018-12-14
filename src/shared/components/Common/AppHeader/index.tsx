@@ -123,7 +123,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                       : <MainNav mobileNavState={ isMobileNavOpened }/>
                     }
 
-                    <AddNav showSearch={ showSearch } handleSearch={ this.handleSearch }/>
+                    <AddNav showSearch={ showSearch } handleSearch={ this.handleSearch } isSticky={isSticky} />
                   </div>
                   { isLoading ? <Preloader extraClasses={ classes.preloader }/> : null }
                 </div>

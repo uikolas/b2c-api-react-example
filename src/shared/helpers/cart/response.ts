@@ -1,5 +1,6 @@
 import { ICartDataResponse } from '../../interfaces/cart';
 import { parseImageSets } from '../product/imageSetsParser';
+import {priceTypeNameDefault, priceTypeNameOriginal} from "src/shared/interfaces/product/index";
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
   return {
@@ -42,6 +43,20 @@ export const parseAddToCartResponse = (data: any): ICartDataResponse => {
                 result[row.id].superAttributes.push({
                   [attribute]: row.attributes.attributes[attribute],
                 });
+              }
+            });
+          }
+        } else if (row.type === 'concrete-product-prices') {
+          result[row.id].prices = row.attributes.prices;
+          if (row.attributes.prices && row.attributes.prices.length) {
+            row.attributes.prices.forEach((priceData: any) => {
+              if (priceData.priceTypeName === priceTypeNameDefault) {
+                result[row.id].priceDefaultGross = priceData.grossAmount;
+                result[row.id].priceDefaultNet = priceData.netAmount;
+              }
+              if (priceData.priceTypeName === priceTypeNameOriginal) {
+                result[row.id].priceOriginalGross = priceData.grossAmount;
+                result[row.id].priceOriginalNet = priceData.netAmount;
               }
             });
           }

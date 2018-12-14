@@ -15,6 +15,7 @@ import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
 import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
+import {getPopoverPosition} from "src/shared/components/Common/AppHeader/helpers";
 
 @(withRouter as any)
 @connect
@@ -22,7 +23,14 @@ export class CartComponent extends React.PureComponent<Props, State> {
   public state: State = {
     anchorEl: null,
     isCartNotificationOpen: true,
+    pageWidth: 0,
+    pageHeight: 0,
   };
+
+  public componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener('resize', this.updateWindowDimensions);
+  }
 
   public componentDidUpdate(prevProps: Props) {
     if (this.props.location !== prevProps.location) {
@@ -32,6 +40,14 @@ export class CartComponent extends React.PureComponent<Props, State> {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
       this.handleOpenCartNotification();
     }
+
+    if (this.props.cartProductsQuantity === 0 && prevProps.cartProductsQuantity > 0) {
+      this.closePopover();
+    }
+  }
+
+  public componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
   private openPopover = ({currentTarget}: ClickEvent) => {
@@ -55,16 +71,27 @@ export class CartComponent extends React.PureComponent<Props, State> {
     this.setState(() => ({isCartNotificationOpen: true}));
   };
 
+  private updateWindowDimensions = () => {
+    this.setState({ pageWidth: window.innerWidth, pageHeight: window.innerHeight });
+  };
+
   public render() {
     const {anchorEl, isCartNotificationOpen} = this.state;
-    const {classes, cartItemsQuantity} = this.props;
+    const {classes, cartItemsQuantity, isSticky} = this.props;
     const open = Boolean(anchorEl);
+    const popoverPos = getPopoverPosition({pageWidth: this.state.pageWidth, isSticky});
+    const popoverStyles = {
+      top: popoverPos.top,
+      left: 0,
+    };
+
     const popoverProps = {
       open,
       anchorEl,
       elevation: 0,
       onClose: this.closePopover,
     };
+
     const cartButton = (
       <IconButton aria-label="cart" onClick={ this.openPopover }>
         <Badge
@@ -82,23 +109,28 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
     return (
       <div>
-        { cartItemsQuantity === 0 ? (
-          <Tooltip disableFocusListener placement="top" title="Cart is empty">
-            { cartButton }
-          </Tooltip>
-        ) : cartButton }
+        { cartItemsQuantity === 0
+          ? (<Tooltip disableFocusListener placement="top" title="Cart is empty">
+              { cartButton }
+            </Tooltip>)
+          : cartButton
+        }
 
         <Popover
           { ...popoverProps }
-          anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
-          transformOrigin={ {vertical: 'top', horizontal: 'center'} }
+          className = {classes.popover}
+          anchorReference="anchorPosition"
+          anchorPosition={{ top: 0, left: popoverPos.left }}
+          style = {popoverStyles}
+          PaperProps = {{classes: {root: classes.cartContent}}}
         >
           <PopoverDrop>
+            <div className={`${open ? classes.cartFlyOutOpen : ''}`}></div>
             <CartDrop/>
           </PopoverDrop>
         </Popover>
 
-        <SprykerNotification
+       {/* <SprykerNotification
           message="Your product was added to your cart"
           extraClasses={ classes.cartNotification }
           isOpen={ isCartNotificationOpen }
@@ -106,7 +138,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
           onClickOpen={ this.handleOpenCartNotification }
           vertical="top"
           horizontal="right"
-        />
+        />*/}
       </div>
     );
   }

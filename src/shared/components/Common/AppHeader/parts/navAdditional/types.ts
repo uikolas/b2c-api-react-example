@@ -4,4 +4,5 @@ import { styles } from './styles';
 export interface AddNavProps extends WithStyles<typeof styles> {
   showSearch: boolean;
   handleSearch(): void;
+  isSticky: boolean;
 }

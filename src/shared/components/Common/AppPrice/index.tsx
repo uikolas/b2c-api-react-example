@@ -14,10 +14,22 @@ interface AppPriceProps extends WithStyles<typeof styles> {
   title?: string;
   extraClassName?: string;
   isStylesInherited?: boolean;
+  isMinus?: boolean;
 }
 
 export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
-  const {classes, currency, value, specificCurrency, priceType, title, extraClassName, isStylesInherited} = props;
+  const {
+    classes,
+    currency,
+    value,
+    specificCurrency,
+    priceType,
+    title,
+    extraClassName,
+    isStylesInherited,
+    isMinus
+  } = props;
+
   if (!currency) {
     return null;
   }
@@ -41,11 +53,12 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
     value || value === 0
       ? <span className={classNames}>
           { title ? title : null }
-        <FormattedNumber
-          value={ valueFormatted }
-          style="currency"
-          currency={ specificCurrency ? specificCurrency : currency }
-        />
+          {isMinus ? <span>&nbsp; - &nbsp;</span> : null}
+          <FormattedNumber
+            value={ valueFormatted }
+            style="currency"
+            currency={ specificCurrency ? specificCurrency : currency }
+          />
       </span>
       : null
   );

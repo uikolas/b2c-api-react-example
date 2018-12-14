@@ -8,11 +8,21 @@ import {styles} from "./styles";
 
 export const AppBtnLinkBase: React.SFC<IAppBtnLinkProps> = (props): JSX.Element => {
   const {
-    classes, title, path, extraClassName
+    classes, title, path, extraClassName, type
   }  = props;
 
+  let classNames = classes.root;
+  if (extraClassName) {
+    classNames += ` ${extraClassName}`;
+  }
+  if (type === 'black') {
+    classNames += ` ${classes.black}`;
+  }
+
   return (
-    <NavLink className={`${classes.root} ${extraClassName ? extraClassName : ''}`} to={path}>{title}</NavLink>
+    <NavLink className={classNames} to={path}>
+      {title}
+    </NavLink>
   );
 };
 

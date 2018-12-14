@@ -1,6 +1,16 @@
 import { TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { IAbstractTotals } from '../abstract/totals';
-import { TProductQuantity, TProductSKU, TProductImageSRC, TProductAvailability } from '../product';
+import {
+  TProductQuantity,
+  TProductSKU,
+  TProductImageSRC,
+  TProductAvailability,
+  IProductPricesItem,
+  TPriceTypeOriginalGross,
+  TPriceTypeOriginalNet,
+  TPriceTypeDefaultGross,
+  TPriceTypeDefaultNet
+} from '../product';
 import {TProductName, TProductPrice} from "src/shared/interfaces/product";
 
 export type TCartId = string;
@@ -32,11 +42,16 @@ export interface ICartItem {
   image: TProductImageSRC | null;
   quantity: TProductQuantity | null;
   amount: TProductPrice | null;
+  prices: Array<IProductPricesItem>;
   calculations: ICartItemCalculation | null;
   groupKey: string | null;
   availability: TProductAvailability | null;
   availableQuantity: TProductQuantity | null;
   superAttributes: Array<{ [key: string]: string }> | null;
+  priceOriginalGross: TPriceTypeOriginalGross;
+  priceOriginalNet: TPriceTypeOriginalNet;
+  priceDefaultGross: TPriceTypeDefaultGross;
+  priceDefaultNet: TPriceTypeDefaultNet;
 }
 
 export interface ICartDataResponse {

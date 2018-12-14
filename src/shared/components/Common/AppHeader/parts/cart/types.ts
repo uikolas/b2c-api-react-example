@@ -7,9 +7,12 @@ export interface CartProps extends WithStyles<typeof styles>, WithRouter {
   // connect
   cartItemsQuantity?: TProductQuantity;
   cartProductsQuantity?: TProductQuantity;
+  isSticky: boolean;
 }
 
 export interface CartState {
   anchorEl: HTMLElement | null;
   isCartNotificationOpen: boolean;
+  pageWidth: number;
+  pageHeight: number;
 }

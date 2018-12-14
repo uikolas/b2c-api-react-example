@@ -1,46 +1,59 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
+export const cartProductImageSize = 100;
+
 export const styles = (theme: Theme) => createStyles({
   productItem: {
-    display: 'flex',
     alignItems: 'stretch',
-    padding: '15px 0',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
   },
-  image: {
-    padding: 10,
-    background: theme.appColors.lightGrey,
-    borderRadius: 4,
-    '& img': {
-      display: 'block',
-      maxWidth: '100%',
-      maxHeight: '100%',
-    },
+  content: {
+    height: "100%",
   },
-  imageContainer: {
-    width: 100,
-    height: 100,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rowsContainer: {
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
+  contentOuter: {
+    width: `calc(100% - ${cartProductImageSize}px)`,
     paddingLeft: 15,
   },
-  topRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: 10,
+  removeBtn: {
+    padding: 0,
+    borderRadius: 0,
+    minHeight: 0,
+    textTransform: "none",
+    color: theme.appColors.blue,
+    minWidth: "auto",
+    fontSize: theme.appFixedDimensions.fontSize.small,
+
+    "&:hover": {
+      color: theme.appColors.black,
+      backgroundColor: "transparent",
+    }
+
   },
-  name: {},
-  price: {},
-  bottomRow: {},
-  quantity: {},
-  btnRemove: {
-    marginLeft: '-16px'
+  actionArea: {
+    display: "flex",
+    justifyContent: "flex-end",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  },
+  imageOuter: {
+
+  },
+  name: {
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    paddingRight: theme.spacing.unit,
+  },
+  price: {
+    fontSize: theme.appFixedDimensions.fontSize.small,
+  },
+  oldPrice: {
+    fontSize: theme.appFixedDimensions.fontSize.small,
+  },
+  quantity: {
+    color: theme.appColors.grey,
+    fontSize: theme.appFixedDimensions.fontSize.small,
   },
 });
