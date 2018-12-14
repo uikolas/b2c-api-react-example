@@ -7,7 +7,7 @@ export const styles = (theme: Theme) => createStyles({
     width: theme.appFixedDimensions.cartDrop.width,
     padding: theme.spacing.unit * 3,
     boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0.05)',
-    height: theme.appFixedDimensions.cartDrop.height,
+    minHeight: theme.appFixedDimensions.cartDrop.height,
     borderBottom: `1px solid ${theme.appColors.weakGrey}`,
     borderLeft: `1px solid ${theme.appColors.weakGrey}`,
     borderRight: `1px solid ${theme.appColors.weakGrey}`,
@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => createStyles({
   cartDropProductsList: {
     listStyle: 'none',
     overflowY: "auto",
-    maxHeight: 148 * 2,
+    maxHeight: (148 * 2) + 1,
     margin: 0,
     padding: 0,
     fontSize: theme.appFixedDimensions.fontSize.small,
@@ -49,32 +49,31 @@ export const styles = (theme: Theme) => createStyles({
     padding: `${theme.spacing.unit * 2}px 0`,
     borderTop: `1px solid ${theme.appColors.weakGrey}`,
     borderBottom: `1px solid ${theme.appColors.weakGrey}`,
-    marginBottom: 24,
   },
   cartTotal: {
-    fontSize: theme.appFixedDimensions.fontSize.medium,
-    lineHeight: '20px',
-    fontWeight: 'bold',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    textTransform: 'uppercase',
     '&:not(:last-child)': {
       marginBottom: 10,
     },
   },
-  priceTotal: {
+  fontTotal: {
     fontSize: theme.appFixedDimensions.fontSize.medium,
-    lineHeight: '20px',
     fontWeight: 'bold',
   },
   cartBtns: {
+    marginTop: theme.spacing.unit * 3,
     display: 'flex',
-    '& a': {
-      flex: 1,
-      '&:not(:last-child)': {
-        marginRight: 12,
-      },
-    },
+    justifyContent: "space-between",
   },
+  action: {
+    flex: 1,
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    textTransform: "uppercase",
+    fontWeight: 500,
+    justifyContent: "center",
+    maxWidth: 173,
+    width: "100%",
+  }
 });

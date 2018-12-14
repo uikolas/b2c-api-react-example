@@ -30,4 +30,13 @@ export const styles = (theme: Theme) => createStyles({
       transition: "all 0.4s ease",
     }
   },
+
+  black: {
+    color: theme.appColors.white,
+    backgroundColor: theme.appColors.deepBlack,
+    "&:hover": {
+      backgroundColor: theme.appColors.white,
+      color: theme.appColors.deepBlack,
+    }
+  }
 });

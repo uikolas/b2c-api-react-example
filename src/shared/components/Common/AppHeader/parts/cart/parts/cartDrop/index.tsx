@@ -13,6 +13,7 @@ import { styles } from './styles';
 import { connect } from './connect';
 import {CartDiscountsTitle, CartTitle, CartTotalTitle} from "src/shared/constants/cart/index";
 import {CheckoutTitle} from "src/shared/constants/checkout/index";
+import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
@@ -44,36 +45,33 @@ export class CartDropComponent extends React.PureComponent<Props> {
         </ul>
 
         <div className={ classes.cartTotalContainer }>
+          { (totals.discountTotal && totals.discountTotal > 0)
+            ? <div className={ classes.cartTotal }>
+                <Typography component="h5" className={ classes.fontTotal }>
+                  {CartDiscountsTitle}
+                </Typography>
+                <AppPrice
+                  value={totals.discountTotal }
+                  isMinus
+                  extraClassName={ classes.fontTotal }
+                />
+              </div>
+            : null
+          }
           <div className={ classes.cartTotal }>
-            <span>{CartDiscountsTitle}</span>
-            <AppPrice
-              value={ -totals.discountTotal }
-              extraClassName={ classes.priceTotal }
-            />
-          </div>
-          <div className={ classes.cartTotal }>
-            <span>{CartTotalTitle}</span>
+            <Typography component="h5" className={ classes.fontTotal }>
+              {CartTotalTitle}
+            </Typography>
             <AppPrice
               value={ totals.grandTotal }
-              extraClassName={ classes.priceTotal }
+              extraClassName={ classes.fontTotal }
             />
           </div>
         </div>
 
         <div className={ classes.cartBtns }>
-          <Button
-            variant="outlined" color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathCartPage }/> }
-          >
-            {CartTitle}
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathCheckoutPage }/> }
-          >
-            {CheckoutTitle}
-          </Button>
+          <AppBtnLink title={CartTitle} path={pathCartPage} extraClassName={classes.action} />
+          <AppBtnLink title={CheckoutTitle} path={pathCheckoutPage} type="black" extraClassName={classes.action} />
         </div>
       </div>
     );
