@@ -45,7 +45,7 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
       if (!action.payload) {
         return {
           ...state,
-          data: initialState.data,
+          data: {...initialState.data, cartCreated: true},
           ...getReducerPartFulfilled(),
         };
       }
