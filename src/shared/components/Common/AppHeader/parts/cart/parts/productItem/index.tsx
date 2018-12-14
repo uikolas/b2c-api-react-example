@@ -15,8 +15,6 @@ import {priceTypeNameOriginal} from "src/shared/interfaces/product/index";
 
 export const ProductItemComponent: React.SFC<Props> = ({classes, productData, deleteItem}) => {
 
-  console.log('productData', productData);
-
   return (
     <Grid container className={classes.productItem}>
       <Grid item className={classes.imageOuter} >
@@ -36,19 +34,26 @@ export const ProductItemComponent: React.SFC<Props> = ({classes, productData, de
               </Grid>
 
               <Grid item xs={12} sm={3}>
-                <Typography component="p" className={classes.price}>
-                  <AppPrice
-                    value={productData.calculations.sumPrice}
-                    isStylesInherited
-                  />
-                </Typography>
-                <Typography component="p" className={classes.price}>
-                  <AppPrice
-                    value={productData.calculations.sumPrice}
-                    priceType={priceTypeNameOriginal}
-                    isStylesInherited
-                  />
-                </Typography>
+                {productData.priceDefaultGross
+                   ? <Typography component="p" className={classes.price}>
+                        <AppPrice
+                          value={productData.priceDefaultGross}
+                          isStylesInherited
+                        />
+                      </Typography>
+                  : null
+                }
+
+                {productData.priceOriginalGross
+                  ? <Typography component="p" className={classes.price}>
+                      <AppPrice
+                        value={productData.priceOriginalGross}
+                        priceType={priceTypeNameOriginal}
+                        isStylesInherited
+                      />
+                    </Typography>
+                  : null
+                }
               </Grid>
 
             </Grid>

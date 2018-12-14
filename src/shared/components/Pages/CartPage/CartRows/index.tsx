@@ -6,8 +6,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField/TextField';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { ICartItem } from 'src/shared/reducers/Common/Cart/types';
 import { SquareImage } from 'src/shared/components/Common/SquareImage';
+import { ICartItem } from 'src/shared/interfaces/cart';
 import { styles } from '../styles';
 import { CartRowsProps as Props } from './types';
 
