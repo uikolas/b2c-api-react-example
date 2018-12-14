@@ -10,6 +10,7 @@ export interface CartDropProps extends WithStyles<typeof styles> {
   isUserLoggedIn?: boolean;
   cartId: string;
   anonymId: string;
+  isCartLoading: boolean;
   cartDeleteItemAction?(cartId: TCartId, itemId: TProductSKU): void;
   removeItemGuestCartAction?(cartId: TCartId, itemId: TProductSKU, anonymId: string): void;
 }

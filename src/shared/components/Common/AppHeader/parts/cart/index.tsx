@@ -40,6 +40,10 @@ export class CartComponent extends React.PureComponent<Props, State> {
     if (this.props.cartProductsQuantity > prevProps.cartProductsQuantity) {
       this.handleOpenCartNotification();
     }
+
+    if (this.props.cartProductsQuantity === 0 && prevProps.cartProductsQuantity > 0) {
+      this.closePopover();
+    }
   }
 
   public componentWillUnmount() {
@@ -105,12 +109,12 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
     return (
       <div>
-        { cartItemsQuantity === 0 ? (
-          <Tooltip disableFocusListener placement="top" title="Cart is empty">
-            { cartButton }
-          </Tooltip>
-        ) : cartButton }
-
+        { cartItemsQuantity === 0
+          ? (<Tooltip disableFocusListener placement="top" title="Cart is empty">
+              { cartButton }
+            </Tooltip>)
+          : cartButton
+        }
 
         <Popover
           { ...popoverProps }

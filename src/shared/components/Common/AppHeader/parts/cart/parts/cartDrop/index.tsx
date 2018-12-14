@@ -12,6 +12,7 @@ import { connect } from './connect';
 import {CartDiscountsTitle, CartTitle, CartTotalTitle} from "src/shared/constants/cart/index";
 import {CheckoutTitle} from "src/shared/constants/checkout/index";
 import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
+import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
@@ -26,10 +27,12 @@ export class CartDropComponent extends React.PureComponent<Props> {
   };
 
   public render() {
-    const {classes, cartItems, totals} = this.props;
+    const {classes, cartItems, totals, isCartLoading} = this.props;
 
     return (
       <div className={ classes.cartDrop }>
+        {isCartLoading ? <AppBackdrop isOpen /> : null}
+
         <Typography gutterBottom component="h3" className={classes.title}>
           {CartTitle}
         </Typography>
@@ -45,15 +48,15 @@ export class CartDropComponent extends React.PureComponent<Props> {
         <div className={ classes.cartTotalContainer }>
           { (totals.discountTotal && totals.discountTotal > 0)
             ? <div className={ classes.cartTotal }>
-                <Typography component="h5" className={ classes.fontTotal }>
-                  {CartDiscountsTitle}
-                </Typography>
-                <AppPrice
-                  value={totals.discountTotal }
-                  isMinus
-                  extraClassName={ classes.fontTotal }
-                />
-              </div>
+              <Typography component="h5" className={ classes.fontTotal }>
+                {CartDiscountsTitle}
+              </Typography>
+              <AppPrice
+                value={totals.discountTotal }
+                isMinus
+                extraClassName={ classes.fontTotal }
+              />
+            </div>
             : null
           }
           <div className={ classes.cartTotal }>
