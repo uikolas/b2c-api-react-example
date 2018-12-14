@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
@@ -10,6 +11,8 @@ import { ProductItem } from '../productItem';
 import { CartDropProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
+import {CartDiscountsTitle, CartTitle, CartTotalTitle} from "src/shared/constants/cart/index";
+import {CheckoutTitle} from "src/shared/constants/checkout/index";
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
@@ -28,7 +31,9 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
     return (
       <div className={ classes.cartDrop }>
-        <p className={ classes.title }><strong>Cart</strong></p>
+        <Typography gutterBottom component="h3" className={classes.title}>
+          {CartTitle}
+        </Typography>
 
         <ul className={ classes.cartDropProductsList }>
           { cartItems.map(cartItem => (
@@ -40,14 +45,14 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         <div className={ classes.cartTotalContainer }>
           <div className={ classes.cartTotal }>
-            <span>Discounts</span>
+            <span>{CartDiscountsTitle}</span>
             <AppPrice
               value={ -totals.discountTotal }
               extraClassName={ classes.priceTotal }
             />
           </div>
           <div className={ classes.cartTotal }>
-            <span>Total</span>
+            <span>{CartTotalTitle}</span>
             <AppPrice
               value={ totals.grandTotal }
               extraClassName={ classes.priceTotal }
@@ -60,14 +65,14 @@ export class CartDropComponent extends React.PureComponent<Props> {
             variant="outlined" color="primary"
             component={ ({innerRef, ...props}) => <Link { ...props } to={ pathCartPage }/> }
           >
-            Cart
+            {CartTitle}
           </Button>
           <Button
             variant="contained"
             color="primary"
             component={ ({innerRef, ...props}) => <Link { ...props } to={ pathCheckoutPage }/> }
           >
-            Checkout
+            {CheckoutTitle}
           </Button>
         </div>
       </div>

@@ -6,6 +6,7 @@ export const styles = (theme: Theme) => createStyles({
     position: 'relative',
     zIndex: 999,
     pointerEvents: 'none',
+    // height: 1,
   },
   header: {
     position: 'relative',

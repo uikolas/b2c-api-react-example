@@ -2,7 +2,6 @@ import {GridSpacing} from "@material-ui/core/Grid";
 import {baseTheme} from "src/shared/theme";
 
 export interface IAppFixedDimensions {
-  headerHeight: React.CSSProperties['height'];
   card: {
     actionAreaWidth: React.CSSProperties['width'];
     actionAreaHeight: React.CSSProperties['height'];
@@ -22,16 +21,28 @@ export interface IAppFixedDimensions {
   };
   customBreakpoints: {
     tablet: number;
+    smallTablet: number;
+    phone: number;
   };
   customerSubPageWidth: React.CSSProperties['width'];
   sprykerLogo: {
     width: number;
     height: number;
   };
+  headerHeight: {
+    desktop: number;
+    sticky: number;
+    tablet: number;
+  };
+  cartDrop: {
+    width: number;
+    height: number;
+    overFlow: number;
+    triangle: number;
+  };
 }
 
 export const appFixedDimensions: IAppFixedDimensions = {
-  headerHeight: 65,
   card: {
     actionAreaWidth: 282,
     actionAreaHeight: 428,
@@ -51,10 +62,24 @@ export const appFixedDimensions: IAppFixedDimensions = {
   },
   customBreakpoints: {
     tablet: 1280,
+    smallTablet: 960,
+    phone: 600,
   },
   customerSubPageWidth: 740,
   sprykerLogo: {
     width: 170,
     height: 60
-  }
+  },
+  headerHeight: {
+    desktop: 148,
+    sticky: 65,
+    tablet: 204,
+  },
+  cartDrop: {
+    width: 418,
+    height: 530,
+    overFlow: 42,
+    triangle: 17,
+
+  },
 };

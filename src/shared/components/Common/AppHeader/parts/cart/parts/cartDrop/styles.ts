@@ -1,34 +1,42 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
+
 export const styles = (theme: Theme) => createStyles({
   cartDrop: {
-    width: 418,
-    padding: 24,
-    border: '1px solid #d8d8d8',
+    width: theme.appFixedDimensions.cartDrop.width,
+    padding: theme.spacing.unit * 3,
     boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0.05)',
+    height: theme.appFixedDimensions.cartDrop.height,
+    borderBottom: `1px solid ${theme.appColors.weakGrey}`,
+    borderLeft: `1px solid ${theme.appColors.weakGrey}`,
+    borderRight: `1px solid ${theme.appColors.weakGrey}`,
   },
   title: {
-    fontSize: '20px',
-    lineHeight: '24px',
-    fontWeight: 'bold',
+    fontSize: theme.appFixedDimensions.fontSize.big,
+    lineHeight: 'normal',
+    fontWeight: 500,
     color: theme.appColors.black,
     letterSpacing: '-.5px',
-    margin: '0 0 10px',
-    borderBottom: '1px solid #d8d8d8',
+    margin: 0,
+    borderBottom: `1px solid ${theme.appColors.weakGrey}`,
     paddingBottom: 10,
-    '& strong': {
-      fontWeight: 400,
-    },
+    paddingTop: 10,
   },
   cartDropProductsList: {
     listStyle: 'none',
+    overflowY: "auto",
+    maxHeight: 148 * 2,
     margin: 0,
     padding: 0,
-    fontSize: 14,
+    fontSize: theme.appFixedDimensions.fontSize.small,
     lineHeight: '18px',
     '& li': {
-      borderBottom: '1px solid #d8d8d8',
+      borderBottom: `1px solid ${theme.appColors.weakGrey}`,
+      minHeight: 148,
+      "&:last-child": {
+        borderBottom: "none",
+      }
     },
     '& a': {
       color: theme.appColors.black,
@@ -38,12 +46,13 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   cartTotalContainer: {
-    padding: '16px 0',
-    borderBottom: '1px solid #d8d8d8',
+    padding: `${theme.spacing.unit * 2}px 0`,
+    borderTop: `1px solid ${theme.appColors.weakGrey}`,
+    borderBottom: `1px solid ${theme.appColors.weakGrey}`,
     marginBottom: 24,
   },
   cartTotal: {
-    fontSize: 16,
+    fontSize: theme.appFixedDimensions.fontSize.medium,
     lineHeight: '20px',
     fontWeight: 'bold',
     display: 'flex',
@@ -55,7 +64,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   priceTotal: {
-    fontSize: 16,
+    fontSize: theme.appFixedDimensions.fontSize.medium,
     lineHeight: '20px',
     fontWeight: 'bold',
   },

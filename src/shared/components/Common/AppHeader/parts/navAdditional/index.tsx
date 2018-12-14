@@ -10,7 +10,7 @@ import { Cart } from '../cart';
 import { AddNavProps as Props } from './types';
 import { styles } from './styles';
 
-export const AddNavComponent: React.SFC<Props> = ({classes, showSearch, handleSearch}) => (
+export const AddNavComponent: React.SFC<Props> = ({classes, showSearch, handleSearch, isSticky}) => (
   <div className={ classes.addNavContainer }>
     <div className={ merge([classes.addNavItem, showSearch ? classes.addNavSearch : '']) }>
       <IconButton onClick={ handleSearch } aria-label="Search">
@@ -19,7 +19,7 @@ export const AddNavComponent: React.SFC<Props> = ({classes, showSearch, handleSe
     </div>
     {/*<div className={ classes.addNavItem }><Lang/></div>*/}
     <div className={ classes.addNavItem }><User/></div>
-    <div className={ classes.addNavItem }><Cart/></div>
+    <div className={`${classes.addNavItem}`}><Cart isSticky={isSticky} /></div>
   </div>
 );
 
