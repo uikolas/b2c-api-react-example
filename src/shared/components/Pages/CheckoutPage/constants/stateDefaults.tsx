@@ -116,17 +116,3 @@ export const paymentInvoiceDefault: ICheckoutInvoiceState = {
     isError: false,
   },
 };
-
-export const addressDefault: IAddressItem = {
-  firstName: '',
-  lastName: '',
-  salutation: '',
-  address1: '',
-  address2: '',
-  address3: '',
-  zipCode: '',
-  city: '',
-  country: '',
-  company: '',
-  phone: '',
-};

@@ -48,7 +48,7 @@ export const deliveryConfigInputStable: IDeliveryObjectConfigInputStable = {
     inputName: 'country',
   },
   company: {
-    isRequired: true,
+    isRequired: false,
     inputName: 'company',
   },
   phone: {

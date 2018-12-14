@@ -22,7 +22,9 @@ export class ProtectedRoute extends React.PureComponent<Props> {
 
   public componentDidUpdate(prevProps: Props): void {
     if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
+      this.props.history.push(pathLoginPage);
       toast.success(customerLogout);
+      setTimeout(() => { this.props.getGuestCartAction(this.props.anonymId); }, 100);
     }
 
     this.checkAuthorized(prevProps.isUserLoggedIn);
@@ -36,9 +38,9 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     }
   };
 
-  // RENDER
-
   public render(): React.ReactNode {
-    return this.props.isUserLoggedIn ? <Route { ...this.props } /> : null;
+    return this.props.isUserLoggedIn
+      ? <Route { ...this.props } />
+      : null;
   }
 }

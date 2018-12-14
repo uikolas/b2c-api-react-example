@@ -110,12 +110,14 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
           }
 
           {label
-            ? <InputLabel classes={{root: `${classes.label} ${extraLabelClassName ? extraLabelClassName : ''}`}} >
+            ? <InputLabel
+                shrink
+                classes={{root: `${classes.label} ${extraLabelClassName ? extraLabelClassName : ''}`}}
+            >
                 {label}
               </InputLabel>
             : null
           }
-
 
           <Select
             value={currentMode }

@@ -42,6 +42,13 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
       return handleRejected(state, action.payload);
     case `${CART_CREATE}_FULFILLED`:
     case `${GET_CARTS}_FULFILLED`:
+      if (!action.payload) {
+        return {
+          ...state,
+          data: initialState.data,
+          ...getReducerPartFulfilled(),
+        };
+      }
       return handleCartFulfilled(state, action.payload);
     case `${CART_CREATE}_REJECTED`:
       return handleCartCreateRejected(state, action.payload);
@@ -67,7 +74,8 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
     case PAGES_CUSTOMER_LOGOUT:
       return {
         ...state,
-        data: initialState.data,
+        data: {...initialState.data, cartCreated: true},
+        ...getReducerPartFulfilled(),
       };
     default:
       return state;

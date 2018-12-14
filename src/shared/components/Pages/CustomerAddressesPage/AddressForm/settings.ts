@@ -12,6 +12,8 @@ import {
   InputLabelPhone,
   InputLabelDefaultDeliveryAddress,
   InputLabelDefaultShippingAddress,
+  InputSelectSalutationFirstItem,
+  InputSelectCountryFirstItem,
 } from "src/shared/constants/forms/labels";
 import { salutationVariants } from "src/shared/constants/customer";
 import { TSalutationVariant } from "src/shared/interfaces/customer";
@@ -52,13 +54,19 @@ export const setFormFields = (
     [{
       type: 'select',
       inputName: 'salutation',
-      inputValue: salutation,
+      inputValue: salutation || ' ',
       spaceNumber: 3,
       isRequired: true,
       label: InputLabelSalutation,
       isError: submitted && !salutation,
       menuItems: salutationVariants
         .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
+      menuItemFirst: {
+        value: " ",
+        name: InputSelectSalutationFirstItem,
+        selected: true,
+        disabled: true,
+      },
     }], [{
       type: 'input',
       inputName: 'firstName',
@@ -123,13 +131,19 @@ export const setFormFields = (
     }], [{
       type: 'select',
       inputName: 'iso2Code',
-      inputValue: iso2Code,
+      inputValue: iso2Code || ' ',
       spaceNumber: 6,
       isRequired: true,
       label: InputLabelCountry,
       isError: submitted && !iso2Code,
       menuItems: countries
         .map((country: ICountries) => ({value: country.iso2Code, name: country.name})),
+      menuItemFirst: {
+        value: " ",
+        name: InputSelectCountryFirstItem,
+        selected: true,
+        disabled: true,
+      },
     }, {
       type: 'input',
       inputName: 'phone',

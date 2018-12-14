@@ -1,4 +1,4 @@
-import api from '../../api';
+import api, { removeAuthToken  } from '../../api';
 import { toast } from 'react-toastify';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
@@ -7,8 +7,10 @@ import * as cartActions from 'src/shared/actions/Common/Cart';
 import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
 
 export class GuestCartService extends ApiServiceAbstract {
-  public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<any> {
+  public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<void> {
     try {
+      removeAuthToken();
+
       dispatch(cartActions.cartAddItemPendingStateAction());
 
       const body = {
@@ -28,20 +30,20 @@ export class GuestCartService extends ApiServiceAbstract {
         toast.success(cartAddProducts);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
-        return responseParsed;
       } else {
-        return this.errorMessageInform(response, dispatch);
+        this.errorMessageInform(response, dispatch);
       }
 
     } catch (error) {
       dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  public static async getGuestCart(dispatch: Function, anonymId: string): Promise<any> {
+  public static async getGuestCart(dispatch: Function, anonymId: string): Promise<string> {
     try {
+      removeAuthToken();
+
       dispatch(cartActions.getCartsPendingStateAction());
 
       const response: any = await api.get(
@@ -52,7 +54,7 @@ export class GuestCartService extends ApiServiceAbstract {
       if (response.ok) {
         if (!response.data.data.length) {
           dispatch(cartActions.getCartsFulfilledStateAction(null));
-          return null;
+          return '';
         }
 
         const responseParsed = parseGuestCartResponse({
@@ -62,20 +64,23 @@ export class GuestCartService extends ApiServiceAbstract {
         dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
         return responseParsed.id;
       } else {
-        return this.errorMessageInform(response, dispatch);
+        this.errorMessageInform(response, dispatch);
+        return '';
       }
 
     } catch (err) {
       dispatch(cartActions.getCartsRejectedStateAction(err.message));
       toast.error('Unexpected Error: ' + err.message);
-      return null;
+      return '';
     }
   }
 
   public static async guestCartRemoveItem(
     dispatch: Function, cartUid: string, sku: string, anonymId: string,
-  ): Promise<any> {
+  ): Promise<void> {
     try {
+      removeAuthToken();
+
       dispatch(cartActions.cartDeleteItemPendingStateAction);
 
       const response: any = await api.delete(
@@ -86,22 +91,23 @@ export class GuestCartService extends ApiServiceAbstract {
 
       if (response.ok) {
         toast.success(cartRemoveItems);
-        return GuestCartService.getGuestCart(dispatch, anonymId);
+        await GuestCartService.getGuestCart(dispatch, anonymId);
       } else {
-        return this.errorMessageInform(response, dispatch);
+        this.errorMessageInform(response, dispatch);
       }
 
     } catch (error) {
       dispatch(cartActions.getCartsRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
   public static async guestCartUpdate(
     dispatch: Function, payload: ICartAddItem, cartId: TCartId, anonymId: string,
-  ): Promise<any> {
+  ): Promise<void> {
     try {
+      removeAuthToken();
+
       dispatch(cartActions.cartUpdateItemPendingStateAction());
 
       const body = {
@@ -121,22 +127,19 @@ export class GuestCartService extends ApiServiceAbstract {
         toast.success(cartChangeQty);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
-        return responseParsed;
       } else {
-        return this.errorMessageInform(response, dispatch);
+        this.errorMessageInform(response, dispatch);
       }
 
     } catch (error) {
       dispatch(cartActions.cartUpdateItemRejectedStateAction(error.message));
       toast.error('Unexpected Error: ' + error.message);
-      return null;
     }
   }
 
-  private static errorMessageInform(response: any, dispatch: Function) {
+  private static errorMessageInform(response: any, dispatch: Function): void {
     const errorMessage = this.getParsedAPIError(response);
     dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
     toast.error('Request Error: ' + errorMessage);
-    return errorMessage || null;
   }
 }

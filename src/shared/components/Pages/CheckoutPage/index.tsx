@@ -16,6 +16,7 @@ import {
   getCheckoutPanelsSettings,
   getDefaultAddressId,
   getExtraOptionsToSelection,
+  getAddressForm,
 } from "./helpers";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop";
 import {AppMain} from "src/shared/components/Common/AppMain";
@@ -31,7 +32,6 @@ import {
   paymentCreditCardDefault,
   paymentInvoiceDefault,
   stepCompletionCheckoutDefault,
-  addressDefault,
 } from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
 import {
   billingConfigInputStable,
@@ -75,7 +75,6 @@ import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/comm
 import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";
-import {TDiscountTotal, TExpenseTotal, TGrandTotal, TSubtotal, TTaxTotal} from "src/shared/interfaces/abstract/totals";
 
 
 @connect
@@ -158,11 +157,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const payload: ICheckoutRequest = {};
 
     if (deliverySelection.isAddNew) {
-      let shippingAddress: IAddressItem = addressDefault;
-      Object.keys(deliveryNewAddress).map((field: string) => {
-        shippingAddress = {...shippingAddress, [field]: deliveryNewAddress[field].value};
-      });
-      payload.shippingAddress = {...shippingAddress, iso2Code: shippingAddress.country, country: ''};
+      payload.shippingAddress = getAddressForm(deliveryNewAddress);
     } else {
       const shippingAddress = addressesCollection.find((address: IAddressItemCollection) =>
         address.id === deliverySelection.selectedAddressId);
@@ -170,11 +165,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
 
     if (billingSelection.isAddNew) {
-      let billingAddress: IAddressItem = addressDefault;
-      Object.keys(billingNewAddress).map((field: string) => {
-        billingAddress = {...billingAddress, [field]: billingNewAddress[field].value};
-      });
-      payload.billingAddress = {...billingAddress, iso2Code: billingAddress.country, country: ''};
+      payload.billingAddress = getAddressForm(billingNewAddress);
     } else if (billingSelection.isSameAsDelivery) {
       payload.billingAddress = payload.shippingAddress;
     } else {
@@ -228,7 +219,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     }
   }
 
-  public handleFormValidityOnBlur = (formName: string) => (event: any): void => {
+  public handleFormValidityOnBlur = (formName: string) => (event: BlurEvent): void => {
     if (formName === checkoutFormsNames.delivery) {
       this.handleDeliveryNewAddressValidity();
     } else if (formName === checkoutFormsNames.billing) {
@@ -243,20 +234,19 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleDeliveryInputs = (event: InputChangeEvent): void => {
-    const name: any = event.target.name;
-    const cleanValue = event.target.value.trim();
+    const { name, value } = event.target;
+
     if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
-    const key: any = name;
-    const isInputValid = validateDeliveryInput(key, cleanValue);
+    const isInputValid = validateDeliveryInput(name, value);
 
     this.setState((prevState: ICheckoutPageState) => {
-      return mutateDeliveryInputs(prevState, key, cleanValue, !isInputValid);
+      return mutateDeliveryInputs(prevState, name, value, !isInputValid);
     }, () => {
       // Validate form when select input is changed
-      if (key === deliveryConfigInputStable.salutation.inputName
-        || key === deliveryConfigInputStable.country.inputName
+      if (name === deliveryConfigInputStable.salutation.inputName
+        || name === deliveryConfigInputStable.country.inputName
       ) {
         this.handleDeliveryNewAddressValidity();
       }
@@ -264,16 +254,16 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleBillingInputs = (event: InputChangeEvent): void => {
-    const {name, value} = event.target;
-    const cleanValue = value.trim();
+    const { name: key, value } = event.target;
+
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
-    const key: string = name;
-    const isInputValid = validateBillingInput(key, cleanValue);
+
+    const isInputValid = validateBillingInput(key, value);
 
     this.setState((prevState: ICheckoutPageState) => {
-      return mutateBillingInputs(prevState, key, cleanValue, !isInputValid);
+      return mutateBillingInputs(prevState, key, value, !isInputValid);
     }, () => {
       // Validate form when select input is changed
       if (key === billingConfigInputStable.salutation.inputName
@@ -285,28 +275,24 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleInvoiceInputs = (event: InputChangeEvent): void => {
-    const name: any = event.target.name;
-    const cleanValue = event.target.value.trim();
-    if (!this.state.paymentInvoiceData.hasOwnProperty(name)) {
+    const { name: key, value } = event.target;
+    if (!this.state.paymentInvoiceData.hasOwnProperty(key)) {
       throw new Error(inputSaveErrorText);
     }
-    const key: any = name;
-    const isInputValid = validateInvoiceInput(key, cleanValue);
+    const isInputValid = validateInvoiceInput(key, value);
     this.setState((prevState: ICheckoutPageState) => {
-      return mutateInvoiceInputs(prevState, key, cleanValue, !isInputValid);
+      return mutateInvoiceInputs(prevState, key, value, !isInputValid);
     });
   }
 
   public handleCreditCardInputs = (event: InputChangeEvent): void => {
-    const name: any = event.target.name;
-    const cleanValue = event.target.value.trim();
-    if (!this.state.paymentCreditCardData.hasOwnProperty(name)) {
+    const { name: key, value } = event.target;
+    if (!this.state.paymentCreditCardData.hasOwnProperty(key)) {
       throw new Error(inputSaveErrorText);
     }
-    const key: any = name;
-    const isInputValid = validateCreditCardInput(key, cleanValue);
+    const isInputValid = validateCreditCardInput(key, value);
     this.setState((prevState: ICheckoutPageState) => {
-      return mutateCreditCardInputs(prevState, key, cleanValue, !isInputValid);
+      return mutateCreditCardInputs(prevState, key, value, !isInputValid);
     }, () => {
       // Validate form when select input is changed
       if (key === creditCardConfigInputStable.paymentProvider.inputName

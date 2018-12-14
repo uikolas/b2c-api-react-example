@@ -6,8 +6,12 @@ import {
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
 } from "src/shared/constants/forms/labels";
-import {ICheckoutPageProps, ICheckoutStepsCompletionState} from "src/shared/components/Pages/CheckoutPage/types";
-import {IAddressItemCollection} from "src/shared/interfaces/addresses";
+import {
+  ICheckoutAddressState,
+  ICheckoutPageProps,
+  ICheckoutStepsCompletionState
+} from "src/shared/components/Pages/CheckoutPage/types";
+import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {IParamFormValidity, IParamInputValidity} from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
 import {
   TAddressType,
@@ -16,6 +20,19 @@ import {
 import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
 import {RegExpZipCode} from "src/shared/constants/forms/regexp";
 
+export const addressDefault: IAddressItem = {
+  firstName: '',
+  lastName: '',
+  salutation: '',
+  address1: '',
+  address2: '',
+  address3: '',
+  zipCode: '',
+  city: '',
+  country: '',
+  company: '',
+  phone: '',
+};
 
 export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
                                            addressType: TAddressType): TExtraOptionsToSelection | null => {
@@ -72,11 +89,10 @@ export const checkFormValidity = (param: IParamFormValidity): boolean => {
   let result: boolean = true;
 
   for (const field in form) {
-    if (!result
-      || form[field].isError
-      || (fieldsConfig[field].isRequired && !form[field].value)
-      || form[field].value === " "
-    ) {
+    const { value } = form[field];
+    const cleanValue = typeof value === 'string' ? value.trim() : value;
+
+    if (form[field].isError || (fieldsConfig[field].isRequired && !cleanValue)) {
       result = false;
     }
   }
@@ -119,3 +135,17 @@ export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState)
 
   return response;
 };
+
+export const getAddressForm = (address: ICheckoutAddressState): IAddressItem => {
+  let payloadAddress: IAddressItem = addressDefault;
+
+  Object.keys(address).map((field: string) => {
+    const { value } = address[field];
+    payloadAddress = {...payloadAddress, [field]: typeof value === 'string' ? value.trim() : value};
+  });
+
+  payloadAddress = {...payloadAddress, iso2Code: payloadAddress.country};
+  delete payloadAddress.country;
+
+  return payloadAddress;
+}

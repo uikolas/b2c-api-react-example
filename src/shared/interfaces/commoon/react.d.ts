@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, RouteProps } from 'react-router';
 
 export interface Styles {
   className?: string;
@@ -15,6 +15,6 @@ export type InputChangeEvent = React.ChangeEvent<HTMLTextAreaElement | HTMLInput
 export type FormEvent = React.FormEvent<HTMLFormElement>;
 export type BlurEvent = React.FocusEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>;
 
-export interface WithRouter extends Partial<RouteComponentProps<any>> {
+export interface WithRouter extends Partial<RouteComponentProps<RouteProps>> {
 
 }

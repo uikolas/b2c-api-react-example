@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
-import { Location } from 'history';
+import { Route, Switch, withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -9,7 +8,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import {ClickEvent, WithRouter} from 'src/shared/interfaces/commoon/react';
 import {
   pathAddressFormPage,
   pathCustomerAddressesPage,
@@ -33,20 +32,19 @@ import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
 
-interface CustomerPageProps extends WithStyles<typeof styles> {
-  location: Location;
+interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
   isUserLoggedIn: boolean;
-  logout?(): void;
+  logout?: () => void;
 }
 
 @connect
+@(withRouter as any)
 export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
 
   public handleLogout = (e: ClickEvent) => {
     e.preventDefault();
     this.props.logout();
   };
-
 
   public render() {
     const {classes, location} = this.props;
