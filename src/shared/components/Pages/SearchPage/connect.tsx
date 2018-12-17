@@ -11,7 +11,9 @@ import {
   SearchState,
 } from 'src/shared/reducers/Pages/Search';
 import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
-import { TSpellingSuggestion } from 'src/shared/interfaces/searchPageData';
+import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
+import {getRouterMatchParam} from "src/shared/selectors/Common/router";
+import {sendSearchAction} from "src/shared/actions/Pages/Search";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
@@ -23,6 +25,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const availableLabels = getAvailableLabels(state, ownProps);
   const sortParamLocalizedNames = getSortParamLocalizedNames(state, ownProps);
   const categoriesLocalizedName = getCategoriesLocalizedName(state, ownProps);
+  const locationCategoryId = getRouterMatchParam(state, ownProps, 'categoryId');
 
   return ({
     location: routerProps.location ? routerProps.location : ownProps.location,
@@ -46,6 +49,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     availableLabels,
     sortParamLocalizedNames,
     categoriesLocalizedName,
+    locationCategoryId,
   });
 };
 
@@ -54,5 +58,6 @@ export const connect = reduxify(
   (dispatch: Function) => ({
     dispatch,
     changeLocation: (location: string) => dispatch(push(location)),
+    sendSearch: (params: ISearchQuery) => dispatch(sendSearchAction(params)),
   }),
 );

@@ -93,7 +93,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
     };
 
     const cartButton = (
-      <IconButton aria-label="cart" onClick={ this.openPopover }>
+      <IconButton aria-label="cart" onClick={ this.openPopover } color="inherit">
         <Badge
           badgeContent={ cartItemsQuantity }
           classes={ {

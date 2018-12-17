@@ -6,10 +6,8 @@ import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { sendSearchAction } from 'src/shared/actions/Pages/Search';
 import {RangeFacets, ISearchQuery} from 'src/shared/interfaces/searchPageData';
-import { ICategory } from 'src/shared/reducers/Common/Init';
-import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
@@ -24,8 +22,9 @@ import { AppPagination } from 'src/shared/components/Common/AppPagination';
 import {
   getFiltersLocalizedNames,
   getRangeFiltersLocalizedNames,
-  isValidRangeInput
-} from 'src/shared/components/Pages/SearchPage/helper';
+  isValidRangeInput,
+  getLabeledCategory, getCategoryNameById
+} from 'src/shared/components/Pages/SearchPage/helpers/index';
 import { AppMain } from '../../Common/AppMain';
 import {
   filterTypeFilter,
@@ -45,6 +44,10 @@ import { SearchIntro } from './SearchIntro';
 import { CategoriesList } from './CategoriesList';
 import { SearchFilterList } from './SearchFilterList';
 import { SearchPageContext } from './context';
+import {
+  addToQueryActiveRangeFilters,
+} from "src/shared/components/Pages/SearchPage/helpers/queries";
+import {DefaultItemsPerPage} from "src/shared/components/Pages/SearchPage/constants";
 
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';
@@ -65,16 +68,21 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       isFiltersReset: false,
       isNeedNewRequest: false,
       isReadyToNewRequest: false,
+      paginationPage: null,
     };
+  }
 
-    if (!props.location.pathname.endsWith(pathSearchPage) && !props.location.pathname.endsWith(pathSearchPage + '/')) {
-      this.makeLocationSearch();
-    }
+  public componentDidMount() {
+    console.info('%c ++++ SearchPage componentDidMount ++++', 'background: #3d5afe; color: #ffea00');
+    this.initCategoryRequest();
   }
 
   public componentDidUpdate = (prevProps: ISearchPageProps, prevState: ISearchPageState): void => {
-    // Init showing a message if filters is reset
-    // (prevState.isFiltersReset === false && this.state.isFiltersReset) ? toast.success(resetFilterSuccessText) : null;
+    const {locationCategoryId, currency} = this.props;
+
+    if (locationCategoryId && currency && locationCategoryId !== prevProps.locationCategoryId) {
+      this.runNewCategoryPage();
+    }
 
     // Init new request if it's needed
     if (this.state.isReadyToNewRequest) {
@@ -87,130 +95,15 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       }
     }
 
-    if (!prevProps.categoriesTree.length && this.props.categoriesTree.length) {
-      this.searchAfterInitCategories();
-    }
-
-    if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.makeLocationSearch();
-    }
-
     // if searchTerm was changed
     if (prevProps.searchTerm !== this.props.searchTerm) {
       this.runResetActiveFilters(false);
     }
   };
 
-  private getCategoryNameById = (categoryId: TCategoryId): string => {
-    let name: string = '';
-
-    const searchName = (leaf: ICategory) => {
-      const path: string = `/${leaf.name.split(/\s+/).join('-')}`;
-      name += path;
-
-      if (leaf.nodeId === +categoryId) {
-        return true;
-      }
-
-      if (Array.isArray(leaf.children) && leaf.children.length) {
-        const result = leaf.children.some(searchName);
-
-        if (!result) {
-          name = name.replace(path, '');
-        }
-
-        return result;
-      }
-
-      name = name.replace(path, '');
-      return false;
-    };
-
-    this.props.categoriesTree.some(searchName);
-
-    return name;
-  };
-
-  public categorySearch = (categoryId: TCategoryId): void => {
-    const query: ISearchQuery = {
-      q: '',
-      currency: this.props.currency,
-      category: categoryId,
-    };
-
-    this.props.dispatch(sendSearchAction(query));
-
-    const name: string = this.getCategoryNameById(categoryId);
-
-    if (this.props.location.pathname !== `${pathSearchPage}${name}`) {
-      this.props.changeLocation(`${pathSearchPage}${name}`);
-    }
-  };
-
   public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
-
-    const query: ISearchQuery = {
-      q: this.props.searchTerm,
-      currency: this.props.currency,
-      sort: this.state.sort,
-      ipp: this.state.itemsPerPage,
-      category: categoryId,
-      ...this.state.activeFilters,
-    };
-
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
-
-    this.props.dispatch(sendSearchAction(query));
-
-    const name: string = this.getCategoryNameById(categoryId);
-
-    if (this.props.location.pathname !== `${pathSearchPage}${name}`) {
-      this.props.changeLocation(`${pathSearchPage}${name}`);
-    }
-  };
-
-  public labelSearch = (label: string): void => {
-    const query: ISearchQuery = {
-      q: '',
-      currency: this.props.currency,
-      label,
-    };
-
-    this.props.dispatch(sendSearchAction(query));
-  };
-
-  public searchAfterInitCategories = (): void => {
-    const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
-
-    const name = nodeId.split('-').join(' ');
-    let id: number | string = 0;
-
-    const searchNodeId = (leaf: ICategory) => {
-      if (leaf.name === name) {
-        id = leaf.nodeId;
-        return true;
-      }
-
-      if (leaf.name.includes('/') && leaf.name.endsWith(name)) {
-        id = leaf.nodeId;
-        return true;
-      }
-
-      if (Array.isArray(leaf.children) && leaf.children.length) {
-        const result = leaf.children.some(searchNodeId);
-        return result;
-      }
-
-      return false;
-    };
-
-    this.props.categoriesTree.some(searchNodeId);
-
-    if (id) {
-      this.categorySearch(+id);
+    if (this.props.locationCategoryId !== categoryId) {
+      this.props.changeLocation(`${pathCategoryPageBase}/${categoryId}`);
     }
   };
 
@@ -281,26 +174,9 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       toast.error(validateRangeInputsError);
       return;
     }
-    console.info('%c ++++ Run Request!!! ++++', 'background: #3d5afe; color: #ffea00');
-    const query: ISearchQuery = {
-      q: this.props.searchTerm,
-      currency: this.props.currency,
-      sort: this.state.sort,
-      ipp: this.state.itemsPerPage,
-      ...this.state.activeFilters,
-    };
-
-    if (this.props.currentCategory) {
-      query.category = this.props.currentCategory;
-    }
-
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
-
-    this.props.dispatch(sendSearchAction(query));
-
+    console.info('%c ++++ Run updateSearch Request!!! ++++', 'background: #3d5afe; color: #ffea00');
+    let query: ISearchQuery = this.getQueryBaseParams();
+    this.props.sendSearch(query);
     this.setState((prevState: ISearchPageState) => ({
       ...prevState,
       isReadyToNewRequest: false,
@@ -319,25 +195,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   };
 
   public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
-    const query: ISearchQuery = {
-      q: this.props.searchTerm,
-      currency: this.props.currency,
-      sort: this.state.sort,
-      ipp: this.state.itemsPerPage,
-      page: value,
-      ...this.state.activeFilters,
-    };
-
-    if (this.props.currentCategory) {
-      query.category = this.props.currentCategory;
-    }
-
-    Object.keys(this.state.activeRangeFilters).forEach((key: string) => {
-      query[`${key.includes('price') ? 'price' : key}[min]`] = this.state.activeRangeFilters[key].min;
-      query[`${key.includes('price') ? 'price' : key}[max]`] = this.state.activeRangeFilters[key].max;
-    });
-
-    this.props.dispatch(sendSearchAction(query));
+    const resultPagination = this.runSetPaginationPage(value);
   };
 
   public onSelectProductHandler = (sku: string) => {
@@ -366,20 +224,52 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     this.setState({isReadyToNewRequest: true});
   };
 
-  private makeLocationSearch = (): void => {
-    const nodeId: string = this.props.location.pathname.substr(this.props.location.pathname.lastIndexOf('/') + 1);
-    if (nodeId && !Number.isNaN(parseInt(nodeId, 10))) {
-      this.categorySearch(+nodeId);
-    } else {
-      if (nodeId && nodeId === 'outlet') {
-        this.labelSearch('SALE %');
+  private initCategoryRequest = async (): Promise<any> => {
+    const {locationCategoryId, currency} = this.props;
+    if (!locationCategoryId || !currency) {
+      return;
+    }
+    let query: ISearchQuery = this.getQueryBaseParams();
+    // TODO: Add Query params to URL
+    await this.props.sendSearch(query);
+  }
+
+  private getQueryBaseParams = (): ISearchQuery => {
+    let query: ISearchQuery = {
+      currency: this.props.currency,
+      ipp: DefaultItemsPerPage,
+    };
+    if (this.props.searchTerm) {
+      query.q = this.props.searchTerm;
+    }
+    if (this.props.currency) {
+      query.currency = this.props.currency;
+    }
+    if (this.props.locationCategoryId) {
+      const labeledCategory = getLabeledCategory(this.props.locationCategoryId);
+      if (labeledCategory) {
+        query.label = labeledCategory;
       } else {
-        if (nodeId && nodeId === 'new') {
-          this.labelSearch('NEW');
-        }
+        query.category = this.props.locationCategoryId;
       }
     }
-  };
+    if (this.state.sort) {
+      query.sort = this.state.sort;
+    }
+    if (this.state.itemsPerPage) {
+      query.ipp = this.state.itemsPerPage;
+    }
+    if (this.state.activeFilters) {
+      query = {...query, ...this.state.activeFilters};
+    }
+    if (this.state.activeRangeFilters) {
+      query = {...query, ...addToQueryActiveRangeFilters(this.state.activeRangeFilters)};
+    }
+    if (this.state.paginationPage) {
+      query.page = this.state.paginationPage;
+    }
+    return query;
+  }
 
   private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<any> => {
     await this.setState((prevState: ISearchPageState) => {
@@ -407,10 +297,22 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     return resultUpdate;
   };
 
+  private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<any> => {
+    await this.setState({paginationPage: page, isReadyToNewRequest: true} );
+    const resultUpdate = await this.updateSearch();
+    return resultUpdate;
+  };
+
   private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<any> => {
     await this.setState({sort: sortMode, isReadyToNewRequest: true});
     const resultUpdate = await this.updateSearch();
     return resultUpdate;
+  };
+
+  private runNewCategoryPage = async (): Promise<any> => {
+    await this.setState({paginationPage: null});
+    const resultNewCategoryPage = await this.initCategoryRequest();
+    return resultNewCategoryPage;
   };
 
   public render() {
@@ -466,7 +368,9 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       />
     );
 
-    const categoryPath = this.getCategoryNameById(currentCategory);
+    const categoryDisplayName =  getCategoryNameById(currentCategory, categoriesTree);
+    console.info('props', this.props);
+    console.info('state', this.state);
 
     return (
       <AppMain>
@@ -474,11 +378,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         <AppPageTitle
           title={ searchTerm
             ? `${pageTitle} "${searchTerm}"`
-            : (
-              currentCategory
-                ? categoryPath.substring(categoryPath.lastIndexOf('/') + 1).replace(/-/g, ' ')
-                : pageTitleDefault
-            )
+            : (currentCategory && categoryDisplayName) ? categoryDisplayName : pageTitleDefault
           }
           intro={ <SearchIntro className={ classes.spellingSuggestion } spellingSuggestion={ spellingSuggestion }/> }
         />
