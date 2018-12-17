@@ -8,6 +8,8 @@ import {
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { rangeMaxType, rangeMinType, TActiveRangeFilters } from 'src/shared/components/Pages/SearchPage/types';
 import {IActiveFilterCategories} from "src/shared/components/Pages/SearchPage/CategoriesList/types";
+import {labeledCategories} from "src/shared/routes/categoriesRoutes";
+import {ICategory} from "src/shared/reducers/Common/Init";
 
 export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
                                   defaultRanges: ISearchPageData['rangeFilters']): boolean => {
@@ -63,4 +65,38 @@ export const getFiltersLocalizedNames = (data: Array<ValueFacets> | null): ILoca
     response[item.name] = item.localizedName;
   });
   return response;
+};
+
+export const getLabeledCategory = (category: string | number): string | null => {
+  if (!category) {
+    return null;
+  }
+  const labelValue = labeledCategories[category];
+  if (!labelValue) {
+    return null;
+  }
+  return labelValue;
+};
+
+export const getCategoryNameById = (categoryId: string | number, categoriesTree: Array<ICategory>): string | null => {
+  if (!categoryId) {
+    return null;
+  }
+  if (!Array.isArray(categoriesTree) || !categoriesTree.length) {
+    return null;
+  }
+  const categoryIdNumbered = Number(categoryId);
+  let name: string | null = null;
+
+  categoriesTree.forEach((category: ICategory) => {
+    if (name) {
+      return;
+    }
+    if (categoryIdNumbered === category.nodeId) {
+      name = category.name;
+    } else if (Array.isArray(category.children) && category.children.length && category.children.length > 0) {
+      name = getCategoryNameById(categoryIdNumbered, category.children);
+    }
+  });
+  return name;
 };

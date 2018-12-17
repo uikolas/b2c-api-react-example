@@ -1,7 +1,7 @@
 import { ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { ISearchPageData } from 'src/shared/interfaces/searchPageData';
+import {ISearchPageData, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import { Location } from 'history';
 
 export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
@@ -10,6 +10,8 @@ export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPage
   categoriesTree: ICategory[];
   location: Location;
   isFulfilled: boolean;
+  locationCategoryId: TCategoryId;
+  sendSearch: (params: ISearchQuery) => void ;
 }
 
 export interface ISearchPageState {
@@ -21,6 +23,7 @@ export interface ISearchPageState {
   isNeedNewRequest: boolean;
   isReadyToNewRequest: boolean;
   selectedCategory?: string | null;
+  paginationPage: number | string | null;
 }
 
 export type RangeType = {min: number, max: number};

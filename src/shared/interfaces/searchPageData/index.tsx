@@ -91,5 +91,8 @@ export interface ISearchQuery {
   currency?: TAppCurrency;
   sort?: string;
   category?: TCategoryId;
-  [key: string]: string | number;
+  ipp?: number;
+  label?: string;
+  page?: string | number;
+  [key: string]: string | number | string[];
 }

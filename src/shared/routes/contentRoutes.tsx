@@ -25,6 +25,9 @@ import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
 
+export const pathCategoryPageBase = `${config.WEB_PATH}category`;
+export const pathCategoryPage = `${pathCategoryPageBase}/:categoryId`;
+
 export const pathProductPageBase = `${config.WEB_PATH}product`;
 export const pathProductPage = `${pathProductPageBase}/:productId`;
 export const pathLoginPage = `${config.WEB_PATH}login`;
@@ -62,6 +65,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
     <Switch>
       <Route path={ pathHomePage } exact component={ LoadableHomePage }/>
       <Route path={ pathSearchPage } component={ LoadableSearchPage }/>
+      <Route path={ pathCategoryPage } component={ LoadableSearchPage }/>
       <Route path={ pathProductPage } component={ LoadableProductPage }/>
       <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
       <Route path={ pathCartPage } component={ LoadableCartPage }/>
