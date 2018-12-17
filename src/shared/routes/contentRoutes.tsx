@@ -21,6 +21,7 @@ import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/l
 import config from '../config';
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
+import {LoadableOrderDetailsPage} from "src/shared/components/Pages/OrderDetailsPage/loadable";
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
@@ -74,6 +75,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
 
       { /* TODO: Change to ProtectedRoute */ }
       <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
+      <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
 
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
     </Switch>

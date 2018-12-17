@@ -126,7 +126,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
         throw new Error(CustomerProfileAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.patch(`customer-password/${customerReference}`, body, {withCredentials: true});
+      response = await api.patch(`customer-password`, body, {withCredentials: true});
 
       if (response.ok) {
         const responseParsed: any = response.data;

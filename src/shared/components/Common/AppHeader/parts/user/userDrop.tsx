@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import {
   pathCustomerAddressesPage,
   pathCustomerProfilePage,
+  pathCustomerPage,
   pathHomePage,
   pathLoginPage,
   pathOrderHistoryPage,
@@ -24,7 +25,12 @@ export class UserDropComponent extends React.PureComponent<Props> {
 
   public customerLogout = (e: ClickEvent) => {
     e.preventDefault();
-    this.props.logout();
+    if (this.props.location.pathname.includes(pathCustomerPage)) {
+      this.props.logout();
+    } else {
+      this.props.history.push(pathCustomerPage);
+      setTimeout(this.props.logout, 250);
+    }
   };
 
   public render() {
