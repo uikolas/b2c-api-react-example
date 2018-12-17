@@ -14,6 +14,9 @@ export const styles = (theme: Theme) => createStyles({
     fontSize: theme.appFixedDimensions.fontSize.mini,
     lineHeight: '14px',
   },
+  badgeCartOpen: {
+
+  },
   hideBadge: {
     transform: 'scale(0)',
   },
