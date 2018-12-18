@@ -1,8 +1,10 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
+import {appTypographyStyles} from "src/shared/theme/properties/overwritten/appTypography";
 
 export const styles = (theme: Theme) => createStyles({
   root: {
+    ...appTypographyStyles,
     display: "inline-flex",
     border: `1px solid ${theme.appColors.deepBlack}`,
     textDecoration: "none",

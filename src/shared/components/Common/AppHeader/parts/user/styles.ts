@@ -1,8 +1,10 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
+import {appTypographyStyles} from "src/shared/theme/properties/overwritten/appTypography";
 
 export const styles = (theme: Theme) => createStyles({
   userDrop: {
+    ...appTypographyStyles,
     width: 340,
     padding: 24,
     border: '1px solid #d8d8d8',
@@ -37,6 +39,7 @@ export const styles = (theme: Theme) => createStyles({
     },
   },
   userBtns: {
+    ...appTypographyStyles,
     display: 'flex',
     '& a': {
       flex: 1,
