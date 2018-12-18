@@ -3,8 +3,10 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import {ISearchPageData, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import { Location } from 'history';
+import { RouteProps } from 'react-router';
+import {WithRouter} from "src/shared/interfaces/commoon/react";
 
-export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData {
+export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData, RouteProps, WithRouter {
   isLoading: boolean;
   changeLocation: Function;
   categoriesTree: ICategory[];

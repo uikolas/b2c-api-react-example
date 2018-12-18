@@ -54,7 +54,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
         <Grid container justify="space-between" className={classes.customerContainer}>
           <Grid item xs={12} sm={4} md={3} container direction="column">
             <Paper className={classes.rootPaper}>
-              <Logo />
+              {/*<Logo />*/}
 
               <MenuList>
                 <MenuItem

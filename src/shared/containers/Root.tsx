@@ -5,6 +5,7 @@ import { History } from 'history';
 
 import { getRoutes } from '../routes';
 import { configureStore } from '../stores/configureStore';
+import {ScrollToTopRoute} from "src/shared/routes/ScrollToTopRoute/index";
 
 
 export const Root = ({history}: {history: History}) => {
@@ -15,7 +16,9 @@ export const Root = ({history}: {history: History}) => {
     <Provider store={ store }>
       { /* ConnectedRouter will use the store from Provider automatically */ }
       <ConnectedRouter history={ history }>
-        { routes }
+        <ScrollToTopRoute>
+          { routes }
+        </ScrollToTopRoute>
       </ConnectedRouter>
     </Provider>
   );
