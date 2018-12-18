@@ -26,7 +26,7 @@ export const styles = (theme: Theme) => createStyles({
   },
   popover: {
     "& > :first-child": {
-      position: "absolute",
+     // position: "fixed",
     },
   },
   cartContent: {

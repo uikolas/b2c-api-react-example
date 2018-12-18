@@ -5,6 +5,8 @@ import { ChangeEvent, ReactNode } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import * as qs from 'query-string';
+import { withRouter } from 'react-router';
 
 import {RangeFacets, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/contentRoutes';
@@ -52,6 +54,7 @@ import {DefaultItemsPerPage} from "src/shared/components/Pages/SearchPage/consta
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';
 
+@(withRouter as any)
 @connect
 export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPageState> {
   constructor(props: ISearchPageProps) {
@@ -113,6 +116,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         ...prevState.activeFilters,
         [name]: values,
       },
+      paginationPage: 1,
       isFiltersReset: false,
       isNeedNewRequest: true,
     }));
@@ -133,6 +137,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
           ...prevState.activeRangeFilters,
           [name]: {min, max},
         },
+        paginationPage: 1,
         isFiltersReset: false,
         isNeedNewRequest: true,
       };
@@ -157,6 +162,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       },
       isFiltersReset: false,
       isNeedNewRequest: true,
+      paginationPage: 1,
     }));
     return true;
   };
@@ -167,7 +173,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     return true;
   };
 
-  public updateSearch = (): boolean => {
+  public updateSearch = (needResetURLParam: boolean = true): boolean => {
 
     if (!this.validateData()) {
       console.error('can\'t make request in updateSearch method!!!');
@@ -176,11 +182,17 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
     console.info('%c ++++ Run updateSearch Request!!! ++++', 'background: #3d5afe; color: #ffea00');
     let query: ISearchQuery = this.getQueryBaseParams();
+
+    if (needResetURLParam === true) {
+      this.setPaginationParam("1");
+    }
+
     this.props.sendSearch(query);
     this.setState((prevState: ISearchPageState) => ({
       ...prevState,
       isReadyToNewRequest: false,
       isNeedNewRequest: false,
+      paginationPage: needResetURLParam ? 1 : prevState.paginationPage,
     }));
 
     return true;
@@ -225,13 +237,19 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   };
 
   private initCategoryRequest = async (): Promise<any> => {
-    const {locationCategoryId, currency} = this.props;
-    if (!locationCategoryId || !currency) {
-      return;
-    }
+    const parsedGetParams = qs.parse(this.props.location.search);
     let query: ISearchQuery = this.getQueryBaseParams();
+    if (parsedGetParams && parsedGetParams.page) {
+      query.page = parsedGetParams.page;
+    }
     // TODO: Add Query params to URL
     await this.props.sendSearch(query);
+  }
+
+  private setPaginationParam = (page: string): void => {
+    const searchQuery = new URLSearchParams(this.props.history.location.search);
+    searchQuery.set('page', page);
+    this.props.history.replace({...this.props.history.location, search: searchQuery.toString()});
   }
 
   private getQueryBaseParams = (): ISearchQuery => {
@@ -281,6 +299,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         isFiltersReset: true,
         isNeedNewRequest: false,
         isReadyToNewRequest: false,
+        paginationPage: 1,
       });
     });
 
@@ -292,14 +311,15 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   };
 
   private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<any> => {
-    await this.setState({itemsPerPage, isReadyToNewRequest: true});
+    await this.setState({paginationPage: 1, itemsPerPage, isReadyToNewRequest: true});
     const resultUpdate = await this.updateSearch();
     return resultUpdate;
   };
 
   private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<any> => {
     await this.setState({paginationPage: page, isReadyToNewRequest: true} );
-    const resultUpdate = await this.updateSearch();
+    this.setPaginationParam(String(page));
+    const resultUpdate = await this.updateSearch(false);
     return resultUpdate;
   };
 
