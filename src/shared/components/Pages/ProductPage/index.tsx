@@ -201,7 +201,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
       });
       await this.runAddToCart();
-      await this.props.getProductAvailability(this.state.sku);
+     // await this.props.getProductAvailability(this.state.sku);
       await this.setState((prevState: State) => {
         return ({
           ...prevState,

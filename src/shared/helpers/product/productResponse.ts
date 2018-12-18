@@ -127,6 +127,14 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
                 if (row.type === 'concrete-product-availabilities' && !result.concreteProducts[row.id].availability) {
                   result.concreteProducts[row.id].availability = row.attributes.availability;
                   result.concreteProducts[row.id].quantity = row.attributes.quantity;
+
+                  if (row.attributes.isNeverOutOfStock) {
+                    result.concreteProducts[row.id].availability = true;
+                    result.concreteProducts[row.id].quantity = 10;
+
+                    result.abstractProduct.availability = true;
+                    result.abstractProduct.quantity = 10;
+                  }
                 }
               }
             }
@@ -151,6 +159,11 @@ export const parseProductAvailabilityResponse = (response: IResponse): IConcrete
     return null;
   }
   const attributes = data[0].attributes;
+
+  // if (attributes.isNeverOutOfStock) {
+  //   attributes.availability = true;
+  //   attributes.quantity = 10;
+  // }
 
   return {
     sku: data[0].id,
