@@ -68,7 +68,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         if (this.state.value === value) {
           this.props.sendSuggestionAction(value);
         }
-      }, 500);
+      }, 800);
     }
   };
 
@@ -78,39 +78,45 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     // }
   };
 
+  private clearSuggestion = (value: string): void => {
+    this.props.clearSuggestions(value);
+    this.setState({value: ''});
+  };
+
   private handleChange = (event: InputChangeEvent, {newValue}: {newValue: string}): void => {
     if (newValue.trim().length < 4) {
       this.props.clearSuggestions(newValue);
     }
 
-    this.setState({
-      value: newValue,
-    });
+    if (!this.props.isLoading) {
+      this.setState({
+        value: newValue,
+      });
+    }
   };
 
   private handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const { value } = this.state;
     if (!this.props.isLoading && value.length > 2) {
-      this.props.sendSearchAction({q: this.state.value, currency: this.props.currency});
+      this.props.sendSearchAction({q: value, currency: this.props.currency});
 
       this.props.push(pathSearchPage);
+      this.clearSuggestion(value);
     }
   };
 
   private handleSearchCompletion = (e: ClickEvent): void => {
     const query = e.currentTarget.dataset.query.trim();
-    this.setState({value: query});
     this.props.sendSearchAction({q: query, currency: this.props.currency});
-    this.props.clearSuggestions(query);
+    this.clearSuggestion(query);
   };
 
   private handleCategoryLink = (e: ClickEvent): void => {
     const { name, nodeid } = e.currentTarget.dataset;
 
     this.props.sendSearchAction({q: '', currency: this.props.currency, category: nodeid});
-    this.props.clearSuggestions(name);
-    this.setState({value: ''});
+    this.clearSuggestion(name);
   };
 
   /* Render Helpers */
