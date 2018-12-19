@@ -9,11 +9,11 @@ export interface CartProps extends WithStyles<typeof styles>, WithRouter {
   cartProductsQuantity?: TProductQuantity;
   isSticky: boolean;
   showSearch: boolean;
+  popoverPosLeft: number;
+  popoverPosTop: number;
 }
 
 export interface CartState {
   anchorEl: HTMLElement | null;
   isCartNotificationOpen: boolean;
-  pageWidth: number;
-  pageHeight: number;
 }

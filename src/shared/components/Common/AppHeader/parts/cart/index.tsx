@@ -23,14 +23,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
   public state: State = {
     anchorEl: null,
     isCartNotificationOpen: true,
-    pageWidth: 0,
-    pageHeight: 0,
   };
-
-  public componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
 
   public componentDidUpdate(prevProps: Props) {
     if (this.props.location !== prevProps.location) {
@@ -44,10 +37,6 @@ export class CartComponent extends React.PureComponent<Props, State> {
     if (this.props.cartProductsQuantity === 0 && prevProps.cartProductsQuantity > 0) {
       this.closePopover();
     }
-  }
-
-  public componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
   }
 
   private openPopover = ({currentTarget}: ClickEvent) => {
@@ -71,17 +60,13 @@ export class CartComponent extends React.PureComponent<Props, State> {
     this.setState(() => ({isCartNotificationOpen: true}));
   };
 
-  private updateWindowDimensions = () => {
-    this.setState({ pageWidth: window.innerWidth, pageHeight: window.innerHeight });
-  };
-
   public render() {
     const {anchorEl, isCartNotificationOpen} = this.state;
-    const {classes, cartItemsQuantity, isSticky, showSearch} = this.props;
+    const {classes, cartItemsQuantity, isSticky, showSearch, popoverPosLeft, popoverPosTop} = this.props;
     const open = Boolean(anchorEl);
-    const popoverPos = getPopoverPosition({pageWidth: this.state.pageWidth, isSticky, showSearch});
+
     const popoverStyles = {
-      top: popoverPos.top,
+      top: popoverPosTop,
       left: 0,
     };
 
@@ -120,7 +105,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
           { ...popoverProps }
           className = {classes.popover}
           anchorReference="anchorPosition"
-          anchorPosition={{ top: 0, left: popoverPos.left }}
+          anchorPosition={{ top: 0, left: popoverPosLeft }}
           style = {popoverStyles}
           PaperProps = {{classes: {root: classes.cartContent}}}
         >
