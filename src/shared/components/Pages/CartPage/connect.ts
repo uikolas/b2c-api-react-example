@@ -7,11 +7,11 @@ import {
   updateItemInCartAction,
   updateGuestCartAction
 } from 'src/shared/actions/Common/Cart';
-import { getCartId, getCartTotals, getProductsFromCart } from 'src/shared/reducers/Common/Cart';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getAnonymId } from 'src/shared/reducers/Common/Init';
 import { RouteProps } from "react-router";
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
+import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);

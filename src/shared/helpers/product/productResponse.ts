@@ -128,13 +128,13 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
                   result.concreteProducts[row.id].availability = row.attributes.availability;
                   result.concreteProducts[row.id].quantity = row.attributes.quantity;
 
-                  if (row.attributes.isNeverOutOfStock) {
-                    result.concreteProducts[row.id].availability = true;
-                    result.concreteProducts[row.id].quantity = 10;
-
-                    result.abstractProduct.availability = true;
-                    result.abstractProduct.quantity = 10;
-                  }
+                  // if (row.attributes.isNeverOutOfStock) {
+                  //   result.concreteProducts[row.id].availability = true;
+                  //   result.concreteProducts[row.id].quantity = 10;
+                  //
+                  //   result.abstractProduct.availability = true;
+                  //   result.abstractProduct.quantity = 10;
+                  // }
                 }
               }
             }

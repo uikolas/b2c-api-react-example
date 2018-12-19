@@ -6,10 +6,11 @@ import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
 import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
 import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout';
-import { cart, isCartStateLoading } from './Common/Cart';
+import { cart } from './Common/Cart';
 import { init, isAppLoading } from './Common/Init';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
 import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
+import {isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
 
 
 export const reducers = {

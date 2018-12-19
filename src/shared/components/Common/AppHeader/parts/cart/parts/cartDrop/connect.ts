@@ -2,10 +2,10 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { cartDeleteItemAction, removeItemGuestCartAction } from 'src/shared/actions/Common/Cart';
-import {getCartId, isCartStateLoading} from 'src/shared/reducers/Common/Cart';
 import { ICartState } from 'src/shared/reducers/Common/Cart/types';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getAnonymId } from 'src/shared/reducers/Common/Init';
+import {getCartId, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const cartProps: ICartState = state.cart ? state.cart : null;

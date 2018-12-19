@@ -5,11 +5,6 @@ import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
 import {getCustomerProfile} from "src/shared/reducers/Pages/CustomerProfile";
-import {
-  getProductsFromCart,
-  getCartTotals,
-  getCartId,
-} from "src/shared/reducers/Common/Cart";
 import {isStateLoading} from "src/shared/reducers";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
@@ -25,6 +20,7 @@ import {
 } from "src/shared/reducers/Pages/Checkout";
 import {getCustomerProfileAction} from "src/shared/actions/Pages/CustomerProfile";
 import {TCustomerReference} from "src/shared/interfaces/customer";
+import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {

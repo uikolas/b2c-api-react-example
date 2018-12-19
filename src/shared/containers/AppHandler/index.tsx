@@ -22,7 +22,8 @@ import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
-import {isCartCreated} from "src/shared/reducers/Common/Cart/index";
+import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
+
 
 const styles = require('./style.scss');
 const className = styles.appHandler;

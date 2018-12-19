@@ -18,10 +18,10 @@ import {
 import {isUserAuthenticated} from 'src/shared/reducers/Pages/Login';
 import {ICartCreatePayload} from 'src/shared/services/Common/Cart/types';
 import {TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';
-import {getCartId} from 'src/shared/reducers/Common/Cart';
 import {TOrderId} from 'src/shared/interfaces/order';
 import {getOrderDetailsAction} from 'src/shared/actions/Pages/Order';
 import {addMultipleItemsToCartAction} from 'src/shared/actions/Common/Cart';
+import {getCartId} from "src/shared/reducers/Common/Cart/selectors";
 
 
 const mapStateToProps = (state: any, ownProps: any) => {

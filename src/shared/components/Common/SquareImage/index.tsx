@@ -14,7 +14,7 @@ export const SquareImageBase: React.SFC<SquareImageProps> = (props) => {
   const imgSize = size * 0.82;
 
   return (
-    <div className={ classes.imgWrapper } style={{ width: sizePX, height: sizePX }}>
+    <div className={ classes.imgWrapper } style={{ width: sizePX, height: sizePX, minWidth: sizePX }}>
       <img
         src={ image }
         style={{ maxWidth: imgSize, maxHeight: imgSize }}
