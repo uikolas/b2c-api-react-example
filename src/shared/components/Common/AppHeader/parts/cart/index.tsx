@@ -3,11 +3,9 @@ import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import Popover from '@material-ui/core/Popover/Popover';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
-import { PopoverDrop } from 'src/shared/components/Common/AppHeader/parts/popoverDrop';
 import { CartDrop } from './parts/cartDrop';
 import { CartIcon } from './cart-icon';
 import { CartProps as Props, CartState as State } from './types';
@@ -16,6 +14,7 @@ import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
 import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
 import {getPopoverPosition} from "src/shared/components/Common/AppHeader/helpers";
+import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper/index";
 
 @(withRouter as any)
 @connect
@@ -62,20 +61,8 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {anchorEl, isCartNotificationOpen} = this.state;
-    const {classes, cartItemsQuantity, isSticky, showSearch, popoverPosLeft, popoverPosTop} = this.props;
+    const {classes, cartItemsQuantity, popoverPosLeft, popoverPosTop} = this.props;
     const open = Boolean(anchorEl);
-
-    const popoverStyles = {
-      top: popoverPosTop,
-      left: 0,
-    };
-
-    const popoverProps = {
-      open,
-      anchorEl,
-      elevation: 0,
-      onClose: this.closePopover,
-    };
 
     const cartButton = (
       <IconButton aria-label="cart" onClick={ this.openPopover } color="inherit">
@@ -101,19 +88,16 @@ export class CartComponent extends React.PureComponent<Props, State> {
           : cartButton
         }
 
-        <Popover
-          { ...popoverProps }
-          className = {classes.popover}
-          anchorReference="anchorPosition"
-          anchorPosition={{ top: 0, left: popoverPosLeft }}
-          style = {popoverStyles}
-          PaperProps = {{classes: {root: classes.cartContent}}}
+        <PopoverWrapper
+          popoverPosLeft={popoverPosLeft}
+          popoverPosTop={popoverPosTop}
+          anchorEl={anchorEl}
+          closePopoverHandler={this.closePopover}
+          extraContentClassName={classes.cartContent}
+          extraHelperClassName={classes.popoverTriangle}
         >
-          <PopoverDrop>
-            <div className={`${open ? classes.cartFlyOutOpen : ''}`}></div>
-            <CartDrop/>
-          </PopoverDrop>
-        </Popover>
+          <CartDrop />
+        </PopoverWrapper>
 
        {/* <SprykerNotification
           message="Your product was added to your cart"

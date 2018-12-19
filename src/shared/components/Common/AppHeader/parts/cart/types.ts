@@ -7,8 +7,6 @@ export interface CartProps extends WithStyles<typeof styles>, WithRouter {
   // connect
   cartItemsQuantity?: TProductQuantity;
   cartProductsQuantity?: TProductQuantity;
-  isSticky: boolean;
-  showSearch: boolean;
   popoverPosLeft: number;
   popoverPosTop: number;
 }

@@ -5,6 +5,8 @@ import { styles } from './styles';
 export interface UserProps extends WithStyles<typeof styles>, WithRouter {
   // connect
   isUserLoggedIn?: boolean;
+  popoverPosLeft: number;
+  popoverPosTop: number;
 }
 
 export interface UserState {
