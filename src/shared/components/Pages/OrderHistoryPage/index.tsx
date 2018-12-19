@@ -1,7 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
 import {connect} from './connect';
@@ -19,11 +18,22 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
   public state: IOrderHistoryPageState = {};
 
   public componentDidMount = () => {
-    this.initRequestData();
+    if (!this.props.isLoading && this.props.isAppDataSet) {
+      this.props.getOrdersCollection();
+    }
   };
 
   public componentDidUpdate = (prevProps: IOrderHistoryPageProps, prevState: IOrderHistoryPageState) => {
-    this.initRequestData();
+    if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
+      console.info('%c ---- componentDidUpdate RETURN ----', 'background: #4caf50; color: #cada55');
+      return;
+    }
+
+    // First load of the App
+    if (!this.props.isFulfilled && !prevProps.isHasOrders) {
+      this.props.getOrdersCollection();
+    }
+
   };
 
   private initRequestData = (): boolean => {
