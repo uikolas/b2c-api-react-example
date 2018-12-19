@@ -18,6 +18,8 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
   public state: State = {
     showSearch: true,
     stickyTriggerOffset: 0,
+    pageWidth: 0,
+    pageHeight: 0,
   };
 
   // Component variables
@@ -45,6 +47,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
 
   private onWindowResize = debounce(() => {
     this.setTriggerOffset();
+    this.updateWindowDimensions();
   }, 0.3);
   private onWindowScroll = debounce(() => {
     const {showSearch, stickyTriggerOffset} = this.state;
@@ -54,6 +57,10 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
       this.setState(() => ({showSearch: false}));
     }
   }, 0.3);
+
+  private updateWindowDimensions = () => {
+    this.setState({ pageWidth: window.innerWidth, pageHeight: window.innerHeight });
+  };
 
   // Action handlers
 
@@ -122,7 +129,13 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                       : <MainNav mobileNavState={ isMobileNavOpened }/>
                     }
 
-                    <AddNav showSearch={ showSearch } handleSearch={ this.handleSearch } isSticky={isSticky} />
+                    <AddNav
+                      showSearch={ showSearch }
+                      handleSearch={ this.handleSearch }
+                      isSticky={isSticky}
+                      pageWidth={this.state.pageWidth}
+                      pageHeight={this.state.pageHeight}
+                    />
                   </div>
                   { isLoading ? <Preloader extraClasses={ classes.preloader }/> : null }
                 </div>

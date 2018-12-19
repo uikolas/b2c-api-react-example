@@ -37,6 +37,12 @@ export interface IAppFixedDimensions {
   cartDrop: {
     width: number;
     height: number;
+  };
+  userDrop: {
+    width: number;
+    height: number;
+  };
+  headerPopover: {
     overFlow: number;
     triangle: number;
   };
@@ -78,8 +84,13 @@ export const appFixedDimensions: IAppFixedDimensions = {
   cartDrop: {
     width: 418,
     height: 550,
+  },
+  userDrop: {
+    width: 340,
+    height: 283,
+  },
+  headerPopover: {
     overFlow: 42,
     triangle: 17,
-
   },
 };
