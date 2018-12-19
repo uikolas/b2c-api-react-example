@@ -70,7 +70,3 @@ To start docker container run
 docker-compose up
 ```
 If you are working on Windows - do not forget to forward port 80 from docker machine to your hos
-
-## License
-
-The project is under proprietary license, please see the LICENSE file provided with the repository.
