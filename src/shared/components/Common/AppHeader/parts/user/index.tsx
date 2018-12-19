@@ -2,16 +2,15 @@ import * as React from 'react';
 import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import Popover from '@material-ui/core/Popover';
 
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import { pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
-import { PopoverDrop } from '../popoverDrop';
 import { PersonIcon } from './person-icon';
 import { UserDrop } from './userDrop';
 import { UserProps as Props, UserState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
+import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper/index";
 
 @connect
 @(withRouter as any)
@@ -41,13 +40,8 @@ export class UserComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {anchorEl} = this.state;
+    const {classes, popoverPosLeft, popoverPosTop} = this.props;
     const open = Boolean(anchorEl);
-    const popoverProps = {
-      open,
-      anchorEl,
-      elevation: 0,
-      onClose: this.closePopover,
-    };
 
     return (
       <div>
@@ -55,15 +49,17 @@ export class UserComponent extends React.PureComponent<Props, State> {
           <PersonIcon/>
         </IconButton>
 
-        <Popover
-          { ...popoverProps }
-          anchorOrigin={ {vertical: 'bottom', horizontal: 'center'} }
-          transformOrigin={ {vertical: 'top', horizontal: 'center'} }
+        <PopoverWrapper
+          popoverPosLeft={popoverPosLeft}
+          popoverPosTop={popoverPosTop}
+          anchorEl={anchorEl}
+          closePopoverHandler={this.closePopover}
+          extraContentClassName={classes.userContent}
+          extraHelperClassName={classes.popoverTriangle}
         >
-          <PopoverDrop>
-            <UserDrop/>
-          </PopoverDrop>
-        </Popover>
+          <UserDrop/>
+        </PopoverWrapper>
+
       </div>
     );
   }

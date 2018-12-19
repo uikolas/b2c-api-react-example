@@ -5,4 +5,6 @@ export interface AddNavProps extends WithStyles<typeof styles> {
   showSearch: boolean;
   handleSearch(): void;
   isSticky: boolean;
+  pageWidth: number;
+  pageHeight: number;
 }
