@@ -8,6 +8,7 @@ export interface CartProps extends WithStyles<typeof styles>, WithRouter {
   cartItemsQuantity?: TProductQuantity;
   cartProductsQuantity?: TProductQuantity;
   isSticky: boolean;
+  showSearch: boolean;
 }
 
 export interface CartState {

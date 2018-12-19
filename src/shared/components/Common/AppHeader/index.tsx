@@ -75,7 +75,6 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
   public render() {
     const {classes, isLoading, isMobileNavOpened, onMobileNavToggle} = this.props;
     const {stickyTriggerOffset, showSearch} = this.state;
-
     return (
       <Sticky topOffset={ stickyTriggerOffset }>
         { (stickyState: StickyChildArgs) => {

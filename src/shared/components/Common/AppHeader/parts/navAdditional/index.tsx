@@ -19,7 +19,7 @@ export const AddNavComponent: React.SFC<Props> = ({classes, showSearch, handleSe
     </div>
     {/*<div className={ classes.addNavItem }><Lang/></div>*/}
     <div className={ classes.addNavItem }><User/></div>
-    <div className={`${classes.addNavItem}`}><Cart isSticky={isSticky} /></div>
+    <div className={`${classes.addNavItem}`}><Cart isSticky={isSticky} showSearch={showSearch} /></div>
   </div>
 );
 

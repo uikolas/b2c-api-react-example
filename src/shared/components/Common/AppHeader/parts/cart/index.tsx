@@ -77,9 +77,9 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
   public render() {
     const {anchorEl, isCartNotificationOpen} = this.state;
-    const {classes, cartItemsQuantity, isSticky} = this.props;
+    const {classes, cartItemsQuantity, isSticky, showSearch} = this.props;
     const open = Boolean(anchorEl);
-    const popoverPos = getPopoverPosition({pageWidth: this.state.pageWidth, isSticky});
+    const popoverPos = getPopoverPosition({pageWidth: this.state.pageWidth, isSticky, showSearch});
     const popoverStyles = {
       top: popoverPos.top,
       left: 0,
