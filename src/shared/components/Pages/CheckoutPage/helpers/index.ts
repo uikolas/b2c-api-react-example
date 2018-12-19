@@ -148,4 +148,4 @@ export const getAddressForm = (address: ICheckoutAddressState): IAddressItem => 
   delete payloadAddress.country;
 
   return payloadAddress;
-}
+};

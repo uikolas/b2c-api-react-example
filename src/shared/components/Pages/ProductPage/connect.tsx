@@ -14,7 +14,6 @@ import {
   isPageWishlistStateLoading,
   isWishlistsCollectionInitiated,
 } from 'src/shared/reducers/Pages/Wishlist';
-import { getCartId, isCartCreated } from 'src/shared/reducers/Common/Cart';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
@@ -27,6 +26,7 @@ import {
   createCartAndAddItemAction,
 } from 'src/shared/actions/Common/Cart';
 import {TProductSKU} from "src/shared/interfaces/product/index";
+import {getCartId, isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const location = getRouterLocation(state, ownProps);

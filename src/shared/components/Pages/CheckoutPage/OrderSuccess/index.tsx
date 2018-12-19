@@ -28,6 +28,6 @@ export const OrderSuccessBase: React.SFC<OrderSuccessProps> = ({classes, order})
       </div>
     </div>
   );
-}
+};
 
 export const OrderSuccess = withStyles(styles)(OrderSuccessBase);
