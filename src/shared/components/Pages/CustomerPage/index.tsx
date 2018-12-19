@@ -31,6 +31,13 @@ import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
 import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
+import {
+  NavLinkTitleAddresses,
+  NavLinkTitleOrderHistory,
+  NavLinkTitleProfile,
+  NavLinkTitleWishlist
+} from "src/shared/constants/navLinks/index";
+import {LogOutBtnTitle} from "src/shared/constants/buttons/index";
 
 interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
   isUserLoggedIn: boolean;
@@ -61,28 +68,28 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                   selected={ location.pathname === pathCustomerProfilePage }
                 >
                   <NavLink to={ pathCustomerProfilePage } className={ classes.link }>
-                    profile
+                    {NavLinkTitleProfile}
                   </NavLink>
                 </MenuItem>
                 <MenuItem
                   selected={ location.pathname === pathCustomerAddressesPage }
                 >
                   <NavLink to={ pathCustomerAddressesPage } className={ classes.link }>
-                    Addresses
+                    {NavLinkTitleAddresses}
                   </NavLink>
                 </MenuItem>
                 <MenuItem
                   selected={ location.pathname.includes(pathOrderHistoryPage) }
                 >
                   <NavLink to={ pathOrderHistoryPage } className={ classes.link }>
-                    Order history
+                    {NavLinkTitleOrderHistory}
                   </NavLink>
                 </MenuItem>
                 <MenuItem
                   selected={ location.pathname.includes(pathWishListsPage) }
                 >
                   <NavLink to={ pathWishListsPage } className={ classes.link }>
-                    Wishlist
+                    {NavLinkTitleWishlist}
                   </NavLink>
                 </MenuItem>
               </MenuList>
@@ -92,7 +99,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                 className={ `${classes.link} ${classes.logoutLink}` }
                 onClick={this.handleLogout}
               >
-                log out
+                {LogOutBtnTitle}
               </div>
             </Paper>
           </Grid>
