@@ -32,7 +32,7 @@ export const deliveryConfigInputStable: IDeliveryObjectConfigInputStable = {
     inputName: 'address3',
   },
   email: {
-    isRequired: false,
+    isRequired: true,
     inputName: 'email',
   },
   zipCode: {
@@ -58,7 +58,10 @@ export const deliveryConfigInputStable: IDeliveryObjectConfigInputStable = {
 };
 
 export const billingConfigInputStable: IBillingObjectConfigInputStable = {
-  ...deliveryConfigInputStable
+  ...deliveryConfigInputStable,  email: {
+    isRequired: false,
+    inputName: 'email',
+  },
 };
 
 export const invoiceConfigInputStable: IInvoiceObjectConfigInputStable = {

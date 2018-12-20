@@ -89,9 +89,8 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                 ? (!isCheckoutFulfilled)
                   ? <AppPageSubTitle title={FormTextWaitingForResponse} />
                   : <React.Fragment>
-                    {addressesCollection ? selectionForm : inputsForm}
-                    {deliverySelections.isAddNew ? inputsForm : null}
-                  </React.Fragment>
+                      {addressesCollection.length ? selectionForm : inputsForm}
+                    </React.Fragment>
                 : inputsForm
               }
             </Grid>
