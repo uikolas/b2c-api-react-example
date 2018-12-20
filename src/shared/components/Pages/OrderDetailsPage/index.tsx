@@ -112,8 +112,6 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
   };
 
   public render(): JSX.Element {
-    console.info('props: ', this.props);
-    console.info('state: ', this.state);
     const {classes, isOrderExist, isFulfilled, currency, order, timeZone} = this.props;
 
     return (

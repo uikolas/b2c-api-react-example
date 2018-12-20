@@ -1,6 +1,6 @@
 import {
   PAGES_SEARCH_REQUEST,
-  PAGES_SEARCH_REQUEST_CLEAR,
+  PAGES_SEARCH_REQUEST_CLEAR, PAGES_SEARCH_TERM_CLEAR,
   PAGES_SUGGESTION_REQUEST,
 } from 'src/shared/constants/ActionTypes/Pages/Search';
 import { CatalogService } from 'src/shared/services/Common/Catalog';
@@ -32,6 +32,12 @@ export const clearSuggestions = function(searchTerm: string) {
   return {
     type: PAGES_SEARCH_REQUEST_CLEAR,
     searchTerm,
+  };
+};
+
+export const clearSearchTermAction = function() {
+  return {
+    type: PAGES_SEARCH_TERM_CLEAR,
   };
 };
 

@@ -1,5 +1,6 @@
 import { TSalutationVariant } from '../../interfaces/customer';
 
+
 export const salutationVariants: Array<TSalutationVariant> = [
   {
     value: 'Mr',
@@ -18,3 +19,5 @@ export const salutationVariants: Array<TSalutationVariant> = [
     label: 'Dr.',
   },
 ];
+
+export const AccountTitle = "Your Account";

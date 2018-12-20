@@ -29,7 +29,6 @@ export class OrderService extends ApiServiceAbstract {
       setAuthToken(token);
       response = await api.get('orders', null, {withCredentials: true});
 
-      console.info('OrderService: getOrdersCollection: response: ', response);
       if (response.ok) {
         const responseParsed = parseGetOrdersCollectionResponse(response.data);
         dispatch(ordersCollectionFulfilledStateAction(responseParsed));
@@ -59,7 +58,6 @@ export class OrderService extends ApiServiceAbstract {
       const endpoint = `orders/${orderId}`;
       response = await api.get(endpoint, null, {withCredentials: true});
 
-      console.info('OrderService: getOrderDetails: response: ', response);
       if (response.ok) {
         const responseParsed = parseGetOrderDetailsResponse(response.data.data);
         dispatch(orderDetailsFulfilledStateAction(responseParsed));
