@@ -26,9 +26,13 @@ yarn
 ```
 
 ## Building
-To run dev server with hot replacement
+To run dev server with hot replacement inside virtual machine (vagrant)
 ```sh
-npm run serve
+npm run serve:vm
+```
+To run dev server with hot replacement on local machine
+```sh
+npm run serve:local
 ```
 To build assets for development and running locally run
 ```sh

@@ -59,6 +59,9 @@ export const styles = (theme: Theme) => createStyles({
     zIndex: 3,
     background: 'transparent',
     letterSpacing: '0.5px',
+    '&:not(:focus)': {
+      backgroundColor: 'white'
+    },
   },
   inputIconContainer: {
     position: 'relative',

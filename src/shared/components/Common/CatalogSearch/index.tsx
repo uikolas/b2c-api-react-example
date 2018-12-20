@@ -112,13 +112,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     this.clearSuggestion(query);
   };
 
-  private handleCategoryLink = (e: ClickEvent): void => {
-    const { name, nodeid } = e.currentTarget.dataset;
-
-    this.props.sendSearchAction({q: '', currency: this.props.currency, category: nodeid});
-    this.clearSuggestion(name);
-  };
-
   /* Render Helpers */
 
   private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
@@ -141,7 +134,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     const parts = parse(suggestQuery, matches);
 
     return (
-      <form action="/" method="GET" onSubmit={this.handleFullSearch}>
+      <form action="/" method="GET" onSubmit={this.handleFullSearch} className="suggestForm">
         <div className={classes.completionInput}>
           {
             parts.length && matches.length
@@ -160,7 +153,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
           }
         </div>
         <TextField
-          type="text"
           variant="outlined"
           fullWidth
           InputProps={ {
@@ -200,6 +192,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
       <NavLink
         to={ `${pathProductPageBase}/${suggestion.abstractSku}` }
         style={{ textDecoration: 'none' }}
+        onClick={() => this.clearSuggestion(suggestion.abstractName)}
       >
         <MenuItem selected={ isHighlighted } component="div" className={classes.menuItem}>
           <SquareImage
@@ -288,7 +281,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                    data-nodeid={categories[i].nodeId}
                    key={`category-${i}`}
                    className={classes.completion}
-                   onClick={this.handleCategoryLink}
+                   onClick={() => this.clearSuggestion(categories[i].name)}
           >
             <div className={classes.completion}>{ categories[i].name }</div>
           </NavLink>
@@ -368,6 +361,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             placeholder: 'What are you looking for?',
             value: this.state.value,
             onChange: this.handleChange,
+            type: 'search',
           } }
           theme={ {
             container: classes.container,
