@@ -1,5 +1,5 @@
 {
-  "name": "ReactSPA",
+  "name": "B2C API React Example",
   "private": true,
   "version": "0.0.1",
   "description": "React single page application for Spryker Glue.",
@@ -12,11 +12,8 @@
     "type": "git",
     "url": "git+https://github.com/spryker/react-app"
   },
-  "author": "",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": ""
-  },
+  "author": "Spryker Systems GmbH",
+  "license": "MIT",
   "readmeFilename": "README.md",
   "tags": [
     "typescript",
