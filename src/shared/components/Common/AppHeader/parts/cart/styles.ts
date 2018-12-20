@@ -24,50 +24,15 @@ export const styles = (theme: Theme) => createStyles({
     top: '70px',
     right: '21px',
   },
-  popover: {
-    "& > :first-child": {
-     // position: "fixed",
-    },
-  },
   cartContent: {
-    top: "0 !important",
     maxHeight: theme.appFixedDimensions.cartDrop.height,
-    overflow: "visible",
-    borderRadius: 0,
   },
-  cartFlyOutOpen: {
-    position: "relative",
-
+  popoverTriangle: {
     '&:before, &:after': {
-      content: '""',
-      zIndex: 1,
-      display: "block",
-      width: 0,
-      height: 0,
-      borderStyle: "solid",
-      borderWidth: `0 ${theme.appFixedDimensions.cartDrop.triangle}px 
-                    ${theme.appFixedDimensions.cartDrop.triangle}px 
-                    ${theme.appFixedDimensions.cartDrop.triangle}px`,
-      position: "absolute",
       right: 57,
       [theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.tablet)]: {
         right: 23,
       },
-      [theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.smallTablet)]: {
-        display: "none",
-      },
-    },
-
-    "&:after": {
-      borderColor: `transparent transparent ${theme.appColors.white} transparent`,
-      top: -(theme.appFixedDimensions.cartDrop.triangle - 1),
-    },
-    "&:before": {
-      borderColor: `transparent transparent ${theme.appColors.weakGrey} transparent`,
-      top: -theme.appFixedDimensions.cartDrop.triangle,
-      [theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.tablet)]: {
-        right: 23,
-      },
-    },
+    }
   },
 });

@@ -5,9 +5,8 @@ import createStyles from '@material-ui/core/styles/createStyles';
 export const styles = (theme: Theme) => createStyles({
   cartDrop: {
     width: theme.appFixedDimensions.cartDrop.width,
-    padding: theme.spacing.unit * 3,
-    boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0.05)',
     maxHeight: theme.appFixedDimensions.cartDrop.height,
+    padding: theme.spacing.unit * 3,
     borderBottom: `1px solid ${theme.appColors.weakGrey}`,
     borderLeft: `1px solid ${theme.appColors.weakGrey}`,
     borderRight: `1px solid ${theme.appColors.weakGrey}`,

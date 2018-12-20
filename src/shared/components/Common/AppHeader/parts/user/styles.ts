@@ -5,10 +5,11 @@ import {appTypographyStyles} from "src/shared/theme/properties/overwritten/appTy
 export const styles = (theme: Theme) => createStyles({
   userDrop: {
     ...appTypographyStyles,
-    width: 340,
-    padding: 24,
-    border: '1px solid #d8d8d8',
-    boxShadow: '0 5px 10px 0 rgba(0, 0, 0, 0.05)',
+    width: theme.appFixedDimensions.userDrop.width,
+    padding: theme.spacing.unit * 3,
+    borderBottom: `1px solid ${theme.appColors.weakGrey}`,
+    borderLeft: `1px solid ${theme.appColors.weakGrey}`,
+    borderRight: `1px solid ${theme.appColors.weakGrey}`,
   },
   title: {
     fontSize: '20px',
@@ -47,5 +48,16 @@ export const styles = (theme: Theme) => createStyles({
         marginRight: 12,
       },
     },
+  },
+  userContent: {
+
+  },
+  popoverTriangle: {
+    '&:before, &:after': {
+      right: 114,
+      [theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.tablet)]: {
+        right: 63,
+      },
+    }
   },
 });
