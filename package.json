@@ -43,7 +43,6 @@
     "lodash": "4.17.11",
     "node-sass": "4.11.0",
     "normalize.css": "8.0.0",
-    "precss": "3.1.2",
     "query-string": "^6.2.0",
     "raf": "3.4.0",
     "rc-slider": "8.6.3",
@@ -176,6 +175,6 @@
     "dev": "cross-env NODE_ENV=webpack-dev-server node --max_old_space_size=4096 server.js",
     "serve:vm": "npm run cpy:local:inside && npm run dev",
     "serve:local": "npm run cpy:local:outside && npm run dev",
-    "start": "node ./server.js",
+    "start": "node ./server.js"
   }
 }

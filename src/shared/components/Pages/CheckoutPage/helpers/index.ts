@@ -55,7 +55,7 @@ export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
 
 export const getDefaultAddressId = (collection: ICheckoutPageProps["addressesCollection"],
                                     addressType: TAddressType) => {
-  if (!collection) {
+  if (!collection || !collection.length) {
     return null;
   }
   const variantData = collection

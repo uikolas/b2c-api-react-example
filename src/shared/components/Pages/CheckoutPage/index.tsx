@@ -110,6 +110,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       this.setState({deliverySelection: {
           selectedAddressId: null,
           isAddNew: true,
+        }, billingSelection: {
+          selectedAddressId: null,
+          isAddNew: true,
+          isSameAsDelivery: false,
         }});
     }
   }
@@ -252,20 +256,20 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public handleBillingInputs = (event: InputChangeEvent): void => {
-    const { name: key, value } = event.target;
+    const { name, value } = event.target;
 
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
       throw new Error(inputSaveErrorText);
     }
 
-    const isInputValid = validateBillingInput(key, value);
+    const isInputValid = validateBillingInput(name, value);
 
     this.setState((prevState: ICheckoutPageState) => {
-      return mutateBillingInputs(prevState, key, value, !isInputValid);
+      return mutateBillingInputs(prevState, name, value, !isInputValid);
     }, () => {
       // Validate form when select input is changed
-      if (key === billingConfigInputStable.salutation.inputName
-        || key === billingConfigInputStable.country.inputName
+      if (name === billingConfigInputStable.salutation.inputName
+        || name === billingConfigInputStable.country.inputName
       ) {
         this.handleBillingNewAddressValidity();
       }
@@ -391,11 +395,15 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
     if (defaultValueDelivery) {
       this.handleDeliverySelection(defaultValueDelivery);
+    } else {
+      this.handleDeliverySelection(checkoutSelectionInputs.isAddNewDeliveryValue);
     }
 
     const defaultValueBilling = getDefaultAddressId(this.props.addressesCollection, 'billing');
     if (defaultValueBilling) {
       this.handleBillingSelection(defaultValueBilling);
+    } else {
+      this.handleBillingSelection(checkoutSelectionInputs.isSameAsDeliveryValue);
     }
   }
 
@@ -422,6 +430,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       paymentMethods,
     } = this.props;
 
+    console.info(this.state);
     if (isAppStateLoading) {
       return <AppMain><AppBackdrop isOpen={true} /></AppMain>;
     }

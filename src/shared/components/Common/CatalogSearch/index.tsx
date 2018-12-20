@@ -357,7 +357,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             placeholder: 'What are you looking for?',
             value: this.state.value,
             onChange: this.handleChange,
-            type: 'search',
+            type: 'text',
           }}
           theme={{
             container: classes.container,
