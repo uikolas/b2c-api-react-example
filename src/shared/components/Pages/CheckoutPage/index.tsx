@@ -115,8 +115,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
-    console.info('%c -- CheckoutPage componentDidUpdate --', 'background: #4caf50; color: #cada55');
-
     // If we get saved addressesCollection
     if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
       this.setDefaultAddresses();
@@ -423,8 +421,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       shipmentMethods,
       paymentMethods,
     } = this.props;
-
-    console.info('CheckoutPage state', this.state);
 
     if (isAppStateLoading) {
       return <AppMain><AppBackdrop isOpen={true} /></AppMain>;

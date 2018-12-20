@@ -25,7 +25,6 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
 
   public componentDidUpdate = (prevProps: IOrderHistoryPageProps, prevState: IOrderHistoryPageState) => {
     if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
-      console.info('%c ---- componentDidUpdate RETURN ----', 'background: #4caf50; color: #cada55');
       return;
     }
 
