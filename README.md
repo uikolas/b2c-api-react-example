@@ -73,4 +73,4 @@ To start docker container run
 ```sh
 docker-compose up
 ```
-If you are working on Windows - do not forget to forward port 80 from docker machine to your hos
+If you are working on Windows - do not forget to forward port 80 from docker machine to your host
