@@ -25,10 +25,9 @@
   "buildOnSave": false,
   "include": [
     "src/**/*",
-    "./basic-webpack-config.ts",
     "./dev-server.ts",
     "./server.ts",
     "./server-config.ts",
-    "./web-webpack-config.ts"
+    "./webpack.config.ts"
   ]
 }
