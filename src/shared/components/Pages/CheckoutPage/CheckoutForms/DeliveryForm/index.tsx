@@ -67,7 +67,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
               inputType: 'email',
               inputName: 'email',
               inputValue: deliveryNewAddress.email.value,
-              spaceNumber: 8,
+              spaceNumber: 6,
               isRequired: true,
               label: InputLabelEmail,
               isError: deliveryNewAddress.email.isError,
