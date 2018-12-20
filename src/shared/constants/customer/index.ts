@@ -1,5 +1,6 @@
 import { TSalutationVariant } from '../../interfaces/customer';
 
+
 export const salutationVariants: Array<TSalutationVariant> = [
   {
     value: 'Mr',

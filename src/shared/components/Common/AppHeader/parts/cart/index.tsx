@@ -13,7 +13,6 @@ import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
 import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
-import {getPopoverPosition} from "src/shared/components/Common/AppHeader/helpers";
 import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper/index";
 
 @(withRouter as any)

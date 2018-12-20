@@ -31,13 +31,9 @@ import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
 import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
-import {
-  NavLinkTitleAddresses,
-  NavLinkTitleOrderHistory,
-  NavLinkTitleProfile,
-  NavLinkTitleWishlist
-} from "src/shared/constants/navLinks/index";
+import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";
 import {LogOutBtnTitle} from "src/shared/constants/buttons/index";
+import {INavLinkData} from "src/shared/interfaces/navLinks/index";
 
 interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
   isUserLoggedIn: boolean;
@@ -64,34 +60,17 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
               {/*<Logo />*/}
 
               <MenuList>
-                <MenuItem
-                  selected={ location.pathname === pathCustomerProfilePage }
-                >
-                  <NavLink to={ pathCustomerProfilePage } className={ classes.link }>
-                    {NavLinkTitleProfile}
-                  </NavLink>
-                </MenuItem>
-                <MenuItem
-                  selected={ location.pathname === pathCustomerAddressesPage }
-                >
-                  <NavLink to={ pathCustomerAddressesPage } className={ classes.link }>
-                    {NavLinkTitleAddresses}
-                  </NavLink>
-                </MenuItem>
-                <MenuItem
-                  selected={ location.pathname.includes(pathOrderHistoryPage) }
-                >
-                  <NavLink to={ pathOrderHistoryPage } className={ classes.link }>
-                    {NavLinkTitleOrderHistory}
-                  </NavLink>
-                </MenuItem>
-                <MenuItem
-                  selected={ location.pathname.includes(pathWishListsPage) }
-                >
-                  <NavLink to={ pathWishListsPage } className={ classes.link }>
-                    {NavLinkTitleWishlist}
-                  </NavLink>
-                </MenuItem>
+                {customerProfileNavLinks.map((item: INavLinkData) => {
+                  const isSelected = (location.pathname === item.path) || location.pathname.includes(item.path);
+                  return (
+                    <MenuItem
+                      key={item.title}
+                      selected={isSelected}
+                    >
+                      <NavLink to={item.path} className={ classes.link } >{item.title}</NavLink>
+                    </MenuItem>
+                  );
+                })}
               </MenuList>
               <Divider />
 

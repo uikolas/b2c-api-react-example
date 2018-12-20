@@ -4,30 +4,18 @@ import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 
-import {
-  pathCustomerAddressesPage,
-  pathCustomerProfilePage,
-  pathCustomerPage,
-  pathHomePage,
-  pathLoginPage,
-  pathOrderHistoryPage,
-  pathWishListsPage,
-} from 'src/shared/routes/contentRoutes';
-
+import {pathCustomerPage, pathLoginPage} from 'src/shared/routes/contentRoutes';
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
 import {AccountTitle} from "src/shared/constants/customer/index";
 import {LogInBtnTitle, LogOutBtnTitle, RegisterBtnTitle} from "src/shared/constants/buttons/index";
-import {
-  NavLinkTitleAddresses,
-  NavLinkTitleOrderHistory,
-  NavLinkTitleProfile,
-  NavLinkTitleWishlist
-} from "src/shared/constants/navLinks/index";
+import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";
 import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
 import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
+import {INavLinkData} from "src/shared/interfaces/navLinks/index";
+
 
 @connect
 @(withRouter as any)
@@ -45,21 +33,17 @@ export class UserDropComponent extends React.PureComponent<Props> {
 
   public render() {
     const {classes, isUserLoggedIn} = this.props;
+
     const loggedInUser = (
      <React.Fragment>
        <ul className={ classes.userDropNav }>
-         <li>
-           <NavLink to={ pathCustomerProfilePage }>{NavLinkTitleProfile}</NavLink>
-         </li>
-         <li>
-           <NavLink to={ pathCustomerAddressesPage }>{NavLinkTitleAddresses}</NavLink>
-         </li>
-         <li>
-           <NavLink to={ pathOrderHistoryPage }>{NavLinkTitleOrderHistory}</NavLink>
-         </li>
-         <li>
-           <NavLink to={ pathWishListsPage }>{NavLinkTitleWishlist}</NavLink>
-         </li>
+         {customerProfileNavLinks.map((item: INavLinkData) => {
+           return (
+             <li  key={item.title} onClick={this.props.closePopoverHandler}>
+               <NavLink to={item.path}>{item.title}</NavLink>
+             </li>
+           );
+         })}
        </ul>
        <div className={ classes.userBtns }>
          <SprykerButton

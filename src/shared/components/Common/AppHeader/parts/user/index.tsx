@@ -57,7 +57,7 @@ export class UserComponent extends React.PureComponent<Props, State> {
           extraContentClassName={classes.userContent}
           extraHelperClassName={classes.popoverTriangle}
         >
-          <UserDrop/>
+          <UserDrop closePopoverHandler={this.closePopover} />
         </PopoverWrapper>
 
       </div>
