@@ -16,7 +16,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 
-import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import {pathCategoryPageBase, pathProductPageBase, pathSearchPage} from 'src/shared/routes/contentRoutes';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
 import { IProductCard } from 'src/shared/interfaces/product';
 import { AppPrice } from '../AppPrice';
@@ -24,6 +24,7 @@ import { SquareImage } from '../SquareImage';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
+import {getCategoryIdByName} from "src/shared/helpers/categories/index";
 
 export const buttonTitle = 'Search';
 
@@ -240,7 +241,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
   };
 
   private renderSuggestionsContainer = (options: any): JSX.Element => {
-    const {categories, completion, suggestions, classes} = this.props;
+    const {categories, completion, suggestions, categoriesTree, classes} = this.props;
     let suggestQuery: string = options.query.trim();
 
     if (completion.length) {
@@ -275,11 +276,13 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
     for (let i = 0; i < 4; i++) {
       if (categories[i]) {
+        const categoryNodeId = getCategoryIdByName(categories[i].name, categoriesTree);
+        const path = categoryNodeId ? `${pathCategoryPageBase}/${categoryNodeId}` : pathSearchPage;
         renderedCategories.push(
-          <NavLink to={`${pathSearchPage}/${categories[i].name.split(/\s+/).join('-')}`}
+          <NavLink to={path}
                    data-name={categories[i].name}
-                   data-nodeid={categories[i].nodeId}
-                   key={`category-${i}`}
+                   data-nodeid={categoryNodeId}
+                   key={`category-${categoryNodeId}`}
                    className={classes.completion}
                    onClick={() => this.clearSuggestion(categories[i].name)}
           >

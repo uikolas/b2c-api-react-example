@@ -77,26 +77,3 @@ export const getLabeledCategory = (category: string | number): string | null => 
   }
   return labelValue;
 };
-
-export const getCategoryNameById = (categoryId: string | number, categoriesTree: Array<ICategory>): string | null => {
-  if (!categoryId) {
-    return null;
-  }
-  if (!Array.isArray(categoriesTree) || !categoriesTree.length) {
-    return null;
-  }
-  const categoryIdNumbered = Number(categoryId);
-  let name: string | null = null;
-
-  categoriesTree.forEach((category: ICategory) => {
-    if (name) {
-      return;
-    }
-    if (categoryIdNumbered === category.nodeId) {
-      name = category.name;
-    } else if (Array.isArray(category.children) && category.children.length && category.children.length > 0) {
-      name = getCategoryNameById(categoryIdNumbered, category.children);
-    }
-  });
-  return name;
-};
