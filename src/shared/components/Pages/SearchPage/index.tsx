@@ -25,7 +25,7 @@ import {
   getFiltersLocalizedNames,
   getRangeFiltersLocalizedNames,
   isValidRangeInput,
-  getLabeledCategory, getCategoryNameById
+  getLabeledCategory
 } from 'src/shared/components/Pages/SearchPage/helpers/index';
 import { AppMain } from '../../Common/AppMain';
 import {
@@ -50,6 +50,7 @@ import {
   addToQueryActiveRangeFilters,
 } from "src/shared/components/Pages/SearchPage/helpers/queries";
 import {DefaultItemsPerPage} from "src/shared/components/Pages/SearchPage/constants";
+import {getCategoryNameById} from "src/shared/helpers/categories/index";
 
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';

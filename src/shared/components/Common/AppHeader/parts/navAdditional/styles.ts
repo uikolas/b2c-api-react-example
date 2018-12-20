@@ -7,7 +7,6 @@ export const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
       position: 'relative',
-      zIndex: 11,
     },
   },
   addNavItem: {
