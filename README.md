@@ -3,7 +3,7 @@ This application is released for the sole purpose of illustrating API usage. It 
 Spryker API Demo Shop
 ===========
 
-## Spryker API Demo Shop (React single page application) with devserver, typescript, redux for Spryker Glue API.
+## React single page application with devserver, typescript, redux for Spryker Glue API.
 
 ## Requirements
 
