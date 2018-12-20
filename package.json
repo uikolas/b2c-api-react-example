@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spryker/react-app"
+    "url": "https://github.com/spryker/react-app"
   },
   "author": "Spryker Systems GmbH",
   "license": "MIT",
