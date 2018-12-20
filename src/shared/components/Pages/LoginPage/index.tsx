@@ -48,7 +48,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
 
     return (
       <AppMain>
-        <Grid item xs={ 12 } sm={ 6 }
+        <Grid item xs={ 12 } sm={ 12 } md={ 6 }
               direction="column"
               container
               justify="center"
@@ -62,7 +62,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
           </div>
         </Grid>
         <div className={ classes.divider } id="divider"/>
-        <Grid item xs={ 12 } sm={ 6 }
+        <Grid item xs={ 12 } sm={ 12 } md={ 6 }
               direction="column"
               container
               justify="center"

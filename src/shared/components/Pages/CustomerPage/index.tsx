@@ -31,6 +31,9 @@ import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
 import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
+import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";
+import {LogOutBtnTitle} from "src/shared/constants/buttons/index";
+import {INavLinkData} from "src/shared/interfaces/navLinks/index";
 
 interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
   isUserLoggedIn: boolean;
@@ -57,34 +60,17 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
               {/*<Logo />*/}
 
               <MenuList>
-                <MenuItem
-                  selected={ location.pathname === pathCustomerProfilePage }
-                >
-                  <NavLink to={ pathCustomerProfilePage } className={ classes.link }>
-                    profile
-                  </NavLink>
-                </MenuItem>
-                <MenuItem
-                  selected={ location.pathname === pathCustomerAddressesPage }
-                >
-                  <NavLink to={ pathCustomerAddressesPage } className={ classes.link }>
-                    Addresses
-                  </NavLink>
-                </MenuItem>
-                <MenuItem
-                  selected={ location.pathname.includes(pathOrderHistoryPage) }
-                >
-                  <NavLink to={ pathOrderHistoryPage } className={ classes.link }>
-                    Order history
-                  </NavLink>
-                </MenuItem>
-                <MenuItem
-                  selected={ location.pathname.includes(pathWishListsPage) }
-                >
-                  <NavLink to={ pathWishListsPage } className={ classes.link }>
-                    Wishlist
-                  </NavLink>
-                </MenuItem>
+                {customerProfileNavLinks.map((item: INavLinkData) => {
+                  const isSelected = (location.pathname === item.path) || location.pathname.includes(item.path);
+                  return (
+                    <MenuItem
+                      key={item.title}
+                      selected={isSelected}
+                    >
+                      <NavLink to={item.path} className={ classes.link } >{item.title}</NavLink>
+                    </MenuItem>
+                  );
+                })}
               </MenuList>
               <Divider />
 
@@ -92,7 +78,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                 className={ `${classes.link} ${classes.logoutLink}` }
                 onClick={this.handleLogout}
               >
-                log out
+                {LogOutBtnTitle}
               </div>
             </Paper>
           </Grid>

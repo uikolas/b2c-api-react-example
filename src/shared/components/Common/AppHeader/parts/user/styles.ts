@@ -12,26 +12,26 @@ export const styles = (theme: Theme) => createStyles({
     borderRight: `1px solid ${theme.appColors.weakGrey}`,
   },
   title: {
-    fontSize: '20px',
-    lineHeight: '24px',
-    fontWeight: 'bold',
+    fontSize: theme.appFixedDimensions.fontSize.big,
+    lineHeight: 'normal',
+    fontWeight: 500,
     color: theme.appColors.black,
     letterSpacing: '-.5px',
-    margin: '0 0 10px',
-    borderBottom: '1px solid #d8d8d8',
+    margin: 0,
+    borderBottom: `1px solid ${theme.appColors.weakGrey}`,
     paddingBottom: 10,
-    '& strong': {
-      fontWeight: 400,
-    },
+    paddingTop: 10,
   },
   userDropNav: {
     listStyle: 'none',
     margin: 0,
-    padding: '24px 0',
+    paddingTop: theme.spacing.unit * 3,
+    paddingLeft: 0,
     '& li': {
       marginBottom: 10,
     },
     '& a': {
+      fontSize: theme.appFixedDimensions.fontSize.small,
       color: theme.appColors.black,
       textDecoration: 'none',
       '&:hover': {
@@ -41,13 +41,23 @@ export const styles = (theme: Theme) => createStyles({
   },
   userBtns: {
     ...appTypographyStyles,
+    marginTop: theme.spacing.unit * 3,
     display: 'flex',
-    '& a': {
-      flex: 1,
-      '&:not(:last-child)': {
-        marginRight: 12,
-      },
-    },
+    justifyContent: "space-between",
+  },
+  action: {
+    flex: 1,
+    fontSize: theme.appFixedDimensions.fontSize.small,
+    textTransform: "uppercase",
+    fontWeight: 500,
+    justifyContent: "center",
+    maxWidth: 140,
+    width: "100%",
+    paddingRight: theme.spacing.unit * 1.5,
+    paddingLeft: theme.spacing.unit *1.5,
+  },
+  actionLogOut: {
+    width: "100%",
   },
   userContent: {
 
