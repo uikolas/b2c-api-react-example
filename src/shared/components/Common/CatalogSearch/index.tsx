@@ -1,7 +1,7 @@
 // tslint:disable:max-file-line-count
 
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -16,17 +16,16 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 
-import { pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
-import { IProductCard } from 'src/shared/interfaces/product';
-import { AppPrice } from '../AppPrice';
-import { SquareImage } from '../SquareImage';
-import { styles } from './styles';
-import { CatalogProps as Props, CatalogState as State } from './types';
-import { connect } from './connect';
+import {pathProductPageBase, pathSearchPage} from 'src/shared/routes/contentRoutes';
+import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/commoon/react';
+import {IProductCard} from 'src/shared/interfaces/product';
+import {AppPrice} from '../AppPrice';
+import {SquareImage} from '../SquareImage';
+import {styles} from './styles';
+import {CatalogProps as Props, CatalogState as State} from './types';
+import {connect} from './connect';
 
 export const buttonTitle = 'Search';
-
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
@@ -97,7 +96,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   private handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const { value } = this.state;
+    const {value} = this.state;
     if (!this.props.isLoading && value.length > 2) {
       this.props.sendSearchAction({q: value, currency: this.props.currency});
 
@@ -136,26 +135,24 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     return (
       <form action="/" method="GET" onSubmit={this.handleFullSearch} className="suggestForm">
         <div className={classes.completionInput}>
-          {
-            parts.length && matches.length
-              ? parts.map((part, index: number) => {
+          {parts.length && matches.length
+            ? parts.map((part, index: number) => {
                 return part.highlight ? (
-                  <span key={ String(index) } className={classes.hiddenPart}>
-                    { part.text }
-                  </span>)
-                  : (
-                    <strong key={ String(index) } className={classes.visiblePart}>
-                      { part.text }
-                    </strong>
-                  );
-                })
-              : null
-          }
+                  <span key={String(index)} className={classes.hiddenPart}>
+                    {part.text}
+                  </span>
+                ) : (
+                  <strong key={String(index)} className={classes.visiblePart}>
+                    {part.text}
+                  </strong>
+                );
+              })
+            : null}
         </div>
         <TextField
           variant="outlined"
           fullWidth
-          InputProps={ {
+          InputProps={{
             inputRef: node => ref(node),
             classes: {
               root: classes.inputRoot,
@@ -164,17 +161,14 @@ export class CatalogSearchBase extends React.Component<Props, State> {
               input: classes.input,
             },
             startAdornment: (
-              <InputAdornment
-                position="start"
-                classes={{ root: classes.inputIconContainer }}
-              >
+              <InputAdornment position="start" classes={{root: classes.inputIconContainer}}>
                 <IconButton aria-label="Search" type="submit">
-                  <SearchIcon classes={{ root: classes.inputIcon }} />
+                  <SearchIcon classes={{root: classes.inputIcon}} />
                 </IconButton>
               </InputAdornment>
             ),
-          } }
-          { ...other }
+          }}
+          {...other}
         />
       </form>
     );
@@ -182,57 +176,61 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
   private renderSuggestion = (
     suggestion: IProductCard,
-    {query, isHighlighted}: {query: string, isHighlighted: boolean}
-    ) => {
+    {query, isHighlighted}: {query: string; isHighlighted: boolean},
+  ) => {
     const matches = match(suggestion.abstractName, query);
     const parts = parse(suggestion.abstractName, matches);
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <NavLink
-        to={ `${pathProductPageBase}/${suggestion.abstractSku}` }
-        style={{ textDecoration: 'none' }}
+        to={`${pathProductPageBase}/${suggestion.abstractSku}`}
+        style={{textDecoration: 'none'}}
         onClick={() => this.clearSuggestion(suggestion.abstractName)}
       >
-        <MenuItem selected={ isHighlighted } component="div" className={classes.menuItem}>
+        <MenuItem selected={isHighlighted} component="div" className={classes.menuItem}>
           <SquareImage
-            image={ suggestion.images.length ? suggestion.images[0].externalUrlSmall : '' }
+            image={suggestion.images.length ? suggestion.images[0].externalUrlSmall : ''}
             size={this.state.heightListItem}
             alt={suggestion.abstractName}
           />
 
-          <div className={ classes.description }>
-            <span className={ classes.itemName }>
-            { parts.map((part, index: number) => {
-              return part.highlight ? (
-                <span key={ String(index) } style={ {fontWeight: 500} }>
-                  { part.text }
-                </span>
-              ) : (
-                <strong key={ String(index) } style={ {fontWeight: 300} }>
-                  { part.text }
-                </strong>
-              );
-            }) }
+          <div className={classes.description}>
+            <span className={classes.itemName}>
+              {parts.map((part, index: number) => {
+                return part.highlight ? (
+                  <span key={String(index)} style={{fontWeight: 500}}>
+                    {part.text}
+                  </span>
+                ) : (
+                  <strong key={String(index)} style={{fontWeight: 300}}>
+                    {part.text}
+                  </strong>
+                );
+              })}
             </span>
 
             <AppPrice
-              value={ suggestion.prices && suggestion.prices.length
-                ? suggestion.prices[0].grossAmount
-                : suggestion.price }
-              priceType={ suggestion.prices && suggestion.prices.length ? suggestion.prices[0].priceTypeName : '' }
+              value={
+                suggestion.prices && suggestion.prices.length
+                  ? suggestion.prices[0].grossAmount
+                  : suggestion.price
+              }
+              priceType={
+                suggestion.prices && suggestion.prices.length
+                  ? suggestion.prices[0].priceTypeName
+                  : ''
+              }
               extraClassName={classes.mainPrice}
             />
 
-            {
-              suggestion.prices && suggestion.prices.length > 1
-                ? <AppPrice
-                    value={ suggestion.prices[1].grossAmount }
-                    priceType={ suggestion.prices[1].priceTypeName }
-                    extraClassName={classes.oldPrice}
-                  />
-                : null
-            }
+            {suggestion.prices && suggestion.prices.length > 1 ? (
+              <AppPrice
+                value={suggestion.prices[1].grossAmount}
+                priceType={suggestion.prices[1].priceTypeName}
+                extraClassName={classes.oldPrice}
+              />
+            ) : null}
           </div>
         </MenuItem>
       </NavLink>
@@ -260,15 +258,16 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     for (let i = 0; i < 4; i++) {
       if (completion[i]) {
         completions.push(
-          <NavLink to={pathSearchPage}
+          <NavLink
+            to={pathSearchPage}
             data-query={completion[i]}
             key={`completion-${i}`}
             className={classes.completion}
             onClick={this.handleSearchCompletion}
           >
-            <SearchIcon/>
+            <SearchIcon />
             <span>{completion[i]}</span>
-          </NavLink>
+          </NavLink>,
         );
       }
     }
@@ -276,22 +275,23 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     for (let i = 0; i < 4; i++) {
       if (categories[i]) {
         renderedCategories.push(
-          <NavLink to={`${pathSearchPage}/${categories[i].name.split(/\s+/).join('-')}`}
-                   data-name={categories[i].name}
-                   data-nodeid={categories[i].nodeId}
-                   key={`category-${i}`}
-                   className={classes.completion}
-                   onClick={() => this.clearSuggestion(categories[i].name)}
+          <NavLink
+            to={`${pathSearchPage}/${categories[i].name.split(/\s+/).join('-')}`}
+            data-name={categories[i].name}
+            data-nodeid={categories[i].nodeId}
+            key={`category-${i}`}
+            className={classes.completion}
+            onClick={() => this.clearSuggestion(categories[i].name)}
           >
-            <div className={classes.completion}>{ categories[i].name }</div>
-          </NavLink>
+            <div className={classes.completion}>{categories[i].name}</div>
+          </NavLink>,
         );
       }
     }
 
     if (!suggestions.length) {
       return (
-        <div  { ...options.containerProps }>
+        <div {...options.containerProps}>
           <Paper square>
             <Typography paragraph variant="headline">
               Nothing found...
@@ -302,25 +302,21 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     }
 
     return (
-      <div { ...options.containerProps }>
+      <div {...options.containerProps}>
         <div className={classes.insideContWrapper}>
-          <div>
-            {completions}
-          </div>
+          <div>{completions}</div>
           <Typography component="h4" className={classes.categoryTitle}>
             Categories
           </Typography>
           <Divider />
-          <div className={classes.marginTop}>
-            {renderedCategories}
-          </div>
+          <div className={classes.marginTop}>{renderedCategories}</div>
           <Typography component="h4" className={classes.categoryTitle}>
             Suggested Products
           </Typography>
 
           <Divider />
 
-          <div>{ options.children }</div>
+          <div>{options.children}</div>
 
           <NavLink
             to={pathSearchPage}
@@ -353,32 +349,29 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     };
 
     return (
-      <div className={ classes.root } id="CatalogSearch"  ref={this.containerRef}>
+      <div className={classes.root} id="CatalogSearch" ref={this.containerRef}>
         <Autosuggest
-          { ...autosuggestProps }
-          inputProps={ {
+          {...autosuggestProps}
+          inputProps={{
             classes,
             placeholder: 'What are you looking for?',
             value: this.state.value,
             onChange: this.handleChange,
             type: 'search',
-          } }
-          theme={ {
+          }}
+          theme={{
             container: classes.container,
             suggestionsContainer: classes.suggestionsContainer,
             suggestionsContainerOpen: classes.suggestionsContainerOpen,
             suggestionsList: classes.suggestionsList,
             suggestion: classes.suggestion,
-          } }
+          }}
         />
-        {/*<Button color="primary" onClick={ this.handleFullSearch } disabled={ isLoading }>*/}
-          {/*{ buttonTitle }*/}
-        {/*</Button>*/}
-        {
-          this.props.isLoading
-            ? <div className={ classes.pendingProgress }><CircularProgress size={ 34 } color="primary"/></div>
-            : null
-        }
+        {this.props.isLoading ? (
+          <div className={classes.pendingProgress}>
+            <CircularProgress size={34} color="primary" />
+          </div>
+        ) : null}
       </div>
     );
   }

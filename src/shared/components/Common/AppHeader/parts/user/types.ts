@@ -17,4 +17,5 @@ export interface UserDropProps extends WithStyles<typeof styles>, WithRouter {
   // connect
   isUserLoggedIn?: boolean;
   logout?(): void;
+  closePopoverHandler: () => void;
 }

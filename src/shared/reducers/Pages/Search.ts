@@ -1,7 +1,7 @@
 import produce from 'immer';
 import {
   PAGES_SEARCH_REQUEST,
-  PAGES_SEARCH_REQUEST_CLEAR,
+  PAGES_SEARCH_REQUEST_CLEAR, PAGES_SEARCH_TERM_CLEAR,
   PAGES_SUGGESTION_REQUEST,
 } from 'src/shared/constants/ActionTypes/Pages/Search';
 import { IReduxState } from 'src/typings/app';
@@ -110,6 +110,9 @@ export const pageSearch = produce<SearchState>(
         draft.fulfilled = true;
         draft.rejected = false;
         draft.initiated = true;
+        break;
+      case PAGES_SEARCH_TERM_CLEAR:
+        draft.data.searchTerm = '';
         break;
       default:
         break;

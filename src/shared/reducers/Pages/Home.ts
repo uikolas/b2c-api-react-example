@@ -17,8 +17,6 @@ export const initialState: IHomeState = {
 export const pagesHome = function(state: IHomeState = initialState, action: any): IHomeState {
   switch (action.type) {
     case `${PAGES_HOME_GET_DATA_REQUEST}_PENDING`:
-      // console.info('pagesHomeGetDataAction', state);
-      // console.info('pagesHomeGetDataAction', action);
       return {
         // ...state,
         error: null,
@@ -28,8 +26,6 @@ export const pagesHome = function(state: IHomeState = initialState, action: any)
         rejected: false,
       };
     case `${PAGES_HOME_GET_DATA_REQUEST}_FULFILLED`:
-      // console.info('pagesHomeGetDataAction', state);
-      // console.info('pagesHomeGetDataAction', action);
       return {
         // ...state,
         error: null,
@@ -39,8 +35,6 @@ export const pagesHome = function(state: IHomeState = initialState, action: any)
         rejected: false,
       };
     case `${PAGES_HOME_GET_DATA_REQUEST}_REJECTED`:
-      // console.info('pagesHomeGetDataAction', state);
-      // console.info('pagesHomeGetDataAction', action);
       return {
         // ...state,
         error: action.error,

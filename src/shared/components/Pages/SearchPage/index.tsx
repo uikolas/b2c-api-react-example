@@ -76,7 +76,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   }
 
   public componentDidMount() {
-    console.info('%c ++++ SearchPage componentDidMount ++++', 'background: #3d5afe; color: #ffea00');
     this.initCategoryRequest();
   }
 
@@ -180,7 +179,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       toast.error(validateRangeInputsError);
       return;
     }
-    console.info('%c ++++ Run updateSearch Request!!! ++++', 'background: #3d5afe; color: #ffea00');
     let query: ISearchQuery = this.getQueryBaseParams();
 
     if (needResetURLParam === true) {
@@ -389,8 +387,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     );
 
     const categoryDisplayName =  getCategoryNameById(currentCategory, categoriesTree);
-    console.info('props', this.props);
-    console.info('state', this.state);
 
     return (
       <AppMain>

@@ -6,15 +6,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 
+import { withRouter } from 'react-router';
 import { IComponent } from 'src/typings/app';
-import { getContentRoutes } from 'src/shared/routes/contentRoutes';
+import {getContentRoutes, pathCategoryPageBase, pathSearchPage} from 'src/shared/routes/contentRoutes';
 import { AppHeader } from 'src/shared/components/Common/AppHeader';
 import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
-  getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled,
-  TAppLocale
+  getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled, TAppLocale
 } from 'src/shared/reducers/Common/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
@@ -23,12 +23,14 @@ import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
+import {clearSearchTermAction} from 'src/shared/actions/Pages/Search';
+import { WithRouter } from 'src/shared/interfaces/commoon/react';
 
 
 const styles = require('./style.scss');
 const className = styles.appHandler;
 
-interface AppHandlerProps extends IComponent {
+interface AppHandlerProps extends IComponent, WithRouter  {
   dispatch: Function;
   isLoading: boolean;
   locale: TAppLocale;
@@ -41,12 +43,14 @@ interface AppHandlerProps extends IComponent {
   anonymId: string;
   cartCreated: boolean;
   isInitStateFulfilled: boolean;
+  clearSearchTerm: () => void;
 }
 
 interface AppHandlerState {
   mobileNavOpened: boolean;
 }
 
+@(withRouter as any)
 export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerState> {
   public state: AppHandlerState = {
     mobileNavOpened: false,
@@ -73,13 +77,24 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     }
   }
 
-  public componentDidUpdate(prevProps: AppHandlerProps) {
+  public componentDidUpdate(prevProps: AppHandlerProps, prevState: AppHandlerState) {
+    this.clearFlyoutSearchHandler(prevProps);
+
     if (!prevProps.isAppDataSet && this.props.isAppDataSet) {
       if (this.props.isCustomerAuth) {
         this.props.getCustomerCart();
       } else {
         this.props.getGuestCart(this.props.anonymId);
       }
+    }
+  }
+
+  private clearFlyoutSearchHandler = (prevProps: AppHandlerProps): void => {
+    if (this.props.location.pathname !== prevProps.location.pathname
+      && this.props.location.pathname.includes(pathCategoryPageBase) === false
+      && this.props.location.pathname.includes(pathSearchPage) === false
+    ) {
+      this.props.clearSearchTerm();
     }
   }
 
@@ -151,5 +166,6 @@ export const AppHandler = reduxify(
     setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
     getCustomerCart: () => dispatch(getCustomerCartsAction()),
     getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
+    clearSearchTerm: () => dispatch(clearSearchTermAction()),
   }),
 )(AppHandlerBase);

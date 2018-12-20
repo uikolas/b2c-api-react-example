@@ -1,23 +1,21 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-import {
-  pathCustomerAddressesPage,
-  pathCustomerProfilePage,
-  pathCustomerPage,
-  pathHomePage,
-  pathLoginPage,
-  pathOrderHistoryPage,
-  pathWishListsPage,
-} from 'src/shared/routes/contentRoutes';
-
+import {pathCustomerPage, pathLoginPage} from 'src/shared/routes/contentRoutes';
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import {AccountTitle} from "src/shared/constants/customer/index";
+import {LogInBtnTitle, LogOutBtnTitle, RegisterBtnTitle} from "src/shared/constants/buttons/index";
+import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";
+import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
+import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
+import {INavLinkData} from "src/shared/interfaces/navLinks/index";
+
 
 @connect
 @(withRouter as any)
@@ -35,57 +33,42 @@ export class UserDropComponent extends React.PureComponent<Props> {
 
   public render() {
     const {classes, isUserLoggedIn} = this.props;
+
     const loggedInUser = (
-      <div className={ classes.userDrop }>
-        <p className={ classes.title }><strong>Your Account</strong></p>
-        <ul className={ classes.userDropNav }>
-          <li>
-            <NavLink to={ pathCustomerProfilePage }>Profile</NavLink>
-          </li>
-          <li>
-            <NavLink to={ pathCustomerAddressesPage }>Addresses</NavLink>
-          </li>
-          <li>
-            <NavLink to={ pathOrderHistoryPage }>Order History</NavLink>
-          </li>
-          <li>
-            <NavLink to={ pathWishListsPage }>Wishlist</NavLink>
-          </li>
-        </ul>
-        <div className={ classes.userBtns }>
-          <Button
-            variant="contained"
-            color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathHomePage }/> }
-            onClick={ this.customerLogout }
-          >
-            Log Out
-          </Button>
-        </div>
-      </div>
+     <React.Fragment>
+       <ul className={ classes.userDropNav }>
+         {customerProfileNavLinks.map((item: INavLinkData) => {
+           return (
+             <li  key={item.title} onClick={this.props.closePopoverHandler}>
+               <NavLink to={item.path}>{item.title}</NavLink>
+             </li>
+           );
+         })}
+       </ul>
+       <div className={ classes.userBtns }>
+         <SprykerButton
+           title={LogOutBtnTitle}
+           onClick={this.customerLogout}
+           extraClasses={classes.actionLogOut}
+         />
+       </div>
+     </React.Fragment>
     );
     const notLoggedInUser = (
-      <div className={ classes.userDrop }>
-        <p className={ classes.title }><strong>Your Account</strong></p>
-        <div className={ classes.userBtns }>
-          <Button
-            variant="outlined" color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathLoginPage }/> }
-          >
-            Register
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            component={ ({innerRef, ...props}) => <Link { ...props } to={ pathLoginPage }/> }
-          >
-            Log In
-          </Button>
-        </div>
+      <div className={ classes.userBtns }>
+        <AppBtnLink title={RegisterBtnTitle} path={pathLoginPage} extraClassName={classes.action} />
+        <AppBtnLink title={LogInBtnTitle} path={pathLoginPage} type="black" extraClassName={classes.action}/>
       </div>
     );
 
-    return isUserLoggedIn ? loggedInUser : notLoggedInUser;
+    return (
+      <div className={ classes.userDrop }>
+        <Typography component="h5" className={ classes.title }>
+          {AccountTitle}
+        </Typography>
+        {isUserLoggedIn ? loggedInUser : notLoggedInUser}
+      </div>
+    );
   }
 }
 
