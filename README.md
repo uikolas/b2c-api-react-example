@@ -1,6 +1,6 @@
 This application is released for the sole purpose of illustrating API usage. It is part of the documentation and should not under any circumstances be used as a starting point for any project. Excluded from MIT-License are all "product images, product data, other images, and fonts”. These are for display purposes only and are subject to their own rights of use, which must be purchased independently.
 
-Spryker API Demo Shop
+B2C API React Example
 ===========
 
 ## React single page application with devserver, typescript, redux for Spryker Glue API.
