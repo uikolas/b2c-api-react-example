@@ -8,7 +8,7 @@ This application is released for the sole purpose of illustrating API usage. It 
 
 - [Node](https://nodejs.org) 8.9.3 or newer
 
-- (optional) [PM2](https://www.npmjs.com/package/pm2) 2.9.1 or newer (for web server)~~
+- (optional) [PM2](https://www.npmjs.com/package/pm2) 2.9.1 or newer (for web server)
 
 - (optional) [Docker](https://www.docker.com/) 18.03.0-ce or newer (for containers)
 
