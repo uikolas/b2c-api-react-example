@@ -107,14 +107,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       this.props.getCheckoutData({idCart: this.props.cartId}, '');
     } else {
       this.props.getCheckoutData({idCart: this.props.cartId}, this.props.anonymId);
-      this.setState({deliverySelection: {
-          selectedAddressId: null,
-          isAddNew: true,
-        }, billingSelection: {
-          selectedAddressId: null,
-          isAddNew: true,
-          isSameAsDelivery: false,
-        }});
     }
   }
 
@@ -315,7 +307,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   }
 
   private handleDeliveryNewAddressValidity = (): void => {
-    const isFormValid = validateDeliveryNewAddressForm(this.state.deliveryNewAddress);
+    const newAddress = this.state.deliveryNewAddress;
+    if (this.props.isUserLoggedIn) {
+      delete newAddress.email;
+    }
+    const isFormValid = validateDeliveryNewAddressForm(newAddress);
     this.setState((prevState: ICheckoutPageState) => {
       return mutateDeliveryNewAddressValidity(prevState, isFormValid);
     });
