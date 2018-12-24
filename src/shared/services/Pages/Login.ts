@@ -8,12 +8,12 @@ import {
   loginCustomerRejectedStateAction,
 } from 'src/shared/actions/Pages/Login';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
-import { ICustomerLoginData } from 'src/shared/interfaces/customer';
+import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { customerLogin, emailExist, registerSuccess } from 'src/shared/constants/messages/customer';
+import { customerLogin, registerSuccess } from 'src/shared/constants/messages/customer';
 
 export class PagesLoginService extends ApiServiceAbstract {
-  public static async register(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<void> {
+  public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
     try {
       const body = {
         data: {

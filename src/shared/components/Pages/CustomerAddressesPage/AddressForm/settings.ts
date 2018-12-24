@@ -20,7 +20,7 @@ import { TSalutationVariant } from "src/shared/interfaces/customer";
 import { ICountries } from "src/shared/reducers/Common/Init";
 import { IFormField } from "src/shared/components/UI/SprykerForm/types";
 import { AddressFormState } from './types';
-import { InputChangeEvent } from "src/shared/interfaces/commoon/react";
+import { InputChangeEvent } from "src/shared/interfaces/common/react";
 
 
 export interface IFieldInput {

@@ -18,7 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import {getCategoryIdByName} from "src/shared/helpers/categories/index";
 import {pathCategoryPageBase, pathProductPageBase, pathSearchPage} from 'src/shared/routes/contentRoutes';
-import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/commoon/react';
+import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/common/react';
 import {IProductCard} from 'src/shared/interfaces/product';
 import {AppPrice} from '../AppPrice';
 import {SquareImage} from '../SquareImage';

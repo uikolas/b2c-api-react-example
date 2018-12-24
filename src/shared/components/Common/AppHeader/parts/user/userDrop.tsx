@@ -8,7 +8,7 @@ import {pathCustomerPage, pathLoginPage} from 'src/shared/routes/contentRoutes';
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
 import {AccountTitle} from "src/shared/constants/customer/index";
 import {LogInBtnTitle, LogOutBtnTitle, RegisterBtnTitle} from "src/shared/constants/buttons/index";
 import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";

@@ -21,7 +21,7 @@ import {
 } from 'src/shared/helpers/product';
 import { TWishListName } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
-import {ClickEvent} from 'src/shared/interfaces/commoon/react';
+import {ClickEvent} from 'src/shared/interfaces/common/react';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';

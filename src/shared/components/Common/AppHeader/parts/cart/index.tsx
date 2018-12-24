@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Tooltip from '@material-ui/core/Tooltip';
 
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { CartDrop } from './parts/cartDrop';
 import { CartIcon } from './cart-icon';
 import { CartProps as Props, CartState as State } from './types';

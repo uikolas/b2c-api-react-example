@@ -20,7 +20,7 @@ import {
 } from "src/shared/interfaces/addresses/index";
 import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
 import {sprykerFormStyles} from "./sprykerFormStyles";
-import {InputChangeEvent, BlurEvent, FormEvent} from "src/shared/interfaces/commoon/react";
+import {InputChangeEvent, BlurEvent, FormEvent} from "src/shared/interfaces/common/react";
 
 
 export interface IFormField {

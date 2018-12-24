@@ -8,7 +8,7 @@ import {
   getSprykerRangeStateMoreError,
   getSprykerRangeStateNoError,
 } from 'src/shared/components/UI/SprykerRangeFilter/helpers';
-import { BlurEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
+import { BlurEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 
 
 export type TRangeInputName = 'min' | 'max';

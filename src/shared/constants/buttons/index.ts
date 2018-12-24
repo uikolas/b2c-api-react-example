@@ -6,3 +6,4 @@ export const RemoveBtnTitle = 'Remove';
 export const LogOutBtnTitle = 'Log Out';
 export const LogInBtnTitle = 'Log In';
 export const RegisterBtnTitle = 'Register';
+export const ContinueCheckoutTitle = 'Continue to checkout';

@@ -13,7 +13,7 @@ import { styles } from '../styles';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
-import { FormEvent, InputChangeEvent } from "src/shared/interfaces/commoon/react";
+import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
 
 
 @connect

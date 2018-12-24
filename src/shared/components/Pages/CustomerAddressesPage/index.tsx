@@ -5,7 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { pathCustomerAddressesPage } from 'src/shared/routes/contentRoutes';

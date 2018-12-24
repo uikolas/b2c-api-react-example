@@ -7,10 +7,10 @@ import { NavLink } from 'react-router-dom';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { ILoginState } from 'src/shared/reducers/Pages/Login';
 import { customerRegisterAction, loginCustomerAction } from 'src/shared/actions/Pages/Login';
-import { ICustomerLoginData } from 'src/shared/interfaces/customer';
+import {ICustomerLoginData, ICustomerProfile, TCustomerReference} from 'src/shared/interfaces/customer';
 import { getCustomerCartsAction } from 'src/shared/actions/Common/Cart';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
-import { WithRouter } from 'src/shared/interfaces/commoon/react';
+import { WithRouter } from 'src/shared/interfaces/common/react';
 
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
@@ -20,7 +20,7 @@ import { styles } from './styles';
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
   dispatch?: Function;
-  customer?: any;
+  customer?: TCustomerReference;
   isAuth?: boolean;
   refreshToken?: string;
   handleSubmitRegisterForm: Function;
@@ -92,7 +92,7 @@ export const ConnectedLogin = reduxify(
   (dispatch: Function) => {
     return {
       dispatch,
-      handleSubmitRegisterForm: (data: any): void => dispatch(customerRegisterAction(data)),
+      handleSubmitRegisterForm: (data: ICustomerProfile): void => dispatch(customerRegisterAction(data)),
       handleSubmitLoginForm: (payload: ICustomerLoginData): void => dispatch(loginCustomerAction(payload)),
       getCustomerCart: () => dispatch(getCustomerCartsAction()),
     };

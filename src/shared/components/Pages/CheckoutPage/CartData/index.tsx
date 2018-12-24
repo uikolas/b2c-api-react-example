@@ -15,7 +15,7 @@ import { CartDataProps, CartDataState } from './types';
 import { ICartItem } from 'src/shared/interfaces/cart';
 import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import {
-  OrderSummary,
+  OrderSummaryTitle,
   OrderAmount,
   Cart,
   PlaceOrder,
@@ -82,12 +82,12 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
 
     return (
       <div className={ classes.root } ref={this.containerRef}>
-        <CustomerPageTitle title={order ? OrderSummary : Cart} />
+        <CustomerPageTitle title={order ? OrderSummaryTitle : Cart} />
         <List>
           { rows }
         </List>
 
-        { order ? null : <CustomerPageTitle title={OrderSummary} /> }
+        { order ? null : <CustomerPageTitle title={OrderSummaryTitle} /> }
 
         <CartTotal
           totals={totals}
