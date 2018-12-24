@@ -4,7 +4,7 @@ import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import {ClickEvent} from 'src/shared/interfaces/commoon/react';
+import {ClickEvent} from 'src/shared/interfaces/common/react';
 import { styles } from './styles';
 
 

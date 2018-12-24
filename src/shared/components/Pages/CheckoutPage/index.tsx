@@ -71,7 +71,7 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
 import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
-import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/commoon/react";
+import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/common/react";
 import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {ICheckoutRequest} from "src/shared/interfaces/checkout";
 import {ICartItem, ICartTotals} from "src/shared/interfaces/cart";

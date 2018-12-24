@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';

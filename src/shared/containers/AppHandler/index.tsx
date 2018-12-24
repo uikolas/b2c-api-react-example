@@ -24,7 +24,7 @@ import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/C
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
 import {clearSearchTermAction} from 'src/shared/actions/Pages/Search';
-import { WithRouter } from 'src/shared/interfaces/commoon/react';
+import { WithRouter } from 'src/shared/interfaces/common/react';
 
 
 const styles = require('./style.scss');

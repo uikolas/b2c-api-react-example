@@ -8,7 +8,7 @@ import MenuList from '@material-ui/core/MenuList';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 
-import {ClickEvent, WithRouter} from 'src/shared/interfaces/commoon/react';
+import {ClickEvent, WithRouter} from 'src/shared/interfaces/common/react';
 import {
   pathAddressFormPage,
   pathCustomerAddressesPage,

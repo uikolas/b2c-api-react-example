@@ -11,9 +11,10 @@ import Divider from '@material-ui/core/Divider/Divider';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
+import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
+import { IWishlistItem } from 'src/shared/interfaces/wishlist';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { pathProductPageBase, pathWishListsPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
@@ -23,7 +24,6 @@ import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
 import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
-import { IWishlistItem } from "src/shared/interfaces/wishlist";
 
 
 @connect
@@ -105,9 +105,9 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     ];
 
     const bodyRows: Array<ITableRow> = products.map((item: IWishlistItem) => {
-      const prices: any = {default: '', original: ''};
+      const prices: {default: string, original: string} = {default: '', original: ''};
 
-      item.prices.forEach((price: any) => {
+      item.prices.forEach((price: IProductPricesItem) => {
         if (price.priceTypeName.toLowerCase() === 'default') {
           prices.default = price.grossAmount + '';
         } else {

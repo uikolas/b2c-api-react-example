@@ -5,6 +5,14 @@ const crypto = require('crypto');
 
 const config = require('./server-config');
 
+let webPath = config.WEB_PATH;
+
+// This feature for Docker container
+try {
+  webPath = JSON.parse(webPath);
+} catch (e) {
+
+}
 
 const webServer = express();
 webServer.use(function(req, res, next) {
@@ -22,15 +30,15 @@ appRouter.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build/web/index.html'));
 });
 
-webServer.use('/react/getUniqueUser', (req, res, next) => {
-  const hash = crypto.createHmac('sha256', req.headers['x-forwarded-for'])
+webServer.use(`${webPath}getUniqueUser`, (req, res, next) => {
+  const hash = crypto.createHmac('sha256', req.headers['x-forwarded-for'] || req.headers.host)
     .update(req.headers['user-agent'])
     .digest('hex');
 
   res.end(hash);
 });
 
-webServer.use('/react/', appRouter);
+webServer.use(webPath, appRouter);
 
 
 // Error Handler

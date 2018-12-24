@@ -7,7 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
 import { IRangeInputError } from 'src/shared/components/UI/SprykerRangeFilter';
-import { BlurEvent, InputChangeEvent } from "src/shared/interfaces/commoon/react";
+import { BlurEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
 
 interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
   title: string;
