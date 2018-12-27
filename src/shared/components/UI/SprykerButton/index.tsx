@@ -12,7 +12,6 @@ export const SprykerButtonBase: React.SFC<ISprykerButtonProps> = (props): JSX.El
     extraClasses = '',
     onClick,
     title,
-    IconType,
     iconComponent,
     disabled,
     value,
@@ -31,7 +30,6 @@ export const SprykerButtonBase: React.SFC<ISprykerButtonProps> = (props): JSX.El
       type={ btnType ? btnType : 'button' }
     >
       { title }
-      { IconType ? <IconType className={ classes.icon }/> : null }
       { iconComponent ? iconComponent : null }
     </Button>
   );
