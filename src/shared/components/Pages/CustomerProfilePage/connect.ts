@@ -14,18 +14,17 @@ import { getCustomerReference, isUserAuthenticated } from 'src/shared/reducers/P
 import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
-  ILoginDataToLocalStorage,
   TCustomerReference,
 } from 'src/shared/interfaces/customer';
 import {
   deleteCustomerAction,
   getCustomerProfileAction,
-  saveLoginDataToStoreAction,
   updateCustomerPasswordAction,
   updateCustomerProfileAction,
 } from 'src/shared/actions/Pages/CustomerProfile';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const location = getRouterLocation(state, ownProps);
   const isLoading = isPageCustomerProfileLoading(state, ownProps);
   const isRejected = isPageCustomerProfileRejected(state, ownProps);

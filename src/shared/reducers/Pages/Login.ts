@@ -12,6 +12,7 @@ import { TAccessToken } from 'src/shared/interfaces/login';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { TCustomerEmail, TCustomerReference, TCustomerUsername } from '../../interfaces/customer';
 import { LOGIN_DATA_SET_TO_STORE } from 'src/shared/constants/ActionTypes/Pages/CustomerProfile';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export interface ILoginState extends IReduxState {
   data: {
@@ -114,11 +115,11 @@ export const pagesLogin = function(state: ILoginState = initialState, action: an
 
 // selectors
 
-export function isUserAuthenticated(state: any, props: any): boolean {
+export function isUserAuthenticated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return (state.pagesLogin && state.pagesLogin.data && state.pagesLogin.data.isAuth);
 }
 
-export function getAccessToken(state: any, props: any): TAccessToken | null {
+export function getAccessToken(state: IReduxStore, props: IReduxOwnProps): TAccessToken | null {
   return (
     isUserAuthenticated(state, props) && state.pagesLogin.data.accessToken
       ? state.pagesLogin.data.accessToken
@@ -126,15 +127,7 @@ export function getAccessToken(state: any, props: any): TAccessToken | null {
   );
 }
 
-export function getLoginCustomer(state: any, props: any): any | null {
-  return (
-    isUserAuthenticated(state, props) && state.pagesLogin.data && state.pagesLogin.data.customer
-      ? state.pagesLogin.data.customer
-      : null
-  );
-}
-
-export function getCustomerReference(state: any, props: any): string | null {
+export function getCustomerReference(state: IReduxStore, props: IReduxOwnProps): string | null {
   return (
     isUserAuthenticated(state, props) && state.pagesLogin.data.customerRef
       ? state.pagesLogin.data.customerRef
@@ -142,7 +135,8 @@ export function getCustomerReference(state: any, props: any): string | null {
   );
 }
 
-export function getCustomerUsername(state: any, props: any): TCustomerUsername | TCustomerEmail | null {
+export function getCustomerUsername(state: IReduxStore, props: IReduxOwnProps):
+  TCustomerUsername | TCustomerEmail | null {
 
   if (!isStateExist(state, props) || !isUserAuthenticated(state, props)) {
     return null;
@@ -159,10 +153,10 @@ export function getCustomerUsername(state: any, props: any): TCustomerUsername |
   }
 }
 
-export function isPageLoginStateLoading(state: any, props: any): boolean {
+export function isPageLoginStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return (state.pagesLogin && state.pagesLogin.pending && state.pagesLogin.pending === true);
 }
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.pagesLogin.data);
 }

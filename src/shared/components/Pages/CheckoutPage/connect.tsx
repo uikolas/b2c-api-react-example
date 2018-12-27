@@ -21,9 +21,10 @@ import {
 import {getCustomerProfileAction} from "src/shared/actions/Pages/CustomerProfile";
 import {TCustomerReference} from "src/shared/interfaces/customer";
 import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);
   const anonymId = getAnonymId(state, ownProps);
   const isAppDataSet: boolean = isAppInitiated(state, ownProps);

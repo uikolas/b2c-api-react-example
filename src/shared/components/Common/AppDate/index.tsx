@@ -3,6 +3,7 @@ import {reduxify} from 'src/shared/lib/redux-helper';
 import {FormattedDate} from 'react-intl';
 import {getAppTimeZone, TAppTimeZone} from 'src/shared/reducers/Common/Init';
 import {TOrderDate} from 'src/shared/interfaces/order';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 interface AppDateProps {
   value: TOrderDate;
@@ -33,7 +34,7 @@ export const AppDateBase: React.SFC<AppDateProps> = props => {
   ) : null;
 };
 
-export const AppDate = reduxify((state: any, ownProps: any) => {
+export const AppDate = reduxify((state: IReduxStore, ownProps: IReduxOwnProps) => {
   const timeZone: TAppTimeZone = getAppTimeZone(state, ownProps);
   return {
     timeZone,

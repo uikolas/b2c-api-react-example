@@ -1,6 +1,5 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { RouteProps } from 'react-router';
 import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
 import {
   addWishlistAction,
@@ -9,16 +8,15 @@ import {
   getWishlistsAction,
   updateWishlistAction,
 } from 'src/shared/actions/Pages/Wishlist';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  const routerProps: RouteProps = state.routing ? state.routing : {};
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
 
   return ({
-    location: routerProps.location ? routerProps.location : ownProps.location,
-    wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : ownProps.wishlists,
-    isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : ownProps.isInitial,
-    isLoading: wishlistProps ? wishlistProps.pending : ownProps.isLoading,
+    wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : null,
+    isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : false,
+    isLoading: wishlistProps ? wishlistProps.pending : false,
   });
 };
 

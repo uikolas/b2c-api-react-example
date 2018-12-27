@@ -7,8 +7,8 @@ import { LocationDescriptor, LocationState } from 'history';
 import { RouterAction } from 'react-router-redux';
 
 export interface WishlistPageProps extends WithStyles<typeof styles> {
-  wishlist: IWishlist;
-  products: Array<IWishlistItem>;
+  wishlist: IWishlist | null;
+  products: Array<IWishlistItem> | null;
   isLoading: boolean;
   currency: TAppCurrency;
   cartLoading: boolean;

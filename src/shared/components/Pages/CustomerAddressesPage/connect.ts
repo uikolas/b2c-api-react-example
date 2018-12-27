@@ -15,8 +15,9 @@ import {
   setCurrentAddressAction,
   deleteAddressAction,
 } from 'src/shared/actions/Pages/Addresses';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const routerPush: Function = getRouterHistoryPush(state, ownProps);
   const customer: string | null = getCustomerReference(state, ownProps);
   const addresses: IAddressItem[] = getAddressesCollection(state, ownProps);

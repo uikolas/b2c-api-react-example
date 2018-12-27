@@ -15,6 +15,7 @@ import {
   addressesCollectionFixture,
   shipmentMethodsFixture
 } from "src/shared/reducers/fixtures/Checkout";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export interface ICheckoutState extends IReduxState {
   data: {
@@ -83,49 +84,51 @@ export const pageCheckout = produce<ICheckoutState>(
   initialState,
 );
 
-export function isPageCheckoutStateLoading(state: any, props: any): boolean {
+export function isPageCheckoutStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.pending);
 }
 
-export function isPageCheckoutStateRejected(state: any, props: any): boolean {
+export function isPageCheckoutStateRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.rejected);
 }
 
-export function isPageCheckoutFulfilled(state: any, props: any): boolean {
+export function isPageCheckoutFulfilled(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.fulfilled);
 }
 
-export function getShipmentMethodsFromStore(state: any, props: any): Array<IShipmentMethod> | null {
+export function getShipmentMethodsFromStore(state: IReduxStore, props: IReduxOwnProps): Array<IShipmentMethod> | null {
   return isShipmentMethodsExist(state, props) ? state.pageCheckout.data.shipments : null;
 }
 
-export function isShipmentMethodsExist(state: any, props: any): boolean {
+export function isShipmentMethodsExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.data.shipments);
 }
 
-export function getPaymentMethodsFromStore(state: any, props: any): Array<IPaymentMethod> | null {
+export function getPaymentMethodsFromStore(state: IReduxStore, props: IReduxOwnProps): Array<IPaymentMethod> | null {
   return isPaymentMethodsExist(state, props) ? state.pageCheckout.data.payments : null;
 }
 
-export function isPaymentMethodsExist(state: any, props: any): boolean {
+export function isPaymentMethodsExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageCheckout.data.payments);
 }
 
-export function getAddressesCollectionFromCheckoutStore(state: any, props: any): Array<IAddressItemCollection> | null {
+export function getAddressesCollectionFromCheckoutStore(state: IReduxStore, props: IReduxOwnProps):
+  Array<IAddressItemCollection> | null {
+
   return checkAddressesCollectionExist(state, props) ? state.pageCheckout.data.addressesCollection : null;
 }
 
-export function checkAddressesCollectionExist(state: any, props: any): boolean {
+export function checkAddressesCollectionExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCheckout.data.addressesCollection
     && state.pageCheckout.data.addressesCollection.length
   );
 }
 
-export function getCreatedOrder(state: any, props: any): string {
+export function getCreatedOrder(state: IReduxStore, props: IReduxOwnProps): string {
   return isStateExist(state, props) ? state.pageCheckout.data.orderId : '';
 }
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.pageCheckout.data);
 }

@@ -11,6 +11,7 @@ import { init, isAppLoading } from './Common/Init';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
 import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
 import {isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
+import {IReduxStore, IReduxOwnProps} from "src/shared/reducers/types";
 
 
 export const reducers = {
@@ -28,7 +29,7 @@ export const reducers = {
   pageCustomerProfile,
 };
 
-export function isStateLoading(state: any, props: any): boolean {
+export function isStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(
     isPageProductStateLoading(state, props)
     || isPageLoginStateLoading(state, props)

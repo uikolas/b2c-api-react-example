@@ -8,6 +8,7 @@ import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected 
 import { ICustomerDataParsed } from 'src/shared/interfaces/customer';
 import { IPayloadError } from 'src/shared/interfaces/errors';
 import { ICustomerDataState } from './types';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export const initialState: ICustomerDataState = {
   data: {
@@ -144,41 +145,41 @@ const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload
 };
 
 // selectors
-export function isPageCustomerProfileInitiated(state: any, props: any): boolean {
+export function isPageCustomerProfileInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.initiated
   );
 }
 
-export function isCustomerProfilePresent(state: any, props: any): boolean {
+export function isCustomerProfilePresent(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.data.profile
     && state.pageCustomerProfile.data.profile.id,
   );
 }
 
-export function isPageCustomerProfileLoading(state: any, props: any): boolean {
+export function isPageCustomerProfileLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.pending
     && state.pageCustomerProfile.pending === true,
   );
 }
 
-export function isPageCustomerProfileRejected(state: any, props: any): boolean {
+export function isPageCustomerProfileRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.rejected
     && state.pageCustomerProfile.rejected === true,
   );
 }
 
-export function isPageCustomerProfileFulfilled(state: any, props: any): boolean {
+export function isPageCustomerProfileFulfilled(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.fulfilled
     && state.pageCustomerProfile.fulfilled === true,
   );
 }
 
-export function getCustomerProfile(state: any, props: any): ICustomerDataParsed | null {
+export function getCustomerProfile(state: IReduxStore, props: IReduxOwnProps): ICustomerDataParsed | null {
   if (!isCustomerProfilePresent(state, props)) {
     return null;
   }
@@ -186,12 +187,12 @@ export function getCustomerProfile(state: any, props: any): ICustomerDataParsed 
   return state.pageCustomerProfile.data.profile;
 }
 
-export function isCustomerPasswordUpdated(state: any, props: any): boolean | null {
+export function isCustomerPasswordUpdated(state: IReduxStore, props: IReduxOwnProps): boolean | null {
   return (isStateExist(state, props))
     ? state.pageCustomerProfile.data.isPasswordUpdated
     : null;
 }
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.pageCustomerProfile);
 }

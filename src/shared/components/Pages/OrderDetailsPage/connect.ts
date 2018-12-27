@@ -22,9 +22,10 @@ import {TOrderId} from 'src/shared/interfaces/order';
 import {getOrderDetailsAction} from 'src/shared/actions/Pages/Order';
 import {addMultipleItemsToCartAction} from 'src/shared/actions/Common/Cart';
 import {getCartId} from "src/shared/reducers/Common/Cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const location = getRouterLocation(state, ownProps);
   const isLoading = isOrderDetailsLoading(state, ownProps);
   const isRejected = isOrderDetailsStateRejected(state, ownProps);

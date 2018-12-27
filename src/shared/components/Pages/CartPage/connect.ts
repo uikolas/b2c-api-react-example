@@ -9,13 +9,12 @@ import {
 } from 'src/shared/actions/Common/Cart';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getAnonymId } from 'src/shared/reducers/Common/Init';
-import { RouteProps } from "react-router";
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
 import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);
-  const routerProps: RouteProps = state.routing ? state.routing : {};
   const {items, totalQty}: {items: ICartItem[], totalQty: number} = getProductsFromCart(state, ownProps);
   const cartId: TCartId = getCartId(state, ownProps);
   const totals: ICartTotals = getCartTotals(state, ownProps);
@@ -23,7 +22,6 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
   return (
     {
-      location: routerProps.location ? routerProps.location : ownProps.location,
       items,
       totals,
       cartId,

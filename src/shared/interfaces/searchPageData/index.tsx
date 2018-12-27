@@ -30,10 +30,10 @@ export interface RangeFacets {
 }
 
 export interface FlyoutSearch {
-  suggestions?: Array<IProductCard>;
-  categories?: Array<{[name: string]: string}>;
-  completion?: string[];
-  pending?: boolean;
+  suggestions: Array<IProductCard> | null;
+  categories: Array<{[name: string]: string}> | null;
+  completion: string[] | null;
+  pending: boolean;
 }
 
 export type TLabelId = string;
@@ -64,13 +64,13 @@ export interface ILocalizedNamesMap {
 }
 
 export interface ICatalogSearchDataParsed {
-  items?: Array<IProductCard>;
-  filters?: Array<ValueFacets>;
+  items: Array<IProductCard> | null;
+  filters: Array<ValueFacets> | null;
   category: Array<FilterValue>;
-  currentCategory: string;
-  currentSort?: string;
-  rangeFilters?: Array<RangeFacets>;
-  sortParams?: Array<string>;
+  currentCategory: string | null;
+  currentSort: string | null;
+  rangeFilters: Array<RangeFacets> | null;
+  sortParams: Array<string> | null;
   sortParamLocalizedNames: ILocalizedNamesMap | null;
   categoriesLocalizedName: TLocalizedName | null;
   pagination: IPagination;

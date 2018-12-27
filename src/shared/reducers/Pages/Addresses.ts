@@ -8,6 +8,7 @@ import {
 } from '../../constants/ActionTypes/Pages/Addresses';
 import { IReduxState } from 'src/typings/app';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export interface IAddressesState extends IReduxState {
   data: {
@@ -109,37 +110,37 @@ export const pageAddresses = produce<IAddressesState>(
   initialState,
 );
 
-export function isPageAddressesStateLoading(state: any, props: any): boolean {
+export function isPageAddressesStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageAddresses.pending);
 }
 
-export function isAddressesStateRejected(state: any, props: any): boolean {
+export function isAddressesStateRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageAddresses.rejected);
 }
 
-export function isAddressesInitiated(state: any, props: any): boolean {
+export function isAddressesInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageAddresses.initiated);
 }
 
-export function getCurrentAddress(state: any, props: any): IAddressItem | null {
+export function getCurrentAddress(state: IReduxStore, props: IReduxOwnProps): IAddressItem | null {
   return (isStateExist(state, props) && state.pageAddresses.data.currentAddress)
     ? state.pageAddresses.data.currentAddress
     : null;
 }
 
-export function getAddressesCollection(state: any, props: any): IAddressItem[] {
+export function getAddressesCollection(state: IReduxStore, props: IReduxOwnProps): IAddressItem[] {
   return isStateExist(state, props)
     ? state.pageAddresses.data.addresses
     : [];
 }
 
-export const checkAddressesCollectionExist = (state: any, props: any): boolean => {
+export const checkAddressesCollectionExist = (state: IReduxStore, props: IReduxOwnProps): boolean => {
   return Boolean(isStateExist(state, props)
     && state.pageAddresses.data.addresses
     && state.pageAddresses.data.addresses.length
   );
 };
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.pageAddresses.data);
 }

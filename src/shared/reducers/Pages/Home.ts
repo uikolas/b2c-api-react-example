@@ -1,5 +1,6 @@
 import { PAGES_HOME_GET_DATA_REQUEST } from '../../constants/ActionTypes/Pages/Home';
 import { IReduxState } from 'src/typings/app';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
 export interface IHomeState extends IReduxState {
@@ -48,6 +49,6 @@ export const pagesHome = function(state: IHomeState = initialState, action: any)
   }
 };
 
-export function isPageHomeStateLoading(state: any, props: any): boolean {
+export function isPageHomeStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return (state.pagesHome && state.pagesHome.pending && state.pagesHome.pending === true);
 }

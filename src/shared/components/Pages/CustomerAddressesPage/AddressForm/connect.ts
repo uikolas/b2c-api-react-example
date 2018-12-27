@@ -7,8 +7,9 @@ import {getCustomerReference} from 'src/shared/reducers/Pages/Login';
 import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { addAddressAction, updateAddressAction } from 'src/shared/actions/Pages/Addresses';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const routerGoBack = getRouterHistoryBack(state, ownProps);
   const countries: ICountries[] = getCounties(state, ownProps);
   const currentAddress: IAddressItem = getCurrentAddress(state, ownProps);

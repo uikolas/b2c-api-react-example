@@ -3,8 +3,9 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import {getAnonymId, isAppStateFulfilled} from "src/shared/reducers/Common/Init";
 import {getGuestCartAction} from "src/shared/actions/Common/Cart";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);
   const isInitStateFulfilled: boolean = isAppStateFulfilled(state, ownProps);
   const anonymId = getAnonymId(state, ownProps);

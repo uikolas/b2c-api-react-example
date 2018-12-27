@@ -6,25 +6,22 @@ import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
 import {getAppCurrency, getCategoriesTree, ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init';
 import { clearSuggestions, sendSearchAction, sendSuggestionAction } from 'src/shared/actions/Pages/Search';
 import { getProductDataAction } from 'src/shared/actions/Pages/Product';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.data
     ? state.pageSearch.data.flyoutSearch
     : null;
-  const searchTerm: string = state.pageSearch && state.pageSearch.data
-    ? state.pageSearch.data.searchTerm
-    : ownProps.searchTerm;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
   const categoriesTree: ICategory[] = getCategoriesTree(state, ownProps);
 
   return (
     {
-      categories: searchProps ? searchProps.categories : ownProps.categories,
-      suggestions: searchProps ? searchProps.suggestions : ownProps.suggestions,
-      completion: searchProps ? searchProps.completion : ownProps.completion,
-      isLoading: searchProps ? searchProps.pending : ownProps.isLoading,
+      categories: searchProps ? searchProps.categories : null,
+      suggestions: searchProps ? searchProps.suggestions : null,
+      completion: searchProps ? searchProps.completion : null,
+      isLoading: searchProps ? searchProps.pending : null,
       currency,
-      searchTerm,
       categoriesTree,
     }
   );

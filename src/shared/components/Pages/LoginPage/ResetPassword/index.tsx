@@ -11,6 +11,7 @@ import { resetPasswordAction } from 'src/shared/actions/Pages/Login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/selectors/Common/router';
 import { formStyles } from '../styles';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
   dispatch?: Function;
@@ -109,7 +110,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
 const ResetPassword = withStyles(formStyles)(ResetPasswordPageBase);
 
 export const ResetPasswordPage = reduxify(
-  (state: any, ownProps: any) => {
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const restoreKey = getRouterMatchParam(state, ownProps, 'restoreKey');
     return (
       {restoreKey}

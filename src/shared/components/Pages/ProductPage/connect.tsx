@@ -27,8 +27,9 @@ import {
 } from 'src/shared/actions/Common/Cart';
 import {TProductSKU} from "src/shared/interfaces/product/index";
 import {getCartId, isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const location = getRouterLocation(state, ownProps);
   const product = getProduct(state, ownProps);
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);

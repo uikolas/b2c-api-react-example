@@ -5,6 +5,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { priceTypeNameOriginal, TPriceTypeName } from 'src/shared/interfaces/product';
 import { styles } from './styles';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 interface AppPriceProps extends WithStyles<typeof styles> {
   currency: TAppCurrency;
@@ -67,7 +68,7 @@ export const AppPriceBase: React.SFC<AppPriceProps> = (props) => {
 export const AppPriceStyled = withStyles(styles)(AppPriceBase);
 
 export const AppPrice = reduxify(
-  (state: any, ownProps: any) => {
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const currency: TAppCurrency = getAppCurrency(state, ownProps);
     return ({
       currency,

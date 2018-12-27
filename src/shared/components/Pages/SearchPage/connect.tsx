@@ -14,9 +14,9 @@ import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/
 import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
 import {getRouterMatchParam} from "src/shared/selectors/Common/router";
 import {sendSearchAction} from "src/shared/actions/Pages/Search";
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  const routerProps: RouteProps = state.routing ? state.routing : {};
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
   const categoriesTree: ICategory[] = getCategoriesTree(state, ownProps);
@@ -28,20 +28,19 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const locationCategoryId = getRouterMatchParam(state, ownProps, 'categoryId');
 
   return ({
-    location: routerProps.location ? routerProps.location : ownProps.location,
-    items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : ownProps.items,
-    searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : ownProps.searchTerm,
-    filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : ownProps.filters,
-    rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : ownProps.rangeFilters,
-    sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : ownProps.sortParams,
-    currentSort: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentSort : ownProps.currentSort,
-    pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : ownProps.pagination,
-    category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : ownProps.category,
+    items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : null,
+    searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : '',
+    filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : null,
+    rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : null,
+    sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : null,
+    currentSort: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentSort : null,
+    pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : null,
+    category: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.category : null,
     currentCategory: pageSearchProps && pageSearchProps.data
       ? pageSearchProps.data.currentCategory
-      : ownProps.currentCategory,
-    isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : ownProps.pending,
-    isFulfilled: pageSearchProps && pageSearchProps.fulfilled ? pageSearchProps.fulfilled : ownProps.fulfilled,
+      : null,
+    isLoading: pageSearchProps && pageSearchProps.pending ? pageSearchProps.pending : false,
+    isFulfilled: pageSearchProps && pageSearchProps.fulfilled ? pageSearchProps.fulfilled : false,
     currency,
     categoriesTree,
     spellingSuggestion,

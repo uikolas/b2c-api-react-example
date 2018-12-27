@@ -2,6 +2,7 @@ import { ORDER_DETAILS_REQUEST } from '../../constants/ActionTypes/Pages/Order';
 import { IReduxState } from 'src/typings/app';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { IOrderDetailsParsed } from '../../interfaces/order';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export interface IOrderDetailsState extends IReduxState {
   data: IOrderDetailsParsed;
@@ -67,30 +68,30 @@ const handlePending = (orderDetailsState: IOrderDetailsState, payload: any) => {
 };
 
 // selectors
-export function getOrderDetailsFromStore(state: any, props: any): IOrderDetailsParsed {
+export function getOrderDetailsFromStore(state: IReduxStore, props: IReduxOwnProps): IOrderDetailsParsed {
   return isOrderDetailsPresent(state, props) ? state.orderDetails.data : null;
 }
 
-export function isOrderDetailsPresent(state: any, props: any): boolean {
+export function isOrderDetailsPresent(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderDetails.data.id);
 }
 
-export function isOrderDetailsStateRejected(state: any, props: any): boolean {
+export function isOrderDetailsStateRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderDetails.rejected && state.orderDetails.rejected === true);
 }
 
-export function isOrderDetailsLoading(state: any, props: any): boolean {
+export function isOrderDetailsLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderDetails.pending && state.orderDetails.pending === true);
 }
 
-export function isOrderDetailsFulfilled(state: any, props: any): boolean {
+export function isOrderDetailsFulfilled(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderDetails.fulfilled && state.orderDetails.fulfilled === true);
 }
 
-export function isOrderDetailsInitiated(state: any, props: any): boolean {
+export function isOrderDetailsInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderDetails.initiated && state.orderDetails.initiated === true);
 }
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.orderDetails);
 }

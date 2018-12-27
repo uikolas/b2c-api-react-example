@@ -10,6 +10,7 @@ import {
   WISHLIST_ALL_LISTS,
 } from '../../constants/ActionTypes/Pages/Wishlist';
 import { IWishlist, IWishlistItem } from '../../interfaces/wishlist';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export interface WishlistState extends IReduxState {
   data: {
@@ -171,22 +172,22 @@ export const pageWishlist = produce<WishlistState>(
   initialState,
 );
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.pageWishlist);
 }
 
-export function isPageWishlistStateLoading(state: any, props: any): boolean {
+export function isPageWishlistStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return (state.pageWishlist && state.pageWishlist.pending && state.pageWishlist.pending === true);
 }
 
-export function isWishlistsCollectionExist(state: any, props: any): boolean {
+export function isWishlistsCollectionExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.pageWishlist.data.wishlists);
 }
 
-export function getWishlistsCollectionFromStore(state: any, props: any): IWishlist[] | null {
+export function getWishlistsCollectionFromStore(state: IReduxStore, props: IReduxOwnProps): IWishlist[] | null {
   return isWishlistsCollectionExist(state, props) ? state.pageWishlist.data.wishlists : null;
 }
 
-export function isWishlistsCollectionInitiated(state: any, props: any): boolean {
+export function isWishlistsCollectionInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return isStateExist(state, props) ? state.pageWishlist.data.isInitial : false;
 }

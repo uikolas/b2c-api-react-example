@@ -1,7 +1,8 @@
 import produce from 'immer';
 import {
   PAGES_SEARCH_REQUEST,
-  PAGES_SEARCH_REQUEST_CLEAR, PAGES_SEARCH_TERM_CLEAR,
+  PAGES_SEARCH_REQUEST_CLEAR,
+  PAGES_SEARCH_TERM_CLEAR,
   PAGES_SUGGESTION_REQUEST,
 } from 'src/shared/constants/ActionTypes/Pages/Search';
 import { IReduxState } from 'src/typings/app';
@@ -13,6 +14,7 @@ import {
   TLocalizedName,
   TSpellingSuggestion,
 } from 'src/shared/interfaces/searchPageData';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 export interface SearchState extends IReduxState {
   data: ISearchPageData;
@@ -122,27 +124,11 @@ export const pageSearch = produce<SearchState>(
 );
 
 // selectors
-export function isPageSearchStateLoading(state: any, props: any): boolean {
+export function isPageSearchStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return (state.pageSearch && state.pageSearch.pending && state.pageSearch.pending === true);
 }
 
-export function getSearchTerm(state: any, props: any): string | null {
-  return (
-    state.pageSearch.data && state.pageSearch.data.searchTerm
-      ? state.pageSearch.data.searchTerm
-      : null
-  );
-}
-
-export function getSuggestions(state: any, props: any): string | null {
-  return (
-    state.pageSearch.data && state.pageSearch.data.suggestions
-      ? state.pageSearch.data.suggestions
-      : null
-  );
-}
-
-export function getSpellingSuggestion(state: any, props: any): TSpellingSuggestion | null {
+export function getSpellingSuggestion(state: IReduxStore, props: IReduxOwnProps): TSpellingSuggestion | null {
   return (
     state.pageSearch.data && state.pageSearch.data.spellingSuggestion
       ? state.pageSearch.data.spellingSuggestion
@@ -150,7 +136,7 @@ export function getSpellingSuggestion(state: any, props: any): TSpellingSuggesti
   );
 }
 
-export function getProductsLabeled(state: any, props: any): IProductsLabeledCollection | null {
+export function getProductsLabeled(state: IReduxStore, props: IReduxOwnProps): IProductsLabeledCollection | null {
   return (
     state.pageSearch.data && state.pageSearch.data.productsLabeled
       ? state.pageSearch.data.productsLabeled
@@ -158,7 +144,7 @@ export function getProductsLabeled(state: any, props: any): IProductsLabeledColl
   );
 }
 
-export function getAvailableLabels(state: any, props: any): IAvailableLabelsCollection | null {
+export function getAvailableLabels(state: IReduxStore, props: IReduxOwnProps): IAvailableLabelsCollection | null {
   return (
     state.pageSearch.data && state.pageSearch.data.availableLabels
       ? state.pageSearch.data.availableLabels
@@ -166,7 +152,7 @@ export function getAvailableLabels(state: any, props: any): IAvailableLabelsColl
   );
 }
 
-export function getSortParamLocalizedNames(state: any, props: any): ILocalizedNamesMap | null {
+export function getSortParamLocalizedNames(state: IReduxStore, props: IReduxOwnProps): ILocalizedNamesMap | null {
   return (
     state.pageSearch.data && state.pageSearch.data.sortParamLocalizedNames
       ? state.pageSearch.data.sortParamLocalizedNames
@@ -174,7 +160,7 @@ export function getSortParamLocalizedNames(state: any, props: any): ILocalizedNa
   );
 }
 
-export function getCategoriesLocalizedName(state: any, props: any): TLocalizedName | null {
+export function getCategoriesLocalizedName(state: IReduxStore, props: IReduxOwnProps): TLocalizedName | null {
   return (
     state.pageSearch.data && state.pageSearch.data.categoriesLocalizedName
       ? state.pageSearch.data.categoriesLocalizedName

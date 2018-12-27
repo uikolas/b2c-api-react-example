@@ -10,9 +10,10 @@ import {
 } from '../../../reducers/Pages/OrderHistory';
 import { isAppInitiated } from '../../../reducers/Common/Init';
 import { isUserAuthenticated } from '../../../reducers/Pages/Login';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isLoading: boolean = isOrderHistoryLoading(state, ownProps);
   const isRejected: boolean = isOrderHistoryStateRejected(state, ownProps);
   const isFulfilled = isOrderHistoryFulfilled(state, ownProps);

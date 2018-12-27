@@ -17,12 +17,11 @@ import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 
 import { styles } from './styles';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
   dispatch?: Function;
-  customer?: TCustomerReference;
   isAuth?: boolean;
-  refreshToken?: string;
   handleSubmitRegisterForm: Function;
   handleSubmitLoginForm: Function;
   getCustomerCart: Function;
@@ -77,15 +76,11 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
 const LoginPage = withStyles(styles)(LoginPageBase);
 
 export const ConnectedLogin = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
     return (
       {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customerRef : ownProps.customer,
-        isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-        refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
+        isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : false,
       }
     );
   },

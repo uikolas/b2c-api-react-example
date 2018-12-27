@@ -25,6 +25,7 @@ import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
 import {clearSearchTermAction} from 'src/shared/actions/Pages/Search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
 const styles = require('./style.scss');
@@ -141,8 +142,8 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
 }
 
 export const AppHandler = reduxify(
-  (state: any, ownProps: any) => {
-    const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
+    const isLoading = isStateLoading(state, ownProps) || false;
     const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);

@@ -2,6 +2,7 @@ import { ORDERS_COLLECTION_REQUEST } from '../../constants/ActionTypes/Pages/Ord
 import { IReduxState } from 'src/typings/app';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { IOrderCollectionParsed, TOrderCollection } from '../../interfaces/order';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
 export interface IOrdersData extends IOrderCollectionParsed {
@@ -64,30 +65,30 @@ const handlePending = (orderHistoryState: IOrderHistoryState, payload: any) => {
 };
 
 // selectors
-export function getOrdersCollectionFromStore(state: any, props: any): TOrderCollection {
+export function getOrdersCollectionFromStore(state: IReduxStore, props: IReduxOwnProps): TOrderCollection {
   return isOrderHistoryItems(state, props) ? state.orderHistory.data.items : null;
 }
 
-export function isOrderHistoryItems(state: any, props: any): boolean {
+export function isOrderHistoryItems(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderHistory.data.items);
 }
 
-export function isOrderHistoryStateRejected(state: any, props: any): boolean {
+export function isOrderHistoryStateRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderHistory.rejected && state.orderHistory.rejected === true);
 }
 
-export function isOrderHistoryLoading(state: any, props: any): boolean {
+export function isOrderHistoryLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderHistory.pending && state.orderHistory.pending === true);
 }
 
-export function isOrderHistoryFulfilled(state: any, props: any): boolean {
+export function isOrderHistoryFulfilled(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderHistory.fulfilled && state.orderHistory.fulfilled === true);
 }
 
-export function isOrderHistoryInitiated(state: any, props: any): boolean {
+export function isOrderHistoryInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props) && state.orderHistory.initiated && state.orderHistory.initiated === true);
 }
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.orderHistory);
 }

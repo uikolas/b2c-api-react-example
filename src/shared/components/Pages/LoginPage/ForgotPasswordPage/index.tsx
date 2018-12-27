@@ -15,6 +15,7 @@ import { AppMain } from 'src/shared/components/Common/AppMain';
 
 import { formStyles } from '../styles';
 import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
+import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;
@@ -92,7 +93,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
 const ForgotPassword = withStyles(formStyles)(ForgotPasswordPageBase);
 
 export const ForgotPasswordPage = reduxify(
-  (state: any, ownProps: any) => {
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const routerGoBack = getRouterHistoryBack(state, ownProps);
     return (
       {
