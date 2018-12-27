@@ -11,7 +11,7 @@ import { withRouter } from 'react-router';
 import {RangeFacets, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
-import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter';
+import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter/types';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
 import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
 import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
