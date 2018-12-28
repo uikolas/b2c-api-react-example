@@ -104,7 +104,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
   };
 
-  public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
+  public selectCategory = (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>): void => {
     if (this.props.locationCategoryId !== categoryId) {
       this.props.changeLocation(`${pathCategoryPageBase}/${categoryId}`);
     }
@@ -213,7 +213,9 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) => (event: React.MouseEvent<HTMLElement>) => {
+  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+
       if (itemToDelete.type === filterTypeFilter) {
         this.resetFilterOneValue(itemToDelete);
       } else if (itemToDelete.type === filterTypeRange) {

@@ -13,6 +13,7 @@ import { getRouterMatchParam } from 'src/shared/selectors/Common/router/index';
 import {TRouterMatchParam} from 'src/shared/selectors/Common/router/types';
 import { formStyles } from '../styles';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
   dispatch?: Function;
@@ -32,14 +33,14 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
     submitted: false,
   };
 
-  public handleChange = (event: any) => {
+  public handleChange = (event: InputChangeEvent) => {
     const {name, value}: any = event.target;
     this.setState({
       ...this.state, [name]: value,
     });
   };
 
-  public submitRequest = (e: any) => {
+  public submitRequest = (e: ClickEvent) => {
     this.setState({submitted: true});
     if (this.state.password !== this.state.confirmPassword) {
       return;

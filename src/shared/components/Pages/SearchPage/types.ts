@@ -28,7 +28,7 @@ export interface ISearchPageState {
   paginationPage: number | string | null;
 }
 
-export type RangeType = {min: number, max: number};
+export type RangeType = {min: number, max: number, [name: string]: number};
 export type TCategoryId = number | string;
 export type TActiveFilters = {[name: string]: string[]};
 export type TActiveRangeFilters = {[name: string]: RangeType};

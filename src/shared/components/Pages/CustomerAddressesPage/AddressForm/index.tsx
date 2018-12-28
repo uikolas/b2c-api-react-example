@@ -51,9 +51,10 @@ export class AddressForm extends React.Component<Props, State> {
     this.setState(state => ({...state, [name]: value}));
   };
 
-  public handleCheckbox = (event: any): void => {
+  public handleCheckbox = (event: InputChangeEvent): void => {
     event.persist();
-    this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));
+    /*this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));*/
+    this.setState((prevState: State) => ({...prevState, [event.target.name]: !prevState[event.target.name]}));
   }
 
   public handleSubmitForm = (e: FormEvent) => {

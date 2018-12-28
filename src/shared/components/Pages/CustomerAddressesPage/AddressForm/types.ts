@@ -16,4 +16,5 @@ export interface AddressFormProps extends WithStyles<typeof styles> {
 
 export interface AddressFormState extends IAddressItem {
   submitted: boolean;
+  [key: string]: string | number | boolean;
 }

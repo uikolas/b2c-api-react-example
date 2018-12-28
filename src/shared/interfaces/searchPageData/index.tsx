@@ -15,7 +15,7 @@ export interface ValueFacets {
   name?: string;
   docCount?: any;
   values?: Array<FilterValue>;
-  activeValue?: Array<string> | null;
+  activeValue?: string | null;
   localizedName: TLocalizedName;
 }
 
@@ -40,7 +40,7 @@ export type TLabelId = string;
 
 export interface IProductLabelResponse {
   type: string;
-  id: number;
+  id: string;
 }
 
 export interface IAvailableLabel {

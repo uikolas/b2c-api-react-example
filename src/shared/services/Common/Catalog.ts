@@ -4,15 +4,14 @@ import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSe
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
 import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
+import {IApiResponseData} from "src/shared/services/types";
 
 export class CatalogService extends ApiServiceAbstract {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
     try {
 
       params.include = 'abstract-products,product-labels,';
-
-      let response: any;
-      response = await api.get('catalog-search', params, {withCredentials: true});
+      const response: IApiResponseData = await api.get('catalog-search', params, {withCredentials: true});
 
       if (response.ok) {
         const responseParsed = parseCatalogSearchResponse(response.data);

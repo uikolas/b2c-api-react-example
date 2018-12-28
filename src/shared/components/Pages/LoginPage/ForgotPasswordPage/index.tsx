@@ -16,6 +16,7 @@ import { AppMain } from 'src/shared/components/Common/AppMain';
 import { formStyles } from '../styles';
 import { getRouterHistoryBack } from 'src/shared/selectors/Common/router/index';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;
@@ -32,11 +33,11 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
     email: '',
   };
 
-  public handleChange = (e: any) => {
+  public handleChange = (e: InputChangeEvent) => {
     this.setState({email: e.target.value});
   };
 
-  public submitRequest = (e: any) => {
+  public submitRequest = (e: ClickEvent) => {
     this.props.sendForgotRequest(this.state.email);
   };
 
@@ -101,7 +102,7 @@ export const ForgotPasswordPage = reduxify(
       }
     );
   },
-  (dispatch: Function, ownProps: any) => {
+  (dispatch: Function) => {
     return {
       dispatch,
       sendForgotRequest: (email: string) => dispatch(forgotPasswordAction(email)),
