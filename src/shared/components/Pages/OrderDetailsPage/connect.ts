@@ -1,5 +1,5 @@
 import {reduxify} from 'src/shared/lib/redux-helper';
-import {getRouterLocation, getRouterMatchParam}  from 'src/shared/selectors/Common/router';
+import {getRouterMatchParam}  from 'src/shared/selectors/Common/router/index';
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
@@ -26,7 +26,6 @@ import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
-  const location = getRouterLocation(state, ownProps);
   const isLoading = isOrderDetailsLoading(state, ownProps);
   const isRejected = isOrderDetailsStateRejected(state, ownProps);
   const isFulfilled = isOrderDetailsFulfilled(state, ownProps);
@@ -42,7 +41,6 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const timeZone: TAppTimeZone = getAppTimeZone(state, ownProps);
 
   return ({
-    location,
     isLoading,
     isRejected,
     isFulfilled,

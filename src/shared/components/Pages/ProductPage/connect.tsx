@@ -15,7 +15,7 @@ import {
   isWishlistsCollectionInitiated,
 } from 'src/shared/reducers/Pages/Wishlist';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
-import { getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { getRouterMatchParam } from 'src/shared/selectors/Common/router/index';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import {getProductAvailabilityAction, getProductDataAction} from 'src/shared/actions/Pages/Product';
@@ -30,7 +30,6 @@ import {getCartId, isCartCreated} from "src/shared/reducers/Common/Cart/selector
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
-  const location = getRouterLocation(state, ownProps);
   const product = getProduct(state, ownProps);
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);
   const cartCreated: boolean = isCartCreated(state, ownProps);
@@ -49,7 +48,6 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const anonymId = getAnonymId(state, ownProps);
 
   return ({
-    location,
     product,
     cartCreated,
     cartId,
