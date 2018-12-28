@@ -6,13 +6,13 @@ import {
   RESET_PASSWORD,
 } from 'src/shared/constants/ActionTypes/Pages/Login';
 import { PagesLoginService } from 'src/shared/services/Pages/Login';
-import { ICustomerLoginData, ICustomerLoginDataParsed } from 'src/shared/interfaces/customer';
+import { ICustomerLoginData, ICustomerLoginDataParsed, ICustomerProfile } from 'src/shared/interfaces/customer';
 
 export const registerPendingState = () => ({
   type: PAGES_CUSTOMER_REGISTER + '_PENDING',
 });
 
-export const customerRegisterAction = function(payload: any) {
+export const customerRegisterAction = function(payload: ICustomerProfile) {
   return (dispatch: Function, getState: Function) => {
     dispatch(registerPendingState);
     PagesLoginService.register(PAGES_CUSTOMER_REGISTER, dispatch, payload);

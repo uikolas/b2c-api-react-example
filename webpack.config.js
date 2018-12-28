@@ -188,7 +188,7 @@ const webLoaders = [
 let devServer = {};
 let watchOptions = {};
 
-if(IS_DEV_SERVER) {
+if (IS_DEV_SERVER) {
     watchOptions = {
         aggregateTimeout: 1000,
         poll: 1000

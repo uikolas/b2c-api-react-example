@@ -25,7 +25,7 @@ import {
   TExtraOptionsToSelection,
   TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/commoon/react";
+import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
 
 
 // Base handlers for checkout's page forms

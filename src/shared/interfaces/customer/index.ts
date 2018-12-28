@@ -34,26 +34,24 @@ export interface ICustomerProfileIdentity {
   firstName?: TCustomerFirstName;
   lastName?: TCustomerLastName;
   email: TCustomerEmail;
+  gender?: TCustomerGender | null;
 }
 
 export interface ICustomerProfilePassword {
-  newPassword: TCustomerPassword;
+  newPassword?: TCustomerPassword;
   password: TCustomerPassword;
   confirmPassword: TCustomerPassword;
 }
 
 export interface ICustomerProfile extends ICustomerProfileIdentity, ICustomerProfilePassword {
+  acceptedTerms?: boolean;
+  [key: string]: string | number | boolean;
 }
 
-export interface ICustomerDataParsed {
+export interface ICustomerDataParsed extends ICustomerProfileIdentity {
   id: TCustomerId;
-  salutation: TCustomerSalutation;
-  firstName: TCustomerFirstName;
-  lastName: TCustomerLastName;
-  email: TCustomerEmail;
   createdAt: TCustomerTime;
   updatedAt: TCustomerTime;
-  gender: TCustomerGender | null;
   dateOfBirth: TCustomerDateOfBirth | null;
 
   [propName: string]: string | number | null;
@@ -62,16 +60,6 @@ export interface ICustomerDataParsed {
 export interface ICustomerLoginData {
   password: TCustomerPassword;
   username: TCustomerUsername;
-}
-
-export interface ICustomerRegisterData {
-  acceptedTerms: TAcceptedTerms;
-  email: TCustomerEmail;
-  firstName: TCustomerFirstName;
-  lastName: TCustomerLastName;
-  password: TCustomerPassword;
-  passwordConfirmation: TCustomerPassword;
-  salutation: TCustomerSalutation;
 }
 
 export interface ILoginDataToLocalStorage {

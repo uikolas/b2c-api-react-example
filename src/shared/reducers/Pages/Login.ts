@@ -15,7 +15,7 @@ import { LOGIN_DATA_SET_TO_STORE } from 'src/shared/constants/ActionTypes/Pages/
 
 export interface ILoginState extends IReduxState {
   data: {
-    customerRef?: string,
+    customerRef?: TCustomerReference,
     isAuth?: boolean,
     tokenType?: string,
     expiresIn?: string,

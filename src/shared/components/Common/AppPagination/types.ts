@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ChangeEvent} from "react";
 import { RouteProps } from 'react-router';
-import {WithRouter} from "src/shared/interfaces/commoon/react";
+import {WithRouter} from "src/shared/interfaces/common/react";
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 

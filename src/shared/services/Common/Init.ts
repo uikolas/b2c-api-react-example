@@ -1,4 +1,4 @@
-import api from '../api';
+import api, {nodeApi} from '../api';
 import { toast } from 'react-toastify';
 import {
   categoriesFulfilledState,
@@ -17,7 +17,7 @@ export class InitAppService extends ApiServiceAbstract {
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
     let anonymId: string;
     try {
-      const nodeResponse: any = await api.get('react/getUniqueUser');
+      const nodeResponse: any = await nodeApi.get('getUniqueUser');
 
       if (nodeResponse.ok) {
         anonymId = nodeResponse.data;

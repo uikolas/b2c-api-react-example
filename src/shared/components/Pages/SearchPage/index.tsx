@@ -373,7 +373,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       <SprykerSelect
         currentMode={ this.state.sort || ' ' }
         changeHandler={ this.handleSetSorting }
-        menuItems={ sortParams.map((item: string) => ({
+        menuItems={ sortParams.filter((item: string) => item !== 'rating').map((item: string) => ({
           value: item,
           name: (sortParamLocalizedNames && sortParamLocalizedNames[item]) ? sortParamLocalizedNames[item] : `${item}`,
         })) }

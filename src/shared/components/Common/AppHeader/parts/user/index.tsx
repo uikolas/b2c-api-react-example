@@ -3,14 +3,15 @@ import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 
-import { ClickEvent } from 'src/shared/interfaces/commoon/react';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { PersonIcon } from './person-icon';
 import { UserDrop } from './userDrop';
 import { UserProps as Props, UserState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
-import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper/index";
+import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper";
+
 
 @connect
 @(withRouter as any)

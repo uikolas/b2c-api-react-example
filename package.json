@@ -111,7 +111,7 @@
     "@types/yargs": "11.0.0",
     "autoprefixer": "8.6.3",
     "clean-webpack-plugin": "0.1.19",
-    "cpy-cli": "^2.0.0",
+    "cpy-cli": "2.0.0",
     "cross-env": "5.2.0",
     "css-loader": "0.28.11",
     "dotenv": "6.0.0",
@@ -128,8 +128,9 @@
     "postcss-icss-values": "2.0.1",
     "postcss-loader": "2.1.5",
     "postcss-smart-import": "0.7.6",
+    "precss": "^4.0.0",
     "prettier": "1.13.7",
-    "react-dev-utils": "^6.1.1",
+    "react-dev-utils": "6.1.1",
     "react-hot-loader": "4.3.3",
     "react-transform-hmr": "1.0.4",
     "redux-devtools": "3.4.1",
@@ -153,9 +154,9 @@
     "url-loader": "1.0.1",
     "webpack": "4.12.0",
     "webpack-bundle-analyzer": "2.13.1",
-    "webpack-cli": "3.0.8",
+    "webpack-cli": "3.1.2",
     "webpack-dashboard": "2.0.0",
-    "webpack-dev-server": "^3.1.10",
+    "webpack-dev-server": "3.1.10",
     "webpack-hot-middleware": "2.24.2"
   },
   "scripts": {
@@ -166,12 +167,13 @@
     "build:web": "node --max_old_space_size=6144 node_modules/.bin/webpack-cli --config ./webpack.config.js --progress --profile --colors",
     "build:web:prod": "cross-env NODE_ENV=production npm run build:web",
     "dist": "npm run build:web:prod",
-    "dist:dev": "npm run cpy:local:dev && npm run build:web",
-    "start:docker": "npm run cpy:local:docker && sudo docker-compose up --build",
+    "dist:dev": "npm run cpy:local:outside && npm run build:web",
+    "start:docker": "npm run cpy:local:docker && docker-compose up --build",
     "dist:prod": "npm run cpy:prod && npm run build:web:prod",
     "dev": "cross-env NODE_ENV=webpack-dev-server node --max_old_space_size=4096 server.js",
     "serve:vm": "npm run cpy:local:inside && npm run dev",
     "serve:local": "npm run cpy:local:outside && npm run dev",
-    "start": "node ./server.js"
+    "start": "node ./server.js",
+    "start22": "webpack -p"
   }
 }

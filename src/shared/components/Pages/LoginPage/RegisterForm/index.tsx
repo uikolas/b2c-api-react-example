@@ -14,7 +14,7 @@ import { salutationVariants } from 'src/shared/constants/customer';
 import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/errors';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
-import { InputChangeEvent, FormEvent } from "src/shared/interfaces/commoon/react";
+import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
 
 export class RegisterFormBase extends React.Component<Props, State> {
   public state = {
