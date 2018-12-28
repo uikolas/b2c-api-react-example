@@ -81,15 +81,20 @@ This application is released for the sole purpose of illustrating API usage. It 
     - `127.0.0.1 react.local`
 3. Please edit `local_outside_vm.env` file inside your project for local environment. You have to edit `DEV_SERVER_HOST` variable value. For example `react.local`
 
+4. Install cpy globally `npm install --global cpy-cli`
 ## Installation
 
-Once installed nodejs, cloned git repository and switched to the project directory
+Once you installed nodejs, cloned git repository and switched to the project directory
+
 ```sh
 npm i
 ```
 
-## Building
-To run dev server with hot replacement on local machine
+```sh
+npm run dist
+```
+
 ```sh
 npm run serve:local
 ```
+
