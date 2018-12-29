@@ -4,6 +4,7 @@ import { IReduxState } from 'src/typings/app';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
 import { ICartCreatePayload } from '../../services/Common/Cart/types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IApiErrorResponse} from "src/shared/services/types";
 
 export type TAppPriceMode = string | null;
 export type TAppCurrency = string | null;
@@ -38,6 +39,13 @@ export interface IInitData {
   anonymId?: string;
 }
 
+type TInitAction = {
+  type: string;
+  payloadInitFulfilled?: IInitData;
+  payloadCategoriesTreeFulfilled?: {categories: Array<ICategory>};
+  payloadRejected?: IApiErrorResponse;
+};
+
 export interface IInitState extends IReduxState {
   data: IInitData | null;
 }
@@ -56,23 +64,24 @@ export const initialState: IInitState = {
   },
 };
 
-export const init = function(state: IInitState = initialState, action: any): IInitState {
+export const init = function(state: IInitState = initialState,
+                             action: TInitAction): IInitState {
   switch (action.type) {
     case `${INIT_APP_ACTION_TYPE}_PENDING`:
     case `${CATEGORIES_TREE_REQUEST}_PENDING`:
-      return handleInitAppPending(state, action.payload);
+      return handleInitAppPending(state);
     case `${INIT_APP_ACTION_TYPE}_FULFILLED`:
-      return handleInitAppFulfilled(state, action.payload);
+      return handleInitAppFulfilled(state, action.payloadInitFulfilled);
     case `${INIT_APP_ACTION_TYPE}_REJECTED`:
     case `${CATEGORIES_TREE_REQUEST}_REJECTED`:
-      return handleInitAppRejected(state, action.payload);
+      return handleInitAppRejected(state, action.payloadRejected);
     case `${CATEGORIES_TREE_REQUEST}_FULFILLED`:
       return {
         ...state,
         data: {
           ...state.data,
           ok: true,
-          categoriesTree: action.categories,
+          categoriesTree: action.payloadCategoriesTreeFulfilled.categories,
         },
         ...getReducerPartFulfilled(),
       };
@@ -82,7 +91,7 @@ export const init = function(state: IInitState = initialState, action: any): IIn
 };
 
 // handlers
-const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
+const handleInitAppFulfilled = (appState: IInitState, payload: IInitData) => {
   return {
     ...appState,
     data: {
@@ -100,7 +109,7 @@ const handleInitAppFulfilled = (appState: IInitState, payload: any) => {
   };
 };
 
-const handleInitAppRejected = (appState: IInitState, payload: any) => {
+const handleInitAppRejected = (appState: IInitState, payload: IApiErrorResponse) => {
   return {
     ...appState,
     data: {
@@ -110,7 +119,7 @@ const handleInitAppRejected = (appState: IInitState, payload: any) => {
     ...getReducerPartRejected(payload.error),
   };
 };
-const handleInitAppPending = (appState: IInitState, payload: any) => {
+const handleInitAppPending = (appState: IInitState) => {
   return {
     ...appState,
     data: {

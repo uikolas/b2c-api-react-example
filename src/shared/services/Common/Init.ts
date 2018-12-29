@@ -13,6 +13,7 @@ import {
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
+import {ICategory, IInitData} from "src/shared/reducers/Common/Init";
 
 export class InitAppService extends ApiServiceAbstract {
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
@@ -35,7 +36,7 @@ export class InitAppService extends ApiServiceAbstract {
       const response: IApiResponseData = await api.get('stores', null);
 
       if (response.ok) {
-        const responseParsed = parseStoreResponse(response.data);
+        const responseParsed: IInitData = parseStoreResponse(response.data);
         dispatch(initApplicationDataFulfilledStateAction({...responseParsed, anonymId}));
 
         dispatch(getCategoriesAction());
@@ -54,10 +55,10 @@ export class InitAppService extends ApiServiceAbstract {
   public static async getCategoriesTree(dispatch: Function): Promise<void> {
     try {
       dispatch(categoriesPendingState());
-      const response: any = await api.get('category-trees', {}, {withCredentials: true});
+      const response: IApiResponseData = await api.get('category-trees', {}, {withCredentials: true});
 
       if (response.ok) {
-        let tree = response.data.data[0].attributes.categoryNodesStorage;
+        let tree: Array<ICategory> = response.data.data[0].attributes.categoryNodesStorage;
 
         if (!Array.isArray(tree)) {
           tree = [];
