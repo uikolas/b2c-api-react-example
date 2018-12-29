@@ -13,7 +13,6 @@ import {labeledCategories} from "src/shared/routes/categoriesRoutes";
 
 export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
                                   defaultRanges: ISearchPageData['rangeFilters']): boolean => {
-  console.log('activeRanges ', activeRanges);
   const activeData: {[key: string]: RangeType} = {...activeRanges};
   const defaultData = [...defaultRanges];
   let canMakeNewRequest: boolean = true;

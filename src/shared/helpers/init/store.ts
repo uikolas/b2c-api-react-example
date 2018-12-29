@@ -1,7 +1,9 @@
 import { IInitData } from '../../reducers/Common/Init';
 import { PRICE_MODE_DEFAULT } from '../../constants/Environment';
+import {ILocaleItem} from "src/shared/interfaces/locale/index";
+import {IStoreRawResponse} from "src/shared/helpers/init/types";
 
-export const parseStoreResponse = (data: any): IInitData => {
+export const parseStoreResponse = (data: IStoreRawResponse): IInitData => {
 
   const result: IInitData = {
     priceMode: null,
@@ -21,7 +23,7 @@ export const parseStoreResponse = (data: any): IInitData => {
   result.timeZone = attributes.timeZone;
   result.countries = attributes.countries;
 
-  attributes.locales.forEach((row: any) => {
+  attributes.locales.forEach((row: ILocaleItem) => {
     row.code === result.store.toLowerCase() ? result.locale = row.code : 'de';
   });
   // For now it's hardcoded. Change if needed

@@ -12,12 +12,13 @@ import {
 } from 'src/shared/actions/Common/Init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import {IApiResponseData} from "src/shared/services/types";
 
 export class InitAppService extends ApiServiceAbstract {
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
     let anonymId: string;
     try {
-      const nodeResponse: any = await nodeApi.get('getUniqueUser');
+      const nodeResponse: IApiResponseData = await nodeApi.get('getUniqueUser');
 
       if (nodeResponse.ok) {
         anonymId = nodeResponse.data;
@@ -30,9 +31,8 @@ export class InitAppService extends ApiServiceAbstract {
     }
 
     try {
-      let response: any;
       dispatch(initApplicationDataPendingStateAction());
-      response = await api.get('stores', null);
+      const response: IApiResponseData = await api.get('stores', null);
 
       if (response.ok) {
         const responseParsed = parseStoreResponse(response.data);
