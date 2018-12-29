@@ -1,4 +1,4 @@
-import { ISuperAttribute } from 'src/shared/helpers/product/superAttributes';
+import { ISuperAttribute } from 'src/shared/helpers/product/types';
 
 // Constants
 export const concreteProductType = 'concreteProduct';
@@ -20,6 +20,9 @@ export type TProductName = string;
 export type TProductPrice = number;
 export type TProductQuantity = number;
 export type TProductCurrency = string;
+export type TProductCurrencyCode = string;
+export type TProductCurrencyName = string;
+export type TProductCurrencySymbol = string;
 export type TProductAvailability = boolean;
 export type TProductAttributes = object;
 export type TProductImageSRC = string;
@@ -38,17 +41,24 @@ export type TPriceTypeOriginalNet = number | null;
 export type TPriceTypeDefaultGross = number | null;
 export type TPriceTypeDefaultNet = number | null;
 
+export type TProductCardImagesCollection = Array<IProductCardImages>;
+
 // Interfaces
 
 export interface IProductPricesItem {
   grossAmount: TPriceTypeOriginalGross | TPriceTypeDefaultGross;
   netAmount: TPriceTypeOriginalNet | TPriceTypeDefaultNet;
   priceTypeName: TPriceTypeName;
+  currency?: {
+    code: TProductCurrencyCode;
+    name: TProductCurrencyName;
+    symbol: TProductCurrencySymbol
+  };
 }
 
 export interface IProductCardImages {
-  externalUrlLarge?: TProductImageSRC;
-  externalUrlSmall?: TProductImageSRC;
+  externalUrlLarge: TProductImageSRC;
+  externalUrlSmall: TProductImageSRC;
 }
 
 export interface IProductCard {
@@ -61,16 +71,16 @@ export interface IProductCard {
 }
 
 export interface IProductAttributeMap {
-  attribute_variants: any;
-  product_concrete_ids: any;
-  super_attributes: any;
+  attribute_variants: {[key: string]: IProductAttributes};
+  product_concrete_ids: Array<TProductSKU>;
+  super_attributes: {[key: string]: Array<string>};
 }
 
 export interface IProductAttributes {
   [key: string]: string | number;
 }
 
-// Translated version of the product's sttributes
+// Translated version of the product's attributes
 export interface IProductAttributeNames {
   [key: string]: string;
 }
@@ -119,3 +129,23 @@ export interface IProductLabel {
   text: string;
   position: TProductLabelPosition;
 }
+
+export interface IProductAttributesRawResponse {
+  sku: string;
+  name: string;
+  description: string;
+  attributes: IProductAttributes;
+  attributeNames: IProductAttributeNames;
+  attributeMap: IProductAttributeMap;
+  id: string;
+  superAttributesDefinition?: Array<string>;
+  metaDescription: string;
+  metaKeywords: string;
+  metaTitle: string;
+}
+
+export interface IProductImageSetsRawResponse {
+  images: Array<IProductCardImages>;
+  name?: string;
+}
+export type TProductImageSetsCollectionRawResponse = Array<IProductImageSetsRawResponse>;

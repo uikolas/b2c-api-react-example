@@ -1,17 +1,6 @@
-import {IProductAttributeMap, IProductAttributeNames} from '../../interfaces/product';
+import {IProductAttributeMap, IProductAttributeNames, IProductAttributes} from '../../interfaces/product';
+import {ISuperAttribute, ISuperAttributeData} from "src/shared/helpers/product/types";
 
-
-export interface ISuperAttribute {
-  name: string;
-  nameToShow: string;
-  data: Array<ISuperAttributeData>;
-}
-
-export interface ISuperAttributeData {
-  value: string;
-  name: string;
-  idProductConcrete?: string | number;
-}
 
 export const parseSuperAttributes = (superAttributes: IProductAttributeMap,
                                      attributeNamesContainer: IProductAttributeNames):
@@ -30,12 +19,10 @@ export const parseSuperAttributes = (superAttributes: IProductAttributeMap,
     const values = superAttributes.super_attributes[name];
 
     values.forEach((value: string) => {
-      data.push(
-        {
+      data.push({
           value,
           name: value,
-        },
-      );
+      });
     });
 
     superData.push({
@@ -48,17 +35,19 @@ export const parseSuperAttributes = (superAttributes: IProductAttributeMap,
   return superData;
 };
 
-export const getInitialSuperAttrSelected = (superAttributes: Array<ISuperAttribute>): any => {
+export const getInitialSuperAttrSelected = (superAttributes: Array<ISuperAttribute>): IProductAttributes | null => {
   const attributes = [...superAttributes];
   if (!attributes.length) {
     return null;
   }
-  const superAttrSelected: object = {};
+  const superAttrSelected: IProductAttributes = {};
 
-  const selectedAttrNames = attributes.map((attr: ISuperAttribute) => (attr.name)).reduce((acc: any, name: string) => {
-    acc[name] = null;
-    return acc;
-  }, superAttrSelected);
+  const selectedAttrNames = attributes.map((attr: ISuperAttribute) => (attr.name)).reduce(
+    (acc: IProductAttributes, name: string) => {
+      acc[name] = null;
+      return acc;
+    }, superAttrSelected
+  );
 
   return selectedAttrNames;
 };

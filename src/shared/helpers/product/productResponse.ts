@@ -1,22 +1,25 @@
 import { parseImageSets, parseSuperAttributes } from './';
 import {
   abstractProductType,
-  concreteProductType, IConcreteProductAvailability, IProductAttributeNames,
+  concreteProductType,
+  IConcreteProductAvailability,
+  IProductAttributeNames,
   IProductDataParsed,
+  IProductPricesItem,
   priceTypeNameDefault,
   priceTypeNameOriginal,
 } from '../../interfaces/product';
+import {
+  IProductAvailabilitiesRawResponse, IProductRawResponse,
+  TRowProductResponseIncluded
+} from "src/shared/helpers/product/types";
 
-interface IResponse {
-  data: object;
-  included: object;
-}
 
-export const parseProductResponse = (response: IResponse): IProductDataParsed => {
+export const parseProductResponse = (response: IProductRawResponse): IProductDataParsed => {
   if (!response) {
     return null;
   }
-  const {data, included}: any = response;
+  const {data, included} = response;
 
   let result: IProductDataParsed = {
     attributeMap: data.attributes.attributeMap,
@@ -45,7 +48,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
 
   // Fill data with concrete products ids
   if (data.attributes.attributeMap.product_concrete_ids) {
-    data.attributes.attributeMap.product_concrete_ids.forEach((id: any) => {
+    data.attributes.attributeMap.product_concrete_ids.forEach((id: string) => {
       result.concreteProducts[id] = {
         sku: null,
         name: null,
@@ -66,7 +69,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
     });
   }
 
-  included.forEach((row: any) => {
+  included.forEach((row: TRowProductResponseIncluded) => {
 
     // Abstract part start
     if (row.type === 'abstract-product-image-sets') {
@@ -76,7 +79,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
         result.abstractProduct.price = row.attributes.price;
         result.abstractProduct.prices = row.attributes.prices;
         if (row.attributes.prices && row.attributes.prices.length) {
-          row.attributes.prices.forEach((priceData: any) => {
+          row.attributes.prices.forEach((priceData: IProductPricesItem) => {
             if (priceData.priceTypeName === priceTypeNameDefault) {
               result.abstractProduct.priceDefaultGross = priceData.grossAmount;
               result.abstractProduct.priceDefaultNet = priceData.netAmount;
@@ -111,7 +114,7 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
                 result.concreteProducts[row.id].price = row.attributes.price;
                 result.concreteProducts[row.id].prices = row.attributes.prices;
                 if (row.attributes.prices && row.attributes.prices.length) {
-                  row.attributes.prices.forEach((priceData: any) => {
+                  row.attributes.prices.forEach((priceData: IProductPricesItem) => {
                     if (priceData.priceTypeName === priceTypeNameDefault) {
                       result.concreteProducts[row.id].priceDefaultGross = priceData.grossAmount;
                       result.concreteProducts[row.id].priceDefaultNet = priceData.netAmount;
@@ -149,12 +152,12 @@ export const parseProductResponse = (response: IResponse): IProductDataParsed =>
   return result;
 };
 
-export const parseProductAvailabilityResponse = (response: IResponse): IConcreteProductAvailability | null => {
+export const parseProductAvailabilityResponse = (response: IProductAvailabilitiesRawResponse):
+  IConcreteProductAvailability | null => {
   if (!response) {
     return null;
   }
-  const {data}: any = response;
-
+  const {data} = response;
   if (!data || !data[0] || !data[0].attributes) {
     return null;
   }

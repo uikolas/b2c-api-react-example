@@ -5,8 +5,7 @@ import {
   IProductAttributeMap,
   IProductAttributes,
   IProductDataParsed,
-  IProductPropFullData,
-  ISuperAttributes,
+  IProductPropFullData, ISuperAttributes,
   TProductQuantity,
 } from 'src/shared/interfaces/product';
 import { TAppPriceMode, TAppStore } from 'src/shared/reducers/Common/Init';

@@ -5,27 +5,29 @@ import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
 
 export type TSpellingSuggestion = string;
 export type TLocalizedName = string;
+export type TDocCount = number;
+export type TLabelId = string;
 
 export interface FilterValue {
-  value: any;
-  doc_count: number;
+  value: string | number;
+  doc_count: TDocCount | null;
 }
 
 export interface ValueFacets {
-  name?: string;
-  docCount?: any;
-  values?: Array<FilterValue>;
-  activeValue?: string | null;
+  name: string;
+  docCount: TDocCount | null;
+  values: Array<FilterValue>;
+  activeValue: string | null;
   localizedName: TLocalizedName;
 }
 
 export interface RangeFacets {
-  name?: string;
-  min?: number;
-  max?: number;
-  activeMin?: number;
-  activeMax?: number;
-  docCount?: any;
+  name: string;
+  min: number;
+  max: number;
+  activeMin: number;
+  activeMax: number;
+  docCount: TDocCount | null;
   localizedName: TLocalizedName;
 }
 
@@ -35,8 +37,6 @@ export interface FlyoutSearch {
   completion: string[] | null;
   pending: boolean;
 }
-
-export type TLabelId = string;
 
 export interface IProductLabelResponse {
   type: string;
