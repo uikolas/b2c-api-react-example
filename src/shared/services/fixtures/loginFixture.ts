@@ -1,5 +1,7 @@
 /* tslint:disable */
-export const fixtureLogin: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const fixtureLogin: TFixtureData = {
   data: {
     data: {
       attributes: {

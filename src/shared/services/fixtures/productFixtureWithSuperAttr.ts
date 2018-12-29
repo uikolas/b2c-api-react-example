@@ -1,5 +1,7 @@
 /* tslint:disable */
-export const fixtureFull: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const fixtureFull: TFixtureData = {
   'data': {
     'type': 'abstract-products',
     'id': '135',
@@ -589,7 +591,7 @@ export const fixtureFull: any = {
   ],
 };
 
-export const fixtureSuperFull: any = {
+export const fixtureSuperFull: TFixtureData = {
   'data': {
     'type': 'abstract-products',
     'id': '070',
@@ -1748,7 +1750,7 @@ export const fixtureSuperFull: any = {
   ],
 };
 
-export const fixtureOneProduct: any = {
+export const fixtureOneProduct: TFixtureData = {
   'data': {
     'type': 'abstract-products',
     'id': '191',
@@ -2173,11 +2175,11 @@ export const fixtureOneProduct: any = {
   ],
 };
 
-export const fixtureError: any = {
+export const fixtureError: TFixtureData = {
   'errors': [{'code': '301', 'status': 404, 'detail': 'Abstract product is not found.'}],
 };
 
-export const fixtureProductPrices: any = {
+export const fixtureProductPrices: TFixtureData = {
   'data': {
     'type': 'abstract-products',
     'id': '001',
@@ -2425,7 +2427,7 @@ export const fixtureProductPrices: any = {
   }],
 };
 
-export const fixtureProductImages: any = {
+export const fixtureProductImages: TFixtureData = {
   'data': {
     'type': 'abstract-products',
     'id': '177',

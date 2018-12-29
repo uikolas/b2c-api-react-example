@@ -1,5 +1,7 @@
 /* tslint:disable */
-export const initFixture: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const initFixture: TFixtureData = {
   data: [{
     'type': 'stores',
     'id': 'DE',

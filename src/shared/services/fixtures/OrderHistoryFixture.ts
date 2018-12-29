@@ -1,9 +1,11 @@
 /* tslint:disable */
-export const orderHistoryFixtureEmpty: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const orderHistoryFixtureEmpty: TFixtureData = {
   'data': [], 'links': {'self': 'http:\/\/glue.de.suite.local\/orders'},
 };
 
-export const orderHistoryFixtureFull: any = {
+export const orderHistoryFixtureFull: TFixtureData = {
   'data': [{
     'type': 'orders',
     'id': 'DE--4',

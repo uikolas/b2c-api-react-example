@@ -1,5 +1,7 @@
 /* tslint:disable */
-export const getWishlistFixture: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const getWishlistFixture: TFixtureData = {
   'data': [{
     'type': 'wishlists',
     'id': '857d4fd0-92cd-5db4-aeb1-49d34dcbe688',

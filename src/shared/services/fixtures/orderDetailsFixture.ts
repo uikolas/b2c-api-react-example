@@ -1,6 +1,8 @@
 /* tslint:disable */
 
-export const orderDetailsFixtureFull: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const orderDetailsFixtureFull: TFixtureData = {
   'data': {
     'type': 'orders',
     'id': 'DE--3',

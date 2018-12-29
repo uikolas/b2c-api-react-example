@@ -1,5 +1,7 @@
 /* tslint:disable */
-export const cartCreateFixture_bundle: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const cartCreateFixture_bundle: TFixtureData = {
   data: {
     'data':
       {
@@ -223,7 +225,7 @@ export const cartCreateFixture_bundle: any = {
   },
 };
 
-export const cartCreateFixture: any = {
+export const cartCreateFixture: TFixtureData = {
   data: {
     'data': {
       'type': 'carts',
@@ -333,7 +335,7 @@ export const cartCreateFixture: any = {
   },
 };
 
-export const cartUpdateQuantityFixture: any = {
+export const cartUpdateQuantityFixture: TFixtureData = {
   data: {
     'data': {
       'type': 'carts',

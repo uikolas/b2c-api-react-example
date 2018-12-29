@@ -1,5 +1,7 @@
 /* tslint:disable */
-export const catalogFixture: any = {
+import {TFixtureData} from "src/shared/services/fixtures/types";
+
+export const catalogFixture: TFixtureData = {
   'data': [{
     'type': 'catalog-search',
     'id': null,
@@ -1218,7 +1220,7 @@ export const catalogFixture: any = {
   }],
 };
 
-export const suggestionFixture: any = {
+export const suggestionFixture: TFixtureData = {
   'data': [{
     'type': 'catalog-search-suggestions',
     'id': null,
