@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
-import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
 import { TCartId } from 'src/shared/interfaces/cart';
 import { deleteItemAction, deleteMultiItemsAction } from 'src/shared/actions/Pages/Wishlist';
 import { addItemToCartAction, multiItemsCartAction } from 'src/shared/actions/Common/Cart';

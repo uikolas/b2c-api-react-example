@@ -1,6 +1,6 @@
 import * as de from 'react-intl/locale-data/de';
 import * as en from 'react-intl/locale-data/en';
-import { TAppLocale } from '../../reducers/Common/Init';
+import { TAppLocale } from '../../reducers/Common/Init/Init';
 import { LocaleData } from 'react-intl';
 import { APP_LOCALE_DE, APP_LOCALE_EN } from '../../constants/Environment';
 

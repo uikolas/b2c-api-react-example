@@ -8,7 +8,7 @@ import {
   updateGuestCartAction
 } from 'src/shared/actions/Common/Cart';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
-import { getAnonymId } from 'src/shared/reducers/Common/Init';
+import { getAnonymId } from 'src/shared/reducers/Common/Init/Init';
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
 import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";

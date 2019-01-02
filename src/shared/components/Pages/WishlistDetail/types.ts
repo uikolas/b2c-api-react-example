@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from 'src/shared/components/Pages/WishlistDetail/styles';
 import { IWishlist, IWishlistItem } from 'src/shared/interfaces/wishlist';
-import { TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { LocationDescriptor, LocationState } from 'history';
 import { RouterAction } from 'react-router-redux';

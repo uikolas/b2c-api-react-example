@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TAppCurrency } from '../../../reducers/Common/Init';
+import { TAppCurrency } from '../../../reducers/Common/Init/Init';
 import { IOrderDetailsSelectedItems } from '../../../interfaces/order';
 import {InputChangeEvent} from "src/shared/interfaces/common/react";
 

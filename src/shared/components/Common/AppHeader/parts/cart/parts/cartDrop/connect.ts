@@ -4,7 +4,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { cartDeleteItemAction, removeItemGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { ICartState } from 'src/shared/reducers/Common/Cart/types';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
-import { getAnonymId } from 'src/shared/reducers/Common/Init';
+import { getAnonymId } from 'src/shared/reducers/Common/Init/Init';
 import {getCartId, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 

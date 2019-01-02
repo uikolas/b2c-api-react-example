@@ -13,7 +13,7 @@ import {
 } from "src/shared/interfaces/checkout";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
-import {ICountries} from "src/shared/reducers/Common/Init";
+import {ICountries} from "src/shared/reducers/Common/Init/Init";
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;

@@ -3,7 +3,7 @@ import { push } from 'react-router-redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
-import {getAppCurrency, getCategoriesTree, ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init';
+import {getAppCurrency, getCategoriesTree, ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init/Init';
 import { clearSuggestions, sendSearchAction, sendSuggestionAction } from 'src/shared/actions/Pages/Search';
 import { getProductDataAction } from 'src/shared/actions/Pages/Product';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";

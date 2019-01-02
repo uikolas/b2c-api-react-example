@@ -2,7 +2,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getRouterHistoryBack } from 'src/shared/selectors/Common/router/index';
-import { getCounties, ICountries } from 'src/shared/reducers/Common/Init';
+import { getCounties, ICountries } from 'src/shared/reducers/Common/Init/Init';
 import {getCustomerReference} from 'src/shared/reducers/Pages/Login';
 import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses/index';
 import { IAddressItem } from 'src/shared/interfaces/addresses';

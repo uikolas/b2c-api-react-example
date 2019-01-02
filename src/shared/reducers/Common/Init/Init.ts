@@ -1,8 +1,8 @@
-import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '../../constants/ActionTypes/Common/Init';
+import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '../../../constants/ActionTypes/Common/Init';
 import { IReduxState } from 'src/typings/app';
 
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { ICartCreatePayload } from '../../services/Common/Cart/types';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { ICartCreatePayload } from '../../../services/Common/Cart/types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 import {IApiErrorResponse} from "src/shared/services/types";
 

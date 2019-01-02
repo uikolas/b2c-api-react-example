@@ -146,8 +146,10 @@ export class AddressesService extends ApiServiceAbstract {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          addressId,
-          data: response.data.data.attributes,
+          payloadFulfilled: {
+            addressId,
+            data: response.data.data.attributes,
+          }
         });
         toast.success(addressUpdate);
       } else {

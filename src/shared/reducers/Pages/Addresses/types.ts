@@ -9,8 +9,16 @@ export interface IAddressesState extends IReduxState {
   };
 }
 
+export interface IPageAddressesActionPayloadFulfilled {
+  addressId: IAddressItem["id"];
+  data: IAddressItem;
+}
+
 export type TPageAddressesAction = {
   type: string;
   addresses?: Array<IAddressItem>;
+  address?: IAddressItem;
   addressId?: IAddressItem["id"];
+  payloadFulfilled?: IPageAddressesActionPayloadFulfilled;
+  error?: string;
 };

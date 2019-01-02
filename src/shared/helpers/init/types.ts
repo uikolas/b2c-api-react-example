@@ -1,4 +1,4 @@
-import {ICountries} from "src/shared/reducers/Common/Init";
+import {ICountries} from "src/shared/reducers/Common/Init/Init";
 import {ICurrencyItem} from "src/shared/interfaces/currency/index";
 import {ILocaleItem} from "src/shared/interfaces/locale/index";
 

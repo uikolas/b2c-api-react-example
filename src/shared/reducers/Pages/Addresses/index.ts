@@ -74,9 +74,12 @@ export const pageAddresses = produce<IAddressesState>(
         break;
       }
       case `${UPDATE_ADDRESS}_FULFILLED`: {
-        const addresses: IAddressItem[] = draft.data.addresses.map((
-          address: IAddressItem
-        ) => address.id === action.addressId ? {...action.data, id: action.addressId} : address);
+        const addresses: IAddressItem[] = draft.data.addresses
+          .map((address: IAddressItem) => (
+            address.id === action.addressId
+            ? {...action.payloadFulfilled.data, id: action.payloadFulfilled.addressId}
+            : address)
+          );
         draft.data.addresses = addresses;
         draft.data.currentAddress = null;
         draft.error = false;

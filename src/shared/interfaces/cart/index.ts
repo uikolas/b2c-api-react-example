@@ -1,4 +1,4 @@
-import { TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
 import { IAbstractTotals } from '../abstract/totals';
 import {
   TProductQuantity,

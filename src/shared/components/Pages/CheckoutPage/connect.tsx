@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getAnonymId, getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Common/Init';
+import {getAnonymId, getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Common/Init/Init';
 import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";

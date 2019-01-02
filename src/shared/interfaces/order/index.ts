@@ -1,4 +1,4 @@
-import { TAppCurrency } from '../../reducers/Common/Init';
+import { TAppCurrency } from '../../reducers/Common/Init/Init';
 import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '../product';
 import { IAbstractTotals, TCanceledTotal } from '../abstract/totals';
 import {TCartPriceMode} from "src/shared/interfaces/cart/index";

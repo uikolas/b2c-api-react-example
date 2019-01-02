@@ -15,7 +15,7 @@ import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
   getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled, TAppLocale
-} from 'src/shared/reducers/Common/Init';
+} from 'src/shared/reducers/Common/Init/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';

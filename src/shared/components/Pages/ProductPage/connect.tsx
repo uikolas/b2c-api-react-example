@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAnonymId, getPayloadForCreateCart, isAppInitiated } from 'src/shared/reducers/Common/Init';
+import { getAnonymId, getPayloadForCreateCart, isAppInitiated } from 'src/shared/reducers/Common/Init/Init';
 import {
   getProduct,
   isPageProductStateFulfilled,

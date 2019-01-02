@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {reduxify} from 'src/shared/lib/redux-helper';
 import {FormattedDate} from 'react-intl';
-import {getAppTimeZone, TAppTimeZone} from 'src/shared/reducers/Common/Init';
+import {getAppTimeZone, TAppTimeZone} from 'src/shared/reducers/Common/Init/Init';
 import {TOrderDate} from 'src/shared/interfaces/order';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 

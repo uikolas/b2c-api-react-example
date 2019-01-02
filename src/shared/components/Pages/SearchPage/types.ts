@@ -1,4 +1,4 @@
-import { ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import {ISearchPageData, ISearchQuery} from 'src/shared/interfaces/searchPageData';

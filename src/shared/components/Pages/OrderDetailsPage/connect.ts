@@ -14,7 +14,7 @@ import {
   getPayloadForCreateCart,
   isAppInitiated,
   TAppTimeZone
-} from 'src/shared/reducers/Common/Init';
+} from 'src/shared/reducers/Common/Init/Init';
 import {isUserAuthenticated} from 'src/shared/reducers/Pages/Login';
 import {ICartCreatePayload} from 'src/shared/services/Common/Cart/types';
 import {TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';

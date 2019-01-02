@@ -10,7 +10,7 @@ import {
   getSpellingSuggestion,
   SearchState,
 } from 'src/shared/reducers/Pages/Search';
-import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
 import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
 import {getRouterMatchParam} from "src/shared/selectors/Common/router/index";
 import {sendSearchAction} from "src/shared/actions/Pages/Search";

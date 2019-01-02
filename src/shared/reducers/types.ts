@@ -6,7 +6,7 @@ import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
 import {IAddressesState} from "src/shared/reducers/Pages/Addresses/types";
 import {ICheckoutState} from "src/shared/reducers/Pages/Checkout";
 import {ICartState} from "src/shared/reducers/Common/Cart/types";
-import {IInitState} from "src/shared/reducers/Common/Init";
+import {IInitState} from "src/shared/reducers/Common/Init/Init";
 import {IOrderHistoryState} from "src/shared/reducers/Pages/OrderHistory";
 import {IOrderDetailsState} from "src/shared/reducers/Pages/OrderDetails";
 import {ICustomerDataState} from "src/shared/reducers/Pages/CustomerProfile/types";

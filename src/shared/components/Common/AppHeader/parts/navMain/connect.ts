@@ -1,4 +1,4 @@
-import { getCategoriesTree, ICategory } from 'src/shared/reducers/Common/Init';
+import { getCategoriesTree, ICategory } from 'src/shared/reducers/Common/Init/Init';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
