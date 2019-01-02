@@ -1,15 +1,10 @@
-import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '../../constants/ActionTypes/Pages/Product';
-import { IReduxState } from 'src/typings/app';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import {IConcreteProductAvailability, IProductDataParsed} from '../../interfaces/product';
+import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '../../../constants/ActionTypes/Pages/Product';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import {IConcreteProductAvailability, IProductDataParsed} from '../../../interfaces/product';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IPageProductAction, IProductState} from "src/shared/reducers/Pages/Product/types";
+import {IApiErrorResponse} from "src/shared/services/types";
 
-
-export interface IProductState extends IReduxState {
-  data: {
-    selectedProduct: IProductDataParsed | null,
-  };
-}
 
 export const initialState: IProductState = {
   data: {
@@ -54,18 +49,18 @@ export const initialState: IProductState = {
   return res;
 };*/
 
-export const pageProduct = function(state: IProductState = initialState, action: any): IProductState {
+export const pageProduct = function(state: IProductState = initialState, action: IPageProductAction): IProductState {
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
     case `${PRODUCT_AVAILABILITY_REQUEST}_REJECTED`:
-      return handleRejected(state, action.payload);
+      return handleRejected(state, action.payloadRejected);
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
     case `${PRODUCT_AVAILABILITY_REQUEST}_PENDING`:
-      return handlePending(state, action.payload);
+      return handlePending(state);
     case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
-      return handleFulfilled(state, action.payload);
+      return handleFulfilled(state, action.payloadFulfilled);
     case `${PRODUCT_AVAILABILITY_REQUEST}_FULFILLED`:
-      return handleAvailabilityFulfilled(state, action.payload);
+      return handleAvailabilityFulfilled(state, action.payloadAvailability);
     default:
       return state;
   }
@@ -107,7 +102,7 @@ const handleAvailabilityFulfilled = (productState: IProductState, payload: IConc
   };
 };
 
-const handleRejected = (productState: IProductState, payload: any) => {
+const handleRejected = (productState: IProductState, payload: IApiErrorResponse) => {
   return {
     ...productState,
     data: {
@@ -117,7 +112,7 @@ const handleRejected = (productState: IProductState, payload: any) => {
   };
 };
 
-const handlePending = (productState: IProductState, payload: any) => {
+const handlePending = (productState: IProductState) => {
   return {
     ...productState,
     data: {

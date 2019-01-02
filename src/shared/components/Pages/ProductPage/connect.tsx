@@ -8,7 +8,7 @@ import {
   isPageProductStateLoading,
   isPageProductStateRejected,
   isProductDetailsPresent,
-} from 'src/shared/reducers/Pages/Product';
+} from 'src/shared/reducers/Pages/Product/index';
 import {
   getWishlistsCollectionFromStore,
   isPageWishlistStateLoading,

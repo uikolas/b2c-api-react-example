@@ -15,7 +15,7 @@ import {
 } from "src/shared/helpers/product/types";
 
 
-export const parseProductResponse = (response: IProductRawResponse): IProductDataParsed => {
+export const parseProductResponse = (response: IProductRawResponse): IProductDataParsed | null => {
   if (!response) {
     return null;
   }

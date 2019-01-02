@@ -10,7 +10,7 @@ import {
   getProductDataRejectedStateAction,
 } from 'src/shared/actions/Pages/Product';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
-import {IConcreteProductAvailability, TProductSKU} from "src/shared/interfaces/product/index";
+import {IConcreteProductAvailability, IProductDataParsed, TProductSKU} from "src/shared/interfaces/product/index";
 import {parseProductAvailabilityResponse} from "src/shared/helpers/product/productResponse";
 
 
@@ -30,7 +30,7 @@ export class ProductService extends ApiServiceAbstract {
       });
 
       if (response.ok) {
-        const responseParsed: any = parseProductResponse(response.data);
+        const responseParsed: IProductDataParsed = parseProductResponse(response.data);
         dispatch(getProductDataFulfilledStateAction(responseParsed));
       } else {
         const errorMessage = this.getParsedAPIError(response);

@@ -1,19 +1,20 @@
 import {PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST} from '../../constants/ActionTypes/Pages/Product';
 import { ProductService } from '../../services/Pages/Product';
 import {IConcreteProductAvailability, IProductDataParsed, TProductSKU} from '../../interfaces/product';
+import {IPageProductAction} from "src/shared/reducers/Pages/Product/types";
 
-export const getProductDataItemPendingStateAction = () => ({
+export const getProductDataItemPendingStateAction = (): IPageProductAction => ({
   type: PAGES_PRODUCT_REQUEST + '_PENDING',
 });
 
-export const getProductDataRejectedStateAction = (message: string) => ({
+export const getProductDataRejectedStateAction = (message: string): IPageProductAction => ({
   type: PAGES_PRODUCT_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const getProductDataFulfilledStateAction = (payload: IProductDataParsed) => ({
+export const getProductDataFulfilledStateAction = (payload: IProductDataParsed): IPageProductAction => ({
   type: PAGES_PRODUCT_REQUEST + '_FULFILLED',
-  payload,
+  payloadFulfilled: payload,
 });
 
 export const getProductDataAction = function(sku: string) {
@@ -24,18 +25,19 @@ export const getProductDataAction = function(sku: string) {
 
 // Product availability
 
-export const getProductAvailabilityPendingStateAction = () => ({
+export const getProductAvailabilityPendingStateAction = (): IPageProductAction => ({
   type: PRODUCT_AVAILABILITY_REQUEST + '_PENDING',
 });
 
-export const getProductAvailabilityRejectedStateAction = (message: string) => ({
+export const getProductAvailabilityRejectedStateAction = (message: string): IPageProductAction => ({
   type: PRODUCT_AVAILABILITY_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const getProductAvailabilityFulfilledStateAction = (payload: IConcreteProductAvailability) => ({
+export const getProductAvailabilityFulfilledStateAction = (payload: IConcreteProductAvailability):
+  IPageProductAction => ({
   type: PRODUCT_AVAILABILITY_REQUEST + '_FULFILLED',
-  payload,
+  payloadAvailability: payload,
 });
 
 export const getProductAvailabilityAction = function(sku: TProductSKU) {

@@ -1,6 +1,8 @@
 import { ORDER_DETAILS_REQUEST, ORDERS_COLLECTION_REQUEST } from '../../constants/ActionTypes/Pages/Order';
 import { OrderService } from '../../services/Pages/Order';
 import { IOrderCollectionParsed, IOrderDetailsParsed, TOrderId } from '../../interfaces/order';
+import {IPageOrderHistoryAction} from "src/shared/reducers/Pages/OrderHistory/types";
+import {IPageOrderDetailsAction} from "src/shared/reducers/Pages/OrderDetails/types";
 
 /**
  *  Order History
@@ -10,14 +12,14 @@ export const ordersCollectionPendingStateAction = () => ({
   type: ORDERS_COLLECTION_REQUEST + '_PENDING',
 });
 
-export const ordersCollectionRejectedStateAction = (message: string) => ({
+export const ordersCollectionRejectedStateAction = (message: string): IPageOrderHistoryAction => ({
   type: ORDERS_COLLECTION_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const ordersCollectionFulfilledStateAction = (payload: IOrderCollectionParsed) => ({
+export const ordersCollectionFulfilledStateAction = (payload: IOrderCollectionParsed): IPageOrderHistoryAction => ({
   type: ORDERS_COLLECTION_REQUEST + '_FULFILLED',
-  payload,
+  payloadFulfilled: payload,
 });
 
 export const getOrdersCollectionAction = function() {
@@ -30,18 +32,18 @@ export const getOrdersCollectionAction = function() {
  *  Order Detail
  */
 
-export const orderDetailsPendingStateAction = () => ({
+export const orderDetailsPendingStateAction = (): IPageOrderDetailsAction => ({
   type: ORDER_DETAILS_REQUEST + '_PENDING',
 });
 
-export const orderDetailsRejectedStateAction = (message: string) => ({
+export const orderDetailsRejectedStateAction = (message: string): IPageOrderDetailsAction => ({
   type: ORDER_DETAILS_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const orderDetailsFulfilledStateAction = (payload: IOrderDetailsParsed) => ({
+export const orderDetailsFulfilledStateAction = (payload: IOrderDetailsParsed): IPageOrderDetailsAction => ({
   type: ORDER_DETAILS_REQUEST + '_FULFILLED',
-  payload,
+  payloadFulfilled: payload,
 });
 
 export const getOrderDetailsAction = function(orderId: TOrderId) {
