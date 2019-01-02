@@ -62,7 +62,7 @@ export const updateCustomerProfileAction = function(
 // Save login data to LocalStorage
 export const saveLoginDataToStoreAction = (payload: ILoginDataToLocalStorage) => ({
   type: LOGIN_DATA_SET_TO_STORE + '_FULFILLED',
-  payload,
+  payloadStoreFulfilled: payload,
 });
 
 // Update customer password.

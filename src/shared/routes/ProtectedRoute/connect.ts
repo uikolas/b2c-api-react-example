@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
 import {getAnonymId, isAppStateFulfilled} from "src/shared/reducers/Common/Init/index";
 import {getGuestCartAction} from "src/shared/actions/Common/Cart";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";

@@ -2,7 +2,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { logout } from 'src/shared/actions/Pages/Login';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 
 

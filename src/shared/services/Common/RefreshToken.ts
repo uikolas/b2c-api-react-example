@@ -58,7 +58,7 @@ export class RefreshTokenService extends ApiServiceAbstract {
       saveAccessDataToLocalStorage(responseParsed);
       dispatch({
         type: REFRESH_TOKEN_REQUEST + '_FULFILLED',
-        payload: responseParsed,
+        payloadRefreshTokenFulfilled: responseParsed,
       });
 
       return responseParsed.accessToken;

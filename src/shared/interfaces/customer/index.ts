@@ -1,4 +1,4 @@
-import { TAccessToken } from '../login';
+import {TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType} from '../login';
 
 export type TCustomerSalutation = string;
 export type TCustomerFirstName = string;
@@ -68,8 +68,8 @@ export interface ILoginDataToLocalStorage {
 
 export interface ICustomerLoginDataParsed {
   accessToken: TAccessToken;
-  expiresIn: number;
-  refreshToken: TAccessToken;
-  tokenType: string;
+  expiresIn: TExpiresInAccessToken;
+  refreshToken: TRefreshToken;
+  tokenType: TTokenType;
   customerRef: TCustomerReference;
 }

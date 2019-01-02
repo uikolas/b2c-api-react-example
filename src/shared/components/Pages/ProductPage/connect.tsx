@@ -14,7 +14,7 @@ import {
   isPageWishlistStateLoading,
   isWishlistsCollectionInitiated,
 } from 'src/shared/reducers/Pages/Wishlist';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
 import { getRouterMatchParam } from 'src/shared/selectors/Common/router/index';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';

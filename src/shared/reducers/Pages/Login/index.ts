@@ -7,38 +7,27 @@ import {
   RESET_PASSWORD,
 } from 'src/shared/constants/ActionTypes/Pages/Login';
 import { SET_AUTH_FROM_STORAGE } from 'src/shared/constants/ActionTypes/Common/Init';
-import { IReduxState } from 'src/typings/app';
 import { TAccessToken } from 'src/shared/interfaces/login';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { TCustomerEmail, TCustomerReference, TCustomerUsername } from '../../interfaces/customer';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { TCustomerEmail, TCustomerUsername } from '../../../interfaces/customer';
 import { LOGIN_DATA_SET_TO_STORE } from 'src/shared/constants/ActionTypes/Pages/CustomerProfile';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {ILoginState, TPageLoginAction} from "src/shared/reducers/Pages/Login/types";
 
-export interface ILoginState extends IReduxState {
-  data: {
-    customerRef?: TCustomerReference,
-    isAuth?: boolean,
-    tokenType?: string,
-    expiresIn?: string,
-    accessToken?: TAccessToken,
-    refreshToken?: string,
-    customerUsername: TCustomerUsername | TCustomerEmail,
-  };
-}
 
 export const initialState: ILoginState = {
   data: {
     customerRef: '',
     isAuth: false,
     tokenType: '',
-    expiresIn: '',
+    expiresIn: 0,
     accessToken: '',
     refreshToken: '',
     customerUsername: '',
   },
 };
 
-export const pagesLogin = function(state: ILoginState = initialState, action: any): ILoginState {
+export const pagesLogin = function(state: ILoginState = initialState, action: TPageLoginAction): ILoginState {
   switch (action.type) {
     case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
@@ -74,12 +63,12 @@ export const pagesLogin = function(state: ILoginState = initialState, action: an
         data: {
           ...state.data,
           isAuth: true,
-          ...action.payload,
+          ...action.payloadRefreshTokenFulfilled,
         },
         ...getReducerPartFulfilled(),
       };
     case `${LOGIN_DATA_SET_TO_STORE}_FULFILLED`:
-      const customerUsername = action.payload.email ? action.payload.email : null;
+      const customerUsername = action.payloadStoreFulfilled.email ? action.payloadStoreFulfilled.email : null;
       return {
         ...state,
         data: {
@@ -93,7 +82,7 @@ export const pagesLogin = function(state: ILoginState = initialState, action: an
         data: {
           ...state.data,
           isAuth: true,
-          ...action.payload,
+          ...action.payloadAuthFulfilled,
         },
       };
     case PAGES_CUSTOMER_LOGOUT:

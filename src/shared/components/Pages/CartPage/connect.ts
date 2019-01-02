@@ -7,7 +7,7 @@ import {
   updateItemInCartAction,
   updateGuestCartAction
 } from 'src/shared/actions/Common/Cart';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
 import { getAnonymId } from 'src/shared/reducers/Common/Init/index';
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
 import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";

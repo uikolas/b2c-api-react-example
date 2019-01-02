@@ -2,7 +2,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getRouterHistoryPush } from 'src/shared/selectors/Common/router/index';
-import { getCustomerReference } from 'src/shared/reducers/Pages/Login';
+import { getCustomerReference } from 'src/shared/reducers/Pages/Login/index';
 import {
   getAddressesCollection,
   getCurrentAddress,

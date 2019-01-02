@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getRouterHistoryBack } from 'src/shared/selectors/Common/router/index';
 import { getCounties } from 'src/shared/reducers/Common/Init/index';
-import {getCustomerReference} from 'src/shared/reducers/Pages/Login';
+import {getCustomerReference} from 'src/shared/reducers/Pages/Login/index';
 import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses/index';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { addAddressAction, updateAddressAction } from 'src/shared/actions/Pages/Addresses';

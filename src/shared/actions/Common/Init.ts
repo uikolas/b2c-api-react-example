@@ -6,6 +6,7 @@ import {
 import { InitAppService } from '../../services/Common/Init';
 import {ICategory} from "src/shared/interfaces/category/index";
 import {IInitData} from "src/shared/interfaces/init/index";
+import {ICustomerLoginDataParsed} from "src/shared/interfaces/customer/index";
 
 export interface IInitApplicationDataPayload {
 
@@ -46,11 +47,9 @@ export const initApplicationDataAction = function(payload: IInitApplicationDataP
   };
 };
 
-export const setAuthFromStorageAction = (
-  payload: {expiresIn: string, accessToken: string, refreshToken: string, customerRef: string}
-) => ({
+export const setAuthFromStorageAction = (payload: ICustomerLoginDataParsed) => ({
   type: SET_AUTH_FROM_STORAGE + '_FULFILLED',
-  payload,
+  payloadAuthFulfilled: payload,
 });
 
 export const getCategoriesAction = function() {

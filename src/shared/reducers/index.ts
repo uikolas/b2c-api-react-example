@@ -1,5 +1,5 @@
 import { isPageHomeStateLoading, pagesHome } from './Pages/Home/index';
-import { isPageLoginStateLoading, pagesLogin } from './Pages/Login';
+import { isPageLoginStateLoading, pagesLogin } from './Pages/Login/index';
 import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product';
 import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';

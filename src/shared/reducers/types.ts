@@ -1,5 +1,5 @@
 import {IHomeState} from "src/shared/reducers/Pages/Home/types";
-import {ILoginState} from "src/shared/reducers/Pages/Login";
+import {ILoginState} from "src/shared/reducers/Pages/Login/types";
 import {SearchState} from "src/shared/reducers/Pages/Search";
 import {IProductState} from "src/shared/reducers/Pages/Product";
 import {WishlistState} from "src/shared/reducers/Pages/Wishlist";

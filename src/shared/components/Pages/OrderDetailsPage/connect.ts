@@ -14,7 +14,7 @@ import {
   getPayloadForCreateCart,
   isAppInitiated
 } from 'src/shared/reducers/Common/Init/index';
-import {isUserAuthenticated} from 'src/shared/reducers/Pages/Login';
+import {isUserAuthenticated} from 'src/shared/reducers/Pages/Login/index';
 import {ICartCreatePayload} from 'src/shared/services/Common/Cart/types';
 import {TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';
 import {TOrderId} from 'src/shared/interfaces/order';

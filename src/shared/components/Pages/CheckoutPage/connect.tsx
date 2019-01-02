@@ -3,7 +3,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import {getAnonymId, getCounties, isAppInitiated} from 'src/shared/reducers/Common/Init/index';
 import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
-import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
+import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login/index";
 import {getCustomerProfile} from "src/shared/reducers/Pages/CustomerProfile";
 import {isStateLoading} from "src/shared/reducers";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";

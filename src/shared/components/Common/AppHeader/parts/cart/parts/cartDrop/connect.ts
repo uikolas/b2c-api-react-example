@@ -3,7 +3,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { cartDeleteItemAction, removeItemGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { ICartState } from 'src/shared/reducers/Common/Cart/types';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
 import { getAnonymId } from 'src/shared/reducers/Common/Init/index';
 import {getCartId, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";

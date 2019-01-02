@@ -16,7 +16,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import {
   getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled
 } from 'src/shared/reducers/Common/Init/index';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
 import {
