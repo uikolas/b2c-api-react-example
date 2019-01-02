@@ -12,6 +12,7 @@ import {
 } from 'src/shared/actions/Pages/Checkout';
 
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import {ICheckoutResponseData} from "src/shared/reducers/Pages/Checkout/types";
 
 interface IRequestBody {
   data: {
@@ -47,7 +48,6 @@ export class CheckoutService extends ApiServiceAbstract {
 
       if (response.ok) {
         const payload = CheckoutService.parseCheckoutData(response.data.data.attributes);
-
         dispatch(getCheckoutDataInitFulfilledStateAction(payload));
       } else {
         const errorMessage = this.getParsedAPIError(response);
@@ -99,7 +99,7 @@ export class CheckoutService extends ApiServiceAbstract {
     }
   }
 
-  private static parseCheckoutData(data: IcheckoutResponse) {
+  private static parseCheckoutData(data: IcheckoutResponse): ICheckoutResponseData {
     let payments: IPaymentMethod[] = [];
 
     Array.isArray(data.paymentProviders) && data.paymentProviders.forEach(provider => {

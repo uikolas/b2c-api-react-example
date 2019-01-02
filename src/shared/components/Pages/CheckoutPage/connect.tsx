@@ -17,7 +17,7 @@ import {
   isPageCheckoutFulfilled,
   isPageCheckoutStateLoading,
   isPageCheckoutStateRejected,
-} from "src/shared/reducers/Pages/Checkout";
+} from "src/shared/reducers/Pages/Checkout/index";
 import {getCustomerProfileAction} from "src/shared/actions/Pages/CustomerProfile";
 import {TCustomerReference} from "src/shared/interfaces/customer";
 import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";

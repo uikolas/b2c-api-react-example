@@ -5,7 +5,7 @@ import { isPageProductStateLoading, pageProduct } from './Pages/Product';
 import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
 import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses/index';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
-import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout';
+import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout/index';
 import { cart } from './Common/Cart';
 import { init, isAppLoading } from './Common/Init/index';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';

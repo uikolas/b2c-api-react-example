@@ -3,28 +3,13 @@ import {
   CHECKOUT_DATA_INIT_REQUEST,
   SEND_CHECKOUT_DATA,
 } from 'src/shared/constants/ActionTypes/Pages/Checkout';
-import {
-  IReduxState,
-} from 'src/typings/app';
-import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
+import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {
   IPaymentMethod,
   IShipmentMethod,
 } from 'src/shared/interfaces/checkout';
-import {
-  addressesCollectionFixture,
-  shipmentMethodsFixture
-} from "src/shared/reducers/fixtures/Checkout";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
-
-export interface ICheckoutState extends IReduxState {
-  data: {
-    payments: Array<IPaymentMethod>;
-    shipments: Array<IShipmentMethod>;
-    addressesCollection: Array<IAddressItemCollection>;
-    orderId: string;
-  };
-}
+import {ICheckoutState, TPageCheckoutAction} from "src/shared/reducers/Pages/Checkout/types";
 
 
 export const initialState: ICheckoutState = {
@@ -37,7 +22,7 @@ export const initialState: ICheckoutState = {
 };
 
 export const pageCheckout = produce<ICheckoutState>(
-  (draft: ICheckoutState, action: any) => {
+  (draft: ICheckoutState, action: TPageCheckoutAction) => {
     switch (action.type) {
       case `${CHECKOUT_DATA_INIT_REQUEST}_PENDING`:
       case `${SEND_CHECKOUT_DATA}_PENDING`:
@@ -58,9 +43,9 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.initiated = false;
         break;
       case `${CHECKOUT_DATA_INIT_REQUEST}_FULFILLED`:
-        draft.data.payments = action.payload.payments || null;
-        draft.data.shipments = action.payload.shipments || null;
-        draft.data.addressesCollection = action.payload.addressesCollection || null;
+        draft.data.payments = action.payloadGetFulfilled.payments || null;
+        draft.data.shipments = action.payloadGetFulfilled.shipments || null;
+        draft.data.addressesCollection = action.payloadGetFulfilled.addressesCollection || null;
 
         draft.error = false;
         draft.pending = false;
@@ -69,7 +54,7 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.initiated = true;
         break;
       case `${SEND_CHECKOUT_DATA}_FULFILLED`: {
-        draft.data.orderId = action.orderId;
+        draft.data.orderId = action.payloadSendFulfilled.orderId;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
