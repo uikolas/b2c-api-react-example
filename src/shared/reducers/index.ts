@@ -9,7 +9,7 @@ import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout/index
 import { cart } from './Common/Cart';
 import { init, isAppLoading } from './Common/Init/index';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
-import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
+import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails/index';
 import {isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
 import {IReduxStore, IReduxOwnProps} from "src/shared/reducers/types";
 

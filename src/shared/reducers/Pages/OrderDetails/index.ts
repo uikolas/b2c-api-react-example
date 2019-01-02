@@ -1,12 +1,13 @@
-import { ORDER_DETAILS_REQUEST } from '../../constants/ActionTypes/Pages/Order';
-import { IReduxState } from 'src/typings/app';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
-import { IOrderDetailsParsed } from '../../interfaces/order';
+import { ORDER_DETAILS_REQUEST } from '../../../constants/ActionTypes/Pages/Order';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { IOrderDetailsParsed } from '../../../interfaces/order';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {
+  IOrderDetailsState,
+  IPageOrderDetailsAction,
+} from "src/shared/reducers/Pages/OrderDetails/types";
+import {IApiErrorResponse} from "src/shared/services/types";
 
-export interface IOrderDetailsState extends IReduxState {
-  data: IOrderDetailsParsed;
-}
 
 export const initialState: IOrderDetailsState = {
   data: {
@@ -22,14 +23,15 @@ export const initialState: IOrderDetailsState = {
   },
 };
 
-export const orderDetails = function(state: IOrderDetailsState = initialState, action: any): IOrderDetailsState {
+export const orderDetails = function(state: IOrderDetailsState = initialState,
+                                     action: IPageOrderDetailsAction): IOrderDetailsState {
   switch (action.type) {
     case `${ORDER_DETAILS_REQUEST}_PENDING`:
-      return handlePending(state, action.payload);
+      return handlePending(state);
     case `${ORDER_DETAILS_REQUEST}_FULFILLED`:
-      return handleFulfilled(state, action.payload);
+      return handleFulfilled(state, action.payloadFulfilled);
     case `${ORDER_DETAILS_REQUEST}_REJECTED`:
-      return handleRejected(state, action.payload);
+      return handleRejected(state, action.payloadRejected);
     default:
       return state;
   }
@@ -47,7 +49,7 @@ const handleFulfilled = (orderDetailsState: IOrderDetailsState, payload: IOrderD
   };
 };
 
-const handleRejected = (orderDetailsState: IOrderDetailsState, payload: any) => {
+const handleRejected = (orderDetailsState: IOrderDetailsState, payload: IApiErrorResponse) => {
   return {
     ...orderDetailsState,
     data: {
@@ -57,7 +59,7 @@ const handleRejected = (orderDetailsState: IOrderDetailsState, payload: any) => 
   };
 };
 
-const handlePending = (orderDetailsState: IOrderDetailsState, payload: any) => {
+const handlePending = (orderDetailsState: IOrderDetailsState) => {
   return {
     ...orderDetailsState,
     data: {

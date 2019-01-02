@@ -7,7 +7,7 @@ import {
   isOrderDetailsLoading,
   isOrderDetailsPresent,
   isOrderDetailsStateRejected,
-} from 'src/shared/reducers/Pages/OrderDetails';
+} from 'src/shared/reducers/Pages/OrderDetails/index';
 import {
   getAppCurrency,
   getAppTimeZone,
