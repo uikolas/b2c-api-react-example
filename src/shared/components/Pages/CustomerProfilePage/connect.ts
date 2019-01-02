@@ -9,7 +9,7 @@ import {
   isPageCustomerProfileLoading,
   isPageCustomerProfileRejected,
 } from 'src/shared/reducers/Pages/CustomerProfile';
-import { isAppInitiated } from 'src/shared/reducers/Common/Init/Init';
+import { isAppInitiated } from 'src/shared/reducers/Common/Init/index';
 import { getCustomerReference, isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import {
   ICustomerProfileIdentity,

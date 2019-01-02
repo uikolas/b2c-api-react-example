@@ -10,11 +10,13 @@ import {
   getSpellingSuggestion,
   SearchState,
 } from 'src/shared/reducers/Pages/Search';
-import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
+import { getAppCurrency, getCategoriesTree } from 'src/shared/reducers/Common/Init/index';
 import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
 import {getRouterMatchParam} from "src/shared/selectors/Common/router/index";
 import {sendSearchAction} from "src/shared/actions/Pages/Search";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {ICategory} from "src/shared/interfaces/category/index";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;

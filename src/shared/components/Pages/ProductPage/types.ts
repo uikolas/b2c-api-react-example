@@ -5,14 +5,16 @@ import {
   IProductAttributeMap,
   IProductAttributes,
   IProductDataParsed,
-  IProductPropFullData, ISuperAttributes,
+  IProductPropFullData,
+  ISuperAttributes,
+  TAppPriceMode,
   TProductQuantity,
 } from 'src/shared/interfaces/product';
-import { TAppPriceMode, TAppStore } from 'src/shared/reducers/Common/Init/Init';
 import { TCartId } from 'src/shared/interfaces/cart';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import {TRouterMatchParam} from 'src/shared/selectors/Common/router/types';
 import { IWishlist, TWishListName } from 'src/shared/interfaces/wishlist';
+import {TAppStore} from "src/shared/interfaces/store/index";
 
 export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
   product: IProductDataParsed | null;

@@ -1,7 +1,7 @@
-import { IInitData } from '../../reducers/Common/Init/Init';
 import { PRICE_MODE_DEFAULT } from '../../constants/Environment';
 import {ILocaleItem} from "src/shared/interfaces/locale/index";
 import {IStoreRawResponse} from "src/shared/helpers/init/types";
+import {IInitData} from "src/shared/interfaces/init/index";
 
 export const parseStoreResponse = (data: IStoreRawResponse): IInitData => {
 

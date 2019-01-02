@@ -1,4 +1,6 @@
-import {ICategory} from "src/shared/reducers/Common/Init/Init";
+
+
+import {ICategory} from "src/shared/interfaces/category/index";
 
 export const getCategoryNameById = (categoryId: string | number, categoriesTree: Array<ICategory>): string | null => {
   if (!categoryId) {

@@ -17,7 +17,7 @@ import {salutationVariants} from "src/shared/constants/customer";
 import {TSalutationVariant} from "src/shared/interfaces/customer";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import {ICountries} from "src/shared/reducers/Common/Init/Init";
+import {ICountry} from "src/shared/interfaces/country/index";
 
 
 export const getAddressFormSettings = (formName: string, params: IAddressParams): IFormSettings => {
@@ -174,7 +174,7 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
           isError: country.isError,
           menuItems: isCountriesCollectionExist
                      ? countriesCollection
-                        .map((item: ICountries) => ({value: item.iso2Code, name: item.name}))
+                        .map((item: ICountry) => ({value: item.iso2Code, name: item.name}))
                      : null,
           menuItemFirst: {
             value: " ",

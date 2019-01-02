@@ -2,10 +2,11 @@ import * as React from 'react';
 import { FormattedNumber } from 'react-intl';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
+import { getAppCurrency } from 'src/shared/reducers/Common/Init/index';
 import { priceTypeNameOriginal, TPriceTypeName } from 'src/shared/interfaces/product';
 import { styles } from './styles';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 interface AppPriceProps extends WithStyles<typeof styles> {
   currency: TAppCurrency;

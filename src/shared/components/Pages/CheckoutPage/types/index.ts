@@ -13,7 +13,8 @@ import {
 } from "src/shared/interfaces/checkout";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
-import {ICountries} from "src/shared/reducers/Common/Init/Init";
+import {ICountry} from "src/shared/interfaces/country/index";
+
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
@@ -33,7 +34,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
   addressesCollection: IAddressItemCollection[] | null;
   orderId: string;
   isAppStateLoading: boolean;
-  countriesCollection: ICountries[];
+  countriesCollection: ICountry[];
   shipmentMethods: Array<IShipmentMethod> | null;
   paymentMethods: Array<IPaymentMethod> | null;
   getCheckoutData: (payload: ICheckoutRequest, anonymId: string) => void;

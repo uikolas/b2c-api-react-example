@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getAnonymId, getCounties, ICountries, isAppInitiated} from 'src/shared/reducers/Common/Init/Init';
+import {getAnonymId, getCounties, isAppInitiated} from 'src/shared/reducers/Common/Init/index';
 import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login";
@@ -22,6 +22,7 @@ import {getCustomerProfileAction} from "src/shared/actions/Pages/CustomerProfile
 import {TCustomerReference} from "src/shared/interfaces/customer";
 import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {ICountry} from "src/shared/interfaces/country/index";
 
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
@@ -45,7 +46,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   // from global state
   const isAppStateLoading = isStateLoading(state, ownProps);
   // Countries from init state
-  const countriesCollection: ICountries[] = getCounties(state, ownProps);
+  const countriesCollection: ICountry[] = getCounties(state, ownProps);
   // From pageCheckout state
   const shipmentMethods: Array<IShipmentMethod> | null = getShipmentMethodsFromStore(state, ownProps);
   const paymentMethods: Array<IPaymentMethod> | null = getPaymentMethodsFromStore(state, ownProps);

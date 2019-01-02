@@ -4,7 +4,8 @@ import {
   SET_AUTH_FROM_STORAGE,
 } from '../../constants/ActionTypes/Common/Init';
 import { InitAppService } from '../../services/Common/Init';
-import {ICategory, IInitData} from '../../reducers/Common/Init/Init';
+import {ICategory} from "src/shared/interfaces/category/index";
+import {IInitData} from "src/shared/interfaces/init/index";
 
 export interface IInitApplicationDataPayload {
 

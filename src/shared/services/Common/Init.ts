@@ -13,7 +13,8 @@ import {
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
-import {ICategory, IInitData} from "src/shared/reducers/Common/Init/Init";
+import {ICategory} from "src/shared/interfaces/category/index";
+import {IInitData} from "src/shared/interfaces/init/index";
 
 export class InitAppService extends ApiServiceAbstract {
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {

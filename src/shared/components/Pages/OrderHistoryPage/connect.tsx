@@ -8,7 +8,7 @@ import {
   isOrderHistoryLoading,
   isOrderHistoryStateRejected,
 } from '../../../reducers/Pages/OrderHistory';
-import { isAppInitiated } from '../../../reducers/Common/Init/Init';
+import { isAppInitiated } from '../../../reducers/Common/Init/index';
 import { isUserAuthenticated } from '../../../reducers/Pages/Login';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 

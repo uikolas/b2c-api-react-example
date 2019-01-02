@@ -7,7 +7,7 @@ import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses/in
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
 import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout';
 import { cart } from './Common/Cart';
-import { init, isAppLoading } from './Common/Init/Init';
+import { init, isAppLoading } from './Common/Init/index';
 import { isOrderHistoryLoading, orderHistory } from './Pages/OrderHistory';
 import { isOrderDetailsLoading, orderDetails } from './Pages/OrderDetails';
 import {isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";

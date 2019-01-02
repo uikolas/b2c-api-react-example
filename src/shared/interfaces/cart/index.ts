@@ -1,4 +1,3 @@
-import { TAppCurrency } from 'src/shared/reducers/Common/Init/Init';
 import { IAbstractTotals } from '../abstract/totals';
 import {
   TProductQuantity,
@@ -12,6 +11,7 @@ import {
   TPriceTypeDefaultNet
 } from '../product';
 import {TProductName, TProductPrice} from "src/shared/interfaces/product";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 export type TCartId = string;
 export type TCartPriceMode = string;

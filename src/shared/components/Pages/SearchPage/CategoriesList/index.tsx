@@ -10,9 +10,9 @@ import {
   ICategoriesListProps
 } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
-import {ICategory} from "src/shared/reducers/Common/Init/Init";
 import {CategoriesPanelTitle} from "src/shared/constants/search";
 import {getFormattedActiveCategories} from "src/shared/components/Pages/SearchPage/helpers/index";
+import {ICategory} from "src/shared/interfaces/category/index";
 
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (

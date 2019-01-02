@@ -14,8 +14,8 @@ import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
-  getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled, TAppLocale
-} from 'src/shared/reducers/Common/Init/Init';
+  getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled
+} from 'src/shared/reducers/Common/Init/index';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
@@ -30,6 +30,7 @@ import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
 import {clearSearchTermAction} from 'src/shared/actions/Pages/Search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {TAppLocale} from "src/shared/interfaces/locale/index";
 
 
 const styles = require('./style.scss');

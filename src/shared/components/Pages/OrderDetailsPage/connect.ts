@@ -12,9 +12,8 @@ import {
   getAppCurrency,
   getAppTimeZone,
   getPayloadForCreateCart,
-  isAppInitiated,
-  TAppTimeZone
-} from 'src/shared/reducers/Common/Init/Init';
+  isAppInitiated
+} from 'src/shared/reducers/Common/Init/index';
 import {isUserAuthenticated} from 'src/shared/reducers/Pages/Login';
 import {ICartCreatePayload} from 'src/shared/services/Common/Cart/types';
 import {TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';
@@ -23,6 +22,7 @@ import {getOrderDetailsAction} from 'src/shared/actions/Pages/Order';
 import {addMultipleItemsToCartAction} from 'src/shared/actions/Common/Cart';
 import {getCartId} from "src/shared/reducers/Common/Cart/selectors";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {TAppTimeZone} from "src/shared/interfaces/locale/index";
 
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

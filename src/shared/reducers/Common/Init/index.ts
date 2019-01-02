@@ -1,54 +1,17 @@
 import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '../../../constants/ActionTypes/Common/Init';
-import { IReduxState } from 'src/typings/app';
-
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICartCreatePayload } from '../../../services/Common/Cart/types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 import {IApiErrorResponse} from "src/shared/services/types";
+import {TAppTimeZone} from "src/shared/interfaces/locale/index";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
+import {TAppPriceMode} from "src/shared/interfaces/product/index";
+import {TAppStore} from "src/shared/interfaces/store/index";
+import {ICategory} from "src/shared/interfaces/category/index";
+import {ICountry} from "src/shared/interfaces/country/index";
+import {IInitData} from "src/shared/interfaces/init/index";
+import {IInitState, TInitAction} from "src/shared/reducers/Common/Init/types";
 
-export type TAppPriceMode = string | null;
-export type TAppCurrency = string | null;
-export type TAppStore = string | null;
-export type TAppLocale = string | null;
-export type TAppTimeZone = string | null;
-
-export interface ICategory {
-  nodeId: number;
-  order: number;
-  name: string;
-  children: Array<ICategory> | object;
-}
-
-export interface ICountries {
-  iso2Code: string;
-  iso3Code: string;
-  name: string;
-  postalCodeMandatory: boolean;
-  postalCodeRegex: string;
-}
-
-export interface IInitData {
-  ok?: boolean;
-  priceMode: TAppPriceMode;
-  currency: TAppCurrency;
-  store: TAppStore;
-  locale: TAppLocale;
-  timeZone: TAppTimeZone;
-  categoriesTree?: Array<ICategory>;
-  countries?: Array<ICountries>;
-  anonymId?: string;
-}
-
-type TInitAction = {
-  type: string;
-  payloadInitFulfilled?: IInitData;
-  payloadCategoriesTreeFulfilled?: {categories: Array<ICategory>};
-  payloadRejected?: IApiErrorResponse;
-};
-
-export interface IInitState extends IReduxState {
-  data: IInitData | null;
-}
 
 export const initialState: IInitState = {
   data: {
@@ -163,7 +126,7 @@ export function getAppStore(state: IReduxStore, props: IReduxOwnProps): TAppStor
   return isAppInitiated(state, props) ? state.init.data.store : null;
 }
 
-export function getCounties(state: IReduxStore, props: IReduxOwnProps): ICountries[] {
+export function getCounties(state: IReduxStore, props: IReduxOwnProps): ICountry[] {
   return isAppInitiated(state, props) ? state.init.data.countries : null;
 }
 

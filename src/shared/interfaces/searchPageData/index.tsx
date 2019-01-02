@@ -1,7 +1,7 @@
 import { IProductCard } from '../product';
-import { TAppCurrency } from '../../reducers/Common/Init/Init';
 import { IPagination } from 'src/shared/components/Common/AppPagination/types';
 import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 export type TSpellingSuggestion = string;
 export type TLocalizedName = string;

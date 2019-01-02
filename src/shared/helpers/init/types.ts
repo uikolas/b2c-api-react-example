@@ -1,6 +1,6 @@
-import {ICountries} from "src/shared/reducers/Common/Init/Init";
 import {ICurrencyItem} from "src/shared/interfaces/currency/index";
 import {ILocaleItem} from "src/shared/interfaces/locale/index";
+import {ICountry} from "src/shared/interfaces/country/index";
 
 export interface IStoreRawResponse {
   data: [{
@@ -17,7 +17,7 @@ export interface IStoreRawResponse {
 }
 
 export interface IStoreAttributesRawResponse {
-  countries: Array<ICountries>;
+  countries: Array<ICountry>;
   currencies: Array<ICurrencyItem>;
   defaultCurrency: string;
   locales: Array<ILocaleItem>;

@@ -1,12 +1,13 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from '../styles';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { ICountries } from 'src/shared/reducers/Common/Init/Init';
+import {ICountry} from "src/shared/interfaces/country/index";
+
 
 export interface AddressFormProps extends WithStyles<typeof styles> {
   customer: string;
   currentAddress: IAddressItem;
-  countries: ICountries[];
+  countries: ICountry[];
   routerGoBack: Function;
   isLoading: boolean;
   dispatch: Function;

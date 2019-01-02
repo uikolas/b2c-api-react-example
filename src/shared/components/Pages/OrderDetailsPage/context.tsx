@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { TAppCurrency } from '../../../reducers/Common/Init/Init';
 import { IOrderDetailsSelectedItems } from '../../../interfaces/order';
 import {InputChangeEvent} from "src/shared/interfaces/common/react";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 type TOrderDetailsContext = {
   selectItemHandler(event: InputChangeEvent): void,

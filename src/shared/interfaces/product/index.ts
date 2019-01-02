@@ -40,6 +40,7 @@ export type TPriceTypeOriginalGross = number | null;
 export type TPriceTypeOriginalNet = number | null;
 export type TPriceTypeDefaultGross = number | null;
 export type TPriceTypeDefaultNet = number | null;
+export type TAppPriceMode = string | null;
 
 export type TProductCardImagesCollection = Array<IProductCardImages>;
 
