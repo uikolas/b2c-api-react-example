@@ -8,7 +8,8 @@ import {
 import { PAGES_CUSTOMER_LOGOUT } from 'src/shared/constants/ActionTypes/Pages/Login';
 import { ICartDataResponse, ICartItem } from 'src/shared/interfaces/cart';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { ICartState } from './types';
+import {ICartAction, ICartState} from './types';
+import {IApiErrorResponse} from "src/shared/services/types";
 
 export const initialState: ICartState = {
   data: {
@@ -24,33 +25,33 @@ export const initialState: ICartState = {
   },
 };
 
-export const cart = function(state: ICartState = initialState, action: any): ICartState {
+export const cart = function(state: ICartState = initialState, action: ICartAction): ICartState {
   switch (action.type) {
     case `${CART_ADD_ITEM}_PENDING`:
     case `${CART_UPDATE_ITEM}_PENDING`:
     case `${CART_CREATE}_PENDING`:
     case `${GET_CARTS}_PENDING`:
-      return handlePending(state, action.payload);
+      return handlePending(state);
     case `${CART_ADD_ITEM}_FULFILLED`:
     case `${CART_UPDATE_ITEM}_FULFILLED`:
-      return handleFulfilled(state, action.payload);
+      return handleFulfilled(state, action.payloadCartItemFulfilled);
     case `${CART_ADD_ITEM}_REJECTED`:
     case `${CART_DELETE_ITEM}_REJECTED`:
     case `${CART_UPDATE_ITEM}_REJECTED`:
     case `${GET_CARTS}_REJECTED`:
-      return handleRejected(state, action.payload);
+      return handleRejected(state, action.payloadRejected);
     case `${CART_CREATE}_FULFILLED`:
     case `${GET_CARTS}_FULFILLED`:
-      if (!action.payload) {
+      if (!action.payloadCartItemFulfilled) {
         return {
           ...state,
           data: {...initialState.data, cartCreated: true},
           ...getReducerPartFulfilled(),
         };
       }
-      return handleCartFulfilled(state, action.payload);
+      return handleCartFulfilled(state, action.payloadCartItemFulfilled);
     case `${CART_CREATE}_REJECTED`:
-      return handleCartCreateRejected(state, action.payload);
+      return handleCartCreateRejected(state, action.payloadRejected);
     case `${CART_DELETE_ITEM}_PENDING`:
       return {
         ...state,
@@ -59,12 +60,12 @@ export const cart = function(state: ICartState = initialState, action: any): ICa
     case `${CART_DELETE_ITEM}_REJECTED`:
       return {
         ...state,
-        ...getReducerPartRejected(action.error),
+        ...getReducerPartRejected(action.payloadRejected.error),
       };
     case `${CART_DELETE_ITEM}_FULFILLED`:
       const itemsAfterDelete: Array<ICartItem> = state.data.items.filter((
         item: ICartItem
-      ) => item.sku !== action.itemId);
+      ) => item.sku !== action.payloadCartDeleteItemFulfilled.itemId);
       return {
         ...state,
         data: {...state.data, items: itemsAfterDelete},
@@ -93,7 +94,7 @@ const handleFulfilled = (cartState: ICartState, payload: ICartDataResponse | nul
   };
 };
 
-const handleRejected = (cartState: ICartState, payload: any) => {
+const handleRejected = (cartState: ICartState, payload: IApiErrorResponse) => {
   return {
     ...cartState,
     data: {
@@ -103,7 +104,7 @@ const handleRejected = (cartState: ICartState, payload: any) => {
   };
 };
 
-const handlePending = (cartState: ICartState, payload: any) => {
+const handlePending = (cartState: ICartState) => {
   return {
     ...cartState,
     data: {
@@ -125,7 +126,7 @@ const handleCartFulfilled = (cartState: ICartState, payload: ICartDataResponse) 
   };
 };
 
-const handleCartCreateRejected = (cartState: ICartState, payload: any) => {
+const handleCartCreateRejected = (cartState: ICartState, payload: IApiErrorResponse) => {
   return {
     ...cartState,
     data: {

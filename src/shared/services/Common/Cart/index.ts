@@ -11,6 +11,7 @@ import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors'
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
+import {IResponseError} from "src/shared/services/apiAbstractions/types";
 
 export class CartService extends ApiServiceAbstract {
   public static async getCustomerCarts(dispatch: Function): Promise<string> {
@@ -138,7 +139,7 @@ export class CartService extends ApiServiceAbstract {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          itemId,
+          payloadCartDeleteItemFulfilled: {itemId},
         });
 
         toast.success(cartRemoveItems);
@@ -280,7 +281,7 @@ export class CartService extends ApiServiceAbstract {
     return response;
   }
 
-  private static errorMessageInform(response: any, dispatch: Function): void {
+  private static errorMessageInform(response: IResponseError, dispatch: Function): void {
     const errorMessage = this.getParsedAPIError(response);
     dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
     toast.error('Request Error: ' + errorMessage);
