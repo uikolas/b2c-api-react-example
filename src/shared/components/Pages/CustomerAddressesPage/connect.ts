@@ -8,7 +8,7 @@ import {
   getCurrentAddress,
   isPageAddressesStateLoading,
   isAddressesInitiated,
-} from 'src/shared/reducers/Pages/Addresses';
+} from 'src/shared/reducers/Pages/Addresses/index';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {
   getAddressesAction,

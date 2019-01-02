@@ -4,7 +4,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { getRouterHistoryBack } from 'src/shared/selectors/Common/router/index';
 import { getCounties, ICountries } from 'src/shared/reducers/Common/Init';
 import {getCustomerReference} from 'src/shared/reducers/Pages/Login';
-import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses';
+import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses/index';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { addAddressAction, updateAddressAction } from 'src/shared/actions/Pages/Addresses';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";

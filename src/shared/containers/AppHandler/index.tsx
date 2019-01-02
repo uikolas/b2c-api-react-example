@@ -19,7 +19,11 @@ import {
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
-import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
+import {
+  initApplicationDataAction,
+  setAuthFromStorageAction,
+  IInitApplicationDataPayload
+} from 'src/shared/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
@@ -163,7 +167,7 @@ export const AppHandler = reduxify(
   },
   (dispatch: Function) => ({
     dispatch,
-    initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
+    initApplicationData: (payload: IInitApplicationDataPayload) => dispatch(initApplicationDataAction(payload)),
     setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
     getCustomerCart: () => dispatch(getCustomerCartsAction()),
     getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),

@@ -5,19 +5,13 @@ import {
   DELETE_ADDRESS,
   SET_CURRENT_ADDRESS,
   UPDATE_ADDRESS,
-} from '../../constants/ActionTypes/Pages/Addresses';
-import { IReduxState } from 'src/typings/app';
+} from '../../../constants/ActionTypes/Pages/Addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IAddressesState, TPageAddressesAction} from "src/shared/reducers/Pages/Addresses/types";
 
-export interface IAddressesState extends IReduxState {
-  data: {
-    addresses: IAddressItem[],
-    currentAddress: IAddressItem | null,
-  };
-}
 
-export const initialState: IAddressesState = {
+const initialState: IAddressesState = {
   data: {
     addresses: [],
     currentAddress: null,
@@ -25,7 +19,7 @@ export const initialState: IAddressesState = {
 };
 
 export const pageAddresses = produce<IAddressesState>(
-  (draft: IAddressesState, action: any) => {
+  (draft: IAddressesState, action: TPageAddressesAction) => {
     switch (action.type) {
       case `${ADDRESSES_LIST}_PENDING`:
       case `${ADD_ADDRESS}_PENDING`:

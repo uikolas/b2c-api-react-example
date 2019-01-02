@@ -1,5 +1,6 @@
 import {
-  IProductAttributesRawResponse, IProductAvailability,
+  IProductAttributesRawResponse,
+  IProductAvailability,
   IProductPricesItem,
   TProductImageSetsCollectionRawResponse,
 } from "src/shared/interfaces/product/index";

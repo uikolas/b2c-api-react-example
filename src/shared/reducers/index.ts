@@ -3,7 +3,7 @@ import { isPageLoginStateLoading, pagesLogin } from './Pages/Login';
 import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product';
 import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
-import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses';
+import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses/index';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
 import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout';
 import { cart } from './Common/Cart';
