@@ -1,21 +1,14 @@
-import { PAGES_HOME_GET_DATA_REQUEST } from '../../constants/ActionTypes/Pages/Home';
-import { IReduxState } from 'src/typings/app';
+import { PAGES_HOME_GET_DATA_REQUEST } from '../../../constants/ActionTypes/Pages/Home';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IHomeState, TPageHomeAction} from "./types";
 
-
-export interface IHomeState extends IReduxState {
-  data: {
-    items?: any[],
-    items_count?: number,
-  };
-}
 
 export const initialState: IHomeState = {
   data: {},
 };
 
 
-export const pagesHome = function(state: IHomeState = initialState, action: any): IHomeState {
+export const pagesHome = function(state: IHomeState = initialState, action: TPageHomeAction): IHomeState {
   switch (action.type) {
     case `${PAGES_HOME_GET_DATA_REQUEST}_PENDING`:
       return {
@@ -30,7 +23,7 @@ export const pagesHome = function(state: IHomeState = initialState, action: any)
       return {
         // ...state,
         error: null,
-        data: action.payload,
+        data: action.payloadFulfilled,
         pending: false,
         fulfilled: true,
         rejected: false,

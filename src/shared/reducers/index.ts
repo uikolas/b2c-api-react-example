@@ -1,4 +1,4 @@
-import { isPageHomeStateLoading, pagesHome } from './Pages/Home';
+import { isPageHomeStateLoading, pagesHome } from './Pages/Home/index';
 import { isPageLoginStateLoading, pagesLogin } from './Pages/Login';
 import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product';
