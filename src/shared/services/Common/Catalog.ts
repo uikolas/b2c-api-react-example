@@ -17,13 +17,13 @@ export class CatalogService extends ApiServiceAbstract {
         const responseParsed = parseCatalogSearchResponse(response.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          ...responseParsed,
+          payloadSearchFulfilled: responseParsed,
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -31,7 +31,7 @@ export class CatalogService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error: error.message,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -66,17 +66,19 @@ export class CatalogService extends ApiServiceAbstract {
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          products,
-          categories: data.data[0].attributes.categories,
-          searchTerm: query,
-          currency: data.data[0].attributes.currency || '',
-          completion: data.data[0].attributes.completion,
+          payloadSuggestionFulfilled: {
+            suggestions: products,
+            categories: data.data[0].attributes.categories,
+            /*searchTerm: query,
+            currency: data.data[0].attributes.currency || '',*/
+            completion: data.data[0].attributes.completion,
+          },
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
         return null;
@@ -85,7 +87,7 @@ export class CatalogService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error: error.message,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }

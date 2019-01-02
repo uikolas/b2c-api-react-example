@@ -8,7 +8,7 @@ import {
 import {ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse} from "src/shared/helpers/catalog/types";
 
 
-export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed => {
+export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed | null => {
   if (!response) {
     return null;
   }

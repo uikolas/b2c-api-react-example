@@ -49,8 +49,8 @@ import { SearchPageContext } from './context';
 import {
   addToQueryActiveRangeFilters,
 } from "src/shared/components/Pages/SearchPage/helpers/queries";
-import {DefaultItemsPerPage} from "src/shared/components/Pages/SearchPage/constants";
 import {getCategoryNameById} from "src/shared/helpers/categories/index";
+import {DefaultItemsPerPage} from "src/shared/constants/search/index";
 
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';

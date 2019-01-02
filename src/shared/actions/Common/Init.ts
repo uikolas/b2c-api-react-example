@@ -37,7 +37,7 @@ export const categoriesRejectedState = (message: string) => ({
 
 export const categoriesFulfilledState = (categories: Array<ICategory>) => ({
   type: CATEGORIES_TREE_REQUEST + '_FULFILLED',
-  payloadCategoriesTreeFulfilled: categories,
+  payloadCategoriesTreeFulfilled: {categories},
 });
 
 

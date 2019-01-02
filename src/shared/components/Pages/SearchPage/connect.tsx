@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RouteProps } from 'react-router';
 import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
@@ -8,8 +7,7 @@ import {
   getProductsLabeled,
   getSortParamLocalizedNames,
   getSpellingSuggestion,
-  SearchState,
-} from 'src/shared/reducers/Pages/Search';
+} from 'src/shared/reducers/Pages/Search/index';
 import { getAppCurrency, getCategoriesTree } from 'src/shared/reducers/Common/Init/index';
 import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
 import {getRouterMatchParam} from "src/shared/selectors/Common/router/index";
@@ -17,9 +15,10 @@ import {sendSearchAction} from "src/shared/actions/Pages/Search";
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 import {ICategory} from "src/shared/interfaces/category/index";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
+import {ISearchState} from "src/shared/reducers/Pages/Search/types";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
-  const pageSearchProps: SearchState = state.pageSearch ? state.pageSearch : null;
+  const pageSearchProps: ISearchState = state.pageSearch ? state.pageSearch : null;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
   const categoriesTree: ICategory[] = getCategoriesTree(state, ownProps);
   const spellingSuggestion: TSpellingSuggestion = getSpellingSuggestion(state, ownProps);

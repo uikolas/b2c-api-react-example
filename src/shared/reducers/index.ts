@@ -1,6 +1,6 @@
 import { isPageHomeStateLoading, pagesHome } from './Pages/Home/index';
 import { isPageLoginStateLoading, pagesLogin } from './Pages/Login/index';
-import { isPageSearchStateLoading, pageSearch } from './Pages/Search';
+import { isPageSearchStateLoading, pageSearch } from './Pages/Search/index';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product/index';
 import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
 import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses/index';

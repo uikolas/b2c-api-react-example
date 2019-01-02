@@ -1,6 +1,6 @@
 import {IHomeState} from "src/shared/reducers/Pages/Home/types";
 import {ILoginState} from "src/shared/reducers/Pages/Login/types";
-import {SearchState} from "src/shared/reducers/Pages/Search";
+import {ISearchState} from "src/shared/reducers/Pages/Search/types";
 import {IProductState} from "src/shared/reducers/Pages/Product/types";
 import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
 import {IAddressesState} from "src/shared/reducers/Pages/Addresses/types";
@@ -17,7 +17,7 @@ import {IApiErrorResponse} from "src/shared/services/types";
 export interface IReduxStore {
   pagesHome: IHomeState;
   pagesLogin: ILoginState;
-  pageSearch: SearchState;
+  pageSearch: ISearchState;
   pageProduct: IProductState;
   pageWishlist: WishlistState;
   pageAddresses: IAddressesState;

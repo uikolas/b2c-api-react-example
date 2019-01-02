@@ -7,6 +7,7 @@ export type TSpellingSuggestion = string;
 export type TLocalizedName = string;
 export type TDocCount = number;
 export type TLabelId = string;
+export type TSearchTerm = string;
 
 export interface FilterValue {
   value: string | number;
@@ -79,10 +80,9 @@ export interface ICatalogSearchDataParsed {
   availableLabels: IAvailableLabelsCollection | null;
 }
 
-export interface ISearchPageData extends ICatalogSearchDataParsed {
+export interface ISearchPageData extends ICatalogSearchDataParsed, ISearchTermData {
   dispatch?: Function;
   flyoutSearch?: FlyoutSearch;
-  searchTerm?: string;
   currency?: TAppCurrency;
 }
 
@@ -95,4 +95,8 @@ export interface ISearchQuery {
   label?: string;
   page?: string | number;
   [key: string]: string | number | string[];
+}
+
+export interface ISearchTermData {
+  searchTerm?: TSearchTerm;
 }

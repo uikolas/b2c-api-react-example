@@ -5,22 +5,19 @@ import {
   PAGES_SEARCH_TERM_CLEAR,
   PAGES_SUGGESTION_REQUEST,
 } from 'src/shared/constants/ActionTypes/Pages/Search';
-import { IReduxState } from 'src/typings/app';
 import {
   IAvailableLabelsCollection,
   ILocalizedNamesMap,
   IProductsLabeledCollection,
-  ISearchPageData,
   TLocalizedName,
   TSpellingSuggestion,
 } from 'src/shared/interfaces/searchPageData';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IPageSearchAction, ISearchState} from "src/shared/reducers/Pages/Search/types";
+import {DefaultItemsPerPage} from "src/shared/constants/search/index";
 
-export interface SearchState extends IReduxState {
-  data: ISearchPageData;
-}
 
-export const initialState: SearchState = {
+export const initialState: ISearchState = {
   data: {
     flyoutSearch: {
       suggestions: [],
@@ -41,8 +38,8 @@ export const initialState: SearchState = {
       numFound: 0,
       currentPage: 0,
       maxPage: 0,
-      currentItemsPerPage: 12,
-      validItemsPerPageOptions: [12],
+      currentItemsPerPage: DefaultItemsPerPage,
+      validItemsPerPageOptions: [DefaultItemsPerPage],
     },
     category: [],
     spellingSuggestion: null,
@@ -51,8 +48,8 @@ export const initialState: SearchState = {
   },
 };
 
-export const pageSearch = produce<SearchState>(
-  (draft: SearchState, action: any) => {
+export const pageSearch = produce<ISearchState>(
+  (draft: ISearchState, action: IPageSearchAction) => {
     switch (action.type) {
       case `${PAGES_SEARCH_REQUEST}_PENDING`:
         draft.error = false;
@@ -60,41 +57,41 @@ export const pageSearch = produce<SearchState>(
         draft.fulfilled = false;
         draft.rejected = false;
         draft.initiated = true;
-        draft.data.searchTerm = action.searchTerm;
+        draft.data.searchTerm = action.payloadSearchTermFulfilled.searchTerm;
         break;
       case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
         draft.data.flyoutSearch.pending = true;
         break;
       case `${PAGES_SUGGESTION_REQUEST}_FULFILLED`:
-        draft.data.flyoutSearch.suggestions = action.products;
-        draft.data.flyoutSearch.categories = action.categories;
-        draft.data.flyoutSearch.completion = action.completion;
+        draft.data.flyoutSearch.suggestions = action.payloadSuggestionFulfilled.suggestions;
+        draft.data.flyoutSearch.categories = action.payloadSuggestionFulfilled.categories;
+        draft.data.flyoutSearch.completion = action.payloadSuggestionFulfilled.completion;
         draft.data.flyoutSearch.pending = false;
         break;
       case `${PAGES_SEARCH_REQUEST}_REJECTED`:
-        draft.error = action.error;
+        draft.error = action.payloadRejected.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
         break;
       case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
         draft.data.flyoutSearch.pending = false;
-        draft.error = action.error;
+        draft.error = action.payloadRejected.error;
         break;
       case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
-        draft.data.items = action.items;
-        draft.data.filters = action.filters;
-        draft.data.category = action.category;
-        draft.data.rangeFilters = action.rangeFilters;
-        draft.data.sortParams = action.sortParams;
-        draft.data.sortParamLocalizedNames = action.sortParamLocalizedNames;
-        draft.data.categoriesLocalizedName = action.categoriesLocalizedName;
-        draft.data.currentSort = action.currentSort;
-        draft.data.pagination = action.pagination;
-        draft.data.currentCategory = action.currentCategory;
-        draft.data.spellingSuggestion = action.spellingSuggestion || null;
-        draft.data.productsLabeled = action.productsLabeled || null;
-        draft.data.availableLabels = action.availableLabels || null;
+        draft.data.items = action.payloadSearchFulfilled.items;
+        draft.data.filters = action.payloadSearchFulfilled.filters;
+        draft.data.category = action.payloadSearchFulfilled.category;
+        draft.data.rangeFilters = action.payloadSearchFulfilled.rangeFilters;
+        draft.data.sortParams = action.payloadSearchFulfilled.sortParams;
+        draft.data.sortParamLocalizedNames = action.payloadSearchFulfilled.sortParamLocalizedNames;
+        draft.data.categoriesLocalizedName = action.payloadSearchFulfilled.categoriesLocalizedName;
+        draft.data.currentSort = action.payloadSearchFulfilled.currentSort;
+        draft.data.pagination = action.payloadSearchFulfilled.pagination;
+        draft.data.currentCategory = action.payloadSearchFulfilled.currentCategory;
+        draft.data.spellingSuggestion = action.payloadSearchFulfilled.spellingSuggestion || null;
+        draft.data.productsLabeled = action.payloadSearchFulfilled.productsLabeled || null;
+        draft.data.availableLabels = action.payloadSearchFulfilled.availableLabels || null;
         draft.error = false;
         draft.pending = false;
         draft.fulfilled = true;
