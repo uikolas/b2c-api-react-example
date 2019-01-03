@@ -1,6 +1,6 @@
-import api, { setAuthToken } from '../api';
+import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../Common/RefreshToken';
+import { RefreshTokenService } from '../../Common/RefreshToken/index';
 import {
   orderDetailsFulfilledStateAction,
   orderDetailsPendingStateAction,

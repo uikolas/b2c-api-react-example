@@ -4,7 +4,7 @@ import {
   PAGES_SEARCH_TERM_CLEAR,
   PAGES_SUGGESTION_REQUEST,
 } from 'src/shared/constants/ActionTypes/Pages/Search';
-import { CatalogService } from 'src/shared/services/Common/Catalog';
+import { CatalogService } from 'src/shared/services/Common/Catalog/index';
 import {ISearchQuery, TSearchTerm} from 'src/shared/interfaces/searchPageData';
 
 

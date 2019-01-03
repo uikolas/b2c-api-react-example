@@ -1,13 +1,13 @@
 import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { RefreshTokenService } from '../Common/RefreshToken';
-import api, { setAuthToken } from '../api';
+import { RefreshTokenService } from '../../Common/RefreshToken/index';
+import api, { setAuthToken } from '../../api';
 import {
   addressAdd,
   addressDelete,
   addressUpdate,
 } from 'src/shared/constants/messages/addresses';
-import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
 
 

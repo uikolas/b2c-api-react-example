@@ -9,7 +9,7 @@ import * as cartActions from 'src/shared/actions/Common/Cart';
 import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
 import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import { RefreshTokenService } from '../RefreshToken';
+import { RefreshTokenService } from '../RefreshToken/index';
 import { ICartCreatePayload } from './types';
 import {IResponseError} from "src/shared/services/apiAbstractions/types";
 import {IApiResponseData} from "src/shared/services/types";

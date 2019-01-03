@@ -2,7 +2,7 @@
 
 import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../../Common/RefreshToken';
+import { RefreshTokenService } from '../../Common/RefreshToken/index';
 import {IWishlist, IWishlistProduct, TWishListId} from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
 import { wishlistAuthenticateErrorText } from 'src/shared/constants/messages/errors';

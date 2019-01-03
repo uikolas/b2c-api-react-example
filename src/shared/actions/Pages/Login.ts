@@ -5,7 +5,7 @@ import {
   PAGES_LOGIN_REQUEST,
   RESET_PASSWORD,
 } from 'src/shared/constants/ActionTypes/Pages/Login';
-import { PagesLoginService } from 'src/shared/services/Pages/Login';
+import { PagesLoginService } from 'src/shared/services/Pages/Login/index';
 import {
   ICustomerLoginData, ICustomerLoginDataParsed, ICustomerProfile,
   IResetPasswordPayload

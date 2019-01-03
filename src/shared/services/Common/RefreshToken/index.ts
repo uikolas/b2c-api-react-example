@@ -1,10 +1,10 @@
-import api from '../api';
+import api from '../../api';
 import { toast } from 'react-toastify';
 
 import { REFRESH_TOKEN_REQUEST } from 'src/shared/constants/ActionTypes/Pages/Login';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataResponse';
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
-import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
 
 

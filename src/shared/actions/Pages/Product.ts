@@ -1,5 +1,5 @@
 import {PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST} from '../../constants/ActionTypes/Pages/Product';
-import { ProductService } from '../../services/Pages/Product';
+import { ProductService } from '../../services/Pages/Product/index';
 import {IConcreteProductAvailability, IProductDataParsed, TProductSKU} from '../../interfaces/product';
 import {IPageProductAction} from "src/shared/reducers/Pages/Product/types";
 

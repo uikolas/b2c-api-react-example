@@ -1,5 +1,5 @@
 import { ORDER_DETAILS_REQUEST, ORDERS_COLLECTION_REQUEST } from '../../constants/ActionTypes/Pages/Order';
-import { OrderService } from '../../services/Pages/Order';
+import { OrderService } from '../../services/Pages/Order/index';
 import { IOrderCollectionParsed, IOrderDetailsParsed, TOrderId } from '../../interfaces/order';
 import {IPageOrderHistoryAction} from "src/shared/reducers/Pages/OrderHistory/types";
 import {IPageOrderDetailsAction} from "src/shared/reducers/Pages/OrderDetails/types";

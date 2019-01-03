@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify';
-import api from '../api';
+import api from '../../api';
 import { saveLoginDataToStoreAction } from 'src/shared/actions/Pages/CustomerProfile';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer';
 import {
@@ -7,7 +7,7 @@ import {
   loginCustomerPendingStateAction,
   loginCustomerRejectedStateAction,
 } from 'src/shared/actions/Pages/Login';
-import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import {ICustomerLoginData, ICustomerProfile, IResetPasswordPayload} from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { customerLogin, registerSuccess } from 'src/shared/constants/messages/customer';

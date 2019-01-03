@@ -1,6 +1,6 @@
-import api, {setAuthToken} from '../api';
+import api, {setAuthToken} from '../../api';
 import { toast } from 'react-toastify';
-import {RefreshTokenService} from '../Common/RefreshToken';
+import {RefreshTokenService} from '../../Common/RefreshToken/index';
 import {ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod} from 'src/shared/interfaces/checkout';
 import {
   getCheckoutDataInitPendingStateAction,
@@ -11,7 +11,7 @@ import {
   sendCheckoutDataFulfilledStateAction,
 } from 'src/shared/actions/Pages/Checkout';
 
-import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import {ICheckoutResponseData} from "src/shared/reducers/Pages/Checkout/types";
 import {IApiResponseData} from "src/shared/services/types";
 

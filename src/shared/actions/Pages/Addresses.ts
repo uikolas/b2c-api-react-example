@@ -6,7 +6,7 @@ import {
   SET_CURRENT_ADDRESS,
 } from 'src/shared/constants/ActionTypes/Pages/Addresses';
 import {IAddressItem} from 'src/shared/interfaces/addresses';
-import {AddressesService} from 'src/shared/services/Pages/Addresses';
+import {AddressesService} from 'src/shared/services/Pages/Addresses/index';
 
 
 export const getAllListPendingState = {

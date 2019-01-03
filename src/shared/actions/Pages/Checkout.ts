@@ -2,7 +2,7 @@ import {
   CHECKOUT_DATA_INIT_REQUEST,
   SEND_CHECKOUT_DATA,
 } from "src/shared/constants/ActionTypes/Pages/Checkout";
-import { CheckoutService } from 'src/shared/services/Pages/Checkout';
+import { CheckoutService } from 'src/shared/services/Pages/Checkout/index';
 import {
   ICheckoutRequest,
 } from 'src/shared/interfaces/checkout';

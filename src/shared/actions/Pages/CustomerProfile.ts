@@ -5,7 +5,7 @@ import {
   CUSTOMER_PASSWORD_UPDATE,
   LOGIN_DATA_SET_TO_STORE,
 } from '../../constants/ActionTypes/Pages/CustomerProfile';
-import { CustomerProfileService } from '../../services/Pages/CustomerProfile';
+import { CustomerProfileService } from '../../services/Pages/CustomerProfile/index';
 import {
   ICustomerDataParsed,
   ICustomerProfileIdentity,

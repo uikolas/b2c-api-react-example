@@ -1,4 +1,4 @@
-import api, { setAuthToken } from '../api';
+import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
 import * as CustomerProfileActions from 'src/shared/actions/Pages/CustomerProfile';
 import {
@@ -8,9 +8,9 @@ import {
   TCustomerReference,
 } from 'src/shared/interfaces/customer';
 import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerDataResponse';
-import { RefreshTokenService } from '../Common/RefreshToken';
-import { CustomerProfileAuthenticateErrorText } from '../../constants/messages/errors';
-import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { RefreshTokenService } from '../../Common/RefreshToken/index';
+import { CustomerProfileAuthenticateErrorText } from '../../../constants/messages/errors';
+import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import { logout } from 'src/shared/actions/Pages/Login';
 import {IApiResponseData} from "src/shared/services/types";
 
