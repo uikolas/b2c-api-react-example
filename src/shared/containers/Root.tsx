@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider, Store } from 'react-redux';
+import {Provider, ProviderProps} from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { History } from 'history';
 
@@ -9,7 +9,7 @@ import {ScrollToTopRoute} from "src/shared/routes/ScrollToTopRoute/index";
 
 
 export const Root = ({history}: {history: History}) => {
-  const store: Store<any> = configureStore(history);
+  const store: ProviderProps["store"] = configureStore(history);
   const routes = getRoutes();
 
   return (
