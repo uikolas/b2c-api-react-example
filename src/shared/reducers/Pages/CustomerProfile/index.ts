@@ -6,9 +6,9 @@ import {
 } from 'src/shared/constants/ActionTypes/Pages/CustomerProfile';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICustomerDataParsed } from 'src/shared/interfaces/customer';
-import { IPayloadError } from 'src/shared/interfaces/errors';
-import { ICustomerDataState } from './types';
+import {ICustomerDataState, IPageCustomerProfileAction} from './types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IApiErrorResponse} from "src/shared/services/types";
 
 export const initialState: ICustomerDataState = {
   data: {
@@ -17,27 +17,28 @@ export const initialState: ICustomerDataState = {
   },
 };
 
-export const pageCustomerProfile = function(state: ICustomerDataState = initialState, action: any): ICustomerDataState {
+export const pageCustomerProfile = function(state: ICustomerDataState = initialState,
+                                            action: IPageCustomerProfileAction): ICustomerDataState {
   switch (action.type) {
     case `${CUSTOMER_DATA_REQUEST}_REJECTED`:
     case `${CUSTOMER_DATA_UPDATE}_REJECTED`:
-      return handleRejected(state, action.payload);
+      return handleRejected(state, action.payloadRejected);
     case `${CUSTOMER_DATA_REQUEST}_PENDING`:
     case `${CUSTOMER_DATA_UPDATE}_PENDING`:
       return handlePending(state);
     case `${CUSTOMER_DATA_REQUEST}_FULFILLED`:
     case `${CUSTOMER_DATA_UPDATE}_FULFILLED`:
-      return handleFulfilled(state, action.payload);
+      return handleFulfilled(state, action.payloadProfileFulfilled);
     case `${CUSTOMER_PASSWORD_UPDATE}_FULFILLED`:
       return handleUpdatePasswordFulfilled(state);
     case `${CUSTOMER_PASSWORD_UPDATE}_REJECTED`:
-      return handleUpdatePasswordRejected(state, action.payload);
+      return handleUpdatePasswordRejected(state, action.payloadRejected);
     case `${CUSTOMER_PASSWORD_UPDATE}_PENDING`:
       return handleUpdatePasswordPending(state);
     case `${CUSTOMER_DELETE_ENTITY}_FULFILLED`:
       return handleDeleteCustomerFulfilled(state);
     case `${CUSTOMER_DELETE_ENTITY}_REJECTED`:
-      return handleDeleteCustomerRejected(state, action.payload);
+      return handleDeleteCustomerRejected(state, action.payloadRejected);
     case `${CUSTOMER_DELETE_ENTITY}_PENDING`:
       return handleDeleteCustomerPending(state);
     default:
@@ -57,7 +58,7 @@ const handleFulfilled = (customerState: ICustomerDataState, payload: ICustomerDa
   };
 };
 
-const handleRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+const handleRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
   return {
     ...customerState,
     data: {
@@ -101,7 +102,7 @@ const handleUpdatePasswordPending = (customerState: ICustomerDataState) => {
   };
 };
 
-const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
   return {
     ...customerState,
     data: {
@@ -134,7 +135,7 @@ const handleDeleteCustomerPending = (customerState: ICustomerDataState) => {
   };
 };
 
-const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
   return {
     ...customerState,
     data: {

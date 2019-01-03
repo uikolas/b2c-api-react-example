@@ -5,18 +5,17 @@ import {
   TCustomerUsername
 } from "src/shared/interfaces/customer/index";
 import {IReduxState} from "src/typings/app";
+import {IActionData} from "src/shared/reducers/types";
 
 export interface ILoginState extends IReduxState {
   data: ILoginStateData;
 }
 
-export type TPageLoginAction = {
-  type: string;
+export interface IPageLoginAction extends IActionData {
   payloadStoreFulfilled?: ILoginDataToLocalStorage;
   payloadRefreshTokenFulfilled?: ICustomerLoginDataParsed;
   payloadAuthFulfilled?: ICustomerLoginDataParsed;
-  error?: string;
-};
+}
 
 interface ILoginStateData extends ICustomerLoginDataParsed {
   isAuth?: boolean;

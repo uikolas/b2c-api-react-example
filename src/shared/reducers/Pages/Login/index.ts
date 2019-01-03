@@ -12,7 +12,7 @@ import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected 
 import { TCustomerEmail, TCustomerUsername } from '../../../interfaces/customer';
 import { LOGIN_DATA_SET_TO_STORE } from 'src/shared/constants/ActionTypes/Pages/CustomerProfile';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
-import {ILoginState, TPageLoginAction} from "src/shared/reducers/Pages/Login/types";
+import {ILoginState, IPageLoginAction} from "src/shared/reducers/Pages/Login/types";
 
 
 export const initialState: ILoginState = {
@@ -27,7 +27,7 @@ export const initialState: ILoginState = {
   },
 };
 
-export const pagesLogin = function(state: ILoginState = initialState, action: TPageLoginAction): ILoginState {
+export const pagesLogin = function(state: ILoginState = initialState, action: IPageLoginAction): ILoginState {
   switch (action.type) {
     case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
     case `${REFRESH_TOKEN_REQUEST}_PENDING`:
