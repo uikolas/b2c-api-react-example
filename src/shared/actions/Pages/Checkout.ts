@@ -7,7 +7,7 @@ import {
   ICheckoutRequest,
 } from 'src/shared/interfaces/checkout';
 import {TOrderId} from "src/shared/interfaces/order/index";
-import {ICheckoutResponseData, TPageCheckoutAction} from "src/shared/reducers/Pages/Checkout/types";
+import {ICheckoutResponseData, IPageCheckoutAction} from "src/shared/reducers/Pages/Checkout/types";
 
 
 export const getCheckoutDataInitPendingStateAction = () => ({
@@ -19,7 +19,7 @@ export const getCheckoutDataInitRejectedStateAction = (message: string) => ({
   payload: {error: message},
 });
 
-export const getCheckoutDataInitFulfilledStateAction = (payload: ICheckoutResponseData): TPageCheckoutAction => ({
+export const getCheckoutDataInitFulfilledStateAction = (payload: ICheckoutResponseData): IPageCheckoutAction => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_FULFILLED',
   payloadGetFulfilled: payload,
 });

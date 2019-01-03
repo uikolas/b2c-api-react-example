@@ -10,7 +10,7 @@ import {TAppStore} from "src/shared/interfaces/store/index";
 import {ICategory} from "src/shared/interfaces/category/index";
 import {ICountry} from "src/shared/interfaces/country/index";
 import {IInitData} from "src/shared/interfaces/init/index";
-import {IInitState, TInitAction} from "src/shared/reducers/Common/Init/types";
+import {IInitState, IInitAction} from "src/shared/reducers/Common/Init/types";
 
 
 export const initialState: IInitState = {
@@ -28,7 +28,7 @@ export const initialState: IInitState = {
 };
 
 export const init = function(state: IInitState = initialState,
-                             action: TInitAction): IInitState {
+                             action: IInitAction): IInitState {
   switch (action.type) {
     case `${INIT_APP_ACTION_TYPE}_PENDING`:
     case `${CATEGORIES_TREE_REQUEST}_PENDING`:

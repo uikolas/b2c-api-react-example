@@ -9,7 +9,7 @@ import {
   IShipmentMethod,
 } from 'src/shared/interfaces/checkout';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
-import {ICheckoutState, TPageCheckoutAction} from "src/shared/reducers/Pages/Checkout/types";
+import {ICheckoutState, IPageCheckoutAction} from "src/shared/reducers/Pages/Checkout/types";
 
 
 export const initialState: ICheckoutState = {
@@ -22,7 +22,7 @@ export const initialState: ICheckoutState = {
 };
 
 export const pageCheckout = produce<ICheckoutState>(
-  (draft: ICheckoutState, action: TPageCheckoutAction) => {
+  (draft: ICheckoutState, action: IPageCheckoutAction) => {
     switch (action.type) {
       case `${CHECKOUT_DATA_INIT_REQUEST}_PENDING`:
       case `${SEND_CHECKOUT_DATA}_PENDING`:

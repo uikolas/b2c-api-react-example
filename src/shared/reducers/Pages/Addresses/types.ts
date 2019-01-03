@@ -1,5 +1,6 @@
 import {IReduxState} from "src/typings/app";
 import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import {IActionData} from "src/shared/reducers/types";
 
 
 export interface IAddressesState extends IReduxState {
@@ -14,11 +15,9 @@ export interface IPageAddressesActionPayloadFulfilled {
   data: IAddressItem;
 }
 
-export type TPageAddressesAction = {
-  type: string;
+export interface IPageAddressesAction extends IActionData {
   addresses?: Array<IAddressItem>;
   address?: IAddressItem;
   addressId?: IAddressItem["id"];
   payloadFulfilled?: IPageAddressesActionPayloadFulfilled;
-  error?: string;
-};
+}

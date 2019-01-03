@@ -8,7 +8,7 @@ import {
 } from '../../../constants/ActionTypes/Pages/Addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
-import {IAddressesState, TPageAddressesAction} from "src/shared/reducers/Pages/Addresses/types";
+import {IAddressesState, IPageAddressesAction} from "src/shared/reducers/Pages/Addresses/types";
 
 
 const initialState: IAddressesState = {
@@ -19,7 +19,7 @@ const initialState: IAddressesState = {
 };
 
 export const pageAddresses = produce<IAddressesState>(
-  (draft: IAddressesState, action: TPageAddressesAction) => {
+  (draft: IAddressesState, action: IPageAddressesAction) => {
     switch (action.type) {
       case `${ADDRESSES_LIST}_PENDING`:
       case `${ADD_ADDRESS}_PENDING`:
