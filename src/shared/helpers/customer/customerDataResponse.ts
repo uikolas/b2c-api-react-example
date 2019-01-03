@@ -8,7 +8,7 @@ interface ICustomerDataResponse {
   included: object;
 }
 
-export const parseCustomerDataResponse = (response: ICustomerDataResponse): ICustomerDataParsed => {
+export const parseCustomerDataResponse = (response: ICustomerDataResponse): ICustomerDataParsed | null => {
   if (!response) {
     return null;
   }

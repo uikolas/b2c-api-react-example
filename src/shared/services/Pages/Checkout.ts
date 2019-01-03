@@ -13,6 +13,7 @@ import {
 
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import {ICheckoutResponseData} from "src/shared/reducers/Pages/Checkout/types";
+import {IApiResponseData} from "src/shared/services/types";
 
 interface IRequestBody {
   data: {
@@ -44,7 +45,7 @@ export class CheckoutService extends ApiServiceAbstract {
 
       dispatch(getCheckoutDataInitPendingStateAction());
 
-      const response: any = await api.post('checkout-data', body, headers);
+      const response: IApiResponseData = await api.post('checkout-data', body, headers);
 
       if (response.ok) {
         const payload = CheckoutService.parseCheckoutData(response.data.data.attributes);
@@ -82,7 +83,7 @@ export class CheckoutService extends ApiServiceAbstract {
 
       dispatch(sendCheckoutDataPendingStateAction());
 
-      const response: any = await api.post('checkout', body, headers);
+      const response: IApiResponseData = await api.post('checkout', body, headers);
 
       if (response.ok) {
         dispatch(sendCheckoutDataFulfilledStateAction(response.data.data.attributes.orderReference));

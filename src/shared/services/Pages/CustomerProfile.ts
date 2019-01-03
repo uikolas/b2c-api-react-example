@@ -12,6 +12,7 @@ import { RefreshTokenService } from '../Common/RefreshToken';
 import { CustomerProfileAuthenticateErrorText } from '../../constants/messages/errors';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { logout } from 'src/shared/actions/Pages/Login';
+import {IApiResponseData} from "src/shared/services/types";
 
 interface IRequestBody {
   data: {
@@ -29,14 +30,13 @@ export class CustomerProfileService extends ApiServiceAbstract {
   public static async getProfileData(dispatch: Function, customerReference: TCustomerReference): Promise<void> {
     try {
       dispatch(CustomerProfileActions.getCustomerProfilePendingStateAction());
-      let response: any;
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
         throw new Error(CustomerProfileAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.get(
+      const response: IApiResponseData = await api.get(
         this.getCustomersEndpoint(customerReference),
         {include: ''},
         {withCredentials: true},
@@ -58,14 +58,11 @@ export class CustomerProfileService extends ApiServiceAbstract {
   }
 
   // Update customer data
-  public static async updateProfileData(
-    dispatch: Function,
-    customerReference: TCustomerReference,
-    payload: ICustomerProfileIdentity
-  ): Promise<void> {
+  public static async updateProfileData(dispatch: Function,
+                                        customerReference: TCustomerReference,
+                                        payload: ICustomerProfileIdentity): Promise<void> {
     try {
       dispatch(CustomerProfileActions.updateCustomerProfilePendingStateAction());
-      let response: any;
 
       const body: IRequestBody = {
         data: {
@@ -81,14 +78,14 @@ export class CustomerProfileService extends ApiServiceAbstract {
         throw new Error(CustomerProfileAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.patch(
+      const response: IApiResponseData = await api.patch(
         this.getCustomersEndpoint(customerReference),
         body,
         {withCredentials: true},
       );
 
       if (response.ok) {
-        const responseParsed: any = parseCustomerDataResponse(response.data);
+        const responseParsed: ICustomerDataParsed = parseCustomerDataResponse(response.data);
         dispatch(CustomerProfileActions.updateCustomerProfileFulfilledStateAction(responseParsed));
         toast.success('Your Profile Data was successfully updated!');
       } else {
@@ -104,15 +101,11 @@ export class CustomerProfileService extends ApiServiceAbstract {
   }
 
   // Update customer password.
-  public static async updatePasswordData(
-    dispatch: Function,
-    customerReference: TCustomerReference,
-    payload: ICustomerProfilePassword
-  ): Promise<void> {
+  public static async updatePasswordData(dispatch: Function,
+                                         customerReference: TCustomerReference,
+                                         payload: ICustomerProfilePassword): Promise<void> {
     try {
       dispatch(CustomerProfileActions.updateCustomerPasswordPendingStateAction());
-
-      let response: any;
 
       const body: IRequestBody = {
         data: {
@@ -126,10 +119,9 @@ export class CustomerProfileService extends ApiServiceAbstract {
         throw new Error(CustomerProfileAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.patch(`customer-password`, body, {withCredentials: true});
+      const response: IApiResponseData = await api.patch(`customer-password`, body, {withCredentials: true});
 
       if (response.ok) {
-        const responseParsed: any = response.data;
         dispatch(CustomerProfileActions.updateCustomerPasswordFulfilledStateAction());
         toast.success('Your Password was successfully updated!');
       } else {
@@ -149,14 +141,13 @@ export class CustomerProfileService extends ApiServiceAbstract {
     try {
       dispatch(CustomerProfileActions.deleteCustomerPendingStateAction());
 
-      let response: any;
-
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
         throw new Error(CustomerProfileAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.delete(`customers/${customerReference}`, null, {withCredentials: true});
+      const endpoint = `customers/${customerReference}`;
+      const response: IApiResponseData = await api.delete(endpoint, null, {withCredentials: true});
 
       if (response.ok) {
         dispatch(logout());

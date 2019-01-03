@@ -13,6 +13,7 @@ import { orderAuthenticateErrorText } from 'src/shared/constants/messages/errors
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/shared/helpers/order/response';
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import {IApiResponseData} from "src/shared/services/types";
 
 export class OrderService extends ApiServiceAbstract {
 
@@ -21,13 +22,12 @@ export class OrderService extends ApiServiceAbstract {
     try {
       dispatch(ordersCollectionPendingStateAction());
 
-      let response: any;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
         throw new Error(orderAuthenticateErrorText);
       }
       setAuthToken(token);
-      response = await api.get('orders', null, {withCredentials: true});
+      const response: IApiResponseData = await api.get('orders', null, {withCredentials: true});
 
       if (response.ok) {
         const responseParsed = parseGetOrdersCollectionResponse(response.data);
@@ -49,14 +49,13 @@ export class OrderService extends ApiServiceAbstract {
     try {
       dispatch(orderDetailsPendingStateAction());
 
-      let response: any;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
         throw new Error(orderAuthenticateErrorText);
       }
       setAuthToken(token);
       const endpoint = `orders/${orderId}`;
-      response = await api.get(endpoint, null, {withCredentials: true});
+      const response: IApiResponseData = await api.get(endpoint, null, {withCredentials: true});
 
       if (response.ok) {
         const responseParsed = parseGetOrderDetailsResponse(response.data.data);

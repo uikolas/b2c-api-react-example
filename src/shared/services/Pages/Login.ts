@@ -11,6 +11,7 @@ import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import {ICustomerLoginData, ICustomerProfile, IResetPasswordPayload} from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { customerLogin, registerSuccess } from 'src/shared/constants/messages/customer';
+import {IApiResponseData} from "src/shared/services/types";
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
@@ -21,7 +22,7 @@ export class PagesLoginService extends ApiServiceAbstract {
           attributes: payload,
         },
       };
-      const response: any = await api.post('customers', body, {withCredentials: true});
+      const response: IApiResponseData = await api.post('customers', body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -61,8 +62,6 @@ export class PagesLoginService extends ApiServiceAbstract {
     try {
       dispatch(loginCustomerPendingStateAction());
 
-      let response: any;
-
       const body = {
         data: {
           type: 'access-tokens',
@@ -70,7 +69,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         },
       };
 
-      response = await api.post('access-tokens', body, {withCredentials: true});
+      const response: IApiResponseData = await api.post('access-tokens', body, {withCredentials: true});
 
       if (response.ok) {
         const responseParsed = parseLoginDataResponse(response.data);
@@ -99,7 +98,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.post('customer-forgotten-password', body, {withCredentials: true});
+      const response: IApiResponseData = await api.post('customer-forgotten-password', body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -134,7 +133,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.patch('customer-restore-password', body, {withCredentials: true});
+      const response: IApiResponseData = await api.patch('customer-restore-password', body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({

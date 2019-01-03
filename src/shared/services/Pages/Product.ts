@@ -12,14 +12,14 @@ import {
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import {IConcreteProductAvailability, IProductDataParsed, TProductSKU} from "src/shared/interfaces/product/index";
 import {parseProductAvailabilityResponse} from "src/shared/helpers/product/productResponse";
+import {IApiResponseData} from "src/shared/services/types";
 
 
 export class ProductService extends ApiServiceAbstract {
   public static async getAbstractData(dispatch: Function, sku: string): Promise<void> {
     try {
       dispatch(getProductDataItemPendingStateAction());
-      let response: any;
-      response = await api.get(`abstract-products/${sku}`, {
+      const response: IApiResponseData = await api.get(`abstract-products/${sku}`, {
         include: 'abstract-product-image-sets,' +
         'abstract-product-prices,' +
         'abstract-product-availabilities,' +
@@ -47,8 +47,7 @@ export class ProductService extends ApiServiceAbstract {
   public static async getConcreteProductAvailability(dispatch: Function, sku: TProductSKU): Promise<any> {
     try {
       dispatch(getProductAvailabilityPendingStateAction());
-      let response: any;
-      response = await api.get(`concrete-products/${sku}/concrete-product-availabilities`);
+      const response: IApiResponseData = await api.get(`concrete-products/${sku}/concrete-product-availabilities`);
 
       if (response.ok) {
         const responseParsed: null | IConcreteProductAvailability = parseProductAvailabilityResponse(response.data);

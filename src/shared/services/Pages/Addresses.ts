@@ -8,6 +8,7 @@ import {
   addressUpdate,
 } from 'src/shared/constants/messages/addresses';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import {IApiResponseData} from "src/shared/services/types";
 
 
 export class AddressesService extends ApiServiceAbstract {
@@ -16,7 +17,8 @@ export class AddressesService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.get(`customers/${customerId}/addresses`, {}, {withCredentials: true});
+      const endpoint = `customers/${customerId}/addresses`;
+      const response: IApiResponseData = await api.get(endpoint, {}, {withCredentials: true});
 
       if (response.ok) {
         const addresses = response.data.data.map((
@@ -59,7 +61,8 @@ export class AddressesService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.post(`customers/${customerId}/addresses`, body, {withCredentials: true});
+      const endpoint = `customers/${customerId}/addresses`;
+      const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -96,7 +99,7 @@ export class AddressesService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(
+      const response: IApiResponseData = await api.delete(
         `customers/${customerId}/addresses/${addressId}`, {}, {withCredentials: true},
       );
 
@@ -139,7 +142,7 @@ export class AddressesService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.patch(
+      const response: IApiResponseData = await api.patch(
         `customers/${customerId}/addresses/${addressId}`, body, {withCredentials: true},
       );
 

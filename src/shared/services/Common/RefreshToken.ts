@@ -5,6 +5,7 @@ import { REFRESH_TOKEN_REQUEST } from 'src/shared/constants/ActionTypes/Pages/Lo
 import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataResponse';
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import {IApiResponseData} from "src/shared/services/types";
 
 
 export class RefreshTokenService extends ApiServiceAbstract {
@@ -51,7 +52,7 @@ export class RefreshTokenService extends ApiServiceAbstract {
 
     dispatch({type: REFRESH_TOKEN_REQUEST + '_PENDING'});
 
-    const response: any = await api.post('refresh-tokens', body, {withCredentials: true});
+    const response: IApiResponseData = await api.post('refresh-tokens', body, {withCredentials: true});
 
     if (response.ok) {
       const responseParsed = parseLoginDataResponse(response.data);

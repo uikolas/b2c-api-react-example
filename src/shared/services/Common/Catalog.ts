@@ -40,7 +40,7 @@ export class CatalogService extends ApiServiceAbstract {
   public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<void> {
     try {
 
-      const response: any = await api.get(
+      const response: IApiResponseData = await api.get(
         'catalog-search-suggestions',
         {q: query, include: 'abstract-products,abstract-product-prices'},
         {withCredentials: true},
