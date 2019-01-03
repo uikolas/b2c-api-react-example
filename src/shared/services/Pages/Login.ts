@@ -8,7 +8,7 @@ import {
   loginCustomerRejectedStateAction,
 } from 'src/shared/actions/Pages/Login';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
-import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
+import {ICustomerLoginData, ICustomerProfile, IResetPasswordPayload} from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { customerLogin, registerSuccess } from 'src/shared/constants/messages/customer';
 
@@ -38,7 +38,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
 
         if (response.status === 422) {
@@ -51,7 +51,7 @@ export class PagesLoginService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -109,7 +109,7 @@ export class PagesLoginService extends ApiServiceAbstract {
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          payloadRejected: {error: response.problem},
         });
         toast.error(response.problem);
       }
@@ -117,13 +117,15 @@ export class PagesLoginService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
   }
 
-  public static async resetPassword(ACTION_TYPE: string, dispatch: Function, payload: any): Promise<void> {
+  public static async resetPassword(ACTION_TYPE: string,
+                                    dispatch: Function,
+                                    payload: IResetPasswordPayload): Promise<void> {
     try {
       const body = {
         data: {
@@ -142,7 +144,7 @@ export class PagesLoginService extends ApiServiceAbstract {
       } else {
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: response.problem,
+          payloadRejected: {error: response.problem},
         });
         toast.error('Request Error: ' + response.problem);
       }
@@ -150,7 +152,7 @@ export class PagesLoginService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }

@@ -1,4 +1,5 @@
 import {TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType} from '../login';
+import {TRouterMatchParam} from "src/shared/selectors/Common/router/types";
 
 export type TCustomerSalutation = string;
 export type TCustomerFirstName = string;
@@ -72,4 +73,10 @@ export interface ICustomerLoginDataParsed {
   refreshToken: TRefreshToken;
   tokenType: TTokenType;
   customerRef: TCustomerReference;
+}
+
+export interface IResetPasswordPayload {
+  restorePasswordKey: TRouterMatchParam;
+  password: TCustomerPassword;
+  confirmPassword: TCustomerPassword;
 }

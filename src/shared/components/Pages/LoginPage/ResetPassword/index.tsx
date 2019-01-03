@@ -14,6 +14,7 @@ import {TRouterMatchParam} from 'src/shared/selectors/Common/router/types';
 import { formStyles } from '../styles';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
+import {IResetPasswordPayload} from "src/shared/interfaces/customer/index";
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
   dispatch?: Function;
@@ -46,7 +47,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
       return;
     }
 
-    const payload = {
+    const payload: IResetPasswordPayload = {
       restorePasswordKey: this.props.restoreKey,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,

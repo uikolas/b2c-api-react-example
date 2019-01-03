@@ -1,6 +1,6 @@
 import {
   ICustomerLoginDataParsed,
-  ILoginDataToLocalStorage,
+  ILoginDataToLocalStorage, IResetPasswordPayload,
   TCustomerEmail,
   TCustomerUsername
 } from "src/shared/interfaces/customer/index";
@@ -15,6 +15,7 @@ export interface IPageLoginAction extends IActionData {
   payloadStoreFulfilled?: ILoginDataToLocalStorage;
   payloadRefreshTokenFulfilled?: ICustomerLoginDataParsed;
   payloadAuthFulfilled?: ICustomerLoginDataParsed;
+  payloadResetPassword?: IResetPasswordPayload;
 }
 
 interface ILoginStateData extends ICustomerLoginDataParsed {

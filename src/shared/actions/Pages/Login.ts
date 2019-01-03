@@ -6,7 +6,10 @@ import {
   RESET_PASSWORD,
 } from 'src/shared/constants/ActionTypes/Pages/Login';
 import { PagesLoginService } from 'src/shared/services/Pages/Login';
-import { ICustomerLoginData, ICustomerLoginDataParsed, ICustomerProfile } from 'src/shared/interfaces/customer';
+import {
+  ICustomerLoginData, ICustomerLoginDataParsed, ICustomerProfile,
+  IResetPasswordPayload
+} from 'src/shared/interfaces/customer';
 
 export const registerPendingState = () => ({
   type: PAGES_CUSTOMER_REGISTER + '_PENDING',
@@ -51,7 +54,7 @@ export const forgotPasswordAction = function(email: string) {
   };
 };
 
-export const resetPasswordAction = function(payload: any) {
+export const resetPasswordAction = function(payload: IResetPasswordPayload) {
   return (dispatch: Function, getState: Function) => {
     dispatch({type: RESET_PASSWORD + '_PENDING'});
     PagesLoginService.resetPassword(RESET_PASSWORD, dispatch, payload);
