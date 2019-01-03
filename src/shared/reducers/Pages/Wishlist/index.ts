@@ -1,5 +1,4 @@
 import produce from 'immer';
-import { IReduxState } from 'src/typings/app';
 import {
   ADD_ITEM_WISHLIST,
   ADD_WISHLIST,
@@ -8,18 +7,11 @@ import {
   DETAIL_WISHLIST,
   UPDATE_WISHLIST,
   WISHLIST_ALL_LISTS,
-} from '../../constants/ActionTypes/Pages/Wishlist';
-import { IWishlist, IWishlistItem } from '../../interfaces/wishlist';
+} from '../../../constants/ActionTypes/Pages/Wishlist';
+import { IWishlist, IWishlistProduct } from '../../../interfaces/wishlist';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {IPageWishlistAction, WishlistState} from "src/shared/reducers/Pages/Wishlist/types";
 
-export interface WishlistState extends IReduxState {
-  data: {
-    wishlists: IWishlist[],
-    currentWishlist: IWishlist | null,
-    currentItems: Array<IWishlistItem>,
-    isInitial: boolean,
-  };
-}
 
 export const initialState: WishlistState = {
   data: {
@@ -31,7 +23,7 @@ export const initialState: WishlistState = {
 };
 
 export const pageWishlist = produce<WishlistState>(
-  (draft: WishlistState, action: any) => {
+  (draft: WishlistState, action: IPageWishlistAction) => {
     switch (action.type) {
       case `${WISHLIST_ALL_LISTS}_PENDING`:
       case `${ADD_WISHLIST}_PENDING`:
@@ -59,7 +51,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${DELETE_WISHLIST}_REJECTED`:
       case `${UPDATE_WISHLIST}_REJECTED`:
         draft.data.isInitial = false;
-        draft.error = action.error;
+        draft.error = action.payloadRejected.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
@@ -68,14 +60,14 @@ export const pageWishlist = produce<WishlistState>(
       case `${DETAIL_WISHLIST}_REJECTED`:
       case `${DELETE_ITEM_WISHLIST}_REJECTED`:
       case `${ADD_ITEM_WISHLIST}_REJECTED`:
-        draft.error = action.error;
+        draft.error = action.payloadRejected.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
         draft.initiated = true;
         break;
       case `${WISHLIST_ALL_LISTS}_FULFILLED`:
-        draft.data.wishlists = action.wishlists;
+        draft.data.wishlists = action.payloadWishlistDataFulfilled.wishlists;
         draft.data.isInitial = true;
         draft.error = false;
         draft.pending = false;
@@ -84,7 +76,7 @@ export const pageWishlist = produce<WishlistState>(
         draft.initiated = true;
         break;
       case `${ADD_WISHLIST}_FULFILLED`: {
-        const wishlists: IWishlist[] = [...draft.data.wishlists, action.wishlist];
+        const wishlists: IWishlist[] = [...draft.data.wishlists, action.payloadWishlistDataFulfilled.data];
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
         draft.error = false;
@@ -97,7 +89,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${DELETE_WISHLIST}_FULFILLED`: {
         const wishlists: IWishlist[] = draft.data.wishlists.filter((
           wishlist: IWishlist,
-        ) => wishlist.id !== action.wishlistId);
+        ) => wishlist.id !== action.payloadWishlistDataFulfilled.wishlistId);
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
         draft.error = false;
@@ -110,7 +102,10 @@ export const pageWishlist = produce<WishlistState>(
       case `${UPDATE_WISHLIST}_FULFILLED`: {
         const wishlists: IWishlist[] = draft.data.wishlists.map((
           wishlist: IWishlist,
-        ) => wishlist.id === action.wishlistId ? action.data : wishlist);
+        ) => (wishlist.id === action.payloadWishlistDataFulfilled.wishlistId)
+              ? action.payloadWishlistDataFulfilled.data
+              : wishlist
+        );
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
         draft.error = false;
@@ -121,8 +116,8 @@ export const pageWishlist = produce<WishlistState>(
         break;
       }
       case `${DETAIL_WISHLIST}_FULFILLED`: {
-        draft.data.currentWishlist = action.wishlist;
-        draft.data.currentItems = action.items;
+        draft.data.currentWishlist = action.payloadWishlistDataFulfilled.data;
+        draft.data.currentItems = action.payloadWishlistDataFulfilled.products;
         draft.data.isInitial = true;
         draft.error = false;
         draft.pending = false;
@@ -134,9 +129,9 @@ export const pageWishlist = produce<WishlistState>(
       case `${ADD_ITEM_WISHLIST}_FULFILLED`: {
         const wishlists: IWishlist[] = draft.data.wishlists.map((
           wishlist: IWishlist,
-          ) => wishlist.id === action.wishlist.id
-          ? action.wishlist
-          : wishlist,
+          ) => (wishlist.id === action.payloadWishlistDataFulfilled.data.id)
+                ? action.payloadWishlistDataFulfilled.data
+                : wishlist,
         );
         draft.data.wishlists = wishlists;
         draft.error = false;
@@ -147,12 +142,12 @@ export const pageWishlist = produce<WishlistState>(
         break;
       }
       case `${DELETE_ITEM_WISHLIST}_FULFILLED`: {
-        const currentItems: IWishlistItem[] = draft.data.currentItems.filter((
-          item: IWishlistItem,
-        ) => item.sku !== action.sku);
+        const currentItems: IWishlistProduct[] = draft.data.currentItems.filter((
+          item: IWishlistProduct,
+        ) => item.sku !== action.payloadWishlistProductFulfilled.sku);
         const wishlists: IWishlist[] = draft.data.wishlists.map((
           wishlist: IWishlist,
-        ) => wishlist.id === action.wishlistId
+        ) => wishlist.id === action.payloadWishlistProductFulfilled.wishlistId
           ? {...wishlist, numberOfItems: currentItems.length}
           : wishlist,
         );

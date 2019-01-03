@@ -3,7 +3,7 @@
 import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
 import { RefreshTokenService } from '../Common/RefreshToken';
-import { IWishlist, IWishlistItem } from 'src/shared/interfaces/wishlist';
+import {IWishlist, IWishlistProduct, TWishListId} from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
 import { wishlistAuthenticateErrorText } from 'src/shared/constants/messages/errors';
 import {
@@ -36,18 +36,18 @@ export class WishlistService extends ApiServiceAbstract {
 
       if (response.ok) {
         const wishlists: IWishlist[] = response.data.data.map((
-          list: any
+          list: IWishlist
         ) => WishlistService.parseWishlistResponse(list));
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlists,
+          payloadWishlistDataFulfilled: {wishlists},
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -55,7 +55,7 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error: error.message,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -69,23 +69,25 @@ export class WishlistService extends ApiServiceAbstract {
       const response: any = await api.get(`wishlists/${wishlistId}`, {}, {withCredentials: true});
 
       if (response.ok) {
-        let items: IWishlistItem[] = [];
+        let products: IWishlistProduct[] = [];
         const wishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
 
         if (response.data.included) {
-          items = WishlistService.parseWishlistItems(response.data.included);
+          products = WishlistService.parseWishlistItems(response.data.included);
         }
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlist,
-          items,
+          payloadWishlistDataFulfilled: {
+            data: wishlist,
+            products,
+          },
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -93,7 +95,7 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error: error.message,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -118,14 +120,14 @@ export class WishlistService extends ApiServiceAbstract {
         const parsedWishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlist: parsedWishlist,
+          payloadWishlistDataFulfilled: {data: parsedWishlist},
         });
         return parsedWishlist.id;
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
         return '';
@@ -134,14 +136,14 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
       return '';
     }
   }
 
-  public static async deleteWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: string): Promise<void> {
+  public static async deleteWishlist(ACTION_TYPE: string, dispatch: Function, wishlistId: TWishListId): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -152,13 +154,13 @@ export class WishlistService extends ApiServiceAbstract {
         toast.success(wishlistDeleted);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlistId,
+          payloadWishlistDataFulfilled: {wishlistId},
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -166,7 +168,7 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -191,14 +193,16 @@ export class WishlistService extends ApiServiceAbstract {
       if (response.ok) {
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          data: WishlistService.parseWishlistResponse(response.data.data),
-          wishlistId,
+          payloadWishlistDataFulfilled: {
+            data: WishlistService.parseWishlistResponse(response.data.data),
+            wishlistId,
+          },
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -206,7 +210,7 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -243,14 +247,14 @@ export class WishlistService extends ApiServiceAbstract {
 
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlist,
+          payloadWishlistDataFulfilled: {data: wishlist},
         });
         toast.success(`${wishlistAddProduct} ${wishlist.name}.`);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -258,7 +262,7 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -281,14 +285,16 @@ export class WishlistService extends ApiServiceAbstract {
         toast.success(wishlistRemoveItems);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
-          wishlistId,
-          sku,
+          payloadWishlistProductFulfilled: {
+            wishlistId,
+            sku,
+          },
         });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
           type: ACTION_TYPE + '_REJECTED',
-          error: errorMessage,
+          payloadRejected: {error: errorMessage},
         });
         toast.error('Request Error: ' + errorMessage);
       }
@@ -296,7 +302,7 @@ export class WishlistService extends ApiServiceAbstract {
     } catch (error) {
       dispatch({
         type: ACTION_TYPE + '_REJECTED',
-        error,
+        payloadRejected: {error: error.message},
       });
       toast.error('Unexpected Error: ' + error.message);
     }
@@ -334,12 +340,12 @@ export class WishlistService extends ApiServiceAbstract {
     return wishlist;
   }
 
-  private static parseWishlistItems(included: any[]): IWishlistItem[] {
-    const items: {[key: string]: IWishlistItem} = {};
+  private static parseWishlistItems(included: any[]): IWishlistProduct[] {
+    const items: {[key: string]: IWishlistProduct} = {};
 
     included.forEach((row: any) => {
       if (!items[row.id]) {
-        items[row.id] = {attributes: [], image: ''} as IWishlistItem;
+        items[row.id] = {attributes: [], image: ''} as IWishlistProduct;
       }
 
       if (row.type === 'concrete-product-image-sets') {

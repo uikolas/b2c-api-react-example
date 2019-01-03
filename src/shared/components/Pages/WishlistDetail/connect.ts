@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
+import { WishlistState } from 'src/shared/reducers/Pages/Wishlist/types';
 import { getAppCurrency } from 'src/shared/reducers/Common/Init/index';
 import { TCartId } from 'src/shared/interfaces/cart';
 import { deleteItemAction, deleteMultiItemsAction } from 'src/shared/actions/Pages/Wishlist';

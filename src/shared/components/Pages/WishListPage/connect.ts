@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
+import { WishlistState } from 'src/shared/reducers/Pages/Wishlist/types';
 import {
   addWishlistAction,
   deleteWishlistAction,

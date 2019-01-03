@@ -2,7 +2,7 @@ import { isPageHomeStateLoading, pagesHome } from './Pages/Home/index';
 import { isPageLoginStateLoading, pagesLogin } from './Pages/Login/index';
 import { isPageSearchStateLoading, pageSearch } from './Pages/Search/index';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product/index';
-import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist';
+import { isPageWishlistStateLoading, pageWishlist } from './Pages/Wishlist/index';
 import { isPageAddressesStateLoading, pageAddresses } from './Pages/Addresses/index';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './Pages/CustomerProfile';
 import { isPageCheckoutStateLoading, pageCheckout } from './Pages/Checkout/index';

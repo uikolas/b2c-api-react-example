@@ -2,7 +2,7 @@ import {IHomeState} from "src/shared/reducers/Pages/Home/types";
 import {ILoginState} from "src/shared/reducers/Pages/Login/types";
 import {ISearchState} from "src/shared/reducers/Pages/Search/types";
 import {IProductState} from "src/shared/reducers/Pages/Product/types";
-import {WishlistState} from "src/shared/reducers/Pages/Wishlist";
+import {WishlistState} from "src/shared/reducers/Pages/Wishlist/types";
 import {IAddressesState} from "src/shared/reducers/Pages/Addresses/types";
 import {ICheckoutState} from "src/shared/reducers/Pages/Checkout/types";
 import {ICartState} from "src/shared/reducers/Common/Cart/types";
