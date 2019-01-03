@@ -1,27 +1,17 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 
 import { styles } from './styles';
+import {ISprykerButtonProps} from './types';
 
-interface SprykerButtonProps extends WithStyles<typeof styles> {
-  title: string;
-  extraClasses?: string;
-  disabled?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLInputElement>) => void;
-  IconType?: any;
-  iconComponent?: any;
-  value?: string | number;
-  btnType?: string;
-}
 
-export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Element => {
+export const SprykerButtonBase: React.SFC<ISprykerButtonProps> = (props): JSX.Element => {
   const {
     classes,
     extraClasses = '',
     onClick,
     title,
-    IconType,
     iconComponent,
     disabled,
     value,
@@ -36,15 +26,10 @@ export const SprykerButtonBase: React.SFC<SprykerButtonProps> = (props): JSX.Ele
       disabled={ !!disabled }
       className={ `${classes.button} ${extraClasses}` }
       value={ value }
-      onClick={
-        onClick
-          ? onClick
-          : null
-      }
+      onClick={onClick ? onClick : null}
       type={ btnType ? btnType : 'button' }
     >
       { title }
-      { IconType ? <IconType className={ classes.icon }/> : null }
       { iconComponent ? iconComponent : null }
     </Button>
   );

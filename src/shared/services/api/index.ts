@@ -11,7 +11,7 @@ const api = create({
   },
 });
 
-export const nodeApi = create({baseURL: `http://localhost:${config.WEB_PORT}${config.WEB_PATH}`});
+export const nodeApi = create({baseURL: `http://localhost:${config.WEB_PORT}/nodeServer/`});
 
 export const setAuthToken = (userAuth: TAccessToken) => api.setHeader('Authorization', 'Bearer ' + userAuth);
 export const removeAuthToken = () => api.deleteHeader('Authorization');
