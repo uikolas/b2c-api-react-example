@@ -4,6 +4,7 @@ import {
   IProductPricesItem,
   TProductImageSetsCollectionRawResponse,
 } from "src/shared/interfaces/product/index";
+import {IAbstractRowIncludedResponse} from "src/shared/interfaces/abstract/rowIncludedresponse";
 
 export interface IProductRawResponse {
   data: {
@@ -44,15 +45,7 @@ export interface ISuperAttributeData {
   idProductConcrete?: string | number;
 }
 
-export interface IAbstractRowProductIncludedResponse {
-  type: string;
-  links: {
-    self: string;
-  };
-  id?: string;
-}
-
-export interface IRowProductPricesIncludedResponse extends IAbstractRowProductIncludedResponse {
+export interface IRowProductPricesIncludedResponse extends IAbstractRowIncludedResponse {
   type: "abstract-product-prices" | "concrete-product-prices";
   attributes: {
     price: number;
@@ -60,19 +53,19 @@ export interface IRowProductPricesIncludedResponse extends IAbstractRowProductIn
   };
 }
 
-export interface IRowProductImageSetsIncludedResponse extends IAbstractRowProductIncludedResponse {
+export interface IRowProductImageSetsIncludedResponse extends IAbstractRowIncludedResponse {
   type: "abstract-product-image-sets" | "concrete-product-image-sets";
   attributes: {
     imageSets: TProductImageSetsCollectionRawResponse;
   };
 }
 
-export interface IRowProductAvailabilitiesIncludedResponse extends IAbstractRowProductIncludedResponse {
+export interface IRowProductAvailabilitiesIncludedResponse extends IAbstractRowIncludedResponse {
   type: "abstract-product-availabilities" | "concrete-product-availabilities";
   attributes: IProductAvailability;
 }
 
-export interface IRowConcreteProductsIncludedResponse extends IAbstractRowProductIncludedResponse {
+export interface IRowConcreteProductsIncludedResponse extends IAbstractRowIncludedResponse {
   type: "concrete-products";
   attributes: IProductAttributesRawResponse;
 }

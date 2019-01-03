@@ -54,15 +54,19 @@ export interface ICartItem {
   priceDefaultNet: TPriceTypeDefaultNet;
 }
 
-export interface ICartDataResponse {
-  id: TCartId;
-  currency: TAppCurrency;
-  discounts?: ICartDiscounts | any;
-  priceMode: TCartPriceMode;
-  store: TCartStore;
-  totals: ICartTotals;
+export interface ICartDataResponse extends ICommonDataInCart {
   items: Array<ICartItem>;
   totalQty?: number;
+}
+
+export interface ICommonDataInCart {
+  id: TCartId | null;
+  currency: TAppCurrency;
+  discounts?: ICartDiscounts | {};
+  priceMode: TCartPriceMode| null;
+  store: TCartStore| null;
+  totals: ICartTotals;
+  cartCreated?: boolean;
 }
 
 export interface ICartItemCalculation {
