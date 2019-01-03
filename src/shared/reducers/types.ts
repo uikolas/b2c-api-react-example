@@ -1,4 +1,3 @@
-import {IHomeState} from "src/shared/reducers/Pages/Home/types";
 import {ILoginState} from "src/shared/reducers/Pages/Login/types";
 import {ISearchState} from "src/shared/reducers/Pages/Search/types";
 import {IProductState} from "src/shared/reducers/Pages/Product/types";
@@ -15,7 +14,6 @@ import {IInitState} from "src/shared/reducers/Common/Init/types";
 import {IApiErrorResponse} from "src/shared/services/types";
 
 export interface IReduxStore {
-  pagesHome: IHomeState;
   pagesLogin: ILoginState;
   pageSearch: ISearchState;
   pageProduct: IProductState;

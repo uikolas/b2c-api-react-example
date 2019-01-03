@@ -1,4 +1,3 @@
-import { isPageHomeStateLoading, pagesHome } from './Pages/Home/index';
 import { isPageLoginStateLoading, pagesLogin } from './Pages/Login/index';
 import { isPageSearchStateLoading, pageSearch } from './Pages/Search/index';
 import { isPageProductStateLoading, pageProduct } from './Pages/Product/index';
@@ -15,7 +14,6 @@ import {IReduxStore, IReduxOwnProps} from "src/shared/reducers/types";
 
 
 export const reducers = {
-  pagesHome,
   pagesLogin,
   pageSearch,
   pageProduct,
@@ -35,7 +33,6 @@ export function isStateLoading(state: IReduxStore, props: IReduxOwnProps): boole
     || isPageLoginStateLoading(state, props)
     || isCartStateLoading(state, props)
     || isPageSearchStateLoading(state, props)
-    || isPageHomeStateLoading(state, props)
     || isAppLoading(state, props)
     || isPageWishlistStateLoading(state, props)
     || isOrderHistoryLoading(state, props)

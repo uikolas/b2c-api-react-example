@@ -6,9 +6,10 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducers } from '../reducers';
+import {IReduxStore} from "src/shared/reducers/types";
 
 
-export const configureStore = function(history: History, initialState?: any) {
+export const configureStore = function(history: History, initialState?: IReduxStore) {
   const middlewares = [
     thunk,
     routerMiddleware(history),

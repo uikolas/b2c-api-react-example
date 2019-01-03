@@ -31,6 +31,7 @@ import {clearSearchTermAction} from 'src/shared/actions/Pages/Search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
 import {TAppLocale} from "src/shared/interfaces/locale/index";
+import {ICustomerLoginDataParsed} from "src/shared/interfaces/customer/index";
 
 
 const styles = require('./style.scss');
@@ -169,7 +170,7 @@ export const AppHandler = reduxify(
   (dispatch: Function) => ({
     dispatch,
     initApplicationData: (payload: IInitApplicationDataPayload) => dispatch(initApplicationDataAction(payload)),
-    setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
+    setAuth: (payload: ICustomerLoginDataParsed) => dispatch(setAuthFromStorageAction(payload)),
     getCustomerCart: () => dispatch(getCustomerCartsAction()),
     getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
     clearSearchTerm: () => dispatch(clearSearchTermAction()),

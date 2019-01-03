@@ -12,7 +12,7 @@ export const initialState: IProductState = {
   },
 };
 
-/*export const pageProduct = function (state: IProductState = initialState, action: any): IProductState {
+/*export const pageProduct = function (state: IProductState = initialState, action: IPageProductAction): IProductState {
   console.info(action);
   const res = produce<IProductState>(state, draft => {
 >>>>>>> main-dev
