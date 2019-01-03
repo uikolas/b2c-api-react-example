@@ -1,8 +1,8 @@
 // tslint:disable:max-file-line-count
 
-import api, { setAuthToken } from '../api';
+import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../Common/RefreshToken';
+import { RefreshTokenService } from '../../Common/RefreshToken';
 import {IWishlist, IWishlistProduct, TWishListId} from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
 import { wishlistAuthenticateErrorText } from 'src/shared/constants/messages/errors';
@@ -12,8 +12,14 @@ import {
   wishlistAddProduct,
   wishlistRemoveItems,
 } from 'src/shared/constants/messages/wishlist';
-import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import * as cartActions from "src/shared/actions/Common/Cart";
+import {IApiResponseData} from "src/shared/services/types";
+import {
+  IWishlistRawData,
+  IWishlistRawResponse,
+  TRowWishlistIncludedResponse
+} from "src/shared/services/Pages/Wishlist/types";
 
 interface IRequestBody {
   data: {
@@ -32,11 +38,11 @@ export class WishlistService extends ApiServiceAbstract {
         throw new Error(wishlistAuthenticateErrorText);
       }
       setAuthToken(token);
-      const response: any = await api.get('wishlists', {}, {withCredentials: true});
+      const response: IApiResponseData = await api.get('wishlists', {}, {withCredentials: true});
 
       if (response.ok) {
         const wishlists: IWishlist[] = response.data.data.map((
-          list: IWishlist
+          list: IWishlistRawData
         ) => WishlistService.parseWishlistResponse(list));
 
         dispatch({
@@ -66,7 +72,7 @@ export class WishlistService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.get(`wishlists/${wishlistId}`, {}, {withCredentials: true});
+      const response: IApiResponseData = await api.get(`wishlists/${wishlistId}`, {}, {withCredentials: true});
 
       if (response.ok) {
         let products: IWishlistProduct[] = [];
@@ -113,7 +119,7 @@ export class WishlistService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.post('wishlists', body, {withCredentials: true});
+      const response: IApiResponseData = await api.post('wishlists', body, {withCredentials: true});
 
       if (response.ok) {
         toast.success(wishlistCreated);
@@ -148,7 +154,7 @@ export class WishlistService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(`wishlists/${wishlistId}`, {}, {withCredentials: true});
+      const response: IApiResponseData = await api.delete(`wishlists/${wishlistId}`, {}, {withCredentials: true});
 
       if (response.ok) {
         toast.success(wishlistDeleted);
@@ -174,9 +180,10 @@ export class WishlistService extends ApiServiceAbstract {
     }
   }
 
-  public static async updateWishlist(
-    ACTION_TYPE: string, dispatch: Function, wishlistId: string, name: string
-  ): Promise<void> {
+  public static async updateWishlist(ACTION_TYPE: string,
+                                     dispatch: Function,
+                                     wishlistId: string,
+                                     name: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -188,7 +195,7 @@ export class WishlistService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.patch(`wishlists/${wishlistId}`, body, {withCredentials: true});
+      const response: IApiResponseData = await api.patch(`wishlists/${wishlistId}`, body, {withCredentials: true});
 
       if (response.ok) {
         dispatch({
@@ -216,9 +223,10 @@ export class WishlistService extends ApiServiceAbstract {
     }
   }
 
-  public static async addItemWishlist(
-    ACTION_TYPE: string, dispatch: Function, wishlistId: string | null, sku: string
-  ): Promise<void> {
+  public static async addItemWishlist(ACTION_TYPE: string,
+                                      dispatch: Function,
+                                      wishlistId: string | null,
+                                      sku: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -239,10 +247,10 @@ export class WishlistService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.post(`wishlists/${id}/wishlist-items`, body, {withCredentials: true});
+      const response: IApiResponseData = await api.post(`wishlists/${id}/wishlist-items`, body, {withCredentials: true});
 
       if (response.ok) {
-        const wishlistResponse: any = await api.get(`wishlists/${id}`, {include: ''}, {withCredentials: true});
+        const wishlistResponse: IApiResponseData = await api.get(`wishlists/${id}`, {include: ''}, {withCredentials: true});
         const wishlist: IWishlist = WishlistService.parseWishlistResponse(wishlistResponse.data.data);
 
         dispatch({
@@ -268,14 +276,15 @@ export class WishlistService extends ApiServiceAbstract {
     }
   }
 
-  public static async deleteItemWishlist(
-    ACTION_TYPE: string, dispatch: Function, wishlistId: string, sku: string
-  ): Promise<void> {
+  public static async deleteItemWishlist(ACTION_TYPE: string,
+                                         dispatch: Function,
+                                         wishlistId: string,
+                                         sku: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const response: any = await api.delete(
+      const response: IApiResponseData = await api.delete(
         `wishlists/${wishlistId}/wishlist-items/${sku}`,
         {},
         {withCredentials: true}
@@ -328,7 +337,7 @@ export class WishlistService extends ApiServiceAbstract {
     }
   }
 
-  private static parseWishlistResponse(data: any): IWishlist {
+  private static parseWishlistResponse(data: IWishlistRawData): IWishlist {
     const wishlist: IWishlist = {
       id: data.id,
       name: data.attributes.name,
@@ -340,10 +349,10 @@ export class WishlistService extends ApiServiceAbstract {
     return wishlist;
   }
 
-  private static parseWishlistItems(included: any[]): IWishlistProduct[] {
+  private static parseWishlistItems(included: IWishlistRawResponse["included"]): IWishlistProduct[] {
     const items: {[key: string]: IWishlistProduct} = {};
 
-    included.forEach((row: any) => {
+    included.forEach((row: TRowWishlistIncludedResponse) => {
       if (!items[row.id]) {
         items[row.id] = {attributes: [], image: ''} as IWishlistProduct;
       }
@@ -363,7 +372,9 @@ export class WishlistService extends ApiServiceAbstract {
           items[row.id].name = row.attributes.name;
           Object.keys(row.attributes.attributes).forEach((attr: string) => {
             if (row.attributes.superAttributesDefinition.includes(attr)) {
-              items[row.id].attributes.push({[attr]: row.attributes.attributes[attr]});
+              const attributeKey: string = String(attr);
+              const attributeValue: string = String(row.attributes.attributes[attr]);
+              items[row.id].attributes.push({[attributeKey]: attributeValue});
             }
           });
         } else {
