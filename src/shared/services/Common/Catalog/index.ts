@@ -5,6 +5,7 @@ import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
 import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import {IApiResponseData} from "src/shared/services/types";
+import {TRowProductResponseIncluded} from "src/shared/helpers/product/types";
 
 export class CatalogService extends ApiServiceAbstract {
   public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
@@ -47,12 +48,12 @@ export class CatalogService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        const {data}: any = response;
+        const {data} = response;
 
         const products: IProductCard[] = data.data[0].attributes.abstractProducts.slice(0, 4);
         let counter = 0;
 
-        data.included && data.included.some((row: any) => {
+        data.included && data.included.some((row: TRowProductResponseIncluded) => {
           if (row.type === 'abstract-product-prices') {
             const product: IProductCard = products.find((prod: IProductCard) => prod.abstractSku === row.id);
             if (product && row.attributes.prices && row.attributes.prices.length) {

@@ -35,7 +35,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
   };
 
   public handleChange = (event: InputChangeEvent) => {
-    const {name, value}: any = event.target;
+    const {name, value} = event.target;
     this.setState({
       ...this.state, [name]: value,
     });

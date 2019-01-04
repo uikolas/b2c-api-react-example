@@ -27,7 +27,7 @@ export const pageCheckout = produce<ICheckoutState>(
       case `${CHECKOUT_DATA_INIT_REQUEST}_PENDING`:
       case `${SEND_CHECKOUT_DATA}_PENDING`:
         draft.data.orderId = '';
-        draft.error = false;
+        draft.error = null;
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
@@ -36,7 +36,7 @@ export const pageCheckout = produce<ICheckoutState>(
       case `${CHECKOUT_DATA_INIT_REQUEST}_REJECTED`:
       case `${SEND_CHECKOUT_DATA}_REJECTED`:
         draft.data.orderId = '';
-        draft.error = action.error;
+        draft.error = action.error || action.payloadRejected.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
@@ -47,7 +47,7 @@ export const pageCheckout = produce<ICheckoutState>(
         draft.data.shipments = action.payloadGetFulfilled.shipments || null;
         draft.data.addressesCollection = action.payloadGetFulfilled.addressesCollection || null;
 
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -55,7 +55,7 @@ export const pageCheckout = produce<ICheckoutState>(
         break;
       case `${SEND_CHECKOUT_DATA}_FULFILLED`: {
         draft.data.orderId = action.payloadSendFulfilled.orderId;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;

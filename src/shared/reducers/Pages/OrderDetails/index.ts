@@ -31,7 +31,7 @@ export const orderDetails = function(state: IOrderDetailsState = initialState,
     case `${ORDER_DETAILS_REQUEST}_FULFILLED`:
       return handleFulfilled(state, action.payloadFulfilled);
     case `${ORDER_DETAILS_REQUEST}_REJECTED`:
-      return handleRejected(state, action.payloadRejected);
+      return handleRejected(state, action.payloadRejected || {error: action.error});
     default:
       return state;
   }

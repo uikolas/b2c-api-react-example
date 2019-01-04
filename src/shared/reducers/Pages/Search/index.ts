@@ -52,7 +52,7 @@ export const pageSearch = produce<ISearchState>(
   (draft: ISearchState, action: IPageSearchAction) => {
     switch (action.type) {
       case `${PAGES_SEARCH_REQUEST}_PENDING`:
-        draft.error = false;
+        draft.error = null;
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
@@ -69,14 +69,14 @@ export const pageSearch = produce<ISearchState>(
         draft.data.flyoutSearch.pending = false;
         break;
       case `${PAGES_SEARCH_REQUEST}_REJECTED`:
-        draft.error = action.payloadRejected.error;
+        draft.error = action.payloadRejected.error || action.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
         break;
       case `${PAGES_SUGGESTION_REQUEST}_REJECTED`:
         draft.data.flyoutSearch.pending = false;
-        draft.error = action.payloadRejected.error;
+        draft.error = action.payloadRejected.error || action.error;
         break;
       case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
         draft.data.items = action.payloadSearchFulfilled.items;
@@ -92,7 +92,7 @@ export const pageSearch = produce<ISearchState>(
         draft.data.spellingSuggestion = action.payloadSearchFulfilled.spellingSuggestion || null;
         draft.data.productsLabeled = action.payloadSearchFulfilled.productsLabeled || null;
         draft.data.availableLabels = action.payloadSearchFulfilled.availableLabels || null;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -104,7 +104,7 @@ export const pageSearch = produce<ISearchState>(
         draft.data.flyoutSearch.categories = [];
         draft.data.flyoutSearch.completion = [];
         draft.data.spellingSuggestion = null;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;

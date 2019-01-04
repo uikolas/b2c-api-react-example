@@ -53,7 +53,7 @@ export const pageProduct = function(state: IProductState = initialState, action:
   switch (action.type) {
     case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
     case `${PRODUCT_AVAILABILITY_REQUEST}_REJECTED`:
-      return handleRejected(state, action.payloadRejected);
+      return handleRejected(state, action.payloadRejected || {error: action.error});
     case `${PAGES_PRODUCT_REQUEST}_PENDING`:
     case `${PRODUCT_AVAILABILITY_REQUEST}_PENDING`:
       return handlePending(state);

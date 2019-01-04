@@ -9,7 +9,7 @@ export interface IComponent extends IStyles {
 
 export interface IReduxState {
   dispatch?: Function;
-  error?: any;
+  error?: string | null;
   pending?: boolean;
   fulfilled?: boolean;
   rejected?: boolean;

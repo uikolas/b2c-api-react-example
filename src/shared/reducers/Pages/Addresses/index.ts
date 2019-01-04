@@ -25,7 +25,7 @@ export const pageAddresses = produce<IAddressesState>(
       case `${ADD_ADDRESS}_PENDING`:
       case `${DELETE_ADDRESS}_PENDING`:
       case `${UPDATE_ADDRESS}_PENDING`:
-        draft.error = false;
+        draft.error = null;
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
@@ -35,7 +35,7 @@ export const pageAddresses = produce<IAddressesState>(
       case `${ADD_ADDRESS}_REJECTED`:
       case `${DELETE_ADDRESS}_REJECTED`:
       case `${UPDATE_ADDRESS}_REJECTED`:
-        draft.error = action.error;
+        draft.error = action.error || action.payloadRejected.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
@@ -45,7 +45,7 @@ export const pageAddresses = produce<IAddressesState>(
       case `${ADDRESSES_LIST}_FULFILLED`:
         draft.data.addresses = action.addresses;
         draft.data.currentAddress = null;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -54,7 +54,7 @@ export const pageAddresses = produce<IAddressesState>(
       case `${ADD_ADDRESS}_FULFILLED`: {
         const addresses: IAddressItem[] = [...draft.data.addresses, action.address];
         draft.data.addresses = addresses;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -66,7 +66,7 @@ export const pageAddresses = produce<IAddressesState>(
           address: IAddressItem
         ) => address.id !== action.addressId);
         draft.data.addresses = addresses;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -82,7 +82,7 @@ export const pageAddresses = produce<IAddressesState>(
           );
         draft.data.addresses = addresses;
         draft.data.currentAddress = null;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;

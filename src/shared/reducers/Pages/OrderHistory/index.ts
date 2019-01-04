@@ -20,7 +20,7 @@ export const orderHistory = function(state: IOrderHistoryState = initialState,
     case `${ORDERS_COLLECTION_REQUEST}_FULFILLED`:
       return handleFulfilled(state, action.payloadFulfilled);
     case `${ORDERS_COLLECTION_REQUEST}_REJECTED`:
-      return handleRejected(state, action.payloadRejected);
+      return handleRejected(state, action.payloadRejected || {error: action.error});
     default:
       return state;
   }

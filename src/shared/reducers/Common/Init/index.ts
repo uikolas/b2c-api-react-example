@@ -37,7 +37,7 @@ export const init = function(state: IInitState = initialState,
       return handleInitAppFulfilled(state, action.payloadInitFulfilled);
     case `${INIT_APP_ACTION_TYPE}_REJECTED`:
     case `${CATEGORIES_TREE_REQUEST}_REJECTED`:
-      return handleInitAppRejected(state, action.payloadRejected);
+      return handleInitAppRejected(state, action.payloadRejected || {error: action.error});
     case `${CATEGORIES_TREE_REQUEST}_FULFILLED`:
       return {
         ...state,

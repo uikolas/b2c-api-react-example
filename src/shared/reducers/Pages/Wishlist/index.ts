@@ -31,7 +31,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${UPDATE_WISHLIST}_PENDING`:
       case `${DELETE_ITEM_WISHLIST}_PENDING`:
       case `${ADD_ITEM_WISHLIST}_PENDING`:
-        draft.error = false;
+        draft.error = null;
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
@@ -40,7 +40,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${DETAIL_WISHLIST}_PENDING`:
         draft.data.currentWishlist = null;
         draft.data.currentItems = [];
-        draft.error = false;
+        draft.error = null;
         draft.pending = true;
         draft.fulfilled = false;
         draft.rejected = false;
@@ -51,7 +51,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${DELETE_WISHLIST}_REJECTED`:
       case `${UPDATE_WISHLIST}_REJECTED`:
         draft.data.isInitial = false;
-        draft.error = action.payloadRejected.error;
+        draft.error = action.payloadRejected.error || action.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
@@ -60,7 +60,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${DETAIL_WISHLIST}_REJECTED`:
       case `${DELETE_ITEM_WISHLIST}_REJECTED`:
       case `${ADD_ITEM_WISHLIST}_REJECTED`:
-        draft.error = action.payloadRejected.error;
+        draft.error = action.payloadRejected.error || action.error;
         draft.pending = false;
         draft.fulfilled = false;
         draft.rejected = true;
@@ -69,7 +69,7 @@ export const pageWishlist = produce<WishlistState>(
       case `${WISHLIST_ALL_LISTS}_FULFILLED`:
         draft.data.wishlists = action.payloadWishlistDataFulfilled.wishlists;
         draft.data.isInitial = true;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -79,7 +79,7 @@ export const pageWishlist = produce<WishlistState>(
         const wishlists: IWishlist[] = [...draft.data.wishlists, action.payloadWishlistDataFulfilled.data];
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -92,7 +92,7 @@ export const pageWishlist = produce<WishlistState>(
         ) => wishlist.id !== action.payloadWishlistDataFulfilled.wishlistId);
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -108,7 +108,7 @@ export const pageWishlist = produce<WishlistState>(
         );
         draft.data.wishlists = wishlists;
         draft.data.isInitial = true;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -119,7 +119,7 @@ export const pageWishlist = produce<WishlistState>(
         draft.data.currentWishlist = action.payloadWishlistDataFulfilled.data;
         draft.data.currentItems = action.payloadWishlistDataFulfilled.products;
         draft.data.isInitial = true;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -134,7 +134,7 @@ export const pageWishlist = produce<WishlistState>(
                 : wishlist,
         );
         draft.data.wishlists = wishlists;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;
@@ -153,7 +153,7 @@ export const pageWishlist = produce<WishlistState>(
         );
         draft.data.wishlists = wishlists;
         draft.data.currentItems = currentItems;
-        draft.error = false;
+        draft.error = null;
         draft.pending = false;
         draft.fulfilled = true;
         draft.rejected = false;

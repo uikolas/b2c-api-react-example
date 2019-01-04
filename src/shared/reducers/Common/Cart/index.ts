@@ -39,7 +39,7 @@ export const cart = function(state: ICartState = initialState, action: ICartActi
     case `${CART_DELETE_ITEM}_REJECTED`:
     case `${CART_UPDATE_ITEM}_REJECTED`:
     case `${GET_CARTS}_REJECTED`:
-      return handleRejected(state, action.payloadRejected);
+      return handleRejected(state, action.payloadRejected || {error: action.error});
     case `${CART_CREATE}_FULFILLED`:
     case `${GET_CARTS}_FULFILLED`:
       if (!action.payloadCartItemFulfilled) {

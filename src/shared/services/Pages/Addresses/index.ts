@@ -9,6 +9,11 @@ import {
 } from 'src/shared/constants/messages/addresses';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
+import {
+  IAddressDataRawResponse,
+  IRequestAddAddressBody,
+  IRequestUpdateAddressBody
+} from "src/shared/services/Pages/Addresses/types";
 
 
 export class AddressesService extends ApiServiceAbstract {
@@ -22,7 +27,7 @@ export class AddressesService extends ApiServiceAbstract {
 
       if (response.ok) {
         const addresses = response.data.data.map((
-          address: any,
+          address: IAddressDataRawResponse,
         ): IAddressItem => ({id: address.id, ...address.attributes}));
 
         dispatch({
@@ -47,14 +52,15 @@ export class AddressesService extends ApiServiceAbstract {
     }
   }
 
-  public static async addAddress(
-    ACTION_TYPE: string, dispatch: Function, payload: IAddressItem, customerId: string
-  ): Promise<void> {
+  public static async addAddress(ACTION_TYPE: string,
+                                 dispatch: Function,
+                                 payload: IAddressItem,
+                                 customerId: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const body: any = {
+      const body: IRequestAddAddressBody = {
         data: {
           type: 'addresses',
           attributes: payload,
@@ -92,9 +98,10 @@ export class AddressesService extends ApiServiceAbstract {
     }
   }
 
-  public static async deleteAddress(
-    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string,
-  ): Promise<void> {
+  public static async deleteAddress(ACTION_TYPE: string,
+                                    dispatch: Function,
+                                    addressId: string,
+                                    customerId: string): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
@@ -127,14 +134,16 @@ export class AddressesService extends ApiServiceAbstract {
     }
   }
 
-  public static async updateAddress(
-    ACTION_TYPE: string, dispatch: Function, addressId: string, customerId: string, payload: IAddressItem,
-  ): Promise<void> {
+  public static async updateAddress(ACTION_TYPE: string,
+                                    dispatch: Function,
+                                    addressId: string,
+                                    customerId: string,
+                                    payload: IAddressItem): Promise<void> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       setAuthToken(token);
 
-      const body: any = {
+      const body: IRequestUpdateAddressBody = {
         data: {
           type: 'addresses',
           id: addressId,

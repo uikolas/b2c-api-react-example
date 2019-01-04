@@ -47,7 +47,7 @@ export const pagesLogin = function(state: ILoginState = initialState, action: IP
     case `${RESET_PASSWORD}_REJECTED`:
       return {
         ...state,
-        ...getReducerPartRejected(action.payloadRejected.error),
+        ...getReducerPartRejected(action.payloadRejected.error || action.error),
       };
     case `${PAGES_LOGIN_REQUEST}_PENDING`:
     case `${FORGOT_PASSWORD}_PENDING`:
