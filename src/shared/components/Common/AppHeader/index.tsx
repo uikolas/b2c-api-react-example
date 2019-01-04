@@ -13,7 +13,7 @@ import { AddNav } from './parts/navAdditional';
 import { AppHeaderProps as Props, AppHeaderState as State } from './types';
 import { styles } from './styles';
 
-@(withRouter as any)
+@(withRouter as Function)
 export class AppHeaderComponent extends React.PureComponent<Props, State> {
   public state: State = {
     showSearch: true,

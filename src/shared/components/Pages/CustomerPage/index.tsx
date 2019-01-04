@@ -41,7 +41,7 @@ interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
 }
 
 @connect
-@(withRouter as any)
+@(withRouter as Function)
 export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
 
   public handleLogout = (e: ClickEvent) => {

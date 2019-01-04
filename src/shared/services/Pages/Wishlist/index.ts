@@ -247,10 +247,12 @@ export class WishlistService extends ApiServiceAbstract {
         },
       };
 
-      const response: IApiResponseData = await api.post(`wishlists/${id}/wishlist-items`, body, {withCredentials: true});
+      const endpointItems = `wishlists/${id}/wishlist-items`;
+      const response: IApiResponseData = await api.post(endpointItems, body, {withCredentials: true});
 
       if (response.ok) {
-        const wishlistResponse: IApiResponseData = await api.get(`wishlists/${id}`, {include: ''}, {withCredentials: true});
+        const endpoint = `wishlists/${id}`;
+        const wishlistResponse: IApiResponseData = await api.get(endpoint, {include: ''}, {withCredentials: true});
         const wishlist: IWishlist = WishlistService.parseWishlistResponse(wishlistResponse.data.data);
 
         dispatch({

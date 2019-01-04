@@ -31,7 +31,7 @@ interface LoginPageState {
 
 }
 
-@(withRouter as any)
+@(withRouter as Function)
 export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {};
 

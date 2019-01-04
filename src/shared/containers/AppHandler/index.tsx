@@ -57,7 +57,7 @@ interface AppHandlerState {
   mobileNavOpened: boolean;
 }
 
-@(withRouter as any)
+@(withRouter as Function)
 export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerState> {
   public state: AppHandlerState = {
     mobileNavOpened: false,

@@ -55,7 +55,7 @@ import {DefaultItemsPerPage} from "src/shared/constants/search/index";
 export const pageTitle = 'Results for ';
 export const pageTitleDefault = 'Start searching';
 
-@(withRouter as any)
+@(withRouter as Function)
 @connect
 export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPageState> {
   constructor(props: ISearchPageProps) {
