@@ -175,9 +175,8 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     );
   };
 
-  private renderSuggestion = (
-    suggestion: IProductCard,
-    {query, isHighlighted}: {query: string; isHighlighted: boolean},
+  private renderSuggestion = (suggestion: IProductCard,
+                              {query, isHighlighted}: {query: string; isHighlighted: boolean},
   ) => {
     const matches = match(suggestion.abstractName, query);
     const parts = parse(suggestion.abstractName, matches);
@@ -238,7 +237,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     );
   };
 
-  private renderSuggestionsContainer = (options: any): JSX.Element => {
+  private renderSuggestionsContainer = (options: Autosuggest.RenderSuggestionsContainerParams): JSX.Element => {
     const {categories, completion, suggestions, categoriesTree, classes} = this.props;
     let suggestQuery: string = options.query.trim();
 
