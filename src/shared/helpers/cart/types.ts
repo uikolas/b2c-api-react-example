@@ -12,9 +12,17 @@ import {
   IRowProductPricesIncludedResponse
 } from "src/shared/helpers/product/types";
 
-export interface ICustomerCartRawResponse {
+export interface IUserCartRawResponseMultiValue {
   data: Array<ICustomerCartDataRawResponse>;
   included?: [TRowCustomerCartIncludedResponse];
+}
+
+export interface IUserCartRawResponseOneValue {
+  data: ICustomerCartDataRawResponse;
+  included?: [TRowCustomerCartIncludedResponse];
+}
+
+export interface IUserCartRawResponse extends IUserCartRawResponseOneValue {
 }
 
 export interface ICustomerCartDataRawResponse {

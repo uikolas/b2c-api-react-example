@@ -3,43 +3,27 @@ import { parseImageSets } from '../product/imageSetsParser';
 import {
   ICartItemDataShort,
   ICartResultData,
-  ICustomerCartRawResponse,
+  IUserCartRawResponseOneValue,
   TRowCustomerCartIncludedResponse
 } from "src/shared/helpers/cart/types";
 import {parseCommonDataInCartResponse} from "src/shared/helpers/cart";
+import {getCartItemBlueprint} from "src/shared/helpers/cart/item";
 
 
-// TODO: Maybe it is a copypast of parseAddToCartResponse ???
-export const parseGuestCartResponse = (response: ICustomerCartRawResponse): ICartDataResponse | null => {
+// TODO: Maybe it is a copypast of parseUserCartResponseMultiValue && parseUserCartResponseOneValue ???
+export const parseGuestCartResponse = (response: IUserCartRawResponseOneValue): ICartDataResponse | null => {
 
   if (!response) {
     return null;
   }
-  const {included} = response;
-  const [data] = response.data;
+  const {included, data} = response;
   let result: ICartResultData = {};
   let totalQty: number = 0;
 
   // Fill data with concrete products ids
   if (data.relationships && data.relationships['guest-cart-items']) {
     data.relationships['guest-cart-items'].data.forEach((datum: ICartItemDataShort) => {
-      result[datum.id] = {
-        sku: null,
-        name: null,
-        image: null,
-        quantity: null,
-        amount: null,
-        prices: [],
-        calculations: null,
-        groupKey: null,
-        availability: null,
-        availableQuantity: null,
-        superAttributes: null,
-        priceOriginalGross: null,
-        priceOriginalNet: null,
-        priceDefaultGross: null,
-        priceDefaultNet: null,
-      };
+      result[datum.id] = {...getCartItemBlueprint()};
     });
   }
 

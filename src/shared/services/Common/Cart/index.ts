@@ -4,7 +4,11 @@ import api, { setAuthToken } from '../../api';
 import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';
 import {ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';
-import { parseAddToCartResponse, parseCartCreateResponse } from 'src/shared/helpers/cart';
+import {
+  parseUserCartResponseMultiValue,
+  parseCartCreateResponse,
+  parseUserCartResponseOneValue
+} from 'src/shared/helpers/cart';
 import * as cartActions from 'src/shared/actions/Common/Cart';
 import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
 import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
@@ -13,6 +17,7 @@ import { RefreshTokenService } from '../RefreshToken/index';
 import { ICartCreatePayload } from './types';
 import {IResponseError} from "src/shared/services/apiAbstractions/types";
 import {IApiResponseData} from "src/shared/services/types";
+
 
 export class CartService extends ApiServiceAbstract {
   public static async getCustomerCarts(dispatch: Function): Promise<string> {
@@ -28,7 +33,7 @@ export class CartService extends ApiServiceAbstract {
           return '';
         }
 
-        const responseParsed: ICartDataResponse = parseAddToCartResponse(response.data);
+        const responseParsed: ICartDataResponse = parseUserCartResponseMultiValue(response.data);
         dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
         return responseParsed.id;
       } else {
@@ -94,7 +99,7 @@ export class CartService extends ApiServiceAbstract {
       const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
 
       if (response.ok) {
-        const responseParsed: ICartDataResponse  = parseAddToCartResponse(response.data);
+        const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
         toast.success(cartAddProducts);
       } else {
@@ -136,7 +141,7 @@ export class CartService extends ApiServiceAbstract {
         const newCartResponse: IApiResponseData = await api.get(`carts/${cartId}`);
 
         if (newCartResponse.ok) {
-          const responseParsed: ICartDataResponse  = parseAddToCartResponse(newCartResponse.data);
+          const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(newCartResponse.data);
           dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
         } else {
           this.errorMessageInform(newCartResponse, dispatch);
@@ -175,7 +180,7 @@ export class CartService extends ApiServiceAbstract {
       const response: IApiResponseData = await api.patch(endpoint, body, {withCredentials: true});
 
       if (response.ok) {
-        const responseParsed: ICartDataResponse  = parseAddToCartResponse(response.data);
+        const responseParsed: ICartDataResponse  = parseUserCartResponseOneValue(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
         toast.success(cartChangeQty);
       } else {
@@ -228,7 +233,7 @@ export class CartService extends ApiServiceAbstract {
         dispatch(cartActions.cartAddItemPendingStateAction());
         const processResult = await this.addingItemProcess(dispatch, item, cartId);
         if (processResult.ok) {
-          const responseParsed: ICartDataResponse  = parseAddToCartResponse(processResult.data);
+          const responseParsed: ICartDataResponse = parseUserCartResponseMultiValue(processResult.data);
           dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
           globalResponse = true;
         } else {

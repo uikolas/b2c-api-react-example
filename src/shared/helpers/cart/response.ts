@@ -4,12 +4,15 @@ import {IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal} from "s
 import {
   ICartItemDataShort,
   ICartResultData,
-  ICustomerCartRawResponse,
-  TRowCustomerCartIncludedResponse
+  IUserCartRawResponseMultiValue,
+  IUserCartRawResponse,
+  TRowCustomerCartIncludedResponse,
+  IUserCartRawResponseOneValue
 } from "src/shared/helpers/cart/types";
 import {parseCommonDataInCartResponse} from "src/shared/helpers/cart";
+import {getCartItemBlueprint} from "src/shared/helpers/cart/item";
 
-export const parseCartCreateResponse = (response: ICustomerCartRawResponse): ICartDataResponse | null => {
+export const parseCartCreateResponse = (response: IUserCartRawResponseMultiValue): ICartDataResponse | null => {
   if (!response) {
     return null;
   }
@@ -20,35 +23,31 @@ export const parseCartCreateResponse = (response: ICustomerCartRawResponse): ICa
   };
 };
 
-export const parseAddToCartResponse = (response: ICustomerCartRawResponse): ICartDataResponse | null => {
+export const parseUserCartResponseMultiValue = (response: IUserCartRawResponseMultiValue): ICartDataResponse | null => {
   if (!response) {
     return null;
   }
   const {included} = response;
   const [data] = response.data;
+  return parseUserCartResponse({data, included});
+};
+
+export const parseUserCartResponseOneValue = (response: IUserCartRawResponseOneValue): ICartDataResponse | null => {
+  if (!response) {
+    return null;
+  }
+  return parseUserCartResponse(response);
+};
+
+const parseUserCartResponse = (response: IUserCartRawResponse): ICartDataResponse => {
+  const {data, included} = response;
   let result: ICartResultData = {};
   let totalQty: number = 0;
 
   // Fill data with concrete products ids
   if (data.relationships && data.relationships.items) {
     data.relationships.items.data.forEach((datum: ICartItemDataShort) => {
-      result[datum.id] = {
-        sku: null,
-        name: null,
-        image: null,
-        quantity: null,
-        amount: null,
-        prices: [],
-        calculations: null,
-        groupKey: null,
-        availability: null,
-        availableQuantity: null,
-        superAttributes: null,
-        priceOriginalGross: null,
-        priceOriginalNet: null,
-        priceDefaultGross: null,
-        priceDefaultNet: null,
-      };
+      result[datum.id] = {...getCartItemBlueprint()};
     });
   }
 
@@ -111,4 +110,3 @@ export const parseAddToCartResponse = (response: ICustomerCartRawResponse): ICar
     totalQty,
   };
 };
-
