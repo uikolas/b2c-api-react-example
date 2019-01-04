@@ -198,15 +198,15 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   };
 
   public handleSetSorting = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
-    const result = this.runSetSorting(event.target.value);
+    this.runSetSorting(event.target.value);
   };
 
   public handleSetItemsPerPage = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
-    const result = this.runSetItemsPerPage(+event.target.value);
+    this.runSetItemsPerPage(+event.target.value);
   };
 
   public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
-    const resultPagination = this.runSetPaginationPage(value);
+    this.runSetPaginationPage(value);
   };
 
   public onSelectProductHandler = (sku: string) => {
@@ -226,7 +226,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     };
 
   public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
-    const resultReset = this.runResetActiveFilters();
+    this.runResetActiveFilters();
   };
 
   public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
@@ -237,7 +237,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     this.setState({isReadyToNewRequest: true});
   };
 
-  private initCategoryRequest = async (): Promise<any> => {
+  private initCategoryRequest = async (): Promise<void> => {
     const parsedGetParams = qs.parse(this.props.location.search);
     let query: ISearchQuery = this.getQueryBaseParams();
     if (parsedGetParams && parsedGetParams.page) {
@@ -290,7 +290,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     return query;
   }
 
-  private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<any> => {
+  private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<void> => {
     await this.setState((prevState: ISearchPageState) => {
       return ({
         ...prevState,
@@ -305,35 +305,29 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     });
 
     if (needUpdateSearch) {
-      const resultUpdate = await this.updateSearch();
+      await this.updateSearch();
     }
-
-    return true;
   };
 
-  private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<any> => {
+  private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<void> => {
     await this.setState({paginationPage: 1, itemsPerPage, isReadyToNewRequest: true});
-    const resultUpdate = await this.updateSearch();
-    return resultUpdate;
+    await this.updateSearch();
   };
 
-  private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<any> => {
+  private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<void> => {
     await this.setState({paginationPage: page, isReadyToNewRequest: true} );
     this.setPaginationParam(String(page));
-    const resultUpdate = await this.updateSearch(false);
-    return resultUpdate;
+    await this.updateSearch(false);
   };
 
-  private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<any> => {
+  private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<void> => {
     await this.setState({sort: sortMode, isReadyToNewRequest: true});
-    const resultUpdate = await this.updateSearch();
-    return resultUpdate;
+    await this.updateSearch();
   };
 
-  private runNewCategoryPage = async (): Promise<any> => {
+  private runNewCategoryPage = async (): Promise<void> => {
     await this.setState({paginationPage: null});
-    const resultNewCategoryPage = await this.initCategoryRequest();
-    return resultNewCategoryPage;
+    await this.initCategoryRequest();
   };
 
   public render() {

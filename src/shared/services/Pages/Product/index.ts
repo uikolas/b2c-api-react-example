@@ -44,7 +44,8 @@ export class ProductService extends ApiServiceAbstract {
     }
   }
 
-  public static async getConcreteProductAvailability(dispatch: Function, sku: TProductSKU): Promise<any> {
+  public static async getConcreteProductAvailability(dispatch: Function,
+                                                     sku: TProductSKU): Promise<IConcreteProductAvailability | null> {
     try {
       dispatch(getProductAvailabilityPendingStateAction());
       const response: IApiResponseData = await api.get(`concrete-products/${sku}/concrete-product-availabilities`);

@@ -187,7 +187,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     const result = this.runProcessCart();
   };
 
-  private runProcessCart = async (): Promise<any> => {
+  private runProcessCart = async (): Promise<void> => {
     try {
       await this.setState((prevState: State) => {
         return ({
@@ -212,22 +212,17 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
   };
 
-  private runAddToCart = async (): Promise<any> => {
+  private runAddToCart = async (): Promise<void> => {
     const item: ICartAddItem = createCartItemAddToCart(this.state.sku, this.state.quantitySelected);
-    let result;
     if (this.props.isUserLoggedIn && this.props.cartId) {
-      result = await this.props.addItemToCart(
-        item,
-        this.props.cartId,
-      );
+      await this.props.addItemToCart(item, this.props.cartId);
     } else {
       if (this.props.isUserLoggedIn) {
-        result = await this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
+        await this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
       } else {
-        result = await this.props.addItemGuestCart(item, this.props.anonymId);
+        await this.props.addItemGuestCart(item, this.props.anonymId);
       }
     }
-    return result;
   };
 
   private initRequestWishListsData = (): boolean => {
