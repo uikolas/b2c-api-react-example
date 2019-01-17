@@ -16,7 +16,7 @@ import { configureStore } from '../../stores/configureStore';
 import createHistory from 'history/createBrowserHistory';
 import config from '../../config';
 import { Main } from '../Main';
-import { sprykerTheme } from "../../theme/sprykerTheme";
+import { sprykerTheme } from '../../theme/sprykerTheme';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
