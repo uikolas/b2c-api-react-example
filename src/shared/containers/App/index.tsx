@@ -11,12 +11,12 @@ import { ScrollToTopRoute } from '../../routes/ScrollToTopRoute';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { sprykerTheme } from '../../theme/sprykerTheme';
 
 import { configureStore } from '../../stores/configureStore';
 import createHistory from 'history/createBrowserHistory';
 import config from '../../config';
-import { Main } from '../Main';
-import { sprykerTheme } from '../../theme/sprykerTheme';
+import { PageContent } from '../PageContent';
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -30,7 +30,7 @@ export const App = () => (
                 <ScrollToTopRoute>
                     <MuiThemeProvider theme={ sprykerTheme }>
                         <CssBaseline/>
-                        <Route path={ config.WEB_PATH } component={ Main } />
+                        <Route path={ config.WEB_PATH } component={ PageContent } />
                     </MuiThemeProvider>
                 </ScrollToTopRoute>
             </ConnectedRouter>
