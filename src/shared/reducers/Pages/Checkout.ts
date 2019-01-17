@@ -11,10 +11,6 @@ import {
   IPaymentMethod,
   IShipmentMethod,
 } from 'src/shared/interfaces/checkout';
-import {
-  addressesCollectionFixture,
-  shipmentMethodsFixture
-} from "src/shared/reducers/fixtures/Checkout";
 
 export interface ICheckoutState extends IReduxState {
   data: {
