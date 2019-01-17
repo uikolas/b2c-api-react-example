@@ -1,3 +1,4 @@
+/* tslint:disable */
 export const AccountTitle = 'Your Account';
 export const AddressAdd = 'New address added successfully.';
 export const AddressDelete = 'Address were removed successfully.';
