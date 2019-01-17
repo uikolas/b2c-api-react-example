@@ -5,12 +5,18 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from 'src/shared/actions/Pages/Login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/selectors/Common/router';
 import { formStyles } from '../styles';
+import {
+  ResetPasswordTitle,
+  EnterNewPasswordText,
+  ConfirmPasswordTitle,
+  PasswordTitle
+} from 'src/shared/translation/translations';
+
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
   dispatch?: Function;
@@ -63,17 +69,17 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
           justify="center"
         >
           <Paper className={ classes.forgot }>
-            <Typography variant="headline" paragraph>Reset password</Typography>
-            <div>Enter new password and confirm it.</div>
+            <Typography variant="headline" paragraph>{ ResetPasswordTitle }</Typography>
+            <div>{ EnterNewPasswordText }</div>
             <form noValidate autoComplete="off">
 
               <TextField
                 required
                 type="password"
-                label="Password"
+                label={ PasswordTitle }
                 name="password"
                 value={ this.state.password }
-                placeholder="Password"
+                placeholder={ PasswordTitle }
                 margin="normal"
                 onChange={ this.handleChange }
                 className={ classes.textField }
@@ -82,10 +88,10 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
                 required
                 type="password"
                 error={ this.state.submitted && this.state.password !== this.state.confirmPassword }
-                label="Confirm Password"
+                label={ ConfirmPasswordTitle }
                 name="confirmPassword"
                 value={ this.state.confirmPassword }
-                placeholder="Confirm Password"
+                placeholder={ ConfirmPasswordTitle }
                 margin="normal"
                 onChange={ this.handleChange }
                 className={ classes.textField }

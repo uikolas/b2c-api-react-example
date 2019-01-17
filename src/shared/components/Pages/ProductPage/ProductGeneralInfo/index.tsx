@@ -1,9 +1,7 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-
 import { ProductAvailability } from '../ProductAvailability';
-
 import { styles } from './styles';
 import {
   priceTypeNameOriginal,
@@ -13,6 +11,8 @@ import {
   TProductSKU,
 } from 'src/shared/interfaces/product';
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import { NoNameText, NoPriceText, IncVatMessage } from 'src/shared/translation/translations';
+
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
   name: TProductName;
@@ -24,7 +24,7 @@ interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
 
 
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
-  const {classes, name = 'No name', price = 'No price', oldPrice, availability} = props;
+  const {classes, name = NoNameText, price = NoPriceText, oldPrice, availability} = props;
 
   return (
     <div className={ classes.root }>
@@ -44,7 +44,7 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
                   </Typography>
                 ) : null
               }
-              <Typography component="span" className={classes.vat}>(Inc. 20% VAT)</Typography>
+              <Typography component="span" className={classes.vat}>({ IncVatMessage })</Typography>
             </div>
           : null
         }

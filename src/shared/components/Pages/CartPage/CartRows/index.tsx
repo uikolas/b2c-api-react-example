@@ -10,6 +10,8 @@ import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { ICartItem } from 'src/shared/interfaces/cart';
 import { styles } from '../styles';
 import { CartRowsProps as Props } from './types';
+import { RemoveBtnTitle } from 'src/shared/translation/translations';
+
 
 export const CartRowsComponent: React.SFC<Props> = (
   {classes, items, heightListItem, handleDeleteItem, handleChangeQty},
@@ -48,7 +50,7 @@ export const CartRowsComponent: React.SFC<Props> = (
               : null
             }
             <div>
-              <span className={ `${classes.itemAttr} ${classes.remove}` }>remove</span>
+              <span className={ `${classes.itemAttr} ${classes.remove}` }>{ RemoveBtnTitle }</span>
               <IconButton onClick={ () => handleDeleteItem(item.sku) }>
                 <DeleteIcon/>
               </IconButton>

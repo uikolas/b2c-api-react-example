@@ -8,13 +8,23 @@ import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
-
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
 import { EmptyRequiredFieldsErrorText } from 'src/shared/translation/translations';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
+import {
+    RegisterTitle,
+    SalutationTitle,
+    InputLabelFirstName,
+    AcceptTermsLabelTitle,
+    InputLabelLastName,
+    InputLabelEmail,
+    PasswordTitle,
+    ConfirmPasswordTitle,
+    PasswordsNotEqualErrorText
+} from 'src/shared/translation/translations';
 
 export class RegisterFormBase extends React.Component<Props, State> {
   public state = {
@@ -48,7 +58,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
     }
 
     if (password !== confirmPassword) {
-      toast.warn('The passwords must match');
+      toast.warn(PasswordsNotEqualErrorText);
       return null;
     }
 
@@ -60,7 +70,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <Typography variant="title" color="inherit" noWrap>Register</Typography>
+        <Typography variant="title" color="inherit" noWrap>{ RegisterTitle }</Typography>
         <form
           className={ classes.container }
           noValidate
@@ -72,7 +82,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
             required
             id="register-salutation"
             select
-            label="Salutation"
+            label={ SalutationTitle }
             name="salutation"
             className={ classes.textField }
             value={ this.state.salutation }
@@ -94,7 +104,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
           <TextField
             required
             id="register-first-name"
-            label="First Name"
+            label={ InputLabelFirstName }
             name="firstName"
             type="text"
             value={ this.state.firstName }
@@ -109,7 +119,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
           <TextField
             required
             id="register-last-name"
-            label="Last Name"
+            label={ InputLabelLastName }
             name="lastName"
             type="text"
             value={ this.state.lastName }
@@ -124,7 +134,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
           <TextField
             required
             id="register-email"
-            label="Email"
+            label={ InputLabelEmail }
             name="email"
             type="email"
             value={ this.state.email }
@@ -147,7 +157,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
               <TextField
                 required
                 id="register-password"
-                label="Password"
+                label={ PasswordTitle }
                 name="password"
                 type="password"
                 value={ this.state.password }
@@ -163,7 +173,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
               <TextField
                 required
                 id="register-confirm-password"
-                label="Confirm password"
+                label={ ConfirmPasswordTitle }
                 name="confirmPassword"
                 type="password"
                 value={ this.state.confirmPassword }
@@ -184,10 +194,10 @@ export class RegisterFormBase extends React.Component<Props, State> {
                 name="acceptedTerms"
               />
             }
-            label="Accept terms"
+            label={ AcceptTermsLabelTitle }
           />
 
-          <Button type="submit" variant="contained" className={ classes.button }>Register</Button>
+          <Button type="submit" variant="contained" className={ classes.button }>{ RegisterTitle }</Button>
         </form>
       </React.Fragment>
     );

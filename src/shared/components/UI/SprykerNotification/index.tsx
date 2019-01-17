@@ -3,10 +3,9 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-
 import {ClickEvent} from 'src/shared/interfaces/common/react';
 import { styles } from './styles';
-
+import { EmptyMessage } from 'src/shared/translation/translations';
 
 interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOrigin {
   message: string;
@@ -19,7 +18,7 @@ interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOr
 export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (props) => {
   const {
     classes,
-    message = 'Empty message',
+    message = EmptyMessage,
     extraClasses = '',
     isOpen,
     onClickClose,

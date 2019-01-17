@@ -14,7 +14,7 @@ import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
 import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
-
+import { ButtonSaveTitle } from 'src/shared/translation/translations';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
@@ -99,11 +99,12 @@ export class AddressForm extends React.Component<Props, State> {
             }}
             SubmitButton={
               <Grid container>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={ 12 } sm={ 4 }>
                   <SprykerButton
-                    title="save"
+                    title={ ButtonSaveTitle }
                     btnType="submit"
-                    extraClasses={classes.addButton} disabled={ isLoading }
+                    extraClasses={ classes.addButton }
+                    disabled={ isLoading }
                   />
                 </Grid>
               </Grid>

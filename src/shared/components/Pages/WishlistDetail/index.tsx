@@ -1,5 +1,4 @@
 // tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -10,7 +9,6 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider/Divider';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
-
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
@@ -24,7 +22,18 @@ import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
 import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
-
+import {
+  NavLinkTitleWishlist,
+    ProductHeaderTitle,
+    OrderDetailTableHeaderPrice,
+    AvailabilityHeaderTitle,
+    AvailableTitle,
+    NotAvailableTitle,
+    AddToCartBtnTitle,
+    RemoveBtnTitle,
+    AddAllProductsToCartMessage,
+    WishlistEmptyMessage
+} from 'src/shared/translation/translations';
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {
@@ -76,7 +85,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     return (
       <MenuList className={ classes.menu }>
         <MenuItem className={ classes.menuItem }>
-          <NavLink to={ pathWishListsPage } className={ classes.link }>Wishlist</NavLink>
+          <NavLink to={ pathWishListsPage } className={ classes.link }>{ NavLinkTitleWishlist }</NavLink>
         </MenuItem>
         {(wishlist && wishlist.name)
           ?  <MenuItem className={ classes.menuItem }>{wishlist.name}</MenuItem>
@@ -97,9 +106,9 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     const headerCellPart = 'header-';
     const bodyCellPart = 'body-';
     const headerCells: Array<ICellInfo> = [
-      {content: 'Product', id: `${headerCellPart}1`},
-      {content: 'Price', id: `${headerCellPart}2`},
-      {content: 'Availability', id: `${headerCellPart}3`},
+      {content: ProductHeaderTitle, id: `${headerCellPart}1`},
+      {content: OrderDetailTableHeaderPrice, id: `${headerCellPart}2`},
+      {content: AvailabilityHeaderTitle, id: `${headerCellPart}3`},
       {content: '', id: `${headerCellPart}4`},
       {content: '', id: `${headerCellPart}5`},
     ];
@@ -146,7 +155,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
           {
             content: (
               <span className={ item.availability ? classes.available : classes.noAvailable }>
-                { item.availability ? 'Available' : 'Not available' }
+                { item.availability ? AvailableTitle : NotAvailableTitle }
               </span>
             ),
             id: `${bodyCellPart}3`
@@ -154,7 +163,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
           {
             content: (
               <Typography component="span" className={ tableAction } onClick={ this.moveToCart(item.sku) }>
-                Add to Cart
+                  { AddToCartBtnTitle }
               </Typography>
             ),
             id: `${bodyCellPart}4`
@@ -162,7 +171,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
           {
             content: (
               <Typography component="span" className={ tableAction } onClick={ this.handleDeleteItem(item.sku) }>
-                Remove
+                  { RemoveBtnTitle }
               </Typography>
             ),
             id: `${bodyCellPart}5`
@@ -176,7 +185,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         <Grid item xs={ 12 }>
           <AppPageTitle
             classes={{root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader}}
-            title="Wishlist"
+            title={ NavLinkTitleWishlist }
           />
         </Grid>
 
@@ -193,13 +202,13 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                   onClick={ this.moveAllProductsToCart }
                   disabled={ isLoading || cartLoading }
                 >
-                  Add all available products to cart
+                    { AddAllProductsToCartMessage }
                 </Button>
               </Paper>
             ) : (
               <Paper elevation={ 0 }>
                 <Divider/>
-                <Typography paragraph className={classes.noItems}>Currently no items in your wishlist.</Typography>
+                <Typography paragraph className={classes.noItems}>{ WishlistEmptyMessage }</Typography>
               </Paper>
             )
           }

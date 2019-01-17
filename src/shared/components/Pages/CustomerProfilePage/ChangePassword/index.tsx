@@ -11,6 +11,7 @@ import {
   InputLabelPassword,
   InputLabelNewPassword,
   InputLabelConfirmPassword,
+  ButtonUpdateTitle
 } from 'src/shared/translation/translations';
 
 interface ChangePasswordProps extends WithStyles<typeof styles> {
@@ -70,8 +71,8 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
       }}
       SubmitButton={
         <Grid container>
-          <Grid item xs={12} sm={2}>
-            <SprykerButton title="update" btnType="submit" extraClasses={classes.submitButton} />
+          <Grid item xs={ 12 } sm={ 2 }>
+            <SprykerButton title={ ButtonUpdateTitle } btnType="submit" extraClasses={ classes.submitButton } />
           </Grid>
         </Grid>
       }

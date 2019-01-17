@@ -1,7 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
 import { styles } from './styles';
 import { IProductCard, IProductLabel } from 'src/shared/interfaces/product';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
@@ -9,10 +8,7 @@ import { ProductCard } from 'src/shared/components/Common/ProductCard';
 import { AppPageHeadline } from 'src/shared/components/Common/AppPageHeadline';
 import { getProductLabel } from 'src/shared/helpers/product/label';
 import { IProductsListProps } from 'src/shared/components/Pages/SearchPage/ProductsList/types';
-
-
-const emptyTitle = 'Nothing to show.';
-const loadingTitle = 'Waiting for results';
+import { EmptyPageTitle, LoadingPageTitle } from 'src/shared/translation/translations';
 
 export const ProductsListBase: React.SFC<IProductsListProps> = (props) => {
   const {
@@ -53,7 +49,7 @@ export const ProductsListBase: React.SFC<IProductsListProps> = (props) => {
           );
         })
         : <Grid item xs>
-          <AppPageHeadline title={ isLoading ? loadingTitle : emptyTitle }/>
+          <AppPageHeadline title={ isLoading ? LoadingPageTitle : EmptyPageTitle }/>
         </Grid>
       }
     </Grid>

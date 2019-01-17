@@ -2,10 +2,14 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import { styles } from './styles';
 import { IFoundItemsProps } from 'src/shared/components/Pages/SearchPage/FoundItems/types';
-
+import {
+    NoFoundText,
+    CartTitleItemText,
+    OrderDetailTableHeaderItems,
+    FoundTitle
+} from 'src/shared/translation/translations';
 
 export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
   const {
@@ -22,8 +26,8 @@ export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
       <Grid item xs={ 12 }>
         <Typography color="inherit" component="p" className={ classes.paragraph }>
           { numberFound
-            ? `${numberFound} ${(numberFound === 1) ? 'item' : 'items'} found`
-            : 'Nothing found'
+            ? `${numberFound} ${(numberFound === 1) ? CartTitleItemText : OrderDetailTableHeaderItems} ${FoundTitle}`
+            : NoFoundText
           }
         </Typography>
       </Grid>

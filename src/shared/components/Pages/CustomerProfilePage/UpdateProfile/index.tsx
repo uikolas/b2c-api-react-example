@@ -18,6 +18,7 @@ import {
   InputLabelFirstName,
   InputLabelLastName,
   InputLabelEmail,
+  ButtonUpdateTitle
 } from 'src/shared/translation/translations';
 
 interface UpdateProfileProps extends WithStyles<typeof styles> {
@@ -88,8 +89,8 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
       }}
       SubmitButton={
         <Grid container>
-          <Grid item xs={12} sm={2}>
-            <SprykerButton title="update" btnType="submit" extraClasses={classes.submitButton} />
+          <Grid item xs={ 12 } sm={ 2 }>
+            <SprykerButton title={ ButtonUpdateTitle } btnType="submit" extraClasses={ classes.submitButton } />
           </Grid>
         </Grid>
       }

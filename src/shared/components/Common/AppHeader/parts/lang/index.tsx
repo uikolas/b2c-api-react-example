@@ -5,17 +5,18 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
-
 import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
+import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation/translations';
+
 
 const availableLanguages: language[] = [
   {
-    name: 'English',
+    name: LanguageEnglishTest,
     code: 'en',
   },
   {
-    name: 'Deutsch',
+    name: LanguageDeutschTest,
     code: 'de',
   },
 ];
@@ -24,7 +25,7 @@ export class LangComponent extends React.PureComponent<Props, State> {
   public state: State = {
     anchorEl: null,
     selectedLang: {
-      name: 'English',
+      name: LanguageEnglishTest,
       code: 'en',
     },
   };

@@ -4,7 +4,6 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { toast } from 'react-toastify';
-
 import {
   concreteProductType,
   defaultItemValueDropdown,
@@ -36,7 +35,7 @@ import { SprykerForm } from "src/shared/components/UI/SprykerForm/index";
 import { ChangeEvent } from "react";
 import { getQuantityFormSettings, getWishListFormSettings } from "src/shared/components/Pages/ProductPage/settings/forms";
 import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
-import { AddToCartBtnTitle, AddToWishlistBtnTitle } from "src/shared/translation/translations";
+import { AddToCartBtnTitle, AddToWishlistBtnTitle, ErrorDurningAddProductToTheCartMessage } from "src/shared/translation/translations";
 
 
 const quantitySelectedInitial = 1;
@@ -208,7 +207,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
       });
     } catch(error) {
-      toast.error('Error occurs during the adding product to the cart ');
+      toast.error(ErrorDurningAddProductToTheCartMessage);
     }
   };
 

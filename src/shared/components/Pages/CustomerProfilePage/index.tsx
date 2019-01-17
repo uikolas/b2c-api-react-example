@@ -15,6 +15,7 @@ import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitl
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
+import { ConfirmDeleteAccountMessage } from 'src/shared/translation/translations';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -23,7 +24,6 @@ const keyEmail = 'email';
 const keyNewPassword = 'newPassword';
 const keyOldPassword = 'password';
 const keyConfirmPassword = 'confirmPassword';
-const deleteProfileContent = 'Are you sure you want to delete your account?';
 
 @connect
 export class CustomerProfilePageBase extends React.Component<Props, State> {
@@ -174,7 +174,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
           ? (
             <SprykerDialog
               handleShow={ this.handleDeleteProfileDialogShowing }
-              content={ deleteProfileContent }
+              content={ ConfirmDeleteAccountMessage }
               isOpen={ this.state.isDeleteProfileDialogOpen }
               handleAgree={ this.handleDeleteProfileDialogAgree }
               handleDisagree={ this.handleDeleteProfileDialogDisagree }

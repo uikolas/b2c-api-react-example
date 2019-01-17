@@ -1,5 +1,4 @@
 // tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import {NavLink} from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
@@ -15,18 +14,22 @@ import Divider from '@material-ui/core/Divider';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import { getCategoryIdByName } from 'src/shared/helpers/categories/index';
+import { pathCategoryPageBase, pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
+import { IProductCard } from 'src/shared/interfaces/product';
+import { AppPrice } from '../AppPrice';
+import { SquareImage } from '../SquareImage';
+import { styles } from './styles';
+import { CatalogProps as Props, CatalogState as State } from './types';
+import { connect } from './connect';
+import {
+  NoFoundText,
+  CategoriesPanelTitle,
+  SuggestedProductsText,
+  AllSuggestedProductsText
+} from 'src/shared/translation/translations';
 
-import {getCategoryIdByName} from "src/shared/helpers/categories/index";
-import {pathCategoryPageBase, pathProductPageBase, pathSearchPage} from 'src/shared/routes/contentRoutes';
-import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/common/react';
-import {IProductCard} from 'src/shared/interfaces/product';
-import {AppPrice} from '../AppPrice';
-import {SquareImage} from '../SquareImage';
-import {styles} from './styles';
-import {CatalogProps as Props, CatalogState as State} from './types';
-import {connect} from './connect';
-
-export const buttonTitle = 'Search';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
@@ -296,7 +299,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         <div {...options.containerProps}>
           <Paper square>
             <Typography paragraph variant="headline">
-              Nothing found...
+              { NoFoundText }
             </Typography>
           </Paper>
         </div>
@@ -308,12 +311,12 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         <div className={classes.insideContWrapper}>
           <div>{completions}</div>
           <Typography component="h4" className={classes.categoryTitle}>
-            Categories
+            { CategoriesPanelTitle }
           </Typography>
           <Divider />
           <div className={classes.marginTop}>{renderedCategories}</div>
           <Typography component="h4" className={classes.categoryTitle}>
-            Suggested Products
+            { SuggestedProductsText }
           </Typography>
 
           <Divider />
@@ -326,7 +329,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             onClick={this.handleSearchCompletion}
             className={classes.linkAll}
           >
-            See all suggested products
+            { AllSuggestedProductsText }
           </NavLink>
         </div>
       </div>

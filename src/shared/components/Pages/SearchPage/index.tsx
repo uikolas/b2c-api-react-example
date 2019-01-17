@@ -51,9 +51,13 @@ import {
 } from "src/shared/components/Pages/SearchPage/helpers/queries";
 import {DefaultItemsPerPage} from "src/shared/components/Pages/SearchPage/constants";
 import {getCategoryNameById} from "src/shared/helpers/categories/index";
-
-export const pageTitle = 'Results for ';
-export const pageTitleDefault = 'Start searching';
+import {
+  SearchResultTitle,
+  SearchResultDefaultTitle,
+  SortModeTitle,
+  RelevanceSortModeTitle,
+  ProductsPerPageTitle
+} from 'src/shared/translation/translations';
 
 @(withRouter as any)
 @connect
@@ -364,7 +368,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         currentMode={ this.state.itemsPerPage }
         changeHandler={ this.handleSetItemsPerPage }
         menuItems={ pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item})) }
-        menuItemFirst={ {value: ' ', name: 'products per page', disabled: true} }
+        menuItemFirst={ {value: ' ', name: ProductsPerPageTitle, disabled: true} }
         name="pages"
       />
     );
@@ -379,7 +383,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         })) }
         menuItemFirst={ {
           value: ' ',
-          name: (!isSortParamsExist && !this.state.sort) ? 'Choose sort mode' : 'Sort by relevance',
+          name: (!isSortParamsExist && !this.state.sort) ? SortModeTitle : RelevanceSortModeTitle,
           disabled: !isSortParamsExist,
         } }
         name="sort"
@@ -394,8 +398,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         { isLoading ? <AppBackdrop isOpen={ true }/> : null }
         <AppPageTitle
           title={ searchTerm
-            ? `${pageTitle} "${searchTerm}"`
-            : (currentCategory && categoryDisplayName) ? categoryDisplayName : pageTitleDefault
+            ? `${SearchResultTitle} "${searchTerm}"`
+            : (currentCategory && categoryDisplayName) ? categoryDisplayName : SearchResultDefaultTitle
           }
           intro={ <SearchIntro className={ classes.spellingSuggestion } spellingSuggestion={ spellingSuggestion }/> }
         />

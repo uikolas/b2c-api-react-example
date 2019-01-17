@@ -1,13 +1,12 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-
 import { styles } from './styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-
 import { IRangeInputError } from 'src/shared/components/UI/SprykerRangeFilter';
 import { BlurEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { RangeInputFrom, RangeInputTo } from 'src/shared/translation/translations';
 
 interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
   title: string;
@@ -20,9 +19,6 @@ interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
   isMin: boolean;
   handleBlur: (event: BlurEvent) => void;
 }
-
-const titlePartMax = ' to';
-const titlePartMin = ' from';
 
 export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
   const {
@@ -50,7 +46,7 @@ export const RangeInputBase: React.SFC<RangeInputProps> = (props) => {
     <FormControl className={ className }>
       <Grid container justify="flex-start" alignItems="center">
         <Grid item>
-          <span className={ classes.title }>{ isMin ? `${title} ${titlePartMin}` : `${title} ${titlePartMax}` }</span>
+          <span className={ classes.title }>{ isMin ? `${title} ${RangeInputFrom}` : `${title} ${RangeInputTo}` }</span>
         </Grid>
         <Grid item>
           { isError

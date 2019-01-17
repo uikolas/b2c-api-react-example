@@ -13,7 +13,13 @@ import {
   CategoryNameNotebooks,
   CategoryNameSale,
   CategoryNameTablets,
-  CategoryNameWorkstations
+  CategoryNameWorkstations,
+  SocialInstagramText,
+  SocialFacebookText,
+  SocialXingText,
+  SocialLinkedInText,
+  SocialTwitterText,
+  SocialYouTubeText
 } from 'src/shared/translation/translations';
 
 export const categoriesLinks: link[] = [
@@ -45,27 +51,27 @@ export const categoriesLinks: link[] = [
 
 export const socialMediaLinks: link[] = [
   {
-    name: 'Instagram',
+    name: SocialInstagramText,
     path: 'https://www.instagram.com/spryker/',
   },
   {
-    name: 'YouTube',
+    name: SocialYouTubeText,
     path: 'https://www.youtube.com/channel/UC6lVOEbqXxUh0W5FMTvlPDQ',
   },
   {
-    name: 'Facebook',
+    name: SocialFacebookText,
     path: 'https://www.facebook.com/Spryker/',
   },
   {
-    name: 'Twitter',
+    name: SocialTwitterText,
     path: 'https://twitter.com/sprysys',
   },
   {
-    name: 'LinkedIn',
+    name: SocialLinkedInText,
     path: 'https://www.linkedin.com/company/spryker-systems-gmbh',
   },
   {
-    name: 'Xing',
+    name: SocialXingText,
     path: 'https://www.xing.com/companies/sprykersystemsgmbh',
   },
 ];
