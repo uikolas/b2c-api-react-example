@@ -2,9 +2,7 @@ import * as React from 'react';
 import { StickyContainer } from 'react-sticky';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { addLocaleData, IntlProvider } from 'react-intl';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 
 import { withRouter } from 'react-router';
 import { IComponent } from 'src/typings/app';
@@ -21,14 +19,13 @@ import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
-import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
-import {isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
-import {clearSearchTermAction} from 'src/shared/actions/Pages/Search';
+import { isCartCreated } from "src/shared/reducers/Common/Cart/selectors";
+import { clearSearchTermAction } from 'src/shared/actions/Pages/Search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 
 
 const styles = require('./style.scss');
-const className = styles.appHandler;
+const className = styles.appMain;
 
 interface AppHandlerProps extends IComponent, WithRouter  {
   dispatch: Function;
@@ -110,37 +107,34 @@ export class AppHandlerBase extends React.Component<AppHandlerProps, AppHandlerS
     addLocaleData(getLocaleData(locale));
 
     return (
-      <MuiThemeProvider theme={ sprykerTheme }>
-        <IntlProvider locale={ locale } key={ locale }>
-          <div className={ className }>
-            <CssBaseline/>
-            <StickyContainer>
-              <AppHeader
-                isLoading={ isLoading }
-                onMobileNavToggle={ this.mobileNavToggle }
-                isMobileNavOpened={ mobileNavOpened }
-              />
-              { getContentRoutes(this.isDataFulfilled()) }
-              <ToastContainer
-                autoClose={ 3000 }
-                transition={ Slide }
-                position={ toast.POSITION.BOTTOM_LEFT }
-                pauseOnHover={ true }
-                style={ {
-                  width: '90%',
-                  left: 0,
-                } }
-              />
-              <AppFooter/>
-            </StickyContainer>
-          </div>
-        </IntlProvider>
-      </MuiThemeProvider>
+      <IntlProvider locale={ locale } key={ locale }>
+        <div className={ className }>
+          <StickyContainer>
+            <AppHeader
+              isLoading={ isLoading }
+              onMobileNavToggle={ this.mobileNavToggle }
+              isMobileNavOpened={ mobileNavOpened }
+            />
+            { getContentRoutes(this.isDataFulfilled()) }
+            <ToastContainer
+              autoClose={ 3000 }
+              transition={ Slide }
+              position={ toast.POSITION.BOTTOM_LEFT }
+              pauseOnHover={ true }
+              style={ {
+                width: '90%',
+                left: 0,
+              } }
+            />
+            <AppFooter/>
+          </StickyContainer>
+        </div>
+      </IntlProvider>
     );
   }
 }
 
-export const AppHandler = reduxify(
+export const Main = reduxify(
   (state: any, ownProps: any) => {
     const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
     const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;

@@ -6,11 +6,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider, Store } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 
-import Routes from '../../routes';
+import { Route } from 'react-router';
 import { ScrollToTopRoute } from '../../routes/ScrollToTopRoute';
+
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { configureStore } from '../../stores/configureStore';
 import createHistory from 'history/createBrowserHistory';
+import config from '../../config';
+import { Main } from '../Main';
+import { sprykerTheme } from "../../theme/sprykerTheme";
 
 // Create a history of your choosing (we're using a browser history in this case)
 const history = createHistory();
@@ -22,7 +28,10 @@ export const App = () => (
             { /* ConnectedRouter will use the store from Provider automatically */ }
             <ConnectedRouter history={ history }>
                 <ScrollToTopRoute>
-                    <Routes />
+                    <MuiThemeProvider theme={ sprykerTheme }>
+                        <CssBaseline/>
+                        <Route path={ config.WEB_PATH } component={ Main } />
+                    </MuiThemeProvider>
                 </ScrollToTopRoute>
             </ConnectedRouter>
         </Provider>
