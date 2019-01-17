@@ -17,10 +17,10 @@ import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import {
   OrderSummaryTitle,
   OrderAmount,
-  Cart,
+  CartTitle,
   PlaceOrder,
   OrderDetailGrandTotal,
-} from "src/shared/constants/orders";
+} from "src/shared/translation/translations";
 
 
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {
@@ -82,7 +82,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
 
     return (
       <div className={ classes.root } ref={this.containerRef}>
-        <CustomerPageTitle title={order ? OrderSummaryTitle : Cart} />
+        <CustomerPageTitle title={order ? OrderSummaryTitle : CartTitle} />
         <List>
           { rows }
         </List>

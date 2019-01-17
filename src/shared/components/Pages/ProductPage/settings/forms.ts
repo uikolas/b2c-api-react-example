@@ -2,7 +2,7 @@ import {FormEvent} from "react";
 import {IProductQuantityParams, IProductWishListParams} from "./types";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {createQuantityVariants} from "src/shared/helpers/product/quantity";
-import {InputLabelProductQuantity, InputLabelProductSelectWishList} from "src/shared/constants/forms/labels";
+import {InputLabelProductQuantity, InputLabelProductSelectWishList} from "src/shared/translation/translations";
 import {createWishListMenuVariants} from "src/shared/helpers/wishlist/list";
 import {defaultItemValueDropdown} from "src/shared/interfaces/product/index";
 

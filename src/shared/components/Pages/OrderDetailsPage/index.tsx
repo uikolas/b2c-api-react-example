@@ -4,9 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {connect} from './connect';
-import {noOrderText} from 'src/shared/constants/messages/orders';
+import {NoOrderText} from 'src/shared/translation/translations';
 import {IOrderDetailsItem, IOrderDetailsSelectedItems} from 'src/shared/interfaces/order';
-import {emptyValueErrorText} from 'src/shared/constants/messages/errors';
+import {EmptyValueErrorText} from 'src/shared/translation/translations';
 import {ICartAddItem} from 'src/shared/interfaces/cart';
 import {OrderDetailsGeneralInfo} from './OrderDetailsGeneralInfo';
 import {OrderProductList} from './OrderProductsList';
@@ -18,7 +18,7 @@ import {getOrderSelectedItemsData} from "src/shared/components/Pages/OrderDetail
 import {
   OrderDetailBillingAddressTitle,
   OrderDetailShippingAddressTitle
-} from "src/shared/constants/orders/index";
+} from "src/shared/translation/translations";
 import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
 
 
@@ -45,7 +45,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     const key = event.target.value;
 
     if (!key) {
-      throw new Error(emptyValueErrorText);
+      throw new Error(EmptyValueErrorText);
     }
 
     this.setState((prevState: State) => {
@@ -141,7 +141,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                       shippingBlockTitle={OrderDetailShippingAddressTitle}
                     />
                   </Grid>
-                : <EmptyOrder intro={noOrderText} />
+                : <EmptyOrder intro={NoOrderText} />
               }
             </Grid>
           )

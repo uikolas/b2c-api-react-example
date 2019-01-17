@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import { IWishlist, IWishlistItem } from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
-import { wishlistAuthenticateErrorText } from 'src/shared/constants/messages/errors';
+import { WishlistAuthenticateErrorText } from 'src/shared/translation/translations';
 import {
-  wishlistCreated,
-  wishlistDeleted,
-  wishlistAddProduct,
-  wishlistRemoveItems,
-} from 'src/shared/constants/messages/wishlist';
+  WishlistCreated,
+  WishlistDeleted,
+  WishlistAddProduct,
+  WishlistRemoveItems,
+} from 'src/shared/translation/translations';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import * as cartActions from "src/shared/actions/Common/Cart";
 
@@ -29,7 +29,7 @@ export class WishlistService extends ApiServiceAbstract {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(wishlistAuthenticateErrorText);
+        throw new Error(WishlistAuthenticateErrorText);
       }
       setAuthToken(token);
       const response: any = await api.get('wishlists', {}, {withCredentials: true});
@@ -114,7 +114,7 @@ export class WishlistService extends ApiServiceAbstract {
       const response: any = await api.post('wishlists', body, {withCredentials: true});
 
       if (response.ok) {
-        toast.success(wishlistCreated);
+        toast.success(WishlistCreated);
         const parsedWishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
@@ -149,7 +149,7 @@ export class WishlistService extends ApiServiceAbstract {
       const response: any = await api.delete(`wishlists/${wishlistId}`, {}, {withCredentials: true});
 
       if (response.ok) {
-        toast.success(wishlistDeleted);
+        toast.success(WishlistDeleted);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           wishlistId,
@@ -245,7 +245,7 @@ export class WishlistService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
           wishlist,
         });
-        toast.success(`${wishlistAddProduct} ${wishlist.name}.`);
+        toast.success(`${WishlistAddProduct} ${wishlist.name}.`);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -278,7 +278,7 @@ export class WishlistService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(wishlistRemoveItems);
+        toast.success(WishlistRemoveItems);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           wishlistId,

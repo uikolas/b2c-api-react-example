@@ -2,8 +2,7 @@ import * as React from 'react';
 import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
-import {styles} from '../styles';
+import { styles } from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
@@ -13,13 +12,13 @@ import {
   TCustomerSalutation,
   TSalutationVariant,
 } from 'src/shared/interfaces/customer';
-import { salutationVariants } from 'src/shared/constants/customer';
+import { SalutationVariants } from 'src/shared/constants/customer/index';
 import {
   InputLabelSalutation,
   InputLabelFirstName,
   InputLabelLastName,
   InputLabelEmail,
-} from 'src/shared/constants/forms/labels';
+} from 'src/shared/translation/translations';
 
 interface UpdateProfileProps extends WithStyles<typeof styles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;
@@ -57,7 +56,7 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
             isRequired: true,
             label: InputLabelSalutation,
             isError: false,
-            menuItems: salutationVariants
+            menuItems: SalutationVariants
               .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
           }, {
             type: 'input',

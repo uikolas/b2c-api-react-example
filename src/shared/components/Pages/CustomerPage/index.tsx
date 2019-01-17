@@ -31,9 +31,9 @@ import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
 import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
-import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";
-import {LogOutBtnTitle} from "src/shared/constants/buttons/index";
-import {INavLinkData} from "src/shared/interfaces/navLinks/index";
+import { customerProfileNavLinks } from "src/shared/constants/navLinks/index";
+import { LogOutBtnTitle } from "src/shared/translation/translations";
+import { INavLinkData } from "src/shared/interfaces/navLinks/index";
 
 interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
   isUserLoggedIn: boolean;

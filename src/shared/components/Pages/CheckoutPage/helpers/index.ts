@@ -5,7 +5,7 @@ import {
   InputLabelAddNewBillingAddress,
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
-} from "src/shared/constants/forms/labels";
+} from "src/shared/translation/translations";
 import {
   ICheckoutAddressState,
   ICheckoutPageProps,

@@ -10,14 +10,13 @@ import {
   InputLabelStreet,
   InputLabelStreetExtra,
   InputLabelZipCode,
-  InputSelectCountryFirstItem,
-  InputSelectSalutationFirstItem
-} from "src/shared/constants/forms/labels";
-import {salutationVariants} from "src/shared/constants/customer";
-import {TSalutationVariant} from "src/shared/interfaces/customer";
-import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import {ICountries} from "src/shared/reducers/Common/Init";
+  FirstItemInSelect
+} from 'src/shared/translation/translations';
+import { SalutationVariants } from 'src/shared/constants/customer/index';
+import { TSalutationVariant } from 'src/shared/interfaces/customer';
+import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
+import { IAddressParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { ICountries } from 'src/shared/reducers/Common/Init';
 
 
 export const getAddressFormSettings = (formName: string, params: IAddressParams): IFormSettings => {
@@ -71,11 +70,11 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
           isRequired: salutationConfig.isRequired,
           label: InputLabelSalutation,
           isError: salutation.isError,
-          menuItems: salutationVariants
+          menuItems: SalutationVariants
             .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
           menuItemFirst: {
             value: " ",
-            name: InputSelectSalutationFirstItem,
+            name: FirstItemInSelect,
             selected: true,
             disabled: true,
           },
@@ -178,7 +177,7 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                      : null,
           menuItemFirst: {
             value: " ",
-            name: InputSelectCountryFirstItem,
+            name: FirstItemInSelect,
             selected: true,
             disabled: true,
           },

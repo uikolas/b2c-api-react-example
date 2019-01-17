@@ -4,7 +4,7 @@ import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import * as cartActions from 'src/shared/actions/Common/Cart';
-import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation/translations';
 
 export class GuestCartService extends ApiServiceAbstract {
   public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<void> {
@@ -27,7 +27,7 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(cartAddProducts);
+        toast.success(CartAddProducts);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
       } else {
@@ -90,7 +90,7 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(cartRemoveItems);
+        toast.success(CartRemoveItems);
         await GuestCartService.getGuestCart(dispatch, anonymId);
       } else {
         this.errorMessageInform(response, dispatch);
@@ -124,7 +124,7 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(cartChangeQty);
+        toast.success(CartChangeQty);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
       } else {

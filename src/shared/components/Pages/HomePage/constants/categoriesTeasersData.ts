@@ -1,4 +1,4 @@
-import {ICategoriesTeasersData} from "src/shared/components/Pages/HomePage/types";
+import {ICategoriesTeasersData} from 'src/shared/components/Pages/HomePage/types';
 import {
   CategoryIntroComputers,
   CategoryIntroNotebooks,
@@ -8,20 +8,20 @@ import {
   CategoryNameNotebooks,
   CategoryNameTablets,
   CategoryNameWorkstations
-} from "src/shared/constants/categories";
+} from 'src/shared/translation/translations';
 import {
   HomePageComputersBtnText,
   HomePageNotebooksBtnText,
   HomePageTabletsBtnText,
   HomePageWorkstationsBtnText
-} from "src/shared/constants/content/homePage";
+} from 'src/shared/translation/translations';
 import {
   pathCategoryComputers,
   pathCategoryNotebooks,
   pathCategoryTablets,
   pathCategoryWorkstations
-} from "src/shared/routes/categoriesRoutes";
-import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from "src/img/index";
+} from 'src/shared/routes/categoriesRoutes';
+import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from 'src/img/index';
 
 export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
   {

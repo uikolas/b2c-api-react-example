@@ -14,7 +14,7 @@ import {
 import {
   getBillingSavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
-import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
+import {FormTextWaitingForResponse} from "src/shared/translation/translations";
 
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";

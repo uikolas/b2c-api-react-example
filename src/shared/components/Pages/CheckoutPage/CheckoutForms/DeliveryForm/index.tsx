@@ -11,7 +11,7 @@ import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/C
 import {
   getDeliverySavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
-import {FormTextWaitingForResponse, InputLabelEmail} from "src/shared/constants/forms/labels";
+import {FormTextWaitingForResponse, InputLabelEmail} from "src/shared/translation/translations";
 
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
-import {styles} from './styles';
-import {IProductDetailProps} from "./types";
-import {ProductAttributes} from "src/shared/components/Pages/ProductPage/ProductAttributes";
-import {ProductBlockTitleDescription, ProductSKUTitle} from "src/shared/constants/product";
+import { styles } from './styles';
+import { IProductDetailProps } from './types';
+import { ProductAttributes } from 'src/shared/components/Pages/ProductPage/ProductAttributes';
+import { ProductBlockTitleDescription, ProductSKUTitle } from 'src/shared/translation/translations';
 import Typography from '@material-ui/core/Typography';
 
 

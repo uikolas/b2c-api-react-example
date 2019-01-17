@@ -5,7 +5,7 @@ import {
   pathCategorySale,
   pathCategoryTablets,
   pathCategoryWorkstations
-} from "src/shared/routes/categoriesRoutes";
+} from 'src/shared/routes/categoriesRoutes';
 import {
   CategoryNameComputers,
   CategoryNameNew,
@@ -13,7 +13,7 @@ import {
   CategoryNameSale,
   CategoryNameTablets,
   CategoryNameWorkstations
-} from "src/shared/constants/categories";
+} from 'src/shared/translation/translations';
 
 export const navLinks = [
   {

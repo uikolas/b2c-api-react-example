@@ -11,7 +11,7 @@ import {
   InputLabelPassword,
   InputLabelNewPassword,
   InputLabelConfirmPassword,
-} from 'src/shared/constants/forms/labels';
+} from 'src/shared/translation/translations';
 
 interface ChangePasswordProps extends WithStyles<typeof styles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;

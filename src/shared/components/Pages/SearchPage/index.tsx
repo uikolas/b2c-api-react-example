@@ -13,7 +13,7 @@ import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/conte
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
-import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
+import { ValidateRangeInputsError } from 'src/shared/translation/translations';
 import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
 import { SortPanel } from 'src/shared/components/Pages/SearchPage/SortPanel';
 import { FoundItems } from 'src/shared/components/Pages/SearchPage/FoundItems';
@@ -177,7 +177,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
     if (!this.validateData()) {
       console.error('can\'t make request in updateSearch method!!!');
-      toast.error(validateRangeInputsError);
+      toast.error(ValidateRangeInputsError);
       return;
     }
     let query: ISearchQuery = this.getQueryBaseParams();

@@ -10,8 +10,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
-import { salutationVariants } from 'src/shared/constants/customer';
-import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/errors';
+import { SalutationVariants } from 'src/shared/constants/customer/index';
+import { EmptyRequiredFieldsErrorText } from 'src/shared/translation/translations';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
@@ -43,7 +43,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
     const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
     e.preventDefault();
     if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-      toast.warn(emptyRequiredFieldsErrorText);
+      toast.warn(EmptyRequiredFieldsErrorText);
       return null;
     }
 
@@ -86,7 +86,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
             fullWidth
             InputLabelProps={ {shrink: true} }
           >
-            { salutationVariants.map((option: TSalutationVariant) => (
+            { SalutationVariants.map((option: TSalutationVariant) => (
               <MenuItem key={ option.value } value={ option.value }>{ option.label }</MenuItem>
             )) }
           </TextField>

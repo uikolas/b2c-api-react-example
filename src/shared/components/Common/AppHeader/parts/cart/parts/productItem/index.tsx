@@ -3,15 +3,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-
 import { ProductItemProps as Props } from './types';
 import { styles, cartProductImageSize } from './styles';
-import {SquareImage} from "src/shared/components/Common/SquareImage/index";
-import {RemoveBtnTitle} from "src/shared/constants/buttons/index";
-import {CartProductQuantity} from "src/shared/constants/cart/index";
-import {priceTypeNameOriginal} from "src/shared/interfaces/product/index";
+import { SquareImage } from 'src/shared/components/Common/SquareImage/index';
+import { RemoveBtnTitle } from 'src/shared/translation/translations';
+import { CartProductQuantity } from 'src/shared/translation/translations';
+import { priceTypeNameOriginal } from 'src/shared/interfaces/product/index';
 
 export const ProductItemComponent: React.SFC<Props> = ({classes, productData, deleteItem}) => {
 
