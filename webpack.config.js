@@ -338,7 +338,17 @@ const config = {
             ...webExtensions
         ],
         alias: {
-            src: path.resolve(__dirname, 'src')
+            src: path.resolve(__dirname, 'src'),
+            '@assets': path.resolve(__dirname, 'src/shared/assets'),
+            '@constants': path.resolve(__dirname, 'src/shared/constants'),
+            '@components': path.resolve(__dirname, 'src/shared/components'),
+            '@containers': path.resolve(__dirname, 'src/shared/containers'),
+            '@helpers': path.resolve(__dirname, 'src/shared/helpers'),
+            '@interfaces': path.resolve(__dirname, 'src/shared/interfaces'),
+            '@routes': path.resolve(__dirname, 'src/shared/routes'),
+            '@stores': path.resolve(__dirname, 'src/shared/stores'),
+            '@selectors': path.resolve(__dirname, 'src/shared/selectors'),
+            '@services': path.resolve(__dirname, 'src/shared/services')
         }
     },
     module: {

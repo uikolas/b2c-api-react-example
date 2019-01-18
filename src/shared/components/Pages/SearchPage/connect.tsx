@@ -9,11 +9,11 @@ import {
   getSortParamLocalizedNames,
   getSpellingSuggestion,
   SearchState,
-} from 'src/shared/reducers/Pages/Search';
-import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
+} from '@stores/reducers/pages/search';
+import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from '@stores/reducers/common/init';
 import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
 import {getRouterMatchParam} from "src/shared/selectors/Common/router";
-import {sendSearchAction} from "src/shared/actions/Pages/Search";
+import {sendSearchAction} from "@stores/actions/pages/search";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};

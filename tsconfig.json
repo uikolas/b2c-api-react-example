@@ -32,7 +32,17 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "src": ["src"]
+      "src": ["src"],
+      "@assets*": ["src/shared/assets*"],
+      "@constants*": ["src/shared/constants*"],
+      "@components*": ["src/shared/components*"],
+      "@containers*": ["src/shared/containers*"],
+      "@helpers*": ["src/shared/helpers*"],
+      "@interfaces*": ["src/shared/interfaces*"],
+      "@routes*": ["src/shared/routes*"],
+      "@stores*": ["src/shared/stores*"],
+      "@selectors*": ["src/shared/selectors*"],
+      "@services*": ["src/shared/services*"]
     }
   },
   "compileOnSave": false,

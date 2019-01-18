@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
 import { parseAddToCartResponse, parseCartCreateResponse } from 'src/shared/helpers/cart';
-import * as cartActions from 'src/shared/actions/Common/Cart';
+import * as cartActions from '@stores/actions/common/cart';
 import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
 import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';

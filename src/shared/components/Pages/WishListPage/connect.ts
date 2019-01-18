@@ -1,14 +1,14 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { RouteProps } from 'react-router';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
+import { WishlistState } from '@stores/reducers/pages/wishlist';
 import {
   addWishlistAction,
   deleteWishlistAction,
   getDetailWishlistAction,
   getWishlistsAction,
   updateWishlistAction,
-} from 'src/shared/actions/Pages/Wishlist';
+} from '@stores/actions/pages/wishlist';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};
