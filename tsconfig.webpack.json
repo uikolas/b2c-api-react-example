@@ -27,7 +27,7 @@
     "src/**/*",
     "./dev-server.ts",
     "./server.ts",
-    "./configs/server-config.ts",
+    "./server-config.ts",
     "./webpack.config.ts"
   ]
 }
