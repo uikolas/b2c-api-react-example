@@ -1,9 +1,9 @@
 import { create } from 'apisauce';
-import { config } from '../../config';
+import { nodeServerConfig } from '../../configs/node-server-config';
 import { TAccessToken } from '../../interfaces/login';
 
 const api = create({
-    baseURL: config.API_URL,
+    baseURL: nodeServerConfig.API_URL,
     headers: {
         'Accept': 'application/vnd.api+json',
         'Content-Type': 'application/json',
@@ -11,7 +11,7 @@ const api = create({
     },
 });
 
-export const nodeApi = create({baseURL: `http://${config.WEB_PATH}:${config.WEB_PATH}/nodeServer/`});
+export const nodeApi = create({baseURL: `http://${nodeServerConfig.WEB_PATH}:${nodeServerConfig.WEB_PATH}/nodeServer/`});
 
 export const setAuthToken = (userAuth: TAccessToken) => api.setHeader('Authorization', 'Bearer ' + userAuth);
 export const removeAuthToken = () => api.deleteHeader('Authorization');

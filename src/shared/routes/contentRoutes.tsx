@@ -18,23 +18,23 @@ import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loada
 
 import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
 
-import config from '../config';
+import nodeServerConfig from '../configs/node-server-config';
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {LoadableOrderDetailsPage} from "src/shared/components/Pages/OrderDetailsPage/loadable";
 
-export const pathHomePage = `${config.WEB_PATH}`;
-export const pathSearchPage = `${config.WEB_PATH}search`;
+export const pathHomePage = `${nodeServerConfig.WEB_PATH}`;
+export const pathSearchPage = `${nodeServerConfig.WEB_PATH}search`;
 
-export const pathCategoryPageBase = `${config.WEB_PATH}category`;
+export const pathCategoryPageBase = `${nodeServerConfig.WEB_PATH}category`;
 export const pathCategoryPage = `${pathCategoryPageBase}/:categoryId`;
 
-export const pathProductPageBase = `${config.WEB_PATH}product`;
+export const pathProductPageBase = `${nodeServerConfig.WEB_PATH}product`;
 export const pathProductPage = `${pathProductPageBase}/:productId`;
-export const pathLoginPage = `${config.WEB_PATH}login`;
-export const pathCartPage = `${config.WEB_PATH}cart`;
+export const pathLoginPage = `${nodeServerConfig.WEB_PATH}login`;
+export const pathCartPage = `${nodeServerConfig.WEB_PATH}cart`;
 
-export const pathCustomerPage = `${config.WEB_PATH}customer`;
+export const pathCustomerPage = `${nodeServerConfig.WEB_PATH}customer`;
 
 export const pathWishListsPage = `${pathCustomerPage}/wishlists`;
 export const pathWishListPageBase = `${pathCustomerPage}/wishlist`;
@@ -43,20 +43,20 @@ export const pathWishListPage = `${pathWishListPageBase}/:name`;
 export const pathOrderHistoryPage = `${pathCustomerPage}/order`;
 export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
 export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
-export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
-export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
+export const pathWishlistPage = `${nodeServerConfig.WEB_PATH}wishlists`;
+export const pathWishlistDetailPage = `${nodeServerConfig.WEB_PATH}wishlist/:name`;
 
-export const pathForgotPassword = `${config.WEB_PATH}password/forgotten`;
-export const pathResetPassword = `${config.WEB_PATH}password/reset`;
+export const pathForgotPassword = `${nodeServerConfig.WEB_PATH}password/forgotten`;
+export const pathResetPassword = `${nodeServerConfig.WEB_PATH}password/reset`;
 
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
 export const pathCustomerAddressesPage = `${pathCustomerPage}/addresses`;
 export const pathAddressFormPage = `${pathCustomerAddressesPage}/:action`;
 
-export const pathCheckoutPage = `${config.WEB_PATH}checkout`;
+export const pathCheckoutPage = `${nodeServerConfig.WEB_PATH}checkout`;
 
-export const pathNotFoundPage = `${config.WEB_PATH}*`;
+export const pathNotFoundPage = `${nodeServerConfig.WEB_PATH}*`;
 
 export const getContentRoutes = function(isReadyToShow: boolean) {
   if (!isReadyToShow) {

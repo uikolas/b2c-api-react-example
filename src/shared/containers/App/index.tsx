@@ -15,7 +15,7 @@ import { sprykerTheme } from '../../theme/sprykerTheme';
 
 import { configureStore } from '../../stores/configureStore';
 import createHistory from 'history/createBrowserHistory';
-import config from '../../config';
+import nodeServerConfig from '../../configs/node-server-config';
 import { PageContent } from '../PageContent';
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -30,7 +30,7 @@ export const App = () => (
                 <ScrollToTopRoute>
                     <MuiThemeProvider theme={ sprykerTheme }>
                         <CssBaseline/>
-                        <Route path={ config.WEB_PATH } component={ PageContent } />
+                        <Route path={ nodeServerConfig.WEB_PATH } component={ PageContent } />
                     </MuiThemeProvider>
                 </ScrollToTopRoute>
             </ConnectedRouter>

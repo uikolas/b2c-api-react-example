@@ -138,7 +138,7 @@ export function getAppCurrency(state: any, props: any): TAppCurrency {
 }
 
 export function getAppLocale(state: any, props: any): TAppStore {
-  return isAppInitiated(state, props) ? state.init.data.locale : null;
+  return isAppInitiated(state, props) ? null : null;
 }
 
 export function getAppTimeZone(state: any, props: any): TAppTimeZone {

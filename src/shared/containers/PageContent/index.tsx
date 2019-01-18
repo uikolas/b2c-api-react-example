@@ -16,7 +16,7 @@ import {
 } from 'src/shared/reducers/Common/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
-import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
+import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
 import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { isCartCreated } from 'src/shared/reducers/Common/Cart/selectors';
