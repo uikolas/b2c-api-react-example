@@ -30,7 +30,7 @@ appRouter.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build/web/index.html'));
 });
 
-webServer.use(`${webPath}getUniqueUser`, (req, res, next) => {
+webServer.use('/nodeServer/getUniqueUser', (req, res, next) => {
   const hash = crypto.createHmac('sha256', req.headers['x-forwarded-for'] || req.headers.host)
     .update(req.headers['user-agent'])
     .digest('hex');
