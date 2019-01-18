@@ -12,16 +12,23 @@ import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from 'src/shared/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
-    getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled, TAppLocale
+    getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled
 } from 'src/shared/reducers/Common/Init';
 import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
-import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
+import {
+    initApplicationDataAction,
+    setAuthFromStorageAction,
+    IInitApplicationDataPayload
+} from 'src/shared/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
 import { isCartCreated } from 'src/shared/reducers/Common/Cart/selectors';
 import { clearSearchTermAction } from 'src/shared/actions/Pages/Search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
+import { IReduxOwnProps, IReduxStore } from 'src/shared/reducers/types';
+import { TAppLocale } from 'src/shared/interfaces/locale/index';
+import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -134,8 +141,8 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
 }
 
 export const PageContent = reduxify(
-    (state: any, ownProps: any) => {
-        const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
+    (state: IReduxStore, ownProps: IReduxOwnProps) => {
+        const isLoading = isStateLoading(state, ownProps) || false;
         const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
         const isAppDataSet: boolean = isAppInitiated(state, ownProps);
         const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);
@@ -155,8 +162,8 @@ export const PageContent = reduxify(
     },
     (dispatch: Function) => ({
         dispatch,
-        initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
-        setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
+        initApplicationData: (payload: IInitApplicationDataPayload) => dispatch(initApplicationDataAction(payload)),
+        setAuth: (payload: ICustomerLoginDataParsed) => dispatch(setAuthFromStorageAction(payload)),
         getCustomerCart: () => dispatch(getCustomerCartsAction()),
         getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
         clearSearchTerm: () => dispatch(clearSearchTermAction()),
