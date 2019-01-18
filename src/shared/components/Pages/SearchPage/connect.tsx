@@ -12,7 +12,7 @@ import {
 } from 'src/shared/reducers/Pages/Search';
 import { getAppCurrency, getCategoriesTree, ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
 import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPageData';
-import {getRouterMatchParam} from "src/shared/selectors/Common/router";
+import {getRouterMatchParam} from "src/shared/helpers/router/router";
 import {sendSearchAction} from "src/shared/actions/Pages/Search";
 
 const mapStateToProps = (state: any, ownProps: any) => {

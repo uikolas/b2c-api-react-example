@@ -14,7 +14,7 @@ import { RouteProps } from 'react-router';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 
 import { formStyles } from '../styles';
-import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
+import { getRouterHistoryBack } from 'src/shared/helpers/router/router';
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;

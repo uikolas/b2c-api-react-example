@@ -12,7 +12,7 @@ import {
 import { TAppPriceMode, TAppStore } from 'src/shared/reducers/Common/Init';
 import { TCartId } from 'src/shared/interfaces/cart';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
-import { TRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { TRouterMatchParam } from 'src/shared/helpers/router/router';
 import { IWishlist, TWishListName } from 'src/shared/interfaces/wishlist';
 
 export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {

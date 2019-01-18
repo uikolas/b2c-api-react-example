@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryPush } from 'src/shared/selectors/Common/router';
+import { getRouterHistoryPush } from 'src/shared/helpers/router/router';
 import { getCustomerReference } from 'src/shared/reducers/Pages/Login';
 import {
   getAddressesCollection,

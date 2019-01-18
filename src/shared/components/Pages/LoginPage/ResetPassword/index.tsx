@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from 'src/shared/actions/Pages/Login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
-import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/helpers/router/router';
 import { formStyles } from '../styles';
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
