@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 const crypto = require('crypto');
 
-const config = require('./build/server-config');
+const config = require('./server-config');
 
 let webPath = config.WEB_PATH;
 

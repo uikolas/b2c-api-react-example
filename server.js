@@ -1,4 +1,4 @@
-const config = require('./build/server-config');
+const config = require('./server-config');
 
 let devServer;
 let webServer;
