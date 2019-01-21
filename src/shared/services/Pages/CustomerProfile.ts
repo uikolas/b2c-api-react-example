@@ -9,7 +9,7 @@ import {
 } from 'src/shared/interfaces/customer';
 import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerDataResponse';
 import { RefreshTokenService } from '../Common/RefreshToken';
-import { CustomerProfileAuthenticateErrorText } from '../../constants/messages/errors';
+import { CustomerProfileAuthenticateErrorMessage } from '../../translation/index';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { logout } from '@stores/actions/pages/login';
 
@@ -33,7 +33,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.get(
@@ -78,7 +78,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.patch(
@@ -123,7 +123,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token: string = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.patch(`customer-password`, body, {withCredentials: true});
@@ -153,7 +153,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.delete(`customers/${customerReference}`, null, {withCredentials: true});

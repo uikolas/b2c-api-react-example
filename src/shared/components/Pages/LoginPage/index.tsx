@@ -11,12 +11,12 @@ import {ICustomerLoginData, ICustomerProfile, TCustomerReference} from 'src/shar
 import { getCustomerCartsAction } from '@stores/actions/common/cart';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
 import { WithRouter } from 'src/shared/interfaces/common/react';
-
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
-
 import { styles } from './styles';
+import { ForgotPasswordTitle } from 'src/shared/translation';
+
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
   dispatch?: Function;
@@ -57,7 +57,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
           />
           <div className={ classes.link }>
             <NavLink to={ pathForgotPassword }>
-              Forgot Password
+                { ForgotPasswordTitle }
             </NavLink>
           </div>
         </Grid>

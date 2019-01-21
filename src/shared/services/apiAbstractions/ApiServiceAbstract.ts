@@ -1,4 +1,4 @@
-import { unexpectedServerError } from 'src/shared/constants/messages/errors';
+import { UnexpectedServerError } from 'src/shared/translation';
 import {IErrorItem, IResponseError} from "./types";
 
 export class ApiServiceAbstract {
@@ -6,7 +6,7 @@ export class ApiServiceAbstract {
   protected static getParsedAPIError = (response: IResponseError) => {
     let errorMessage: string;
     if (!response || !response.problem) {
-      errorMessage = unexpectedServerError;
+      errorMessage = UnexpectedServerError;
     } else {
       errorMessage = response.problem;
     }

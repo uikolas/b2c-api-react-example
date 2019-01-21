@@ -8,10 +8,8 @@ import {
   InputLabelPaymentCreditCardNumber,
   InputLabelPaymentExpiryDate,
   InputLabelPaymentProvider,
-  InputSelectPaymentExpiryMonthFirstItem,
-  InputSelectPaymentExpiryYearFirstItem,
-  InputSelectPaymentProviderFirstItem
-} from "src/shared/constants/forms/labels";
+  FirstItemInSelect
+} from "src/shared/translation";
 import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 
 
@@ -58,7 +56,7 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
           menuItems: providersCollection,
           menuItemFirst: {
             value: " ",
-            name: InputSelectPaymentProviderFirstItem,
+            name: FirstItemInSelect,
             selected: true,
             disabled: true,
           },
@@ -96,7 +94,7 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
           menuItems: createItemsForExpiryMonth(),
          /* menuItemFirst: {
             value: " ",
-            name: InputSelectPaymentExpiryMonthFirstItem,
+            name: FirstItemInSelect,
             selected: true,
             disabled: true,
           },*/
@@ -112,7 +110,7 @@ export const getCreditCardFormSettings = ( formName: string, params: IPaymentCre
           menuItems: createItemsForExpiryYear(),
           /*menuItemFirst: {
             value: " ",
-            name: InputSelectPaymentExpiryYearFirstItem,
+            name: FirstItemInSelect,
             selected: true,
             disabled: true,
           },*/

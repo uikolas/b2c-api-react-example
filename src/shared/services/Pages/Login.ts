@@ -10,7 +10,7 @@ import {
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { customerLogin, registerSuccess } from 'src/shared/constants/messages/customer';
+import { CustomerLogin, RegisterSuccess } from 'src/shared/translation';
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
@@ -28,7 +28,7 @@ export class PagesLoginService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
         });
 
-        toast.success(registerSuccess);
+        toast.success(RegisterSuccess);
 
         await PagesLoginService.loginRequest(dispatch, {
           username: payload.email,
@@ -77,7 +77,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         dispatch(saveLoginDataToStoreAction({email: payload.username}));
         saveAccessDataToLocalStorage(responseParsed);
         dispatch(loginCustomerFulfilledStateAction(responseParsed));
-        toast.success(customerLogin);
+        toast.success(CustomerLogin);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(loginCustomerRejectedStateAction(errorMessage));

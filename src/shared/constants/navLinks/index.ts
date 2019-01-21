@@ -1,16 +1,17 @@
-import {INavLinkData} from "src/shared/interfaces/navLinks/index";
+import {INavLinkData} from 'src/shared/interfaces/navLinks/index';
 import {
   pathCustomerAddressesPage,
   pathCustomerProfilePage,
   pathOrderHistoryPage,
   pathWishListsPage
-} from "src/shared/routes/contentRoutes";
+} from 'src/shared/routes/contentRoutes';
+import {
+  NavLinkTitleProfile,
+  NavLinkTitleAddresses,
+  NavLinkTitleOrderHistory,
+  NavLinkTitleWishlist
+} from '../../translation/index';
 
-
-export const NavLinkTitleProfile = "Profile";
-export const NavLinkTitleAddresses = "Addresses";
-export const NavLinkTitleOrderHistory = "Order History";
-export const NavLinkTitleWishlist = "Wishlist";
 
 export const customerProfileNavLinks: Array<INavLinkData> = [
   {path: pathCustomerProfilePage, title: NavLinkTitleProfile},

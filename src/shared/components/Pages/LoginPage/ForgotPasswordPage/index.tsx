@@ -6,15 +6,19 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ChevronLeft';
-
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { forgotPasswordAction } from '@stores/actions/pages/login';
 import { RouteProps } from 'react-router';
-
 import { AppMain } from 'src/shared/components/Common/AppMain';
-
 import { formStyles } from '../styles';
 import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
+import {
+    ButtonBackTitle,
+    ButtonSubmitTitle,
+    RecoveryPasswordMessage,
+    EnterEmailAddressMessage
+} from 'src/shared/translation';
+
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;
@@ -50,8 +54,8 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
           justify="center"
         >
           <Paper className={ classes.forgot }>
-            <Typography color="primary" variant="headline" paragraph>Recover my password</Typography>
-            <Typography variant="title" paragraph>Enter the e-mail address associated with your account.</Typography>
+            <Typography color="primary" variant="headline" paragraph>{ RecoveryPasswordMessage }</Typography>
+            <Typography variant="title" paragraph>{ EnterEmailAddressMessage }</Typography>
             <form autoComplete="off">
               <TextField
                 required
@@ -71,7 +75,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                 onClick={ () => routerGoBack() }
               >
                 <BackIcon/>
-                <span>Back</span>
+                <span>{ ButtonBackTitle }</span>
               </Button>
               <Button
                 variant="contained"
@@ -79,7 +83,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                 className={ classes.passwordButtons }
                 onClick={ this.submitRequest }
               >
-                Submit
+                { ButtonSubmitTitle }
               </Button>
             </Grid>
           </Paper>
