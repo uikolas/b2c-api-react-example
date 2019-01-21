@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import { IWishlist, IWishlistItem } from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
-import { WishlistAuthenticateErrorText } from 'src/shared/translation/translations';
+import { WishlistAuthenticateErrorMessage } from 'src/shared/translation/translations';
 import {
   WishlistCreated,
   WishlistDeleted,
@@ -29,7 +29,7 @@ export class WishlistService extends ApiServiceAbstract {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(WishlistAuthenticateErrorText);
+        throw new Error(WishlistAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const response: any = await api.get('wishlists', {}, {withCredentials: true});

@@ -20,7 +20,7 @@ import { WishlistPageProps as Props, WishlistPageState as State } from './types'
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
 import {IWishlist} from "src/shared/interfaces/wishlist/index";
 import {
-  WishlistNameText,
+  WishlistNameTitle,
   CreateListMessage,
   ButtonAddTitle,
   NavLinkTitleWishlist
@@ -171,7 +171,7 @@ export class WishListBase extends React.Component<Props, State> {
             <Paper elevation={ 0 } className={ classes.formItem }>
               <TextField
                 className={ classes.textFieldForm }
-                placeholder={ WishlistNameText }
+                placeholder={ WishlistNameTitle }
                 value={ this.state.name }
                 variant={ 'outlined' }
                 onChange={ this.handleChangeName }

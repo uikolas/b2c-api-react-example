@@ -13,7 +13,7 @@ import { styles } from './styles';
 import { connect } from './connect';
 import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
 import {
-  PanelBillingAddressText,
+  PanelBillingAddressTitle,
   OrderDetailShippingAddressTitle,
   EmptyAddressMessage,
   ButtonAddAddressTitle
@@ -66,7 +66,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
             {
               item.isDefaultBilling
                 ? <Chip
-                    label={ PanelBillingAddressText }
+                    label={ PanelBillingAddressTitle }
                     variant="outlined"
                     className={ classes.chips }
                 />

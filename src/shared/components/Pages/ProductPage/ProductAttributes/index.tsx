@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product';
 import { styles } from './styles';
 import { ProductBlockTitleProductDetails } from 'src/shared/translation/translations';
-import { NoTranslationText } from 'src/shared/translation/translations';
+import { NoTranslationTitle } from 'src/shared/translation/translations';
 
 
 interface ProductAttributesProps extends WithStyles<typeof styles> {
@@ -31,7 +31,7 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
               <Typography component="div" color="inherit" gutterBottom={ true } className={ classes.valuesBlock }>
                 <p>
                   <Typography variant="subheading" component="strong">
-                    { `${attributeNames[data[0]] ? attributeNames[data[0]] : NoTranslationText}: ` }
+                    { `${attributeNames[data[0]] ? attributeNames[data[0]] : NoTranslationTitle}: ` }
                   </Typography>
                 </p>
                 <Typography variant="subheading" component="span">

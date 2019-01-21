@@ -13,7 +13,7 @@ import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
 import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
 import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper/index';
-import { CartIsEmptyTooltipText } from 'src/shared/translation/translations';
+import { CartIsEmptyTooltipMessage } from 'src/shared/translation/translations';
 
 
 @(withRouter as any)
@@ -82,7 +82,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
     return (
       <div>
         { cartItemsQuantity === 0
-          ? (<Tooltip disableFocusListener placement="top" title={CartIsEmptyTooltipText}>
+          ? (<Tooltip disableFocusListener placement="top" title={CartIsEmptyTooltipMessage}>
               { cartButton }
             </Tooltip>)
           : cartButton

@@ -20,7 +20,7 @@ import { AppPrice } from '../AppPrice';
 import { ProductLabel } from 'src/shared/components/Common/ProductLabel';
 import { getOneProductImage } from 'src/shared/helpers/product/imageSetsParser';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
-import { NoNameText } from 'src/shared/translation/translations';
+import { NoNameTitle } from 'src/shared/translation/translations';
 
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
@@ -32,7 +32,7 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
 }
 
 export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
-  const {classes, images, name = NoNameText, prices, sku, label} = props;
+  const {classes, images, name = NoNameTitle, prices, sku, label} = props;
 
   let actualPriceGross = 0;
   let actualPriceNet = 0;

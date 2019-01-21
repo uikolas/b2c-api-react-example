@@ -24,10 +24,10 @@ import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
 import {
-  NoFoundText,
+  NoFoundMessage,
   CategoriesPanelTitle,
-  SuggestedProductsText,
-  AllSuggestedProductsText
+  SuggestedProductsTitle,
+  AllSuggestedProductsTitle
 } from 'src/shared/translation/translations';
 
 
@@ -299,7 +299,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         <div {...options.containerProps}>
           <Paper square>
             <Typography paragraph variant="headline">
-              { NoFoundText }
+              { NoFoundMessage }
             </Typography>
           </Paper>
         </div>
@@ -316,7 +316,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
           <Divider />
           <div className={classes.marginTop}>{renderedCategories}</div>
           <Typography component="h4" className={classes.categoryTitle}>
-            { SuggestedProductsText }
+            { SuggestedProductsTitle }
           </Typography>
 
           <Divider />
@@ -329,7 +329,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             onClick={this.handleSearchCompletion}
             className={classes.linkAll}
           >
-            { AllSuggestedProductsText }
+            { AllSuggestedProductsTitle }
           </NavLink>
         </div>
       </div>

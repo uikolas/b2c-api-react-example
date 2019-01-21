@@ -12,7 +12,7 @@ import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/selectors/Com
 import { formStyles } from '../styles';
 import {
   ResetPasswordTitle,
-  EnterNewPasswordText,
+  EnterNewPasswordMessage,
   ConfirmPasswordTitle,
   PasswordTitle
 } from 'src/shared/translation/translations';
@@ -70,7 +70,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
         >
           <Paper className={ classes.forgot }>
             <Typography variant="headline" paragraph>{ ResetPasswordTitle }</Typography>
-            <div>{ EnterNewPasswordText }</div>
+            <div>{ EnterNewPasswordMessage }</div>
             <form noValidate autoComplete="off">
 
               <TextField

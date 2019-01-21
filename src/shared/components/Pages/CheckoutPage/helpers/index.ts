@@ -20,10 +20,10 @@ import {
 import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
 import {RegExpZipCode} from "src/shared/constants/forms/regexp";
 import {
-  PanelDeliveryAddressText,
-  PanelBillingAddressText,
-  PanelShipmentText,
-  PanelPaymentText
+  PanelDeliveryAddressTitle,
+  PanelBillingAddressTitle,
+  PanelShipmentTitle,
+  PanelPaymentTitle
 } from 'src/shared/translation/translations';
 
 
@@ -123,19 +123,19 @@ export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState)
 
   const response = {
     first: {
-      title: PanelDeliveryAddressText,
+      title: PanelDeliveryAddressTitle,
       isDisabled: isFirstPanelDisabled,
     },
     second: {
-      title: PanelBillingAddressText,
+      title: PanelBillingAddressTitle,
       isDisabled: isSecondPanelDisabled,
     },
     third: {
-      title: PanelShipmentText,
+      title: PanelShipmentTitle,
       isDisabled: isThirdPanelDisabled,
     },
     fourth: {
-      title: PanelPaymentText,
+      title: PanelPaymentTitle,
       isDisabled: isFourthPanelDisabled,
     },
   };

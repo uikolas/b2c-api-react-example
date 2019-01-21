@@ -7,7 +7,7 @@ import { ICartAddItem, TCartAddItemCollection, TCartId } from 'src/shared/interf
 import { parseAddToCartResponse, parseCartCreateResponse } from 'src/shared/helpers/cart';
 import * as cartActions from 'src/shared/actions/Common/Cart';
 import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation/translations';
-import { CartAuthenticateErrorText } from 'src/shared/translation/translations';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation/translations';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
@@ -18,7 +18,7 @@ export class CartService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
 
       if (!token) {
-        throw new Error(CartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
 
       setAuthToken(token);
@@ -60,7 +60,7 @@ export class CartService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
 
       if (!token) {
-        throw new Error(CartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
 
       setAuthToken(token);
@@ -99,7 +99,7 @@ export class CartService extends ApiServiceAbstract {
       const endpoint = `carts/${cartId}/items`;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.post(endpoint, body, {withCredentials: true});
@@ -180,7 +180,7 @@ export class CartService extends ApiServiceAbstract {
       const endpoint = `carts/${cartId}/items/${sku}`;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.patch(endpoint, body, {withCredentials: true});
@@ -270,7 +270,7 @@ export class CartService extends ApiServiceAbstract {
       const endpoint = `carts/${cartId}/items`;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.post(endpoint, body, {withCredentials: true});

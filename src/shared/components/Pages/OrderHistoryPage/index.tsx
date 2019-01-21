@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
 import {connect} from './connect';
 import {styles} from './styles';
-import {NoOrderText} from '../../../translation/translations';
+import {NoOrderMessage} from '../../../translation/translations';
 import {OrderList} from './OrderList';
 import {OrdersHistoryPageTitle} from "src/shared/translation/translations";
 import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
@@ -62,7 +62,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
                     ? <Grid item xs={12}>
                         <OrderList orders={orders} />
                       </Grid>
-                    : <EmptyOrder intro={NoOrderText} />
+                    : <EmptyOrder intro={NoOrderMessage} />
                   }
                 </Grid>
               </div>

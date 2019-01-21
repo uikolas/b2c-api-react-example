@@ -17,7 +17,7 @@ import {
   createRangeFilterItemCombined,
 } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
-import { ActiveFiltersText, ResetAllFiltersButtonTitle } from 'src/shared/translation/translations';
+import { ActiveFiltersTitle, ResetAllFiltersButtonTitle } from 'src/shared/translation/translations';
 
 export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props) => {
   const {
@@ -88,7 +88,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <AppPageSubTitle title={ ActiveFiltersText }/>
+        <AppPageSubTitle title={ ActiveFiltersTitle }/>
       </Grid>
 
       <Grid container

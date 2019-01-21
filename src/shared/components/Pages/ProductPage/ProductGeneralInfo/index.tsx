@@ -11,7 +11,7 @@ import {
   TProductSKU,
 } from 'src/shared/interfaces/product';
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import { NoNameText, NoPriceText, IncVatMessage } from 'src/shared/translation/translations';
+import { NoNameTitle, NoPriceTitle, IncVatMessage } from 'src/shared/translation/translations';
 
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
@@ -24,7 +24,7 @@ interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
 
 
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
-  const {classes, name = NoNameText, price = NoPriceText, oldPrice, availability} = props;
+  const {classes, name = NoNameTitle, price = NoPriceTitle, oldPrice, availability} = props;
 
   return (
     <div className={ classes.root }>

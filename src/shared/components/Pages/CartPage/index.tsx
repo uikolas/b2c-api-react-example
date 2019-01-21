@@ -13,13 +13,13 @@ import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
 import {
-  CartIsEmptyGoShoppingText,
+  CartIsEmptyGoShoppingMessage,
     OrderDetailTableHeaderPrice,
     OrderDetailTableHeaderItems,
     OrderDetailTableHeaderQuantity,
     CartTitle,
     CartQuestTitle,
-    CartTitleItemText
+    CartItemTitle
 } from 'src/shared/translation/translations';
 
 @connect
@@ -114,7 +114,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               noWrap
               align="center"
             >
-              {CartIsEmptyGoShoppingText}
+              {CartIsEmptyGoShoppingMessage}
             </Typography>
           </Grid>
         </AppMain>
@@ -137,7 +137,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               <span>{ ` - ${totalQty} ` }</span>
               <FormattedPlural
                 value={ totalQty }
-                one={ CartTitleItemText }
+                one={ CartItemTitle }
                 other={ OrderDetailTableHeaderItems }
               />
             </Typography>

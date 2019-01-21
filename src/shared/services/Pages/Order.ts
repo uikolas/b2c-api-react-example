@@ -9,7 +9,7 @@ import {
   ordersCollectionPendingStateAction,
   ordersCollectionRejectedStateAction,
 } from 'src/shared/actions/Pages/Order';
-import { OrderAuthenticateErrorText } from 'src/shared/translation/translations';
+import { OrderAuthenticateErrorMessage } from 'src/shared/translation/translations';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/shared/helpers/order/response';
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
@@ -24,7 +24,7 @@ export class OrderService extends ApiServiceAbstract {
       let response: any;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(OrderAuthenticateErrorText);
+        throw new Error(OrderAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.get('orders', null, {withCredentials: true});
@@ -52,7 +52,7 @@ export class OrderService extends ApiServiceAbstract {
       let response: any;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(OrderAuthenticateErrorText);
+        throw new Error(OrderAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const endpoint = `orders/${orderId}`;

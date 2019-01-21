@@ -11,7 +11,7 @@ import {getAddressFormSettings} from "src/shared/components/Pages/CheckoutPage/C
 import {
   getDeliverySavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
-import {FormTextWaitingForResponse, InputLabelEmail} from "src/shared/translation/translations";
+import {FormWaitingForResponseTitle, InputLabelEmail} from "src/shared/translation/translations";
 
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
@@ -87,7 +87,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
             <Grid item xs={12}>
               { isUserLoggedIn
                 ? (!isCheckoutFulfilled)
-                  ? <AppPageSubTitle title={FormTextWaitingForResponse} />
+                  ? <AppPageSubTitle title={FormWaitingForResponseTitle} />
                   : <React.Fragment>
                     {addressesCollection && addressesCollection.length && selectionForm}
                     {deliverySelections.isAddNew ? inputsForm : null}

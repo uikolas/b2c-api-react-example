@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
-import { EmptyRequiredFieldsErrorText } from 'src/shared/translation/translations';
+import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation/translations';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
@@ -23,7 +23,7 @@ import {
     InputLabelEmail,
     PasswordTitle,
     ConfirmPasswordTitle,
-    PasswordsNotEqualErrorText
+    PasswordsNotEqualErrorMessage
 } from 'src/shared/translation/translations';
 
 export class RegisterFormBase extends React.Component<Props, State> {
@@ -53,12 +53,12 @@ export class RegisterFormBase extends React.Component<Props, State> {
     const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
     e.preventDefault();
     if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-      toast.warn(EmptyRequiredFieldsErrorText);
+      toast.warn(EmptyRequiredFieldsErrorMessage);
       return null;
     }
 
     if (password !== confirmPassword) {
-      toast.warn(PasswordsNotEqualErrorText);
+      toast.warn(PasswordsNotEqualErrorMessage);
       return null;
     }
 

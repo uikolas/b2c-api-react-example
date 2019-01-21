@@ -10,10 +10,10 @@ import {
   CategoryNameWorkstations
 } from 'src/shared/translation/translations';
 import {
-  HomePageComputersBtnText,
-  HomePageNotebooksBtnText,
-  HomePageTabletsBtnText,
-  HomePageWorkstationsBtnText
+  HomePageComputersBtnTitle,
+  HomePageNotebooksBtnTitle,
+  HomePageTabletsBtnTitle,
+  HomePageWorkstationsBtnTitle
 } from 'src/shared/translation/translations';
 import {
   pathCategoryComputers,
@@ -29,27 +29,27 @@ export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
     text: CategoryIntroComputers,
     img: computersSrc,
     path: pathCategoryComputers,
-    linkTitle: HomePageComputersBtnText,
+    linkTitle: HomePageComputersBtnTitle,
   },
   {
     title: CategoryNameNotebooks,
     text: CategoryIntroNotebooks,
     img: notebooksSrc,
     path: pathCategoryNotebooks,
-    linkTitle: HomePageNotebooksBtnText,
+    linkTitle: HomePageNotebooksBtnTitle,
   },
   {
     title: CategoryNameTablets,
     text: CategoryIntroTablets,
     img: tabletsSrc,
     path: pathCategoryTablets,
-    linkTitle: HomePageTabletsBtnText,
+    linkTitle: HomePageTabletsBtnTitle,
   },
   {
     title: CategoryNameWorkstations,
     text: CategoryIntroWorkstations,
     img: workstationsSrc,
     path: pathCategoryWorkstations,
-    linkTitle: HomePageWorkstationsBtnText,
+    linkTitle: HomePageWorkstationsBtnTitle,
   },
 ];

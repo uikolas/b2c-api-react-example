@@ -5,8 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { IFoundItemsProps } from 'src/shared/components/Pages/SearchPage/FoundItems/types';
 import {
-    NoFoundText,
-    CartTitleItemText,
+    NoFoundMessage,
+    CartItemTitle,
     OrderDetailTableHeaderItems,
     FoundTitle
 } from 'src/shared/translation/translations';
@@ -26,8 +26,8 @@ export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
       <Grid item xs={ 12 }>
         <Typography color="inherit" component="p" className={ classes.paragraph }>
           { numberFound
-            ? `${numberFound} ${(numberFound === 1) ? CartTitleItemText : OrderDetailTableHeaderItems} ${FoundTitle}`
-            : NoFoundText
+            ? `${numberFound} ${(numberFound === 1) ? CartItemTitle : OrderDetailTableHeaderItems} ${FoundTitle}`
+            : NoFoundMessage
           }
         </Typography>
       </Grid>

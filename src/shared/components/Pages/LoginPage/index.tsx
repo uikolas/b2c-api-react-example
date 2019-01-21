@@ -15,7 +15,7 @@ import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { styles } from './styles';
-import { ForgotPasswordText } from 'src/shared/translation/translations';
+import { ForgotPasswordTitle } from 'src/shared/translation/translations';
 
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
@@ -57,7 +57,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
           />
           <div className={ classes.link }>
             <NavLink to={ pathForgotPassword }>
-                { ForgotPasswordText }
+                { ForgotPasswordTitle }
             </NavLink>
           </div>
         </Grid>

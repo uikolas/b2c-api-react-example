@@ -4,9 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import {connect} from './connect';
-import {NoOrderText} from 'src/shared/translation/translations';
+import {NoOrderMessage} from 'src/shared/translation/translations';
 import {IOrderDetailsItem, IOrderDetailsSelectedItems} from 'src/shared/interfaces/order';
-import {EmptyValueErrorText} from 'src/shared/translation/translations';
+import {EmptyValueErrorMessage} from 'src/shared/translation/translations';
 import {ICartAddItem} from 'src/shared/interfaces/cart';
 import {OrderDetailsGeneralInfo} from './OrderDetailsGeneralInfo';
 import {OrderProductList} from './OrderProductsList';
@@ -45,7 +45,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     const key = event.target.value;
 
     if (!key) {
-      throw new Error(EmptyValueErrorText);
+      throw new Error(EmptyValueErrorMessage);
     }
 
     this.setState((prevState: State) => {
@@ -141,7 +141,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                       shippingBlockTitle={OrderDetailShippingAddressTitle}
                     />
                   </Grid>
-                : <EmptyOrder intro={NoOrderText} />
+                : <EmptyOrder intro={NoOrderMessage} />
               }
             </Grid>
           )
