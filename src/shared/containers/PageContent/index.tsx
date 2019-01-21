@@ -9,18 +9,18 @@ import { IComponent } from 'src/typings/app';
 import { getContentRoutes, pathCategoryPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppHeader } from 'src/shared/components/Common/AppHeader';
 import { AppFooter } from 'src/shared/components/Common/AppFooter';
-import { isStateLoading } from 'src/shared/reducers';
+import { isStateLoading } from '@stores/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
     getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled, TAppLocale
-} from 'src/shared/reducers/Common/Init';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+} from '@stores/reducers/common/init';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
-import { initApplicationDataAction, setAuthFromStorageAction } from 'src/shared/actions/Common/Init';
-import { getCustomerCartsAction, getGuestCartAction } from 'src/shared/actions/Common/Cart';
-import { isCartCreated } from 'src/shared/reducers/Common/Cart/selectors';
-import { clearSearchTermAction } from 'src/shared/actions/Pages/Search';
+import { initApplicationDataAction, setAuthFromStorageAction } from '@stores/actions/common/Init';
+import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
+import { isCartCreated } from '@stores/reducers/common/cart/selectors';
+import { clearSearchTermAction } from '@stores/actions/pages/search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 
 const styles = require('./style.scss');

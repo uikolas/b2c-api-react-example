@@ -9,7 +9,7 @@ import {
   sendCheckoutDataPendingStateAction,
   sendCheckoutDataRejectedStateAction,
   sendCheckoutDataFulfilledStateAction,
-} from 'src/shared/actions/Pages/Checkout';
+} from '@stores/actions/pages/checkout';
 
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 

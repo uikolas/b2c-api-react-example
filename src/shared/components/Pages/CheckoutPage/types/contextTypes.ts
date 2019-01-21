@@ -8,7 +8,7 @@ import {
   IDeliverySelectionState
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
-import {ICountries} from "src/shared/reducers/Common/Init";
+import {ICountries} from "@stores/reducers/common/init";
 import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {
   TCurrentValueBillingSelection,

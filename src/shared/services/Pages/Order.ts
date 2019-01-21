@@ -8,7 +8,7 @@ import {
   ordersCollectionFulfilledStateAction,
   ordersCollectionPendingStateAction,
   ordersCollectionRejectedStateAction,
-} from 'src/shared/actions/Pages/Order';
+} from '@stores/actions/pages/order';
 import { orderAuthenticateErrorText } from 'src/shared/constants/messages/errors';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/shared/helpers/order/response';
 import { TOrderId } from 'src/shared/interfaces/order';

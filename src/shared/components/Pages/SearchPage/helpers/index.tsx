@@ -9,7 +9,7 @@ import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { rangeMaxType, rangeMinType, TActiveRangeFilters } from 'src/shared/components/Pages/SearchPage/types';
 import {IActiveFilterCategories} from "src/shared/components/Pages/SearchPage/CategoriesList/types";
 import {labeledCategories} from "src/shared/routes/categoriesRoutes";
-import {ICategory} from "src/shared/reducers/Common/Init";
+import {ICategory} from "@stores/reducers/common/init";
 
 export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
                                   defaultRanges: ISearchPageData['rangeFilters']): boolean => {

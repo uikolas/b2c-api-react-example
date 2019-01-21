@@ -8,9 +8,9 @@ import {
   isPageCustomerProfileFulfilled,
   isPageCustomerProfileLoading,
   isPageCustomerProfileRejected,
-} from 'src/shared/reducers/Pages/CustomerProfile';
-import { isAppInitiated } from 'src/shared/reducers/Common/Init';
-import { getCustomerReference, isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
+} from '@stores/reducers/pages/CustomerProfile';
+import { isAppInitiated } from '@stores/reducers/common/init';
+import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/pages/login';
 import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
@@ -23,7 +23,7 @@ import {
   saveLoginDataToStoreAction,
   updateCustomerPasswordAction,
   updateCustomerProfileAction,
-} from 'src/shared/actions/Pages/CustomerProfile';
+} from '@stores/actions/pages/customerProfile';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const location = getRouterLocation(state, ownProps);

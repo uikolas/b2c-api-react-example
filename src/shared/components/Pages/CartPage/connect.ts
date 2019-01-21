@@ -6,12 +6,12 @@ import {
   removeItemGuestCartAction,
   updateItemInCartAction,
   updateGuestCartAction
-} from 'src/shared/actions/Common/Cart';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
-import { getAnonymId } from 'src/shared/reducers/Common/Init';
+} from '@stores/actions/common/cart';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
+import { getAnonymId } from '@stores/reducers/common/init';
 import { RouteProps } from "react-router";
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
-import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
+import {getCartId, getCartTotals, getProductsFromCart} from "@stores/reducers/common/cart/selectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);

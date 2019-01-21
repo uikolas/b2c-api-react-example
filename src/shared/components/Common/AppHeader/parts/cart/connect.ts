@@ -1,5 +1,5 @@
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getTotalItemsQuantity, getTotalProductsQuantity} from "src/shared/reducers/Common/Cart/selectors";
+import {getTotalItemsQuantity, getTotalProductsQuantity} from "@stores/reducers/common/cart/selectors";
 
 
 const mapStateToProps = (state: any, ownProps: any) => ({

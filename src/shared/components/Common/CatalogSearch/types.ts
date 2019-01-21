@@ -2,7 +2,7 @@ import { WithStyles } from '@material-ui/core';
 import { RouteProps } from 'react-router';
 import { styles } from './styles';
 import { FlyoutSearch, ISearchQuery } from 'src/shared/interfaces/searchPageData';
-import {ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init';
+import {ICategory, TAppCurrency} from '@stores/reducers/common/init';
 
 export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, FlyoutSearch {
   // connect

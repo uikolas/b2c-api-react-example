@@ -3,7 +3,7 @@ import { styles } from 'src/shared/components/Pages/OrderDetailsPage/styles';
 import { RouteProps } from 'react-router';
 import { TRouterMatchParam } from 'src/shared/helpers/router/router';
 import { IOrderDetailsParsed, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
-import {TAppCurrency, TAppTimeZone} from 'src/shared/reducers/Common/Init';
+import {TAppCurrency, TAppTimeZone} from '@stores/reducers/common/init';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
 

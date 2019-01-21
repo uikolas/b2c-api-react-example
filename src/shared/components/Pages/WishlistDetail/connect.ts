@@ -1,13 +1,13 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { RouteProps } from 'react-router';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist';
-import { getAppCurrency, TAppCurrency } from 'src/shared/reducers/Common/Init';
+import { WishlistState } from '@stores/reducers/pages/wishlist';
+import { getAppCurrency, TAppCurrency } from '@stores/reducers/common/init';
 import { TCartId } from 'src/shared/interfaces/cart';
-import { deleteItemAction, deleteMultiItemsAction } from 'src/shared/actions/Pages/Wishlist';
-import { addItemToCartAction, multiItemsCartAction } from 'src/shared/actions/Common/Cart';
+import { deleteItemAction, deleteMultiItemsAction } from '@stores/actions/pages/wishlist';
+import { addItemToCartAction, multiItemsCartAction } from '@stores/actions/common/cart';
 import { push } from 'react-router-redux';
-import {getCartId, getTotalItemsQuantity, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
+import {getCartId, getTotalItemsQuantity, isCartStateLoading} from "@stores/reducers/common/cart/selectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const routerProps: RouteProps = state.routing ? state.routing : {};

@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import {FilterValue, TLocalizedName} from 'src/shared/interfaces/searchPageData';
-import { ICategory } from 'src/shared/reducers/Common/Init';
+import { ICategory } from '@stores/reducers/common/init';
 import { TCategoryId } from 'src/shared/components/Pages/SearchPage/types';
 
 
