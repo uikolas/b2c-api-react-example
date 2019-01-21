@@ -10,7 +10,7 @@ import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { ICartItem } from 'src/shared/interfaces/cart';
 import { styles } from '../styles';
 import { CartRowsProps as Props } from './types';
-import { RemoveBtnTitle } from 'src/shared/translation/translations';
+import { RemoveBtnTitle } from 'src/shared/translation';
 
 
 export const CartRowsComponent: React.SFC<Props> = (

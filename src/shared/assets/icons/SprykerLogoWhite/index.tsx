@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ISprykerLogoWhiteProps } from "./types";
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { LogoSprykerMainTitle, LogoSprykerTitle } from 'src/shared/translation/translations';
+import { LogoSprykerMainTitle, LogoSprykerTitle } from 'src/shared/translation';
 
 /* tslint:disable */
 const path1 = `M198.5,516.8c-1.2,0.9-2.7,1.8-4.2,2.9c-1.5,1-3,2.1-4.4,3.3c-1.2,1.1-2.2,2.3-3,3.8c-0.7,1.3-0.9,2.9-0.5,4.3
@@ -74,7 +74,7 @@ export const SprykerLogoWhiteBase: React.SFC<ISprykerLogoWhiteProps> = (props) =
          viewBox="0 120 1650 380"
          className={`${classes.root} ${extraClassName ? extraClassName : ''}`}
     >
-      <title>{LogoSprykerMainTitle}</title>
+      <title>{LogoSprykerTitle}</title>
       <path className={classes.st0} d={path1} />
       <path className={classes.st0} d={path2} />
       <path className={classes.st0} d={path3} />

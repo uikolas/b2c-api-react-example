@@ -33,7 +33,7 @@ import {
     RemoveBtnTitle,
     AddAllProductsToCartMessage,
     WishlistEmptyMessage
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {

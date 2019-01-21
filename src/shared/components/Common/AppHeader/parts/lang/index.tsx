@@ -7,7 +7,7 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
-import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation/translations';
+import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation';
 
 
 const availableLanguages: language[] = [

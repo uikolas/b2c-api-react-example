@@ -11,7 +11,7 @@ import {
   OrderDetailTableHeaderPrice,
   OrderDetailTableHeaderQuantity,
   OrderDetailTableHeaderTotal
-} from "src/shared/translation/translations";
+} from "src/shared/translation";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
 import {appFixedDimensions} from "src/shared/theme/properties/new/appFixedDimensions";
 import {AppTable} from "src/shared/components/Common/AppTable/index";

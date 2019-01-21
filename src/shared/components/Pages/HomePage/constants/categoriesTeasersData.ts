@@ -8,13 +8,13 @@ import {
   CategoryNameNotebooks,
   CategoryNameTablets,
   CategoryNameWorkstations
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 import {
   HomePageComputersBtnTitle,
   HomePageNotebooksBtnTitle,
   HomePageTabletsBtnTitle,
   HomePageWorkstationsBtnTitle
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 import {
   pathCategoryComputers,
   pathCategoryNotebooks,

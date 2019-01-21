@@ -4,7 +4,7 @@ import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import * as cartActions from 'src/shared/actions/Common/Cart';
-import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation/translations';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
 
 export class GuestCartService extends ApiServiceAbstract {
   public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<void> {

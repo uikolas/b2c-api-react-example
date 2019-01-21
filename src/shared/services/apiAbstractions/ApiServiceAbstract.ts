@@ -1,4 +1,4 @@
-import { UnexpectedServerError } from 'src/shared/translation/translations';
+import { UnexpectedServerError } from 'src/shared/translation';
 import {IErrorItem, IResponseError} from "./types";
 
 export class ApiServiceAbstract {

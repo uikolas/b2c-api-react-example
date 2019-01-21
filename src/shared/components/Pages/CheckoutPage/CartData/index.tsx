@@ -20,7 +20,7 @@ import {
   CartTitle,
   PlaceOrder,
   OrderDetailGrandTotal,
-} from "src/shared/translation/translations";
+} from "src/shared/translation";
 
 
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {

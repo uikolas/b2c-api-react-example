@@ -23,7 +23,7 @@ import {AppMain} from "src/shared/components/Common/AppMain";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {OrderSuccess} from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
-import {InputSaveErrorMessage} from "src/shared/translation/translations";
+import {InputSaveErrorMessage} from "src/shared/translation";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -70,7 +70,7 @@ import {
   validateInvoiceInput
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
-import {NoProductsInCheckoutMessage} from "src/shared/translation/translations";
+import {NoProductsInCheckoutMessage} from "src/shared/translation";
 import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/common/react";
 import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {ICheckoutRequest} from "src/shared/interfaces/checkout";

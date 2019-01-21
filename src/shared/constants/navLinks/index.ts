@@ -10,7 +10,7 @@ import {
   NavLinkTitleAddresses,
   NavLinkTitleOrderHistory,
   NavLinkTitleWishlist
-} from '../../translation/translations';
+} from '../../translation/index';
 
 
 export const customerProfileNavLinks: Array<INavLinkData> = [

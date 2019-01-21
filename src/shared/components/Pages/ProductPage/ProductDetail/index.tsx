@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { IProductDetailProps } from './types';
 import { ProductAttributes } from 'src/shared/components/Pages/ProductPage/ProductAttributes';
-import { ProductBlockTitleDescription, ProductSKUTitle } from 'src/shared/translation/translations';
+import { ProductBlockTitleDescription, ProductSKUTitle } from 'src/shared/translation';
 import Typography from '@material-ui/core/Typography';
 
 

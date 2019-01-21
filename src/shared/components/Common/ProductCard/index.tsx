@@ -20,7 +20,7 @@ import { AppPrice } from '../AppPrice';
 import { ProductLabel } from 'src/shared/components/Common/ProductLabel';
 import { getOneProductImage } from 'src/shared/helpers/product/imageSetsParser';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
-import { NoNameTitle } from 'src/shared/translation/translations';
+import { NoNameTitle } from 'src/shared/translation';
 
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {

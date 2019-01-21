@@ -8,7 +8,7 @@ import { ProductCard } from 'src/shared/components/Common/ProductCard';
 import { AppPageHeadline } from 'src/shared/components/Common/AppPageHeadline';
 import { getProductLabel } from 'src/shared/helpers/product/label';
 import { IProductsListProps } from 'src/shared/components/Pages/SearchPage/ProductsList/types';
-import { EmptyPageTitle, LoadingPageTitle } from 'src/shared/translation/translations';
+import { EmptyPageTitle, LoadingPageTitle } from 'src/shared/translation';
 
 export const ProductsListBase: React.SFC<IProductsListProps> = (props) => {
   const {

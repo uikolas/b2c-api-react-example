@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { formStyles } from '../styles';
 import { TCustomerPassword, TCustomerUsername } from 'src/shared/interfaces/customer';
 import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
-import { InputLabelEmail, PasswordTitle, LogindTitle } from 'src/shared/translation/translations';
+import { InputLabelEmail, PasswordTitle, LogindTitle } from 'src/shared/translation';
 
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {

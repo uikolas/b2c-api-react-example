@@ -20,7 +20,7 @@ import {
     CartTitle,
     CartQuestTitle,
     CartItemTitle
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {

@@ -4,8 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product';
 import { styles } from './styles';
-import { ProductBlockTitleProductDetails } from 'src/shared/translation/translations';
-import { NoTranslationTitle } from 'src/shared/translation/translations';
+import { ProductBlockTitleProductDetails } from 'src/shared/translation';
+import { NoTranslationTitle } from 'src/shared/translation';
 
 
 interface ProductAttributesProps extends WithStyles<typeof styles> {

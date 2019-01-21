@@ -11,7 +11,7 @@ import {
   InputLabelStreetExtra,
   InputLabelZipCode,
   FirstItemInSelect
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';

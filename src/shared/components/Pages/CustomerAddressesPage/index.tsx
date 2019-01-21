@@ -17,7 +17,7 @@ import {
   OrderDetailShippingAddressTitle,
   EmptyAddressMessage,
   ButtonAddAddressTitle
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 
 @connect

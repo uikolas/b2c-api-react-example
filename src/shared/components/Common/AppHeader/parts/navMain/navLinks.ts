@@ -13,7 +13,7 @@ import {
   CategoryNameSale,
   CategoryNameTablets,
   CategoryNameWorkstations
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 export const navLinks = [
   {

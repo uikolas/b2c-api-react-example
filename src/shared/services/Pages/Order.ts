@@ -9,7 +9,7 @@ import {
   ordersCollectionPendingStateAction,
   ordersCollectionRejectedStateAction,
 } from 'src/shared/actions/Pages/Order';
-import { OrderAuthenticateErrorMessage } from 'src/shared/translation/translations';
+import { OrderAuthenticateErrorMessage } from 'src/shared/translation';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/shared/helpers/order/response';
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';

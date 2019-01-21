@@ -15,7 +15,7 @@ import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { styles } from './styles';
-import { ForgotPasswordTitle } from 'src/shared/translation/translations';
+import { ForgotPasswordTitle } from 'src/shared/translation';
 
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {

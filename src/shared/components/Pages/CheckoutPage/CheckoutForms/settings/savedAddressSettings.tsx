@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   InputLabelSelectSavedBillingAddress,
   InputLabelSelectSavedDeliveryAddress
-} from "src/shared/translation/translations";
+} from "src/shared/translation";
 import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
 import { IAddressItemCollection } from "src/shared/interfaces/addresses";
 import {

@@ -13,7 +13,7 @@ import {
   InputLabelDefaultDeliveryAddress,
   InputLabelDefaultShippingAddress,
   FirstItemInSelect
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { ICountries } from 'src/shared/reducers/Common/Init';

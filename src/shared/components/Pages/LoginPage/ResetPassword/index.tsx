@@ -15,7 +15,7 @@ import {
   EnterNewPasswordMessage,
   ConfirmPasswordTitle,
   PasswordTitle
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {

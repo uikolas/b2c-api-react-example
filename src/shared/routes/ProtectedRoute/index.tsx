@@ -5,7 +5,7 @@ import { Route, withRouter } from 'react-router';
 import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../contentRoutes';
-import { CustomerLogout } from 'src/shared/translation/translations';
+import { CustomerLogout } from 'src/shared/translation';
 
 @connect
 @(withRouter as any)

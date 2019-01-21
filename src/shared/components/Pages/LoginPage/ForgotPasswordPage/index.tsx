@@ -17,7 +17,7 @@ import {
     ButtonSubmitTitle,
     RecoveryPasswordMessage,
     EnterEmailAddressMessage
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {

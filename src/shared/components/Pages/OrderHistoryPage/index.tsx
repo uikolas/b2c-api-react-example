@@ -5,9 +5,9 @@ import Grid from '@material-ui/core/Grid';
 import {IOrderHistoryPageProps, IOrderHistoryPageState} from "./types";
 import {connect} from './connect';
 import {styles} from './styles';
-import {NoOrderMessage} from '../../../translation/translations';
+import {NoOrderMessage} from '../../../translation/index';
 import {OrderList} from './OrderList';
-import {OrdersHistoryPageTitle} from "src/shared/translation/translations";
+import {OrdersHistoryPageTitle} from "src/shared/translation";
 import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
 import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
 

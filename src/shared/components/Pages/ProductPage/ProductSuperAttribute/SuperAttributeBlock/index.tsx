@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { SuperAttributeItem } from '../SuperAttributeItem';
 import { SuperAttributeBlockProps as Props, SuperAttributeBlockState as State } from './types';
 import { styles } from './styles';
-import { ProductBlockTitleAttribute } from 'src/shared/translation/translations';
+import { ProductBlockTitleAttribute } from 'src/shared/translation';
 
 export class SuperAttributeBlockComponent extends React.PureComponent<Props, State> {
   public state: State = {

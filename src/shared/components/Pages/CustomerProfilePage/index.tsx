@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {
   EmptyRequiredFieldsErrorMessage,
   PasswordsNotEqualErrorMessage,
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
@@ -15,7 +15,7 @@ import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitl
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
-import { ConfirmDeleteAccountMessage } from 'src/shared/translation/translations';
+import { ConfirmDeleteAccountMessage } from 'src/shared/translation';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';

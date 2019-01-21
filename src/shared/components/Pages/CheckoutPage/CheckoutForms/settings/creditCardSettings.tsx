@@ -9,7 +9,7 @@ import {
   InputLabelPaymentExpiryDate,
   InputLabelPaymentProvider,
   FirstItemInSelect
-} from "src/shared/translation/translations";
+} from "src/shared/translation";
 import {IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
 
 

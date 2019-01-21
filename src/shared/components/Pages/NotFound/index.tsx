@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PageNotFoundMessage } from 'src/shared/translation/translations';
+import { PageNotFoundMessage } from 'src/shared/translation';
 
 export class NotFound extends React.PureComponent<any, any> {
   public displayName: string = 'NotFound';

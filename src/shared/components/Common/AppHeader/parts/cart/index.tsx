@@ -13,7 +13,7 @@ import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
 import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
 import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper/index';
-import { CartIsEmptyTooltipMessage } from 'src/shared/translation/translations';
+import { CartIsEmptyTooltipMessage } from 'src/shared/translation';
 
 
 @(withRouter as any)

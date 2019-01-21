@@ -28,7 +28,7 @@ import {
   CategoriesPanelTitle,
   SuggestedProductsTitle,
   AllSuggestedProductsTitle
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 
 @connect

@@ -5,7 +5,7 @@ import { pathHomePage } from 'src/shared/routes/contentRoutes';
 import { LogoProps as Props } from './types';
 import { styles } from './styles';
 import { SprykerLogoBlack } from 'src/shared/assets/icons/SprykerLogoBlack';
-import { SprykerNameText } from 'src/shared/translation/translations';
+import { SprykerNameTitle } from 'src/shared/translation';
 
 export const LogoComponent: React.SFC<Props> = ({classes}) => (
 
@@ -13,7 +13,7 @@ export const LogoComponent: React.SFC<Props> = ({classes}) => (
     <NavLink to={ pathHomePage } className={ classes.logo }>
       <SprykerLogoBlack />
     </NavLink>
-    <span className={ classes.logoCopy }>&copy; { SprykerNameText }</span>
+    <span className={ classes.logoCopy }>{ SprykerNameTitle }</span>
   </div>
 );
 

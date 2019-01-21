@@ -20,7 +20,7 @@ import {
   SocialLinkedInTitle,
   SocialTwitterTitle,
   SocialYouTubeTitle
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 
 export const categoriesLinks: link[] = [
   {

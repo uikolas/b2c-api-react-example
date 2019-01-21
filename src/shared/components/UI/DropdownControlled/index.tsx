@@ -6,7 +6,7 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { styles } from './styles';
 import { defaultItemValueDropdown } from '../../../interfaces/product/';
-import { FirstItemInSelect } from 'src/shared/translation/translations';
+import { FirstItemInSelect } from 'src/shared/translation';
 
 
 export interface IMenuItemsDropdown {

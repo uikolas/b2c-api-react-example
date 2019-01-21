@@ -1,6 +1,6 @@
 import {
   InputLabelSameAsDelivery,
-} from "src/shared/translation/translations";
+} from "src/shared/translation";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {ISameAsDeliveryParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
 

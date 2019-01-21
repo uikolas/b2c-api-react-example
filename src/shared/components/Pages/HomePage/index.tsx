@@ -13,7 +13,7 @@ import {
   HomePageBannerIntro,
   HomePageBannerTitleFirst,
   HomePageBannerTitleSecond
-} from "src/shared/translation/translations";
+} from "src/shared/translation";
 import {pathCategoryComputers} from "src/shared/routes/categoriesRoutes";
 
 

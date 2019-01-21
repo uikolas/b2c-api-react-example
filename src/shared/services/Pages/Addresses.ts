@@ -6,7 +6,7 @@ import {
   AddressAdd,
   AddressDelete,
   AddressUpdate,
-} from 'src/shared/translation/translations';
+} from 'src/shared/translation';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 
 

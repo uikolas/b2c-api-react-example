@@ -10,7 +10,7 @@ import {
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { CustomerLogin, RegisterSuccess } from 'src/shared/translation/translations';
+import { CustomerLogin, RegisterSuccess } from 'src/shared/translation';
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
