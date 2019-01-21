@@ -347,7 +347,6 @@ const config = {
             '@interfaces': path.resolve(__dirname, 'src/shared/interfaces'),
             '@routes': path.resolve(__dirname, 'src/shared/routes'),
             '@stores': path.resolve(__dirname, 'src/shared/stores'),
-            '@selectors': path.resolve(__dirname, 'src/shared/selectors'),
             '@services': path.resolve(__dirname, 'src/shared/services')
         }
     },

@@ -41,7 +41,6 @@
       "@interfaces*": ["src/shared/interfaces*"],
       "@routes*": ["src/shared/routes*"],
       "@stores*": ["src/shared/stores*"],
-      "@selectors*": ["src/shared/selectors*"],
       "@services*": ["src/shared/services*"]
     }
   },
