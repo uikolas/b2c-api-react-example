@@ -9,10 +9,10 @@ import { ProductItem } from '../productItem';
 import { CartDropProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
-import {CartDiscountsTitle, CartTitle, CartTotalTitle} from "src/shared/constants/cart/index";
-import {CheckoutTitle} from "src/shared/constants/checkout/index";
-import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
+import { CartDiscountsTitle, CartTitle, CartTotalTitle } from 'src/shared/translation';
+import { CheckoutTitle } from 'src/shared/translation';
+import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
+import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop/index';
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {

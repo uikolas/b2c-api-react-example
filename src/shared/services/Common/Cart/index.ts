@@ -6,8 +6,8 @@ import { TProductSKU } from 'src/shared/interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
 import { parseAddToCartResponse, parseCartCreateResponse } from 'src/shared/helpers/cart';
 import * as cartActions from '@stores/actions/common/cart';
-import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
-import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation'
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
@@ -18,7 +18,7 @@ export class CartService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
 
       if (!token) {
-        throw new Error(cartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
 
       setAuthToken(token);
@@ -60,7 +60,7 @@ export class CartService extends ApiServiceAbstract {
       const token = await RefreshTokenService.getActualToken(dispatch);
 
       if (!token) {
-        throw new Error(cartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
 
       setAuthToken(token);
@@ -99,7 +99,7 @@ export class CartService extends ApiServiceAbstract {
       const endpoint = `carts/${cartId}/items`;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(cartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.post(endpoint, body, {withCredentials: true});
@@ -107,7 +107,7 @@ export class CartService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
-        toast.success(cartAddProducts);
+        toast.success(CartAddProducts);
       } else {
         this.errorMessageInform(response, dispatch);
       }
@@ -141,7 +141,7 @@ export class CartService extends ApiServiceAbstract {
           itemId,
         });
 
-        toast.success(cartRemoveItems);
+        toast.success(CartRemoveItems);
         const newCartResponse: any = await api.get(`carts/${cartId}`);
 
         if (newCartResponse.ok) {
@@ -180,7 +180,7 @@ export class CartService extends ApiServiceAbstract {
       const endpoint = `carts/${cartId}/items/${sku}`;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(cartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.patch(endpoint, body, {withCredentials: true});
@@ -188,7 +188,7 @@ export class CartService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed = parseAddToCartResponse(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
-        toast.success(cartChangeQty);
+        toast.success(CartChangeQty);
       } else {
         this.errorMessageInform(response, dispatch);
       }
@@ -270,7 +270,7 @@ export class CartService extends ApiServiceAbstract {
       const endpoint = `carts/${cartId}/items`;
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(cartAuthenticateErrorText);
+        throw new Error(CartAuthenticateErrorMessage);
       }
       setAuthToken(token);
       response = await api.post(endpoint, body, {withCredentials: true});

@@ -3,10 +3,10 @@ import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import api, { setAuthToken } from '../api';
 import {
-  addressAdd,
-  addressDelete,
-  addressUpdate,
-} from 'src/shared/constants/messages/addresses';
+  AddressAdd,
+  AddressDelete,
+  AddressUpdate,
+} from 'src/shared/translation';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 
 
@@ -67,7 +67,7 @@ export class AddressesService extends ApiServiceAbstract {
           address: {id: response.data.data.id, ...response.data.data.attributes},
 
         });
-        toast.success(addressAdd);
+        toast.success(AddressAdd);
 
         // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
         await AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
@@ -101,7 +101,7 @@ export class AddressesService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(addressDelete);
+        toast.success(AddressDelete);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           addressId,
@@ -149,7 +149,7 @@ export class AddressesService extends ApiServiceAbstract {
           addressId,
           data: response.data.data.attributes,
         });
-        toast.success(addressUpdate);
+        toast.success(AddressUpdate);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({

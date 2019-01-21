@@ -3,18 +3,17 @@ import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-
-import {pathCustomerPage, pathLoginPage} from 'src/shared/routes/contentRoutes';
+import { pathCustomerPage, pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
-import {AccountTitle} from "src/shared/constants/customer/index";
-import {LogInBtnTitle, LogOutBtnTitle, RegisterBtnTitle} from "src/shared/constants/buttons/index";
-import {customerProfileNavLinks} from "src/shared/constants/navLinks/index";
-import {AppBtnLink} from "src/shared/components/Common/AppBtnLink/index";
-import {SprykerButton} from "src/shared/components/UI/SprykerButton/index";
-import {INavLinkData} from "src/shared/interfaces/navLinks/index";
+import { AccountTitle } from 'src/shared/translation';
+import { LogInBtnTitle, LogOutBtnTitle, RegisterBtnTitle } from 'src/shared/translation';
+import { customerProfileNavLinks } from 'src/shared/constants/navLinks/index';
+import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
+import { SprykerButton } from 'src/shared/components/UI/SprykerButton/index';
+import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
 
 
 @connect

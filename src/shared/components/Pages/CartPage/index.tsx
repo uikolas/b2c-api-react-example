@@ -12,6 +12,15 @@ import { OrderSummary } from './OrderSummary';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
+import {
+  CartIsEmptyGoShoppingMessage,
+    OrderDetailTableHeaderPrice,
+    OrderDetailTableHeaderItems,
+    OrderDetailTableHeaderQuantity,
+    CartTitle,
+    CartQuestTitle,
+    CartItemTitle
+} from 'src/shared/translation';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
@@ -105,7 +114,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               noWrap
               align="center"
             >
-              Empty cart, go shopping
+              {CartIsEmptyGoShoppingMessage}
             </Typography>
           </Grid>
         </AppMain>
@@ -123,20 +132,20 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
               color="primary"
             >
               <span>
-                { isUserLoggedIn ? 'Cart' : 'Cart (guest)' }
+                { isUserLoggedIn ? CartTitle : CartQuestTitle }
               </span>
-              <span>{ ` has ${totalQty} ` }</span>
+              <span>{ ` - ${totalQty} ` }</span>
               <FormattedPlural
                 value={ totalQty }
-                one='item'
-                other='items'
+                one={ CartItemTitle }
+                other={ OrderDetailTableHeaderItems }
               />
             </Typography>
             <div className={ classes.listTitle } ref={ this.listRef }>
-              <div style={ {width: '20%'} }>Item</div>
+              <div style={ {width: '20%'} }>{ OrderDetailTableHeaderItems }</div>
               <div className={ classes.itemWrapper }/>
-              <div className={ classes.quantityForm }>Quantity</div>
-              <div className={ classes.priceWrapper }>Price</div>
+              <div className={ classes.quantityForm }>{ OrderDetailTableHeaderQuantity }</div>
+              <div className={ classes.priceWrapper }>{ OrderDetailTableHeaderPrice }</div>
             </div>
             <Divider className={ classes.fullWidth }/>
             <List>

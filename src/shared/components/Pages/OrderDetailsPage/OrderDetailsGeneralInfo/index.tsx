@@ -10,7 +10,7 @@ import {
   OrderDetailPageTitle,
   OrderDetailPriceModeTitle,
   OrderDetailViewAllOrders,
-} from "src/shared/constants/orders";
+} from "src/shared/translation";
 import {CustomerPageTitle} from "src/shared/components/Common/CustomerPageTitle/index";
 import {pathOrderHistoryPage} from "src/shared/routes/contentRoutes";
 import {OrderDate} from "src/shared/components/Pages/OrderDetailsPage/OrderDate/index";
