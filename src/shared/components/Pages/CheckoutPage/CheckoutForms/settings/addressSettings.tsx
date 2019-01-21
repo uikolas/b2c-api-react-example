@@ -17,7 +17,7 @@ import {salutationVariants} from "src/shared/constants/customer";
 import {TSalutationVariant} from "src/shared/interfaces/customer";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IAddressParams} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import {ICountries} from "src/shared/reducers/Common/Init";
+import {ICountries} from "@stores/reducers/common/init";
 
 
 export const getAddressFormSettings = (formName: string, params: IAddressParams): IFormSettings => {

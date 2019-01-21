@@ -11,7 +11,7 @@ import {
   ICheckoutInvoiceState,
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
-import {ICountries} from "src/shared/reducers/Common/Init";
+import {ICountries} from "@stores/reducers/common/init";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types/contextTypes";
 import {
   ICreditCardObjectConfigInputStable,

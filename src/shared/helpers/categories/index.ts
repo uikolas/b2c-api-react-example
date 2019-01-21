@@ -1,4 +1,4 @@
-import {ICategory} from "src/shared/reducers/Common/Init";
+import {ICategory} from "@stores/reducers/common/init";
 
 export const getCategoryNameById = (categoryId: string | number, categoriesTree: Array<ICategory>): string | null => {
   if (!categoryId) {

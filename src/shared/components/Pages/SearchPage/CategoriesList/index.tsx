@@ -10,7 +10,7 @@ import {
   ICategoriesListProps
 } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
-import {ICategory} from "src/shared/reducers/Common/Init";
+import {ICategory} from "@stores/reducers/common/init";
 import {CategoriesPanelTitle} from "src/shared/constants/search";
 import {getFormattedActiveCategories} from "src/shared/components/Pages/SearchPage/helpers/index";
 

@@ -1,4 +1,4 @@
-import { getCategoriesTree, ICategory } from 'src/shared/reducers/Common/Init';
+import { getCategoriesTree, ICategory } from '@stores/reducers/common/init';
 import { reduxify } from 'src/shared/lib/redux-helper';
 
 const mapStateToProps = (state: any, ownProps: any) => {

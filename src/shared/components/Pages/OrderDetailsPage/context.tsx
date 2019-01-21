@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TAppCurrency } from '../../../reducers/Common/Init';
+import { TAppCurrency } from '@stores/reducers/Common/Init';
 import { IOrderDetailsSelectedItems } from '../../../interfaces/order';
 
 type TOrderDetailsContext = {
