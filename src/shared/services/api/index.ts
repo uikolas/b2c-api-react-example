@@ -1,5 +1,5 @@
 import { create } from 'apisauce';
-import { config } from '../../configs/server-config';
+import { config } from '../../configs/server';
 import { TAccessToken } from '../../interfaces/login';
 
 const api = create({

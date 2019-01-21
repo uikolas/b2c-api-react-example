@@ -18,7 +18,7 @@ import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loada
 
 import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
 
-import config from '../configs/server-config';
+import config from '../configs/server';
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {LoadableOrderDetailsPage} from "src/shared/components/Pages/OrderDetailsPage/loadable";
