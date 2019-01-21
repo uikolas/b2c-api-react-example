@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import * as cartActions from 'src/shared/actions/Common/Cart';
+import * as cartActions from '@stores/actions/common/cart';
 import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
 
 export class GuestCartService extends ApiServiceAbstract {

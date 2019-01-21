@@ -9,7 +9,7 @@ import {
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction,
-} from 'src/shared/actions/Common/Init';
+} from '@stores/actions/common/Init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 

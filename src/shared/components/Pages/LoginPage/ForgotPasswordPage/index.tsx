@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ChevronLeft';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { forgotPasswordAction } from 'src/shared/actions/Pages/Login';
+import { forgotPasswordAction } from '@stores/actions/pages/login';
 import { RouteProps } from 'react-router';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { formStyles } from '../styles';

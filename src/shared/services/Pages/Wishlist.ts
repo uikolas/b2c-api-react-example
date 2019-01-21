@@ -4,7 +4,7 @@ import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
 import { RefreshTokenService } from '../Common/RefreshToken';
 import { IWishlist, IWishlistItem } from 'src/shared/interfaces/wishlist';
-import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
+import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
 import { WishlistAuthenticateErrorMessage } from 'src/shared/translation';
 import {
   WishlistCreated,
@@ -13,7 +13,7 @@ import {
   WishlistRemoveItems,
 } from 'src/shared/translation';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
-import * as cartActions from "src/shared/actions/Common/Cart";
+import * as cartActions from "@stores/actions/common/cart";
 
 interface IRequestBody {
   data: {

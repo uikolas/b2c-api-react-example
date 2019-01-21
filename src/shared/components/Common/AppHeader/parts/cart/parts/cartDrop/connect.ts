@@ -1,11 +1,11 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { cartDeleteItemAction, removeItemGuestCartAction } from 'src/shared/actions/Common/Cart';
-import { ICartState } from 'src/shared/reducers/Common/Cart/types';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
-import { getAnonymId } from 'src/shared/reducers/Common/Init';
-import {getCartId, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
+import { cartDeleteItemAction, removeItemGuestCartAction } from '@stores/actions/common/cart';
+import { ICartState } from '@stores/reducers/common/cart/types';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
+import { getAnonymId } from '@stores/reducers/common/init';
+import {getCartId, isCartStateLoading} from "@stores/reducers/common/cart/selectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const cartProps: ICartState = state.cart ? state.cart : null;

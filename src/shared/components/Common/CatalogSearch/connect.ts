@@ -3,9 +3,9 @@ import { push } from 'react-router-redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
-import {getAppCurrency, getCategoriesTree, ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init';
-import { clearSuggestions, sendSearchAction, sendSuggestionAction } from 'src/shared/actions/Pages/Search';
-import { getProductDataAction } from 'src/shared/actions/Pages/Product';
+import {getAppCurrency, getCategoriesTree, ICategory, TAppCurrency} from '@stores/reducers/common/init';
+import { clearSuggestions, sendSearchAction, sendSuggestionAction } from '@stores/actions/pages/search';
+import { getProductDataAction } from '@stores/actions/pages/product';
 
 const mapStateToProps = (state: any, ownProps: any) => {
   const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.data

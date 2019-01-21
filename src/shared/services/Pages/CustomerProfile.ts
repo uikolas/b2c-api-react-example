@@ -1,6 +1,6 @@
 import api, { setAuthToken } from '../api';
 import { toast } from 'react-toastify';
-import * as CustomerProfileActions from 'src/shared/actions/Pages/CustomerProfile';
+import * as CustomerProfileActions from '@stores/actions/pages/customerProfile';
 import {
   ICustomerDataParsed,
   ICustomerProfileIdentity,
@@ -11,7 +11,7 @@ import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerD
 import { RefreshTokenService } from '../Common/RefreshToken';
 import { CustomerProfileAuthenticateErrorMessage } from '../../translation/index';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
-import { logout } from 'src/shared/actions/Pages/Login';
+import { logout } from '@stores/actions/pages/login';
 
 interface IRequestBody {
   data: {

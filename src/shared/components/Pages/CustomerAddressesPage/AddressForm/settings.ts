@@ -16,7 +16,7 @@ import {
 } from 'src/shared/translation';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
-import { ICountries } from 'src/shared/reducers/Common/Init';
+import { ICountries } from "@stores/reducers/common/init";
 import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
 import { AddressFormState } from './types';
 import { InputChangeEvent } from 'src/shared/interfaces/common/react';

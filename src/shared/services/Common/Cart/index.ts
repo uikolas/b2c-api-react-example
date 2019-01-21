@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';
 import { ICartAddItem, TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
 import { parseAddToCartResponse, parseCartCreateResponse } from 'src/shared/helpers/cart';
-import * as cartActions from 'src/shared/actions/Common/Cart';
+import * as cartActions from '@stores/actions/common/cart';
 import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
-import { CartAuthenticateErrorMessage } from 'src/shared/translation';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation'
 import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';

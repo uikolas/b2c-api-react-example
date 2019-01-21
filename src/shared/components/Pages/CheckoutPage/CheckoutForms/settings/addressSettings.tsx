@@ -1,22 +1,22 @@
 import {
-  InputLabelCity,
-  InputLabelCompany,
-  InputLabelCountry,
-  InputLabelFirstName,
-  InputLabelLastName,
-  InputLabelNumber,
-  InputLabelPhone,
-  InputLabelSalutation,
-  InputLabelStreet,
-  InputLabelStreetExtra,
-  InputLabelZipCode,
-  FirstItemInSelect
-} from 'src/shared/translation';
-import { SalutationVariants } from 'src/shared/constants/customer/index';
-import { TSalutationVariant } from 'src/shared/interfaces/customer';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IAddressParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { ICountries } from 'src/shared/reducers/Common/Init';
+    InputLabelCity,
+    InputLabelCompany,
+    InputLabelCountry,
+    InputLabelFirstName,
+    InputLabelLastName,
+    InputLabelNumber,
+    InputLabelPhone,
+    InputLabelSalutation,
+    InputLabelStreet,
+    InputLabelStreetExtra,
+    InputLabelZipCode,
+    FirstItemInSelect
+} from "src/shared/translation";
+import { SalutationVariants } from "src/shared/constants/customer";
+import { TSalutationVariant } from "src/shared/interfaces/customer";
+import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
+import { IAddressParams } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
+import { ICountries } from "@stores/reducers/common/init";
 
 
 export const getAddressFormSettings = (formName: string, params: IAddressParams): IFormSettings => {

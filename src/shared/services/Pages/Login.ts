@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify';
 import api from '../api';
-import { saveLoginDataToStoreAction } from 'src/shared/actions/Pages/CustomerProfile';
+import { saveLoginDataToStoreAction } from '@stores/actions/pages/customerProfile';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer';
 import {
   loginCustomerFulfilledStateAction,
   loginCustomerPendingStateAction,
   loginCustomerRejectedStateAction,
-} from 'src/shared/actions/Pages/Login';
+} from '@stores/actions/pages/login';
 import { ApiServiceAbstract } from '../apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
