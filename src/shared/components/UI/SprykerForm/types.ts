@@ -1,23 +1,6 @@
 import * as React from 'react';
 import {GridSize} from "@material-ui/core/Grid";
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import {
-  TCustomerEmail,
-  TCustomerFirstName,
-  TCustomerLastName,
-  TCustomerPassword,
-  TCustomerSalutation,
-  TCustomerUsername
-} from "src/shared/interfaces/customer";
-import {
-  TAddress,
-  TAddressCity,
-  TAddressCompany,
-  TAddressCountry,
-  TAddressPhone,
-  TAddressZipCode,
-  TIso2Code
-} from "src/shared/interfaces/addresses/index";
 import {SprykerSelectProps} from "src/shared/components/UI/SprykerSelect/index";
 import {sprykerFormStyles} from "./sprykerFormStyles";
 import {InputChangeEvent, BlurEvent, FormEvent} from "src/shared/interfaces/common/react";
@@ -30,8 +13,8 @@ export interface IFormField {
   inputValue: TFormInputValue;
   spaceNumber: GridSize;
   isRequired?: boolean;
-  onChangeOwnHandler?: React.EventHandler<any>;
-  onBlurOwnHandler?: React.EventHandler<any>;
+  onChangeOwnHandler?: (event: InputChangeEvent) => void;
+  onBlurOwnHandler?: (event: BlurEvent) => void;
   label?: string;
   isError?: boolean;
   menuItems?: SprykerSelectProps["menuItems"];

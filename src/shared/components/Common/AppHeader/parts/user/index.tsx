@@ -14,7 +14,7 @@ import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/Popov
 
 
 @connect
-@(withRouter as any)
+@(withRouter as Function)
 export class UserComponent extends React.PureComponent<Props, State> {
   public state: State = {
     anchorEl: null,

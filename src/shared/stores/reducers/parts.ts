@@ -1,7 +1,7 @@
 import { IReduxState } from '../../../typings/app';
 
 export const getReducerPartFulfilled = (): IReduxState => ({
-  error: false,
+  error: null,
   pending: false,
   fulfilled: true,
   rejected: false,
@@ -9,7 +9,7 @@ export const getReducerPartFulfilled = (): IReduxState => ({
 });
 
 export const getReducerPartPending = (): IReduxState => ({
-  error: false,
+  error: null,
   pending: true,
   fulfilled: false,
   rejected: false,

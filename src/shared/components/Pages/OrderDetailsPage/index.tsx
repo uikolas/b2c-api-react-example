@@ -1,7 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import {connect} from './connect';
 import {NoOrderMessage} from 'src/shared/translation';
@@ -20,6 +19,7 @@ import {
   OrderDetailShippingAddressTitle
 } from "src/shared/translation";
 import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
+import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
 
 
 @connect
@@ -41,7 +41,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     }
   };
 
-  public selectItemHandler = (event: any): any => {
+  public selectItemHandler = (event: InputChangeEvent): void => {
     const key = event.target.value;
 
     if (!key) {
@@ -62,7 +62,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     });
   };
 
-  public reorderSelectedClickHandler = (event: any): any => {
+  public reorderSelectedClickHandler = (event: InputChangeEvent): boolean => {
     const items = [...this.state.selectedItemsData];
     if (!items) {
       return false;
@@ -75,7 +75,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     return Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length);
   };
 
-  public reorderAllClickHandler = (event: any): any => {
+  public reorderAllClickHandler = (event: ClickEvent): void => {
     const allSelectedItemsData = this.props.order.items.map((item: IOrderDetailsItem): ICartAddItem => ({
       sku: item.sku,
       quantity: item.quantity,
@@ -95,7 +95,6 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     });
 
     this.props.addMultipleItemsToCart(allSelectedItemsData, this.props.cartId, this.props.payloadForCreateCart);
-    return true;
   };
 
   private isReorderAllDisabled = (): boolean => Boolean(!this.props.order.items.length);

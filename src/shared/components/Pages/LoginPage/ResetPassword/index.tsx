@@ -8,8 +8,12 @@ import Button from '@material-ui/core/Button';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from '@stores/actions/pages/login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
-import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/helpers/router/router';
+import { getRouterMatchParam } from 'src/shared/helpers/router/index';
+import {TRouterMatchParam} from 'src/shared/helpers/router/index';
 import { formStyles } from '../styles';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
+import {IResetPasswordPayload} from "src/shared/interfaces/customer/index";
 import {
   ResetPasswordTitle,
   EnterNewPasswordMessage,
@@ -36,20 +40,20 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
     submitted: false,
   };
 
-  public handleChange = (event: any) => {
-    const {name, value}: any = event.target;
+  public handleChange = (event: InputChangeEvent) => {
+    const {name, value} = event.target;
     this.setState({
       ...this.state, [name]: value,
     });
   };
 
-  public submitRequest = (e: any) => {
+  public submitRequest = (e: ClickEvent) => {
     this.setState({submitted: true});
     if (this.state.password !== this.state.confirmPassword) {
       return;
     }
 
-    const payload = {
+    const payload: IResetPasswordPayload = {
       restorePasswordKey: this.props.restoreKey,
       password: this.state.password,
       confirmPassword: this.state.confirmPassword,
@@ -115,7 +119,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
 const ResetPassword = withStyles(formStyles)(ResetPasswordPageBase);
 
 export const ResetPasswordPage = reduxify(
-  (state: any, ownProps: any) => {
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const restoreKey = getRouterMatchParam(state, ownProps, 'restoreKey');
     return (
       {restoreKey}

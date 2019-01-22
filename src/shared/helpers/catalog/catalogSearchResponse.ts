@@ -5,17 +5,14 @@ import {
   TLocalizedName,
   ValueFacets,
 } from 'src/shared/interfaces/searchPageData';
+import {ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse} from "src/shared/helpers/catalog/types";
 
-interface IResponse {
-  data: object;
-  included: object;
-}
 
-export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchDataParsed => {
+export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed | null => {
   if (!response) {
     return null;
   }
-  const {data, included}: any = response;
+  const {data, included}: ICatalogSearchRawResponse = response;
 
   if (!data || !data[0]) {
     return null;
@@ -28,7 +25,7 @@ export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchD
   let currentCategory: string = '';
   let categoriesLocalizedName: TLocalizedName | null = null;
 
-  attributes.valueFacets.forEach((filter: any) => {
+  attributes.valueFacets.forEach((filter: ValueFacets) => {
     if (filter.name === 'category') {
       category = Array.isArray(filter.values) ? filter.values : [];
       currentCategory = filter.activeValue;
@@ -64,7 +61,7 @@ export const parseCatalogSearchResponse = (response: IResponse): ICatalogSearchD
     return result;
   }
 
-  included.forEach((row: any) => {
+  included.forEach((row: IRowCatalogSearchIncludedResponse) => {
 
     if (row.type === 'abstract-products'
       && row.relationships

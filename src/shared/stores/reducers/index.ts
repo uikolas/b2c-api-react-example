@@ -1,20 +1,19 @@
-import { isPageHomeStateLoading, pagesHome } from './pages/home';
-import { isPageLoginStateLoading, pagesLogin } from './pages/login';
-import { isPageSearchStateLoading, pageSearch } from './pages/search';
-import { isPageProductStateLoading, pageProduct } from './pages/product';
-import { isPageWishlistStateLoading, pageWishlist } from './pages/wishlist';
-import { isPageAddressesStateLoading, pageAddresses } from './pages/addresses';
+import { isPageLoginStateLoading, pagesLogin } from './pages/login/index';
+import { isPageSearchStateLoading, pageSearch } from './pages/search/index';
+import { isPageProductStateLoading, pageProduct } from './pages/product/index';
+import { isPageWishlistStateLoading, pageWishlist } from './pages/wishlist/index';
+import { isPageAddressesStateLoading, pageAddresses } from './pages/addresses/index';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './pages/customerProfile';
-import { isPageCheckoutStateLoading, pageCheckout } from './pages/checkout';
+import { isPageCheckoutStateLoading, pageCheckout } from './pages/checkout/index';
 import { cart } from './common/cart';
-import { init, isAppLoading } from './common/init';
-import { isOrderHistoryLoading, orderHistory } from './pages/orderHistory';
-import { isOrderDetailsLoading, orderDetails } from './pages/orderDetails';
-import { isCartStateLoading } from "./common/cart/selectors";
+import { init, isAppLoading } from './common/init/index';
+import { isOrderHistoryLoading, orderHistory } from './pages/orderHistory/index';
+import { isOrderDetailsLoading, orderDetails } from './pages/orderDetails/index';
+import {isCartStateLoading} from "@stores/reducers/Common/Cart/selectors";
+import {IReduxStore, IReduxOwnProps} from "@stores/reducers/types";
 
 
 export const reducers = {
-  pagesHome,
   pagesLogin,
   pageSearch,
   pageProduct,
@@ -28,13 +27,12 @@ export const reducers = {
   pageCustomerProfile,
 };
 
-export function isStateLoading(state: any, props: any): boolean {
+export function isStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(
     isPageProductStateLoading(state, props)
     || isPageLoginStateLoading(state, props)
     || isCartStateLoading(state, props)
     || isPageSearchStateLoading(state, props)
-    || isPageHomeStateLoading(state, props)
     || isAppLoading(state, props)
     || isPageWishlistStateLoading(state, props)
     || isOrderHistoryLoading(state, props)

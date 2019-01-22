@@ -17,7 +17,7 @@ import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
 
 
 @connect
-@(withRouter as any)
+@(withRouter as Function)
 export class UserDropComponent extends React.PureComponent<Props> {
 
   public customerLogout = (e: ClickEvent) => {

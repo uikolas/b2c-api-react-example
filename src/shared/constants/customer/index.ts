@@ -4,7 +4,7 @@ import {
     SalutationVariantMs,
     SalutationVariantMrs,
     SalutationVariantDr
-} from '../../translation/index';
+} from 'src/shared/translation/index';
 
 export const SalutationVariants: Array<TSalutationVariant> = [
     {

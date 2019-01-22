@@ -1,6 +1,6 @@
 import { rangeMaxType, rangeMinType, TRangeType } from 'src/shared/components/Pages/SearchPage/types';
 
-export const firstLetterToUpperCase = (word: any): string | null => {
+export const firstLetterToUpperCase = (word: string): string | null => {
   if (!word) {
     return null;
   }
@@ -23,7 +23,7 @@ export const firstLetterToUpperCase = (word: any): string | null => {
   return title.charAt(0).toUpperCase() + title.slice(1);
 };
 
-export const isWordHasPrice = (word: any): boolean => {
+export const isWordHasPrice = (word: string): boolean => {
   if (!word) {
     return false;
   }

@@ -16,7 +16,7 @@ import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/Pop
 import { CartIsEmptyTooltipMessage } from 'src/shared/translation';
 
 
-@(withRouter as any)
+@(withRouter as Function)
 @connect
 export class CartComponent extends React.PureComponent<Props, State> {
   public state: State = {

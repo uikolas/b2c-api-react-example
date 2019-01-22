@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryPush } from 'src/shared/helpers/router/router';
+import { getRouterHistoryPush } from 'src/shared/helpers/router/index';
 import { getCustomerReference } from '@stores/reducers/pages/login';
 import {
   getAddressesCollection,
@@ -15,8 +15,9 @@ import {
   setCurrentAddressAction,
   deleteAddressAction,
 } from '@stores/actions/pages/addresses';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const routerPush: Function = getRouterHistoryPush(state, ownProps);
   const customer: string | null = getCustomerReference(state, ownProps);
   const addresses: IAddressItem[] = getAddressesCollection(state, ownProps);

@@ -4,7 +4,7 @@ import { IWishlist } from 'src/shared/interfaces/wishlist';
 
 export interface WishlistPageProps extends WithStyles<typeof styles> {
   dispatch: Function;
-  wishlists: IWishlist[];
+  wishlists: IWishlist[] | null;
   isLoading: boolean;
   isInitial: boolean;
 

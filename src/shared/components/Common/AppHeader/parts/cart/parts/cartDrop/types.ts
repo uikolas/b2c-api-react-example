@@ -5,9 +5,9 @@ import { styles } from './styles';
 
 export interface CartDropProps extends WithStyles<typeof styles> {
   // connect
-  totals: ICartTotals;
-  cartItems: ICartItem[];
-  isUserLoggedIn?: boolean;
+  totals: ICartTotals | null;
+  cartItems: ICartItem[] | null;
+  isUserLoggedIn: boolean;
   cartId: string;
   anonymId: string;
   isCartLoading: boolean;

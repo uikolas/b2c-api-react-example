@@ -1,12 +1,12 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from '../styles';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { ICountries } from '@stores/reducers/common/init';
+import {ICountry} from "src/shared/interfaces/country/index";
 
 export interface AddressFormProps extends WithStyles<typeof styles> {
   customer: string;
   currentAddress: IAddressItem;
-  countries: ICountries[];
+  countries: ICountry[];
   routerGoBack: Function;
   isLoading: boolean;
   dispatch: Function;
@@ -16,4 +16,5 @@ export interface AddressFormProps extends WithStyles<typeof styles> {
 
 export interface AddressFormState extends IAddressItem {
   submitted: boolean;
+  [key: string]: string | number | boolean;
 }

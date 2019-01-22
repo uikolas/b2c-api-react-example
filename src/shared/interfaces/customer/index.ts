@@ -1,4 +1,5 @@
-import { TAccessToken } from '../login';
+import {TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType} from '../login';
+import {TRouterMatchParam} from "src/shared/helpers/router/types";
 
 export type TCustomerSalutation = string;
 export type TCustomerFirstName = string;
@@ -68,8 +69,14 @@ export interface ILoginDataToLocalStorage {
 
 export interface ICustomerLoginDataParsed {
   accessToken: TAccessToken;
-  expiresIn: number;
-  refreshToken: TAccessToken;
-  tokenType: string;
+  expiresIn: TExpiresInAccessToken;
+  refreshToken: TRefreshToken;
+  tokenType: TTokenType;
   customerRef: TCustomerReference;
+}
+
+export interface IResetPasswordPayload {
+  restorePasswordKey: TRouterMatchParam;
+  password: TCustomerPassword;
+  confirmPassword: TCustomerPassword;
 }

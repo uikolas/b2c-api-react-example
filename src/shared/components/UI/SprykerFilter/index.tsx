@@ -7,6 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import { ChevronLeft } from '@material-ui/icons';
 
 import { styles } from './styles';
+import {InputChangeEvent} from "src/shared/interfaces/common/react";
 
 export interface IMenuItemsDropdown {
   value: string | number;
@@ -45,11 +46,11 @@ export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFi
     this.setState(prev => ({isOpen: !prev.isOpen}));
   };
 
-  private handleChangeValues = (event: any) => {
+  private handleChangeValues = (event: InputChangeEvent) => {
     this.props.handleChange(this.props.attributeName, event.target.value);
   };
 
-  private handleDelete = (item: any) => () => {
+  private handleDelete = (item: string) => () => {
     const values = [...this.props.activeValues].filter((val) => val !== item);
     this.props.handleChange(this.props.attributeName, values);
   };
