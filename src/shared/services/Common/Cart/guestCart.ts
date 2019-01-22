@@ -1,10 +1,10 @@
-import api, { removeAuthToken  } from '../../api';
+import api, { removeAuthToken  } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import * as cartActions from 'src/shared/actions/Common/Cart';
-import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import * as cartActions from '@stores/actions/common/cart';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
 import {IApiResponseData} from "src/shared/services/types";
 import {IResponseError} from "src/shared/services/apiAbstractions/types";
 
@@ -29,7 +29,7 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(cartAddProducts);
+        toast.success(CartAddProducts);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
       } else {
@@ -93,7 +93,7 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(cartRemoveItems);
+        toast.success(CartRemoveItems);
         await GuestCartService.getGuestCart(dispatch, anonymId);
       } else {
         this.errorMessageInform(response, dispatch);
@@ -128,7 +128,7 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(cartChangeQty);
+        toast.success(CartChangeQty);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
       } else {

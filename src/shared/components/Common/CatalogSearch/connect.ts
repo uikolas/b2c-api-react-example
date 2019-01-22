@@ -3,10 +3,10 @@ import { push } from 'react-router-redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
-import {getAppCurrency, getCategoriesTree} from 'src/shared/reducers/Common/Init/index';
-import { clearSuggestions, sendSearchAction, sendSuggestionAction } from 'src/shared/actions/Pages/Search';
-import { getProductDataAction } from 'src/shared/actions/Pages/Product';
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {getAppCurrency, getCategoriesTree} from '@stores/reducers/common/init';
+import { clearSuggestions, sendSearchAction, sendSuggestionAction } from '@stores/actions/pages/search';
+import { getProductDataAction } from '@stores/actions/pages/product';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {ICategory} from "src/shared/interfaces/category/index";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 

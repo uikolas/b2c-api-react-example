@@ -6,12 +6,12 @@ import {
   removeItemGuestCartAction,
   updateItemInCartAction,
   updateGuestCartAction
-} from 'src/shared/actions/Common/Cart';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
-import { getAnonymId } from 'src/shared/reducers/Common/Init/index';
+} from '@stores/actions/common/cart';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
+import { getAnonymId } from '@stores/reducers/common/init';
 import {ICartTotals, ICartItem, TCartId } from "src/shared/interfaces/cart";
-import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {getCartId, getCartTotals, getProductsFromCart} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isUserLoggedIn: boolean = isUserAuthenticated(state, ownProps);

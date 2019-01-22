@@ -1,6 +1,6 @@
-import api, {setAuthToken} from '../../api';
+import api, {setAuthToken} from 'src/shared/services/api';
 import { toast } from 'react-toastify';
-import {RefreshTokenService} from '../../Common/RefreshToken/index';
+import {RefreshTokenService} from 'src/shared/services/Common/RefreshToken/index';
 import {ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod} from 'src/shared/interfaces/checkout';
 import {
   getCheckoutDataInitPendingStateAction,
@@ -9,10 +9,10 @@ import {
   sendCheckoutDataPendingStateAction,
   sendCheckoutDataRejectedStateAction,
   sendCheckoutDataFulfilledStateAction,
-} from 'src/shared/actions/Pages/Checkout';
+} from '@stores/actions/pages/checkout';
 
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import {ICheckoutResponseData} from "src/shared/reducers/Pages/Checkout/types";
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import {ICheckoutResponseData} from "src/shared/stores/reducers/pages/checkout/types";
 import {IApiResponseData} from "src/shared/services/types";
 
 interface IRequestBody {

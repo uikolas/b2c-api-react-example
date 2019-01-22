@@ -12,7 +12,7 @@ import {
 } from 'src/shared/interfaces/product';
 import { TCartId } from 'src/shared/interfaces/cart';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
-import {TRouterMatchParam} from 'src/shared/selectors/Common/router/types';
+import { TRouterMatchParam } from 'src/shared/helpers/router/index';
 import { IWishlist, TWishListName } from 'src/shared/interfaces/wishlist';
 import {TAppStore} from "src/shared/interfaces/store/index";
 

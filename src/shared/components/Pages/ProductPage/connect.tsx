@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAnonymId, getPayloadForCreateCart, isAppInitiated } from 'src/shared/reducers/Common/Init/index';
+import { getAnonymId, getPayloadForCreateCart, isAppInitiated } from '@stores/reducers/common/init';
 import {
   getProduct,
   isPageProductStateFulfilled,
@@ -8,26 +8,26 @@ import {
   isPageProductStateLoading,
   isPageProductStateRejected,
   isProductDetailsPresent,
-} from 'src/shared/reducers/Pages/Product/index';
+} from '@stores/reducers/pages/product';
 import {
   getWishlistsCollectionFromStore,
   isPageWishlistStateLoading,
   isWishlistsCollectionInitiated,
-} from 'src/shared/reducers/Pages/Wishlist/index';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
-import { getRouterMatchParam } from 'src/shared/selectors/Common/router/index';
+} from '@stores/reducers/pages/wishlist';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
+import { getRouterMatchParam } from 'src/shared/helpers/router/index';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
-import {getProductAvailabilityAction, getProductDataAction} from 'src/shared/actions/Pages/Product';
-import { addItemAction, getWishlistsAction } from 'src/shared/actions/Pages/Wishlist';
+import {getProductAvailabilityAction, getProductDataAction} from '@stores/actions/pages/product';
+import { addItemAction, getWishlistsAction } from '@stores/actions/pages/wishlist';
 import {
   addItemGuestCartAction,
   addItemToCartAction,
   createCartAndAddItemAction,
-} from 'src/shared/actions/Common/Cart';
+} from '@stores/actions/common/cart';
 import {TProductSKU} from "src/shared/interfaces/product/index";
-import {getCartId, isCartCreated} from "src/shared/reducers/Common/Cart/selectors";
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {getCartId, isCartCreated} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const product = getProduct(state, ownProps);

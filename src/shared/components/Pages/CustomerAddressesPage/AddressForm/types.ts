@@ -3,7 +3,6 @@ import { styles } from '../styles';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {ICountry} from "src/shared/interfaces/country/index";
 
-
 export interface AddressFormProps extends WithStyles<typeof styles> {
   customer: string;
   currentAddress: IAddressItem;

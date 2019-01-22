@@ -47,106 +47,106 @@ export type TProductCardImagesCollection = Array<IProductCardImages>;
 // Interfaces
 
 export interface IProductPricesItem {
-  grossAmount: TPriceTypeOriginalGross | TPriceTypeDefaultGross;
-  netAmount: TPriceTypeOriginalNet | TPriceTypeDefaultNet;
-  priceTypeName: TPriceTypeName;
-  currency?: {
-    code: TProductCurrencyCode;
-    name: TProductCurrencyName;
-    symbol: TProductCurrencySymbol
-  };
+    grossAmount: TPriceTypeOriginalGross | TPriceTypeDefaultGross;
+    netAmount: TPriceTypeOriginalNet | TPriceTypeDefaultNet;
+    priceTypeName: TPriceTypeName;
+    currency?: {
+        code: TProductCurrencyCode;
+        name: TProductCurrencyName;
+        symbol: TProductCurrencySymbol
+    };
 }
 
 export interface IProductCardImages {
-  externalUrlLarge: TProductImageSRC;
-  externalUrlSmall: TProductImageSRC;
+    externalUrlLarge: TProductImageSRC;
+    externalUrlSmall: TProductImageSRC;
 }
 
 export interface IProductCard {
-  images?: Array<IProductCardImages> | null;
-  price: TProductPrice;
-  abstractName: TProductName;
-  abstractSku: TProductSKU;
-  prices: Array<IProductPricesItem>;
+    images?: Array<IProductCardImages> | null;
+    price: TProductPrice;
+    abstractName: TProductName;
+    abstractSku: TProductSKU;
+    prices: Array<IProductPricesItem>;
 
 }
 
 export interface IProductAttributeMap {
-  attribute_variants: {[key: string]: IProductAttributes};
-  product_concrete_ids: Array<TProductSKU>;
-  super_attributes: {[key: string]: Array<string>};
+    attribute_variants: {[key: string]: IProductAttributes};
+    product_concrete_ids: Array<TProductSKU>;
+    super_attributes: {[key: string]: Array<string>};
 }
 
 export interface IProductAttributes {
-  [key: string]: string | number;
+    [key: string]: string | number;
 }
 
 // Translated version of the product's attributes
 export interface IProductAttributeNames {
-  [key: string]: string;
+    [key: string]: string;
 }
 
 export interface ISuperAttributes {
-  superAttributes: Array<ISuperAttribute> | null;
+    superAttributes: Array<ISuperAttribute> | null;
 }
 
 export interface IProductAvailability {
-  availability: TProductAvailability | null;
-  quantity: TProductQuantity | null;
-  isNeverOutOfStock?: TProductIsNeverOutOfStock;
+    availability: TProductAvailability | null;
+    quantity: TProductQuantity | null;
+    isNeverOutOfStock?: TProductIsNeverOutOfStock;
 }
 
 export interface IConcreteProductAvailability extends IProductAvailability {
-  sku: TProductSKU | null;
+    sku: TProductSKU | null;
 }
 
 export interface IProductPropFullData extends IProductAvailability {
-  attributes: TProductAttributes | null;
-  attributeNames: IProductAttributeNames | null;
-  description: TProductDescription | null;
-  images: Array<IProductCardImages> | null;
-  name: TProductName | null;
-  price: TProductPrice | null;
-  prices: Array<IProductPricesItem> | null;
-  priceOriginalGross: TPriceTypeOriginalGross;
-  priceOriginalNet: TPriceTypeOriginalNet;
-  priceDefaultGross: TPriceTypeDefaultGross;
-  priceDefaultNet: TPriceTypeDefaultNet;
-  sku: TProductSKU | null;
-  productType: TProductType | null;
+    attributes: TProductAttributes | null;
+    attributeNames: IProductAttributeNames | null;
+    description: TProductDescription | null;
+    images: Array<IProductCardImages> | null;
+    name: TProductName | null;
+    price: TProductPrice | null;
+    prices: Array<IProductPricesItem> | null;
+    priceOriginalGross: TPriceTypeOriginalGross;
+    priceOriginalNet: TPriceTypeOriginalNet;
+    priceDefaultGross: TPriceTypeDefaultGross;
+    priceDefaultNet: TPriceTypeDefaultNet;
+    sku: TProductSKU | null;
+    productType: TProductType | null;
 }
 
 export interface IProductDataParsed {
-  attributeMap: IProductAttributeMap | null;
-  superAttributes: Array<ISuperAttribute> | null;
-  abstractProduct: IProductPropFullData | null;
-  concreteProducts: {
-    [key: string]: IProductPropFullData
-  };
+    attributeMap: IProductAttributeMap | null;
+    superAttributes: Array<ISuperAttribute> | null;
+    abstractProduct: IProductPropFullData | null;
+    concreteProducts: {
+        [key: string]: IProductPropFullData
+    };
 }
 
 export interface IProductLabel {
-  type: string;
-  text: string;
-  position: TProductLabelPosition;
+    type: string;
+    text: string;
+    position: TProductLabelPosition;
 }
 
 export interface IProductAttributesRawResponse {
-  sku: string;
-  name: string;
-  description: string;
-  attributes: IProductAttributes;
-  attributeNames: IProductAttributeNames;
-  attributeMap: IProductAttributeMap;
-  id: string;
-  superAttributesDefinition?: Array<string>;
-  metaDescription: string;
-  metaKeywords: string;
-  metaTitle: string;
+    sku: string;
+    name: string;
+    description: string;
+    attributes: IProductAttributes;
+    attributeNames: IProductAttributeNames;
+    attributeMap: IProductAttributeMap;
+    id: string;
+    superAttributesDefinition?: Array<string>;
+    metaDescription: string;
+    metaKeywords: string;
+    metaTitle: string;
 }
 
 export interface IProductImageSetsRawResponse {
-  images: Array<IProductCardImages>;
-  name?: string;
+    images: Array<IProductCardImages>;
+    name?: string;
 }
 export type TProductImageSetsCollectionRawResponse = Array<IProductImageSetsRawResponse>;

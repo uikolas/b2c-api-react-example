@@ -1,13 +1,13 @@
 import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { RefreshTokenService } from '../../Common/RefreshToken/index';
-import api, { setAuthToken } from '../../api';
+import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
+import api, { setAuthToken } from 'src/shared/services/api';
 import {
-  addressAdd,
-  addressDelete,
-  addressUpdate,
-} from 'src/shared/constants/messages/addresses';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
+  AddressAdd,
+  AddressDelete,
+  AddressUpdate,
+} from 'src/shared/translation';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
 import {
   IAddressDataRawResponse,
@@ -76,7 +76,7 @@ export class AddressesService extends ApiServiceAbstract {
           address: {id: response.data.data.id, ...response.data.data.attributes},
 
         });
-        toast.success(addressAdd);
+        toast.success(AddressAdd);
 
         // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
         await AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
@@ -111,7 +111,7 @@ export class AddressesService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(addressDelete);
+        toast.success(AddressDelete);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           addressId,
@@ -163,7 +163,7 @@ export class AddressesService extends ApiServiceAbstract {
             data: response.data.data.attributes,
           }
         });
-        toast.success(addressUpdate);
+        toast.success(AddressUpdate);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({

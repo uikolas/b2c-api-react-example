@@ -1,6 +1,6 @@
-import api, { setAuthToken } from '../../api';
+import api, { setAuthToken } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
-import * as CustomerProfileActions from 'src/shared/actions/Pages/CustomerProfile';
+import * as CustomerProfileActions from '@stores/actions/pages/customerProfile';
 import {
   ICustomerDataParsed,
   ICustomerProfileIdentity,
@@ -8,10 +8,10 @@ import {
   TCustomerReference,
 } from 'src/shared/interfaces/customer';
 import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerDataResponse';
-import { RefreshTokenService } from '../../Common/RefreshToken/index';
-import { CustomerProfileAuthenticateErrorText } from '../../../constants/messages/errors';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import { logout } from 'src/shared/actions/Pages/Login';
+import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
+import { CustomerProfileAuthenticateErrorMessage } from 'src/shared/translation/index';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import { logout } from '@stores/actions/pages/login';
 import {IApiResponseData} from "src/shared/services/types";
 
 interface IRequestBody {
@@ -33,7 +33,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const response: IApiResponseData = await api.get(
@@ -75,7 +75,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const response: IApiResponseData = await api.patch(
@@ -116,7 +116,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token: string = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const response: IApiResponseData = await api.patch(`customer-password`, body, {withCredentials: true});
@@ -143,7 +143,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(CustomerProfileAuthenticateErrorText);
+        throw new Error(CustomerProfileAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const endpoint = `customers/${customerReference}`;

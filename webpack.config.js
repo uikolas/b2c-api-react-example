@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 env.config();
 
@@ -324,7 +323,6 @@ const config = {
         ...(
             IS_DEV_SERVER ? [
                 new webpack.HotModuleReplacementPlugin(),
-                new DashboardPlugin()
             ] : []
         ),
     ],
@@ -338,7 +336,16 @@ const config = {
             ...webExtensions
         ],
         alias: {
-            src: path.resolve(__dirname, 'src')
+            src: path.resolve(__dirname, 'src'),
+            '@assets': path.resolve(__dirname, 'src/shared/assets'),
+            '@constants': path.resolve(__dirname, 'src/shared/constants'),
+            '@components': path.resolve(__dirname, 'src/shared/components'),
+            '@containers': path.resolve(__dirname, 'src/shared/containers'),
+            '@helpers': path.resolve(__dirname, 'src/shared/helpers'),
+            '@interfaces': path.resolve(__dirname, 'src/shared/interfaces'),
+            '@routes': path.resolve(__dirname, 'src/shared/routes'),
+            '@stores': path.resolve(__dirname, 'src/shared/stores'),
+            '@services': path.resolve(__dirname, 'src/shared/services')
         }
     },
     module: {

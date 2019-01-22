@@ -5,7 +5,7 @@ import { Route, withRouter } from 'react-router';
 import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../contentRoutes';
-import {customerLogout} from "src/shared/constants/messages/customer";
+import { CustomerLogout } from 'src/shared/translation';
 
 @connect
 @(withRouter as Function)
@@ -23,7 +23,7 @@ export class ProtectedRoute extends React.PureComponent<Props> {
   public componentDidUpdate(prevProps: Props): void {
     if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
       this.props.history.push(pathLoginPage);
-      toast.success(customerLogout);
+      toast.success(CustomerLogout);
       setTimeout(() => { this.props.getGuestCartAction(this.props.anonymId); }, 100);
     }
 

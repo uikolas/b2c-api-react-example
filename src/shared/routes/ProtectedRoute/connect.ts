@@ -1,9 +1,9 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login/index';
-import {getAnonymId, isAppStateFulfilled} from "src/shared/reducers/Common/Init/index";
-import {getGuestCartAction} from "src/shared/actions/Common/Cart";
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
+import {getAnonymId, isAppStateFulfilled} from "@stores/reducers/common/init";
+import {getGuestCartAction} from "@stores/actions/common/cart";
+import {IReduxOwnProps, IReduxStore} from "@stores/reducers/types";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);

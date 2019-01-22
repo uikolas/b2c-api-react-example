@@ -15,7 +15,6 @@ import {IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {TFormInputValue} from "src/shared/components/UI/SprykerForm/types";
 import {ICountry} from "src/shared/interfaces/country/index";
 
-
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
   isAppDataSet: boolean;
   isUserLoggedIn: boolean;

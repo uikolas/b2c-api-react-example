@@ -6,15 +6,21 @@ import {
   pathCategorySale,
   pathCategoryTablets,
   pathCategoryWorkstations
-} from "src/shared/routes/categoriesRoutes";
+} from 'src/shared/routes/categoriesRoutes';
 import {
   CategoryNameComputers,
   CategoryNameNew,
   CategoryNameNotebooks,
   CategoryNameSale,
   CategoryNameTablets,
-  CategoryNameWorkstations
-} from "src/shared/constants/categories";
+  CategoryNameWorkstations,
+  SocialInstagramTitle,
+  SocialFacebookTitle,
+  SocialXingTitle,
+  SocialLinkedInTitle,
+  SocialTwitterTitle,
+  SocialYouTubeTitle
+} from 'src/shared/translation';
 
 export const categoriesLinks: link[] = [
   {
@@ -45,27 +51,27 @@ export const categoriesLinks: link[] = [
 
 export const socialMediaLinks: link[] = [
   {
-    name: 'Instagram',
+    name: SocialInstagramTitle,
     path: 'https://www.instagram.com/spryker/',
   },
   {
-    name: 'YouTube',
+    name: SocialYouTubeTitle,
     path: 'https://www.youtube.com/channel/UC6lVOEbqXxUh0W5FMTvlPDQ',
   },
   {
-    name: 'Facebook',
+    name: SocialFacebookTitle,
     path: 'https://www.facebook.com/Spryker/',
   },
   {
-    name: 'Twitter',
+    name: SocialTwitterTitle,
     path: 'https://twitter.com/sprysys',
   },
   {
-    name: 'LinkedIn',
+    name: SocialLinkedInTitle,
     path: 'https://www.linkedin.com/company/spryker-systems-gmbh',
   },
   {
-    name: 'Xing',
+    name: SocialXingTitle,
     path: 'https://www.xing.com/companies/sprykersystemsgmbh',
   },
 ];

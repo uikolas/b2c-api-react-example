@@ -1,4 +1,4 @@
-import api from '../../api';
+import api from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import { parseProductResponse } from 'src/shared/helpers/product';
 import {
@@ -8,7 +8,7 @@ import {
   getProductDataFulfilledStateAction,
   getProductDataItemPendingStateAction,
   getProductDataRejectedStateAction,
-} from 'src/shared/actions/Pages/Product';
+} from '@stores/actions/pages/product';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import {IConcreteProductAvailability, IProductDataParsed, TProductSKU} from "src/shared/interfaces/product/index";
 import {parseProductAvailabilityResponse} from "src/shared/helpers/product/productResponse";

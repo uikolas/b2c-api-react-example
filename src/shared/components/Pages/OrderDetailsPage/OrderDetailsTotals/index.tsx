@@ -14,7 +14,7 @@ import {
   OrderDetailShipmentTotal,
   OrderDetailSubtotal,
   OrderDetailTax
-} from "src/shared/constants/orders/index";
+} from "src/shared/translation";
 
 
 export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (props): JSX.Element => {

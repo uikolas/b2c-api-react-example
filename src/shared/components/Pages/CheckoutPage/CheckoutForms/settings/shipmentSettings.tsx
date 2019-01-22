@@ -5,7 +5,7 @@ import {IShippingMethodsParams} from "../../types/formSettingsTypes";
 import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {IShipmentMethod} from "src/shared/interfaces/checkout";
 import {AppPrice} from "src/shared/components/Common/AppPrice";
-import {InputLabelShipmentTaxRate} from "src/shared/constants/forms/labels";
+import {InputLabelShipmentTaxRate} from "src/shared/translation";
 
 
 export const getShipmentMethodsFormSettings = (formName: string, params: IShippingMethodsParams): IFormSettings => {

@@ -1,8 +1,6 @@
 import * as React from 'react';
+import { PageNotFoundMessage } from 'src/shared/translation';
 import { INotFoundProps as Props, INotFoundState as State } from './types';
-
-
-const title = 'Page not found.';
 
 export class NotFound extends React.PureComponent<Props, State> {
   public displayName: string = 'NotFound';
@@ -15,7 +13,7 @@ export class NotFound extends React.PureComponent<Props, State> {
   public render() {
     return (
       <React.Fragment>
-        <div className={ this.props.className || '' }>{ title }</div>
+        <div className={ this.props.className || '' }>{ PageNotFoundMessage }</div>
       </React.Fragment>
     );
   }

@@ -1,4 +1,4 @@
-import api, {nodeApi} from '../../api';
+import api, {nodeApi} from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import {
   categoriesFulfilledState,
@@ -9,9 +9,9 @@ import {
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction,
-} from 'src/shared/actions/Common/Init';
+} from '@stores/actions/common/Init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
 import {ICategory} from "src/shared/interfaces/category/index";
 import {IInitData} from "src/shared/interfaces/init/index";

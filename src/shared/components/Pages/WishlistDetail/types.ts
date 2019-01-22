@@ -7,21 +7,21 @@ import { RouterAction } from 'react-router-redux';
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 export interface WishlistPageProps extends WithStyles<typeof styles> {
-  wishlist: IWishlist | null;
-  products: Array<IWishlistProduct> | null;
-  isLoading: boolean;
-  currency: TAppCurrency;
-  cartLoading: boolean;
-  cartId: TCartId;
-  cartItemsLength: number;
-  deleteItemAction(wishlistId: string, sku: string): void;
-  addItemToCartAction(payload: ICartAddItem, cartId: TCartId): void;
-  multiItemsCartAction(cartId: TCartId, listItems: string[]): void;
-  deleteMultiItemsAction(wishlistId: string, items: string[]): void;
-  changeLocation(location: LocationDescriptor, state?: LocationState): RouterAction;
+    wishlist: IWishlist | null;
+    products: Array<IWishlistProduct> | null;
+    isLoading: boolean;
+    currency: TAppCurrency;
+    cartLoading: boolean;
+    cartId: TCartId;
+    cartItemsLength: number;
+    deleteItemAction(wishlistId: string, sku: string): void;
+    addItemToCartAction(payload: ICartAddItem, cartId: TCartId): void;
+    multiItemsCartAction(cartId: TCartId, listItems: string[]): void;
+    deleteMultiItemsAction(wishlistId: string, items: string[]): void;
+    changeLocation(location: LocationDescriptor, state?: LocationState): RouterAction;
 }
 
 export interface WishlistPageState {
-  movedItem: string;
-  multiProducts: string[];
+    movedItem: string;
+    multiProducts: string[];
 }

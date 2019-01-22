@@ -1,13 +1,13 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryBack } from 'src/shared/selectors/Common/router/index';
-import { getCounties } from 'src/shared/reducers/Common/Init/index';
-import {getCustomerReference} from 'src/shared/reducers/Pages/Login/index';
-import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses/index';
+import { getRouterHistoryBack } from 'src/shared/helpers/router/index';
+import { getCounties } from '@stores/reducers/common/init';
+import {getCustomerReference} from '@stores/reducers/pages/login';
+import {getCurrentAddress, isPageAddressesStateLoading} from '@stores/reducers/pages/addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { addAddressAction, updateAddressAction } from 'src/shared/actions/Pages/Addresses';
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import { addAddressAction, updateAddressAction } from '@stores/actions/pages/addresses';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {ICountry} from "src/shared/interfaces/country/index";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

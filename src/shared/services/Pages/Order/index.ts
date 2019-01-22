@@ -1,6 +1,6 @@
-import api, { setAuthToken } from '../../api';
+import api, { setAuthToken } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../../Common/RefreshToken/index';
+import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import {
   orderDetailsFulfilledStateAction,
   orderDetailsPendingStateAction,
@@ -8,8 +8,8 @@ import {
   ordersCollectionFulfilledStateAction,
   ordersCollectionPendingStateAction,
   ordersCollectionRejectedStateAction,
-} from 'src/shared/actions/Pages/Order';
-import { orderAuthenticateErrorText } from 'src/shared/constants/messages/errors';
+} from '@stores/actions/pages/order';
+import { OrderAuthenticateErrorMessage } from 'src/shared/translation';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/shared/helpers/order/response';
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
@@ -24,7 +24,7 @@ export class OrderService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(orderAuthenticateErrorText);
+        throw new Error(OrderAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const response: IApiResponseData = await api.get('orders', null, {withCredentials: true});
@@ -51,7 +51,7 @@ export class OrderService extends ApiServiceAbstract {
 
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(orderAuthenticateErrorText);
+        throw new Error(OrderAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const endpoint = `orders/${orderId}`;

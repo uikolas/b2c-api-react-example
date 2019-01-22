@@ -1,14 +1,14 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist/types';
+import { WishlistState } from '@stores/reducers/pages/wishlist/types';
 import {
   addWishlistAction,
   deleteWishlistAction,
   getDetailWishlistAction,
   getWishlistsAction,
   updateWishlistAction,
-} from 'src/shared/actions/Pages/Wishlist';
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+} from '@stores/actions/pages/wishlist';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;

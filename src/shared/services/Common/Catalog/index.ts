@@ -1,7 +1,7 @@
-import api from '../../api';
+import api from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
 import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import {IApiResponseData} from "src/shared/services/types";

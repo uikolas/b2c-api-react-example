@@ -1,5 +1,5 @@
 import {reduxify} from 'src/shared/lib/redux-helper';
-import {getRouterMatchParam}  from 'src/shared/selectors/Common/router/index';
+import {getRouterMatchParam}  from 'src/shared/helpers/router/index';
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
@@ -7,21 +7,21 @@ import {
   isOrderDetailsLoading,
   isOrderDetailsPresent,
   isOrderDetailsStateRejected,
-} from 'src/shared/reducers/Pages/OrderDetails/index';
+} from '@stores/reducers/pages/orderDetails';
 import {
   getAppCurrency,
   getAppTimeZone,
   getPayloadForCreateCart,
   isAppInitiated
-} from 'src/shared/reducers/Common/Init/index';
-import {isUserAuthenticated} from 'src/shared/reducers/Pages/Login/index';
+} from '@stores/reducers/common/init';
+import {isUserAuthenticated} from '@stores/reducers/pages/login';
 import {ICartCreatePayload} from 'src/shared/services/Common/Cart/types';
 import {TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';
 import {TOrderId} from 'src/shared/interfaces/order';
-import {getOrderDetailsAction} from 'src/shared/actions/Pages/Order';
-import {addMultipleItemsToCartAction} from 'src/shared/actions/Common/Cart';
-import {getCartId} from "src/shared/reducers/Common/Cart/selectors";
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {getOrderDetailsAction} from '@stores/actions/pages/order';
+import {addMultipleItemsToCartAction} from '@stores/actions/common/cart';
+import {getCartId} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {TAppTimeZone} from "src/shared/interfaces/locale/index";
 
 

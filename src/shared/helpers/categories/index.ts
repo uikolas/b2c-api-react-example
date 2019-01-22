@@ -1,5 +1,3 @@
-
-
 import {ICategory} from "src/shared/interfaces/category/index";
 
 export const getCategoryNameById = (categoryId: string | number, categoriesTree: Array<ICategory>): string | null => {

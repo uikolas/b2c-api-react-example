@@ -1,13 +1,14 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { WishlistState } from 'src/shared/reducers/Pages/Wishlist/types';
-import { getAppCurrency } from 'src/shared/reducers/Common/Init/index';
+import { RouteProps } from 'react-router';
+import { WishlistState } from '@stores/reducers/pages/wishlist';
+import { getAppCurrency } from '@stores/reducers/common/init';
 import { TCartId } from 'src/shared/interfaces/cart';
-import { deleteItemAction, deleteMultiItemsAction } from 'src/shared/actions/Pages/Wishlist';
-import { addItemToCartAction, multiItemsCartAction } from 'src/shared/actions/Common/Cart';
+import { deleteItemAction, deleteMultiItemsAction } from '@stores/actions/pages/wishlist';
+import { addItemToCartAction, multiItemsCartAction } from '@stores/actions/common/cart';
 import { push } from 'react-router-redux';
-import {getCartId, getTotalItemsQuantity, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {getCartId, getTotalItemsQuantity, isCartStateLoading} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

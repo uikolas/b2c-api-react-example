@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import {getAnonymId, getCounties, isAppInitiated} from 'src/shared/reducers/Common/Init/index';
+import {getAnonymId, getCounties, isAppInitiated} from '@stores/reducers/common/init';
 import {ICartTotals, ICartItem, TCartId} from "src/shared/interfaces/cart";
 import {ICheckoutRequest, IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
-import {getCustomerReference, isUserAuthenticated} from "src/shared/reducers/Pages/Login/index";
-import {getCustomerProfile} from "src/shared/reducers/Pages/CustomerProfile";
-import {isStateLoading} from "src/shared/reducers";
+import {getCustomerReference, isUserAuthenticated} from "@stores/reducers/pages/login";
+import {getCustomerProfile} from "@stores/reducers/pages/customerProfile";
+import {isStateLoading} from "@stores/reducers";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
-import {getCheckoutDataAction, sendCheckoutDataAction} from "src/shared/actions/Pages/Checkout";
-import {getCustomerCartsAction, getGuestCartAction} from "src/shared/actions/Common/Cart";
+import {getCheckoutDataAction, sendCheckoutDataAction} from "@stores/actions/pages/checkout";
+import {getCustomerCartsAction, getGuestCartAction} from "@stores/actions/common/cart";
 import {
   getAddressesCollectionFromCheckoutStore,
   getPaymentMethodsFromStore,
@@ -17,11 +17,11 @@ import {
   isPageCheckoutFulfilled,
   isPageCheckoutStateLoading,
   isPageCheckoutStateRejected,
-} from "src/shared/reducers/Pages/Checkout/index";
-import {getCustomerProfileAction} from "src/shared/actions/Pages/CustomerProfile";
+} from "@stores/reducers/pages/checkout";
+import {getCustomerProfileAction} from "@stores/actions/pages/customerProfile";
 import {TCustomerReference} from "src/shared/interfaces/customer";
-import {getCartId, getCartTotals, getProductsFromCart} from "src/shared/reducers/Common/Cart/selectors";
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+import {getCartId, getCartTotals, getProductsFromCart} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {ICountry} from "src/shared/interfaces/country/index";
 
 

@@ -1,4 +1,4 @@
-import {ICategoriesTeasersData} from "src/shared/components/Pages/HomePage/types";
+import {ICategoriesTeasersData} from 'src/shared/components/Pages/HomePage/types';
 import {
   CategoryIntroComputers,
   CategoryIntroNotebooks,
@@ -8,20 +8,20 @@ import {
   CategoryNameNotebooks,
   CategoryNameTablets,
   CategoryNameWorkstations
-} from "src/shared/constants/categories";
+} from 'src/shared/translation';
 import {
-  HomePageComputersBtnText,
-  HomePageNotebooksBtnText,
-  HomePageTabletsBtnText,
-  HomePageWorkstationsBtnText
-} from "src/shared/constants/content/homePage";
+  HomePageComputersBtnTitle,
+  HomePageNotebooksBtnTitle,
+  HomePageTabletsBtnTitle,
+  HomePageWorkstationsBtnTitle
+} from 'src/shared/translation';
 import {
   pathCategoryComputers,
   pathCategoryNotebooks,
   pathCategoryTablets,
   pathCategoryWorkstations
-} from "src/shared/routes/categoriesRoutes";
-import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from "src/img/index";
+} from 'src/shared/routes/categoriesRoutes';
+import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from 'src/img/index';
 
 export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
   {
@@ -29,27 +29,27 @@ export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
     text: CategoryIntroComputers,
     img: computersSrc,
     path: pathCategoryComputers,
-    linkTitle: HomePageComputersBtnText,
+    linkTitle: HomePageComputersBtnTitle,
   },
   {
     title: CategoryNameNotebooks,
     text: CategoryIntroNotebooks,
     img: notebooksSrc,
     path: pathCategoryNotebooks,
-    linkTitle: HomePageNotebooksBtnText,
+    linkTitle: HomePageNotebooksBtnTitle,
   },
   {
     title: CategoryNameTablets,
     text: CategoryIntroTablets,
     img: tabletsSrc,
     path: pathCategoryTablets,
-    linkTitle: HomePageTabletsBtnText,
+    linkTitle: HomePageTabletsBtnTitle,
   },
   {
     title: CategoryNameWorkstations,
     text: CategoryIntroWorkstations,
     img: workstationsSrc,
     path: pathCategoryWorkstations,
-    linkTitle: HomePageWorkstationsBtnText,
+    linkTitle: HomePageWorkstationsBtnTitle,
   },
 ];

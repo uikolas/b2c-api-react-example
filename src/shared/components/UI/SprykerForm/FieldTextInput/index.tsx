@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 
 import {IFieldTextInputProps} from "src/shared/components/UI/SprykerForm/FieldTextInput/types";
-import {OptionalPlaceholder} from "src/shared/constants/forms/labels";
+import {OptionalPlaceholder} from "src/shared/translation";
 import {sprykerFormStyles} from "src/shared/components/UI/SprykerForm/sprykerFormStyles";
 
 export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.Element => {

@@ -13,7 +13,7 @@ import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/conte
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter/types';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
-import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
+import { ValidateRangeInputsError } from 'src/shared/translation';
 import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
 import { SortPanel } from 'src/shared/components/Pages/SearchPage/SortPanel';
 import { FoundItems } from 'src/shared/components/Pages/SearchPage/FoundItems';
@@ -51,9 +51,13 @@ import {
 } from "src/shared/components/Pages/SearchPage/helpers/queries";
 import {getCategoryNameById} from "src/shared/helpers/categories/index";
 import {DefaultItemsPerPage} from "src/shared/constants/search/index";
-
-export const pageTitle = 'Results for ';
-export const pageTitleDefault = 'Start searching';
+import {
+  SearchResultTitle,
+  SearchResultDefaultTitle,
+  SortModeTitle,
+  RelevanceSortModeTitle,
+  ProductsPerPageTitle
+} from 'src/shared/translation';
 
 @(withRouter as Function)
 @connect
@@ -177,7 +181,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
     if (!this.validateData()) {
       console.error('can\'t make request in updateSearch method!!!');
-      toast.error(validateRangeInputsError);
+      toast.error(ValidateRangeInputsError);
       return;
     }
     let query: ISearchQuery = this.getQueryBaseParams();
@@ -360,7 +364,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         currentMode={ this.state.itemsPerPage }
         changeHandler={ this.handleSetItemsPerPage }
         menuItems={ pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item})) }
-        menuItemFirst={ {value: ' ', name: 'products per page', disabled: true} }
+        menuItemFirst={ {value: ' ', name: ProductsPerPageTitle, disabled: true} }
         name="pages"
       />
     );
@@ -375,7 +379,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         })) }
         menuItemFirst={ {
           value: ' ',
-          name: (!isSortParamsExist && !this.state.sort) ? 'Choose sort mode' : 'Sort by relevance',
+          name: (!isSortParamsExist && !this.state.sort) ? SortModeTitle : RelevanceSortModeTitle,
           disabled: !isSortParamsExist,
         } }
         name="sort"
@@ -390,8 +394,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         { isLoading ? <AppBackdrop isOpen={ true }/> : null }
         <AppPageTitle
           title={ searchTerm
-            ? `${pageTitle} "${searchTerm}"`
-            : (currentCategory && categoryDisplayName) ? categoryDisplayName : pageTitleDefault
+            ? `${SearchResultTitle} "${searchTerm}"`
+            : (currentCategory && categoryDisplayName) ? categoryDisplayName : SearchResultDefaultTitle
           }
           intro={ <SearchIntro className={ classes.spellingSuggestion } spellingSuggestion={ spellingSuggestion }/> }
         />

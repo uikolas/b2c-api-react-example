@@ -1,16 +1,16 @@
 import { toast } from 'react-toastify';
-import api from '../../api';
-import { saveLoginDataToStoreAction } from 'src/shared/actions/Pages/CustomerProfile';
+import api from 'src/shared/services/api';
+import { saveLoginDataToStoreAction } from '@stores/actions/pages/customerProfile';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer';
 import {
   loginCustomerFulfilledStateAction,
   loginCustomerPendingStateAction,
   loginCustomerRejectedStateAction,
-} from 'src/shared/actions/Pages/Login';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import {ICustomerLoginData, ICustomerProfile, IResetPasswordPayload} from 'src/shared/interfaces/customer';
+} from '@stores/actions/pages/login';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { customerLogin, registerSuccess } from 'src/shared/constants/messages/customer';
+import { CustomerLogin, RegisterSuccess } from 'src/shared/translation';
 import {IApiResponseData} from "src/shared/services/types";
 
 export class PagesLoginService extends ApiServiceAbstract {
@@ -29,7 +29,7 @@ export class PagesLoginService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
         });
 
-        toast.success(registerSuccess);
+        toast.success(RegisterSuccess);
 
         await PagesLoginService.loginRequest(dispatch, {
           username: payload.email,
@@ -76,7 +76,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         dispatch(saveLoginDataToStoreAction({email: payload.username}));
         saveAccessDataToLocalStorage(responseParsed);
         dispatch(loginCustomerFulfilledStateAction(responseParsed));
-        toast.success(customerLogin);
+        toast.success(CustomerLogin);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(loginCustomerRejectedStateAction(errorMessage));

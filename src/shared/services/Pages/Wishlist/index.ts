@@ -1,19 +1,19 @@
 // tslint:disable:max-file-line-count
 
-import api, { setAuthToken } from '../../api';
+import api, { setAuthToken } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from '../../Common/RefreshToken/index';
+import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import {IWishlist, IWishlistProduct, TWishListId} from 'src/shared/interfaces/wishlist';
-import { ADD_WISHLIST } from 'src/shared/constants/ActionTypes/Pages/Wishlist';
-import { wishlistAuthenticateErrorText } from 'src/shared/constants/messages/errors';
+import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
+import { WishlistAuthenticateErrorMessage } from 'src/shared/translation';
 import {
-  wishlistCreated,
-  wishlistDeleted,
-  wishlistAddProduct,
-  wishlistRemoveItems,
-} from 'src/shared/constants/messages/wishlist';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import * as cartActions from "src/shared/actions/Common/Cart";
+  WishlistCreated,
+  WishlistDeleted,
+  WishlistAddProduct,
+  WishlistRemoveItems,
+} from 'src/shared/translation';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import * as cartActions from "@stores/actions/common/cart";
 import {IApiResponseData} from "src/shared/services/types";
 import {
   IWishlistRawData,
@@ -35,7 +35,7 @@ export class WishlistService extends ApiServiceAbstract {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
       if (!token) {
-        throw new Error(wishlistAuthenticateErrorText);
+        throw new Error(WishlistAuthenticateErrorMessage);
       }
       setAuthToken(token);
       const response: IApiResponseData = await api.get('wishlists', {}, {withCredentials: true});
@@ -122,7 +122,7 @@ export class WishlistService extends ApiServiceAbstract {
       const response: IApiResponseData = await api.post('wishlists', body, {withCredentials: true});
 
       if (response.ok) {
-        toast.success(wishlistCreated);
+        toast.success(WishlistCreated);
         const parsedWishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
@@ -157,7 +157,7 @@ export class WishlistService extends ApiServiceAbstract {
       const response: IApiResponseData = await api.delete(`wishlists/${wishlistId}`, {}, {withCredentials: true});
 
       if (response.ok) {
-        toast.success(wishlistDeleted);
+        toast.success(WishlistDeleted);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payloadWishlistDataFulfilled: {wishlistId},
@@ -259,7 +259,7 @@ export class WishlistService extends ApiServiceAbstract {
           type: ACTION_TYPE + '_FULFILLED',
           payloadWishlistDataFulfilled: {data: wishlist},
         });
-        toast.success(`${wishlistAddProduct} ${wishlist.name}.`);
+        toast.success(`${WishlistAddProduct} ${wishlist.name}.`);
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch({
@@ -293,7 +293,7 @@ export class WishlistService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(wishlistRemoveItems);
+        toast.success(WishlistRemoveItems);
         dispatch({
           type: ACTION_TYPE + '_FULFILLED',
           payloadWishlistProductFulfilled: {

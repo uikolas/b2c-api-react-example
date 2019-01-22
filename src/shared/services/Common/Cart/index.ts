@@ -1,6 +1,6 @@
 // tslint:disable:max-file-line-count
 
-import api, { setAuthToken } from '../../api';
+import api, { setAuthToken } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';
 import {ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId} from 'src/shared/interfaces/cart';
@@ -9,11 +9,11 @@ import {
   parseCartCreateResponse,
   parseUserCartResponseOneValue
 } from 'src/shared/helpers/cart';
-import * as cartActions from 'src/shared/actions/Common/Cart';
-import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
-import { cartAuthenticateErrorText } from 'src/shared/constants/messages/errors';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import { RefreshTokenService } from '../RefreshToken/index';
+import * as cartActions from '@stores/actions/common/cart';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation'
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
 import {IResponseError} from "src/shared/services/apiAbstractions/types";
 import {IApiResponseData} from "src/shared/services/types";
@@ -23,7 +23,7 @@ export class CartService extends ApiServiceAbstract {
   public static async getCustomerCarts(dispatch: Function): Promise<string> {
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
-      if (!token) { throw new Error(cartAuthenticateErrorText); }
+      if (!token) { throw new Error(CartAuthenticateErrorMessage); }
       setAuthToken(token);
 
       const response: IApiResponseData = await api.get('/carts', {}, {withCredentials: true});
@@ -58,7 +58,7 @@ export class CartService extends ApiServiceAbstract {
       };
 
       const token = await RefreshTokenService.getActualToken(dispatch);
-      if (!token) { throw new Error(cartAuthenticateErrorText); }
+      if (!token) { throw new Error(CartAuthenticateErrorMessage); }
       setAuthToken(token);
 
       const response: IApiResponseData = await api.post('carts', body, {withCredentials: true});
@@ -92,7 +92,7 @@ export class CartService extends ApiServiceAbstract {
       };
 
       const token = await RefreshTokenService.getActualToken(dispatch);
-      if (!token) { throw new Error(cartAuthenticateErrorText); }
+      if (!token) { throw new Error(CartAuthenticateErrorMessage); }
       setAuthToken(token);
 
       const endpoint = `carts/${cartId}/items`;
@@ -101,7 +101,7 @@ export class CartService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
-        toast.success(cartAddProducts);
+        toast.success(CartAddProducts);
       } else {
         this.errorMessageInform(response, dispatch);
       }
@@ -137,7 +137,7 @@ export class CartService extends ApiServiceAbstract {
           payloadCartDeleteItemFulfilled: {itemId},
         });
 
-        toast.success(cartRemoveItems);
+        toast.success(CartRemoveItems);
         const newCartResponse: IApiResponseData = await api.get(`carts/${cartId}`);
 
         if (newCartResponse.ok) {
@@ -173,7 +173,7 @@ export class CartService extends ApiServiceAbstract {
       const {sku} = payload;
 
       const token = await RefreshTokenService.getActualToken(dispatch);
-      if (!token) { throw new Error(cartAuthenticateErrorText); }
+      if (!token) { throw new Error(CartAuthenticateErrorMessage); }
       setAuthToken(token);
 
       const endpoint = `carts/${cartId}/items/${sku}`;
@@ -182,7 +182,7 @@ export class CartService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed: ICartDataResponse  = parseUserCartResponseOneValue(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
-        toast.success(cartChangeQty);
+        toast.success(CartChangeQty);
       } else {
         this.errorMessageInform(response, dispatch);
       }
@@ -259,7 +259,7 @@ export class CartService extends ApiServiceAbstract {
 
     try {
       const token = await RefreshTokenService.getActualToken(dispatch);
-      if (!token) { throw new Error(cartAuthenticateErrorText); }
+      if (!token) { throw new Error(CartAuthenticateErrorMessage); }
       setAuthToken(token);
 
       const endpoint = `carts/${cartId}/items`;

@@ -1,5 +1,5 @@
 import { reduxify } from '../../../lib/redux-helper';
-import { getOrdersCollectionAction } from '../../../actions/Pages/Order';
+import { getOrdersCollectionAction } from '@stores/actions/pages/order';
 import {
   getOrdersCollectionFromStore,
   isOrderHistoryFulfilled,
@@ -7,10 +7,10 @@ import {
   isOrderHistoryItems,
   isOrderHistoryLoading,
   isOrderHistoryStateRejected,
-} from '../../../reducers/Pages/OrderHistory/index';
-import { isAppInitiated } from '../../../reducers/Common/Init/index';
-import { isUserAuthenticated } from '../../../reducers/Pages/Login/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/reducers/types";
+} from '@stores/reducers/Pages/OrderHistory';
+import { isAppInitiated } from '@stores/reducers/Common/Init/index';
+import { isUserAuthenticated } from '@stores/reducers/Pages/Login';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

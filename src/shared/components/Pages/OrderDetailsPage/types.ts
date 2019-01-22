@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from 'src/shared/components/Pages/OrderDetailsPage/styles';
 import { RouteProps } from 'react-router';
-import {TRouterMatchParam} from 'src/shared/selectors/Common/router/types';
+import {TRouterMatchParam} from 'src/shared/helpers/router/index';
 import { IOrderDetailsParsed, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
