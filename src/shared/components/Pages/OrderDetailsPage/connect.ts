@@ -1,5 +1,5 @@
 import {reduxify} from 'src/shared/lib/redux-helper';
-import {getRouterLocation, getRouterMatchParam}  from 'src/shared/selectors/Common/router';
+import {getRouterLocation, getRouterMatchParam}  from 'src/shared/helpers/router/router';
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,

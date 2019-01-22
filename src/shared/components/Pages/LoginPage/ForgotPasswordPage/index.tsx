@@ -11,7 +11,7 @@ import { forgotPasswordAction } from '@stores/actions/pages/login';
 import { RouteProps } from 'react-router';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { formStyles } from '../styles';
-import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
+import { getRouterHistoryBack } from 'src/shared/helpers/router/router';
 import {
     ButtonBackTitle,
     ButtonSubmitTitle,

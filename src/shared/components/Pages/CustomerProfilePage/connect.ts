@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryPush, getRouterLocation } from 'src/shared/selectors/Common/router';
+import { getRouterHistoryPush, getRouterLocation } from 'src/shared/helpers/router/router';
 import {
   getCustomerProfile,
   isCustomerPasswordUpdated,

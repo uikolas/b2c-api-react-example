@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 env.config();
 
@@ -324,7 +323,6 @@ const config = {
         ...(
             IS_DEV_SERVER ? [
                 new webpack.HotModuleReplacementPlugin(),
-                new DashboardPlugin()
             ] : []
         ),
     ],

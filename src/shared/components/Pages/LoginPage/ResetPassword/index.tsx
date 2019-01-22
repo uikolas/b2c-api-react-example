@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from '@stores/actions/pages/login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
-import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { getRouterMatchParam, TRouterMatchParam } from 'src/shared/helpers/router/router';
 import { formStyles } from '../styles';
 import {
   ResetPasswordTitle,

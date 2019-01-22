@@ -15,7 +15,7 @@ import {
   isWishlistsCollectionInitiated,
 } from '@stores/reducers/pages/wishlist';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
-import { getRouterLocation, getRouterMatchParam } from 'src/shared/selectors/Common/router';
+import { getRouterLocation, getRouterMatchParam } from 'src/shared/helpers/router/router';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import {getProductAvailabilityAction, getProductDataAction} from '@stores/actions/pages/product';
