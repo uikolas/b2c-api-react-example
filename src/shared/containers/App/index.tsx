@@ -13,7 +13,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { sprykerTheme } from '../../theme/sprykerTheme';
 
-import { configureStore } from '../../stores/configureStore';
+import { configureStore } from '@stores/configureStore';
 import createHistory from 'history/createBrowserHistory';
 import config from '../../config';
 import { PageContent } from '../PageContent';

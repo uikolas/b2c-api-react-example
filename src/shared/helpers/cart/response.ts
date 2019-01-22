@@ -1,6 +1,6 @@
 import { ICartDataResponse } from '../../interfaces/cart';
 import { parseImageSets } from '../product/imageSetsParser';
-import {priceTypeNameDefault, priceTypeNameOriginal} from "src/shared/interfaces/product/index";
+import {priceTypeNameDefault, priceTypeNameOriginal} from "../../interfaces/product/index";
 
 export const parseCartCreateResponse = (data: any): ICartDataResponse => {
   return {

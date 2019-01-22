@@ -17,7 +17,9 @@ import {
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/constants/Environment';
-import { initApplicationDataAction, setAuthFromStorageAction } from '@stores/actions/common/Init';
+import {
+    initApplicationDataAction, setAuthFromStorageAction, getCategoriesAction
+} from '@stores/actions/common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { clearSearchTermAction } from '@stores/actions/pages/search';
@@ -34,6 +36,7 @@ interface PageContentProps extends IComponent, WithRouter {
     setAuth: Function;
     getCustomerCart: Function;
     getGuestCart: Function;
+    getCategories: Function;
     isAppDataSet: boolean;
     isCustomerAuth: boolean;
     anonymId: string;
@@ -69,6 +72,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
 
         if (!this.props.isAppDataSet) {
             this.props.initApplicationData(null);
+            this.props.getCategories();
             return;
         }
     }
@@ -158,6 +162,7 @@ export const PageContent = reduxify(
         initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
         setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
         getCustomerCart: () => dispatch(getCustomerCartsAction()),
+        getCategories: () => dispatch(getCategoriesAction()),
         getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
         clearSearchTerm: () => dispatch(clearSearchTermAction()),
     }),

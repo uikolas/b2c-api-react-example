@@ -20,7 +20,6 @@ import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/l
 
 import config from '../config';
 import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {AppBackdrop} from "src/shared/components/Common/AppBackdrop/index";
 import {LoadableOrderDetailsPage} from "src/shared/components/Pages/OrderDetailsPage/loadable";
 
 export const pathHomePage = `${config.WEB_PATH}`;
@@ -60,7 +59,7 @@ export const pathNotFoundPage = `${config.WEB_PATH}*`;
 
 export const getContentRoutes = function(isReadyToShow: boolean) {
   if (!isReadyToShow) {
-    return <AppMain><AppBackdrop isOpen={true} /></AppMain>;
+    return <AppMain>{ null }</AppMain>;
   }
   return (
     <Switch>

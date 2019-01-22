@@ -14,7 +14,6 @@ import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
 import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
-import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
 import { SortPanel } from 'src/shared/components/Pages/SearchPage/SortPanel';
 import { FoundItems } from 'src/shared/components/Pages/SearchPage/FoundItems';
 import { SprykerSelect } from 'src/shared/components/UI/SprykerSelect';
@@ -391,7 +390,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
     return (
       <AppMain>
-        { isLoading ? <AppBackdrop isOpen={ true }/> : null }
         <AppPageTitle
           title={ searchTerm
             ? `${pageTitle} "${searchTerm}"`
