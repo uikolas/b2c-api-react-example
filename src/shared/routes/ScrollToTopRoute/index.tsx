@@ -3,7 +3,7 @@ import {IScrollToTopRouteProps, IScrollToTopRouteState} from "./types";
 import {withRouter} from 'react-router';
 
 
-@(withRouter as any)
+@(withRouter as Function)
 export class ScrollToTopRoute extends React.Component<IScrollToTopRouteProps, IScrollToTopRouteState> {
   public state: IScrollToTopRouteState = {
   };

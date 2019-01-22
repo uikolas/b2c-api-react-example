@@ -1,11 +1,12 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from 'src/shared/components/Pages/OrderDetailsPage/styles';
 import { RouteProps } from 'react-router';
-import { TRouterMatchParam } from 'src/shared/helpers/router/router';
+import {TRouterMatchParam} from 'src/shared/helpers/router/index';
 import { IOrderDetailsParsed, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
-import {TAppCurrency, TAppTimeZone} from '@stores/reducers/common/init';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { TCartAddItemCollection, TCartId } from 'src/shared/interfaces/cart';
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
+import {TAppTimeZone} from "src/shared/interfaces/locale/index";
 
 export interface IOrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
   isLoading: boolean;

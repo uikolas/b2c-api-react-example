@@ -2,6 +2,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from '../styles';
 import { WishListRowsProps as Props } from './types';
+import {IProductAttributes} from "src/shared/interfaces/product/index";
 
 const WishlistItemBaseInfoComponent: React.SFC<Props> = ({classes, productItem, renderProduct}) => (
   <div className={ classes.product }>
@@ -13,7 +14,7 @@ const WishlistItemBaseInfoComponent: React.SFC<Props> = ({classes, productItem, 
         { productItem.name }
       </span>
       <span className={ classes.attributes }>SKU: { productItem.sku }</span>
-      { productItem.attributes.map((attr: any, idx: number) => (
+      { productItem.attributes.map((attr: IProductAttributes, idx: number) => (
         <span className={ classes.attributes } key={ `attr-${productItem.sku}-${idx}` }>
           { `${Object.keys(attr)[0].split('_').join(' ')}: ${Object.values(attr)[0]}` }
         </span>

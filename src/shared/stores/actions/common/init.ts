@@ -4,7 +4,9 @@ import {
   SET_AUTH_FROM_STORAGE,
 } from '@stores/actionTypes/common/init';
 import { InitAppService } from '@services/Common/init';
-import { IInitData } from '@stores/reducers/common/init';
+import {ICategory} from "src/shared/interfaces/category/index";
+import {IInitData} from "src/shared/interfaces/init/index";
+import {ICustomerLoginDataParsed} from "src/shared/interfaces/customer/index";
 
 export interface IInitApplicationDataPayload {
 
@@ -16,12 +18,12 @@ export const initApplicationDataPendingStateAction = () => ({
 
 export const initApplicationDataRejectedStateAction = (message: string) => ({
   type: INIT_APP_ACTION_TYPE + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
 export const initApplicationDataFulfilledStateAction = (payload: IInitData) => ({
   type: INIT_APP_ACTION_TYPE + '_FULFILLED',
-  payload,
+  payloadInitFulfilled: payload,
 });
 
 export const categoriesPendingState = () => ({
@@ -30,12 +32,12 @@ export const categoriesPendingState = () => ({
 
 export const categoriesRejectedState = (message: string) => ({
   type: CATEGORIES_TREE_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const categoriesFulfilledState = (categories: any[]) => ({
+export const categoriesFulfilledState = (categories: Array<ICategory>) => ({
   type: CATEGORIES_TREE_REQUEST + '_FULFILLED',
-  categories,
+  payloadCategoriesTreeFulfilled: {categories},
 });
 
 
@@ -45,11 +47,9 @@ export const initApplicationDataAction = function(payload: IInitApplicationDataP
   };
 };
 
-export const setAuthFromStorageAction = (
-  payload: {expiresIn: string, accessToken: string, refreshToken: string, customerRef: string}
-) => ({
+export const setAuthFromStorageAction = (payload: ICustomerLoginDataParsed) => ({
   type: SET_AUTH_FROM_STORAGE + '_FULFILLED',
-  payload,
+  payloadAuthFulfilled: payload,
 });
 
 export const getCategoriesAction = function() {

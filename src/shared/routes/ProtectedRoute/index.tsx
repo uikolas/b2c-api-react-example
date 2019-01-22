@@ -8,7 +8,7 @@ import { pathLoginPage } from '../contentRoutes';
 import { CustomerLogout } from 'src/shared/translation';
 
 @connect
-@(withRouter as any)
+@(withRouter as Function)
 export class ProtectedRoute extends React.PureComponent<Props> {
   public static defaultProps = {
     pageTitle: '',

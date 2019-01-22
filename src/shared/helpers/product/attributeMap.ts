@@ -1,4 +1,4 @@
-import { defaultItemValueDropdown, IProductAttributes } from '../../interfaces/product';
+import {defaultItemValueDropdown, IProductAttributeMap, IProductAttributes} from '../../interfaces/product';
 
 // Created path from object of superAttrSelected
 export const createPathToIdProductConcrete = (selected: IProductAttributes) => {
@@ -21,7 +21,8 @@ export const createPathToIdProductConcrete = (selected: IProductAttributes) => {
   return path;
 };
 
-export const findIdProductConcreteByPath = (path: Array<string>, attribute_variants: any): string => {
+export const findIdProductConcreteByPath = (path: Array<string>,
+                                            attribute_variants: IProductAttributeMap["attribute_variants"]): string => {
   const variants = {...attribute_variants};
   const id = path.reduce((acc: any, key: string) => {
     if (acc[key] && acc[key].id_product_concrete) {

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { IFilterItemToDelete, TCategoryId } from 'src/shared/components/Pages/SearchPage/types';
 
 type TSearchPageContext = {
-  selectCategoryHandler: (categoryId: TCategoryId) => any;
-  deleteActiveFilterHandler: (itemToDelete: IFilterItemToDelete) => any;
+  selectCategoryHandler: (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>) => void;
+  deleteActiveFilterHandler: (itemToDelete: IFilterItemToDelete) => (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 export const SearchPageContext = React.createContext<TSearchPageContext>({

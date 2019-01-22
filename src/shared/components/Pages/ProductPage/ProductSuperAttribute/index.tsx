@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { SuperAttributeBlock } from './SuperAttributeBlock';
 import { ProductSuperAttributeProps as Props, ProductSuperAttributeState as State } from './types';
 import { styles } from './styles';
-import {ISuperAttribute} from "src/shared/helpers/product/superAttributes";
+import {ISuperAttribute} from "src/shared/helpers/product/types";
 
 export class ProductSuperAttributeComponent extends React.PureComponent<Props, State> {
   public state: State = {

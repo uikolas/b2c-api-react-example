@@ -12,16 +12,23 @@ import { AppFooter } from 'src/shared/components/Common/AppFooter';
 import { isStateLoading } from '@stores/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
-    getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled, TAppLocale
+    getAnonymId, getAppLocale, isAppInitiated, isAppStateFulfilled
 } from '@stores/reducers/common/init';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getLocaleData } from 'src/shared/helpers/locale';
 import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
-import { initApplicationDataAction, setAuthFromStorageAction } from '@stores/actions/common/Init';
+import {
+    initApplicationDataAction,
+    setAuthFromStorageAction,
+    IInitApplicationDataPayload
+} from '@stores/actions/Common/Init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { clearSearchTermAction } from '@stores/actions/pages/search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { TAppLocale } from 'src/shared/interfaces/locale/index';
+import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -134,8 +141,8 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
 }
 
 export const PageContent = reduxify(
-    (state: any, ownProps: any) => {
-        const isLoading = isStateLoading(state, ownProps) || ownProps.pending || false;
+    (state: IReduxStore, ownProps: IReduxOwnProps) => {
+        const isLoading = isStateLoading(state, ownProps) || false;
         const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
         const isAppDataSet: boolean = isAppInitiated(state, ownProps);
         const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);
@@ -155,8 +162,8 @@ export const PageContent = reduxify(
     },
     (dispatch: Function) => ({
         dispatch,
-        initApplicationData: (payload: any) => dispatch(initApplicationDataAction(payload)),
-        setAuth: (payload: any) => dispatch(setAuthFromStorageAction(payload)),
+        initApplicationData: (payload: IInitApplicationDataPayload) => dispatch(initApplicationDataAction(payload)),
+        setAuth: (payload: ICustomerLoginDataParsed) => dispatch(setAuthFromStorageAction(payload)),
         getCustomerCart: () => dispatch(getCustomerCartsAction()),
         getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
         clearSearchTerm: () => dispatch(clearSearchTermAction()),

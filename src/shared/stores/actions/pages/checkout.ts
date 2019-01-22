@@ -4,7 +4,8 @@ import {
 } from '@stores/actionTypes/pages/checkout';
 import { CheckoutService } from '@services/Pages/checkout';
 import { ICheckoutRequest } from '@interfaces/checkout';
-
+import {TOrderId} from "src/shared/interfaces/order/index";
+import {ICheckoutResponseData, IPageCheckoutAction} from "src/shared/stores/reducers/pages/checkout/types";
 
 export const getCheckoutDataInitPendingStateAction = () => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_PENDING',
@@ -15,9 +16,9 @@ export const getCheckoutDataInitRejectedStateAction = (message: string) => ({
   payload: {error: message},
 });
 
-export const getCheckoutDataInitFulfilledStateAction = (payload: any) => ({
+export const getCheckoutDataInitFulfilledStateAction = (payload: ICheckoutResponseData): IPageCheckoutAction => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_FULFILLED',
-  payload,
+  payloadGetFulfilled: payload,
 });
 
 export const getCheckoutDataAction = function(payload: ICheckoutRequest, anonymId: string) {
@@ -35,9 +36,9 @@ export const sendCheckoutDataRejectedStateAction = (message: string) => ({
   payload: {error: message},
 });
 
-export const sendCheckoutDataFulfilledStateAction = (orderId: string) => ({
+export const sendCheckoutDataFulfilledStateAction = (orderId: TOrderId) => ({
   type: SEND_CHECKOUT_DATA + '_FULFILLED',
-  orderId,
+  payloadSendFulfilled: orderId,
 });
 
 export const sendCheckoutDataAction = function(payload: ICheckoutRequest, anonymId: string) {

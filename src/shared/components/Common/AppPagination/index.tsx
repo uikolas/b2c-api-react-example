@@ -10,7 +10,7 @@ import { styles } from './styles';
 import {IAppPaginationProps, IAppPaginationState} from './types';
 import {withRouter} from 'react-router';
 
-@(withRouter as any)
+@(withRouter as Function)
 export class AppPaginationBase extends React.Component<IAppPaginationProps, IAppPaginationState> {
 
   public onChange = (event: ChangeEvent<{}>, value: number | string): void => {

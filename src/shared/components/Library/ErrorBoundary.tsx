@@ -3,12 +3,15 @@ import * as React from 'react';
 
 interface IState {
   hasError: boolean;
-  error: any;
-  info: any;
+  error: Error | null;
+  info: object;
 }
 
-export class ErrorBoundary extends React.PureComponent<any, IState> {
-  constructor(props: any) {
+interface IProps {
+}
+
+export class ErrorBoundary extends React.PureComponent<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       hasError: false,
@@ -17,7 +20,7 @@ export class ErrorBoundary extends React.PureComponent<any, IState> {
     };
   }
 
-  public componentDidCatch(error: any, info: any) {
+  public componentDidCatch(error: Error | null, info: object) {
     // Display fallback UI
     this.setState({hasError: true, error, info});
     console.error('ErrorBoundary->componentDidCatch->error', error);

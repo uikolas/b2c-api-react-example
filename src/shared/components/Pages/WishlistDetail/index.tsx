@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
-import { IWishlistItem } from 'src/shared/interfaces/wishlist';
+import { IWishlistProduct } from 'src/shared/interfaces/wishlist';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { pathProductPageBase, pathWishListsPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
@@ -113,7 +113,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
       {content: '', id: `${headerCellPart}5`},
     ];
 
-    const bodyRows: Array<ITableRow> = products.map((item: IWishlistItem) => {
+    const bodyRows: Array<ITableRow> = products.map((item: IWishlistProduct) => {
       const prices: {default: string, original: string} = {default: '', original: ''};
 
       item.prices.forEach((price: IProductPricesItem) => {
