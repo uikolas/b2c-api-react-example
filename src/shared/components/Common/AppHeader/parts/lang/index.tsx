@@ -3,11 +3,15 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { toast } from 'react-toastify';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
 import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation';
+import { connect } from './connect';
+import {TAppLocale} from "src/shared/interfaces/locale/index";
+import CartPage from "@components/Pages/CartPage";
 
 
 const availableLanguages: language[] = [
@@ -21,23 +25,47 @@ const availableLanguages: language[] = [
   },
 ];
 
+@connect
 export class LangComponent extends React.PureComponent<Props, State> {
   public state: State = {
-    anchorEl: null,
-    selectedLang: {
-      name: LanguageEnglishTest,
-      code: 'en',
-    },
+    anchorEl: null
   };
 
   private openLang = ({currentTarget}: React.MouseEvent<HTMLElement>) => {
     this.setState(() => ({anchorEl: currentTarget}));
   };
   private closeLang = () => this.setState(() => ({anchorEl: null}));
-  private selectLang = (lang: language) => () => this.setState(() => ({selectedLang: lang, anchorEl: null}));
+  private selectLang = (lang: language) => (event: React.MouseEvent<HTMLElement>) => {
+      /* this.props.switchLocaleAction({locale: lang.code});
+       this.setState((prevState: State) => {
+         return ({
+           selectedLang: lang,
+           anchorEl: null
+         });
+       });*/
+      this.runProcessSelectLang(lang.code);
+  };
+
+  private runProcessSelectLang = async (appLocale: TAppLocale): Promise<void> => {
+      try {
+          await this.setState((prevState: State) => {
+              return ({
+                  anchorEl: null
+              });
+          });
+          await this.props.switchLocaleAction({locale: appLocale});
+      } catch(error) {
+          toast.error('Error occurs during the changing a language');
+      }
+  };
 
   public render() {
-    const {anchorEl, selectedLang} = this.state;
+    const {appLocale} = this.props;
+    if (!appLocale) {
+        return null;
+    }
+    const {anchorEl} = this.state;
+    const selectedLang = availableLanguages.filter((item: language) => (item.code === appLocale))[0];
     const {classes} = this.props;
     const open = Boolean(anchorEl);
 
@@ -75,4 +103,6 @@ export class LangComponent extends React.PureComponent<Props, State> {
   }
 }
 
-export const Lang = withStyles(styles)(LangComponent);
+export const LanguageSwircher = withStyles(styles)(LangComponent);
+
+export default LanguageSwircher;

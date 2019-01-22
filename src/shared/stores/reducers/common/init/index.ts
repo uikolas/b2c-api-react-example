@@ -1,4 +1,4 @@
-import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '@stores/actionTypes/Common/Init';
+import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/Common/Init';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICartCreatePayload } from '../../../../services/Common/Cart/types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
@@ -45,6 +45,15 @@ export const init = function(state: IInitState = initialState,
                     ...state.data,
                     ok: true,
                     categoriesTree: action.payloadCategoriesTreeFulfilled.categories,
+                },
+                ...getReducerPartFulfilled(),
+            };
+        case `${SWITCH_LOCALE}_FULFILLED`:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    locale: action.payloadLocaleFulfilled.locale,
                 },
                 ...getReducerPartFulfilled(),
             };
