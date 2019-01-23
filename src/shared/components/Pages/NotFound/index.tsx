@@ -1,12 +1,11 @@
 import * as React from 'react';
+import { PageNotFoundMessage } from 'src/shared/translation';
+import { INotFoundProps as Props, INotFoundState as State } from './types';
 
-
-const title = 'Page not found.';
-
-export class NotFound extends React.PureComponent<any, any> {
+export class NotFound extends React.PureComponent<Props, State> {
   public displayName: string = 'NotFound';
 
-  public componentDidCatch(error: any, info: any) {
+  public componentDidCatch(error: Error | null, info: object) {
     console.error('NotFound->componentDidCatch->error', error);
     console.error('NotFound->componentDidCatch->info', info);
   }
@@ -14,7 +13,7 @@ export class NotFound extends React.PureComponent<any, any> {
   public render() {
     return (
       <React.Fragment>
-        <div className={ this.props.className || '' }>{ title }</div>
+        <div className={ this.props.className || '' }>{ PageNotFoundMessage }</div>
       </React.Fragment>
     );
   }

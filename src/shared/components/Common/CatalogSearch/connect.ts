@@ -3,28 +3,27 @@ import { push } from 'react-router-redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { FlyoutSearch } from 'src/shared/interfaces/searchPageData';
-import {getAppCurrency, getCategoriesTree, ICategory, TAppCurrency} from '@stores/reducers/common/init';
+import {getAppCurrency, getCategoriesTree} from '@stores/reducers/common/init';
 import { clearSuggestions, sendSearchAction, sendSuggestionAction } from '@stores/actions/pages/search';
 import { getProductDataAction } from '@stores/actions/pages/product';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import {ICategory} from "src/shared/interfaces/category/index";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const searchProps: FlyoutSearch = state.pageSearch && state.pageSearch.data
     ? state.pageSearch.data.flyoutSearch
     : null;
-  const searchTerm: string = state.pageSearch && state.pageSearch.data
-    ? state.pageSearch.data.searchTerm
-    : ownProps.searchTerm;
   const currency: TAppCurrency = getAppCurrency(state, ownProps);
   const categoriesTree: ICategory[] = getCategoriesTree(state, ownProps);
 
   return (
     {
-      categories: searchProps ? searchProps.categories : ownProps.categories,
-      suggestions: searchProps ? searchProps.suggestions : ownProps.suggestions,
-      completion: searchProps ? searchProps.completion : ownProps.completion,
-      isLoading: searchProps ? searchProps.pending : ownProps.isLoading,
+      categories: searchProps ? searchProps.categories : null,
+      suggestions: searchProps ? searchProps.suggestions : null,
+      completion: searchProps ? searchProps.completion : null,
+      isLoading: searchProps ? searchProps.pending : null,
       currency,
-      searchTerm,
       categoriesTree,
     }
   );

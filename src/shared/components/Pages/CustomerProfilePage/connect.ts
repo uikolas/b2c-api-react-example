@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryPush, getRouterLocation } from 'src/shared/selectors/Common/router';
+import { getRouterHistoryPush } from 'src/shared/helpers/router/index';
 import {
   getCustomerProfile,
   isCustomerPasswordUpdated,
@@ -14,19 +14,17 @@ import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/page
 import {
   ICustomerProfileIdentity,
   ICustomerProfilePassword,
-  ILoginDataToLocalStorage,
   TCustomerReference,
 } from 'src/shared/interfaces/customer';
 import {
   deleteCustomerAction,
   getCustomerProfileAction,
-  saveLoginDataToStoreAction,
   updateCustomerPasswordAction,
   updateCustomerProfileAction,
 } from '@stores/actions/pages/customerProfile';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  const location = getRouterLocation(state, ownProps);
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isLoading = isPageCustomerProfileLoading(state, ownProps);
   const isRejected = isPageCustomerProfileRejected(state, ownProps);
   const isFulfilled = isPageCustomerProfileFulfilled(state, ownProps);
@@ -39,7 +37,6 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const routerPush = getRouterHistoryPush(state, ownProps);
 
   return ({
-    location,
     isLoading,
     isRejected,
     isFulfilled,

@@ -8,7 +8,6 @@ import {
   IDeliverySelectionState
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
-import {ICountries} from "@stores/reducers/common/init";
 import {IPaymentMethod, IShipmentMethod} from "src/shared/interfaces/checkout";
 import {
   TCurrentValueBillingSelection,
@@ -16,6 +15,7 @@ import {
   TExtraOptionsToSelection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
+import {ICountry} from "src/shared/interfaces/country/index";
 
 // Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {
@@ -30,7 +30,7 @@ export type TCheckoutPageContext = {
   deliveryNewAddress: IDeliveryAddressState;
   billingNewAddress: IBillingAddressState;
   addressesCollection: IAddressItemCollection[] | null;
-  countriesCollection: ICountries[] | null;
+  countriesCollection: ICountry[] | null;
   deliverySelections: IDeliverySelectionState | null;
   billingSelections: IBillingSelectionState | null;
   currentValueDeliverySelection: TCurrentValueDeliverySelection;

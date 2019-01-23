@@ -11,7 +11,7 @@ import { withRouter } from 'react-router';
 import {RangeFacets, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
-import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter';
+import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter/types';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
 import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
 import { SortPanel } from 'src/shared/components/Pages/SearchPage/SortPanel';
@@ -48,13 +48,17 @@ import { SearchPageContext } from './context';
 import {
   addToQueryActiveRangeFilters,
 } from "src/shared/components/Pages/SearchPage/helpers/queries";
-import {DefaultItemsPerPage} from "src/shared/components/Pages/SearchPage/constants";
 import {getCategoryNameById} from "src/shared/helpers/categories/index";
+import {DefaultItemsPerPage} from "src/shared/constants/search/index";
+import {
+  SearchResultTitle,
+  SearchResultDefaultTitle,
+  SortModeTitle,
+  RelevanceSortModeTitle,
+  ProductsPerPageTitle
+} from 'src/shared/translation';
 
-export const pageTitle = 'Results for ';
-export const pageTitleDefault = 'Start searching';
-
-@(withRouter as any)
+@(withRouter as Function)
 @connect
 export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPageState> {
   constructor(props: ISearchPageProps) {
@@ -103,7 +107,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
   };
 
-  public selectCategory = (categoryId: TCategoryId): any => (event: React.MouseEvent<HTMLElement>) => {
+  public selectCategory = (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>): void => {
     if (this.props.locationCategoryId !== categoryId) {
       this.props.changeLocation(`${pathCategoryPageBase}/${categoryId}`);
     }
@@ -176,7 +180,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
     if (!this.validateData()) {
       console.error('can\'t make request in updateSearch method!!!');
-      toast.error(validateRangeInputsError);
+      toast.error(ValidateRangeInputsError);
       return;
     }
     let query: ISearchQuery = this.getQueryBaseParams();
@@ -197,22 +201,24 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
   };
 
   public handleSetSorting = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
-    const result = this.runSetSorting(event.target.value);
+    this.runSetSorting(event.target.value);
   };
 
   public handleSetItemsPerPage = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
-    const result = this.runSetItemsPerPage(+event.target.value);
+    this.runSetItemsPerPage(+event.target.value);
   };
 
   public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
-    const resultPagination = this.runSetPaginationPage(value);
+    this.runSetPaginationPage(value);
   };
 
   public onSelectProductHandler = (sku: string) => {
     this.props.changeLocation(`${pathProductPageBase}/${sku}`);
   };
 
-  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) => (event: React.MouseEvent<HTMLElement>) => {
+  public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) =>
+    (event: React.MouseEvent<HTMLElement>): void => {
+
       if (itemToDelete.type === filterTypeFilter) {
         this.resetFilterOneValue(itemToDelete);
       } else if (itemToDelete.type === filterTypeRange) {
@@ -223,7 +229,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     };
 
   public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
-    const resultReset = this.runResetActiveFilters();
+    this.runResetActiveFilters();
   };
 
   public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
@@ -234,7 +240,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     this.setState({isReadyToNewRequest: true});
   };
 
-  private initCategoryRequest = async (): Promise<any> => {
+  private initCategoryRequest = async (): Promise<void> => {
     const parsedGetParams = qs.parse(this.props.location.search);
     let query: ISearchQuery = this.getQueryBaseParams();
     if (parsedGetParams && parsedGetParams.page) {
@@ -287,7 +293,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     return query;
   }
 
-  private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<any> => {
+  private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<void> => {
     await this.setState((prevState: ISearchPageState) => {
       return ({
         ...prevState,
@@ -302,35 +308,29 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     });
 
     if (needUpdateSearch) {
-      const resultUpdate = await this.updateSearch();
+      await this.updateSearch();
     }
-
-    return true;
   };
 
-  private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<any> => {
+  private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<void> => {
     await this.setState({paginationPage: 1, itemsPerPage, isReadyToNewRequest: true});
-    const resultUpdate = await this.updateSearch();
-    return resultUpdate;
+    await this.updateSearch();
   };
 
-  private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<any> => {
+  private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<void> => {
     await this.setState({paginationPage: page, isReadyToNewRequest: true} );
     this.setPaginationParam(String(page));
-    const resultUpdate = await this.updateSearch(false);
-    return resultUpdate;
+    await this.updateSearch(false);
   };
 
-  private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<any> => {
+  private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<void> => {
     await this.setState({sort: sortMode, isReadyToNewRequest: true});
-    const resultUpdate = await this.updateSearch();
-    return resultUpdate;
+    await this.updateSearch();
   };
 
-  private runNewCategoryPage = async (): Promise<any> => {
+  private runNewCategoryPage = async (): Promise<void> => {
     await this.setState({paginationPage: null});
-    const resultNewCategoryPage = await this.initCategoryRequest();
-    return resultNewCategoryPage;
+    await this.initCategoryRequest();
   };
 
   public render() {
@@ -363,7 +363,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         currentMode={ this.state.itemsPerPage }
         changeHandler={ this.handleSetItemsPerPage }
         menuItems={ pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item})) }
-        menuItemFirst={ {value: ' ', name: 'products per page', disabled: true} }
+        menuItemFirst={ {value: ' ', name: ProductsPerPageTitle, disabled: true} }
         name="pages"
       />
     );
@@ -378,7 +378,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         })) }
         menuItemFirst={ {
           value: ' ',
-          name: (!isSortParamsExist && !this.state.sort) ? 'Choose sort mode' : 'Sort by relevance',
+          name: (!isSortParamsExist && !this.state.sort) ? SortModeTitle : RelevanceSortModeTitle,
           disabled: !isSortParamsExist,
         } }
         name="sort"
@@ -392,8 +392,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
       <AppMain>
         <AppPageTitle
           title={ searchTerm
-            ? `${pageTitle} "${searchTerm}"`
-            : (currentCategory && categoryDisplayName) ? categoryDisplayName : pageTitleDefault
+            ? `${SearchResultTitle} "${searchTerm}"`
+            : (currentCategory && categoryDisplayName) ? categoryDisplayName : SearchResultDefaultTitle
           }
           intro={ <SearchIntro className={ classes.spellingSuggestion } spellingSuggestion={ spellingSuggestion }/> }
         />

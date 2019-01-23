@@ -11,18 +11,17 @@ import {ICustomerLoginData, ICustomerProfile, TCustomerReference} from 'src/shar
 import { getCustomerCartsAction } from '@stores/actions/common/cart';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
 import { WithRouter } from 'src/shared/interfaces/common/react';
-
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
-
 import { styles } from './styles';
+import { ForgotPasswordTitle } from 'src/shared/translation';
+
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
   dispatch?: Function;
-  customer?: TCustomerReference;
   isAuth?: boolean;
-  refreshToken?: string;
   handleSubmitRegisterForm: Function;
   handleSubmitLoginForm: Function;
   getCustomerCart: Function;
@@ -32,7 +31,7 @@ interface LoginPageState {
 
 }
 
-@(withRouter as any)
+@(withRouter as Function)
 export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
   public state: LoginPageState = {};
 
@@ -57,7 +56,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
           />
           <div className={ classes.link }>
             <NavLink to={ pathForgotPassword }>
-              Forgot Password
+                { ForgotPasswordTitle }
             </NavLink>
           </div>
         </Grid>
@@ -77,15 +76,11 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
 const LoginPage = withStyles(styles)(LoginPageBase);
 
 export const ConnectedLogin = reduxify(
-  (state: any, ownProps: any) => {
-    const routerProps: RouteProps = state.routing ? state.routing : {};
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
     return (
       {
-        location: routerProps.location ? routerProps.location : ownProps.location,
-        customer: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.customerRef : ownProps.customer,
-        isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : ownProps.isAuth,
-        refreshToken: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.refreshToken : ownProps.isAuth,
+        isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : false,
       }
     );
   },

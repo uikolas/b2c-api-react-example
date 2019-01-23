@@ -11,7 +11,6 @@ import {
   ICheckoutInvoiceState,
 } from "src/shared/components/Pages/CheckoutPage/types";
 import {IAddressItemCollection} from "src/shared/interfaces/addresses";
-import {ICountries} from "@stores/reducers/common/init";
 import {TCheckoutPageContext} from "src/shared/components/Pages/CheckoutPage/types/contextTypes";
 import {
   ICreditCardObjectConfigInputStable,
@@ -25,7 +24,8 @@ import {
   TExtraOptionsToSelection,
   TPaymentProvidersCollection
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import {BlurEvent, FormEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
+import {BlurEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
+import {ICountry} from "src/shared/interfaces/country/index";
 
 
 // Base handlers for checkout's page forms
@@ -39,7 +39,7 @@ export interface IBaseCheckoutFormHandler {
 export interface IAddressParams extends IBaseCheckoutFormHandler {
   inputsData: ICheckoutAddressState;
   inputsConfig: IObjectConfigInputStable;
-  countriesCollection: ICountries[] | null;
+  countriesCollection: ICountry[] | null;
   listFieldNameToChangeHandler?: {
     [key: string]: IFormField["onChangeOwnHandler"]
   };

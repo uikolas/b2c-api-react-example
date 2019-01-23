@@ -2,17 +2,15 @@ import * as React from 'react';
 import {
   InputLabelSelectSavedBillingAddress,
   InputLabelSelectSavedDeliveryAddress
-} from "src/shared/constants/forms/labels";
-import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {IAddressItemCollection} from "src/shared/interfaces/addresses";
-import {salutationVariants} from "src/shared/constants/customer";
-import {TSalutationVariant} from "src/shared/interfaces/customer";
+} from "src/shared/translation";
+import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
+import { IAddressItemCollection } from "src/shared/interfaces/addresses";
 import {
   IAddressesParams,
   IBillingAddressesParams,
   IDeliveryAddressesParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import {getSalutationToShow} from "src/shared/helpers/customer/salutation";
+import { getSalutationToShow } from "src/shared/helpers/customer/salutation";
 
 
 export const getDeliverySavedAddressFormSettings = (formName: string,

@@ -9,11 +9,11 @@ import {CategoriesTeasers} from "./CategoriesTeasers";
 import {AppMain} from '../../Common/AppMain';
 import {Banner} from "./Banner/index";
 import {
-  HomePageBannerBtnText,
+  HomePageBannerBtnTitle,
   HomePageBannerIntro,
   HomePageBannerTitleFirst,
   HomePageBannerTitleSecond
-} from "src/shared/constants/content/homePage";
+} from "src/shared/translation";
 import {pathCategoryComputers} from "src/shared/routes/categoriesRoutes";
 
 
@@ -32,7 +32,7 @@ export class HomePageBase extends React.Component<IHomePageProps, IHomePageState
           titleSecond={HomePageBannerTitleSecond}
           intro={HomePageBannerIntro}
           linkPath={pathCategoryComputers}
-          linkTitle={HomePageBannerBtnText}
+          linkTitle={HomePageBannerBtnTitle}
         />
         <AppMain>
           <CategoriesTeasers teasers={categoriesTeasersData} />

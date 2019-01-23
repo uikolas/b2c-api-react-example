@@ -1,12 +1,11 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 
 import {connect} from './connect';
-import {noOrderText} from 'src/shared/constants/messages/orders';
+import {NoOrderMessage} from 'src/shared/translation';
 import {IOrderDetailsItem, IOrderDetailsSelectedItems} from 'src/shared/interfaces/order';
-import {emptyValueErrorText} from 'src/shared/constants/messages/errors';
+import {EmptyValueErrorMessage} from 'src/shared/translation';
 import {ICartAddItem} from 'src/shared/interfaces/cart';
 import {OrderDetailsGeneralInfo} from './OrderDetailsGeneralInfo';
 import {OrderProductList} from './OrderProductsList';
@@ -18,8 +17,9 @@ import {getOrderSelectedItemsData} from "src/shared/components/Pages/OrderDetail
 import {
   OrderDetailBillingAddressTitle,
   OrderDetailShippingAddressTitle
-} from "src/shared/constants/orders/index";
+} from "src/shared/translation";
 import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
+import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
 
 
 @connect
@@ -41,11 +41,11 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     }
   };
 
-  public selectItemHandler = (event: any): any => {
+  public selectItemHandler = (event: InputChangeEvent): void => {
     const key = event.target.value;
 
     if (!key) {
-      throw new Error(emptyValueErrorText);
+      throw new Error(EmptyValueErrorMessage);
     }
 
     this.setState((prevState: State) => {
@@ -62,7 +62,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     });
   };
 
-  public reorderSelectedClickHandler = (event: any): any => {
+  public reorderSelectedClickHandler = (event: InputChangeEvent): boolean => {
     const items = [...this.state.selectedItemsData];
     if (!items) {
       return false;
@@ -75,7 +75,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     return Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length);
   };
 
-  public reorderAllClickHandler = (event: any): any => {
+  public reorderAllClickHandler = (event: ClickEvent): void => {
     const allSelectedItemsData = this.props.order.items.map((item: IOrderDetailsItem): ICartAddItem => ({
       sku: item.sku,
       quantity: item.quantity,
@@ -95,7 +95,6 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     });
 
     this.props.addMultipleItemsToCart(allSelectedItemsData, this.props.cartId, this.props.payloadForCreateCart);
-    return true;
   };
 
   private isReorderAllDisabled = (): boolean => Boolean(!this.props.order.items.length);
@@ -141,7 +140,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                       shippingBlockTitle={OrderDetailShippingAddressTitle}
                     />
                   </Grid>
-                : <EmptyOrder intro={noOrderText} />
+                : <EmptyOrder intro={NoOrderMessage} />
               }
             </Grid>
           )

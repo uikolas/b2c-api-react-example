@@ -1,5 +1,5 @@
 import {reduxify} from 'src/shared/lib/redux-helper';
-import {getRouterLocation, getRouterMatchParam}  from 'src/shared/selectors/Common/router';
+import {getRouterMatchParam}  from 'src/shared/helpers/router/index';
 import {
   getOrderDetailsFromStore,
   isOrderDetailsFulfilled,
@@ -12,8 +12,7 @@ import {
   getAppCurrency,
   getAppTimeZone,
   getPayloadForCreateCart,
-  isAppInitiated,
-  TAppTimeZone
+  isAppInitiated
 } from '@stores/reducers/common/init';
 import {isUserAuthenticated} from '@stores/reducers/pages/login';
 import {ICartCreatePayload} from 'src/shared/services/Common/Cart/types';
@@ -22,10 +21,11 @@ import {TOrderId} from 'src/shared/interfaces/order';
 import {getOrderDetailsAction} from '@stores/actions/pages/order';
 import {addMultipleItemsToCartAction} from '@stores/actions/common/cart';
 import {getCartId} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import {TAppTimeZone} from "src/shared/interfaces/locale/index";
 
 
-const mapStateToProps = (state: any, ownProps: any) => {
-  const location = getRouterLocation(state, ownProps);
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const isLoading = isOrderDetailsLoading(state, ownProps);
   const isRejected = isOrderDetailsStateRejected(state, ownProps);
   const isFulfilled = isOrderDetailsFulfilled(state, ownProps);
@@ -41,7 +41,6 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const timeZone: TAppTimeZone = getAppTimeZone(state, ownProps);
 
   return ({
-    location,
     isLoading,
     isRejected,
     isFulfilled,

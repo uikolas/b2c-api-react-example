@@ -5,7 +5,7 @@ import {
   CUSTOMER_PASSWORD_UPDATE,
   LOGIN_DATA_SET_TO_STORE,
 } from '@stores/actionTypes/pages/customerProfile';
-import { CustomerProfileService } from '@services/Pages/CustomerProfile';
+import { CustomerProfileService } from '@services/Pages/CustomerProfile/index';
 import {
   ICustomerDataParsed,
   ICustomerProfileIdentity,
@@ -13,20 +13,22 @@ import {
   ILoginDataToLocalStorage,
   TCustomerReference,
 } from '@interfaces/customer';
+import {IPageCustomerProfileAction} from "src/shared/reducers/Pages/CustomerProfile/types";
+import {IPageLoginAction} from "src/shared/stores/reducers/pages/login/types";
 
 // Retrieve customer data.
-export const getCustomerProfilePendingStateAction = () => ({
+export const getCustomerProfilePendingStateAction = (): IPageCustomerProfileAction => ({
   type: CUSTOMER_DATA_REQUEST + '_PENDING',
 });
 
-export const getCustomerProfileRejectedStateAction = (message: string) => ({
+export const getCustomerProfileRejectedStateAction = (message: string): IPageCustomerProfileAction => ({
   type: CUSTOMER_DATA_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const getCustomerProfileFulfilledStateAction = (payload: ICustomerDataParsed) => ({
+export const getCustomerProfileFulfilledStateAction = (payload: ICustomerDataParsed): IPageCustomerProfileAction => ({
   type: CUSTOMER_DATA_REQUEST + '_FULFILLED',
-  payload,
+  payloadProfileFulfilled: payload,
 });
 
 export const getCustomerProfileAction = function(customerReference: TCustomerReference) {
@@ -36,18 +38,19 @@ export const getCustomerProfileAction = function(customerReference: TCustomerRef
 };
 
 // Update customer data
-export const updateCustomerProfilePendingStateAction = () => ({
+export const updateCustomerProfilePendingStateAction = (): IPageCustomerProfileAction => ({
   type: CUSTOMER_DATA_UPDATE + '_PENDING',
 });
 
-export const updateCustomerProfileRejectedStateAction = (message: string) => ({
+export const updateCustomerProfileRejectedStateAction = (message: string): IPageCustomerProfileAction => ({
   type: CUSTOMER_DATA_UPDATE + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const updateCustomerProfileFulfilledStateAction = (payload: ICustomerDataParsed) => ({
+export const updateCustomerProfileFulfilledStateAction = (payload: ICustomerDataParsed):
+  IPageCustomerProfileAction => ({
   type: CUSTOMER_DATA_UPDATE + '_FULFILLED',
-  payload,
+  payloadProfileFulfilled: payload,
 });
 
 export const updateCustomerProfileAction = function(
@@ -60,22 +63,22 @@ export const updateCustomerProfileAction = function(
 };
 
 // Save login data to LocalStorage
-export const saveLoginDataToStoreAction = (payload: ILoginDataToLocalStorage) => ({
+export const saveLoginDataToStoreAction = (payload: ILoginDataToLocalStorage): IPageLoginAction => ({
   type: LOGIN_DATA_SET_TO_STORE + '_FULFILLED',
-  payload,
+  payloadStoreFulfilled: payload,
 });
 
 // Update customer password.
-export const updateCustomerPasswordPendingStateAction = () => ({
+export const updateCustomerPasswordPendingStateAction = (): IPageCustomerProfileAction => ({
   type: CUSTOMER_PASSWORD_UPDATE + '_PENDING',
 });
 
-export const updateCustomerPasswordRejectedStateAction = (message: string) => ({
+export const updateCustomerPasswordRejectedStateAction = (message: string): IPageCustomerProfileAction => ({
   type: CUSTOMER_PASSWORD_UPDATE + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const updateCustomerPasswordFulfilledStateAction = () => ({
+export const updateCustomerPasswordFulfilledStateAction = (): IPageCustomerProfileAction => ({
   type: CUSTOMER_PASSWORD_UPDATE + '_FULFILLED',
 });
 
@@ -88,16 +91,16 @@ export const updateCustomerPasswordAction = function(
 };
 
 // Delete Customer Entity
-export const deleteCustomerPendingStateAction = () => ({
+export const deleteCustomerPendingStateAction = (): IPageCustomerProfileAction => ({
   type: CUSTOMER_DELETE_ENTITY + '_PENDING',
 });
 
-export const deleteCustomerRejectedStateAction = (message: string) => ({
+export const deleteCustomerRejectedStateAction = (message: string): IPageCustomerProfileAction => ({
   type: CUSTOMER_DELETE_ENTITY + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
-export const deleteCustomerFulfilledStateAction = () => ({
+export const deleteCustomerFulfilledStateAction = (): IPageCustomerProfileAction => ({
   type: CUSTOMER_DELETE_ENTITY + '_FULFILLED',
 });
 

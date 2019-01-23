@@ -1,5 +1,4 @@
 // tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import {NavLink} from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
@@ -15,18 +14,22 @@ import Divider from '@material-ui/core/Divider';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
+import { getCategoryIdByName } from 'src/shared/helpers/categories/index';
+import { pathCategoryPageBase, pathProductPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
+import { IProductCard } from 'src/shared/interfaces/product';
+import { AppPrice } from '../AppPrice';
+import { SquareImage } from '../SquareImage';
+import { styles } from './styles';
+import { CatalogProps as Props, CatalogState as State } from './types';
+import { connect } from './connect';
+import {
+  NoFoundMessage,
+  CategoriesPanelTitle,
+  SuggestedProductsTitle,
+  AllSuggestedProductsTitle
+} from 'src/shared/translation';
 
-import {getCategoryIdByName} from "src/shared/helpers/categories/index";
-import {pathCategoryPageBase, pathProductPageBase, pathSearchPage} from 'src/shared/routes/contentRoutes';
-import {ClickEvent, InputChangeEvent} from 'src/shared/interfaces/common/react';
-import {IProductCard} from 'src/shared/interfaces/product';
-import {AppPrice} from '../AppPrice';
-import {SquareImage} from '../SquareImage';
-import {styles} from './styles';
-import {CatalogProps as Props, CatalogState as State} from './types';
-import {connect} from './connect';
-
-export const buttonTitle = 'Search';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
@@ -175,9 +178,8 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     );
   };
 
-  private renderSuggestion = (
-    suggestion: IProductCard,
-    {query, isHighlighted}: {query: string; isHighlighted: boolean},
+  private renderSuggestion = (suggestion: IProductCard,
+                              {query, isHighlighted}: {query: string; isHighlighted: boolean},
   ) => {
     const matches = match(suggestion.abstractName, query);
     const parts = parse(suggestion.abstractName, matches);
@@ -238,7 +240,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     );
   };
 
-  private renderSuggestionsContainer = (options: any): JSX.Element => {
+  private renderSuggestionsContainer = (options: Autosuggest.RenderSuggestionsContainerParams): JSX.Element => {
     const {categories, completion, suggestions, categoriesTree, classes} = this.props;
     let suggestQuery: string = options.query.trim();
 
@@ -296,7 +298,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         <div {...options.containerProps}>
           <Paper square>
             <Typography paragraph variant="headline">
-              Nothing found...
+              { NoFoundMessage }
             </Typography>
           </Paper>
         </div>
@@ -308,12 +310,12 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         <div className={classes.insideContWrapper}>
           <div>{completions}</div>
           <Typography component="h4" className={classes.categoryTitle}>
-            Categories
+            { CategoriesPanelTitle }
           </Typography>
           <Divider />
           <div className={classes.marginTop}>{renderedCategories}</div>
           <Typography component="h4" className={classes.categoryTitle}>
-            Suggested Products
+            { SuggestedProductsTitle }
           </Typography>
 
           <Divider />
@@ -326,7 +328,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             onClick={this.handleSearchCompletion}
             className={classes.linkAll}
           >
-            See all suggested products
+            { AllSuggestedProductsTitle }
           </NavLink>
         </div>
       </div>

@@ -1,46 +1,47 @@
 import { IProductCard } from '../product';
-import { TAppCurrency } from '@stores/reducers/common/init';
 import { IPagination } from 'src/shared/components/Common/AppPagination/types';
 import {TCategoryId} from "src/shared/components/Pages/SearchPage/types";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 export type TSpellingSuggestion = string;
 export type TLocalizedName = string;
+export type TDocCount = number;
+export type TLabelId = string;
+export type TSearchTerm = string;
 
 export interface FilterValue {
-  value: any;
-  doc_count: number;
+  value: string | number;
+  doc_count: TDocCount | null;
 }
 
 export interface ValueFacets {
-  name?: string;
-  docCount?: any;
-  values?: Array<FilterValue>;
-  activeValue?: Array<string> | null;
+  name: string;
+  docCount: TDocCount | null;
+  values: Array<FilterValue>;
+  activeValue: string | null;
   localizedName: TLocalizedName;
 }
 
 export interface RangeFacets {
-  name?: string;
-  min?: number;
-  max?: number;
-  activeMin?: number;
-  activeMax?: number;
-  docCount?: any;
+  name: string;
+  min: number;
+  max: number;
+  activeMin: number;
+  activeMax: number;
+  docCount: TDocCount | null;
   localizedName: TLocalizedName;
 }
 
 export interface FlyoutSearch {
-  suggestions?: Array<IProductCard>;
-  categories?: Array<{[name: string]: string}>;
-  completion?: string[];
-  pending?: boolean;
+  suggestions: Array<IProductCard> | null;
+  categories: Array<{[name: string]: string}> | null;
+  completion: string[] | null;
+  pending: boolean;
 }
-
-export type TLabelId = string;
 
 export interface IProductLabelResponse {
   type: string;
-  id: number;
+  id: string;
 }
 
 export interface IAvailableLabel {
@@ -64,13 +65,13 @@ export interface ILocalizedNamesMap {
 }
 
 export interface ICatalogSearchDataParsed {
-  items?: Array<IProductCard>;
-  filters?: Array<ValueFacets>;
+  items: Array<IProductCard> | null;
+  filters: Array<ValueFacets> | null;
   category: Array<FilterValue>;
-  currentCategory: string;
-  currentSort?: string;
-  rangeFilters?: Array<RangeFacets>;
-  sortParams?: Array<string>;
+  currentCategory: string | null;
+  currentSort: string | null;
+  rangeFilters: Array<RangeFacets> | null;
+  sortParams: Array<string> | null;
   sortParamLocalizedNames: ILocalizedNamesMap | null;
   categoriesLocalizedName: TLocalizedName | null;
   pagination: IPagination;
@@ -79,10 +80,9 @@ export interface ICatalogSearchDataParsed {
   availableLabels: IAvailableLabelsCollection | null;
 }
 
-export interface ISearchPageData extends ICatalogSearchDataParsed {
+export interface ISearchPageData extends ICatalogSearchDataParsed, ISearchTermData {
   dispatch?: Function;
   flyoutSearch?: FlyoutSearch;
-  searchTerm?: string;
   currency?: TAppCurrency;
 }
 
@@ -95,4 +95,8 @@ export interface ISearchQuery {
   label?: string;
   page?: string | number;
   [key: string]: string | number | string[];
+}
+
+export interface ISearchTermData {
+  searchTerm?: TSearchTerm;
 }

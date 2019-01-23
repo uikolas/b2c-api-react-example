@@ -18,7 +18,7 @@ export const parseLoginDataResponse = (response: ICustomerLoginDataResponse): IC
   if (!response) {
     return null;
   }
-  const {data: {attributes}}: any = response;
+  const {data: {attributes}}: ICustomerLoginDataResponse = response;
   const {sub}: {sub: string} = jwtDecoder(attributes.accessToken);
   const customerRef = JSON.parse(sub).customer_reference;
 

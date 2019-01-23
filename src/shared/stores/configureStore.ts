@@ -1,11 +1,12 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { routerMiddleware, routerReducer } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { routerMiddleware, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import { History } from 'history';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducers } from './reducers';
+import {IReduxStore} from "./reducers/types";
 
 export const configureStore = function (history: History, initialState?: any) {
     const middlewares = [

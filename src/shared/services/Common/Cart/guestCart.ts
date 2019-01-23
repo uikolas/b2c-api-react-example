@@ -1,10 +1,12 @@
-import api, { removeAuthToken  } from '../../api';
+import api, { removeAuthToken  } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from '@stores/actions/common/cart';
-import { cartAddProducts, cartChangeQty, cartRemoveItems } from 'src/shared/constants/messages/cart';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
+import {IApiResponseData} from "src/shared/services/types";
+import {IResponseError} from "src/shared/services/apiAbstractions/types";
 
 export class GuestCartService extends ApiServiceAbstract {
   public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<void> {
@@ -20,14 +22,14 @@ export class GuestCartService extends ApiServiceAbstract {
         },
       };
 
-      const response: any = await api.post(
+      const response: IApiResponseData = await api.post(
         'guest-cart-items',
         body,
         {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
 
       if (response.ok) {
-        toast.success(cartAddProducts);
+        toast.success(CartAddProducts);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
       } else {
@@ -46,7 +48,7 @@ export class GuestCartService extends ApiServiceAbstract {
 
       dispatch(cartActions.getCartsPendingStateAction());
 
-      const response: any = await api.get(
+      const response: IApiResponseData = await api.get(
         '/guest-carts', {},
         {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
@@ -75,22 +77,23 @@ export class GuestCartService extends ApiServiceAbstract {
     }
   }
 
-  public static async guestCartRemoveItem(
-    dispatch: Function, cartUid: string, sku: string, anonymId: string,
-  ): Promise<void> {
+  public static async guestCartRemoveItem(dispatch: Function,
+                                          cartUid: string,
+                                          sku: string,
+                                          anonymId: string): Promise<void> {
     try {
       removeAuthToken();
 
       dispatch(cartActions.cartDeleteItemPendingStateAction);
 
-      const response: any = await api.delete(
+      const response: IApiResponseData = await api.delete(
         `guest-carts/${cartUid}/guest-cart-items/${sku}`,
         {},
         {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
 
       if (response.ok) {
-        toast.success(cartRemoveItems);
+        toast.success(CartRemoveItems);
         await GuestCartService.getGuestCart(dispatch, anonymId);
       } else {
         this.errorMessageInform(response, dispatch);
@@ -102,9 +105,10 @@ export class GuestCartService extends ApiServiceAbstract {
     }
   }
 
-  public static async guestCartUpdate(
-    dispatch: Function, payload: ICartAddItem, cartId: TCartId, anonymId: string,
-  ): Promise<void> {
+  public static async guestCartUpdate(dispatch: Function,
+                                      payload: ICartAddItem,
+                                      cartId: TCartId,
+                                      anonymId: string): Promise<void> {
     try {
       removeAuthToken();
 
@@ -117,14 +121,14 @@ export class GuestCartService extends ApiServiceAbstract {
         },
       };
       const {sku} = payload;
-      const response: any = await api.patch(
+      const response: IApiResponseData = await api.patch(
         `guest-carts/${cartId}/guest-cart-items/${sku}`,
         body,
         {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
       );
 
       if (response.ok) {
-        toast.success(cartChangeQty);
+        toast.success(CartChangeQty);
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
       } else {
@@ -137,7 +141,7 @@ export class GuestCartService extends ApiServiceAbstract {
     }
   }
 
-  private static errorMessageInform(response: any, dispatch: Function): void {
+  private static errorMessageInform(response: IResponseError, dispatch: Function): void {
     const errorMessage = this.getParsedAPIError(response);
     dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
     toast.error('Request Error: ' + errorMessage);

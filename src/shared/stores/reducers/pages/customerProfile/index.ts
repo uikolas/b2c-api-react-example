@@ -6,8 +6,9 @@ import {
 } from '@stores/actionTypes/pages/customerProfile';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICustomerDataParsed } from '@interfaces/customer';
-import { IPayloadError } from '@interfaces/errors';
-import { ICustomerDataState } from './types';
+import {ICustomerDataState, IPageCustomerProfileAction} from './types';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import {IApiErrorResponse} from "src/shared/services/types";
 
 export const initialState: ICustomerDataState = {
   data: {
@@ -16,27 +17,28 @@ export const initialState: ICustomerDataState = {
   },
 };
 
-export const pageCustomerProfile = function(state: ICustomerDataState = initialState, action: any): ICustomerDataState {
+export const pageCustomerProfile = function(state: ICustomerDataState = initialState,
+                                            action: IPageCustomerProfileAction): ICustomerDataState {
   switch (action.type) {
     case `${CUSTOMER_DATA_REQUEST}_REJECTED`:
     case `${CUSTOMER_DATA_UPDATE}_REJECTED`:
-      return handleRejected(state, action.payload);
+      return handleRejected(state, action.payloadRejected || {error: action.error});
     case `${CUSTOMER_DATA_REQUEST}_PENDING`:
     case `${CUSTOMER_DATA_UPDATE}_PENDING`:
       return handlePending(state);
     case `${CUSTOMER_DATA_REQUEST}_FULFILLED`:
     case `${CUSTOMER_DATA_UPDATE}_FULFILLED`:
-      return handleFulfilled(state, action.payload);
+      return handleFulfilled(state, action.payloadProfileFulfilled);
     case `${CUSTOMER_PASSWORD_UPDATE}_FULFILLED`:
       return handleUpdatePasswordFulfilled(state);
     case `${CUSTOMER_PASSWORD_UPDATE}_REJECTED`:
-      return handleUpdatePasswordRejected(state, action.payload);
+      return handleUpdatePasswordRejected(state, action.payloadRejected || {error: action.error});
     case `${CUSTOMER_PASSWORD_UPDATE}_PENDING`:
       return handleUpdatePasswordPending(state);
     case `${CUSTOMER_DELETE_ENTITY}_FULFILLED`:
       return handleDeleteCustomerFulfilled(state);
     case `${CUSTOMER_DELETE_ENTITY}_REJECTED`:
-      return handleDeleteCustomerRejected(state, action.payload);
+      return handleDeleteCustomerRejected(state, action.payloadRejected || {error: action.error});
     case `${CUSTOMER_DELETE_ENTITY}_PENDING`:
       return handleDeleteCustomerPending(state);
     default:
@@ -56,7 +58,7 @@ const handleFulfilled = (customerState: ICustomerDataState, payload: ICustomerDa
   };
 };
 
-const handleRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+const handleRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
   return {
     ...customerState,
     data: {
@@ -100,7 +102,7 @@ const handleUpdatePasswordPending = (customerState: ICustomerDataState) => {
   };
 };
 
-const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
   return {
     ...customerState,
     data: {
@@ -133,7 +135,7 @@ const handleDeleteCustomerPending = (customerState: ICustomerDataState) => {
   };
 };
 
-const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IPayloadError) => {
+const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
   return {
     ...customerState,
     data: {
@@ -144,41 +146,41 @@ const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload
 };
 
 // selectors
-export function isPageCustomerProfileInitiated(state: any, props: any): boolean {
+export function isPageCustomerProfileInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.initiated
   );
 }
 
-export function isCustomerProfilePresent(state: any, props: any): boolean {
+export function isCustomerProfilePresent(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.data.profile
     && state.pageCustomerProfile.data.profile.id,
   );
 }
 
-export function isPageCustomerProfileLoading(state: any, props: any): boolean {
+export function isPageCustomerProfileLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.pending
     && state.pageCustomerProfile.pending === true,
   );
 }
 
-export function isPageCustomerProfileRejected(state: any, props: any): boolean {
+export function isPageCustomerProfileRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.rejected
     && state.pageCustomerProfile.rejected === true,
   );
 }
 
-export function isPageCustomerProfileFulfilled(state: any, props: any): boolean {
+export function isPageCustomerProfileFulfilled(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(isStateExist(state, props)
     && state.pageCustomerProfile.fulfilled
     && state.pageCustomerProfile.fulfilled === true,
   );
 }
 
-export function getCustomerProfile(state: any, props: any): ICustomerDataParsed | null {
+export function getCustomerProfile(state: IReduxStore, props: IReduxOwnProps): ICustomerDataParsed | null {
   if (!isCustomerProfilePresent(state, props)) {
     return null;
   }
@@ -186,12 +188,12 @@ export function getCustomerProfile(state: any, props: any): ICustomerDataParsed 
   return state.pageCustomerProfile.data.profile;
 }
 
-export function isCustomerPasswordUpdated(state: any, props: any): boolean | null {
+export function isCustomerPasswordUpdated(state: IReduxStore, props: IReduxOwnProps): boolean | null {
   return (isStateExist(state, props))
     ? state.pageCustomerProfile.data.isPasswordUpdated
     : null;
 }
 
-function isStateExist(state: any, props: any): boolean {
+function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
   return Boolean(state.pageCustomerProfile);
 }

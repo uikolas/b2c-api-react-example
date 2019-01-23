@@ -4,7 +4,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Tooltip from '@material-ui/core/Tooltip';
-
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { CartDrop } from './parts/cartDrop';
 import { CartIcon } from './cart-icon';
@@ -13,9 +12,11 @@ import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
 import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
-import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper/index";
+import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper/index';
+import { CartIsEmptyTooltipMessage } from 'src/shared/translation';
 
-@(withRouter as any)
+
+@(withRouter as Function)
 @connect
 export class CartComponent extends React.PureComponent<Props, State> {
   public state: State = {
@@ -81,7 +82,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
     return (
       <div>
         { cartItemsQuantity === 0
-          ? (<Tooltip disableFocusListener placement="top" title="Cart is empty">
+          ? (<Tooltip disableFocusListener placement="top" title={CartIsEmptyTooltipMessage}>
               { cartButton }
             </Tooltip>)
           : cartButton

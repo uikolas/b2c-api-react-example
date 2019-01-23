@@ -1,23 +1,26 @@
 import { TSalutationVariant } from '../../interfaces/customer';
+import {
+    SalutationVariantMr,
+    SalutationVariantMs,
+    SalutationVariantMrs,
+    SalutationVariantDr
+} from 'src/shared/translation/index';
 
-
-export const salutationVariants: Array<TSalutationVariant> = [
-  {
-    value: 'Mr',
-    label: 'Mr.',
-  },
-  {
-    value: 'Ms',
-    label: 'Ms.',
-  },
-  {
-    value: 'Mrs',
-    label: 'Mrs.',
-  },
-  {
-    value: 'Dr',
-    label: 'Dr.',
-  },
+export const SalutationVariants: Array<TSalutationVariant> = [
+    {
+        value: SalutationVariantMr,
+        label: `${SalutationVariantMr}.`,
+    },
+    {
+        value: SalutationVariantMs,
+        label: `${SalutationVariantMs}.`,
+    },
+    {
+        value: SalutationVariantMrs,
+        label: `${SalutationVariantMrs}.`,
+    },
+    {
+        value: SalutationVariantDr,
+        label: `${SalutationVariantDr}.`,
+    },
 ];
-
-export const AccountTitle = "Your Account";

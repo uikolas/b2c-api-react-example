@@ -17,10 +17,7 @@ import {
   createRangeFilterItemCombined,
 } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
-
-
-const title = 'Active Filters';
-const resetBtnTitle = 'RESET ALL FILTERS';
+import { ActiveFiltersTitle, ResetAllFiltersButtonTitle } from 'src/shared/translation';
 
 export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props) => {
   const {
@@ -91,7 +88,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
           className={ classes.root }
     >
       <Grid item xs={ 12 }>
-        <AppPageSubTitle title={ title }/>
+        <AppPageSubTitle title={ ActiveFiltersTitle }/>
       </Grid>
 
       <Grid container
@@ -113,7 +110,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
         })
         }
         <Chip
-          label={ resetBtnTitle }
+          label={ ResetAllFiltersButtonTitle }
           className={ `${classes.reset}` }
           onClick={ resetHandler }
           classes={ {label: classes.resetLabel} }

@@ -4,7 +4,6 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { toast } from 'react-toastify';
-
 import {
   concreteProductType,
   defaultItemValueDropdown,
@@ -21,7 +20,7 @@ import {
 } from 'src/shared/helpers/product';
 import { TWishListName } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
-import {ClickEvent} from 'src/shared/interfaces/common/react';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
 import { AppMain } from '../../Common/AppMain';
 import { ImageSlider } from '../../Common/ImageSlider';
@@ -31,12 +30,12 @@ import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
-import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {SprykerForm} from "src/shared/components/UI/SprykerForm/index";
-import {ChangeEvent} from "react";
-import {getQuantityFormSettings, getWishListFormSettings} from "src/shared/components/Pages/ProductPage/settings/forms";
-import {ProductDetail} from "src/shared/components/Pages/ProductPage/ProductDetail/index";
-import {AddToCartBtnTitle, AddToWishlistBtnTitle} from "src/shared/constants/buttons/index";
+import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
+import { SprykerForm } from "src/shared/components/UI/SprykerForm/index";
+import { ChangeEvent } from "react";
+import { getQuantityFormSettings, getWishListFormSettings } from "src/shared/components/Pages/ProductPage/settings/forms";
+import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
+import { AddToCartBtnTitle, AddToWishlistBtnTitle, ErrorDurningAddProductToTheCartMessage } from "src/shared/translation";
 
 const quantitySelectedInitial = 1;
 
@@ -186,7 +185,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     const result = this.runProcessCart();
   };
 
-  private runProcessCart = async (): Promise<any> => {
+  private runProcessCart = async (): Promise<void> => {
     try {
       await this.setState((prevState: State) => {
         return ({
@@ -207,26 +206,21 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
       });
     } catch(error) {
-      toast.error('Error occurs during the adding product to the cart ');
+      toast.error(ErrorDurningAddProductToTheCartMessage);
     }
   };
 
-  private runAddToCart = async (): Promise<any> => {
+  private runAddToCart = async (): Promise<void> => {
     const item: ICartAddItem = createCartItemAddToCart(this.state.sku, this.state.quantitySelected);
-    let result;
     if (this.props.isUserLoggedIn && this.props.cartId) {
-      result = await this.props.addItemToCart(
-        item,
-        this.props.cartId,
-      );
+      await this.props.addItemToCart(item, this.props.cartId);
     } else {
       if (this.props.isUserLoggedIn) {
-        result = await this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
+        await this.props.createCartAndAddItem(this.props.payloadForCreateCart, item);
       } else {
-        result = await this.props.addItemGuestCart(item, this.props.anonymId);
+        await this.props.addItemGuestCart(item, this.props.anonymId);
       }
     }
-    return result;
   };
 
   private initRequestWishListsData = (): boolean => {

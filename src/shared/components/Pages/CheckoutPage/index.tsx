@@ -22,7 +22,7 @@ import {AppMain} from "src/shared/components/Common/AppMain";
 import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
 import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
 import {OrderSuccess} from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
-import {inputSaveErrorText} from "src/shared/constants/messages/errors";
+import {InputSaveErrorMessage} from "src/shared/translation";
 import {
   billingNewAddressDefault,
   billingSelectionDefault,
@@ -69,7 +69,7 @@ import {
   validateInvoiceInput
 } from "src/shared/components/Pages/CheckoutPage/helpers/validation";
 import {AppPageTitle} from "src/shared/components/Common/AppPageTitle/index";
-import {noProductsInCheckoutText} from "src/shared/constants/messages/checkout";
+import {NoProductsInCheckoutMessage} from "src/shared/translation";
 import {InputChangeEvent, FormEvent, BlurEvent} from "src/shared/interfaces/common/react";
 import {IAddressItem, IAddressItemCollection} from "src/shared/interfaces/addresses";
 import {ICheckoutRequest} from "src/shared/interfaces/checkout";
@@ -230,7 +230,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const { name, value } = event.target;
 
     if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
-      throw new Error(inputSaveErrorText);
+      throw new Error(InputSaveErrorMessage);
     }
     const isInputValid = validateDeliveryInput(name, value);
 
@@ -250,7 +250,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     const { name, value } = event.target;
 
     if (!this.state.billingNewAddress.hasOwnProperty(name)) {
-      throw new Error(inputSaveErrorText);
+      throw new Error(InputSaveErrorMessage);
     }
 
     const isInputValid = validateBillingInput(name, value);
@@ -270,7 +270,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public handleInvoiceInputs = (event: InputChangeEvent): void => {
     const { name: key, value } = event.target;
     if (!this.state.paymentInvoiceData.hasOwnProperty(key)) {
-      throw new Error(inputSaveErrorText);
+      throw new Error(InputSaveErrorMessage);
     }
     const isInputValid = validateInvoiceInput(key, value);
     this.setState((prevState: ICheckoutPageState) => {
@@ -281,7 +281,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
   public handleCreditCardInputs = (event: InputChangeEvent): void => {
     const { name: key, value } = event.target;
     if (!this.state.paymentCreditCardData.hasOwnProperty(key)) {
-      throw new Error(inputSaveErrorText);
+      throw new Error(InputSaveErrorMessage);
     }
     const isInputValid = validateCreditCardInput(key, value);
     this.setState((prevState: ICheckoutPageState) => {
@@ -425,7 +425,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
       paymentMethods,
     } = this.props;
 
-    console.info(this.state);
     if (isAppStateLoading) {
       return <AppMain>{ null }</AppMain>;
     }
@@ -433,7 +432,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     return (
       <AppMain>
         {!isProductsExists && !orderId
-          ? <AppPageTitle title={noProductsInCheckoutText} />
+          ? <AppPageTitle title={NoProductsInCheckoutMessage} />
           : <CheckoutPageContext.Provider
             value={{
               submitHandler: this.handleSubmit,
