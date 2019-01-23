@@ -3,11 +3,7 @@ import {
   CategoryIntroComputers,
   CategoryIntroNotebooks,
   CategoryIntroTablets,
-  CategoryIntroWorkstations,
-  CategoryNameComputers,
-  CategoryNameNotebooks,
-  CategoryNameTablets,
-  CategoryNameWorkstations
+  CategoryIntroWorkstations
 } from 'src/shared/translation/translations';
 import {
   HomePageComputersBtnTitle,
@@ -25,28 +21,28 @@ import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from 'src/img/i
 
 export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
   {
-    title: CategoryNameComputers,
+    title: 'category.name.computers',
     text: CategoryIntroComputers,
     img: computersSrc,
     path: pathCategoryComputers,
     linkTitle: HomePageComputersBtnTitle,
   },
   {
-    title: CategoryNameNotebooks,
+    title: 'category.name.notebooks',
     text: CategoryIntroNotebooks,
     img: notebooksSrc,
     path: pathCategoryNotebooks,
     linkTitle: HomePageNotebooksBtnTitle,
   },
   {
-    title: CategoryNameTablets,
+    title: 'category.name.tablets',
     text: CategoryIntroTablets,
     img: tabletsSrc,
     path: pathCategoryTablets,
     linkTitle: HomePageTabletsBtnTitle,
   },
   {
-    title: CategoryNameWorkstations,
+    title: 'category.name.workstations',
     text: CategoryIntroWorkstations,
     img: workstationsSrc,
     path: pathCategoryWorkstations,

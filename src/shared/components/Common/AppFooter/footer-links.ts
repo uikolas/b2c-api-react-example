@@ -18,7 +18,7 @@ export const categoriesLinks: link[] = [
         path: pathCategoryNotebooks,
     },
     {
-        name: 'Pcs & Workstations',
+        name: 'category.name.workstations',
         path: pathCategoryWorkstations,
     },
     {

@@ -13,7 +13,7 @@ export const getCheckoutDataInitPendingStateAction = () => ({
 
 export const getCheckoutDataInitRejectedStateAction = (message: string) => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
 export const getCheckoutDataInitFulfilledStateAction = (payload: ICheckoutResponseData): IPageCheckoutAction => ({
@@ -33,12 +33,12 @@ export const sendCheckoutDataPendingStateAction = () => ({
 
 export const sendCheckoutDataRejectedStateAction = (message: string) => ({
   type: SEND_CHECKOUT_DATA + '_REJECTED',
-  payload: {error: message},
+  payloadRejected: {error: message},
 });
 
 export const sendCheckoutDataFulfilledStateAction = (orderId: TOrderId) => ({
   type: SEND_CHECKOUT_DATA + '_FULFILLED',
-  payloadSendFulfilled: orderId,
+  payloadSendFulfilled: {orderId},
 });
 
 export const sendCheckoutDataAction = function(payload: ICheckoutRequest, anonymId: string) {
