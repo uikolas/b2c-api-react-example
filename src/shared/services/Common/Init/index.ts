@@ -81,11 +81,19 @@ export class InitAppService extends ApiServiceAbstract {
     }
   }
 
+  public static switchLocaleMinimumTime(time: number): Promise<void> {
+      return new Promise(resolve => setTimeout(resolve, time));
+  }
+
   public static async switchLocale(dispatch: Function, payload?: ILocaleActionPayload): Promise<void> {
       dispatch(switchLocalePendingState());
       try {
-          dispatch(getCategoriesAction());
-          await setTimeout(() => { dispatch(switchLocaleFulfilledState(payload)); }, 500);
+          const getCategoriesTree = this.getCategoriesTree(dispatch);
+          const switchLocaleMinimumTime = this.switchLocaleMinimumTime(500);
+
+          await Promise.all([getCategoriesTree, switchLocaleMinimumTime]);
+
+          dispatch(switchLocaleFulfilledState(payload));
 
       } catch(error) {
           dispatch(switchLocaleRejectedState(error.message));
