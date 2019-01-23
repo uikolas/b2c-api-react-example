@@ -20,7 +20,8 @@ import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
 import {
     initApplicationDataAction,
     setAuthFromStorageAction,
-    IInitApplicationDataPayload
+    IInitApplicationDataPayload,
+    getCategoriesAction
 } from '@stores/actions/common/init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
