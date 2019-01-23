@@ -9,7 +9,7 @@ import {
     CartItemTitle,
     OrderDetailTableHeaderItems,
     FoundTitle
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 
 export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
   const {

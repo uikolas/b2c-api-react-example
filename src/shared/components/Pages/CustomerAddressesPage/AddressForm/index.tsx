@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation';
+import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation/translations';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
@@ -14,7 +14,7 @@ import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
 import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
-import { ButtonSaveTitle } from 'src/shared/translation';
+import { ButtonSaveTitle } from 'src/shared/translation/translations';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {

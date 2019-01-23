@@ -7,8 +7,8 @@ import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ProductItemProps as Props } from './types';
 import { styles, cartProductImageSize } from './styles';
 import { SquareImage } from 'src/shared/components/Common/SquareImage/index';
-import { RemoveBtnTitle } from 'src/shared/translation';
-import { CartProductQuantity } from 'src/shared/translation';
+import { RemoveBtnTitle } from 'src/shared/translation/translations';
+import { CartProductQuantity } from 'src/shared/translation/translations';
 import { priceTypeNameOriginal } from 'src/shared/interfaces/product/index';
 
 export const ProductItemComponent: React.SFC<Props> = ({classes, productData, deleteItem}) => {

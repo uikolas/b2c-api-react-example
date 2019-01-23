@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { styles } from './styles';
-import { ButtonAgreeTitle, ButtonDisagreeTitle } from 'src/shared/translation';
+import { ButtonAgreeTitle, ButtonDisagreeTitle } from 'src/shared/translation/translations';
 
 interface SprykerDialogProps extends WithStyles<typeof styles> {
   title?: string;

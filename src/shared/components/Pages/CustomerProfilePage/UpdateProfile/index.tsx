@@ -19,7 +19,7 @@ import {
   InputLabelLastName,
   InputLabelEmail,
   ButtonUpdateTitle
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 
 interface UpdateProfileProps extends WithStyles<typeof styles> {
   submitHandler: (event: FormEvent<HTMLFormElement>) => void;

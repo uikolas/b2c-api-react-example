@@ -10,7 +10,7 @@ import {
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { CustomerLogin, RegisterSuccess } from 'src/shared/translation';
+import { CustomerLogin, RegisterSuccess } from 'src/shared/translation/translations';
 import {IApiResponseData} from "src/shared/services/types";
 
 export class PagesLoginService extends ApiServiceAbstract {

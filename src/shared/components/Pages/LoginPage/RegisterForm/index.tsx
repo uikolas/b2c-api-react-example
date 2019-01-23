@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
-import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation';
+import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation/translations';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
@@ -24,7 +24,7 @@ import {
     PasswordTitle,
     ConfirmPasswordTitle,
     PasswordsNotEqualErrorMessage
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 
 export class RegisterFormBase extends React.Component<Props, State> {
   public state = {

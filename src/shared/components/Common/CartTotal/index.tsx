@@ -5,7 +5,7 @@ import {
   OrderDetailSubtotal,
   OrderDetailTax,
   OrderDetailDiscount,
-} from "src/shared/translation";
+} from "src/shared/translation/translations";
 
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ICartTotals } from 'src/shared/interfaces/cart';

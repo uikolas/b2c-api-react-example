@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PageNotFoundMessage } from 'src/shared/translation';
+import { PageNotFoundMessage } from 'src/shared/translation/translations';
 import { INotFoundProps as Props, INotFoundState as State } from './types';
 
 export class NotFound extends React.PureComponent<Props, State> {

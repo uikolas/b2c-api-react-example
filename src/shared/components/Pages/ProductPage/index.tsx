@@ -35,7 +35,7 @@ import { SprykerForm } from "src/shared/components/UI/SprykerForm/index";
 import { ChangeEvent } from "react";
 import { getQuantityFormSettings, getWishListFormSettings } from "src/shared/components/Pages/ProductPage/settings/forms";
 import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
-import { AddToCartBtnTitle, AddToWishlistBtnTitle, ErrorDurningAddProductToTheCartMessage } from "src/shared/translation";
+import { AddToCartBtnTitle, AddToWishlistBtnTitle, ErrorDurningAddProductToTheCartMessage } from "src/shared/translation/translations";
 
 
 const quantitySelectedInitial = 1;

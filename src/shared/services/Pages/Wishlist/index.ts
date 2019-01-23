@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import {IWishlist, IWishlistProduct, TWishListId} from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
-import { WishlistAuthenticateErrorMessage } from 'src/shared/translation';
+import { WishlistAuthenticateErrorMessage } from 'src/shared/translation/translations';
 import {
   WishlistCreated,
   WishlistDeleted,
   WishlistAddProduct,
   WishlistRemoveItems,
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from "@stores/actions/common/cart";
 import {IApiResponseData} from "src/shared/services/types";

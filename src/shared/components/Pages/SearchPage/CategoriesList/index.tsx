@@ -11,7 +11,7 @@ import {
 } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
 import {ICategory} from "src/shared/interfaces/category/index";
-import { CategoriesPanelTitle, NoNameTitle } from 'src/shared/translation';
+import { CategoriesPanelTitle, NoNameTitle } from 'src/shared/translation/translations';
 import { getFormattedActiveCategories } from 'src/shared/components/Pages/SearchPage/helpers/index';
 
 

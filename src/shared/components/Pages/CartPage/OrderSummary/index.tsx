@@ -12,8 +12,8 @@ import { CartTotal } from 'src/shared/components/Common/CartTotal';
 import {
   OrderSummaryTitle,
   OrderDetailGrandTotal,
-} from 'src/shared/translation';
-import { ContinueCheckoutTitle } from 'src/shared/translation';
+} from 'src/shared/translation/translations';
+import { ContinueCheckoutTitle } from 'src/shared/translation/translations';
 
 export const OrderSummaryComponent: React.SFC<Props> = (
   {classes, handleChangeVouchercode, voucherCode, totals},

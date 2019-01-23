@@ -2,13 +2,13 @@ import {
     CATEGORIES_TREE_REQUEST,
     INIT_APP_ACTION_TYPE,
     SET_AUTH_FROM_STORAGE,
-    SWITCH_LOCALE,
+    SWITCH_LOCALE
 } from '@stores/actionTypes/Common/Init';
 import { InitAppService } from '@services/Common/Init/index';
-import {ICategory} from "src/shared/interfaces/category/index";
-import {IInitData} from "src/shared/interfaces/init/index";
-import {ICustomerLoginDataParsed} from "src/shared/interfaces/customer/index";
-import {ILocaleActionPayload, IInitAction} from "@stores/reducers/Common/Init/types";
+import { ICategory } from 'src/shared/interfaces/category/index';
+import { IInitData } from 'src/shared/interfaces/init/index';
+import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
+import { ILocaleActionPayload, IInitAction } from '@stores/reducers/Common/Init/types';
 
 export interface IInitApplicationDataPayload {
 
@@ -42,10 +42,25 @@ export const categoriesFulfilledState = (categories: Array<ICategory>) => ({
     payloadCategoriesTreeFulfilled: {categories},
 });
 
-export const switchLocaleAction = (payload: ILocaleActionPayload): IInitAction => ({
+export const switchLocalePendingState = () => ({
+    type: SWITCH_LOCALE + '_PENDING',
+});
+
+export const switchLocaleRejectedState = (message: string) => ({
+    type: SWITCH_LOCALE + '_REJECTED',
+    payloadRejected: {error: message},
+});
+
+export const switchLocaleFulfilledState = (payload: ILocaleActionPayload): IInitAction => ({
     type: SWITCH_LOCALE + '_FULFILLED',
     payloadLocaleFulfilled: payload,
 });
+
+export const switchLocaleAction = function(payload: any) {
+    return (dispatch: Function, getState: Function) => {
+        InitAppService.switchLocale(dispatch, payload);
+    };
+};
 
 export const initApplicationDataAction = function(payload: IInitApplicationDataPayload) {
     return (dispatch: Function, getState: Function) => {

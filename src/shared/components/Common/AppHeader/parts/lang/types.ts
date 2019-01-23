@@ -5,7 +5,7 @@ import {TAppLocale} from "src/shared/interfaces/locale/index";
 
 export type language = {
     name: string,
-    code: string,
+    code: TAppLocale,
 };
 
 export interface LangProps extends WithStyles<typeof styles> {

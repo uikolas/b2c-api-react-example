@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import {ClickEvent} from 'src/shared/interfaces/common/react';
 import { styles } from './styles';
-import { EmptyMessage } from 'src/shared/translation';
+import { EmptyMessage } from 'src/shared/translation/translations';
 
 interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOrigin {
   message: string;

@@ -24,7 +24,7 @@ import {
   CreateListMessage,
   ButtonAddTitle,
   NavLinkTitleWishlist
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 
 
 @connect

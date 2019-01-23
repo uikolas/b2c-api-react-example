@@ -2,7 +2,7 @@ import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
 import {
   IPaymentInvoiceParams
 } from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import {InputLabelPaymentDateOfBirth} from "src/shared/translation";
+import {InputLabelPaymentDateOfBirth} from "src/shared/translation/translations";
 
 
 export const getInvoiceFormSettings = ( formName: string, params: IPaymentInvoiceParams): IFormSettings => {

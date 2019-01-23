@@ -3,9 +3,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import {connect} from './connect';
-import {NoOrderMessage} from 'src/shared/translation';
+import {NoOrderMessage} from 'src/shared/translation/translations';
 import {IOrderDetailsItem, IOrderDetailsSelectedItems} from 'src/shared/interfaces/order';
-import {EmptyValueErrorMessage} from 'src/shared/translation';
+import {EmptyValueErrorMessage} from 'src/shared/translation/translations';
 import {ICartAddItem} from 'src/shared/interfaces/cart';
 import {OrderDetailsGeneralInfo} from './OrderDetailsGeneralInfo';
 import {OrderProductList} from './OrderProductsList';
@@ -17,7 +17,7 @@ import {getOrderSelectedItemsData} from "src/shared/components/Pages/OrderDetail
 import {
   OrderDetailBillingAddressTitle,
   OrderDetailShippingAddressTitle
-} from "src/shared/translation";
+} from "src/shared/translation/translations";
 import {EmptyOrder} from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
 import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
 

@@ -5,7 +5,7 @@ import {
   InputLabelAddNewBillingAddress,
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
-} from "src/shared/translation";
+} from "src/shared/translation/translations";
 import {
   ICheckoutAddressState,
   ICheckoutPageProps,
@@ -24,7 +24,7 @@ import {
   PanelBillingAddressTitle,
   PanelShipmentTitle,
   PanelPaymentTitle
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 
 
 export const addressDefault: IAddressItem = {

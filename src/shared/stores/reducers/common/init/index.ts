@@ -32,12 +32,15 @@ export const init = function(state: IInitState = initialState,
     switch (action.type) {
         case `${INIT_APP_ACTION_TYPE}_PENDING`:
         case `${CATEGORIES_TREE_REQUEST}_PENDING`:
+        case `${SWITCH_LOCALE}_PENDING`:
             return handleInitAppPending(state);
         case `${INIT_APP_ACTION_TYPE}_FULFILLED`:
             return handleInitAppFulfilled(state, action.payloadInitFulfilled);
         case `${INIT_APP_ACTION_TYPE}_REJECTED`:
         case `${CATEGORIES_TREE_REQUEST}_REJECTED`:
+        case `${SWITCH_LOCALE}_REJECTED`:
             return handleInitAppRejected(state, action.payloadRejected || {error: action.error});
+
         case `${CATEGORIES_TREE_REQUEST}_FULFILLED`:
             return {
                 ...state,

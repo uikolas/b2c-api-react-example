@@ -6,7 +6,7 @@ import {
   AddressAdd,
   AddressDelete,
   AddressUpdate,
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
 import {

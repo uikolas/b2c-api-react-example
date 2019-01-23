@@ -11,7 +11,7 @@ import {
   TProductSKU,
 } from 'src/shared/interfaces/product';
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import { NoNameTitle, NoPriceTitle, IncVatMessage } from 'src/shared/translation';
+import { NoNameTitle, NoPriceTitle, IncVatMessage } from 'src/shared/translation/translations';
 
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {

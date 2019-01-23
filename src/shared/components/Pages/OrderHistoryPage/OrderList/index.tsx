@@ -9,7 +9,7 @@ import {
   OrdersHistoryTableHeaderID,
   OrdersHistoryTableHeaderTotal,
   OrdersHistoryViewDetailBtnTitle
-} from "src/shared/translation";
+} from "src/shared/translation/translations";
 import {IOrderListProps} from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";

@@ -13,7 +13,7 @@ import {
   InputLabelDefaultDeliveryAddress,
   InputLabelDefaultShippingAddress,
   FirstItemInSelect
-} from 'src/shared/translation';
+} from 'src/shared/translation/translations';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { IFormField } from 'src/shared/components/UI/SprykerForm/types';

@@ -3,15 +3,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { toast } from 'react-toastify';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
-import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation';
+import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation/translations';
 import { connect } from './connect';
-import {TAppLocale} from "src/shared/interfaces/locale/index";
-import CartPage from "@components/Pages/CartPage";
+import { TAppLocale } from 'src/shared/interfaces/locale/index';
+import api from '@services/api';
 
 
 const availableLanguages: language[] = [
@@ -36,27 +35,11 @@ export class LangComponent extends React.PureComponent<Props, State> {
   };
   private closeLang = () => this.setState(() => ({anchorEl: null}));
   private selectLang = (lang: language) => (event: React.MouseEvent<HTMLElement>) => {
-      /* this.props.switchLocaleAction({locale: lang.code});
-       this.setState((prevState: State) => {
-         return ({
-           selectedLang: lang,
-           anchorEl: null
-         });
-       });*/
-      this.runProcessSelectLang(lang.code);
-  };
+    const locale: TAppLocale = lang.code;
 
-  private runProcessSelectLang = async (appLocale: TAppLocale): Promise<void> => {
-      try {
-          await this.setState((prevState: State) => {
-              return ({
-                  anchorEl: null
-              });
-          });
-          await this.props.switchLocaleAction({locale: appLocale});
-      } catch(error) {
-          toast.error('Error occurs during the changing a language');
-      }
+    api.setHeader('Accept-Language', locale);
+    this.setState({anchorEl: null});
+    this.props.switchLocaleAction({locale});
   };
 
   public render() {
@@ -73,9 +56,9 @@ export class LangComponent extends React.PureComponent<Props, State> {
       <div>
         <Button
           className={ classes.langBtn }
-          size="small"
+          size='small'
           aria-owns={ open ? 'lang-menu' : null }
-          aria-haspopup="true"
+          aria-haspopup='true'
           onClick={ this.openLang }
         >
           { selectedLang.name }
@@ -83,7 +66,7 @@ export class LangComponent extends React.PureComponent<Props, State> {
         </Button>
 
         <Menu
-          id="lang-menu"
+          id='lang-menu'
           anchorEl={ anchorEl }
           open={ open }
           onClose={ this.closeLang }

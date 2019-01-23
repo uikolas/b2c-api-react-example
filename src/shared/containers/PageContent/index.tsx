@@ -29,6 +29,7 @@ import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { TAppLocale } from 'src/shared/interfaces/locale/index';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
+import { messages } from 'src/shared/translation/index';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -113,7 +114,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
         addLocaleData(getLocaleData(locale));
 
         return (
-            <IntlProvider locale={locale} key={locale}>
+            <IntlProvider locale={locale} messages={messages[locale]}>
                 <div className={className}>
                     <StickyContainer>
                         <AppHeader

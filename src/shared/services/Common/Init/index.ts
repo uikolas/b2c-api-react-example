@@ -9,12 +9,16 @@ import {
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
   initApplicationDataRejectedStateAction,
+  switchLocalePendingState,
+  switchLocaleFulfilledState,
+  switchLocaleRejectedState
 } from '@stores/actions/common/Init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
-import {IApiResponseData} from "src/shared/services/types";
-import {ICategory} from "src/shared/interfaces/category/index";
-import {IInitData} from "src/shared/interfaces/init/index";
+import { IApiResponseData } from "src/shared/services/types";
+import { ICategory } from 'src/shared/interfaces/category/index';
+import { IInitData } from 'src/shared/interfaces/init/index';
+import { ILocaleActionPayload } from '@stores/reducers/Common/Init/types';
 
 export class InitAppService extends ApiServiceAbstract {
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
@@ -75,5 +79,17 @@ export class InitAppService extends ApiServiceAbstract {
       dispatch(categoriesRejectedState(error.message));
       toast.error('Unexpected Error: ' + error.message);
     }
+  }
+
+  public static async switchLocale(dispatch: Function, payload?: ILocaleActionPayload): Promise<void> {
+      dispatch(switchLocalePendingState());
+      try {
+          dispatch(getCategoriesAction());
+          await setTimeout(() => { dispatch(switchLocaleFulfilledState(payload)); }, 500);
+
+      } catch(error) {
+          dispatch(switchLocaleRejectedState(error.message));
+          toast.error('Error occurs during the changing a language:' + error.message);
+      }
   }
 }

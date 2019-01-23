@@ -5,7 +5,7 @@ import { pathHomePage } from 'src/shared/routes/contentRoutes';
 import { LogoProps as Props } from './types';
 import { styles } from './styles';
 import { SprykerLogoBlack } from 'src/shared/assets/icons/SprykerLogoBlack';
-import { SprykerNameTitle } from 'src/shared/translation';
+import { SprykerNameTitle } from 'src/shared/translation/translations';
 
 export const LogoComponent: React.SFC<Props> = ({classes}) => (
 

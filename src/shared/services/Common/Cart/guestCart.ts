@@ -4,7 +4,7 @@ import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation/translations';
 import {IApiResponseData} from "src/shared/services/types";
 import {IResponseError} from "src/shared/services/apiAbstractions/types";
 

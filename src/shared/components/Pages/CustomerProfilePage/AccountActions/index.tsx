@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import {styles} from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { DeleteAccountTitle, DeleteAccountMessage } from 'src/shared/translation';
+import { DeleteAccountTitle, DeleteAccountMessage } from 'src/shared/translation/translations';
 
 interface AccountActionsProps extends WithStyles<typeof styles> {
   submitDeleteHandler: (event: FormEvent<HTMLFormElement>) => void;

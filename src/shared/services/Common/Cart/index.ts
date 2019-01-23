@@ -10,8 +10,8 @@ import {
   parseUserCartResponseOneValue
 } from 'src/shared/helpers/cart';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
-import { CartAuthenticateErrorMessage } from 'src/shared/translation'
+import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation/translations';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation/translations'
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';

@@ -5,7 +5,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import { styles } from '../styles';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { OrderSuccessProps } from './types';
-import { OrderCreatedSuccess, OrderThank, OrderId } from 'src/shared/translation';
+import { OrderCreatedSuccess, OrderThank, OrderId } from 'src/shared/translation/translations';
 import { pathOrderDetailsPageBase } from "src/shared/routes/contentRoutes";
 
 

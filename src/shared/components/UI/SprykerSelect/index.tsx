@@ -10,7 +10,7 @@ import { ChevronLeft } from '@material-ui/icons';
 import InputLabel from '@material-ui/core/InputLabel';
 import { styles } from './styles';
 import {IMenuItemFirst, IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
-import { FirstItemInSelect } from 'src/shared/translation';
+import { FirstItemInSelect } from 'src/shared/translation/translations';
 
 
 export interface SprykerSelectProps extends WithStyles<typeof styles> {

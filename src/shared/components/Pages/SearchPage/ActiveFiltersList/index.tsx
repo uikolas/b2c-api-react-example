@@ -17,7 +17,7 @@ import {
   createRangeFilterItemCombined,
 } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
-import { ActiveFiltersTitle, ResetAllFiltersButtonTitle } from 'src/shared/translation';
+import { ActiveFiltersTitle, ResetAllFiltersButtonTitle } from 'src/shared/translation/translations';
 
 export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props) => {
   const {
