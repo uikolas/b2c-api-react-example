@@ -11,7 +11,8 @@ import {
   TProductSKU,
 } from 'src/shared/interfaces/product';
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import { NoNameTitle, NoPriceTitle, IncVatMessage } from 'src/shared/translation/translations';
+import { NoNameTitle, NoPriceTitle } from 'src/shared/translation/translations';
+import { FormattedMessage } from 'react-intl';
 
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
@@ -44,7 +45,9 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
                   </Typography>
                 ) : null
               }
-              <Typography component="span" className={classes.vat}>({ IncVatMessage })</Typography>
+              <Typography component="span" className={classes.vat}>
+                  <FormattedMessage id={ 'inc.vat.message' } />
+              </Typography>
             </div>
           : null
         }

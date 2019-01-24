@@ -13,9 +13,7 @@ import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
 import { SprykerRangeSlider } from 'src/shared/components/UI/SprykerRangeSlider';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ISearchFilterListProps } from 'src/shared/components/Pages/SearchPage/SearchFilterList/types';
-
-
-const title = 'Filter your results';
+import { FormattedMessage } from 'react-intl';
 
 export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) => {
   const {
@@ -110,7 +108,9 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = (props) =
       { isItemsExist
         ? (
           <Grid item xs={ 12 }>
-            <AppPageSubTitle title={ title }/>
+            <AppPageSubTitle
+                title={ <FormattedMessage id={'category.results.filter.title'} /> }
+            />
           </Grid>
         )
         : null

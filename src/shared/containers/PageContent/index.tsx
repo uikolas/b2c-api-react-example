@@ -29,7 +29,7 @@ import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { TAppLocale } from 'src/shared/interfaces/locale/index';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
-import { messages } from 'src/shared/translation/index';
+import messages from 'src/shared/translation/index';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -121,6 +121,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
                             isLoading={isLoading}
                             onMobileNavToggle={this.mobileNavToggle}
                             isMobileNavOpened={mobileNavOpened}
+                            locale={locale}
                         />
                         {getContentRoutes(this.isDataFulfilled())}
                         <ToastContainer

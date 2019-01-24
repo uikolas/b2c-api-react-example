@@ -11,9 +11,9 @@ import {
 } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
 import {ICategory} from "src/shared/interfaces/category/index";
-import { CategoriesPanelTitle, NoNameTitle } from 'src/shared/translation/translations';
+import {  NoNameTitle } from 'src/shared/translation/translations';
 import { getFormattedActiveCategories } from 'src/shared/components/Pages/SearchPage/helpers/index';
-
+import { FormattedMessage } from 'react-intl';
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
   {classes, categories, categoriesTree, selectedCategory, localizedName},
@@ -61,7 +61,10 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
       className={classes.root}
     >
       <Grid item xs={12}>
-        <AppPageSubTitle title={ localizedName ? localizedName : CategoriesPanelTitle } extraClass={classes.title}/>
+        <AppPageSubTitle
+            title={localizedName ? localizedName : <FormattedMessage id={'categories.panel.title'} />}
+            extraClass={classes.title}
+        />
         <List component="nav" className={classes.list}>
           {getCategoriesList(categoriesTree, activeCategories, selectedCategory)}
         </List>

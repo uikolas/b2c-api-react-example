@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 
 export const LinksComponent: React.SFC<Props> = ({classes, title, links, external}) => (
   <div>
-    <p className={ classes.title }><strong>{ title }</strong></p>
+    <p className={ classes.title }><strong><FormattedMessage id={ title } /></strong></p>
 
     <ul className={ classes.linkList }>
       { links.map(link => (

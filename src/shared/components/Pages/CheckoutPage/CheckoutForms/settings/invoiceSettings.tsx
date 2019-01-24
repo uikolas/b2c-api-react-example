@@ -1,42 +1,40 @@
-import {IFormSettings} from "src/shared/components/UI/SprykerForm/types";
-import {
-  IPaymentInvoiceParams
-} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import {InputLabelPaymentDateOfBirth} from "src/shared/translation/translations";
+import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
+import { IPaymentInvoiceParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { FormattedMessage } from 'react-intl';
+import React from 'react';
 
-
-export const getInvoiceFormSettings = ( formName: string, params: IPaymentInvoiceParams): IFormSettings => {
-  const {
-    inputsData: {
-      dateOfBirth,
-    },
-    inputsConfig: {
-      dateOfBirth: dateOfBirthConfig,
-    },
-    submitHandler,
-    inputChangeHandler,
-    onBlurHandler,
-  } = params;
-
-
-  const formSettings: IFormSettings = {
-    formName,
-    onChangeHandler: inputChangeHandler,
-    onSubmitHandler: submitHandler,
-    onBlurHandler,
-    fields: [
-      [
-        {
-          type: 'input',
-          inputName: dateOfBirthConfig.inputName,
-          inputValue: dateOfBirth.value,
-          spaceNumber: 6,
-          isRequired: dateOfBirthConfig.isRequired,
-          label: InputLabelPaymentDateOfBirth,
-          isError: dateOfBirth.isError,
+export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoiceParams): IFormSettings => {
+    const {
+        inputsData: {
+            dateOfBirth,
         },
-      ],
-    ],
-  };
-  return formSettings;
+        inputsConfig: {
+            dateOfBirth: dateOfBirthConfig,
+        },
+        submitHandler,
+        inputChangeHandler,
+        onBlurHandler,
+    } = params;
+
+
+    const formSettings: IFormSettings = {
+        formName,
+        onChangeHandler: inputChangeHandler,
+        onSubmitHandler: submitHandler,
+        onBlurHandler,
+        fields: [
+            [
+                {
+                    type: 'input',
+                    inputName: dateOfBirthConfig.inputName,
+                    inputValue: dateOfBirth.value,
+                    spaceNumber: 6,
+                    isRequired: dateOfBirthConfig.isRequired,
+                    label: <FormattedMessage id={ 'payment.date.of.birth.label' } />,
+                    isError: dateOfBirth.isError,
+                },
+            ],
+        ],
+    };
+    return formSettings;
 };
