@@ -135,7 +135,7 @@ export class WishListBase extends React.Component<Props, State> {
                                 className={ tableAction }
                                 onClick={ this.setUpdatedWishlist(item.id, item.name) }
                             >
-                                Edit
+                                <FormattedMessage id={ 'word.edit.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}4`
@@ -144,7 +144,7 @@ export class WishListBase extends React.Component<Props, State> {
                         content: (
                             <Typography component="span" className={ tableAction }
                                         onClick={ this.handleDeleteWishlist(item.id) }>
-                                Delete
+                                <FormattedMessage id={ 'word.delete.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}5`
