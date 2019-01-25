@@ -7,9 +7,8 @@ import {
     UPDATE_ADDRESS,
 } from '@stores/actionTypes/pages/addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {IAddressesState, IPageAddressesAction} from "src/shared/stores/reducers/pages/addresses/types";
-
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IAddressesState, IPageAddressesAction } from 'src/shared/stores/reducers/pages/addresses/types';
 
 const initialState: IAddressesState = {
     data: {
@@ -131,12 +130,11 @@ export function getAddressesCollection(state: IReduxStore, props: IReduxOwnProps
         : [];
 }
 
-export const checkAddressesCollectionExist = (state: IReduxStore, props: IReduxOwnProps): boolean => {
-    return Boolean(isStateExist(state, props)
+export const checkAddressesCollectionExist = (state: IReduxStore, props: IReduxOwnProps): boolean =>
+    Boolean(isStateExist(state, props)
         && state.pageAddresses.data.addresses
         && state.pageAddresses.data.addresses.length
     );
-};
 
 function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
     return Boolean(state.pageAddresses.data);

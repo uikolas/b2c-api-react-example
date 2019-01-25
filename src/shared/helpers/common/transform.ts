@@ -1,54 +1,58 @@
 import { rangeMaxType, rangeMinType, TRangeType } from 'src/shared/components/Pages/SearchPage/types';
 
 export const firstLetterToUpperCase = (word: string): string | null => {
-  if (!word) {
-    return null;
-  }
-
-  let title: string;
-  const possibleSeparators = ['-', '_'];
-  const separator = possibleSeparators.filter((item: string) => {
-    if (word.indexOf(item) > -1) {
-      return item;
+    if (!word) {
+        return null;
     }
-  });
 
-  if (separator && separator.length) {
-    const wordParts = word.split(separator[0]);
-    title = (wordParts.length > 1) ? wordParts[0] : word;
-  } else {
-    title = word;
-  }
+    let title: string;
+    const possibleSeparators = ['-', '_'];
+    const separator = possibleSeparators.filter((item: string) => {
+        if (word.indexOf(item) > -1) {
+            return item;
+        }
+    });
 
-  return title.charAt(0).toUpperCase() + title.slice(1);
+    if (separator && separator.length) {
+        const wordParts = word.split(separator[0]);
+        title = (wordParts.length > 1) ? wordParts[0] : word;
+    } else {
+        title = word;
+    }
+
+    return title.charAt(0).toUpperCase() + title.slice(1);
 };
 
 export const isWordHasPrice = (word: string): boolean => {
-  if (!word) {
-    return false;
-  }
+    if (!word) {
+        return false;
+    }
 
-  if (word.toLowerCase().indexOf('price') !== -1) {
-    return true;
-  }
-  return false;
+    if (word.toLowerCase().indexOf('price') !== -1) {
+        return true;
+    }
+
+    return false;
 };
 
 export const rangeFilterValueToFront = (value: number, type: TRangeType): number => {
-  let valueFixed = (value / 100);
-  if (type === rangeMinType) {
-    return Math.floor(valueFixed);
-  } else {
-    if (type === rangeMaxType) {
-      return Math.ceil(valueFixed);
+    const valueFixed = (value / 100);
+
+    if (type === rangeMinType) {
+        return Math.floor(valueFixed);
+    } else {
+        if (type === rangeMaxType) {
+            return Math.ceil(valueFixed);
+        }
     }
-  }
-  return 0;
+
+    return 0;
 };
 
 export const rangeFilterValueToBack = (value: number): number => {
-  if (!value) {
-    return 0;
-  }
-  return value * 100;
+    if (!value) {
+        return 0;
+    }
+
+    return value * 100;
 };

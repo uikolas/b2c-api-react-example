@@ -1,31 +1,31 @@
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import { IAddressItem } from 'src/shared/interfaces/addresses';
 
 export interface IAddressRawResponse {
-  data: Array<IAddressDataRawResponse>;
+    data: IAddressDataRawResponse[];
 }
 
 export interface IAddressDataRawResponse {
-  attributes: IAddressItem;
-  id: string;
-  links: {
-    self: string;
-  };
-  type: string;
+    attributes: IAddressItem;
+    id: string;
+    links: {
+        self: string;
+    };
+    type: string;
 }
 
 export interface IRequestAddAddressBody {
-  data: {
-    type: string;
-    attributes: IAddressItem;
-    include?: string;
-  };
+    data: {
+        type: string;
+        attributes: IAddressItem;
+        include?: string;
+    };
 }
 
 export interface IRequestUpdateAddressBody {
-  data: {
-    type: string;
-    id: string,
-    attributes: IAddressItem;
-    include?: string;
-  };
+    data: {
+        type: string;
+        id: string,
+        attributes: IAddressItem;
+        include?: string;
+    };
 }

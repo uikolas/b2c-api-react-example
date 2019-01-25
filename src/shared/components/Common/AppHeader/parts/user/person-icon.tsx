@@ -7,10 +7,9 @@ const path = 'M1 22c0-4.98 5.807-8.5 12.5-8.5S26 17.02 26 22v.5H1V22zM13.5.5C17.
 /* tslint:enable */
 
 export const PersonIcon: React.SFC = () => (
-  <svg width={ 24 } height={ 24 } viewBox="0 0 27 22">
-    <g fill="none" fillRule="evenodd" stroke="#000">
-      <path d={ path }/>
-    </g>
-  </svg>
+    <svg width={24} height={24} viewBox="0 0 27 22">
+        <g fill="none" fillRule="evenodd" stroke="#000">
+            <path d={path}/>
+        </g>
+    </svg>
 );
-

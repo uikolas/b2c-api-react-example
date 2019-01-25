@@ -10,37 +10,39 @@ import { CustomerLogout } from 'src/shared/translation';
 @connect
 @(withRouter as Function)
 export class ProtectedRoute extends React.PureComponent<Props> {
-  public static defaultProps = {
-    pageTitle: '',
-  };
+    public static defaultProps = {
+        pageTitle: '',
+    };
 
-  // Component lifecycle methods
+    // Component lifecycle methods
 
-  public componentDidMount(): void {
-    this.checkAuthorized(false);
-  }
-
-  public componentDidUpdate(prevProps: Props): void {
-    if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
-      this.props.history.push(pathLoginPage);
-      toast.success(CustomerLogout);
-      setTimeout(() => { this.props.getGuestCartAction(this.props.anonymId); }, 100);
+    public componentDidMount(): void {
+        this.checkAuthorized(false);
     }
 
-    this.checkAuthorized(prevProps.isUserLoggedIn);
-  }
+    public componentDidUpdate(prevProps: Props): void {
+        if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
+            this.props.history.push(pathLoginPage);
+            toast.success(CustomerLogout);
+            setTimeout(() => {
+                this.props.getGuestCartAction(this.props.anonymId);
+            }, 100);
+        }
 
-  // Helper functions
-
-  private checkAuthorized = (prevIsUserLoggedIn: boolean): void => {
-    if (!prevIsUserLoggedIn && !this.props.isUserLoggedIn) {
-      this.props.history.push(pathLoginPage);
+        this.checkAuthorized(prevProps.isUserLoggedIn);
     }
-  };
 
-  public render(): React.ReactNode {
-    return this.props.isUserLoggedIn
-      ? <Route { ...this.props } />
-      : null;
-  }
+    // Helper functions
+
+    private checkAuthorized = (prevIsUserLoggedIn: boolean): void => {
+        if (!prevIsUserLoggedIn && !this.props.isUserLoggedIn) {
+            this.props.history.push(pathLoginPage);
+        }
+    };
+
+    public render(): React.ReactNode {
+        return this.props.isUserLoggedIn
+            ? <Route {...this.props} />
+            : null;
+    }
 }

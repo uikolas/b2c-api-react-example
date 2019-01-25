@@ -21,9 +21,9 @@ import { WishlistItemBaseInfo } from './WishlistItemBaseInfo';
 import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
-import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
+import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
 import {
-  NavLinkTitleWishlist,
+    NavLinkTitleWishlist,
     ProductHeaderTitle,
     OrderDetailTableHeaderPrice,
     AvailabilityHeaderTitle,
@@ -37,185 +37,187 @@ import {
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {
-  public state: State = {
-    movedItem: '',
-    multiProducts: [],
-  };
+    public state: State = {
+        movedItem: '',
+        multiProducts: [],
+    };
 
-  public componentDidUpdate(prevProps: Props, prevState: State) {
-    const { cartItemsLength, cartId, wishlist } = this.props;
-    if (prevState.movedItem && cartItemsLength > prevProps.cartItemsLength) {
-      this.props.deleteItemAction(wishlist.id, prevState.movedItem);
-      this.setState({ movedItem: '' });
-    }
-
-    if (prevState.multiProducts.length && cartItemsLength > prevProps.cartItemsLength) {
-      this.props.deleteMultiItemsAction(wishlist.id, prevState.multiProducts);
-      this.setState({ multiProducts: [] });
-    }
-  }
-
-  public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
-    event.persist();
-    this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
-  };
-
-  public handleDeleteItem = (sku: string) => (event: ClickEvent) => {
-    event.persist();
-    this.props.deleteItemAction(this.props.wishlist.id, sku);
-  };
-
-  public moveToCart = (sku: string) => (event: ClickEvent) => {
-    event.persist();
-    this.setState(() => ({ movedItem: sku }));
-    this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
-  };
-
-  public moveAllProductsToCart = (event: ClickEvent) => {
-    event.persist();
-    const { products, cartId, wishlist } = this.props;
-    const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
-    this.props.multiItemsCartAction(cartId, availableProducts);
-    this.setState({ multiProducts: availableProducts });
-  };
-
-  public wishlistMenu = () => {
-    const {classes, wishlist} = this.props;
-
-    return (
-      <MenuList className={ classes.menu }>
-        <MenuItem className={ classes.menuItem }>
-          <NavLink to={ pathWishListsPage } className={ classes.link }>{ NavLinkTitleWishlist }</NavLink>
-        </MenuItem>
-        {(wishlist && wishlist.name)
-          ?  <MenuItem className={ classes.menuItem }>{wishlist.name}</MenuItem>
-          : null
+    public componentDidUpdate(prevProps: Props, prevState: State) {
+        const {cartItemsLength, cartId, wishlist} = this.props;
+        if (prevState.movedItem && cartItemsLength > prevProps.cartItemsLength) {
+            this.props.deleteItemAction(wishlist.id, prevState.movedItem);
+            this.setState({movedItem: ''});
         }
-      </MenuList>
-    );
-  };
 
-  public render() {
-    const {classes, products, isLoading, cartLoading, currency} = this.props;
-    const tableAction = cartLoading ? classes.tableActionDisabled : classes.tableAction;
-
-    if (!products.length && isLoading) {
-      return null;
+        if (prevState.multiProducts.length && cartItemsLength > prevProps.cartItemsLength) {
+            this.props.deleteMultiItemsAction(wishlist.id, prevState.multiProducts);
+            this.setState({multiProducts: []});
+        }
     }
 
-    const headerCellPart = 'header-';
-    const bodyCellPart = 'body-';
-    const headerCells: Array<ICellInfo> = [
-      {content: ProductHeaderTitle, id: `${headerCellPart}1`},
-      {content: OrderDetailTableHeaderPrice, id: `${headerCellPart}2`},
-      {content: AvailabilityHeaderTitle, id: `${headerCellPart}3`},
-      {content: '', id: `${headerCellPart}4`},
-      {content: '', id: `${headerCellPart}5`},
-    ];
+    public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
+        event.persist();
+        this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
+    };
 
-    const bodyRows: Array<ITableRow> = products.map((item: IWishlistProduct) => {
-      const prices: {default: string, original: string} = {default: '', original: ''};
+    public handleDeleteItem = (sku: string) => (event: ClickEvent) => {
+        event.persist();
+        this.props.deleteItemAction(this.props.wishlist.id, sku);
+    };
 
-      item.prices.forEach((price: IProductPricesItem) => {
-        if (price.priceTypeName.toLowerCase() === 'default') {
-          prices.default = price.grossAmount + '';
-        } else {
-          if (price.priceTypeName.toLowerCase() === 'original') {
-            prices.original = price.grossAmount + '';
-          }
+    public moveToCart = (sku: string) => (event: ClickEvent) => {
+        event.persist();
+        this.setState(() => ({movedItem: sku}));
+        this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
+    };
+
+    public moveAllProductsToCart = (event: ClickEvent) => {
+        event.persist();
+        const {products, cartId, wishlist} = this.props;
+        const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
+        this.props.multiItemsCartAction(cartId, availableProducts);
+        this.setState({multiProducts: availableProducts});
+    };
+
+    public wishlistMenu = () => {
+        const {classes, wishlist} = this.props;
+
+        return (
+            <MenuList className={classes.menu}>
+                <MenuItem className={classes.menuItem}>
+                    <NavLink to={pathWishListsPage} className={classes.link}>{NavLinkTitleWishlist}</NavLink>
+                </MenuItem>
+                {(wishlist && wishlist.name)
+                    ? <MenuItem className={classes.menuItem}>{wishlist.name}</MenuItem>
+                    : null
+                }
+            </MenuList>
+        );
+    };
+
+    public render() {
+        const {classes, products, isLoading, cartLoading, currency} = this.props;
+        const tableAction = cartLoading ? classes.tableActionDisabled : classes.tableAction;
+
+        if (!products.length && isLoading) {
+            return null;
         }
-      });
 
-      return {
-        id: item.sku,
-        cells: [
-          {
-            content: (<WishlistItemBaseInfo productItem={item} renderProduct={this.renderProduct}/>),
-            id: `${bodyCellPart}1`
-          },
-          {
-            content: (
-              <div className={ classes.vertical }>
-                <AppPrice
-                  value={ prices.original }
-                  extraClassName={ classes.price }
-                  currency={ currency }
-                  priceType={ priceTypeNameOriginal }
-                />
-                <AppPrice
-                  value={ prices.default }
-                  extraClassName={ classes.price }
-                  currency={ currency }
-                  priceType={ priceTypeNameDefault }
-                />
-              </div>
-            ),
-            id: `${bodyCellPart}2`
-          },
-          {
-            content: (
-              <span className={ item.availability ? classes.available : classes.noAvailable }>
-                { item.availability ? AvailableTitle : NotAvailableTitle }
+        const headerCellPart = 'header-';
+        const bodyCellPart = 'body-';
+        const headerCells: ICellInfo[] = [
+            {content: ProductHeaderTitle, id: `${headerCellPart}1`},
+            {content: OrderDetailTableHeaderPrice, id: `${headerCellPart}2`},
+            {content: AvailabilityHeaderTitle, id: `${headerCellPart}3`},
+            {content: '', id: `${headerCellPart}4`},
+            {content: '', id: `${headerCellPart}5`},
+        ];
+
+        const bodyRows: ITableRow[] = products.map((item: IWishlistProduct) => {
+            const prices: { default: string, original: string } = {default: '', original: ''};
+
+            item.prices.forEach((price: IProductPricesItem) => {
+                if (price.priceTypeName.toLowerCase() === 'default') {
+                    prices.default = price.grossAmount + '';
+                } else {
+                    if (price.priceTypeName.toLowerCase() === 'original') {
+                        prices.original = price.grossAmount + '';
+                    }
+                }
+            });
+
+            return {
+                id: item.sku,
+                cells: [
+                    {
+                        content: (<WishlistItemBaseInfo productItem={item} renderProduct={this.renderProduct}/>),
+                        id: `${bodyCellPart}1`
+                    },
+                    {
+                        content: (
+                            <div className={classes.vertical}>
+                                <AppPrice
+                                    value={prices.original}
+                                    extraClassName={classes.price}
+                                    currency={currency}
+                                    priceType={priceTypeNameOriginal}
+                                />
+                                <AppPrice
+                                    value={prices.default}
+                                    extraClassName={classes.price}
+                                    currency={currency}
+                                    priceType={priceTypeNameDefault}
+                                />
+                            </div>
+                        ),
+                        id: `${bodyCellPart}2`
+                    },
+                    {
+                        content: (
+                            <span className={item.availability ? classes.available : classes.noAvailable}>
+                {item.availability ? AvailableTitle : NotAvailableTitle}
               </span>
-            ),
-            id: `${bodyCellPart}3`
-          },
-          {
-            content: (
-              <Typography component="span" className={ tableAction } onClick={ this.moveToCart(item.sku) }>
-                  { AddToCartBtnTitle }
-              </Typography>
-            ),
-            id: `${bodyCellPart}4`
-          },
-          {
-            content: (
-              <Typography component="span" className={ tableAction } onClick={ this.handleDeleteItem(item.sku) }>
-                  { RemoveBtnTitle }
-              </Typography>
-            ),
-            id: `${bodyCellPart}5`
-          },
-        ],
-      };
-    });
+                        ),
+                        id: `${bodyCellPart}3`
+                    },
+                    {
+                        content: (
+                            <Typography component="span" className={tableAction} onClick={this.moveToCart(item.sku)}>
+                                {AddToCartBtnTitle}
+                            </Typography>
+                        ),
+                        id: `${bodyCellPart}4`
+                    },
+                    {
+                        content: (
+                            <Typography component="span" className={tableAction}
+                                        onClick={this.handleDeleteItem(item.sku)}>
+                                {RemoveBtnTitle}
+                            </Typography>
+                        ),
+                        id: `${bodyCellPart}5`
+                    },
+                ],
+            };
+        });
 
-    return (
-      <Grid container>
-        <Grid item xs={ 12 }>
-          <AppPageTitle
-            classes={{root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader}}
-            title={ NavLinkTitleWishlist }
-          />
-        </Grid>
+        return (
+            <Grid container>
+                <Grid item xs={12}>
+                    <AppPageTitle
+                        classes={{root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader}}
+                        title={NavLinkTitleWishlist}
+                    />
+                </Grid>
 
-        <Grid item xs={ 12 }>
-          { this.wishlistMenu() }
-          { bodyRows.length
-            ? (
-              <Paper elevation={ 0 }>
-                <AppTable classes={{bodyCell: classes.bodyCell}} headerCells={headerCells} bodyRows={bodyRows}/>
-                <Button
-                  className={ classes.addAllBtn }
-                  color="primary"
-                  variant="contained"
-                  onClick={ this.moveAllProductsToCart }
-                  disabled={ isLoading || cartLoading }
-                >
-                    { AddAllProductsToCartMessage }
-                </Button>
-              </Paper>
-            ) : (
-              <Paper elevation={ 0 }>
-                <Divider/>
-                <Typography paragraph className={classes.noItems}>{ WishlistEmptyMessage }</Typography>
-              </Paper>
-            )
-          }
-        </Grid>
-      </Grid>
-    );
-  }
+                <Grid item xs={12}>
+                    {this.wishlistMenu()}
+                    {bodyRows.length
+                        ? (
+                            <Paper elevation={0}>
+                                <AppTable classes={{bodyCell: classes.bodyCell}} headerCells={headerCells}
+                                          bodyRows={bodyRows}/>
+                                <Button
+                                    className={classes.addAllBtn}
+                                    color="primary"
+                                    variant="contained"
+                                    onClick={this.moveAllProductsToCart}
+                                    disabled={isLoading || cartLoading}
+                                >
+                                    {AddAllProductsToCartMessage}
+                                </Button>
+                            </Paper>
+                        ) : (
+                            <Paper elevation={0}>
+                                <Divider/>
+                                <Typography paragraph className={classes.noItems}>{WishlistEmptyMessage}</Typography>
+                            </Paper>
+                        )
+                    }
+                </Grid>
+            </Grid>
+        );
+    }
 }
 
 export const ConnectedWishlistDetailPage = withStyles(styles)(WishlistDetailBase);

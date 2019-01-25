@@ -6,9 +6,9 @@ import {
 } from '@stores/actionTypes/pages/customerProfile';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICustomerDataParsed } from '@interfaces/customer';
-import {ICustomerDataState, IPageCustomerProfileAction} from './types';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {IApiErrorResponse} from "src/shared/services/types";
+import { ICustomerDataState, IPageCustomerProfileAction } from './types';
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IApiErrorResponse } from 'src/shared/services/types';
 
 export const initialState: ICustomerDataState = {
   data: {
@@ -47,103 +47,94 @@ export const pageCustomerProfile = function(state: ICustomerDataState = initialS
 };
 
 // handlers
-const handleFulfilled = (customerState: ICustomerDataState, payload: ICustomerDataParsed | null) => {
-  return {
+const handleFulfilled = (customerState: ICustomerDataState, payload: ICustomerDataParsed | null) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
       profile: {...payload},
     },
     ...getReducerPartFulfilled(),
-  };
-};
+  });
 
-const handleRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
-  return {
+const handleRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
     },
     ...getReducerPartRejected(payload.error),
-  };
-};
+  });
 
-const handlePending = (customerState: ICustomerDataState) => {
-  return {
+const handlePending = (customerState: ICustomerDataState) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
     },
     ...getReducerPartPending(),
-  };
-};
+  });
 
 // Update customer password.
 
-const handleUpdatePasswordFulfilled = (customerState: ICustomerDataState) => {
-  return {
+const handleUpdatePasswordFulfilled = (customerState: ICustomerDataState) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
       isPasswordUpdated: true,
     },
     ...getReducerPartFulfilled(),
-  };
-};
+  });
 
-const handleUpdatePasswordPending = (customerState: ICustomerDataState) => {
-  return {
+const handleUpdatePasswordPending = (customerState: ICustomerDataState) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
       isPasswordUpdated: false,
     },
     ...getReducerPartPending(),
-  };
-};
+  });
 
-const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
-  return {
+const handleUpdatePasswordRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
       isPasswordUpdated: false,
     },
     ...getReducerPartRejected(payload.error),
-  };
-};
+  });
 
 // Delete customer.
 
-const handleDeleteCustomerFulfilled = (customerState: ICustomerDataState) => {
-  return {
+const handleDeleteCustomerFulfilled = (customerState: ICustomerDataState) =>
+  ({
     ...customerState,
     data: {
       ...initialState.data,
     },
     ...getReducerPartFulfilled(),
-  };
-};
+  });
 
-const handleDeleteCustomerPending = (customerState: ICustomerDataState) => {
-  return {
+const handleDeleteCustomerPending = (customerState: ICustomerDataState) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
     },
     ...getReducerPartPending(),
-  };
-};
+  });
 
-const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) => {
-  return {
+const handleDeleteCustomerRejected = (customerState: ICustomerDataState, payload: IApiErrorResponse) =>
+  ({
     ...customerState,
     data: {
       ...customerState.data,
     },
     ...getReducerPartRejected(payload.error),
-  };
-};
+  });
 
 // selectors
 export function isPageCustomerProfileInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {

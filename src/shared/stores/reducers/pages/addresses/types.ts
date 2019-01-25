@@ -1,7 +1,6 @@
-import {IReduxState} from "src/typings/app";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
-import {IActionData} from "src/shared/stores/reducers/types";
-
+import { IReduxState } from 'src/typings/app';
+import { IAddressItem } from 'src/shared/interfaces/addresses/index';
+import { IActionData } from 'src/shared/stores/reducers/types';
 
 export interface IAddressesState extends IReduxState {
   data: {
@@ -11,13 +10,13 @@ export interface IAddressesState extends IReduxState {
 }
 
 export interface IPageAddressesActionPayloadFulfilled {
-  addressId: IAddressItem["id"];
+  addressId: IAddressItem['id'];
   data: IAddressItem;
 }
 
 export interface IPageAddressesAction extends IActionData {
-  addresses?: Array<IAddressItem>;
+  addresses?: IAddressItem[];
   address?: IAddressItem;
-  addressId?: IAddressItem["id"];
+  addressId?: IAddressItem['id'];
   payloadFulfilled?: IPageAddressesActionPayloadFulfilled;
 }

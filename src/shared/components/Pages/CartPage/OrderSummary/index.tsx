@@ -10,45 +10,45 @@ import { styles } from '../styles';
 import { OrderSummaryProps as Props } from './types';
 import { CartTotal } from 'src/shared/components/Common/CartTotal';
 import {
-  OrderSummaryTitle,
-  OrderDetailGrandTotal,
+    OrderSummaryTitle,
+    OrderDetailGrandTotal,
+    ContinueCheckoutTitle
 } from 'src/shared/translation';
-import { ContinueCheckoutTitle } from 'src/shared/translation';
 
 export const OrderSummaryComponent: React.SFC<Props> = (
-  {classes, handleChangeVouchercode, voucherCode, totals},
+    {classes, handleChangeVouchercode, voucherCode, totals},
 ) => (
-  <Grid item xs={ 12 } md={ 4 }>
-    <Typography
-      variant="display1"
-      noWrap
-      align="left"
-      color="primary"
-    >
-      { OrderSummaryTitle }
-    </Typography>
+    <Grid item xs={12} md={4}>
+        <Typography
+            variant="display1"
+            noWrap
+            align="left"
+            color="primary"
+        >
+            {OrderSummaryTitle}
+        </Typography>
 
-    <CartTotal
-      extraClass={classes.cartTotalIndent}
-      totals={totals}
-      title={OrderDetailGrandTotal}
-    />
+        <CartTotal
+            extraClass={classes.cartTotalIndent}
+            totals={totals}
+            title={OrderDetailGrandTotal}
+        />
 
-    <NavLink
-      to={ pathCheckoutPage }
-      className={ classes.fullWidth }
-      style={{ textDecoration: 'none' }}
-    >
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        className={ classes.btnWrapper }
-      >
-        { ContinueCheckoutTitle }
-      </Button>
-    </NavLink>
-  </Grid>
+        <NavLink
+            to={pathCheckoutPage}
+            className={classes.fullWidth}
+            style={{textDecoration: 'none'}}
+        >
+            <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                className={classes.btnWrapper}
+            >
+                {ContinueCheckoutTitle}
+            </Button>
+        </NavLink>
+    </Grid>
 );
 
 export const OrderSummary = withStyles(styles)(OrderSummaryComponent);

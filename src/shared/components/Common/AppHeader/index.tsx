@@ -15,137 +15,139 @@ import { styles } from './styles';
 
 @(withRouter as Function)
 export class AppHeaderComponent extends React.PureComponent<Props, State> {
-  public state: State = {
-    showSearch: true,
-    stickyTriggerOffset: 0,
-    pageWidth: 0,
-    pageHeight: 0,
-  };
+    public state: State = {
+        showSearch: true,
+        stickyTriggerOffset: 0,
+        pageWidth: 0,
+        pageHeight: 0,
+    };
 
-  // Component variables
+    // Component variables
+    private stickyTriggerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-  private stickyTriggerRef: React.RefObject<HTMLDivElement> = React.createRef();
-
-  // Component lifecycle methods
-
-  public componentDidMount() {
-    window.addEventListener('resize', this.onWindowResize);
-    window.addEventListener('scroll', this.onWindowScroll);
-  }
-
-  public componentDidUpdate() {
-    this.onWindowResize();
-  }
-
-  public componentWillUnmount() {
-    window.removeEventListener('resize', this.onWindowResize);
-    window.removeEventListener('scroll', this.onWindowScroll);
-    this.stickyTriggerRef = null;
-  }
-
-  // Event handlers
-
-  private onWindowResize = debounce(() => {
-    this.setTriggerOffset();
-    this.updateWindowDimensions();
-  }, 0.3);
-  private onWindowScroll = debounce(() => {
-    const {showSearch, stickyTriggerOffset} = this.state;
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (showSearch && scrollPosition > stickyTriggerOffset) {
-      this.setState(() => ({showSearch: false}));
+    // Component lifecycle methods
+    public componentDidMount() {
+        window.addEventListener('resize', this.onWindowResize);
+        window.addEventListener('scroll', this.onWindowScroll);
     }
-  }, 0.3);
 
-  private updateWindowDimensions = () => {
-    this.setState({ pageWidth: window.innerWidth, pageHeight: window.innerHeight });
-  };
+    public componentDidUpdate() {
+        this.onWindowResize();
+    }
 
-  // Action handlers
+    public componentWillUnmount() {
+        window.removeEventListener('resize', this.onWindowResize);
+        window.removeEventListener('scroll', this.onWindowScroll);
+        this.stickyTriggerRef = null;
+    }
 
-  private setTriggerOffset = () => {
-    const stickyTriggerOffset = this.stickyTriggerRef.current.offsetTop;
+    // Event handlers
+    private onWindowResize = debounce(() => {
+        this.setTriggerOffset();
+        this.updateWindowDimensions();
+    }, 0.3);
+    private onWindowScroll = debounce(() => {
+        const {showSearch, stickyTriggerOffset} = this.state;
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
-    this.setState(() => ({stickyTriggerOffset}));
-  };
+        if (showSearch && scrollPosition > stickyTriggerOffset) {
+            this.setState(() => ({showSearch: false}));
+        }
+    }, 0.3);
 
-  private handleSticky = (stickyState: StickyChildArgs) => {
-    const {stickyTriggerOffset} = this.state;
-    const scrollOffset = stickyState.distanceFromTop * -1;
+    private updateWindowDimensions = () => {
+        this.setState({pageWidth: window.innerWidth, pageHeight: window.innerHeight});
+    };
 
-    this.setState(() => ({showSearch: scrollOffset < stickyTriggerOffset}));
-  };
+    // Action handlers
+    private setTriggerOffset = () => {
+        const stickyTriggerOffset = this.stickyTriggerRef.current.offsetTop;
 
-  private handleSearch = () => this.setState(({showSearch}) => ({showSearch: !showSearch}));
+        this.setState(() => ({stickyTriggerOffset}));
+    };
 
-  public render() {
-    const {classes, isLoading, isMobileNavOpened, onMobileNavToggle} = this.props;
-    const {stickyTriggerOffset, showSearch} = this.state;
-    return (
-      <Sticky topOffset={ stickyTriggerOffset }>
-        { (stickyState: StickyChildArgs) => {
-          const {style, isSticky, wasSticky} = stickyState;
+    private handleSticky = (stickyState: StickyChildArgs) => {
+        const {stickyTriggerOffset} = this.state;
+        const scrollOffset = stickyState.distanceFromTop * -1;
 
-          if (isSticky !== wasSticky) {
-            this.handleSticky(stickyState);
-          }
+        this.setState(() => ({showSearch: scrollOffset < stickyTriggerOffset}));
+    };
 
-          return (
-            <div
-              style={ style }
-              className={ classes.headerStickyContainer }
-            >
-              <div
-                className={ classes.header }
-                style={ {
-                  transform: `translate3d(0, -${showSearch ? 0 : stickyTriggerOffset}px, 0)`,
-                  transition: isSticky && wasSticky ? 'transform .3s ease-in-out' : 'none',
-                } }
-              >
-                <div className={ classes.headerTop }>
-                  <div className={ merge([classes.headerContainer, classes.headerTopContainer]) }>
-                    <div className={ classes.logoContainer }>
-                      <Logo/>
-                    </div>
+    private handleSearch = () => this.setState(({showSearch}) => ({showSearch: !showSearch}));
 
-                    <div className={ classes.headerSearchContainer }>
-                      <CatalogSearch id={'2'}/>
-                    </div>
-                  </div>
-                </div>
-                <div className={ classes.headerBottom } ref={ this.stickyTriggerRef }>
-                  <div className={ classes.headerContainer }>
-                    <div
-                      className={ merge([classes.hamburger, isMobileNavOpened ? classes.hamburgerOpened : '']) }
-                      onClick={ onMobileNavToggle }
-                    >
-                      <span/>
-                      <span/>
-                    </div>
+    public render() {
+        const {classes, isLoading, isMobileNavOpened, onMobileNavToggle} = this.props;
+        const {stickyTriggerOffset, showSearch} = this.state;
 
-                    {this.props.location.pathname.endsWith(pathCheckoutPage)
-                      ? <div className={ classes.checkout }>Checkout</div>
-                      : <MainNav mobileNavState={ isMobileNavOpened }/>
+        return (
+            <Sticky topOffset={stickyTriggerOffset}>
+                {(stickyState: StickyChildArgs) => {
+                    const {style, isSticky, wasSticky} = stickyState;
+
+                    if (isSticky !== wasSticky) {
+                        this.handleSticky(stickyState);
                     }
 
-                    <AddNav
-                      showSearch={ showSearch }
-                      handleSearch={ this.handleSearch }
-                      isSticky={isSticky}
-                      pageWidth={this.state.pageWidth}
-                      pageHeight={this.state.pageHeight}
-                    />
-                  </div>
-                  { isLoading ? <Preloader extraClasses={ classes.preloader }/> : null }
-                </div>
-              </div>
-            </div>
-          );
-        } }
-      </Sticky>
-    );
-  }
+                    return (
+                        <div
+                            style={style}
+                            className={classes.headerStickyContainer}
+                        >
+                            <div
+                                className={classes.header}
+                                style={{
+                                    transform: `translate3d(0, -${showSearch ? 0 : stickyTriggerOffset}px, 0)`,
+                                    transition: isSticky && wasSticky ? 'transform .3s ease-in-out' : 'none',
+                                }}
+                            >
+                                <div className={classes.headerTop}>
+                                    <div className={merge([classes.headerContainer, classes.headerTopContainer])}>
+                                        <div className={classes.logoContainer}>
+                                            <Logo/>
+                                        </div>
+
+                                        <div className={classes.headerSearchContainer}>
+                                            <CatalogSearch id={'2'}/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={classes.headerBottom} ref={this.stickyTriggerRef}>
+                                    <div className={classes.headerContainer}>
+                                        <div
+                                            className={
+                                                merge([
+                                                    classes.hamburger,
+                                                    isMobileNavOpened ? classes.hamburgerOpened : ''
+                                                ])
+                                            }
+                                            onClick={onMobileNavToggle}
+                                        >
+                                            <span/>
+                                            <span/>
+                                        </div>
+
+                                        {this.props.location.pathname.endsWith(pathCheckoutPage)
+                                            ? <div className={classes.checkout}>Checkout</div>
+                                            : <MainNav mobileNavState={isMobileNavOpened}/>
+                                        }
+
+                                        <AddNav
+                                            showSearch={showSearch}
+                                            handleSearch={this.handleSearch}
+                                            isSticky={isSticky}
+                                            pageWidth={this.state.pageWidth}
+                                            pageHeight={this.state.pageHeight}
+                                        />
+                                    </div>
+                                    {isLoading ? <Preloader extraClasses={classes.preloader}/> : null}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                }}
+            </Sticky>
+        );
+    }
 }
 
 export const AppHeader = withStyles(styles)(AppHeaderComponent);

@@ -6,7 +6,7 @@ import { History } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducers } from './reducers';
-import {IReduxStore} from "./reducers/types";
+import { IReduxStore } from './reducers/types';
 
 export const configureStore = function (history: History, initialState?: any) {
     const middlewares = [
@@ -15,7 +15,7 @@ export const configureStore = function (history: History, initialState?: any) {
     ];
     if (process.env.NODE_ENV !== 'production') {
         const logger = createLogger({
-            actionTransformer: (action) => ({
+            actionTransformer: action => ({
                 ...action,
                 type: String(action.type),
             }),
@@ -37,8 +37,8 @@ export const configureStore = function (history: History, initialState?: any) {
         initialState,
         middleware,
     );
+
     return store;
 };
-
 
 export default configureStore;

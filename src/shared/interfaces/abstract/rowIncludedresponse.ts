@@ -1,7 +1,7 @@
 export interface IAbstractRowIncludedResponse {
-  type: string;
-  links: {
-    self: string;
-  };
-  id?: string;
+    type: string;
+    links: {
+        self: string;
+    };
+    id?: string;
 }
