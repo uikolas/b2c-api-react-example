@@ -1,5 +1,5 @@
 export interface INavLinkData {
   path: string;
-  title: any;
+  title: string;
   extraClassName?: string;
 }

@@ -37,7 +37,9 @@ export class UserDropComponent extends React.Component<Props> {
                     { customerProfileNavLinks.map((item: INavLinkData) => {
                         return (
                             <li key={ item.title } onClick={ this.props.closePopoverHandler }>
-                                <NavLink to={ item.path }>{ item.title }</NavLink>
+                                <NavLink to={ item.path }>
+                                    <FormattedMessage id={ item.title } />
+                                </NavLink>
                             </li>
                         );
                     }) }

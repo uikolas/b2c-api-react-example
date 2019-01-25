@@ -16,7 +16,7 @@ import {
     pathOrderDetailsPage,
     pathOrderHistoryPage,
     pathWishListPage,
-    pathWishListsPage,
+    pathWishListsPage
 } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
 import { LoadableWishListPage } from '../WishListPage/loadable';
@@ -28,8 +28,8 @@ import { LoadableOrderHistoryPage } from '../OrderHistoryPage/loadable';
 import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
 import { styles } from './styles';
 import { connect } from './connect';
-import { customerProfileNavLinks } from "src/shared/constants/navLinks/index";
-import { INavLinkData } from "src/shared/interfaces/navLinks/index";
+import { customerProfileNavLinks } from 'src/shared/constants/navLinks/index';
+import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
 import { FormattedMessage } from 'react-intl';
 
 interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
@@ -65,7 +65,9 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                                             selected={ isSelected }
                                         >
                                             <NavLink to={ item.path }
-                                                     className={ classes.link }>{ item.title }</NavLink>
+                                                     className={ classes.link }>
+                                                <FormattedMessage id={ item.title } />
+                                            </NavLink>
                                         </MenuItem>
                                     );
                                 }) }
