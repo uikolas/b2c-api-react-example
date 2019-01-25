@@ -14,13 +14,18 @@ import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react
 import { pathWishListPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
-
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
 import { IWishlist, TWishListId } from 'src/shared/interfaces/wishlist/index';
-
+import {
+    ButtonAddNewListTitle,
+    ButtonDeleteTitle,
+    ButtonEditTitle,
+    ButtonAddTitle,
+    CreateListMessage
+} from 'src/shared/translation';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
@@ -128,7 +133,7 @@ export class WishListBase extends React.Component<Props, State> {
                                 className={ tableAction }
                                 onClick={ this.setUpdatedWishlist(item.id, item.name) }
                             >
-                                Edit
+                                { ButtonEditTitle }
                             </Typography>
                         ),
                         id: `${bodyCellPart}4`
@@ -137,7 +142,7 @@ export class WishListBase extends React.Component<Props, State> {
                         content: (
                             <Typography component="span" className={ tableAction }
                                         onClick={ this.handleDeleteWishlist(item.id) }>
-                                Delete
+                                { ButtonDeleteTitle }
                             </Typography>
                         ),
                         id: `${bodyCellPart}5`
@@ -157,7 +162,7 @@ export class WishListBase extends React.Component<Props, State> {
 
                 <Grid item xs={ 12 }>
                     <form noValidate autoComplete="off" onSubmit={ this.addWishlist } className={ classes.form }>
-                        <Typography paragraph className={ classes.titleForm }>Add New Wishlist</Typography>
+                        <Typography paragraph className={ classes.titleForm }>{ ButtonAddNewListTitle }</Typography>
                         <Paper elevation={ 0 } className={ classes.formItem }>
                             <TextField
                                 className={ classes.textFieldForm }
@@ -168,7 +173,7 @@ export class WishListBase extends React.Component<Props, State> {
                                 inputProps={ { className: classes.input } }
                             />
                             <Button type="submit" variant="contained" color="primary"
-                                    className={ classes.formSubmit }>Add</Button>
+                                    className={ classes.formSubmit }>{ ButtonAddTitle }</Button>
                         </Paper>
                     </form>
 
@@ -180,7 +185,7 @@ export class WishListBase extends React.Component<Props, State> {
                             <Paper elevation={ 0 }>
                                 <Divider />
                                 <Typography paragraph className={ classes.noItems }>
-                                    You do not have any lists yet, create one above to get started.
+                                    { CreateListMessage }
                                 </Typography>
                             </Paper>
                         )
