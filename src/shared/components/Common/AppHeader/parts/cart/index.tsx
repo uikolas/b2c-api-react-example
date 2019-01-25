@@ -84,7 +84,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
                 { cartItemsQuantity === 0
                     ? (<Tooltip disableFocusListener
                                 placement="top"
-                                title={ <FormattedMessage id={ 'Cart is empty' } /> }>
+                                title={ <FormattedMessage id={ 'empty.cart.title' } /> }>
                         { cartButton }
                     </Tooltip>)
                     : cartButton
