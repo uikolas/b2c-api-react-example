@@ -14,17 +14,12 @@ import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react
 import { pathWishListPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
+
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
 import { IWishlist, TWishListId } from 'src/shared/interfaces/wishlist/index';
-import {
-    WishlistNameTitle,
-    CreateListMessage,
-    ButtonAddTitle,
-    NavLinkTitleWishlist
-} from 'src/shared/translation';
 
 
 @connect
@@ -70,9 +65,8 @@ export class WishListBase extends React.Component<Props, State> {
         this.props.deleteWishlistAction(wishlistId);
     };
 
-    public setCurrentWishlist = (wishlistId: string) => (event: ClickEvent) => {
-        event.persist();
-        this.props.getDetailWishlistAction(wishlistId);
+    private setUpdatedWishlist = (id: string, name: string) => (e: ClickEvent) => {
+        this.setState(() => ({ updatedList: id, updatedName: name }));
     };
 
     public render() {
@@ -157,7 +151,7 @@ export class WishListBase extends React.Component<Props, State> {
                 <Grid item xs={ 12 }>
                     <AppPageTitle
                         classes={ { root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader } }
-                        title={ NavLinkTitleWishlist }
+                        title="Wishlist"
                     />
                 </Grid>
 
@@ -167,14 +161,14 @@ export class WishListBase extends React.Component<Props, State> {
                         <Paper elevation={ 0 } className={ classes.formItem }>
                             <TextField
                                 className={ classes.textFieldForm }
-                                placeholder={ WishlistNameTitle }
+                                placeholder="Wishlist Name"
                                 value={ this.state.name }
                                 variant={ 'outlined' }
                                 onChange={ this.handleChangeName }
                                 inputProps={ { className: classes.input } }
                             />
                             <Button type="submit" variant="contained" color="primary"
-                                    className={ classes.formSubmit }>{ ButtonAddTitle }</Button>
+                                    className={ classes.formSubmit }>Add</Button>
                         </Paper>
                     </form>
 
