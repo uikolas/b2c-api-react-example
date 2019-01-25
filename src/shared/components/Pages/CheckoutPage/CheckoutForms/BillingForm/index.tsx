@@ -14,7 +14,7 @@ import {
 import {
   getBillingSavedAddressFormSettings
 } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
-import {FormTextWaitingForResponse} from "src/shared/constants/forms/labels";
+import {FormWaitingForResponseTitle} from "src/shared/translation";
 
 import {AppPageSubTitle} from "src/shared/components/Common/AppPageSubTitle";
 import {checkoutFormsNames} from "src/shared/components/Pages/CheckoutPage/constants";
@@ -85,7 +85,7 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
             <Grid item xs={12}>
               { isUserLoggedIn
                 ? (!isCheckoutFulfilled)
-                  ? <AppPageSubTitle title={FormTextWaitingForResponse} />
+                  ? <AppPageSubTitle title={FormWaitingForResponseTitle} />
                   : (<React.Fragment>
                       {addressesCollection && addressesCollection.length ? selectionForm : sameAsDeliveryForm}
                       {billingSelections.isAddNew && inputsForm}

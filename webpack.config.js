@@ -2,11 +2,10 @@ const path = require('path');
 const env = require('dotenv');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const DashboardPlugin = require("webpack-dashboard/plugin");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 env.config();
 
@@ -23,17 +22,17 @@ const commonExtensions = ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', '.jsx'
 const webExtensions = ['.css', '.less', '.sass', '.scss', '.woff', '.woff2', '.ttf', '.eot', '.svg', '.md', '.jpg', '.png', '.ico'];
 
 const definableConstants = {
-    "process.env.NODE_ENV": JSON.stringify(NODE_ENV),
-    "process.env.WEB_PORT": JSON.stringify(WEB_PORT),
-    "process.env.WEB_PATH": JSON.stringify(WEB_PATH),
-    "process.env.API_URL": JSON.stringify(API_URL),
-    "process.env.DEV_SERVER_HOST": JSON.stringify(DEV_SERVER_HOST),
-    "process.env.DEV_SERVER_PORT": JSON.stringify(DEV_SERVER_PORT),
-    "process.env.APP_TITLE": JSON.stringify(APP_TITLE)
+    'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
+    'process.env.WEB_PORT': JSON.stringify(WEB_PORT),
+    'process.env.WEB_PATH': JSON.stringify(WEB_PATH),
+    'process.env.API_URL': JSON.stringify(API_URL),
+    'process.env.DEV_SERVER_HOST': JSON.stringify(DEV_SERVER_HOST),
+    'process.env.DEV_SERVER_PORT': JSON.stringify(DEV_SERVER_PORT),
+    'process.env.APP_TITLE': JSON.stringify(APP_TITLE)
 };
 
 const globalCssLoaderOptions = {
-    loader: "css-loader",
+    loader: 'css-loader',
     options: {
         modules: false,
         sourceMap: !IS_PRODUCTION,
@@ -43,7 +42,7 @@ const globalCssLoaderOptions = {
 };
 
 const localCssLoaderOptions = {
-    loader: "css-loader",
+    loader: 'css-loader',
     options: {
         camelCase: true,
         modules: true,
@@ -55,11 +54,11 @@ const localCssLoaderOptions = {
 };
 
 const sassLoaderOptions = {
-    loader: "sass-loader",
+    loader: 'sass-loader',
     options: {
         includePaths: [
-            path.resolve(__dirname, "node_modules"),
-            path.resolve(__dirname, "src")
+            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, 'src')
         ]
     }
 };
@@ -70,8 +69,8 @@ const localCssLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         localCssLoaderOptions,
-        {loader: "resolve-url-loader"},
-        {loader: "postcss-loader"}
+        {loader: 'resolve-url-loader'},
+        {loader: 'postcss-loader'}
     ]
 };
 
@@ -81,8 +80,8 @@ const localSaasLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         localCssLoaderOptions,
-        {loader: "resolve-url-loader"},
-        {loader: "postcss-loader"},
+        {loader: 'resolve-url-loader'},
+        {loader: 'postcss-loader'},
         sassLoaderOptions
     ]
 };
@@ -93,8 +92,8 @@ const localScssLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         localCssLoaderOptions,
-        {loader: "resolve-url-loader"},
-        {loader: "postcss-loader"},
+        {loader: 'resolve-url-loader'},
+        {loader: 'postcss-loader'},
         sassLoaderOptions
     ]
 };
@@ -105,8 +104,8 @@ const globalCssLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         globalCssLoaderOptions,
-        {loader: "resolve-url-loader"},
-        {loader: "postcss-loader"}
+        {loader: 'resolve-url-loader'},
+        {loader: 'postcss-loader'}
     ]
 };
 
@@ -116,8 +115,8 @@ const globalSaasLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         globalCssLoaderOptions,
-        {loader: "resolve-url-loader"},
-        {loader: "postcss-loader"},
+        {loader: 'resolve-url-loader'},
+        {loader: 'postcss-loader'},
         sassLoaderOptions
     ]
 };
@@ -128,8 +127,8 @@ const globalScssLoader = {
     use: [
         MiniCssExtractPlugin.loader,
         globalCssLoaderOptions,
-        {loader: "resolve-url-loader"},
-        {loader: "postcss-loader"},
+        {loader: 'resolve-url-loader'},
+        {loader: 'postcss-loader'},
         sassLoaderOptions
     ]
 };
@@ -147,7 +146,7 @@ const tsLoader = {
 
 const staticLoaders = [
     {test: /\.gif(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'},
-    {test: /\.(jpg|png|svg)$/, loader: "url-loader?limit=8000"},
+    {test: /\.(jpg|png|svg)$/, loader: 'url-loader?limit=8000'},
     {
         test: /\.(ttf|otf|eot|svg|ico|woff(2)?)$/,
         include: [
@@ -176,8 +175,8 @@ const commonLoaders = [
     {test: /\.json$/, loader: 'json-loader'},
     tsLoader,
     {test: /\.html$/, loader: 'htmllint-loader!html-loader'},
-    {test: /\.md$/, loader: "html-loader!markdown-loader?gfm=false"},
-    {test: /LICENSE$/, loader: "html-loader!markdown-loader?gfm=false"}
+    {test: /\.md$/, loader: 'html-loader!markdown-loader?gfm=false'},
+    {test: /LICENSE$/, loader: 'html-loader!markdown-loader?gfm=false'}
 ];
 
 const webLoaders = [
@@ -211,13 +210,13 @@ if (IS_DEV_SERVER) {
 
 const entry = {
     app: [
-        './src/web/index.tsx'
+        './src/index.tsx'
     ]
 };
 
 if(IS_DEV_SERVER) {
-    entry["dev-server-client"] = 'webpack-dev-server/client?http://' + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT;
-    entry["dev-server-hot"] = 'webpack/hot/only-dev-server';
+    entry['dev-server-client'] = 'webpack-dev-server/client?http://' + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT;
+    entry['dev-server-hot'] = 'webpack/hot/only-dev-server';
 }
 
 const config = {
@@ -230,9 +229,9 @@ const config = {
     },
     output: {
         path: path.resolve(__dirname, 'build', 'web'),
-        filename: "[name].[hash].bundle.js",
-        chunkFilename: "[name].[chunkhash].chunk.js",
-        publicPath: IS_DEV_SERVER ? "http://" + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + "/" : WEB_PATH
+        filename: '[name].[hash].bundle.js',
+        chunkFilename: '[name].[chunkhash].chunk.js',
+        publicPath: IS_DEV_SERVER ? 'http://' + DEV_SERVER_HOST + ':' + DEV_SERVER_PORT + '/' : WEB_PATH
     },
     optimization: {
         minimizer: [
@@ -266,14 +265,14 @@ const config = {
         ],
         splitChunks: {
             chunks: 'async',
-            automaticNameDelimiter: "-",
+            automaticNameDelimiter: '-',
             name: true,
             cacheGroups: {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: -10,
-                    name: "vendors",
-                    chunks: "all",
+                    name: 'vendors',
+                    chunks: 'all',
                     reuseExistingChunk: true
                 },
                 default: {
@@ -284,7 +283,7 @@ const config = {
             }
         },
         runtimeChunk: {
-            name: "runtime"
+            name: 'runtime'
         }
     },
     plugins: [
@@ -307,13 +306,13 @@ const config = {
             ...definableConstants
         }),
         new MiniCssExtractPlugin({
-            filename: IS_DEV_SERVER ? "[name].css" : "[name].[hash].css",
-            chunkFilename: IS_DEV_SERVER ? "[id].css" : "[id].[hash].css"
+            filename: IS_DEV_SERVER ? '[name].css' : '[name].[hash].css',
+            chunkFilename: IS_DEV_SERVER ? '[id].css' : '[id].[hash].css'
         }),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, `src`, `web`, `index.ejs`),
+            template: path.resolve(__dirname, 'src', 'index.ejs'),
             title: APP_TITLE || '',
-            filename: `index.html`,
+            filename: 'index.html',
             hash: true,
             compile: true,
             favicon: path.resolve(__dirname, `favicon.png`),
@@ -324,7 +323,6 @@ const config = {
         ...(
             IS_DEV_SERVER ? [
                 new webpack.HotModuleReplacementPlugin(),
-                new DashboardPlugin()
             ] : []
         ),
     ],
@@ -338,7 +336,16 @@ const config = {
             ...webExtensions
         ],
         alias: {
-            src: path.resolve(__dirname, 'src')
+            src: path.resolve(__dirname, 'src'),
+            '@assets': path.resolve(__dirname, 'src/shared/assets'),
+            '@constants': path.resolve(__dirname, 'src/shared/constants'),
+            '@components': path.resolve(__dirname, 'src/shared/components'),
+            '@containers': path.resolve(__dirname, 'src/shared/containers'),
+            '@helpers': path.resolve(__dirname, 'src/shared/helpers'),
+            '@interfaces': path.resolve(__dirname, 'src/shared/interfaces'),
+            '@routes': path.resolve(__dirname, 'src/shared/routes'),
+            '@stores': path.resolve(__dirname, 'src/shared/stores'),
+            '@services': path.resolve(__dirname, 'src/shared/services')
         }
     },
     module: {

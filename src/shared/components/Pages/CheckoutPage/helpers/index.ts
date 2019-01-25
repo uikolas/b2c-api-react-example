@@ -5,7 +5,7 @@ import {
   InputLabelAddNewBillingAddress,
   InputLabelAddNewDeliveryAddress,
   InputLabelSameAsCurrentDelivery
-} from "src/shared/constants/forms/labels";
+} from "src/shared/translation";
 import {
   ICheckoutAddressState,
   ICheckoutPageProps,
@@ -19,6 +19,13 @@ import {
 } from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
 import {checkoutSelectionInputs} from "src/shared/components/Pages/CheckoutPage/constants";
 import {RegExpZipCode} from "src/shared/constants/forms/regexp";
+import {
+  PanelDeliveryAddressTitle,
+  PanelBillingAddressTitle,
+  PanelShipmentTitle,
+  PanelPaymentTitle
+} from 'src/shared/translation';
+
 
 export const addressDefault: IAddressItem = {
   firstName: '',
@@ -116,19 +123,19 @@ export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState)
 
   const response = {
     first: {
-      title: "Delivery Address",
+      title: PanelDeliveryAddressTitle,
       isDisabled: isFirstPanelDisabled,
     },
     second: {
-      title: "Billing Address",
+      title: PanelBillingAddressTitle,
       isDisabled: isSecondPanelDisabled,
     },
     third: {
-      title: "Shipment",
+      title: PanelShipmentTitle,
       isDisabled: isThirdPanelDisabled,
     },
     fourth: {
-      title: "Payment",
+      title: PanelPaymentTitle,
       isDisabled: isFourthPanelDisabled,
     },
   };

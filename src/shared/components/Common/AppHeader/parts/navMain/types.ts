@@ -1,6 +1,6 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { ICategory } from 'src/shared/reducers/Common/Init';
 import { styles } from './styles';
+import {ICategory} from "src/shared/interfaces/category/index";
 
 export interface MainNavProps extends WithStyles<typeof styles> {
   categoriesTree: ICategory[];

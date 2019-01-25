@@ -2,11 +2,11 @@ import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
-import {IProductAttributeNames, IProductAttributes} from 'src/shared/interfaces/product';
-
+import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product';
 import { styles } from './styles';
-import {ProductBlockTitleProductDetails} from "src/shared/constants/product/index";
+import { ProductBlockTitleProductDetails } from 'src/shared/translation';
+import { NoTranslationTitle } from 'src/shared/translation';
+
 
 interface ProductAttributesProps extends WithStyles<typeof styles> {
   attributes: IProductAttributes;
@@ -25,13 +25,13 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
         {ProductBlockTitleProductDetails}
       </Typography>
       <Grid container justify="center" className={ classes.root }>
-        { Object.entries(attributes).map((data: any) => {
+        { Object.entries(attributes).map((data: [string, string]) => {
           return (
             <Grid key={ data[0] } item xs={ 12 } sm={ 12 } md={ 6 } className={ classes.element }>
               <Typography component="div" color="inherit" gutterBottom={ true } className={ classes.valuesBlock }>
                 <p>
                   <Typography variant="subheading" component="strong">
-                    { `${attributeNames[data[0]] ? attributeNames[data[0]] : 'No translation'}: ` }
+                    { `${attributeNames[data[0]] ? attributeNames[data[0]] : NoTranslationTitle}: ` }
                   </Typography>
                 </p>
                 <Typography variant="subheading" component="span">

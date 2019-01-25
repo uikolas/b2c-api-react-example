@@ -4,18 +4,20 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { pathCustomerAddressesPage } from 'src/shared/routes/contentRoutes';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-
 import { styles } from './styles';
 import { connect } from './connect';
 import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
-
-const emptyAddressMessage: string = 'You do not have any saved addresses within your account.';
+import {
+  PanelBillingAddressTitle,
+  OrderDetailShippingAddressTitle,
+  EmptyAddressMessage,
+  ButtonAddAddressTitle
+} from 'src/shared/translation';
 
 
 @connect
@@ -55,7 +57,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
             {
               item.isDefaultShipping
                 ? <Chip
-                    label="Shipping address"
+                    label={ OrderDetailShippingAddressTitle }
                     variant="outlined"
                     className={ classes.chips }
                 />
@@ -64,7 +66,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
             {
               item.isDefaultBilling
                 ? <Chip
-                    label="Billing address"
+                    label={ PanelBillingAddressTitle }
                     variant="outlined"
                     className={ classes.chips }
                 />
@@ -97,7 +99,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
         <Grid item xs={ 12 }>
           <CustomerPageTitle title="manage addresses" />
 
-          { addresses.length ? null : <div className={ classes.emptyMsg }>{ emptyAddressMessage }</div> }
+          { addresses.length ? null : <div className={ classes.emptyMsg }>{ EmptyAddressMessage }</div> }
         </Grid>
 
         <Grid item xs={ 12 }>
@@ -106,7 +108,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
 
         <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
           <SprykerButton
-            title="add address"
+            title={ ButtonAddAddressTitle }
             onClick={ this.handleAddAddress }
             disabled={ isLoading }
           />

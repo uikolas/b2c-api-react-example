@@ -1,10 +1,10 @@
-import { ICategory, TAppCurrency } from 'src/shared/reducers/Common/Init';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import {ISearchPageData, ISearchQuery} from 'src/shared/interfaces/searchPageData';
 import { Location } from 'history';
 import { RouteProps } from 'react-router';
 import {WithRouter} from "src/shared/interfaces/common/react";
+import {ICategory} from "src/shared/interfaces/category/index";
 
 export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData, RouteProps, WithRouter {
   isLoading: boolean;
@@ -28,7 +28,7 @@ export interface ISearchPageState {
   paginationPage: number | string | null;
 }
 
-export type RangeType = {min: number, max: number};
+export type RangeType = {min: number, max: number, [name: string]: number};
 export type TCategoryId = number | string;
 export type TActiveFilters = {[name: string]: string[]};
 export type TActiveRangeFilters = {[name: string]: RangeType};

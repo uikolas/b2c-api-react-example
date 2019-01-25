@@ -2,20 +2,21 @@ import { WithStyles } from '@material-ui/core';
 import { RouteProps } from 'react-router';
 import { styles } from './styles';
 import { FlyoutSearch, ISearchQuery } from 'src/shared/interfaces/searchPageData';
-import {ICategory, TAppCurrency} from 'src/shared/reducers/Common/Init';
+import {ICategory} from '@stores/reducers/common/init';
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, FlyoutSearch {
   // connect
-  currency?: TAppCurrency;
-  isLoading?: boolean;
-  id?: string;
-  categoriesTree: ICategory[];
+  currency: TAppCurrency;
+  isLoading: boolean;
+  id: string;
+  categoriesTree: ICategory[] | null;
 
-  sendSuggestionAction?(query: string): void;
-  clearSuggestions?(query: string): void;
-  sendSearchAction?(params: ISearchQuery): void;
-  getProductDataAction?(sku: string): void;
-  push?(query: string): void;
+  sendSuggestionAction(query: string): void;
+  clearSuggestions(query: string): void;
+  sendSearchAction(params: ISearchQuery): void;
+  getProductDataAction(sku: string): void;
+  push(query: string): void;
 }
 
 export interface CatalogState {

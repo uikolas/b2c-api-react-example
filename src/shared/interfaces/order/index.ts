@@ -1,8 +1,8 @@
-import { TAppCurrency } from '../../reducers/Common/Init';
 import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '../product';
 import { IAbstractTotals, TCanceledTotal } from '../abstract/totals';
 import {TCartPriceMode} from "src/shared/interfaces/cart/index";
 import {IAddressItemOrder} from "src/shared/interfaces/addresses/index";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 type TOrderCreatedAt = string;
 export type TOrderDate = string;

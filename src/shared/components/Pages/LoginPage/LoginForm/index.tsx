@@ -3,10 +3,11 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-
 import { formStyles } from '../styles';
 import { TCustomerPassword, TCustomerUsername } from 'src/shared/interfaces/customer';
 import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { InputLabelEmail, PasswordTitle, LogindTitle } from 'src/shared/translation';
+
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
   handleSubmit: Function;
@@ -51,14 +52,14 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
     return (
       <React.Fragment>
         <Typography variant="title" color="inherit" noWrap>
-          Login
+          { LogindTitle }
         </Typography>
         <form className={ classes.container } noValidate autoComplete="off" onSubmit={ this.handleSubmit }
               id="LoginForm">
           <TextField
             required
             id="login-email"
-            label="Email"
+            label={ InputLabelEmail }
             name="username"
             onChange={ this.handleChange('username') }
             type="email"
@@ -77,7 +78,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
           <TextField
             required
             id="login-password"
-            label="Password"
+            label={ PasswordTitle }
             name="password"
             onChange={ this.handleChange('password') }
             type="password"
@@ -94,7 +95,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
           />
 
           <Button type="submit" variant="contained" className={ classes.button }>
-            Login
+            { LogindTitle }
           </Button>
 
         </form>

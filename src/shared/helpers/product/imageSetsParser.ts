@@ -1,6 +1,11 @@
-import { IProductCardImages, TProductImageSRC } from '../../interfaces/product';
+import {
+  IProductCardImages,
+  IProductImageSetsRawResponse,
+  TProductImageSetsCollectionRawResponse,
+  TProductImageSRC
+} from '../../interfaces/product';
 
-export const parseImageSets = (imageSets: any): Array<IProductCardImages> | null => {
+export const parseImageSets = (imageSets: TProductImageSetsCollectionRawResponse): Array<IProductCardImages> | null => {
 
   if (!Array.isArray(imageSets) || !imageSets.length) {
     return null;
@@ -8,8 +13,8 @@ export const parseImageSets = (imageSets: any): Array<IProductCardImages> | null
 
   const result: Array<IProductCardImages> = [];
 
-  imageSets.map((set: any) => {
-    set.images.forEach((imgs: any) => {
+  imageSets.map((set: IProductImageSetsRawResponse) => {
+    set.images.forEach((imgs: IProductCardImages) => {
       result.push(imgs);
     });
   });

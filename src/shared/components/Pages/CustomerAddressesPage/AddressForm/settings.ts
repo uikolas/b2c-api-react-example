@@ -12,15 +12,14 @@ import {
   InputLabelPhone,
   InputLabelDefaultDeliveryAddress,
   InputLabelDefaultShippingAddress,
-  InputSelectSalutationFirstItem,
-  InputSelectCountryFirstItem,
-} from "src/shared/constants/forms/labels";
-import { salutationVariants } from "src/shared/constants/customer";
-import { TSalutationVariant } from "src/shared/interfaces/customer";
-import { ICountries } from "src/shared/reducers/Common/Init";
-import { IFormField } from "src/shared/components/UI/SprykerForm/types";
+  FirstItemInSelect
+} from 'src/shared/translation';
+import { SalutationVariants } from 'src/shared/constants/customer/index';
+import { TSalutationVariant } from 'src/shared/interfaces/customer';
+import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
 import { AddressFormState } from './types';
-import { InputChangeEvent } from "src/shared/interfaces/common/react";
+import { InputChangeEvent } from 'src/shared/interfaces/common/react';
+import {ICountry} from "src/shared/interfaces/country/index";
 
 
 export interface IFieldInput {
@@ -30,7 +29,7 @@ export interface IFieldInput {
 
 export const setFormFields = (
   currentState: AddressFormState,
-  countries: ICountries[],
+  countries: ICountry[],
   handleCheckBox: (event: InputChangeEvent) => void
 ): Array<IFormField[]> => {
   const {
@@ -59,11 +58,11 @@ export const setFormFields = (
       isRequired: true,
       label: InputLabelSalutation,
       isError: submitted && !salutation,
-      menuItems: salutationVariants
+      menuItems: SalutationVariants
         .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
       menuItemFirst: {
         value: " ",
-        name: InputSelectSalutationFirstItem,
+        name: FirstItemInSelect,
         selected: true,
         disabled: true,
       },
@@ -137,10 +136,10 @@ export const setFormFields = (
       label: InputLabelCountry,
       isError: submitted && !iso2Code,
       menuItems: countries
-        .map((country: ICountries) => ({value: country.iso2Code, name: country.name})),
+        .map((country: ICountry) => ({value: country.iso2Code, name: country.name})),
       menuItemFirst: {
         value: " ",
-        name: InputSelectCountryFirstItem,
+        name: FirstItemInSelect,
         selected: true,
         disabled: true,
       },

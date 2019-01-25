@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
-import { emptyRequiredFieldsErrorText } from 'src/shared/constants/messages/errors';
+import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
@@ -14,7 +14,7 @@ import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
 import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
-
+import { ButtonSaveTitle } from 'src/shared/translation';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
@@ -51,9 +51,10 @@ export class AddressForm extends React.Component<Props, State> {
     this.setState(state => ({...state, [name]: value}));
   };
 
-  public handleCheckbox = (event: any): void => {
+  public handleCheckbox = (event: InputChangeEvent): void => {
     event.persist();
-    this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));
+    /*this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));*/
+    this.setState((prevState: State) => ({...prevState, [event.target.name]: !prevState[event.target.name]}));
   }
 
   public handleSubmitForm = (e: FormEvent) => {
@@ -62,7 +63,7 @@ export class AddressForm extends React.Component<Props, State> {
     this.setState(() => ({submitted: true}));
 
     if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
-      toast.warn(emptyRequiredFieldsErrorText);
+      toast.warn(EmptyRequiredFieldsErrorMessage);
       return;
     }
 
@@ -99,11 +100,12 @@ export class AddressForm extends React.Component<Props, State> {
             }}
             SubmitButton={
               <Grid container>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={ 12 } sm={ 4 }>
                   <SprykerButton
-                    title="save"
+                    title={ ButtonSaveTitle }
                     btnType="submit"
-                    extraClasses={classes.addButton} disabled={ isLoading }
+                    extraClasses={ classes.addButton }
+                    disabled={ isLoading }
                   />
                 </Grid>
               </Grid>

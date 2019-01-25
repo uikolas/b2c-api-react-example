@@ -1,13 +1,13 @@
-import { connect } from 'react-redux';
+import {connect, MapDispatchToPropsParam, MapStateToProps, MergeProps, Options} from 'react-redux';
 
 export const reduxify = (
   mapStateToProps: Function,
   mapDispatchToProps?: Function,
-  mergeProps?: any,
-  options?: any,
+  mergeProps?: MergeProps<{}, {}, {}, {}>,
+  options?: Options<{}, {}, {}, {}>,
 ) => (target: any) => connect(
-  mapStateToProps as any,
-  mapDispatchToProps as any,
+  mapStateToProps as MapStateToProps<{}, {}, {}>,
+  mapDispatchToProps as MapDispatchToPropsParam<{}, {}>,
   mergeProps,
   options,
 )(target) as any;

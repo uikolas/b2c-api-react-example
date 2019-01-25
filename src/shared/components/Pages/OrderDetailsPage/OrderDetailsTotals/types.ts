@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import {IOrderDetailsParsed} from "src/shared/interfaces/order/index";
-import {TAppCurrency} from "src/shared/reducers/Common/Init";
+import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 
 export interface IOrderDetailsTotalsProps extends WithStyles<typeof styles> {

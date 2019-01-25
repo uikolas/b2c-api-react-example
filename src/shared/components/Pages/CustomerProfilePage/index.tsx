@@ -3,9 +3,9 @@ import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {
-  emptyRequiredFieldsErrorText,
-  passwordsNotEqualErrorText,
-} from 'src/shared/constants/messages/errors';
+  EmptyRequiredFieldsErrorMessage,
+  PasswordsNotEqualErrorMessage,
+} from 'src/shared/translation';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
@@ -15,6 +15,7 @@ import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitl
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
+import { ConfirmDeleteAccountMessage } from 'src/shared/translation';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -23,7 +24,6 @@ const keyEmail = 'email';
 const keyNewPassword = 'newPassword';
 const keyOldPassword = 'password';
 const keyConfirmPassword = 'confirmPassword';
-const deleteProfileContent = 'Are you sure you want to delete your account?';
 
 @connect
 export class CustomerProfilePageBase extends React.Component<Props, State> {
@@ -85,7 +85,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     const {firstName, lastName, salutation, email} = this.state.inputs;
 
     if (!firstName || !lastName || !email || !salutation) {
-      toast.warn(emptyRequiredFieldsErrorText);
+      toast.warn(EmptyRequiredFieldsErrorMessage);
       return null;
     }
     const profileData = {salutation, firstName, lastName, email};
@@ -96,11 +96,11 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     event.preventDefault();
     const {password, newPassword, confirmPassword}  = this.state.inputs;
     if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
-      toast.warn(emptyRequiredFieldsErrorText);
+      toast.warn(EmptyRequiredFieldsErrorMessage);
       return null;
     }
     if (newPassword !== confirmPassword) {
-      toast.warn(passwordsNotEqualErrorText);
+      toast.warn(PasswordsNotEqualErrorMessage);
       return null;
     }
     const passwordData = {password, newPassword, confirmPassword};
@@ -174,7 +174,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
           ? (
             <SprykerDialog
               handleShow={ this.handleDeleteProfileDialogShowing }
-              content={ deleteProfileContent }
+              content={ ConfirmDeleteAccountMessage }
               isOpen={ this.state.isDeleteProfileDialogOpen }
               handleAgree={ this.handleDeleteProfileDialogAgree }
               handleDisagree={ this.handleDeleteProfileDialogDisagree }

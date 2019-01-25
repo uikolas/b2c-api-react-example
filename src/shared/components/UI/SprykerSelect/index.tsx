@@ -8,9 +8,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Typography from '@material-ui/core/Typography';
 import { ChevronLeft } from '@material-ui/icons';
 import InputLabel from '@material-ui/core/InputLabel';
-
 import { styles } from './styles';
 import {IMenuItemFirst, IMenuItemSelect} from "src/shared/components/UI/SprykerSelect/types";
+import { FirstItemInSelect } from 'src/shared/translation';
 
 
 export interface SprykerSelectProps extends WithStyles<typeof styles> {
@@ -44,7 +44,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
     menuItemFirst = {
       // Do not change default value!!!!
       value: " ",
-      name: 'please select',
+      name: FirstItemInSelect,
       selected: false,
       disabled: false,
     },

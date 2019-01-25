@@ -6,15 +6,21 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ChevronLeft';
-
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { forgotPasswordAction } from 'src/shared/actions/Pages/Login';
+import { forgotPasswordAction } from '@stores/actions/pages/login';
 import { RouteProps } from 'react-router';
-
 import { AppMain } from 'src/shared/components/Common/AppMain';
-
 import { formStyles } from '../styles';
-import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
+import { getRouterHistoryBack } from 'src/shared/helpers/router/index';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";
+import {
+    ButtonBackTitle,
+    ButtonSubmitTitle,
+    RecoveryPasswordMessage,
+    EnterEmailAddressMessage
+} from 'src/shared/translation';
+
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
   dispatch?: Function;
@@ -31,11 +37,11 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
     email: '',
   };
 
-  public handleChange = (e: any) => {
+  public handleChange = (e: InputChangeEvent) => {
     this.setState({email: e.target.value});
   };
 
-  public submitRequest = (e: any) => {
+  public submitRequest = (e: ClickEvent) => {
     this.props.sendForgotRequest(this.state.email);
   };
 
@@ -50,8 +56,8 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
           justify="center"
         >
           <Paper className={ classes.forgot }>
-            <Typography color="primary" variant="headline" paragraph>Recover my password</Typography>
-            <Typography variant="title" paragraph>Enter the e-mail address associated with your account.</Typography>
+            <Typography color="primary" variant="headline" paragraph>{ RecoveryPasswordMessage }</Typography>
+            <Typography variant="title" paragraph>{ EnterEmailAddressMessage }</Typography>
             <form autoComplete="off">
               <TextField
                 required
@@ -71,7 +77,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                 onClick={ () => routerGoBack() }
               >
                 <BackIcon/>
-                <span>Back</span>
+                <span>{ ButtonBackTitle }</span>
               </Button>
               <Button
                 variant="contained"
@@ -79,7 +85,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                 className={ classes.passwordButtons }
                 onClick={ this.submitRequest }
               >
-                Submit
+                { ButtonSubmitTitle }
               </Button>
             </Grid>
           </Paper>
@@ -92,7 +98,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
 const ForgotPassword = withStyles(formStyles)(ForgotPasswordPageBase);
 
 export const ForgotPasswordPage = reduxify(
-  (state: any, ownProps: any) => {
+  (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const routerGoBack = getRouterHistoryBack(state, ownProps);
     return (
       {
@@ -100,7 +106,7 @@ export const ForgotPasswordPage = reduxify(
       }
     );
   },
-  (dispatch: Function, ownProps: any) => {
+  (dispatch: Function) => {
     return {
       dispatch,
       sendForgotRequest: (email: string) => dispatch(forgotPasswordAction(email)),

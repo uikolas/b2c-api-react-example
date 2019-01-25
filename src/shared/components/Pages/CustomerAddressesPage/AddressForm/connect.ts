@@ -1,16 +1,18 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryBack } from 'src/shared/selectors/Common/router';
-import { getCounties, ICountries } from 'src/shared/reducers/Common/Init';
-import {getCustomerReference} from 'src/shared/reducers/Pages/Login';
-import {getCurrentAddress, isPageAddressesStateLoading} from 'src/shared/reducers/Pages/Addresses';
+import { getRouterHistoryBack } from 'src/shared/helpers/router/index';
+import { getCounties } from '@stores/reducers/common/init';
+import {getCustomerReference} from '@stores/reducers/pages/login';
+import {getCurrentAddress, isPageAddressesStateLoading} from '@stores/reducers/pages/addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { addAddressAction, updateAddressAction } from 'src/shared/actions/Pages/Addresses';
+import { addAddressAction, updateAddressAction } from '@stores/actions/pages/addresses';
+import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import {ICountry} from "src/shared/interfaces/country/index";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const routerGoBack = getRouterHistoryBack(state, ownProps);
-  const countries: ICountries[] = getCounties(state, ownProps);
+  const countries: ICountry[] = getCounties(state, ownProps);
   const currentAddress: IAddressItem = getCurrentAddress(state, ownProps);
   const customer: string | null = getCustomerReference(state, ownProps);
   const isLoading: boolean = isPageAddressesStateLoading(state, ownProps);

@@ -1,17 +1,16 @@
 import * as de from 'react-intl/locale-data/de';
 import * as en from 'react-intl/locale-data/en';
-import { TAppLocale } from '../../reducers/Common/Init';
+import {TAppLocale} from "src/shared/interfaces/locale/index";
 import { LocaleData } from 'react-intl';
-import { APP_LOCALE_DE, APP_LOCALE_EN } from '../../constants/Environment';
+import { APP_LOCALE_DE, APP_LOCALE_EN } from '../../configs/environment';
 
 export const getLocaleData = (locale: TAppLocale): LocaleData => {
-  if (locale === APP_LOCALE_DE) {
-    return de;
-  } else {
-    if (locale === APP_LOCALE_EN) {
-      return en;
-    } else {
-      return de;
+    switch (locale) {
+        case APP_LOCALE_DE:
+            return de;
+        case APP_LOCALE_EN:
+            return en;
+        default:
+            return de;
     }
-  }
 };

@@ -1,13 +1,14 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { cartDeleteItemAction, removeItemGuestCartAction } from 'src/shared/actions/Common/Cart';
-import { ICartState } from 'src/shared/reducers/Common/Cart/types';
-import { isUserAuthenticated } from 'src/shared/reducers/Pages/Login';
-import { getAnonymId } from 'src/shared/reducers/Common/Init';
-import {getCartId, isCartStateLoading} from "src/shared/reducers/Common/Cart/selectors";
+import { cartDeleteItemAction, removeItemGuestCartAction } from '@stores/actions/common/cart';
+import { ICartState } from '@stores/reducers/common/cart/types';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
+import { getAnonymId } from '@stores/reducers/common/init';
+import {getCartId, isCartStateLoading} from "@stores/reducers/common/cart/selectors";
+import {IReduxOwnProps, IReduxStore} from "@stores/reducers/types";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
   const cartProps: ICartState = state.cart ? state.cart : null;
   const isUserLoggedIn = isUserAuthenticated(state, ownProps);
   const anonymId = getAnonymId(state, ownProps);
@@ -15,8 +16,8 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
   return ({
     cartId: getCartId(state, ownProps),
-    totals: cartProps && cartProps.data ? cartProps.data.totals : ownProps.totals,
-    cartItems: cartProps && cartProps.data ? cartProps.data.items : ownProps.items,
+    totals: cartProps && cartProps.data ? cartProps.data.totals : null,
+    cartItems: cartProps && cartProps.data ? cartProps.data.items : null,
     isUserLoggedIn,
     anonymId,
     isCartLoading,

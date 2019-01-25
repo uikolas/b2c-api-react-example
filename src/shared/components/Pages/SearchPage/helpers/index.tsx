@@ -6,14 +6,14 @@ import {
   ValueFacets
 } from 'src/shared/interfaces/searchPageData';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
-import { rangeMaxType, rangeMinType, TActiveRangeFilters } from 'src/shared/components/Pages/SearchPage/types';
+import {rangeMaxType, rangeMinType, RangeType, TActiveRangeFilters} from 'src/shared/components/Pages/SearchPage/types';
 import {IActiveFilterCategories} from "src/shared/components/Pages/SearchPage/CategoriesList/types";
 import {labeledCategories} from "src/shared/routes/categoriesRoutes";
-import {ICategory} from "src/shared/reducers/Common/Init";
+
 
 export const isValidRangeInput = (activeRanges: TActiveRangeFilters,
                                   defaultRanges: ISearchPageData['rangeFilters']): boolean => {
-  const activeData: {[key: string]: any} = {...activeRanges};
+  const activeData: {[key: string]: RangeType} = {...activeRanges};
   const defaultData = [...defaultRanges];
   let canMakeNewRequest: boolean = true;
 

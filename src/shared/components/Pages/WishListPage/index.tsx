@@ -14,14 +14,18 @@ import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react
 import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
-
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import {ICellInfo, ITableRow} from "src/shared/components/Common/AppTable/types";
 import {IWishlist} from "src/shared/interfaces/wishlist/index";
+import {
+  WishlistNameTitle,
+  CreateListMessage,
+  ButtonAddTitle,
+  NavLinkTitleWishlist
+} from 'src/shared/translation';
 
-export const pageTitle = 'Search results for ';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
@@ -157,7 +161,7 @@ export class WishListBase extends React.Component<Props, State> {
         <Grid item xs={ 12 }>
           <AppPageTitle
             classes={ {root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader} }
-            title="Wishlist"
+            title={ NavLinkTitleWishlist }
           />
         </Grid>
 
@@ -167,13 +171,13 @@ export class WishListBase extends React.Component<Props, State> {
             <Paper elevation={ 0 } className={ classes.formItem }>
               <TextField
                 className={ classes.textFieldForm }
-                placeholder="Wishlist Name"
+                placeholder={ WishlistNameTitle }
                 value={ this.state.name }
                 variant={ 'outlined' }
                 onChange={ this.handleChangeName }
                 inputProps={ {className: classes.input} }
               />
-              <Button type="submit" variant="contained" color="primary" className={ classes.formSubmit }>Add</Button>
+              <Button type="submit" variant="contained" color="primary" className={ classes.formSubmit }>{ ButtonAddTitle }</Button>
             </Paper>
           </form>
 
@@ -184,7 +188,7 @@ export class WishListBase extends React.Component<Props, State> {
               <Paper elevation={ 0 }>
                 <Divider/>
                 <Typography paragraph className={ classes.noItems }>
-                  You do not have any lists yet, create one above to get started.
+                  { CreateListMessage }
                 </Typography>
               </Paper>
             )
