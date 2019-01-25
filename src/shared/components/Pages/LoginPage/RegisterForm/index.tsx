@@ -10,15 +10,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { toast } from 'react-toastify';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer/index';
-import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation/translations';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
-import {
-    PasswordTitle,
-    ConfirmPasswordTitle,
-    PasswordsNotEqualErrorMessage
-} from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
 
 export class RegisterFormBase extends React.Component<Props, State> {
@@ -48,12 +42,12 @@ export class RegisterFormBase extends React.Component<Props, State> {
         const { salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms } = this.state;
         e.preventDefault();
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
             return null;
         }
 
         if (password !== confirmPassword) {
-            toast.warn(PasswordsNotEqualErrorMessage);
+            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
             return null;
         }
 
@@ -154,7 +148,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                             <TextField
                                 required
                                 id="register-password"
-                                label={ PasswordTitle }
+                                label={ <FormattedMessage id={ 'word.password.title' } /> }
                                 name="password"
                                 type="password"
                                 value={ this.state.password }

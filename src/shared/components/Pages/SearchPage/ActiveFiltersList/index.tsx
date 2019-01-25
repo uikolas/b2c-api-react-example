@@ -16,7 +16,6 @@ import {
     createRangeFilterItemCombined,
 } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
-import { ResetAllFiltersButtonTitle } from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
 
 export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props) => {
@@ -112,7 +111,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
                 })
                 }
                 <Chip
-                    label={ ResetAllFiltersButtonTitle }
+                    label={ <FormattedMessage id={ 'reset.all.filters.title' } /> }
                     className={ `${classes.reset}` }
                     onClick={ resetHandler }
                     classes={ { label: classes.resetLabel } }

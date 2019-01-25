@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ISprykerLogoWhiteProps } from "./types";
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { LogoSprykerMainTitle, LogoSprykerTitle } from 'src/shared/translation/translations';
+import { FormattedMessage } from 'react-intl';
 
 /* tslint:disable */
 const path1 = `M198.5,516.8c-1.2,0.9-2.7,1.8-4.2,2.9c-1.5,1-3,2.1-4.4,3.3c-1.2,1.1-2.2,2.3-3,3.8c-0.7,1.3-0.9,2.9-0.5,4.3
@@ -61,38 +61,41 @@ const path15 = `M1333.5,330.3h-17.7c-20.2,0-27.8,10.1-27.8,32.8v60.5l-2.5,2.5h-3
 
 
 export const SprykerLogoWhiteBase: React.SFC<ISprykerLogoWhiteProps> = (props) => {
-  const {
-    classes,
-    extraClassName
-  } = props;
+    const {
+        classes,
+        extraClassName
+    } = props;
 
-  return(
-    <svg version="1.1"
-         xmlns="http://www.w3.org/2000/svg"
-         x="0px"
-         y="0px"
-         viewBox="0 120 1650 380"
-         className={`${classes.root} ${extraClassName ? extraClassName : ''}`}
-    >
-      <title>{LogoSprykerTitle}</title>
-      <path className={classes.st0} d={path1} />
-      <path className={classes.st0} d={path2} />
-      <path className={classes.st0} d={path3} />
-      <path className={classes.st0} d={path4} />
-      <path className={classes.st0} d={path5} />
-      <path className={classes.st0} d={path6} />
-      <path className={classes.st0} d={path7} />
-      <path className={classes.st1} d={path8} />
-      <path className={classes.st0} d={path9} />
-      <path className={classes.st0} d={path10} />
-      <path className={classes.st0} d={path11} />
-      <path className={classes.st0} d={path12} />
-      <path className={classes.st0} d={path13} />
-      <path className={classes.st0} d={path14} />
-      <path className={classes.st0} d={path15}/>
-      <text className={`${classes.text} ${classes.st2} ${classes.st3} ${classes.st4}`}>{LogoSprykerMainTitle}</text>
-    </svg>
-  );
+    return (
+        <svg version="1.1"
+             xmlns="http://www.w3.org/2000/svg"
+             x="0px"
+             y="0px"
+             viewBox="0 120 1650 380"
+             className={ `${classes.root} ${extraClassName ? extraClassName : ''}` }
+        >
+            <title><FormattedMessage id={ 'logo.spryker.title' } /></title>
+            <path className={ classes.st0 } d={ path1 } />
+            <path className={ classes.st0 } d={ path2 } />
+            <path className={ classes.st0 } d={ path3 } />
+            <path className={ classes.st0 } d={ path4 } />
+            <path className={ classes.st0 } d={ path5 } />
+            <path className={ classes.st0 } d={ path6 } />
+            <path className={ classes.st0 } d={ path7 } />
+            <path className={ classes.st1 } d={ path8 } />
+            <path className={ classes.st0 } d={ path9 } />
+            <path className={ classes.st0 } d={ path10 } />
+            <path className={ classes.st0 } d={ path11 } />
+            <path className={ classes.st0 } d={ path12 } />
+            <path className={ classes.st0 } d={ path13 } />
+            <path className={ classes.st0 } d={ path14 } />
+            <path className={ classes.st0 } d={ path15 } />
+            <text
+                className={ `${classes.text} ${classes.st2} ${classes.st3} ${classes.st4}` }>
+                <FormattedMessage id={ 'logo.spryker.main.title' } />
+            </text>
+        </svg>
+    );
 };
 
 export const SprykerLogoWhite = withStyles(styles)(SprykerLogoWhiteBase);

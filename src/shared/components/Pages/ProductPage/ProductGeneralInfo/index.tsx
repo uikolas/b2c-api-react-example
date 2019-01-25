@@ -11,9 +11,7 @@ import {
   TProductSKU,
 } from 'src/shared/interfaces/product';
 import {AppPrice} from "src/shared/components/Common/AppPrice/index";
-import { NoNameTitle, NoPriceTitle } from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
-
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
   name: TProductName;
@@ -25,7 +23,11 @@ interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
 
 
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
-  const {classes, name = NoNameTitle, price = NoPriceTitle, oldPrice, availability} = props;
+  const {
+      classes,
+      name = <FormattedMessage id={ 'no.name.title' } />,
+      price = <FormattedMessage id={ 'no.price.title' } />, oldPrice, availability
+  } = props;
 
   return (
     <div className={ classes.root }>

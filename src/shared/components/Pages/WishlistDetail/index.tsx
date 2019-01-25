@@ -22,11 +22,6 @@ import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
 import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
-import {
-
-
-    WishlistEmptyMessage
-} from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
 
 @connect
@@ -210,7 +205,8 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                             <Paper elevation={ 0 }>
                                 <Divider />
                                 <Typography paragraph
-                                            className={ classes.noItems }>{ WishlistEmptyMessage }
+                                            className={ classes.noItems }>
+                                    <FormattedMessage id={ 'wishlist.empty.message' } />
                                 </Typography>
                             </Paper>
                         )

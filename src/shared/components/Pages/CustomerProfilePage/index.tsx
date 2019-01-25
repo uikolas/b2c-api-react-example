@@ -2,10 +2,6 @@ import * as React from 'react';
 import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {
-    EmptyRequiredFieldsErrorMessage,
-    PasswordsNotEqualErrorMessage,
-} from 'src/shared/translation/translations';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
@@ -87,7 +83,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         const { firstName, lastName, salutation, email } = this.state.inputs;
 
         if (!firstName || !lastName || !email || !salutation) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
             return null;
         }
         const profileData = { salutation, firstName, lastName, email };
@@ -98,11 +94,11 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         event.preventDefault();
         const { password, newPassword, confirmPassword } = this.state.inputs;
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
             return null;
         }
         if (newPassword !== confirmPassword) {
-            toast.warn(PasswordsNotEqualErrorMessage);
+            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
             return null;
         }
         const passwordData = { password, newPassword, confirmPassword };

@@ -38,7 +38,6 @@ import {
     getWishListFormSettings
 } from "src/shared/components/Pages/ProductPage/settings/forms";
 import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
-import { ErrorDurningAddProductToTheCartMessage } from "src/shared/translation/translations";
 import { FormattedMessage } from 'react-intl';
 
 
@@ -211,7 +210,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                 });
             });
         } catch (error) {
-            toast.error(ErrorDurningAddProductToTheCartMessage);
+            toast.error(<FormattedMessage id={ 'error.durning.add.product.to.cart.message' } />);
         }
     };
 

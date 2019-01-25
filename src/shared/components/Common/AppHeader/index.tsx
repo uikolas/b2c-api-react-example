@@ -125,7 +125,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
 
                                         {this.props.location.pathname.endsWith(pathCheckoutPage)
                                             ? <div className={classes.checkout}>Checkout</div>
-                                            : <MainNav mobileNavState={isMobileNavOpened} locale={locale} />
+                                            : <MainNav mobileNavState={isMobileNavOpened} />
                                         }
 
                                         <AddNav
@@ -134,6 +134,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                                             isSticky={isSticky}
                                             pageWidth={this.state.pageWidth}
                                             pageHeight={this.state.pageHeight}
+                                            locale={locale}
                                         />
                                     </div>
                                     {isLoading ? <Preloader extraClasses={classes.preloader} /> : null}

@@ -23,11 +23,6 @@ import { SquareImage } from '../SquareImage';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
-import {
-    NoFoundMessage,
-
-    SuggestedProductsTitle,
-} from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
 
 @connect
@@ -297,7 +292,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 <div { ...options.containerProps }>
                     <Paper square>
                         <Typography paragraph variant="headline">
-                            { NoFoundMessage }
+                            <FormattedMessage id={ 'no.found.message' } />
                         </Typography>
                     </Paper>
                 </div>
@@ -314,7 +309,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                     <Divider />
                     <div className={ classes.marginTop }>{ renderedCategories }</div>
                     <Typography component="h4" className={ classes.categoryTitle }>
-                        { SuggestedProductsTitle }
+                        <FormattedMessage id={ 'suggested.products.title' } />
                     </Typography>
 
                     <Divider />

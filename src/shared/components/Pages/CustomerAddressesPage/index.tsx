@@ -12,9 +12,6 @@ import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
-import {
-    EmptyAddressMessage,
-} from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
 
 @connect
@@ -96,7 +93,9 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                 <Grid item xs={ 12 }>
                     <CustomerPageTitle title={ <FormattedMessage id={ 'manage.addresses' } /> } />
 
-                    { addresses.length ? null : <div className={ classes.emptyMsg }>{ EmptyAddressMessage }</div> }
+                    { addresses.length ? null : <div className={ classes.emptyMsg }>
+                        <FormattedMessage id={ 'empty.address.message' } />
+                    </div> }
                 </Grid>
 
                 <Grid item xs={ 12 }>

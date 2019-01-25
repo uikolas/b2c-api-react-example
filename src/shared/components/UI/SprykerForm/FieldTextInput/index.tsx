@@ -5,8 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import { IFieldTextInputProps } from 'src/shared/components/UI/SprykerForm/FieldTextInput/types';
 import { sprykerFormStyles } from 'src/shared/components/UI/SprykerForm/sprykerFormStyles';
 import { FormattedMessage } from 'react-intl';
-import { OptionalPlaceholder } from 'src/shared/translation/translations';
-
 
 export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.Element => {
     const {
@@ -25,7 +23,7 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
 
     const placeholder = placeholderText
         ? placeholderText
-        : (isRequired ? null : OptionalPlaceholder);
+        : (isRequired ? null : <FormattedMessage id={ 'optional.placeholder' } />);
 
     return (
         <TextField
@@ -46,7 +44,13 @@ export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.
             } }
             type={ inputType || 'text' }
             value={ inputValue }
-            placeholder={ placeholder }
+            helperText={ placeholder }
+            FormHelperTextProps={{
+                classes: {
+                    root: classes.placeholder,
+                    filled: inputValue.toString().length > 0 ? classes.filled : null
+                }
+            }}
             className={ classes.textField }
             margin="normal"
             onChange={ onChangeHandler }

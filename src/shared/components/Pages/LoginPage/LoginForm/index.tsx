@@ -6,7 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import { formStyles } from '../styles';
 import { TCustomerPassword, TCustomerUsername } from 'src/shared/interfaces/customer';
 import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
-import { PasswordTitle } from 'src/shared/translation/translations';
 import { FormattedMessage } from 'react-intl';
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
@@ -78,7 +77,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
                     <TextField
                         required
                         id="login-password"
-                        label={ PasswordTitle }
+                        label={ <FormattedMessage id={ 'word.password.title' } /> }
                         name="password"
                         onChange={ this.handleChange('password') }
                         type="password"

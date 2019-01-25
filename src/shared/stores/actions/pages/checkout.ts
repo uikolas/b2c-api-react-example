@@ -11,7 +11,7 @@ export const getCheckoutDataInitPendingStateAction = () => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_PENDING',
 });
 
-export const getCheckoutDataInitRejectedStateAction = (message: string) => ({
+export const getCheckoutDataInitRejectedStateAction = (message: string | React.ReactNode) => ({
   type: CHECKOUT_DATA_INIT_REQUEST + '_REJECTED',
   payloadRejected: {error: message},
 });

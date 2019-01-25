@@ -16,7 +16,7 @@ import { FormattedMessage } from 'react-intl';
 
 @connect
 @(withRouter as Function)
-export class UserDropComponent extends React.PureComponent<Props> {
+export class UserDropComponent extends React.Component<Props> {
 
     public customerLogout = (e: ClickEvent) => {
         e.preventDefault();
@@ -42,7 +42,7 @@ export class UserDropComponent extends React.PureComponent<Props> {
                         );
                     }) }
                 </ul>
-                <div classN ame={ classes.userBtns }>
+                <div className={ classes.userBtns }>
                     <SprykerButton
                         title={ <FormattedMessage id={ 'log.out.button.title' } /> }
                         onClick={ this.customerLogout }

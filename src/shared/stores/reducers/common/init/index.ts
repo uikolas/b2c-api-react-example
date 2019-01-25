@@ -11,6 +11,7 @@ import {ICategory} from "src/shared/interfaces/category/index";
 import {ICountry} from "src/shared/interfaces/country/index";
 import {IInitData} from "src/shared/interfaces/init/index";
 import {IInitState, IInitAction} from "src/shared/stores/reducers/common/init/types";
+import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
 
 
 export const initialState: IInitState = {
@@ -123,7 +124,7 @@ export function getAppCurrency(state: IReduxStore, props: IReduxOwnProps): TAppC
 }
 
 export function getAppLocale(state: IReduxStore, props: IReduxOwnProps): TAppStore {
-    return isAppInitiated(state, props) ? state.init.data.locale : null;
+    return isAppInitiated(state, props) ? state.init.data.locale : APP_LOCALE_DEFAULT;
 }
 
 export function getAppTimeZone(state: IReduxStore, props: IReduxOwnProps): TAppTimeZone {

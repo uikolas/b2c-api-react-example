@@ -1,26 +1,26 @@
-import { TSalutationVariant } from '../../interfaces/customer';
-import {
-    SalutationVariantMr,
-    SalutationVariantMs,
-    SalutationVariantMrs,
-    SalutationVariantDr
-} from 'src/shared/translation/translations';
+import { TSalutationVariant } from '@interfaces/customer';
+import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
+
+const SalutationVariantMrValue = 'Mr';
+const SalutationVariantMrsValue = 'Mrs';
+const SalutationVariantDrValue = 'Dr';
+const SalutationVariantMsValue = 'Ms';
 
 export const SalutationVariants: Array<TSalutationVariant> = [
     {
-        value: SalutationVariantMr,
-        label: `${SalutationVariantMr}.`,
+        value: SalutationVariantMrValue,
+        label: FormattedMessageTemplate('salutation.variant.mr')
     },
     {
-        value: SalutationVariantMs,
-        label: `${SalutationVariantMs}.`,
+        value: SalutationVariantMsValue,
+        label: FormattedMessageTemplate('salutation.variant.ms')
     },
     {
-        value: SalutationVariantMrs,
-        label: `${SalutationVariantMrs}.`,
+        value: SalutationVariantMrsValue,
+        label: FormattedMessageTemplate('salutation.variant.mrs')
     },
     {
-        value: SalutationVariantDr,
-        label: `${SalutationVariantDr}.`,
+        value: SalutationVariantDrValue,
+        label: FormattedMessageTemplate('salutation.variant.dr')
     },
 ];

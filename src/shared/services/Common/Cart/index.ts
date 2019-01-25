@@ -10,12 +10,12 @@ import {
     parseUserCartResponseOneValue
 } from 'src/shared/helpers/cart';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAuthenticateErrorMessage } from 'src/shared/translation/translations';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
-import { IResponseError } from "src/shared/services/apiAbstractions/types";
-import { IApiResponseData } from "src/shared/services/types";
+import { IResponseError } from 'src/shared/services/apiAbstractions/types';
+import { IApiResponseData } from 'src/shared/services/types';
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class CartService extends ApiServiceAbstract {
@@ -54,8 +54,8 @@ export class CartService extends ApiServiceAbstract {
             const body = {
                 data: {
                     type: 'carts',
-                    attributes: payload,
-                },
+                    attributes: payload
+                }
             };
 
             const token = await RefreshTokenService.getActualToken(dispatch);
@@ -90,8 +90,8 @@ export class CartService extends ApiServiceAbstract {
             const body = {
                 data: {
                     type: 'items',
-                    attributes: payload,
-                },
+                    attributes: payload
+                }
             };
 
             const token = await RefreshTokenService.getActualToken(dispatch);
@@ -139,7 +139,7 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    payloadCartDeleteItemFulfilled: { itemId },
+                    payloadCartDeleteItemFulfilled: { itemId }
                 });
 
                 toast.success(FormattedMessageTemplate('items.removed.message'));
@@ -158,7 +158,7 @@ export class CartService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error: error.message,
+                error: error.message
             });
             toast.error('Unexpected Error: ' + error.message);
         }
@@ -172,8 +172,8 @@ export class CartService extends ApiServiceAbstract {
             const body = {
                 data: {
                     type: 'items',
-                    attributes: payload,
-                },
+                    attributes: payload
+                }
             };
             const { sku } = payload;
 
@@ -262,8 +262,8 @@ export class CartService extends ApiServiceAbstract {
         const body = {
             data: {
                 type: 'items',
-                attributes: payload,
-            },
+                attributes: payload
+            }
         };
 
         try {

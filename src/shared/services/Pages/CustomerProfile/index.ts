@@ -9,7 +9,7 @@ import {
 } from 'src/shared/interfaces/customer';
 import { parseCustomerDataResponse } from 'src/shared/helpers/customer/customerDataResponse';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
-import { CustomerProfileAuthenticateErrorMessage } from 'src/shared/translation/translations';
+import { CustomerProfileAuthenticateErrorMessage } from 'src/shared/translation';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { logout } from '@stores/actions/pages/login';
 import {IApiResponseData} from "src/shared/services/types";

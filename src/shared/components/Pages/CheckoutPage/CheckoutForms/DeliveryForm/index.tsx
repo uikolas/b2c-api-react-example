@@ -9,8 +9,6 @@ import { getAddressFormSettings } from 'src/shared/components/Pages/CheckoutPage
 import {
     getDeliverySavedAddressFormSettings
 } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
-import { FormWaitingForResponseTitle } from 'src/shared/translation/translations';
-
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
 import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
 import {
@@ -19,7 +17,7 @@ import {
 } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 import { deliveryConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
 import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
-
+import { FormattedMessage } from 'react-intl';
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
     const {
@@ -85,7 +83,9 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                         <Grid item xs={ 12 }>
                             { isUserLoggedIn
                                 ? (!isCheckoutFulfilled)
-                                    ? <AppPageSubTitle title={ FormWaitingForResponseTitle } />
+                                    ? <AppPageSubTitle
+                                        title={ <FormattedMessage id={ 'form.waiting.for.response.title' } /> }
+                                    />
                                     : <React.Fragment>
                                         { addressesCollection && addressesCollection.length && selectionForm }
                                         { deliverySelections.isAddNew ? inputsForm : null }

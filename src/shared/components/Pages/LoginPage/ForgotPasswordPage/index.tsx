@@ -41,6 +41,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
 
     public render() {
         const { classes, routerGoBack } = this.props;
+        const { email } = this.state;
 
         return (
             <AppMain>
@@ -51,16 +52,26 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                 >
                     <Paper className={ classes.forgot }>
                         <Typography color="primary" variant="headline"
-                                    paragraph><FormattedMessage id={ 'recovery.password.title' } /></Typography>
-                        <Typography variant="title" paragraph><FormattedMessage id={ 'enter.email.address.message' } /></Typography>
+                                    paragraph>
+                            <FormattedMessage id={ 'recovery.password.title' } />
+                        </Typography>
+                        <Typography variant="title" paragraph>
+                            <FormattedMessage id={ 'enter.email.address.message' } />
+                        </Typography>
                         <form autoComplete="off">
                             <TextField
                                 required
                                 inputProps={ { type: 'email' } }
-                                label="Email Address"
+                                label={ <FormattedMessage id={ 'email.label' } /> }
                                 className={ classes.email }
-                                value={ this.state.email }
-                                placeholder="Email Address"
+                                value={ email }
+                                helperText={ <FormattedMessage id={ 'email.label' } /> }
+                                FormHelperTextProps={{
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: email.length > 0 ? classes.filled : null
+                                    }
+                                }}
                                 onChange={ this.handleChange }
                             />
                         </form>

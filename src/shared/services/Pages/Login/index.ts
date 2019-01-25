@@ -8,9 +8,8 @@ import {
     loginCustomerRejectedStateAction,
 } from '@stores/actions/pages/login';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
-import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
+import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { RegisterSuccess } from 'src/shared/translation/translations';
 import { IApiResponseData } from "src/shared/services/types";
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
@@ -30,7 +29,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                 });
 
-                toast.success(RegisterSuccess);
+                toast.success(FormattedMessageTemplate('register.success.message'));
 
                 await PagesLoginService.loginRequest(dispatch, {
                     username: payload.email,

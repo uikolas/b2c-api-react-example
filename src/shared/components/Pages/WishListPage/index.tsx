@@ -19,9 +19,6 @@ import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
 import { IWishlist } from "src/shared/interfaces/wishlist/index";
-import {
-    WishlistNameTitle
-} from 'src/shared/translation/translations';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
@@ -77,6 +74,7 @@ export class WishListBase extends React.Component<Props, State> {
 
     public render() {
         const { classes, wishlists, isLoading } = this.props;
+        const { name } = this.state;
         const tableAction = isLoading ? classes.tableActionDisabled : classes.tableAction;
 
         if (!wishlists.length && isLoading) {
@@ -172,8 +170,14 @@ export class WishListBase extends React.Component<Props, State> {
                         <Paper elevation={ 0 } className={ classes.formItem }>
                             <TextField
                                 className={ classes.textFieldForm }
-                                placeholder={ WishlistNameTitle }
-                                value={ this.state.name }
+                                value={ name }
+                                helperText={ <FormattedMessage id={ 'wishlist.name.title' } /> }
+                                FormHelperTextProps={{
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: name.length > 0 ? classes.filled : null
+                                    }
+                                }}
                                 variant={ 'outlined' }
                                 onChange={ this.handleChangeName }
                                 inputProps={ { className: classes.input } }
