@@ -2,7 +2,7 @@ import { isPageLoginStateLoading, pagesLogin } from './pages/login/index';
 import { isPageSearchStateLoading, pageSearch } from './pages/search/index';
 import { isPageProductStateLoading, pageProduct } from './pages/product/index';
 import { isPageWishlistStateLoading, pageWishlist } from './pages/wishlist/index';
-import { isPageAddressesStateLoading, pageAddresses } from './pages/addresses/index';
+import { pageAddresses } from './pages/addresses/index';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './pages/customerProfile';
 import { isPageCheckoutStateLoading, pageCheckout } from './pages/checkout/index';
 import { cart } from './common/cart';
@@ -11,6 +11,7 @@ import { isOrderHistoryLoading, orderHistory } from './pages/orderHistory/index'
 import { isOrderDetailsLoading, orderDetails } from './pages/orderDetails/index';
 import {isCartStateLoading} from "@stores/reducers/Common/Cart/selectors";
 import {IReduxStore, IReduxOwnProps} from "@stores/reducers/types";
+import {isPageAddressesStateLoading} from "@stores/reducers/Pages/Addresses/selectors";
 
 
 export const reducers = {

@@ -4,11 +4,11 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { getRouterHistoryPush } from 'src/shared/helpers/router/index';
 import { getCustomerReference } from '@stores/reducers/pages/login';
 import {
-  getAddressesCollection,
-  getCurrentAddress,
-  isPageAddressesStateLoading,
-  isAddressesInitiated,
-} from '@stores/reducers/pages/addresses';
+    getAddressesCollection,
+    getCurrentAddress,
+    isAddressesInitiated,
+    isPageAddressesStateLoading
+} from "@stores/reducers/Pages/Addresses/selectors";
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {
   getAddressesAction,

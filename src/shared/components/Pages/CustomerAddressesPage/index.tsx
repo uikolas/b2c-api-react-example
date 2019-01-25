@@ -7,116 +7,126 @@ import Button from '@material-ui/core/Button';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { pathCustomerAddressesPage } from 'src/shared/routes/contentRoutes';
+import { pathAddressFormNew, pathAddressFormUpdateBase } from 'src/shared/routes/contentRoutes';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
 import {
-  PanelBillingAddressTitle,
-  OrderDetailShippingAddressTitle,
-  EmptyAddressMessage,
-  ButtonAddAddressTitle
+    PanelBillingAddressTitle,
+    OrderDetailShippingAddressTitle,
+    EmptyAddressMessage,
+    ButtonAddAddressTitle
 } from 'src/shared/translation';
 
 
 @connect
 export class CustomerAddressBase extends React.Component<Props, State> {
-  public state: State = {};
+    public state: State = {};
 
-  public componentDidMount() {
-    this.props.setCurrentAddressAction(null);
-
-    if (!this.props.isAddressesInit && this.props.customer) {
-      this.props.getAddressesAction(this.props.customer);
+    public componentDidMount() {
+        this.props.setCurrentAddressAction(null);
+        this.initRequestData();
     }
-  }
 
-  public handleAddAddress = () => {
-    this.props.routerPush(`${pathCustomerAddressesPage}/new`);
-  };
+    public componentDidUpdate = (prevProps: Props, prevState: State) => {
+        // this.initRequestData();
+    };
 
-  public setUpdatedAddress = (addressId: string) => (e: ClickEvent) => {
-    this.props.setCurrentAddressAction(addressId);
-    this.props.routerPush(`${pathCustomerAddressesPage}/update`);
-  };
+    public handleAddAddress = () => {
+        this.props.routerPush(pathAddressFormNew);
+    };
 
-  public render(): JSX.Element {
-    const {classes, addresses, isLoading, deleteAddressAction} = this.props;
+    public setUpdatedAddress = (addressId: string) => (e: ClickEvent) => {
+        this.props.setCurrentAddressAction(addressId);
+        this.props.routerPush(`${pathAddressFormUpdateBase}/${addressId}`);
+    };
 
-    const rows = addresses.map((item: IAddressItem) => (
-      <div key={ item.id || item.zipCode } className={classes.addressData}>
-        <div>{ `${item.salutation} ${item.firstName} ${item.lastName},` }</div>
-        <div>{ `${item.company || ''}` }</div>
-        <div>{ `${item.address1} ${item.address2} ${item.address3},` }</div>
-        <div>{ `${item.city} ${item.zipCode},` }</div>
-        <div>{ `${item.country}` }</div>
-        <div>{ `${item.phone || ''}` }</div>
-        <div className={ classes.btnRow }>
-          <div>
-            {
-              item.isDefaultShipping
-                ? <Chip
-                    label={ OrderDetailShippingAddressTitle }
-                    variant="outlined"
-                    className={ classes.chips }
-                />
-                : null
-            }
-            {
-              item.isDefaultBilling
-                ? <Chip
-                    label={ PanelBillingAddressTitle }
-                    variant="outlined"
-                    className={ classes.chips }
-                />
-                : null
-            }
-          </div>
-          <div>
-            <Button
-              color="primary"
-              onClick={ this.setUpdatedAddress(item.id) }
-              disabled={ isLoading }
-            >
-              Edit
-            </Button>
-            <Button
-              color="primary"
-              onClick={ () => deleteAddressAction(item.id, this.props.customer) }
-              disabled={ isLoading }
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
-        <Divider />
-      </div>
-    ));
+    private initRequestData = () => {
+        const {addresses, isLoading, customer} = this.props;
+        if (isLoading) { return; }
 
-    return (
-      <Grid container>
-        <Grid item xs={ 12 }>
-          <CustomerPageTitle title="manage addresses" />
+        if ((addresses && Array.isArray(addresses) && !addresses.length) && customer) {
+            this.props.getAddressesAction(customer);
+        }
+    };
 
-          { addresses.length ? null : <div className={ classes.emptyMsg }>{ EmptyAddressMessage }</div> }
-        </Grid>
+    public render(): JSX.Element {
+        const { classes, addresses, isLoading, deleteAddressAction } = this.props;
 
-        <Grid item xs={ 12 }>
-          { rows }
-        </Grid>
+        const rows = addresses.map((item: IAddressItem) => (
+            <div key={ item.id || item.zipCode } className={ classes.addressData }>
+                <div>{ `${item.salutation} ${item.firstName} ${item.lastName},` }</div>
+                <div>{ `${item.company || ''}` }</div>
+                <div>{ `${item.address1} ${item.address2} ${item.address3},` }</div>
+                <div>{ `${item.city} ${item.zipCode},` }</div>
+                <div>{ `${item.country}` }</div>
+                <div>{ `${item.phone || ''}` }</div>
+                <div className={ classes.btnRow }>
+                    <div>
+                        {
+                            item.isDefaultShipping
+                                ? <Chip
+                                    label={ OrderDetailShippingAddressTitle }
+                                    variant="outlined"
+                                    className={ classes.chips }
+                                />
+                                : null
+                        }
+                        {
+                            item.isDefaultBilling
+                                ? <Chip
+                                    label={ PanelBillingAddressTitle }
+                                    variant="outlined"
+                                    className={ classes.chips }
+                                />
+                                : null
+                        }
+                    </div>
+                    <div>
+                        <Button
+                            color="primary"
+                            onClick={ this.setUpdatedAddress(item.id) }
+                            disabled={ isLoading }
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            color="primary"
+                            onClick={ () => deleteAddressAction(item.id, this.props.customer) }
+                            disabled={ isLoading }
+                        >
+                            Delete
+                        </Button>
+                    </div>
+                </div>
+                <Divider />
+            </div>
+        ));
 
-        <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
-          <SprykerButton
-            title={ ButtonAddAddressTitle }
-            onClick={ this.handleAddAddress }
-            disabled={ isLoading }
-          />
-        </Grid>
+        return (
+            <Grid container>
+                <Grid item xs={ 12 }>
+                    <CustomerPageTitle title="manage addresses" />
 
-      </Grid>
-    );
-  }
+                    { addresses.length ? null : <div className={ classes.emptyMsg }>{ EmptyAddressMessage }</div> }
+                </Grid>
+
+                <Grid item xs={ 12 }>
+                    { rows }
+                </Grid>
+
+                <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
+                    <SprykerButton
+                        title={ ButtonAddAddressTitle }
+                        onClick={ this.handleAddAddress }
+                        disabled={ isLoading }
+                    />
+                </Grid>
+
+            </Grid>
+        );
+    }
 }
 
 export const CustomerAddressPage = withStyles(styles)(CustomerAddressBase);
