@@ -13,7 +13,7 @@ import {
   getWishlistsCollectionFromStore,
   isPageWishlistStateLoading,
   isWishlistsCollectionInitiated,
-} from '@stores/reducers/pages/wishlist';
+} from '@stores/reducers/Pages/Wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getRouterMatchParam } from 'src/shared/helpers/router/index';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';

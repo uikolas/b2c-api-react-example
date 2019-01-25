@@ -38,13 +38,13 @@ export const pathCustomerPage = `${config.WEB_PATH}customer`;
 
 export const pathWishListsPage = `${pathCustomerPage}/wishlists`;
 export const pathWishListPageBase = `${pathCustomerPage}/wishlist`;
-export const pathWishListPage = `${pathWishListPageBase}/:name`;
+export const pathWishlistDetailPage = `${pathWishListPageBase}/:wishlistId`;
 
 export const pathOrderHistoryPage = `${pathCustomerPage}/order`;
 export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
 export const pathOrderDetailsPage = `${pathOrderDetailsPageBase}/:orderId`;
-export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
-export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;
+/*export const pathWishlistPage = `${config.WEB_PATH}wishlists`;
+export const pathWishlistDetailPage = `${config.WEB_PATH}wishlist/:name`;*/
 
 export const pathForgotPassword = `${config.WEB_PATH}password/forgotten`;
 export const pathResetPassword = `${config.WEB_PATH}password/reset`;
@@ -74,7 +74,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
       <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
       <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
 
-      <ProtectedRoute path={ pathWishlistPage } component={ LoadableWishListPage }/>
+      <ProtectedRoute path={ pathWishListsPage } component={ LoadableWishListPage }/>
       <ProtectedRoute path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
 
       { /* TODO: Change to ProtectedRoute */ }
