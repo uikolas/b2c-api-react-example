@@ -1,7 +1,6 @@
-import {ICartDataResponse} from '../../interfaces/cart';
+import {ICartDataResponse} from '@interfaces/cart';
 import { parseImageSets } from '../product/imageSetsParser';
-import {priceTypeNameDefault, priceTypeNameOriginal} from "../../interfaces/product/index";
-import {IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal} from "src/shared/interfaces/product/index";
+import {IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal} from "@interfaces/product";
 import {
   ICartItemDataShort,
   ICartResultData,

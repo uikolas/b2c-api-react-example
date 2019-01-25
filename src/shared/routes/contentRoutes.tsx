@@ -59,7 +59,7 @@ export const pathNotFoundPage = `${config.WEB_PATH}*`;
 
 export const getContentRoutes = function(isReadyToShow: boolean) {
   if (!isReadyToShow) {
-    return <AppMain>{ null }</AppMain>;
+    return <AppMain />;
   }
   return (
     <Switch>
