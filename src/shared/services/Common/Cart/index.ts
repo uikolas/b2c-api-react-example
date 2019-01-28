@@ -17,6 +17,7 @@ import { ICartCreatePayload } from './types';
 import { IResponseError } from 'src/shared/services/apiAbstractions/types';
 import { IApiResponseData } from 'src/shared/services/types';
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
+import { NotificationsMessage } from 'src/shared/components/Common/Notifications/NotificationsMessage';
 
 export class CartService extends ApiServiceAbstract {
     public static async getCustomerCarts(dispatch: Function): Promise<string> {
@@ -284,6 +285,6 @@ export class CartService extends ApiServiceAbstract {
     private static errorMessageInform(response: IResponseError, dispatch: Function): void {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
-        toast.error('Request Error: ' + errorMessage);
+        toast.error(NotificationsMessage({message: `Request Error: ${errorMessage}`, icon: 'error'}));
     }
 }

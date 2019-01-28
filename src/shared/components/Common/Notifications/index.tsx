@@ -1,8 +1,14 @@
 import * as React from 'react';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { styles } from './styles';
 
-export const Notifications: React.SFC<any> = (props): JSX.Element => {
+interface INotifications extends WithStyles<typeof styles> {}
+
+export const NotificationsBase: React.SFC<INotifications> = (props): JSX.Element => {
+    const { classes } = props;
+
     return (
         <ToastContainer
             autoClose={ 500000 }
@@ -12,14 +18,13 @@ export const Notifications: React.SFC<any> = (props): JSX.Element => {
             pauseOnHover={ false }
             pauseOnFocusLoss={ false }
             closeButton={ false }
+            toastClassName={ classes.container }
+            bodyClassName={ classes.body }
+            className={ classes.wrapper }
             draggable={ false }
-            style={ {
-                width: '100%',
-                left: 0,
-                top: 0,
-                padding: 0,
-                margin: 0
-            } }
         />
     );
 };
+
+
+export const Notifications = withStyles(styles)(NotificationsBase);

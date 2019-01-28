@@ -264,6 +264,7 @@ export const messages: IMessages = {
         'email.label': 'E-Mail Adresse',
         'empry.cart.title': 'Einkaufswagen ist leer',
         'empty.address.message': 'Sie haben keine gespeicherten Adressen in Ihrem Konto.',
+        'empty.cart.title': 'Einkaufswagen ist leer',
         'empty.message': 'Leere Nachricht',
         'empty.page.title': 'Nichts zu zeigen.',
         'empty.required.fields.message': 'Nicht alle Felder sind ausgefüllt',
