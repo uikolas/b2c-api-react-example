@@ -1,7 +1,8 @@
 import { isPageLoginStateLoading, pagesLogin } from './pages/login/index';
 import { isPageSearchStateLoading, pageSearch } from './pages/search/index';
 import { isPageProductStateLoading, pageProduct } from './pages/product/index';
-import { isPageWishlistStateLoading, pageWishlist } from './pages/wishlist/index';
+import { pageWishlist } from './Pages/Wishlist/index';
+import { isPageWishlistStateLoading } from './Pages/Wishlist/selectors';
 import { pageAddresses } from './pages/addresses/index';
 import { isPageCustomerProfileLoading, pageCustomerProfile } from './pages/customerProfile';
 import { isPageCheckoutStateLoading, pageCheckout } from './pages/checkout/index';
