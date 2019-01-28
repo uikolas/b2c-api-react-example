@@ -12,7 +12,6 @@ import { connect } from './connect';
 import { CartDiscountsTitle, CartTitle, CartTotalTitle } from 'src/shared/translation';
 import { CheckoutTitle } from 'src/shared/translation';
 import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
-import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop/index';
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
@@ -27,12 +26,10 @@ export class CartDropComponent extends React.PureComponent<Props> {
   };
 
   public render() {
-    const {classes, cartItems, totals, isCartLoading} = this.props;
+    const {classes, cartItems, totals} = this.props;
 
     return (
       <div className={ classes.cartDrop }>
-        {isCartLoading ? <AppBackdrop isOpen /> : null}
-
         <Typography gutterBottom component="h3" className={classes.title}>
           {CartTitle}
         </Typography>

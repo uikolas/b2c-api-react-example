@@ -6,7 +6,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { merge } from 'src/shared/helpers/common';
 import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import CatalogSearch from '../CatalogSearch';
-import { Preloader } from '../Preloader';
 import { Logo } from './parts/logo';
 import { MainNav } from './parts/navMain';
 import { AddNav } from './parts/navAdditional';
@@ -137,7 +136,6 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                       pageHeight={this.state.pageHeight}
                     />
                   </div>
-                  { isLoading ? <Preloader extraClasses={ classes.preloader }/> : null }
                 </div>
               </div>
             </div>
