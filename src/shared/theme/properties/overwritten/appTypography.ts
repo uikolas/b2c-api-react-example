@@ -1,11 +1,11 @@
 export interface IAppTypography {
-  fontFamily: React.CSSProperties['fontFamily'];
+    fontFamily: React.CSSProperties['fontFamily'];
 }
 
 export const appTypographyStyles: IAppTypography = {
-  fontFamily: [
-    'Circular',
-    'Segoe UI',
-    'Roboto',
-  ].join(','),
+    fontFamily: [
+        'Circular',
+        'Segoe UI',
+        'Roboto',
+    ].join(','),
 };

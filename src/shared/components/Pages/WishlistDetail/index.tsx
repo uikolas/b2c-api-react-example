@@ -22,18 +22,7 @@ import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import {
-    NavLinkTitleWishlist,
-    ProductHeaderTitle,
-    OrderDetailTableHeaderPrice,
-    AvailabilityHeaderTitle,
-    AvailableTitle,
-    NotAvailableTitle,
-    AddToCartBtnTitle,
-    RemoveBtnTitle,
-    AddAllProductsToCartMessage,
-    WishlistEmptyMessage
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {
@@ -106,7 +95,9 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         return (
             <MenuList className={ classes.menu }>
                 <MenuItem className={ classes.menuItem }>
-                    <NavLink to={ pathWishListsPage } className={ classes.link }>{ NavLinkTitleWishlist }</NavLink>
+                    <NavLink to={ pathWishListsPage } className={ classes.link }>
+                        <FormattedMessage id={ 'word.wishlist.title' } />
+                    </NavLink>
                 </MenuItem>
                 { (wishlist && wishlist.name)
                     ? <MenuItem className={ classes.menuItem }>{ wishlist.name }</MenuItem>
@@ -127,11 +118,11 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         const headerCellPart = 'header-';
         const bodyCellPart = 'body-';
         const headerCells: Array<ICellInfo> = [
-            { content: ProductHeaderTitle, id: `${headerCellPart}1` },
-            { content: OrderDetailTableHeaderPrice, id: `${headerCellPart}2` },
-            { content: AvailabilityHeaderTitle, id: `${headerCellPart}3` },
+            { content: <FormattedMessage id={ 'word.product.title' } />, id: `${headerCellPart}1` },
+            { content: <FormattedMessage id={ 'word.price.title' } />, id: `${headerCellPart}2` },
+            { content: <FormattedMessage id={ 'word.availability.title' } />, id: `${headerCellPart}3` },
             { content: '', id: `${headerCellPart}4` },
-            { content: '', id: `${headerCellPart}5` }
+            { content: '', id: `${headerCellPart}5` },
         ];
 
         const bodyRows: Array<ITableRow> = products.map((item: IWishlistProduct) => {
@@ -176,8 +167,10 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                     {
                         content: (
                             <span className={ item.availability ? classes.available : classes.noAvailable }>
-                { item.availability ? AvailableTitle : NotAvailableTitle }
-              </span>
+                                <FormattedMessage
+                                    id={ `${item.availability ? 'available.title' : 'unavailable.title'}` }
+                                />
+                            </span>
                         ),
                         id: `${bodyCellPart}3`
                     },
@@ -185,7 +178,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                         content: (
                             <Typography component="span" className={ tableAction }
                                         onClick={ this.moveToCart(item.sku) }>
-                                { AddToCartBtnTitle }
+                                <FormattedMessage id={ 'add.to.cart.button.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}4`
@@ -194,12 +187,12 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                         content: (
                             <Typography component="span" className={ tableAction }
                                         onClick={ this.handleDeleteItem(item.sku) }>
-                                { RemoveBtnTitle }
+                                <FormattedMessage id={ 'remove.button.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}5`
-                    }
-                ]
+                    },
+                ],
             };
         });
 
@@ -208,7 +201,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 <Grid item xs={ 12 }>
                     <AppPageTitle
                         classes={ { root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader } }
-                        title={ NavLinkTitleWishlist }
+                        title={ <FormattedMessage id={ 'word.wishlist.title' } /> }
                     />
                 </Grid>
 
@@ -226,14 +219,16 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                                     onClick={ this.moveAllProductsToCart }
                                     disabled={ isLoading || cartLoading }
                                 >
-                                    { AddAllProductsToCartMessage }
+                                    <FormattedMessage id={ 'add.all.products.to.cart.title' } />
                                 </Button>
                             </Paper>
                         ) : (
                             <Paper elevation={ 0 }>
                                 <Divider />
                                 <Typography paragraph
-                                            className={ classes.noItems }>{ WishlistEmptyMessage }</Typography>
+                                            className={ classes.noItems }>
+                                    <FormattedMessage id={ 'wishlist.empty.message' } />
+                                </Typography>
                             </Paper>
                         )
                     }

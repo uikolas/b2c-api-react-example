@@ -1,5 +1,5 @@
 import {ICurrencyItem} from "src/shared/interfaces/currency/index";
-import {ILocaleItem} from "src/shared/interfaces/locale/index";
+import {ILocaleItem} from "src/shared/interfaces/locale";
 import {ICountry} from "src/shared/interfaces/country/index";
 
 export interface IStoreRawResponse {

@@ -1,77 +1,63 @@
 import { link } from './parts/Links/types';
 import {
-  pathCategoryComputers,
-  pathCategoryNew,
-  pathCategoryNotebooks,
-  pathCategorySale,
-  pathCategoryTablets,
-  pathCategoryWorkstations
+    pathCategoryComputers,
+    pathCategoryNew,
+    pathCategoryNotebooks,
+    pathCategorySale,
+    pathCategoryTablets,
+    pathCategoryWorkstations
 } from 'src/shared/routes/categoriesRoutes';
-import {
-  CategoryNameComputers,
-  CategoryNameNew,
-  CategoryNameNotebooks,
-  CategoryNameSale,
-  CategoryNameTablets,
-  CategoryNameWorkstations,
-  SocialInstagramTitle,
-  SocialFacebookTitle,
-  SocialXingTitle,
-  SocialLinkedInTitle,
-  SocialTwitterTitle,
-  SocialYouTubeTitle
-} from 'src/shared/translation';
 
 export const categoriesLinks: link[] = [
-  {
-    name: CategoryNameComputers,
-    path: pathCategoryComputers,
-  },
-  {
-    name: CategoryNameNotebooks,
-    path: pathCategoryNotebooks,
-  },
-  {
-    name: CategoryNameWorkstations,
-    path: pathCategoryWorkstations,
-  },
-  {
-    name: CategoryNameTablets,
-    path: pathCategoryTablets,
-  },
-  {
-    name: CategoryNameSale,
-    path: pathCategorySale,
-  },
-  {
-    name: CategoryNameNew,
-    path: pathCategoryNew,
-  },
+    {
+        name: 'category.name.computers',
+        path: pathCategoryComputers,
+    },
+    {
+        name: 'category.name.notebooks',
+        path: pathCategoryNotebooks,
+    },
+    {
+        name: 'category.name.workstations',
+        path: pathCategoryWorkstations,
+    },
+    {
+        name: 'category.name.tablets',
+        path: pathCategoryTablets,
+    },
+    {
+        name: 'category.name.sale',
+        path: pathCategorySale,
+    },
+    {
+        name: 'category.name.new',
+        path: pathCategoryNew,
+    },
 ];
 
 export const socialMediaLinks: link[] = [
-  {
-    name: SocialInstagramTitle,
-    path: 'https://www.instagram.com/spryker/',
-  },
-  {
-    name: SocialYouTubeTitle,
-    path: 'https://www.youtube.com/channel/UC6lVOEbqXxUh0W5FMTvlPDQ',
-  },
-  {
-    name: SocialFacebookTitle,
-    path: 'https://www.facebook.com/Spryker/',
-  },
-  {
-    name: SocialTwitterTitle,
-    path: 'https://twitter.com/sprysys',
-  },
-  {
-    name: SocialLinkedInTitle,
-    path: 'https://www.linkedin.com/company/spryker-systems-gmbh',
-  },
-  {
-    name: SocialXingTitle,
-    path: 'https://www.xing.com/companies/sprykersystemsgmbh',
-  },
+    {
+        name: 'social.instagram.title',
+        path: 'https://www.instagram.com/spryker/',
+    },
+    {
+        name: 'social.youTube.title',
+        path: 'https://www.youtube.com/channel/UC6lVOEbqXxUh0W5FMTvlPDQ',
+    },
+    {
+        name: 'social.facebook.title',
+        path: 'https://www.facebook.com/Spryker/',
+    },
+    {
+        name: 'social.twitter.title',
+        path: 'https://twitter.com/sprysys',
+    },
+    {
+        name: 'social.linkedin.title',
+        path: 'https://www.linkedin.com/company/spryker-systems-gmbh',
+    },
+    {
+        name: 'social.xing.title',
+        path: 'https://www.xing.com/companies/sprykersystemsgmbh',
+    },
 ];

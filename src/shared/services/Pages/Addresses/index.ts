@@ -1,23 +1,16 @@
-// tslint:disable:max-file-line-count
-
 import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { RefreshTokenService } from '../../Common/RefreshToken';
-import api, { setAuthToken } from '../../api';
-import {
-    AddressAdd,
-    AddressDelete,
-    AddressUpdate
-} from 'src/shared/translation';
-import { ApiServiceAbstract } from '../../apiAbstractions/ApiServiceAbstract';
-import { IApiResponseData } from 'src/shared/services/types';
+import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
+import api, { setAuthToken } from 'src/shared/services/api';
+import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
+import { IApiResponseData } from "src/shared/services/types";
 import {
     IAddressDataRawResponse,
     IRequestAddAddressBody,
     IRequestUpdateAddressBody
-} from 'src/shared/services/Pages/Addresses/types';
+} from "src/shared/services/Pages/Addresses/types";
 import { parseOneAddressRawResponse } from 'src/shared/helpers/address/response';
-
+import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class AddressesService extends ApiServiceAbstract {
     public static async getCustomerAddresses(ACTION_TYPE: string, dispatch: Function, customerId: string): Promise<void> {
@@ -87,9 +80,7 @@ export class AddressesService extends ApiServiceAbstract {
             });
             toast.error('Unexpected Error: ' + error.message);
         }
-    }
-
-    public static async addAddress(ACTION_TYPE: string,
+    }public static async addAddress(ACTION_TYPE: string,
                                    dispatch: Function,
                                    payload: IAddressItem,
                                    customerId: string): Promise<void> {
@@ -106,13 +97,14 @@ export class AddressesService extends ApiServiceAbstract {
 
             const endpoint = `customers/${customerId}/addresses`;
             const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
+
             if (response.ok) {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                     address: { id: response.data.data.id, ...response.data.data.attributes }
 
                 });
-                toast.success(AddressAdd);
+                toast.success(FormattedMessageTemplate('new.address.added.message'));
 
                 // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
                 await AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
@@ -147,7 +139,7 @@ export class AddressesService extends ApiServiceAbstract {
             );
 
             if (response.ok) {
-                toast.success(AddressDelete);
+                toast.success(FormattedMessageTemplate('address.removed.message'));
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                     addressId
@@ -199,7 +191,7 @@ export class AddressesService extends ApiServiceAbstract {
                         data: response.data.data.attributes
                     }
                 });
-                toast.success(AddressUpdate);
+                toast.success(FormattedMessageTemplate('address.updated.message'));
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({

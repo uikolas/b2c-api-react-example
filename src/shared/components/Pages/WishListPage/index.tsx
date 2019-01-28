@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -19,13 +19,6 @@ import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
 import { IWishlist, TWishListId } from 'src/shared/interfaces/wishlist/index';
-import {
-    ButtonAddNewListTitle,
-    ButtonDeleteTitle,
-    ButtonEditTitle,
-    ButtonAddTitle,
-    CreateListMessage
-} from 'src/shared/translation';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
@@ -76,6 +69,7 @@ export class WishListBase extends React.Component<Props, State> {
 
     public render() {
         const { classes, wishlists, isLoading } = this.props;
+        const { name } = this.state;
         const tableAction = isLoading ? classes.tableActionDisabled : classes.tableAction;
 
         if (!wishlists.length && isLoading) {
@@ -111,9 +105,11 @@ export class WishListBase extends React.Component<Props, State> {
                                             <SaveIcon />
                                         </IconButton>
                                     </form>
-                                )
-                                : (
-                                    <NavLink className={ classes.link } to={ `${pathWishListPageBase}/${item.id}` }>
+                                ) : (
+                                    <NavLink
+                                        className={ classes.link }
+                                        to={ `${pathWishListPageBase}/wishlist/${item.name}` }
+                                    >
                                         { item.name }
                                     </NavLink>
                                 )
@@ -133,7 +129,7 @@ export class WishListBase extends React.Component<Props, State> {
                                 className={ tableAction }
                                 onClick={ this.setUpdatedWishlist(item.id, item.name) }
                             >
-                                { ButtonEditTitle }
+                                <FormattedMessage id={ 'word.edit.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}4`
@@ -142,7 +138,7 @@ export class WishListBase extends React.Component<Props, State> {
                         content: (
                             <Typography component="span" className={ tableAction }
                                         onClick={ this.handleDeleteWishlist(item.id) }>
-                                { ButtonDeleteTitle }
+                                <FormattedMessage id={ 'word.delete.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}5`
@@ -156,36 +152,45 @@ export class WishListBase extends React.Component<Props, State> {
                 <Grid item xs={ 12 }>
                     <AppPageTitle
                         classes={ { root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader } }
-                        title="Wishlist"
+                        title={ <FormattedMessage id={ 'word.wishlist.title' } /> }
                     />
                 </Grid>
 
                 <Grid item xs={ 12 }>
                     <form noValidate autoComplete="off" onSubmit={ this.addWishlist } className={ classes.form }>
-                        <Typography paragraph className={ classes.titleForm }>{ ButtonAddNewListTitle }</Typography>
+                        <Typography paragraph className={ classes.titleForm }>
+                            <FormattedMessage id={ 'add.new.wishlist.title' } />
+                        </Typography>
                         <Paper elevation={ 0 } className={ classes.formItem }>
                             <TextField
                                 className={ classes.textFieldForm }
-                                placeholder="Wishlist Name"
-                                value={ this.state.name }
+                                value={ name }
+                                helperText={ <FormattedMessage id={ 'wishlist.name.title' } /> }
+                                FormHelperTextProps={ {
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: name.length > 0 ? classes.filled : null
+                                    }
+                                } }
                                 variant={ 'outlined' }
                                 onChange={ this.handleChangeName }
                                 inputProps={ { className: classes.input } }
                             />
                             <Button type="submit" variant="contained" color="primary"
-                                    className={ classes.formSubmit }>{ ButtonAddTitle }</Button>
+                                    className={ classes.formSubmit }>
+                                <FormattedMessage id={ 'add.new.wishlist.title' } />
+                            </Button>
                         </Paper>
                     </form>
 
                     { bodyRows.length
                         ? (
                             <AppTable headerCells={ headerCells } bodyRows={ bodyRows } />
-                        )
-                        : (
+                        ) : (
                             <Paper elevation={ 0 }>
                                 <Divider />
                                 <Typography paragraph className={ classes.noItems }>
-                                    { CreateListMessage }
+                                    <FormattedMessage id={ 'create.list.message' } />
                                 </Typography>
                             </Paper>
                         )

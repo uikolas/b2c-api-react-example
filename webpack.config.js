@@ -139,7 +139,7 @@ const tsLoader = {
         path.resolve(__dirname, 'src')
     ],
     use: [
-        {loader: 'ts-loader', options: {transpileOnly: false}},
+        {loader: 'ts-loader', options: {transpileOnly: true, experimentalWatchApi: true}},
         {loader: 'tslint-loader'}
     ]
 };

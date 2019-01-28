@@ -22,7 +22,7 @@ import {getOrderDetailsAction} from '@stores/actions/pages/order';
 import {addMultipleItemsToCartAction} from '@stores/actions/common/cart';
 import {getCartId} from "@stores/reducers/common/cart/selectors";
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {TAppTimeZone} from "src/shared/interfaces/locale/index";
+import {TAppTimeZone} from "src/shared/interfaces/locale";
 
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

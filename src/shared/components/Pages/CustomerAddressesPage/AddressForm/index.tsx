@@ -3,40 +3,32 @@ import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
-import { EmptyRequiredFieldsErrorMessage } from 'src/shared/translation';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-
 import { styles } from '../styles';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
-import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import {
-    ButtonSaveTitle,
-    ButtonEditTitle,
-    ButtonAddNewTitle,
-    AddressTitle
-} from 'src/shared/translation';
+import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
     public state: State = {
-        salutation: '',
-        firstName: '',
-        lastName: '',
-        company: '',
-        address1: '',
-        address2: '',
-        address3: '',
-        zipCode: '',
-        city: '',
-        country: '',
-        iso2Code: '',
-        phone: '',
-        isDefaultShipping: false,
+            salutation : '',
+            firstName : '',
+            lastName : '',
+            company : '',
+            address1 : '',
+            address2 : '',
+            address3 : '',
+            zipCode : '',
+            city:  '',
+            country : '',
+            iso2Code : '',
+            phone : '',
+            isDefaultShipping: false,
         isDefaultBilling: false,
         submitted: false
     };
@@ -46,7 +38,7 @@ export class AddressForm extends React.Component<Props, State> {
             this.setInitialData();
         } else if (!this.props.isAddressExist
             || (this.props.isAddressExist && this.props.addressIdParam !== this.props.currentAddress.id)
-        ) {
+            ) {
             this.initRequestData();
         }
     };
@@ -85,7 +77,7 @@ export class AddressForm extends React.Component<Props, State> {
         this.setState(() => ({ submitted: true }));
 
         if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
             return;
         }
 
@@ -137,13 +129,15 @@ export class AddressForm extends React.Component<Props, State> {
 
     public render(): JSX.Element {
         const { classes, currentAddress, countries, routerGoBack, isLoading } = this.props;
-        const pageTitle = `${currentAddress ? ButtonAddNewTitle : ButtonEditTitle} AddressTitle`;
+        const pageTitle = currentAddress ? 'edit.address.title' : 'add.new.address.title';
         const currentState = { ...this.state };
 
         return (
             <Grid container>
                 <Grid item xs={ 12 }>
-                    <CustomerPageTitle title={ pageTitle } />
+                    <CustomerPageTitle
+                        title={<FormattedMessage id={ pageTitle } />}
+                    />
                 </Grid>
 
                 <Grid item xs={ 9 }>
@@ -158,7 +152,7 @@ export class AddressForm extends React.Component<Props, State> {
                             <Grid container>
                                 <Grid item xs={ 12 } sm={ 4 }>
                                     <SprykerButton
-                                        title={ ButtonSaveTitle }
+                                        title={ <FormattedMessage id={ 'word.save.title' } /> }
                                         btnType="submit"
                                         extraClasses={classes.addButton}
                                         disabled={ isLoading }

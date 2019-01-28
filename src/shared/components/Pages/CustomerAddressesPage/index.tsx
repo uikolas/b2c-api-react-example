@@ -12,14 +12,7 @@ import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
-import {
-    PanelBillingAddressTitle,
-    OrderDetailShippingAddressTitle,
-    EmptyAddressMessage,
-    ButtonAddAddressTitle,
-    ManageAddressTitle
-} from 'src/shared/translation';
-
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CustomerAddressBase extends React.Component<Props, State> {
@@ -27,7 +20,8 @@ export class CustomerAddressBase extends React.Component<Props, State> {
 
     public componentDidMount() {
         this.props.setCurrentAddressAction(null);
-        this.initRequestData();
+
+         this.initRequestData();
     }
 
     public handleAddAddress = () => {
@@ -64,7 +58,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                         {
                             item.isDefaultShipping
                                 ? <Chip
-                                    label={ OrderDetailShippingAddressTitle }
+                                    label={ <FormattedMessage id={ 'shipping.address.title' } /> }
                                     variant="outlined"
                                     className={ classes.chips }
                                 />
@@ -73,7 +67,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                         {
                             item.isDefaultBilling
                                 ? <Chip
-                                    label={ PanelBillingAddressTitle }
+                                    label={ <FormattedMessage id={ 'billing.address.title' } /> }
                                     variant="outlined"
                                     className={ classes.chips }
                                 />
@@ -104,9 +98,11 @@ export class CustomerAddressBase extends React.Component<Props, State> {
         return (
             <Grid container>
                 <Grid item xs={ 12 }>
-                    <CustomerPageTitle title={ ManageAddressTitle } />
+                    <CustomerPageTitle title={ <FormattedMessage id={ 'manage.addresses' } /> } />
 
-                    { addresses.length ? null : <div className={ classes.emptyMsg }>{ EmptyAddressMessage }</div> }
+                    { addresses.length ? null : <div className={ classes.emptyMsg }>
+                        <FormattedMessage id={ 'empty.address.message' } />
+                    </div> }
                 </Grid>
 
                 <Grid item xs={ 12 }>
@@ -115,7 +111,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
 
                 <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
                     <SprykerButton
-                        title={ ButtonAddAddressTitle }
+                        title={ <FormattedMessage id={ 'add.address.title' } /> }
                         onClick={ this.handleAddAddress }
                         disabled={ isLoading }
                     />

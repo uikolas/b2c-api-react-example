@@ -10,7 +10,7 @@ import { cart } from './common/cart';
 import { init, isAppLoading } from './common/init/index';
 import { isOrderHistoryLoading, orderHistory } from './pages/orderHistory/index';
 import { isOrderDetailsLoading, orderDetails } from './pages/orderDetails/index';
-import {isCartStateLoading} from "@stores/reducers/Common/Cart/selectors";
+import {isCartStateLoading} from "@stores/reducers/common/Cart/selectors";
 import {IReduxStore, IReduxOwnProps} from "@stores/reducers/types";
 import {isPageAddressesStateLoading} from "@stores/reducers/Pages/Addresses/selectors";
 
