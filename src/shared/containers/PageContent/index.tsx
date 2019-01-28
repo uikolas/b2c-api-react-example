@@ -17,8 +17,7 @@ import { getLocaleData } from 'src/shared/helpers/locale';
 import {
     initApplicationDataAction,
     setAuthFromStorageAction,
-    IInitApplicationDataPayload,
-    getCategoriesAction
+    IInitApplicationDataPayload
 } from '@stores/actions/common/init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
