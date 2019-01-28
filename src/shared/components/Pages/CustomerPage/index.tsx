@@ -16,7 +16,7 @@ import {
   pathCustomerProfilePage,
   pathOrderDetailsPage,
   pathOrderHistoryPage,
-  pathWishListPage,
+  pathWishlistDetailPage,
   pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
 
@@ -90,7 +90,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                   <Route path={ pathCustomerAddressesPage } exact component={ LoadableCustomerAddressPage }/>
                   <Route path={ pathAddressFormPage } component={ AddressFormPage }/>
                   <Route path={ pathWishListsPage } component={ LoadableWishListPage }/>
-                  <Route path={ pathWishListPage } component={ LoadableWishlistDetail }/>
+                  <Route path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
                   <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage }/>
                   <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
                   <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage }/>

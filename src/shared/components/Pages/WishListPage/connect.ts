@@ -4,7 +4,6 @@ import { WishlistState } from '@stores/reducers/pages/wishlist/types';
 import {
   addWishlistAction,
   deleteWishlistAction,
-  getDetailWishlistAction,
   getWishlistsAction,
   updateWishlistAction,
 } from '@stores/actions/pages/wishlist';
@@ -15,7 +14,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
 
   return ({
     wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : null,
-    isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitial : false,
+    isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitialList : false,
     isLoading: wishlistProps ? wishlistProps.pending : false,
   });
 };
@@ -25,7 +24,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     {
       addWishlistAction,
       deleteWishlistAction,
-      getDetailWishlistAction,
       getWishlistsAction,
       updateWishlistAction,
     },
