@@ -14,10 +14,10 @@ export const AppFooterComponent: React.SFC<Props> = ({classes}) => (
         <Logo/>
       </div>
       <div className={ classes.footerCol }>
-        <Links title="Categories" links={ categoriesLinks }/>
+        <Links title='categories.panel.title' links={ categoriesLinks }/>
       </div>
       <div className={ classes.footerCol }>
-        <Links title="Social Media" links={ socialMediaLinks } external/>
+        <Links title='social.media.title' links={ socialMediaLinks } external/>
       </div>
       <div className={ `${classes.footerCol} ${classes.partners}` }>
         <Logos/>

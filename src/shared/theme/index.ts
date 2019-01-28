@@ -7,30 +7,30 @@ import { IAppColors } from './properties/new/appColors';
 import { IAppModules } from 'src/shared/theme/properties/new/appModules';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
-  interface Theme {
-    appContainerStyles: IAppContainerStyles;
-    appFixedDimensions: IAppFixedDimensions;
-    appColors: IAppColors;
-    appModules: IAppModules;
-  }
+    interface Theme {
+        appContainerStyles: IAppContainerStyles;
+        appFixedDimensions: IAppFixedDimensions;
+        appColors: IAppColors;
+        appModules: IAppModules;
+    }
 
-  // allow configuration using `createMuiTheme`
-  interface ThemeOptions {
-    appContainerStyles?: IAppContainerStyles;
-    appFixedDimensions?: IAppFixedDimensions;
-    appColors?: IAppColors;
-    appModules?: IAppModules;
-  }
+    // allow configuration using `createMuiTheme`
+    interface ThemeOptions {
+        appContainerStyles?: IAppContainerStyles;
+        appFixedDimensions?: IAppFixedDimensions;
+        appColors?: IAppColors;
+        appModules?: IAppModules;
+    }
 
-  interface TypographyOptions {
-    typography?: IAppTypography;
-  }
+    interface TypographyOptions {
+        typography?: IAppTypography;
+    }
 }
 
 export function createSprykerTheme(options: ThemeOptions) {
-  return createMuiTheme({
-    ...options,
-  });
+    return createMuiTheme({
+        ...options,
+    });
 }
 
 // Use it to get base properties (spacing etc) in the custom global solutions

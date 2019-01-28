@@ -1,5 +1,5 @@
 import { PRICE_MODE_DEFAULT } from '../../configs/environment';
-import {ILocaleItem} from "src/shared/interfaces/locale/index";
+import {ILocaleItem} from "src/shared/interfaces/locale";
 import {IStoreRawResponse} from "src/shared/helpers/init/types";
 import {IInitData} from "src/shared/interfaces/init/index";
 

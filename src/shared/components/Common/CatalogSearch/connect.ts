@@ -7,7 +7,7 @@ import {getAppCurrency, getCategoriesTree} from '@stores/reducers/common/init';
 import { clearSuggestions, sendSearchAction, sendSuggestionAction } from '@stores/actions/pages/search';
 import { getProductDataAction } from '@stores/actions/pages/product';
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {ICategory} from "src/shared/interfaces/category/index";
+import {ICategory} from "src/shared/interfaces/category";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

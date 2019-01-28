@@ -1,16 +1,17 @@
-import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE } from '@stores/actionTypes/Common/Init';
+import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/Common/Init';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICartCreatePayload } from '../../../../services/Common/Cart/types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {IApiErrorResponse} from "src/shared/services/types";
-import {TAppTimeZone} from "src/shared/interfaces/locale/index";
+import {TAppTimeZone} from "src/shared/interfaces/locale";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 import {TAppPriceMode} from "src/shared/interfaces/product/index";
 import {TAppStore} from "src/shared/interfaces/store/index";
-import {ICategory} from "src/shared/interfaces/category/index";
+import {ICategory} from "src/shared/interfaces/category";
 import {ICountry} from "src/shared/interfaces/country/index";
 import {IInitData} from "src/shared/interfaces/init/index";
 import {IInitState, IInitAction} from "src/shared/stores/reducers/common/init/types";
+import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
 
 
 export const initialState: IInitState = {
@@ -32,12 +33,15 @@ export const init = function(state: IInitState = initialState,
     switch (action.type) {
         case `${INIT_APP_ACTION_TYPE}_PENDING`:
         case `${CATEGORIES_TREE_REQUEST}_PENDING`:
+        case `${SWITCH_LOCALE}_PENDING`:
             return handleInitAppPending(state);
         case `${INIT_APP_ACTION_TYPE}_FULFILLED`:
             return handleInitAppFulfilled(state, action.payloadInitFulfilled);
         case `${INIT_APP_ACTION_TYPE}_REJECTED`:
         case `${CATEGORIES_TREE_REQUEST}_REJECTED`:
+        case `${SWITCH_LOCALE}_REJECTED`:
             return handleInitAppRejected(state, action.payloadRejected || {error: action.error});
+
         case `${CATEGORIES_TREE_REQUEST}_FULFILLED`:
             return {
                 ...state,
@@ -45,6 +49,15 @@ export const init = function(state: IInitState = initialState,
                     ...state.data,
                     ok: true,
                     categoriesTree: action.payloadCategoriesTreeFulfilled.categories,
+                },
+                ...getReducerPartFulfilled(),
+            };
+        case `${SWITCH_LOCALE}_FULFILLED`:
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    locale: action.payloadLocaleFulfilled.locale,
                 },
                 ...getReducerPartFulfilled(),
             };
@@ -111,7 +124,7 @@ export function getAppCurrency(state: IReduxStore, props: IReduxOwnProps): TAppC
 }
 
 export function getAppLocale(state: IReduxStore, props: IReduxOwnProps): TAppStore {
-    return isAppInitiated(state, props) ? state.init.data.locale : null;
+    return isAppInitiated(state, props) ? state.init.data.locale : APP_LOCALE_DEFAULT;
 }
 
 export function getAppTimeZone(state: IReduxStore, props: IReduxOwnProps): TAppTimeZone {

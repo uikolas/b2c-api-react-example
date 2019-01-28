@@ -4,7 +4,7 @@ import {ISearchPageData, ISearchQuery} from 'src/shared/interfaces/searchPageDat
 import { Location } from 'history';
 import { RouteProps } from 'react-router';
 import {WithRouter} from "src/shared/interfaces/common/react";
-import {ICategory} from "src/shared/interfaces/category/index";
+import {ICategory} from "src/shared/interfaces/category";
 
 export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPageData, RouteProps, WithRouter {
   isLoading: boolean;

@@ -21,6 +21,7 @@ import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/l
 import config from '../configs/server';
 import {AppMain} from "src/shared/components/Common/AppMain/index";
 import {LoadableOrderDetailsPage} from "src/shared/components/Pages/OrderDetailsPage/loadable";
+import {AddressFormPage} from "src/shared/components/Pages/CustomerAddressesPage/AddressForm/index";
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
@@ -51,7 +52,9 @@ export const pathResetPassword = `${config.WEB_PATH}password/reset`;
 export const pathCustomerProfilePage = `${pathCustomerPage}/profile`;
 
 export const pathCustomerAddressesPage = `${pathCustomerPage}/addresses`;
-export const pathAddressFormPage = `${pathCustomerAddressesPage}/:action`;
+export const pathAddressFormUpdateBase = `${pathCustomerAddressesPage}/update`;
+export const pathAddressFormUpdate = `${pathAddressFormUpdateBase}/:addressId`;
+export const pathAddressFormNew = `${pathCustomerAddressesPage}/new`;
 
 export const pathCheckoutPage = `${config.WEB_PATH}checkout`;
 
@@ -79,6 +82,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
       { /* TODO: Change to ProtectedRoute */ }
       <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
       <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
+      <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
 
       <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
     </Switch>
