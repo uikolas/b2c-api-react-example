@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { NavLink } from 'react-router-dom';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { ILoginState } from '@stores/reducers/pages/login';
+import { ILoginState } from '@stores/reducers/pages/login/types';
 import { customerRegisterAction, loginCustomerAction } from '@stores/actions/pages/login';
 import {ICustomerLoginData, ICustomerProfile, TCustomerReference} from 'src/shared/interfaces/customer';
 import { getCustomerCartsAction } from '@stores/actions/common/cart';

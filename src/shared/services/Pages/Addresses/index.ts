@@ -2,7 +2,7 @@
 
 import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { RefreshTokenService } from '../../Common/RefreshToken/index';
+import { RefreshTokenService } from '../../Common/RefreshToken';
 import api, { setAuthToken } from '../../api';
 import {
     AddressAdd,

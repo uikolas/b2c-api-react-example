@@ -14,7 +14,12 @@ import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
 import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { ButtonSaveTitle } from 'src/shared/translation';
+import {
+    ButtonSaveTitle,
+    ButtonEditTitle,
+    ButtonAddNewTitle,
+    AddressTitle
+} from 'src/shared/translation';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
@@ -71,7 +76,6 @@ export class AddressForm extends React.Component<Props, State> {
 
     public handleCheckbox = (event: InputChangeEvent): void => {
         event.persist();
-        /*this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));*/
         this.setState((prevState: State) => ({ ...prevState, [ event.target.name ]: !prevState[ event.target.name ] }));
     };
 
@@ -133,9 +137,8 @@ export class AddressForm extends React.Component<Props, State> {
 
     public render(): JSX.Element {
         const { classes, currentAddress, countries, routerGoBack, isLoading } = this.props;
-        const pageTitle = `${currentAddress ? 'Edit' : 'Add New'} Address`;
+        const pageTitle = `${currentAddress ? ButtonAddNewTitle : ButtonEditTitle} AddressTitle`;
         const currentState = { ...this.state };
-        // delete currentState.submitted;
 
         return (
             <Grid container>

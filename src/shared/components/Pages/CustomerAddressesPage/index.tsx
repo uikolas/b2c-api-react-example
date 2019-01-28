@@ -16,7 +16,8 @@ import {
     PanelBillingAddressTitle,
     OrderDetailShippingAddressTitle,
     EmptyAddressMessage,
-    ButtonAddAddressTitle
+    ButtonAddAddressTitle,
+    ManageAddressTitle
 } from 'src/shared/translation';
 
 
@@ -28,10 +29,6 @@ export class CustomerAddressBase extends React.Component<Props, State> {
         this.props.setCurrentAddressAction(null);
         this.initRequestData();
     }
-
-    public componentDidUpdate = (prevProps: Props, prevState: State) => {
-        // this.initRequestData();
-    };
 
     public handleAddAddress = () => {
         this.props.routerPush(pathAddressFormNew);
@@ -107,7 +104,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
         return (
             <Grid container>
                 <Grid item xs={ 12 }>
-                    <CustomerPageTitle title="manage addresses" />
+                    <CustomerPageTitle title={ ManageAddressTitle } />
 
                     { addresses.length ? null : <div className={ classes.emptyMsg }>{ EmptyAddressMessage }</div> }
                 </Grid>
