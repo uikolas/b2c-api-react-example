@@ -12,13 +12,13 @@ import {
   switchLocalePendingState,
   switchLocaleFulfilledState,
   switchLocaleRejectedState
-} from '@stores/actions/common/Init';
+} from '@stores/actions/Common/init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from "src/shared/services/types";
-import { ICategory } from 'src/shared/interfaces/category/index';
+import { ICategory } from 'src/shared/interfaces/category';
 import { IInitData } from 'src/shared/interfaces/init/index';
-import { ILocaleActionPayload } from '@stores/reducers/Common/Init/types';
+import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
 
 export class InitAppService extends ApiServiceAbstract {
   public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {

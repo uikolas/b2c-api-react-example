@@ -2,12 +2,12 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 export type link = {
-  name: any;
-  path: any;
+  name: string;
+  path: string;
 };
 
 export interface LinksProps extends WithStyles<typeof styles> {
-  external?: any;
-  title: any;
+  external?: boolean;
+  title: string;
   links: link[];
 }

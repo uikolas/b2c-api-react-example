@@ -11,10 +11,9 @@ import { CartProps as Props, CartState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
-import { SprykerNotification } from 'src/shared/components/UI/SprykerNotification';
 import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper/index';
 import { FormattedMessage } from 'react-intl';
-
+import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 
 @(withRouter as Function)
 @connect
@@ -41,7 +40,7 @@ export class CartComponent extends React.PureComponent<Props, State> {
     private openPopover = ({ currentTarget }: ClickEvent) => {
         const { cartItemsQuantity } = this.props;
 
-        if (window.innerWidth < 500) {
+        if (window.innerWidth < BreakpointsSM) {
             if (cartItemsQuantity !== 0) {
                 this.props.history.push(pathCartPage);
             }

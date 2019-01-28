@@ -4,7 +4,7 @@ import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 
 import { merge } from 'src/shared/helpers/common';
-import { LanguageSwircher } from '../lang';
+import { LanguageSwitcher } from '../lang';
 import { User } from '../user';
 import { Cart } from '../cart';
 import { AddNavProps as Props } from './types';
@@ -38,7 +38,7 @@ export const AddNavComponent: React.SFC<Props> = (props) => {
           <Search/>
         </IconButton>
       </div>
-      <div className={ classes.addNavItem }><LanguageSwircher/></div>
+      <div className={ classes.addNavItem }><LanguageSwitcher/></div>
       <div className={classes.addNavItem}>
         <User
           popoverPosLeft={popoverUserPos.left}

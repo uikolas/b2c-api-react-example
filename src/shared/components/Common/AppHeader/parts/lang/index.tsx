@@ -8,7 +8,7 @@ import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
-import { TAppLocale } from 'src/shared/interfaces/locale/index';
+import { TAppLocale } from 'src/shared/interfaces/locale';
 import api from '@services/api';
 import { FormattedMessage } from 'react-intl';
 
@@ -86,6 +86,6 @@ export class LangComponent extends React.PureComponent<Props, State> {
     }
 }
 
-export const LanguageSwircher = withStyles(styles)(LangComponent);
+export const LanguageSwitcher = withStyles(styles)(LangComponent);
 
-export default LanguageSwircher;
+export default LanguageSwitcher;

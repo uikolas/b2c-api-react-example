@@ -13,7 +13,7 @@ import {ISearchQuery, TSpellingSuggestion} from 'src/shared/interfaces/searchPag
 import {getRouterMatchParam} from "src/shared/helpers/router/index";
 import {sendSearchAction} from "@stores/actions/pages/search";
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {ICategory} from "src/shared/interfaces/category/index";
+import {ICategory} from "src/shared/interfaces/category";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 import {ISearchState} from "src/shared/stores/reducers/pages/search/types";
 

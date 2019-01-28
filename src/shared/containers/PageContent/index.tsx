@@ -20,13 +20,13 @@ import {
     initApplicationDataAction,
     setAuthFromStorageAction,
     IInitApplicationDataPayload
-} from '@stores/actions/Common/Init';
+} from '@stores/actions/Common/init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { clearSearchTermAction } from '@stores/actions/pages/search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
-import { TAppLocale } from 'src/shared/interfaces/locale/index';
+import { TAppLocale } from 'src/shared/interfaces/locale';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
 import { messages } from 'src/shared/translation/index';
 

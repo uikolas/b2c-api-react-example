@@ -13,6 +13,7 @@ import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton/index';
 import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
 import { FormattedMessage } from 'react-intl';
+import { LogoutSetTimeoutTime } from 'src/shared/constants/customer';
 
 @connect
 @(withRouter as Function)
@@ -24,7 +25,7 @@ export class UserDropComponent extends React.Component<Props> {
             this.props.logout();
         } else {
             this.props.history.push(pathCustomerPage);
-            setTimeout(this.props.logout, 250);
+            setTimeout(this.props.logout, LogoutSetTimeoutTime);
         }
     };
 

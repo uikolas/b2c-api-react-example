@@ -3,11 +3,11 @@ import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected 
 import { ICartCreatePayload } from '../../../../services/Common/Cart/types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {IApiErrorResponse} from "src/shared/services/types";
-import {TAppTimeZone} from "src/shared/interfaces/locale/index";
+import {TAppTimeZone} from "src/shared/interfaces/locale";
 import {TAppCurrency} from "src/shared/interfaces/currency/index";
 import {TAppPriceMode} from "src/shared/interfaces/product/index";
 import {TAppStore} from "src/shared/interfaces/store/index";
-import {ICategory} from "src/shared/interfaces/category/index";
+import {ICategory} from "src/shared/interfaces/category";
 import {ICountry} from "src/shared/interfaces/country/index";
 import {IInitData} from "src/shared/interfaces/init/index";
 import {IInitState, IInitAction} from "src/shared/stores/reducers/common/init/types";

@@ -1,8 +1,8 @@
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
-import { ILocaleActionPayload } from '@stores/reducers/Common/init/types';
-import { switchLocaleAction } from '@stores/actions/Common/Init';
-import { getAppLocale } from '@stores/reducers/Common/init';
+import { ILocaleActionPayload } from '@stores/reducers/common/init/types';
+import { switchLocaleAction } from '@stores/actions/Common/init';
+import { getAppLocale } from '@stores/reducers/common/init';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const appLocale = getAppLocale(state, ownProps);

@@ -1,4 +1,4 @@
-import {ICategory} from "src/shared/interfaces/category/index";
+import {ICategory} from "src/shared/interfaces/category";
 
 export const getCategoryNameById = (categoryId: string | number, categoriesTree: Array<ICategory>): string | null => {
   if (!categoryId) {

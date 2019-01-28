@@ -17,15 +17,15 @@ import { AppTable } from '../../Common/AppTable';
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
-import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
-import { IWishlist } from "src/shared/interfaces/wishlist/index";
+import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
+import { IWishlist } from 'src/shared/interfaces/wishlist/index';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
     public state: State = {
         name: '',
         updatedName: '',
-        updatedList: '',
+        updatedList: ''
     };
 
     public componentDidMount() {
@@ -89,7 +89,7 @@ export class WishListBase extends React.Component<Props, State> {
             { content: 'Items', id: `${headerCellPart}2` },
             { content: 'Created', id: `${headerCellPart}3` },
             { content: '', id: `${headerCellPart}4` },
-            { content: '', id: `${headerCellPart}5` },
+            { content: '', id: `${headerCellPart}5` }
         ];
 
         const bodyRows: Array<ITableRow> = wishlists.map((item: IWishlist) => (
@@ -148,8 +148,8 @@ export class WishListBase extends React.Component<Props, State> {
                             </Typography>
                         ),
                         id: `${bodyCellPart}5`
-                    },
-                ],
+                    }
+                ]
             }
         ));
 
@@ -172,12 +172,12 @@ export class WishListBase extends React.Component<Props, State> {
                                 className={ classes.textFieldForm }
                                 value={ name }
                                 helperText={ <FormattedMessage id={ 'wishlist.name.title' } /> }
-                                FormHelperTextProps={{
+                                FormHelperTextProps={ {
                                     classes: {
                                         root: classes.placeholder,
                                         filled: name.length > 0 ? classes.filled : null
                                     }
-                                }}
+                                } }
                                 variant={ 'outlined' }
                                 onChange={ this.handleChangeName }
                                 inputProps={ { className: classes.input } }

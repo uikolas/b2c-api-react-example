@@ -24,3 +24,5 @@ export const SalutationVariants: Array<TSalutationVariant> = [
         label: FormattedMessageTemplate('salutation.variant.dr')
     },
 ];
+
+export const LogoutSetTimeoutTime: number = 250;
