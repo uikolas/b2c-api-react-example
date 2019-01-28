@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { StickyContainer } from 'react-sticky';
-import { Slide, toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { addLocaleData, IntlProvider } from 'react-intl';
 
 import { withRouter } from 'react-router';
@@ -30,6 +28,8 @@ import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { TAppLocale } from 'src/shared/interfaces/locale/index';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
+import { Notifications } from 'src/shared/components/Common/Notifications';
+
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -125,16 +125,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
                             isMobileNavOpened={mobileNavOpened}
                         />
                         {getContentRoutes(this.isDataFulfilled())}
-                        <ToastContainer
-                            autoClose={3000}
-                            transition={Slide}
-                            position={toast.POSITION.BOTTOM_LEFT}
-                            pauseOnHover={true}
-                            style={{
-                                width: '90%',
-                                left: 0,
-                            }}
-                        />
+                        <Notifications />
                         <AppFooter/>
                     </StickyContainer>
                 </div>

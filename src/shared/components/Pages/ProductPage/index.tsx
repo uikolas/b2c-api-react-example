@@ -454,5 +454,5 @@ export class ProductPageBase extends React.Component<Props, State> {
   }
 }
 
-export const ProductPage = withStyles(styles)(ProductPageBase);
+const ProductPage = withStyles(styles)(ProductPageBase);
 export default ProductPage;

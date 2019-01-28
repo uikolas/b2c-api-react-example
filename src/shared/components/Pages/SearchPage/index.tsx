@@ -13,7 +13,6 @@ import {pathCategoryPageBase, pathProductPageBase} from 'src/shared/routes/conte
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { TRangeInputName } from 'src/shared/components/UI/SprykerRangeFilter/types';
 import { ActiveFiltersList } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList';
-import { validateRangeInputsError } from 'src/shared/constants/messages/errors';
 import { SortPanel } from 'src/shared/components/Pages/SearchPage/SortPanel';
 import { FoundItems } from 'src/shared/components/Pages/SearchPage/FoundItems';
 import { SprykerSelect } from 'src/shared/components/UI/SprykerSelect';
@@ -55,7 +54,8 @@ import {
   SearchResultDefaultTitle,
   SortModeTitle,
   RelevanceSortModeTitle,
-  ProductsPerPageTitle
+  ProductsPerPageTitle,
+  ValidateRangeInputsError
 } from 'src/shared/translation';
 
 @(withRouter as Function)
