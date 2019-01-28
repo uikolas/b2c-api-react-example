@@ -9,7 +9,7 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from '@stores/actions/pages/login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { getRouterMatchParam } from 'src/shared/helpers/router/index';
-import {TRouterMatchParam} from 'src/shared/helpers/router/index';
+import {TRouterMatchParam} from 'src/shared/helpers/router/types';
 import { formStyles } from '../styles';
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 import {ClickEvent, InputChangeEvent} from "src/shared/interfaces/common/react";

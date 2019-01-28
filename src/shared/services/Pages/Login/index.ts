@@ -12,6 +12,8 @@ import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/cust
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { CustomerLogin, RegisterSuccess } from 'src/shared/translation';
 import {IApiResponseData} from "src/shared/services/types";
+import { IResetPasswordPayload } from 'src/shared/interfaces/customer';
+
 
 export class PagesLoginService extends ApiServiceAbstract {
   public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
