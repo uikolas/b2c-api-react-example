@@ -11,14 +11,14 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
+import { pathWishListPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import { IWishlist } from 'src/shared/interfaces/wishlist/index';
+import { IWishlist, TWishListId } from 'src/shared/interfaces/wishlist/index';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
@@ -59,17 +59,12 @@ export class WishListBase extends React.Component<Props, State> {
         this.setState(() => ({ updatedList: '', updatedName: '' }));
     };
 
-    public handleDeleteWishlist = (wishlistId: string) => (e: ClickEvent) => {
+    public handleDeleteWishlist = (wishlistId: TWishListId) => (e: ClickEvent) => {
         this.props.deleteWishlistAction(wishlistId);
     };
 
     private setUpdatedWishlist = (id: string, name: string) => (e: ClickEvent) => {
         this.setState(() => ({ updatedList: id, updatedName: name }));
-    };
-
-    public setCurrentWishlist = (wishlistId: string) => (event: ClickEvent) => {
-        event.persist();
-        this.props.getDetailWishlistAction(wishlistId);
     };
 
     public render() {
@@ -113,8 +108,7 @@ export class WishListBase extends React.Component<Props, State> {
                                 ) : (
                                     <NavLink
                                         className={ classes.link }
-                                        to={ `${pathCustomerPage}/wishlist/${item.name}` }
-                                        onClick={ this.setCurrentWishlist(item.id) }
+                                        to={ `${pathWishListPageBase}/wishlist/${item.name}` }
                                     >
                                         { item.name }
                                     </NavLink>

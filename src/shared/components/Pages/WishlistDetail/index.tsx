@@ -21,14 +21,22 @@ import { WishlistItemBaseInfo } from './WishlistItemBaseInfo';
 import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
-import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
+import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
 import { FormattedMessage } from 'react-intl';
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {
     public state: State = {
         movedItem: '',
-        multiProducts: [],
+        multiProducts: []
+    };
+
+    public componentDidMount = () => {
+        if (!this.props.isWishlistExist
+            || (this.props.isWishlistExist && this.props.wishlistIdParam !== this.props.wishlist.id)
+        ) {
+            this.initRequestData();
+        }
     };
 
     public componentDidUpdate(prevProps: Props, prevState: State) {
@@ -42,11 +50,24 @@ export class WishlistDetailBase extends React.Component<Props, State> {
             this.props.deleteMultiItemsAction(wishlist.id, prevState.multiProducts);
             this.setState({ multiProducts: [] });
         }
+
+        if (!this.props.isRejected && !this.props.isWishlistExist) {
+            this.initRequestData();
+        }
     }
 
     public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
         event.persist();
         this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[ 0 ]}`);
+    };
+
+    private initRequestData = () => {
+        if (this.props.isLoading) { return; }
+        if (this.props.isAppDataSet && this.props.wishlistIdParam) {
+            this.props.getDetailWishlistAction(this.props.wishlistIdParam);
+            return true;
+        }
+        return false;
     };
 
     public handleDeleteItem = (sku: string) => (event: ClickEvent) => {

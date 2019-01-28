@@ -10,7 +10,6 @@ export interface WishlistPageProps extends WithStyles<typeof styles> {
 
   addWishlistAction(name: string): void;
   deleteWishlistAction(wishlistId: string): void;
-  getDetailWishlistAction(wishlistId: string): void;
   getWishlistsAction(): void;
   updateWishlistAction(wishlistId: string, name: string): void;
 }

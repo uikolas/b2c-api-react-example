@@ -9,14 +9,14 @@ import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import { ClickEvent, WithRouter } from 'src/shared/interfaces/common/react';
 import {
-    pathAddressFormPage,
-    pathCustomerAddressesPage,
-    pathCustomerPage,
-    pathCustomerProfilePage,
-    pathOrderDetailsPage,
-    pathOrderHistoryPage,
-    pathWishListPage,
-    pathWishListsPage
+  pathAddressFormPage,
+  pathCustomerAddressesPage,
+  pathCustomerPage,
+  pathCustomerProfilePage,
+  pathOrderDetailsPage,
+  pathOrderHistoryPage,
+  pathWishlistDetailPage,
+  pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
 import { AppMain } from '../../Common/AppMain';
 import { LoadableWishListPage } from '../WishListPage/loadable';
@@ -91,7 +91,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                                            component={ LoadableCustomerAddressPage } />
                                     <Route path={ pathAddressFormPage } component={ AddressFormPage } />
                                     <Route path={ pathWishListsPage } component={ LoadableWishListPage } />
-                                    <Route path={ pathWishListPage } component={ LoadableWishlistDetail } />
+                                    <Route path={ pathWishlistDetailPage } component={ LoadableWishlistDetail } />
                                     <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage } />
                                     <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage } />
                                     <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage } />
