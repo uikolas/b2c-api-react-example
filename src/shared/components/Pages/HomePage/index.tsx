@@ -7,7 +7,7 @@ import {connect} from './connect';
 import {categoriesTeasersData} from "./constants/categoriesTeasersData";
 import {CategoriesTeasers} from "./CategoriesTeasers";
 import {AppMain} from '../../Common/AppMain';
-import {Banner} from "src/shared/components/Pages/HomePage/Banner/index";
+import {Banner} from "./Banner/index";
 import {pathCategoryComputers} from "src/shared/routes/categoriesRoutes";
 import { FormattedMessage } from 'react-intl';
 

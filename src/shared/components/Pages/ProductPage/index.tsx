@@ -40,7 +40,6 @@ import {
 import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
 import { FormattedMessage } from 'react-intl';
 
-
 const quantitySelectedInitial = 1;
 
 @connect

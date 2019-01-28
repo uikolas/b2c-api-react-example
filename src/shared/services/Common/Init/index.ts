@@ -4,7 +4,6 @@ import {
   categoriesFulfilledState,
   categoriesPendingState,
   categoriesRejectedState,
-  getCategoriesAction,
   IInitApplicationDataPayload,
   initApplicationDataFulfilledStateAction,
   initApplicationDataPendingStateAction,
@@ -43,8 +42,6 @@ export class InitAppService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed: IInitData = parseStoreResponse(response.data);
         dispatch(initApplicationDataFulfilledStateAction({...responseParsed, anonymId}));
-
-        dispatch(getCategoriesAction());
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(initApplicationDataRejectedStateAction(errorMessage));
