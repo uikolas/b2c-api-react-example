@@ -25,10 +25,6 @@ export const styles = (theme: Theme) => createStyles({
                     ${theme.appFixedDimensions.headerPopover.triangle}px 
                     ${theme.appFixedDimensions.headerPopover.triangle}px`,
             position: 'absolute',
-            /* right: 57,
-			 [theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.tablet)]: {
-			   right: 23,
-			 },*/
             [theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.smallTablet)]: {
                 display: 'none',
             },
@@ -41,9 +37,6 @@ export const styles = (theme: Theme) => createStyles({
         '&:before': {
             borderColor: `transparent transparent ${theme.appColors.weakGrey} transparent`,
             top: -theme.appFixedDimensions.headerPopover.triangle,
-            /*[theme.breakpoints.down(theme.appFixedDimensions.customBreakpoints.tablet)]: {
-			  right: 23,
-			},*/
         },
     },
 });

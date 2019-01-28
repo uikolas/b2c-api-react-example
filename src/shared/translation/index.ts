@@ -1,4 +1,5 @@
 /* tslint:disable */
+export const LogoTitle = 'Spryker logo';
 export const AcceptTermsLabelTitle = 'Accept terms';
 export const AccountTitle = 'Your Account';
 export const ActiveFiltersTitle = 'Active Filters';

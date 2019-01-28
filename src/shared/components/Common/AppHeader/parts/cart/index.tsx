@@ -96,16 +96,6 @@ export class CartComponent extends React.PureComponent<Props, State> {
                 >
                     <CartDrop/>
                 </PopoverWrapper>
-
-                {/* <SprykerNotification
-				  message="Your product was added to your cart"
-				  extraClasses={ classes.cartNotification }
-				  isOpen={ isCartNotificationOpen }
-				  onClickClose={ this.handleCloseCartNotification }
-				  onClickOpen={ this.handleOpenCartNotification }
-				  vertical="top"
-				  horizontal="right"
-				/>*/}
             </div>
         );
     }
