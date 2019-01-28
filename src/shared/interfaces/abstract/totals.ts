@@ -7,11 +7,10 @@ export type TSubtotal = TAbstractTotal;
 export type TGrandTotal = TAbstractTotal;
 export type TCanceledTotal = TAbstractTotal;
 
-
 export interface IAbstractTotals {
-  expenseTotal: TExpenseTotal;
-  discountTotal: TDiscountTotal;
-  taxTotal: TTaxTotal;
-  subtotal: TSubtotal;
-  grandTotal: TGrandTotal;
+    expenseTotal: TExpenseTotal;
+    discountTotal: TDiscountTotal;
+    taxTotal: TTaxTotal;
+    subtotal: TSubtotal;
+    grandTotal: TGrandTotal;
 }

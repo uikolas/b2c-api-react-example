@@ -1,12 +1,12 @@
-import { TSalutationVariant } from '../../interfaces/customer';
+import { TSalutationVariant } from '@interfaces/customer';
 import {
     SalutationVariantMr,
     SalutationVariantMs,
     SalutationVariantMrs,
     SalutationVariantDr
-} from 'src/shared/translation/index';
+} from 'src/shared/translation';
 
-export const SalutationVariants: Array<TSalutationVariant> = [
+export const SalutationVariants: TSalutationVariant[] = [
     {
         value: SalutationVariantMr,
         label: `${SalutationVariantMr}.`,

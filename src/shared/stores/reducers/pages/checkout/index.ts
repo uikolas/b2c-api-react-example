@@ -3,14 +3,13 @@ import {
     CHECKOUT_DATA_INIT_REQUEST,
     SEND_CHECKOUT_DATA,
 } from '@stores/actionTypes/Pages/Checkout';
-import {IAddressItemCollection} from "src/shared/interfaces/addresses/index";
+import { IAddressItemCollection } from 'src/shared/interfaces/addresses/index';
 import {
     IPaymentMethod,
     IShipmentMethod,
 } from 'src/shared/interfaces/checkout/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {ICheckoutState, IPageCheckoutAction} from "src/shared/stores/reducers/pages/checkout/types";
-
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { ICheckoutState, IPageCheckoutAction } from 'src/shared/stores/reducers/pages/checkout/types';
 
 export const initialState: ICheckoutState = {
     data: {
@@ -81,7 +80,7 @@ export function isPageCheckoutFulfilled(state: IReduxStore, props: IReduxOwnProp
     return Boolean(isStateExist(state, props) && state.pageCheckout.fulfilled);
 }
 
-export function getShipmentMethodsFromStore(state: IReduxStore, props: IReduxOwnProps): Array<IShipmentMethod> | null {
+export function getShipmentMethodsFromStore(state: IReduxStore, props: IReduxOwnProps): IShipmentMethod[] | null {
     return isShipmentMethodsExist(state, props) ? state.pageCheckout.data.shipments : null;
 }
 
@@ -89,7 +88,7 @@ export function isShipmentMethodsExist(state: IReduxStore, props: IReduxOwnProps
     return Boolean(isStateExist(state, props) && state.pageCheckout.data.shipments);
 }
 
-export function getPaymentMethodsFromStore(state: IReduxStore, props: IReduxOwnProps): Array<IPaymentMethod> | null {
+export function getPaymentMethodsFromStore(state: IReduxStore, props: IReduxOwnProps): IPaymentMethod[] | null {
     return isPaymentMethodsExist(state, props) ? state.pageCheckout.data.payments : null;
 }
 
@@ -98,7 +97,7 @@ export function isPaymentMethodsExist(state: IReduxStore, props: IReduxOwnProps)
 }
 
 export function getAddressesCollectionFromCheckoutStore(state: IReduxStore, props: IReduxOwnProps):
-    Array<IAddressItemCollection> | null {
+    IAddressItemCollection[] | null {
 
     return checkAddressesCollectionExist(state, props) ? state.pageCheckout.data.addressesCollection : null;
 }

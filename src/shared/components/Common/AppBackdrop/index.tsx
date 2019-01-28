@@ -5,15 +5,15 @@ import Backdrop from '@material-ui/core/Backdrop';
 import { styles } from './styles';
 
 interface AppBackdropProps extends WithStyles<typeof styles> {
-  isOpen: boolean;
+    isOpen: boolean;
 }
 
-export const AppBackdropBase: React.SFC<AppBackdropProps> = (props) => {
-  const {classes, isOpen} = props;
+export const AppBackdropBase: React.SFC<AppBackdropProps> = props => {
+    const {classes, isOpen} = props;
 
-  return (
-    <Backdrop open={ isOpen } classes={ {root: classes.root} }/>
-  );
+    return (
+        <Backdrop open={isOpen} classes={{root: classes.root}}/>
+    );
 };
 
 export const AppBackdrop = withStyles(styles)(AppBackdropBase);

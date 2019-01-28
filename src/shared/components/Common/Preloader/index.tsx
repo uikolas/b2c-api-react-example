@@ -5,18 +5,19 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { styles } from './styles';
 
 interface PreloaderProps extends WithStyles<typeof styles> {
-  extraClasses?: string;
+    extraClasses?: string;
 }
 
-export const PreloaderBase: React.SFC<PreloaderProps> = (props) => {
-  const {classes, extraClasses} = props;
-  return (
-    <div className={ `${classes.root} ${extraClasses}` }>
-      <LinearProgress color="primary"/>
-      <br/>
-      <LinearProgress color="primary" variant="query"/>
-    </div>
-  );
+export const PreloaderBase: React.SFC<PreloaderProps> = props => {
+    const {classes, extraClasses} = props;
+
+    return (
+        <div className={`${classes.root} ${extraClasses}`}>
+            <LinearProgress color="primary"/>
+            <br/>
+            <LinearProgress color="primary" variant="query"/>
+        </div>
+    );
 };
 
 export const Preloader = withStyles(styles)(PreloaderBase);

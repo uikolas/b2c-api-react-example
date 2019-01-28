@@ -11,29 +11,30 @@ import {
     FoundTitle
 } from 'src/shared/translation';
 
-export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
-  const {
-    classes,
-    numberFound,
-  } = props;
+export const FoundItemsBase: React.SFC<IFoundItemsProps> = props => {
+    const {
+        classes,
+        numberFound,
+    } = props;
 
-  return (
-    <Grid container
-          justify="flex-start"
-          alignItems="center"
-          className={ classes.root }
-    >
-      <Grid item xs={ 12 }>
-        <Typography color="inherit" component="p" className={ classes.paragraph }>
-          { numberFound
-            ? `${numberFound} ${(numberFound === 1) ? CartItemTitle : OrderDetailTableHeaderItems} ${FoundTitle}`
-            : NoFoundMessage
-          }
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-
+    return (
+        <Grid
+            container
+            justify="flex-start"
+            alignItems="center"
+            className={classes.root}
+        >
+            <Grid item xs={12}>
+                <Typography color="inherit" component="p" className={classes.paragraph}>
+                    {numberFound
+                        ? `${numberFound} ${(numberFound === 1)
+                            ? CartItemTitle : OrderDetailTableHeaderItems} ${FoundTitle}`
+                        : NoFoundMessage
+                    }
+                </Typography>
+            </Grid>
+        </Grid>
+    );
 };
 
 export const FoundItems = withStyles(styles)(FoundItemsBase);

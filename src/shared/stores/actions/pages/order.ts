@@ -1,31 +1,31 @@
 import { ORDER_DETAILS_REQUEST, ORDERS_COLLECTION_REQUEST } from '@stores/actionTypes/pages/order';
 import { OrderService } from '@services/Pages/Order';
 import { IOrderCollectionParsed, IOrderDetailsParsed, TOrderId } from '@interfaces/order';
-import {IPageOrderHistoryAction} from "@stores/reducers/Pages/OrderHistory/types";
-import {IPageOrderDetailsAction} from "@stores/reducers/Pages/OrderDetails/types";
+import { IPageOrderHistoryAction } from '@stores/reducers/Pages/OrderHistory/types';
+import { IPageOrderDetailsAction } from '@stores/reducers/Pages/OrderDetails/types';
 
 /**
  *  Order History
  */
 
 export const ordersCollectionPendingStateAction = () => ({
-  type: ORDERS_COLLECTION_REQUEST + '_PENDING',
+    type: ORDERS_COLLECTION_REQUEST + '_PENDING',
 });
 
 export const ordersCollectionRejectedStateAction = (message: string): IPageOrderHistoryAction => ({
-  type: ORDERS_COLLECTION_REQUEST + '_REJECTED',
-  payloadRejected: {error: message},
+    type: ORDERS_COLLECTION_REQUEST + '_REJECTED',
+    payloadRejected: {error: message},
 });
 
 export const ordersCollectionFulfilledStateAction = (payload: IOrderCollectionParsed): IPageOrderHistoryAction => ({
-  type: ORDERS_COLLECTION_REQUEST + '_FULFILLED',
-  payloadFulfilled: payload,
+    type: ORDERS_COLLECTION_REQUEST + '_FULFILLED',
+    payloadFulfilled: payload,
 });
 
-export const getOrdersCollectionAction = function() {
-  return (dispatch: Function, getState: Function) => {
-    OrderService.getOrdersCollection(dispatch);
-  };
+export const getOrdersCollectionAction = function () {
+    return (dispatch: Function, getState: Function) => {
+        OrderService.getOrdersCollection(dispatch);
+    };
 };
 
 /**
@@ -33,21 +33,21 @@ export const getOrdersCollectionAction = function() {
  */
 
 export const orderDetailsPendingStateAction = (): IPageOrderDetailsAction => ({
-  type: ORDER_DETAILS_REQUEST + '_PENDING',
+    type: ORDER_DETAILS_REQUEST + '_PENDING',
 });
 
 export const orderDetailsRejectedStateAction = (message: string): IPageOrderDetailsAction => ({
-  type: ORDER_DETAILS_REQUEST + '_REJECTED',
-  payloadRejected: {error: message},
+    type: ORDER_DETAILS_REQUEST + '_REJECTED',
+    payloadRejected: {error: message},
 });
 
 export const orderDetailsFulfilledStateAction = (payload: IOrderDetailsParsed): IPageOrderDetailsAction => ({
-  type: ORDER_DETAILS_REQUEST + '_FULFILLED',
-  payloadFulfilled: payload,
+    type: ORDER_DETAILS_REQUEST + '_FULFILLED',
+    payloadFulfilled: payload,
 });
 
-export const getOrderDetailsAction = function(orderId: TOrderId) {
-  return (dispatch: Function, getState: Function) => {
-    OrderService.getOrderDetails(dispatch, orderId);
-  };
+export const getOrderDetailsAction = function (orderId: TOrderId) {
+    return (dispatch: Function, getState: Function) => {
+        OrderService.getOrderDetails(dispatch, orderId);
+    };
 };

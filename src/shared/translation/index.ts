@@ -1,4 +1,5 @@
 /* tslint:disable */
+export const LogoTitle = 'Spryker logo';
 export const AcceptTermsLabelTitle = 'Accept terms';
 export const AccountTitle = 'Your Account';
 export const ActiveFiltersTitle = 'Active Filters';
@@ -155,7 +156,7 @@ export const OrdersHistoryTableHeaderTotal = 'Total';
 export const OrdersHistoryViewDetailBtnTitle = 'View Order';
 export const OrderSummaryTitle = 'Order summary';
 export const OrderThank = 'Thank you for your order! You can view details of your order ';
-export const PageNotFoundMessage = 'Page not found.'
+export const PageNotFoundMessage = 'Page not found.';
 export const PageSauggestionTitle = 'Did you mean ';
 export const PanelBillingAddressTitle = 'Billing Address';
 export const PanelDeliveryAddressTitle = 'Delivery Address';
@@ -178,7 +179,7 @@ export const RegisterSuccess = 'You have successfully registered';
 export const RegisterTitle = 'Register';
 export const RelevanceSortModeTitle = 'Sort by relevance';
 export const RemoveBtnTitle = 'Remove';
-export const ResetAllFiltersButtonTitle = 'Reset All Filters'
+export const ResetAllFiltersButtonTitle = 'Reset All Filters';
 export const ResetPasswordTitle = 'Reset password';
 export const SalutationTitle = 'Register';
 export const SalutationVariantDr = 'Dr';

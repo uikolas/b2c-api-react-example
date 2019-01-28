@@ -1,5 +1,5 @@
-import {TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType} from '../login';
-import {TRouterMatchParam} from "src/shared/helpers/router/types";
+import { TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType } from '../login';
+import { TRouterMatchParam } from 'src/shared/helpers/router/types';
 
 export type TCustomerSalutation = string;
 export type TCustomerFirstName = string;
@@ -19,64 +19,65 @@ export type TCustomerPhone = string;
 export type TCustomerCellPhone = string;
 
 export type TCustomerInputValue = TCustomerFirstName
-  | TCustomerLastName
-  | TCustomerEmail
-  | TCustomerPassword
-  | TCustomerSalutation
-  | TCustomerUsername;
+    | TCustomerLastName
+    | TCustomerEmail
+    | TCustomerPassword
+    | TCustomerSalutation
+    | TCustomerUsername;
 
 export type TSalutationVariant = {
-  value: string,
-  label: string,
+    value: string,
+    label: string,
 };
 
 export interface ICustomerProfileIdentity {
-  salutation?: TCustomerSalutation;
-  firstName?: TCustomerFirstName;
-  lastName?: TCustomerLastName;
-  email: TCustomerEmail;
-  gender?: TCustomerGender | null;
+    salutation?: TCustomerSalutation;
+    firstName?: TCustomerFirstName;
+    lastName?: TCustomerLastName;
+    email: TCustomerEmail;
+    gender?: TCustomerGender | null;
 }
 
 export interface ICustomerProfilePassword {
-  newPassword?: TCustomerPassword;
-  password: TCustomerPassword;
-  confirmPassword: TCustomerPassword;
+    newPassword?: TCustomerPassword;
+    password: TCustomerPassword;
+    confirmPassword: TCustomerPassword;
 }
 
 export interface ICustomerProfile extends ICustomerProfileIdentity, ICustomerProfilePassword {
-  acceptedTerms?: boolean;
-  [key: string]: string | number | boolean;
+    acceptedTerms?: boolean;
+
+    [key: string]: string | number | boolean;
 }
 
 export interface ICustomerDataParsed extends ICustomerProfileIdentity {
-  id: TCustomerId;
-  createdAt: TCustomerTime;
-  updatedAt: TCustomerTime;
-  dateOfBirth: TCustomerDateOfBirth | null;
+    id: TCustomerId;
+    createdAt: TCustomerTime;
+    updatedAt: TCustomerTime;
+    dateOfBirth: TCustomerDateOfBirth | null;
 
-  [propName: string]: string | number | null;
+    [propName: string]: string | number | null;
 }
 
 export interface ICustomerLoginData {
-  password: TCustomerPassword;
-  username: TCustomerUsername;
+    password: TCustomerPassword;
+    username: TCustomerUsername;
 }
 
 export interface ILoginDataToLocalStorage {
-  email: TCustomerUsername | TCustomerEmail | null;
+    email: TCustomerUsername | TCustomerEmail | null;
 }
 
 export interface ICustomerLoginDataParsed {
-  accessToken: TAccessToken;
-  expiresIn: TExpiresInAccessToken;
-  refreshToken: TRefreshToken;
-  tokenType: TTokenType;
-  customerRef: TCustomerReference;
+    accessToken: TAccessToken;
+    expiresIn: TExpiresInAccessToken;
+    refreshToken: TRefreshToken;
+    tokenType: TTokenType;
+    customerRef: TCustomerReference;
 }
 
 export interface IResetPasswordPayload {
-  restorePasswordKey: TRouterMatchParam;
-  password: TCustomerPassword;
-  confirmPassword: TCustomerPassword;
+    restorePasswordKey: TRouterMatchParam;
+    password: TCustomerPassword;
+    confirmPassword: TCustomerPassword;
 }

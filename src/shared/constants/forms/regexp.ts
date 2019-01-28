@@ -1,1 +1,1 @@
-export const RegExpZipCode = "\\d{5}";
+export const RegExpZipCode = '\\d{5}';

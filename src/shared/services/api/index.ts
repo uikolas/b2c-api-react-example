@@ -16,5 +16,4 @@ export const nodeApi = create({baseURL: `http://${config.WEB_PATH}:${config.WEB_
 export const setAuthToken = (userAuth: TAccessToken) => api.setHeader('Authorization', 'Bearer ' + userAuth);
 export const removeAuthToken = () => api.deleteHeader('Authorization');
 
-
 export default api;

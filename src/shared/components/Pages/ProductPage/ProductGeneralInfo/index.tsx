@@ -4,55 +4,52 @@ import Typography from '@material-ui/core/Typography';
 import { ProductAvailability } from '../ProductAvailability';
 import { styles } from './styles';
 import {
-  priceTypeNameOriginal,
-  TPriceTypeDefaultGross,
-  TPriceTypeOriginalGross,
-  TProductName,
-  TProductSKU,
+    priceTypeNameOriginal,
+    TPriceTypeDefaultGross,
+    TPriceTypeOriginalGross,
+    TProductName,
+    TProductSKU,
 } from 'src/shared/interfaces/product';
-import {AppPrice} from "src/shared/components/Common/AppPrice/index";
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { NoNameTitle, NoPriceTitle, IncVatMessage } from 'src/shared/translation';
 
-
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
-  name: TProductName;
-  sku: TProductSKU;
-  price: TPriceTypeOriginalGross;
-  oldPrice: TPriceTypeDefaultGross;
-  availability: string;
+    name: TProductName;
+    sku: TProductSKU;
+    price: TPriceTypeOriginalGross;
+    oldPrice: TPriceTypeDefaultGross;
+    availability: string;
 }
 
-
 export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
-  const {classes, name = NoNameTitle, price = NoPriceTitle, oldPrice, availability} = props;
+    const {classes, name = NoNameTitle, price = NoPriceTitle, oldPrice, availability} = props;
 
-  return (
-    <div className={ classes.root }>
-      <Typography component="h1" color="inherit" className={classes.title}>
-        { name }
-      </Typography>
-      <div className={ classes.productInfo }>
-        {(price || oldPrice)
-          ? <div className={ classes.priceBlock }>
-              <Typography component="span"  color="inherit" className={ classes.price }>
-                <AppPrice value={price} isStylesInherited />
-              </Typography>
-              { oldPrice
-                ? (
-                  <Typography component="span" className={ classes.oldPrice }>
-                    <AppPrice value={oldPrice} priceType={priceTypeNameOriginal} isStylesInherited/>
-                  </Typography>
-                ) : null
-              }
-              <Typography component="span" className={classes.vat}>({ IncVatMessage })</Typography>
+    return (
+        <div className={classes.root}>
+            <Typography component="h1" color="inherit" className={classes.title}>
+                {name}
+            </Typography>
+            <div className={classes.productInfo}>
+                {(price || oldPrice)
+                    ? <div className={classes.priceBlock}>
+                        <Typography component="span" color="inherit" className={classes.price}>
+                            <AppPrice value={price} isStylesInherited/>
+                        </Typography>
+                        {oldPrice
+                            ? (
+                                <Typography component="span" className={classes.oldPrice}>
+                                    <AppPrice value={oldPrice} priceType={priceTypeNameOriginal} isStylesInherited/>
+                                </Typography>
+                            ) : null
+                        }
+                        <Typography component="span" className={classes.vat}>({IncVatMessage})</Typography>
+                    </div>
+                    : null
+                }
+                <ProductAvailability availability={availability}/>
             </div>
-          : null
-        }
-        <ProductAvailability availability={ availability }/>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export const ProductGeneralInfo = withStyles(styles)(ProductGeneralInfoBase);
-
