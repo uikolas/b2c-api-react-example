@@ -31,8 +31,6 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
     return (
       <div className={ classes.cartDrop }>
-        {isCartLoading ? <AppBackdrop isOpen /> : null}
-
         <Typography gutterBottom component="h3" className={classes.title}>
           {CartTitle}
         </Typography>

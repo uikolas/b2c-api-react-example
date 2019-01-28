@@ -37,7 +37,6 @@ import { getQuantityFormSettings, getWishListFormSettings } from "src/shared/com
 import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
 import { AddToCartBtnTitle, AddToWishlistBtnTitle, ErrorDurningAddProductToTheCartMessage } from "src/shared/translation";
 
-
 const quantitySelectedInitial = 1;
 
 @connect

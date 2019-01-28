@@ -1,6 +1,6 @@
 import {TProductQuantity, TProductSKU} from '@interfaces/product/index';
 import {ICartItem, ICartTotals, TCartId} from '@interfaces/cart/index';
-import {ICartState} from '@stores/reducers/common/cart/types';
+import {ICartState} from './types';
 import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
 
 // Number of products(including quantity per each product) in the cart

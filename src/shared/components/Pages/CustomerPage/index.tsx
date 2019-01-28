@@ -28,7 +28,6 @@ import { AddressFormPage } from '../CustomerAddressesPage/AddressForm';
 import { LoadableOrderDetailsPage } from '../OrderDetailsPage/loadable';
 import { LoadableOrderHistoryPage } from '../OrderHistoryPage/loadable';
 import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
-import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
 import { customerProfileNavLinks } from "src/shared/constants/navLinks/index";

@@ -20,8 +20,9 @@ import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
 import {
     initApplicationDataAction,
     setAuthFromStorageAction,
-    IInitApplicationDataPayload
-} from '@stores/actions/Common/Init';
+    IInitApplicationDataPayload,
+    getCategoriesAction
+} from '@stores/actions/common/init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { clearSearchTermAction } from '@stores/actions/pages/search';
@@ -41,6 +42,7 @@ interface PageContentProps extends IComponent, WithRouter {
     setAuth: Function;
     getCustomerCart: Function;
     getGuestCart: Function;
+    getCategories: Function;
     isAppDataSet: boolean;
     isCustomerAuth: boolean;
     anonymId: string;
@@ -76,6 +78,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
 
         if (!this.props.isAppDataSet) {
             this.props.initApplicationData(null);
+            this.props.getCategories();
             return;
         }
     }
@@ -165,6 +168,7 @@ export const PageContent = reduxify(
         initApplicationData: (payload: IInitApplicationDataPayload) => dispatch(initApplicationDataAction(payload)),
         setAuth: (payload: ICustomerLoginDataParsed) => dispatch(setAuthFromStorageAction(payload)),
         getCustomerCart: () => dispatch(getCustomerCartsAction()),
+        getCategories: () => dispatch(getCategoriesAction()),
         getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
         clearSearchTerm: () => dispatch(clearSearchTermAction()),
     }),
