@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { pathCustomerAddressesPage } from 'src/shared/routes/contentRoutes';
+import { pathAddressFormNew, pathAddressFormUpdateBase } from 'src/shared/routes/contentRoutes';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { styles } from './styles';
 import { connect } from './connect';
@@ -21,18 +21,25 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     public componentDidMount() {
         this.props.setCurrentAddressAction(null);
 
-        if (!this.props.isAddressesInit && this.props.customer) {
-            this.props.getAddressesAction(this.props.customer);
-        }
+         this.initRequestData();
     }
 
     public handleAddAddress = () => {
-        this.props.routerPush(`${pathCustomerAddressesPage}/new`);
+        this.props.routerPush(pathAddressFormNew);
     };
 
     public setUpdatedAddress = (addressId: string) => (e: ClickEvent) => {
         this.props.setCurrentAddressAction(addressId);
-        this.props.routerPush(`${pathCustomerAddressesPage}/update`);
+        this.props.routerPush(`${pathAddressFormUpdateBase}/${addressId}`);
+    };
+
+    private initRequestData = () => {
+        const {addresses, isLoading, customer} = this.props;
+        if (isLoading) { return; }
+
+        if ((addresses && Array.isArray(addresses) && !addresses.length) && customer) {
+            this.props.getAddressesAction(customer);
+        }
     };
 
     public render(): JSX.Element {

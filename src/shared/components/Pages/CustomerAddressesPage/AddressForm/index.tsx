@@ -15,33 +15,51 @@ import { FormattedMessage } from 'react-intl';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+    public state: State = {
+            salutation : '',
+            firstName : '',
+            lastName : '',
+            company : '',
+            address1 : '',
+            address2 : '',
+            address3 : '',
+            zipCode : '',
+            city:  '',
+            country : '',
+            iso2Code : '',
+            phone : '',
+            isDefaultShipping: false,
+        isDefaultBilling: false,
+        submitted: false
+    };
 
-        this.state = {
-            salutation: props.currentAddress ? props.currentAddress.salutation : '',
-            firstName: props.currentAddress ? props.currentAddress.firstName : '',
-            lastName: props.currentAddress ? props.currentAddress.lastName : '',
-            company: props.currentAddress ? props.currentAddress.company || '' : '',
-            address1: props.currentAddress ? props.currentAddress.address1 : '',
-            address2: props.currentAddress ? props.currentAddress.address2 : '',
-            address3: props.currentAddress ? props.currentAddress.address3 || '' : '',
-            zipCode: props.currentAddress ? props.currentAddress.zipCode : '',
-            city: props.currentAddress ? props.currentAddress.city : '',
-            country: props.currentAddress ? props.currentAddress.country : '',
-            iso2Code: props.currentAddress ? props.currentAddress.iso2Code : '',
-            phone: props.currentAddress ? props.currentAddress.phone || '' : '',
-            isDefaultShipping: props.currentAddress ? props.currentAddress.isDefaultShipping : true,
-            isDefaultBilling: props.currentAddress ? props.currentAddress.isDefaultBilling : true,
-            submitted: false,
-        };
-    }
-
-    public componentDidUpdate = (prevProps: Props) => {
-        if (prevProps.isLoading && !this.props.isLoading) {
-            this.props.routerGoBack();
+    public componentDidMount = () => {
+        if (this.props.currentAddress) {
+            this.setInitialData();
+        } else if (!this.props.isAddressExist
+            || (this.props.isAddressExist && this.props.addressIdParam !== this.props.currentAddress.id)
+            ) {
+            this.initRequestData();
         }
     };
+
+    public componentDidUpdate = (prevProps: Props, prevState: State) => {
+
+        // After updating data
+        if (!prevState.submitted && this.state.submitted) {
+            this.props.routerGoBack();
+            return;
+        }
+        // First load of the page
+        if (!this.props.isRejected && !this.props.isAddressExist && !this.state.submitted) {
+            this.initRequestData();
+        }
+
+        if (!prevProps.isAddressExist && this.props.isAddressExist) {
+            this.setInitialData();
+        }
+    };
+
 
     public handleChange = (event: { target: IFieldInput }): void => {
         const { name, value }: IFieldInput = event.target;
@@ -50,7 +68,6 @@ export class AddressForm extends React.Component<Props, State> {
 
     public handleCheckbox = (event: InputChangeEvent): void => {
         event.persist();
-        /*this.setState(prevState => ({...prevState, [event.target.name]: event.target.checked}));*/
         this.setState((prevState: State) => ({ ...prevState, [ event.target.name ]: !prevState[ event.target.name ] }));
     };
 
@@ -74,12 +91,46 @@ export class AddressForm extends React.Component<Props, State> {
         }
     };
 
+    private initRequestData = () => {
+        if (this.props.isLoading) {
+            return;
+        }
+        if (this.props.isAppDataSet && this.props.customer && this.props.addressIdParam) {
+            this.props.getOneAddress(this.props.customer, this.props.addressIdParam);
+        }
+    };
+
+    private setInitialData = () => {
+        const { currentAddress } = this.props;
+        const isAddressDataExist = Boolean(currentAddress);
+
+        const stateData = {
+            salutation: isAddressDataExist ? currentAddress.salutation : '',
+            firstName: isAddressDataExist ? currentAddress.firstName : '',
+            lastName: isAddressDataExist ? currentAddress.lastName : '',
+            company: isAddressDataExist ? currentAddress.company || '' : '',
+            address1: isAddressDataExist ? currentAddress.address1 : '',
+            address2: isAddressDataExist ? currentAddress.address2 : '',
+            address3: isAddressDataExist ? currentAddress.address3 || '' : '',
+            zipCode: isAddressDataExist ? currentAddress.zipCode : '',
+            city: isAddressDataExist ? currentAddress.city : '',
+            country: isAddressDataExist ? currentAddress.country : '',
+            iso2Code: isAddressDataExist ? currentAddress.iso2Code : '',
+            phone: isAddressDataExist ? currentAddress.phone || '' : '',
+            isDefaultShipping: isAddressDataExist && currentAddress.isDefaultShipping,
+            isDefaultBilling: isAddressDataExist && currentAddress.isDefaultBilling,
+            submitted: false
+        };
+        this.setState((prevState: State) => ({
+            ...prevState,
+            ...stateData
+        }));
+    };
+
     public render(): JSX.Element {
         const { classes, currentAddress, countries, routerGoBack, isLoading } = this.props;
-
         const pageTitle = currentAddress ? 'edit.address.title' : 'add.new.address.title';
         const currentState = { ...this.state };
-        // delete currentState.submitted;
 
         return (
             <Grid container>
@@ -95,7 +146,7 @@ export class AddressForm extends React.Component<Props, State> {
                             formName: 'addressForm',
                             onChangeHandler: this.handleChange,
                             onSubmitHandler: this.handleSubmitForm,
-                            fields: setFormFields(currentState, countries, this.handleCheckbox),
+                            fields: setFormFields(currentState, countries, this.handleCheckbox)
                         } }
                         SubmitButton={
                             <Grid container>
@@ -103,7 +154,7 @@ export class AddressForm extends React.Component<Props, State> {
                                     <SprykerButton
                                         title={ <FormattedMessage id={ 'word.save.title' } /> }
                                         btnType="submit"
-                                        extraClasses={ classes.addButton }
+                                        extraClasses={classes.addButton}
                                         disabled={ isLoading }
                                     />
                                 </Grid>

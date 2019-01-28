@@ -9,6 +9,7 @@ import {
     IRequestAddAddressBody,
     IRequestUpdateAddressBody
 } from "src/shared/services/Pages/Addresses/types";
+import { parseOneAddressRawResponse } from 'src/shared/helpers/address/response';
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class AddressesService extends ApiServiceAbstract {
@@ -22,18 +23,18 @@ export class AddressesService extends ApiServiceAbstract {
 
             if (response.ok) {
                 const addresses = response.data.data.map((
-                    address: IAddressDataRawResponse,
+                    address: IAddressDataRawResponse
                 ): IAddressItem => ({ id: address.id, ...address.attributes }));
 
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    addresses,
+                    addresses
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    error: errorMessage,
+                    error: errorMessage
                 });
                 toast.error('Request Error: ' + errorMessage);
             }
@@ -41,13 +42,45 @@ export class AddressesService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error: error.message,
+                error: error.message
             });
             toast.error('Unexpected Error: ' + error.message);
         }
     }
 
-    public static async addAddress(ACTION_TYPE: string,
+    public static async getOneCustomerAddress(ACTION_TYPE: string,
+                                              dispatch: Function,
+                                              customerId: string,
+                                              addressId: string): Promise<void> {
+        try {
+            const token = await RefreshTokenService.getActualToken(dispatch);
+            setAuthToken(token);
+
+            const endpoint = `customers/${customerId}/addresses/${addressId}`;
+            const response: IApiResponseData = await api.get(endpoint, {}, { withCredentials: true });
+
+            if (response.ok) {
+                const address = parseOneAddressRawResponse(response.data);
+                dispatch({
+                    type: ACTION_TYPE + '_FULFILLED',
+                    payloadFulfilled: { data: address, addressId: address.id }
+                });
+            } else {
+                const errorMessage = this.getParsedAPIError(response);
+                dispatch({
+                    type: ACTION_TYPE + '_REJECTED',
+                    error: errorMessage
+                });
+                toast.error('Request Error: ' + errorMessage);
+            }
+        } catch (error) {
+            dispatch({
+                type: ACTION_TYPE + '_REJECTED',
+                error: error.message
+            });
+            toast.error('Unexpected Error: ' + error.message);
+        }
+    }public static async addAddress(ACTION_TYPE: string,
                                    dispatch: Function,
                                    payload: IAddressItem,
                                    customerId: string): Promise<void> {
@@ -58,8 +91,8 @@ export class AddressesService extends ApiServiceAbstract {
             const body: IRequestAddAddressBody = {
                 data: {
                     type: 'addresses',
-                    attributes: payload,
-                },
+                    attributes: payload
+                }
             };
 
             const endpoint = `customers/${customerId}/addresses`;
@@ -68,7 +101,7 @@ export class AddressesService extends ApiServiceAbstract {
             if (response.ok) {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    address: { id: response.data.data.id, ...response.data.data.attributes },
+                    address: { id: response.data.data.id, ...response.data.data.attributes }
 
                 });
                 toast.success(FormattedMessageTemplate('new.address.added.message'));
@@ -79,7 +112,7 @@ export class AddressesService extends ApiServiceAbstract {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    error: errorMessage,
+                    error: errorMessage
                 });
                 toast.error('Request Error: ' + errorMessage);
             }
@@ -87,7 +120,7 @@ export class AddressesService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error,
+                error
             });
             toast.error('Unexpected Error: ' + error.message);
         }
@@ -102,20 +135,20 @@ export class AddressesService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const response: IApiResponseData = await api.delete(
-                `customers/${customerId}/addresses/${addressId}`, {}, { withCredentials: true },
+                `customers/${customerId}/addresses/${addressId}`, {}, { withCredentials: true }
             );
 
             if (response.ok) {
                 toast.success(FormattedMessageTemplate('address.removed.message'));
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    addressId,
+                    addressId
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    error: errorMessage,
+                    error: errorMessage
                 });
                 toast.error('Request Error: ' + errorMessage);
             }
@@ -123,7 +156,7 @@ export class AddressesService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error,
+                error
             });
             toast.error('Unexpected Error: ' + error.message);
         }
@@ -142,12 +175,12 @@ export class AddressesService extends ApiServiceAbstract {
                 data: {
                     type: 'addresses',
                     id: addressId,
-                    attributes: payload,
-                },
+                    attributes: payload
+                }
             };
 
             const response: IApiResponseData = await api.patch(
-                `customers/${customerId}/addresses/${addressId}`, body, { withCredentials: true },
+                `customers/${customerId}/addresses/${addressId}`, body, { withCredentials: true }
             );
 
             if (response.ok) {
@@ -155,7 +188,7 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                     payloadFulfilled: {
                         addressId,
-                        data: response.data.data.attributes,
+                        data: response.data.data.attributes
                     }
                 });
                 toast.success(FormattedMessageTemplate('address.updated.message'));
@@ -163,7 +196,7 @@ export class AddressesService extends ApiServiceAbstract {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    error: errorMessage,
+                    error: errorMessage
                 });
                 toast.error('Request Error: ' + errorMessage);
             }
@@ -171,7 +204,7 @@ export class AddressesService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error,
+                error
             });
             toast.error('Unexpected Error: ' + error.message);
         }
