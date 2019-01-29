@@ -1,5 +1,4 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
@@ -27,11 +26,11 @@ export class CatalogService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -39,11 +38,11 @@ export class CatalogService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -90,11 +89,11 @@ export class CatalogService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
                 return null;
             }
 
@@ -103,11 +102,11 @@ export class CatalogService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 }

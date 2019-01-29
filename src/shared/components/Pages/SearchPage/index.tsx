@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ChangeEvent, ReactNode } from 'react';
-import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
@@ -171,10 +170,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         if (!this.validateData()) {
             console.error('can\'t make request in updateSearch method!!!');
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 id: 'validate.range.input.error.message',
                 type: 'error'
-            }));
+            });
             return;
         }
         let query: ISearchQuery = this.getQueryBaseParams();

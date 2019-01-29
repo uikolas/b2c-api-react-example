@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import api from 'src/shared/services/api';
 import { saveLoginDataToStoreAction } from '@stores/actions/pages/customerProfile';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer';
@@ -29,10 +28,10 @@ export class PagesLoginService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                 });
 
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'register.success.message',
                     type: 'success'
-                }));
+                });
 
                 await PagesLoginService.loginRequest(dispatch, {
                     username: payload.email,
@@ -46,13 +45,15 @@ export class PagesLoginService extends ApiServiceAbstract {
                 });
 
                 if (response.status === 422) {
-                    toast.warn(NotificationsMessage({
-                        message: errorMessage
-                    }));
+                    NotificationsMessage({
+                        message: errorMessage,
+                        type: 'warning'
+                    });
                 } else {
-                    toast.error(NotificationsMessage({
-                        message: errorMessage
-                    }));
+                    NotificationsMessage({
+                        message: errorMessage,
+                        type: 'error'
+                    });
                 }
             }
 
@@ -61,11 +62,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -87,23 +88,26 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch(saveLoginDataToStoreAction({ email: payload.username }));
                 saveAccessDataToLocalStorage(responseParsed);
                 dispatch(loginCustomerFulfilledStateAction(responseParsed));
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'customer.login.message',
                     type: 'success'
-                }));
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(loginCustomerRejectedStateAction(errorMessage));
-                toast.error(errorMessage);
+                NotificationsMessage({
+                    message: errorMessage,
+                    type: 'error'
+                });
             }
 
         } catch (error) {
             dispatch(loginCustomerRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -122,16 +126,19 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                 });
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'link.sanded.created.message',
                     type: 'success'
-                }));
+                });
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: response.problem },
                 });
-                toast.error(response.problem);
+                NotificationsMessage({
+                    message: response.problem,
+                    type: 'error'
+                });
             }
 
         } catch (error) {
@@ -139,11 +146,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -164,20 +171,20 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                 });
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'password.successfull.updated.message',
                     type: 'success'
-                }));
+                });
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: response.problem },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: response.problem,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -185,11 +192,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 }

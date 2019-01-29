@@ -1,5 +1,4 @@
 import api, { removeAuthToken  } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
@@ -29,10 +28,10 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(NotificationsMessage({
+        NotificationsMessage({
             id: 'items.added.message',
             type: 'success'
-        }));
+        });
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
       } else {
@@ -41,11 +40,11 @@ export class GuestCartService extends ApiServiceAbstract {
 
     } catch (error) {
       dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
@@ -79,11 +78,11 @@ export class GuestCartService extends ApiServiceAbstract {
 
     } catch (error) {
       dispatch(cartActions.getCartsRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
       return '';
     }
   }
@@ -104,10 +103,10 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(NotificationsMessage({
+        NotificationsMessage({
             id: 'items.removed.message',
             type: 'success'
-        }));
+        });
         await GuestCartService.getGuestCart(dispatch, anonymId);
       } else {
         this.errorMessageInform(response, dispatch);
@@ -115,11 +114,11 @@ export class GuestCartService extends ApiServiceAbstract {
 
     } catch (error) {
       dispatch(cartActions.getCartsRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
@@ -146,10 +145,10 @@ export class GuestCartService extends ApiServiceAbstract {
       );
 
       if (response.ok) {
-        toast.success(NotificationsMessage({
+        NotificationsMessage({
             id: 'cart.changed.quantity.message',
             type: 'success'
-        }));
+        });
 
         const responseParsed = parseGuestCartResponse(response.data);
         dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
@@ -159,21 +158,21 @@ export class GuestCartService extends ApiServiceAbstract {
 
     } catch (error) {
       dispatch(cartActions.cartUpdateItemRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
   private static errorMessageInform(response: IResponseError, dispatch: Function): void {
     const errorMessage = this.getParsedAPIError(response);
     dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
-    toast.error(NotificationsMessage({
+    NotificationsMessage({
         messageWithCustomText: 'request.error.message',
         message: errorMessage,
         type: 'error'
-    }));
+    });
   }
 }

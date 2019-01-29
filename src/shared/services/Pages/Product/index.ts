@@ -1,5 +1,4 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { parseProductResponse } from 'src/shared/helpers/product';
 import {
     getProductAvailabilityFulfilledStateAction,
@@ -35,20 +34,20 @@ export class ProductService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(getProductDataRejectedStateAction(errorMessage));
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
             dispatch(getProductDataRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -65,20 +64,20 @@ export class ProductService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(getProductAvailabilityRejectedStateAction(errorMessage));
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
             dispatch(getProductAvailabilityRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 }

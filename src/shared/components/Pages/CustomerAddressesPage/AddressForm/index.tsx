@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -78,9 +77,10 @@ export class AddressForm extends React.Component<Props, State> {
         this.setState(() => ({ submitted: true }));
 
         if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
-            toast.warn(NotificationsMessage({
-                id: 'empty.required.fields.message'
-            }));
+            NotificationsMessage({
+                id: 'empty.required.fields.message',
+                type: 'warning'
+            });
             return;
         }
 

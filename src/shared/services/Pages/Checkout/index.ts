@@ -1,5 +1,4 @@
 import api, { setAuthToken } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import { ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod } from 'src/shared/interfaces/checkout';
 import {
@@ -54,20 +53,20 @@ export class CheckoutService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(getCheckoutDataInitRejectedStateAction(errorMessage));
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
             dispatch(getCheckoutDataInitRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -96,27 +95,27 @@ export class CheckoutService extends ApiServiceAbstract {
 
             if (response.ok) {
                 dispatch(sendCheckoutDataFulfilledStateAction(response.data.data.attributes.orderReference));
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'order.successfully.created.message',
                     type: 'success'
-                }));
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(sendCheckoutDataRejectedStateAction(errorMessage));
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
             dispatch(sendCheckoutDataRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 

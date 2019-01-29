@@ -43,16 +43,18 @@ export class RegisterFormBase extends React.Component<Props, State> {
         const { salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms } = this.state;
         e.preventDefault();
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-            toast.warn(NotificationsMessage({
-                id: 'empty.required.fields.message'
-            }));
+            NotificationsMessage({
+                id: 'empty.required.fields.message',
+                type: 'warning'
+            });
             return null;
         }
 
         if (password !== confirmPassword) {
-            toast.warn(NotificationsMessage({
-                id: 'password.not.equal.message'
-            }));
+            NotificationsMessage({
+                id: 'password.not.equal.message',
+                type: 'warning'
+            });
             return null;
         }
 

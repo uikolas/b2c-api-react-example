@@ -1,7 +1,6 @@
 // tslint:disable:max-file-line-count
 
 import api, { setAuthToken } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import { IWishlist, IWishlistProduct, TWishListId } from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
@@ -50,11 +49,11 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -62,11 +61,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -98,11 +97,11 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -110,11 +109,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -133,10 +132,10 @@ export class WishlistService extends ApiServiceAbstract {
             const response: IApiResponseData = await api.post('wishlists', body, { withCredentials: true });
 
             if (response.ok) {
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'wishlist.created.message',
                     type: 'success'
-                }));
+                });
                 const parsedWishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
@@ -149,11 +148,11 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
                 return '';
             }
 
@@ -162,11 +161,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
             return '';
         }
     }
@@ -179,10 +178,10 @@ export class WishlistService extends ApiServiceAbstract {
             const response: IApiResponseData = await api.delete(`wishlists/${wishlistId}`, {}, { withCredentials: true });
 
             if (response.ok) {
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'wishlist.deleted.message',
                     type: 'success'
-                }));
+                });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                     payloadWishlistDataFulfilled: { wishlistId },
@@ -193,11 +192,11 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -205,11 +204,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -244,11 +243,11 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -256,11 +255,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -300,22 +299,22 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                     payloadWishlistDataFulfilled: { data: wishlist },
                 });
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'wishlist.add.product.message',
                     message: wishlist.name,
                     type: 'success'
-                }));
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -323,11 +322,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -346,10 +345,10 @@ export class WishlistService extends ApiServiceAbstract {
             );
 
             if (response.ok) {
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'wishlist.removed.items.message',
                     type: 'success'
-                }));
+                });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                     payloadWishlistProductFulfilled: {
@@ -363,11 +362,11 @@ export class WishlistService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -375,11 +374,11 @@ export class WishlistService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -399,11 +398,11 @@ export class WishlistService extends ApiServiceAbstract {
             await WishlistService.getWishlist('DETAIL_WISHLIST', dispatch, wishlistId);
         } catch (error) {
             dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 

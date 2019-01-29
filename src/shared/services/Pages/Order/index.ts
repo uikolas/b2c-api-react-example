@@ -1,5 +1,4 @@
 import api, { setAuthToken } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import {
   orderDetailsFulfilledStateAction,
@@ -36,20 +35,20 @@ export class OrderService extends ApiServiceAbstract {
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(ordersCollectionRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({
+        NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
             type: 'error'
-        }));
+        });
       }
 
     } catch (error) {
       dispatch(ordersCollectionRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
@@ -72,20 +71,20 @@ export class OrderService extends ApiServiceAbstract {
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(orderDetailsRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({
+        NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
             type: 'error'
-        }));
+        });
       }
 
     } catch (error) {
       dispatch(orderDetailsRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 }

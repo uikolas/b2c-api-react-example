@@ -1,5 +1,4 @@
 import api, { setAuthToken } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import * as CustomerProfileActions from '@stores/actions/pages/customerProfile';
 import {
   ICustomerDataParsed,
@@ -49,20 +48,20 @@ export class CustomerProfileService extends ApiServiceAbstract {
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.getCustomerProfileRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({
+        NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
             type: 'error'
-        }));
+        });
       }
 
     } catch (error) {
       dispatch(CustomerProfileActions.getCustomerProfileRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
@@ -96,27 +95,27 @@ export class CustomerProfileService extends ApiServiceAbstract {
       if (response.ok) {
         const responseParsed: ICustomerDataParsed = parseCustomerDataResponse(response.data);
         dispatch(CustomerProfileActions.updateCustomerProfileFulfilledStateAction(responseParsed));
-        toast.success(NotificationsMessage({
+        NotificationsMessage({
             id: 'profile.data.successfully.updated.message',
             type: 'success'
-        }));
+        });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.updateCustomerProfileRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({
+        NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
             type: 'error'
-        }));
+        });
       }
 
     } catch (error) {
       dispatch(CustomerProfileActions.updateCustomerProfileRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
@@ -143,27 +142,27 @@ export class CustomerProfileService extends ApiServiceAbstract {
 
       if (response.ok) {
         dispatch(CustomerProfileActions.updateCustomerPasswordFulfilledStateAction());
-        toast.success(NotificationsMessage({
+        NotificationsMessage({
             id: 'password.successfully.updated.message',
             type: 'success'
-        }));
+        });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.updateCustomerPasswordRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({
+        NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
             type: 'error'
-        }));
+        });
       }
 
     } catch (error) {
       dispatch(CustomerProfileActions.updateCustomerPasswordRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 
@@ -183,28 +182,28 @@ export class CustomerProfileService extends ApiServiceAbstract {
       if (response.ok) {
         dispatch(logout());
         dispatch(CustomerProfileActions.deleteCustomerFulfilledStateAction());
-        toast.success(NotificationsMessage({
+        NotificationsMessage({
             id: 'account.was.deleted.message',
             type: 'success'
-        }));
+        });
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(CustomerProfileActions.deleteCustomerRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({
+        NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
             type: 'error'
-        }));
+        });
       }
 
     } catch (error) {
       console.error('deleteCustomerEntity error', error);
       dispatch(CustomerProfileActions.deleteCustomerRejectedStateAction(error.message));
-      toast.error(NotificationsMessage({
+      NotificationsMessage({
           messageWithCustomText: 'unexpected.error.message',
           message: error.message,
           type: 'error'
-      }));
+      });
     }
   }
 }

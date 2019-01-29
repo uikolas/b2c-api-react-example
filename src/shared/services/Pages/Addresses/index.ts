@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
 import api, { setAuthToken } from 'src/shared/services/api';
@@ -36,11 +35,11 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -48,11 +47,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error: error.message
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -79,22 +78,22 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
                 error: error.message
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }public static async addAddress(ACTION_TYPE: string,
                                    dispatch: Function,
@@ -120,10 +119,10 @@ export class AddressesService extends ApiServiceAbstract {
                     address: { id: response.data.data.id, ...response.data.data.attributes }
 
                 });
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'new.address.added.message',
                     type: 'success'
-                }));
+                });
 
                 // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
                 await AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
@@ -133,11 +132,11 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -145,11 +144,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -166,10 +165,10 @@ export class AddressesService extends ApiServiceAbstract {
             );
 
             if (response.ok) {
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'address.removed.message',
                     type: 'success'
-                }));
+                });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                     addressId
@@ -180,11 +179,11 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -192,11 +191,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -229,21 +228,21 @@ export class AddressesService extends ApiServiceAbstract {
                         data: response.data.data.attributes
                     }
                 });
-                toast.success(NotificationsMessage({
+                NotificationsMessage({
                     id: 'address.updated.message',
                     type: 'success'
-                }));
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
@@ -251,11 +250,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 }

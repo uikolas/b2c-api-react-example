@@ -3,7 +3,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import { toast } from 'react-toastify';
 import {
     concreteProductType,
     defaultItemValueDropdown,
@@ -210,10 +209,10 @@ export class ProductPageBase extends React.Component<Props, State> {
                 });
             });
         } catch (error) {
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 id: 'error.durning.add.product.to.cart.message',
                 type: 'error'
-            }));
+            });
         }
     };
 

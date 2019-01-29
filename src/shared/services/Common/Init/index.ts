@@ -1,5 +1,4 @@
 import api, { nodeApi } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import {
     categoriesFulfilledState,
     categoriesPendingState,
@@ -48,20 +47,20 @@ export class InitAppService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(initApplicationDataRejectedStateAction(errorMessage));
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
             dispatch(initApplicationDataRejectedStateAction(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -80,20 +79,20 @@ export class InitAppService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(categoriesRejectedState(errorMessage));
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
                     type: 'error'
-                }));
+                });
             }
 
         } catch (error) {
             dispatch(categoriesRejectedState(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 
@@ -106,11 +105,11 @@ export class InitAppService extends ApiServiceAbstract {
 
         } catch (error) {
             dispatch(switchLocaleRejectedState(error.message));
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'change.language.error.message',
                 message: error.message,
                 type: 'error'
-            }));
+            });
         }
     }
 }

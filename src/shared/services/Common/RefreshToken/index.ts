@@ -1,5 +1,4 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { REFRESH_TOKEN_REQUEST } from '@stores/actionTypes/pages/login';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataResponse';
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
@@ -28,11 +27,11 @@ export class RefreshTokenService extends ApiServiceAbstract {
                     type: REFRESH_TOKEN_REQUEST + '_REJECTED',
                     error: error.message
                 });
-                toast.error(NotificationsMessage({
+                NotificationsMessage({
                     messageWithCustomText: 'unexpected.error.message',
                     message: error.message,
                     type: 'error'
-                }));
+                });
                 return Promise.reject(error.message);
             }
         }
@@ -72,11 +71,11 @@ export class RefreshTokenService extends ApiServiceAbstract {
                 type: REFRESH_TOKEN_REQUEST + '_REJECTED',
                 error: errorMessage
             });
-            toast.error(NotificationsMessage({
+            NotificationsMessage({
                 messageWithCustomText: 'request.error.message',
                 message: errorMessage,
                 type: 'error'
-            }));
+            });
             return Promise.reject(errorMessage);
         }
     }
