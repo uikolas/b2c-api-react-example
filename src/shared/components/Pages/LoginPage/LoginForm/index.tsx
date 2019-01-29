@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { formStyles } from '../styles';
 import { TCustomerPassword, TCustomerUsername } from 'src/shared/interfaces/customer';
-import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
@@ -20,7 +20,6 @@ interface LoginFormState {
 }
 
 export class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
-
     public state = {
         username: '',
         password: '',
@@ -42,12 +41,13 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
 
     public handleChange = (name: string) => (event: InputChangeEvent) => {
         this.setState({
-            ...this.state, [ name ]: event.target.value,
+            ...this.state, [name]: event.target.value,
         });
     };
 
     public render() {
         const { classes } = this.props;
+
         return (
             <React.Fragment>
                 <Typography variant="title" color="inherit" noWrap>
@@ -104,4 +104,3 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
 }
 
 export const LoginForm = withStyles(formStyles)(LoginFormBase);
-

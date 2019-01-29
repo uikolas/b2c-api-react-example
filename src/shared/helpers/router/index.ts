@@ -1,6 +1,5 @@
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {TRouterMatchParam} from './types';
-
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { TRouterMatchParam } from './types';
 
 export function getRouterMatchParam(state: IReduxStore, props: IReduxOwnProps, paramName: string ): TRouterMatchParam {
     if (!paramName || !props.match || !props.match.params) {

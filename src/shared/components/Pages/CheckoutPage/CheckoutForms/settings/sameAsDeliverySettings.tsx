@@ -1,7 +1,7 @@
+import React from 'react';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
 import { ISameAsDeliveryParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 import { FormattedMessage } from 'react-intl';
-import React from 'react';
 
 export const getSameAsDeliveryFormSettings = (formName: string, params: ISameAsDeliveryParams): IFormSettings => {
     const {

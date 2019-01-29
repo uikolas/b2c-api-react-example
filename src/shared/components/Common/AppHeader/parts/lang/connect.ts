@@ -6,6 +6,7 @@ import { getAppLocale } from '@stores/reducers/common/init';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const appLocale = getAppLocale(state, ownProps);
+
     return ({
         appLocale,
     });

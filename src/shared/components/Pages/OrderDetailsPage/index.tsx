@@ -10,12 +10,11 @@ import { OrderProductList } from './OrderProductsList';
 import { OrderDetailsTotals } from './OrderDetailsTotals';
 import { styles } from './styles';
 import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
-import { OrderAddresses } from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/index";
-import { getOrderSelectedItemsData } from "src/shared/components/Pages/OrderDetailsPage/helpers";
-import { EmptyOrder } from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
-import { ClickEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { OrderAddresses } from 'src/shared/components/Pages/OrderDetailsPage/OrderAddresses';
+import { getOrderSelectedItemsData } from 'src/shared/components/Pages/OrderDetailsPage/helpers';
+import { EmptyOrder } from 'src/shared/components/Pages/OrderDetailsPage/EmptyOrder';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
-
 
 @connect
 export class OrderDetailsPageBase extends React.Component<Props, State> {
@@ -46,7 +45,7 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
         this.setState((prevState: State) => {
             const newSelectedItems = {
                 ...prevState.selectedItems,
-                [ key ]: !prevState.selectedItems[ key ],
+                [key]: !prevState.selectedItems[key],
             };
 
             return ({
@@ -58,17 +57,18 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     };
 
     public reorderSelectedClickHandler = (event: InputChangeEvent): boolean => {
-        const items = [ ...this.state.selectedItemsData ];
+        const items = [...this.state.selectedItemsData];
         if (!items) {
             return false;
         }
         this.props.addMultipleItemsToCart(items, this.props.cartId, this.props.payloadForCreateCart);
+
         return true;
     };
 
-    private isReorderSelectedDisabled = (): boolean => {
-        return Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length);
-    };
+    private isReorderSelectedDisabled = (): boolean => (
+        Boolean(!this.state.selectedItemsData || !this.state.selectedItemsData.length)
+    );
 
     public reorderAllClickHandler = (event: ClickEvent): void => {
         const allSelectedItemsData = this.props.order.items.map((item: IOrderDetailsItem): ICartAddItem => ({
@@ -78,16 +78,14 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
 
         const allSelectedItems: IOrderDetailsSelectedItems = {};
         for (const item of allSelectedItemsData) {
-            allSelectedItems[ item.sku ] = true;
+            allSelectedItems[item.sku] = true;
         }
 
-        this.setState((prevState: State) => {
-            return ({
-                ...prevState,
-                selectedItems: allSelectedItems,
-                selectedItemsData: allSelectedItemsData,
-            });
-        });
+        this.setState((prevState: State) => ({
+            ...prevState,
+            selectedItems: allSelectedItems,
+            selectedItemsData: allSelectedItemsData,
+        }));
 
         this.props.addMultipleItemsToCart(allSelectedItemsData, this.props.cartId, this.props.payloadForCreateCart);
     };
@@ -100,42 +98,44 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
         }
         if (this.props.isAppDataSet && this.props.orderIdParam) {
             this.props.getOrderData(this.props.orderIdParam as string);
+
             return true;
         }
+
         return false;
     };
 
     public render(): JSX.Element {
-        const { classes, isOrderExist, isFulfilled, currency, order, timeZone } = this.props;
+        const {classes, isOrderExist, isFulfilled, currency, order, timeZone} = this.props;
 
         return (
-            <div className={ classes.root }>
-                { (isFulfilled === false)
+            <div className={classes.root}>
+                {(isFulfilled === false)
                     ? null
                     : (
                         <Grid container>
-                            { isOrderExist
-                                ? <Grid item xs={ 12 }>
+                            {isOrderExist
+                                ? <Grid item xs={12}>
                                     <OrderDetailsGeneralInfo
-                                        orderId={ order.id }
-                                        date={ order.dateCreated }
-                                        priceMode={ order.priceMode }
-                                        timeZone={ timeZone }
+                                        orderId={order.id}
+                                        date={order.dateCreated}
+                                        priceMode={order.priceMode}
+                                        timeZone={timeZone}
                                     />
-                                    <OrderProductList items={ order.items } />
+                                    <OrderProductList items={order.items}/>
                                     <OrderDetailsTotals
-                                        currency={ currency }
-                                        expenses={ order.expenses }
-                                        totals={ order.totals }
+                                        currency={currency}
+                                        expenses={order.expenses}
+                                        totals={order.totals}
                                     />
                                     <OrderAddresses
-                                        billingAddress={ order.billingAddress }
-                                        shippingAddress={ order.shippingAddress }
-                                        billingBlockTitle={ <FormattedMessage id={ 'billing.address.title' } /> }
-                                        shippingBlockTitle={ <FormattedMessage id={ 'shipping.address.title' } /> }
+                                        billingAddress={order.billingAddress}
+                                        shippingAddress={order.shippingAddress}
+                                        billingBlockTitle={<FormattedMessage id={ 'billing.address.title' } />}
+                                        shippingBlockTitle={<FormattedMessage id={ 'shipping.address.title' } />}
                                     />
                                 </Grid>
-                                : <EmptyOrder intro={ <FormattedMessage id={ 'no.order.message' } /> } />
+                                : <EmptyOrder intro={<FormattedMessage id={ 'no.order.message' } />}/>
                             }
                         </Grid>
                     )

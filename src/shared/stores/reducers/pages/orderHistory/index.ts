@@ -1,10 +1,9 @@
 import { ORDERS_COLLECTION_REQUEST } from '@stores/actionTypes/Pages/Order';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { IOrderCollectionParsed, TOrderCollection } from 'src/shared/interfaces/order/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {IOrderHistoryState, IPageOrderHistoryAction} from "src/shared/stores/reducers/pages/orderHistory/types";
-import {IApiErrorResponse} from "src/shared/services/types";
-
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IOrderHistoryState, IPageOrderHistoryAction } from 'src/shared/stores/reducers/pages/orderHistory/types';
+import { IApiErrorResponse } from 'src/shared/services/types';
 
 export const initialState: IOrderHistoryState = {
     data: {
@@ -12,8 +11,10 @@ export const initialState: IOrderHistoryState = {
     },
 };
 
-export const orderHistory = function(state: IOrderHistoryState = initialState,
-                                     action: IPageOrderHistoryAction): IOrderHistoryState {
+export const orderHistory = function(
+    state: IOrderHistoryState = initialState,
+    action: IPageOrderHistoryAction
+): IOrderHistoryState {
     switch (action.type) {
         case `${ORDERS_COLLECTION_REQUEST}_PENDING`:
             return handlePending(state);
@@ -27,36 +28,36 @@ export const orderHistory = function(state: IOrderHistoryState = initialState,
 };
 
 // handlers
-const handleFulfilled = (orderHistoryState: IOrderHistoryState, payload: IOrderCollectionParsed | null) => {
-    return {
+const handleFulfilled = (orderHistoryState: IOrderHistoryState, payload: IOrderCollectionParsed | null) => (
+    {
         ...orderHistoryState,
         data: {
             ...orderHistoryState.data,
             ...payload,
         },
         ...getReducerPartFulfilled(),
-    };
-};
+    }
+);
 
-const handleRejected = (orderHistoryState: IOrderHistoryState, payload: IApiErrorResponse) => {
-    return {
+const handleRejected = (orderHistoryState: IOrderHistoryState, payload: IApiErrorResponse) => (
+    {
         ...orderHistoryState,
         data: {
             ...orderHistoryState.data,
         },
         ...getReducerPartRejected(payload.error),
-    };
-};
+    }
+);
 
-const handlePending = (orderHistoryState: IOrderHistoryState) => {
-    return {
+const handlePending = (orderHistoryState: IOrderHistoryState) => (
+    {
         ...orderHistoryState,
         data: {
             ...orderHistoryState.data,
         },
         ...getReducerPartPending(),
-    };
-};
+    }
+);
 
 // selectors
 export function getOrdersCollectionFromStore(state: IReduxStore, props: IReduxOwnProps): TOrderCollection {

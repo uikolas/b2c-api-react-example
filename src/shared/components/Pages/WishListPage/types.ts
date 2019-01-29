@@ -3,19 +3,22 @@ import { styles } from 'src/shared/components/Pages/WishListPage/styles';
 import { IWishlist } from 'src/shared/interfaces/wishlist';
 
 export interface WishlistPageProps extends WithStyles<typeof styles> {
-  dispatch: Function;
-  wishlists: IWishlist[] | null;
-  isLoading: boolean;
-  isInitial: boolean;
+    dispatch: Function;
+    wishlists: IWishlist[] | null;
+    isLoading: boolean;
+    isInitial: boolean;
 
   addWishlistAction(name: string): void;
+
   deleteWishlistAction(wishlistId: string): void;
+
   getWishlistsAction(): void;
+
   updateWishlistAction(wishlistId: string, name: string): void;
 }
 
 export interface WishlistPageState {
-  name: string;
-  updatedName: string;
-  updatedList: string;
+    name: string;
+    updatedName: string;
+    updatedList: string;
 }

@@ -35,4 +35,3 @@ export function createSprykerTheme(options: ThemeOptions) {
 
 // Use it to get base properties (spacing etc) in the custom global solutions
 export const baseTheme = createMuiTheme();
-

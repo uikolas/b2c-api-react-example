@@ -1,10 +1,10 @@
 import { pathCategoryPageBase } from 'src/shared/routes/contentRoutes';
 
-export const pathURLToCategorySale = "outlet";
-export const pathURLToCategoryNew = "new";
-export const labeledCategories: {[key: string]: string} = {
-  [pathURLToCategorySale]: "SALE %",
-  [pathURLToCategoryNew]: "NEW",
+export const pathURLToCategorySale = 'outlet\'';
+export const pathURLToCategoryNew = 'new\'';
+export const labeledCategories: { [key: string]: string } = {
+    [pathURLToCategorySale]: 'SALE %',
+    [pathURLToCategoryNew]: 'NEW',
 };
 
 export const pathCategoryComputers = `${pathCategoryPageBase}/5`;

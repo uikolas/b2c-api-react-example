@@ -12,10 +12,9 @@ import {
     TLocalizedName,
     TSpellingSuggestion,
 } from 'src/shared/interfaces/searchPageData/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {IPageSearchAction, ISearchState} from "src/shared/stores/reducers/pages/search/types";
-import {DefaultItemsPerPage} from "src/shared/constants/search/index";
-
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IPageSearchAction, ISearchState } from 'src/shared/stores/reducers/pages/search/types';
+import { DefaultItemsPerPage } from 'src/shared/constants/search';
 
 export const initialState: ISearchState = {
     data: {

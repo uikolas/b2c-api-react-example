@@ -10,12 +10,12 @@ import {
     ICategoriesListProps
 } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
-import { ICategory } from "src/shared/interfaces/category";
+import { ICategory } from 'src/shared/interfaces/category';
 import { getFormattedActiveCategories } from 'src/shared/components/Pages/SearchPage/helpers/index';
 import { FormattedMessage } from 'react-intl';
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
-    { classes, categories, categoriesTree, selectedCategory, localizedName },
+    {classes, categories, categoriesTree, selectedCategory, localizedName},
 ) => {
 
     if (!Array.isArray(categories) || !categories.length) {
@@ -23,30 +23,30 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
     }
     const activeCategories = getFormattedActiveCategories(categories);
 
-    const getCategoriesList = (data: Array<ICategory>,
-                               activeData: IActiveFilterCategories,
-                               selectedId: ICategoriesListProps["selectedCategory"]): Array<JSX.Element> | null => {
+    const getCategoriesList = (
+        data: ICategory[],
+        activeData: IActiveFilterCategories,
+        selectedId: ICategoriesListProps['selectedCategory']): JSX.Element[] | null => {
 
         if (!Array.isArray(data) || !data.length) {
             return null;
         }
 
         return data.map((category: ICategory) => {
-
-            const quantity = (activeData[ category.nodeId ] ? activeData[ category.nodeId ] : 0);
+            const quantity = (activeData[category.nodeId] ? activeData[category.nodeId] : 0);
 
             return (
                 <CategoryItem
-                    key={ `category-${category.nodeId}` }
-                    categoryValue={ category.nodeId }
-                    isSelected={ (+selectedId) === category.nodeId }
-                    isActive={ Boolean(quantity) }
+                    key={`category-${category.nodeId}`}
+                    categoryValue={category.nodeId}
+                    isSelected={(+selectedId) === category.nodeId}
+                    isActive={Boolean(quantity)}
                     displayName={ `${category.name
                         ? category.name
                         : <FormattedMessage id={ 'no.name.title' } />
                     } (${quantity})` }
                 >
-                    { (Array.isArray(category.children) && category.children.length && category.children.length > 0)
+                    {(Array.isArray(category.children) && category.children.length && category.children.length > 0)
                         ? getCategoriesList(category.children, activeData, selectedCategory)
                         : null
                     }
@@ -60,15 +60,15 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
             container
             justify="flex-start"
             alignItems="center"
-            className={ classes.root }
+            className={classes.root}
         >
-            <Grid item xs={ 12 }>
+            <Grid item xs={12}>
                 <AppPageSubTitle
                     title={ localizedName ? localizedName : <FormattedMessage id={ 'categories.panel.title' } /> }
                     extraClass={ classes.title }
                 />
-                <List component="nav" className={ classes.list }>
-                    { getCategoriesList(categoriesTree, activeCategories, selectedCategory) }
+                <List component="nav" className={classes.list}>
+                    {getCategoriesList(categoriesTree, activeCategories, selectedCategory)}
                 </List>
             </Grid>
         </Grid>

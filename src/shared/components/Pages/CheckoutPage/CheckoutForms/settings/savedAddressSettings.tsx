@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
-import { IAddressItemCollection } from "src/shared/interfaces/addresses";
+import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
+import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
 import {
     IAddressesParams,
     IBillingAddressesParams,
     IDeliveryAddressesParams
-} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import { getSalutationToShow } from "src/shared/helpers/customer/salutation";
+} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
 import { FormattedMessage } from 'react-intl';
 
-
-export const getDeliverySavedAddressFormSettings = (formName: string,
-                                                    params: IDeliveryAddressesParams): IFormSettings => {
+export const getDeliverySavedAddressFormSettings = (
+    formName: string,
+    params: IDeliveryAddressesParams): IFormSettings => {
 
     const {
         addressesCollection,
@@ -44,8 +44,9 @@ export const getDeliverySavedAddressFormSettings = (formName: string,
     return formSettings;
 };
 
-export const getBillingSavedAddressFormSettings = (formName: string,
-                                                   params: IBillingAddressesParams): IFormSettings => {
+export const getBillingSavedAddressFormSettings = (
+    formName: string,
+    params: IBillingAddressesParams): IFormSettings => {
 
     const {
         addressesCollection,
@@ -78,30 +79,30 @@ export const getBillingSavedAddressFormSettings = (formName: string,
     return formSettings;
 };
 
-const getRadioItems = (collection: IAddressesParams["addressesCollection"],
-                       extraOptions: IAddressesParams["extraOptionsToSelection"]) => {
+const getRadioItems = (
+    collection: IAddressesParams['addressesCollection'],
+    extraOptions: IAddressesParams['extraOptionsToSelection']) => {
     let items = convertAddressesToRadioItems(collection);
+
     if (!items) {
         return null;
     }
+
     if (Array.isArray(extraOptions) && extraOptions.length > 0) {
         items = items.concat(extraOptions);
     }
+
     return items;
 };
 
-const convertAddressesToRadioItems = (collection: IAddressesParams["addressesCollection"]) => {
-
-    return (isAddressesCollectionExist(collection)
-            ? collection.map((item: IAddressItemCollection) => ({ value: item.id, label: createRadioItemLabel(item) }))
-            : null
+const convertAddressesToRadioItems = (collection: IAddressesParams['addressesCollection']) =>
+    (isAddressesCollectionExist(collection)
+        ? collection.map((item: IAddressItemCollection) => ({value: item.id, label: createRadioItemLabel(item)}))
+        : null
     );
-};
 
-const isAddressesCollectionExist = (collection: IAddressesParams["addressesCollection"]) => {
-    return Boolean(collection && Array.isArray(collection) && collection.length > 0);
-};
-
+const isAddressesCollectionExist = (collection: IAddressesParams['addressesCollection']) =>
+    Boolean(collection && Array.isArray(collection) && collection.length > 0);
 
 const createRadioItemLabel = (address: IAddressItemCollection) => {
     let response: React.ReactNode = '';

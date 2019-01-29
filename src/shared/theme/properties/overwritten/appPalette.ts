@@ -6,5 +6,5 @@ export const appPalette: PaletteOptions = {
     },
     secondary: {
         main: '#ededed',
-    },
+    }
 };

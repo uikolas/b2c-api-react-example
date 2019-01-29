@@ -11,7 +11,8 @@ export interface AppHeaderState {
 
 export interface AppHeaderProps extends WithStyles<typeof styles>, WithRouter {
     isLoading: boolean;
-    onMobileNavToggle(): void;
     isMobileNavOpened: boolean;
     locale: string;
+
+    onMobileNavToggle(): void;
 }

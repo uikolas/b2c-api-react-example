@@ -1,5 +1,5 @@
 import { parseGetOrdersCollectionResponse } from './response';
 
 export {
-  parseGetOrdersCollectionResponse,
+    parseGetOrdersCollectionResponse,
 };

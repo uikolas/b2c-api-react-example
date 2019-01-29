@@ -42,7 +42,7 @@ export type TPriceTypeDefaultGross = number | null;
 export type TPriceTypeDefaultNet = number | null;
 export type TAppPriceMode = string | null;
 
-export type TProductCardImagesCollection = Array<IProductCardImages>;
+export type TProductCardImagesCollection = IProductCardImages[];
 
 // Interfaces
 
@@ -63,18 +63,18 @@ export interface IProductCardImages {
 }
 
 export interface IProductCard {
-    images?: Array<IProductCardImages> | null;
+    images?: IProductCardImages[] | null;
     price: TProductPrice;
     abstractName: TProductName;
     abstractSku: TProductSKU;
-    prices: Array<IProductPricesItem>;
+    prices: IProductPricesItem[];
 
 }
 
 export interface IProductAttributeMap {
-    attribute_variants: {[key: string]: IProductAttributes};
-    product_concrete_ids: Array<TProductSKU>;
-    super_attributes: {[key: string]: Array<string>};
+    attribute_variants: { [key: string]: IProductAttributes };
+    product_concrete_ids: TProductSKU[];
+    super_attributes: { [key: string]: string[] };
 }
 
 export interface IProductAttributes {
@@ -87,7 +87,7 @@ export interface IProductAttributeNames {
 }
 
 export interface ISuperAttributes {
-    superAttributes: Array<ISuperAttribute> | null;
+    superAttributes: ISuperAttribute[] | null;
 }
 
 export interface IProductAvailability {
@@ -104,10 +104,10 @@ export interface IProductPropFullData extends IProductAvailability {
     attributes: TProductAttributes | null;
     attributeNames: IProductAttributeNames | null;
     description: TProductDescription | null;
-    images: Array<IProductCardImages> | null;
+    images: IProductCardImages[] | null;
     name: TProductName | null;
     price: TProductPrice | null;
-    prices: Array<IProductPricesItem> | null;
+    prices: IProductPricesItem[] | null;
     priceOriginalGross: TPriceTypeOriginalGross;
     priceOriginalNet: TPriceTypeOriginalNet;
     priceDefaultGross: TPriceTypeDefaultGross;
@@ -118,7 +118,7 @@ export interface IProductPropFullData extends IProductAvailability {
 
 export interface IProductDataParsed {
     attributeMap: IProductAttributeMap | null;
-    superAttributes: Array<ISuperAttribute> | null;
+    superAttributes: ISuperAttribute[] | null;
     abstractProduct: IProductPropFullData | null;
     concreteProducts: {
         [key: string]: IProductPropFullData
@@ -139,14 +139,15 @@ export interface IProductAttributesRawResponse {
     attributeNames: IProductAttributeNames;
     attributeMap: IProductAttributeMap;
     id: string;
-    superAttributesDefinition?: Array<string>;
+    superAttributesDefinition?: string[];
     metaDescription: string;
     metaKeywords: string;
     metaTitle: string;
 }
 
 export interface IProductImageSetsRawResponse {
-    images: Array<IProductCardImages>;
+    images: IProductCardImages[];
     name?: string;
 }
-export type TProductImageSetsCollectionRawResponse = Array<IProductImageSetsRawResponse>;
+
+export type TProductImageSetsCollectionRawResponse = IProductImageSetsRawResponse[];

@@ -2,7 +2,7 @@ import { SalutationVariants } from 'src/shared/constants/customer';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
 import { IAddressParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { ICountry } from 'src/shared/interfaces/country/index';
+import { ICountry } from 'src/shared/interfaces/country';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
@@ -60,7 +60,7 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     menuItems: SalutationVariants
                         .map((item: TSalutationVariant) => ({ value: item.value, name: item.label })),
                     menuItemFirst: {
-                        value: " ",
+                        value: ' ',
                         name: <FormattedMessage id={ 'first.item.in.select' } />,
                         selected: true,
                         disabled: true,
@@ -163,7 +163,7 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                             .map((item: ICountry) => ({ value: item.iso2Code, name: item.name }))
                         : null,
                     menuItemFirst: {
-                        value: " ",
+                        value: ' ',
                         name: <FormattedMessage id={ 'first.item.in.select' } />,
                         selected: true,
                         disabled: true,
@@ -181,5 +181,6 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
             ],
         ],
     };
+
     return formSettings;
 };

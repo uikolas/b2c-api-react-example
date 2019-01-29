@@ -10,9 +10,9 @@ import {
     getProductDataRejectedStateAction,
 } from '@stores/actions/pages/product';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
-import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from "src/shared/interfaces/product/index";
-import { parseProductAvailabilityResponse } from "src/shared/helpers/product/productResponse";
-import { IApiResponseData } from "src/shared/services/types";
+import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from 'src/shared/interfaces/product/index';
+import { parseProductAvailabilityResponse } from 'src/shared/helpers/product/productResponse';
+import { IApiResponseData } from 'src/shared/services/types';
 
 export class ProductService extends ApiServiceAbstract {
     public static async getAbstractData(dispatch: Function, sku: string): Promise<void> {
@@ -20,12 +20,12 @@ export class ProductService extends ApiServiceAbstract {
             dispatch(getProductDataItemPendingStateAction());
             const response: IApiResponseData = await api.get(`abstract-products/${sku}`, {
                 include: 'abstract-product-image-sets,' +
-                    'abstract-product-prices,' +
-                    'abstract-product-availabilities,' +
-                    'concrete-products,' +
-                    'concrete-product-image-sets,' +
-                    'concrete-product-prices,' +
-                    'concrete-product-availabilities',
+                'abstract-product-prices,' +
+                'abstract-product-availabilities,' +
+                'concrete-products,' +
+                'concrete-product-image-sets,' +
+                'concrete-product-prices,' +
+                'concrete-product-availabilities',
             });
 
             if (response.ok) {
@@ -47,11 +47,16 @@ export class ProductService extends ApiServiceAbstract {
                                                        sku: TProductSKU): Promise<IConcreteProductAvailability | null> {
         try {
             dispatch(getProductAvailabilityPendingStateAction());
-            const response: IApiResponseData = await api.get(`concrete-products/${sku}/concrete-product-availabilities`);
+            const response: IApiResponseData = await api.get(
+                `concrete-products/${sku}/concrete-product-availabilities`
+            );
 
             if (response.ok) {
-                const responseParsed: null | IConcreteProductAvailability = parseProductAvailabilityResponse(response.data);
+                const responseParsed: null | IConcreteProductAvailability = parseProductAvailabilityResponse(
+                    response.data
+                );
                 dispatch(getProductAvailabilityFulfilledStateAction(responseParsed));
+
                 return responseParsed;
             } else {
                 const errorMessage = this.getParsedAPIError(response);

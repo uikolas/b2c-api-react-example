@@ -18,7 +18,7 @@ import {
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
 import { FormattedMessage } from 'react-intl';
 
-export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props) => {
+export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props => {
     const {
         classes,
         activeValuesFilters,
@@ -30,15 +30,15 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
     } = props;
 
     const isActiveRangesExist = ((Object.getOwnPropertyNames(activeValuesRanges).length > 0));
-    const itemsGlobalCollection: Array<IFilterItem> = [];
+    const itemsGlobalCollection: IFilterItem[] = [];
 
-    for (let filter in activeValuesFilters) {
-        if (Array.isArray(activeValuesFilters[ filter ]) && activeValuesFilters[ filter ].length) {
-            const itemsLocalCollection = activeValuesFilters[ filter ].map((value: TFilterItemValue) => ({
+    for (const filter in activeValuesFilters) {
+        if (Array.isArray(activeValuesFilters[filter]) && activeValuesFilters[filter].length) {
+            const itemsLocalCollection = activeValuesFilters[filter].map((value: TFilterItemValue) => ({
                 name: filter,
                 value,
-                label: `${(filtersLocalizedNames && filtersLocalizedNames[ filter ])
-                    ? filtersLocalizedNames[ filter ]
+                label: `${(filtersLocalizedNames && filtersLocalizedNames[filter])
+                    ? filtersLocalizedNames[filter]
                     : ''}: ${value}`,
                 type: filterTypeFilter,
             }));
@@ -47,26 +47,25 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
     }
 
     if (isActiveRangesExist && rangeFilters) {
-
-        for (let rangeName in activeValuesRanges) {
+        for (const rangeName in activeValuesRanges) {
             const defaultValuesArr = rangeFilters.filter((item: RangeFacets) => (item.name === rangeName));
-            if (defaultValuesArr && defaultValuesArr[ 0 ]) {
+            if (defaultValuesArr && defaultValuesArr[0]) {
 
                 let isPrice = false;
                 if (isWordHasPrice(rangeName)) {
                     isPrice = true;
                 }
-                const valueFrom = activeValuesRanges[ rangeName ].min;
-                const valueTo = activeValuesRanges[ rangeName ].max;
+                const valueFrom = activeValuesRanges[rangeName].min;
+                const valueTo = activeValuesRanges[rangeName].max;
 
                 if (valueFrom > 0 && valueTo > 0) {
                     itemsGlobalCollection.push(
                         createRangeFilterItemCombined({
                             isPrice,
-                            value: activeValuesRanges[ rangeName ],
+                            value: activeValuesRanges[rangeName],
                             rangeName,
-                            title: (rangesLocalizedNames && rangesLocalizedNames[ rangeName ])
-                                ? rangesLocalizedNames[ rangeName ]
+                            title: (rangesLocalizedNames && rangesLocalizedNames[rangeName])
+                                ? rangesLocalizedNames[rangeName]
                                 : '',
                             priceClassName: classes.price
                         }),
@@ -86,35 +85,33 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = (props)
         <Grid container
               justify="flex-start"
               alignItems="center"
-              className={ classes.root }
+              className={classes.root}
         >
-            <Grid item xs={ 12 }>
-                <AppPageSubTitle title={ <FormattedMessage id={ 'active.filters.title' } /> } />
+            <Grid item xs={12}>
+                <AppPageSubTitle title={<FormattedMessage id={ 'active.filters.title' } />}/>
             </Grid>
 
             <Grid container
                   justify="flex-start"
                   alignItems="center"
-                  className={ classes.list }
+                  className={classes.list}
             >
-                { itemsGlobalCollection.map((item: IFilterItem) => {
-                    return (
-                        <ActiveFilterItem
-                            key={ `${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}` }
-                            value={ item.value }
-                            name={ item.name }
-                            label={ item.label }
-                            type={ item.type }
-                            rangeSubType={ item.rangeSubType }
-                        />
-                    );
-                })
+                {itemsGlobalCollection.map((item: IFilterItem) => (
+                    <ActiveFilterItem
+                        key={`${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}`}
+                        value={item.value}
+                        name={item.name}
+                        label={item.label}
+                        type={item.type}
+                        rangeSubType={item.rangeSubType}
+                    />
+                ))
                 }
                 <Chip
-                    label={ <FormattedMessage id={ 'reset.all.filters.title' } /> }
-                    className={ `${classes.reset}` }
-                    onClick={ resetHandler }
-                    classes={ { label: classes.resetLabel } }
+                    label={<FormattedMessage id={ 'reset.all.filters.title' } />}
+                    className={`${classes.reset}`}
+                    onClick={resetHandler}
+                    classes={{label: classes.resetLabel}}
                 />
 
             </Grid>

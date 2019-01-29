@@ -8,12 +8,12 @@ import Button from '@material-ui/core/Button';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from '@stores/actions/pages/login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
-import { getRouterMatchParam } from 'src/shared/helpers/router/index';
+import { getRouterMatchParam } from 'src/shared/helpers/router';
 import { TRouterMatchParam } from 'src/shared/helpers/router/types';
 import { formStyles } from '../styles';
-import { IReduxOwnProps, IReduxStore } from "src/shared/stores/reducers/types";
-import { ClickEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
-import { IResetPasswordPayload } from "src/shared/interfaces/customer/index";
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
+import { IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { FormattedMessage } from 'react-intl';
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
@@ -35,14 +35,14 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
     };
 
     public handleChange = (event: InputChangeEvent) => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         this.setState({
-            ...this.state, [ name ]: value,
+            ...this.state, [name]: value,
         });
     };
 
     public submitRequest = (e: ClickEvent) => {
-        this.setState({ submitted: true });
+        this.setState({submitted: true});
         if (this.state.password !== this.state.confirmPassword) {
             return;
         }
@@ -57,16 +57,17 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
     };
 
     public render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         const { confirmPassword, password, submitted } = this.state;
+
         return (
             <AppMain>
                 <Grid
-                    item xs={ 12 }
+                    item xs={12}
                     container
                     justify="center"
                 >
-                    <Paper className={ classes.forgot }>
+                    <Paper className={classes.forgot}>
                         <Typography variant="headline" paragraph>
                             <FormattedMessage id={ 'reset.password.title' } />
                         </Typography>
@@ -129,8 +130,9 @@ const ResetPassword = withStyles(formStyles)(ResetPasswordPageBase);
 export const ResetPasswordPage = reduxify(
     (state: IReduxStore, ownProps: IReduxOwnProps) => {
         const restoreKey = getRouterMatchParam(state, ownProps, 'restoreKey');
+
         return (
-            { restoreKey }
+            {restoreKey}
         );
     },
 )(ResetPassword);

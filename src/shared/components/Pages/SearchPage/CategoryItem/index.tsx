@@ -7,43 +7,43 @@ import { styles } from './styles';
 import { SearchPageContext } from '../context';
 import { ICategoryItemProps } from 'src/shared/components/Pages/SearchPage/CategoryItem/types';
 
-export const CategoryItemBase: React.SFC<ICategoryItemProps> = (props) => {
-  const {
-    classes,
-    displayName,
-    categoryValue,
-    isSelected,
-    isActive,
-    children,
-  } = props;
+export const CategoryItemBase: React.SFC<ICategoryItemProps> = props => {
+    const {
+        classes,
+        displayName,
+        categoryValue,
+        isSelected,
+        isActive,
+        children,
+    } = props;
 
-  return (
-    <SearchPageContext.Consumer>
-      { ({selectCategoryHandler}) => (
-        <div className={`${classes.listItemOuter} ${children ? classes.hasChildren : null}`}>
-          <ListItem
-            button
-            onClick={ (event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event) }
-            selected={ isSelected }
-            disabled={!isActive}
-            className={ classes.categoryItem }
-            disableGutters
-            classes={ {root: classes.root, selected: classes.selected} }
-          >
-            <ListItemText
-              disableTypography
-              classes={ {root: classes.categoryItemText} }
-              primary={ displayName }
-            />
-          </ListItem>
-          {children
-            ? <div className={classes.children}>{children}</div>
-            : null
-          }
-        </div>
-      ) }
-    </SearchPageContext.Consumer>
-  );
+    return (
+        <SearchPageContext.Consumer>
+            {({selectCategoryHandler}) => (
+                <div className={`${classes.listItemOuter} ${children ? classes.hasChildren : null}`}>
+                    <ListItem
+                        button
+                        onClick={(event: React.MouseEvent<HTMLElement>) => selectCategoryHandler(categoryValue)(event)}
+                        selected={isSelected}
+                        disabled={!isActive}
+                        className={classes.categoryItem}
+                        disableGutters
+                        classes={{root: classes.root, selected: classes.selected}}
+                    >
+                        <ListItemText
+                            disableTypography
+                            classes={{root: classes.categoryItemText}}
+                            primary={displayName}
+                        />
+                    </ListItem>
+                    {children
+                        ? <div className={classes.children}>{children}</div>
+                        : null
+                    }
+                </div>
+            )}
+        </SearchPageContext.Consumer>
+    );
 };
 
 export const CategoryItem = withStyles(styles)(CategoryItemBase);

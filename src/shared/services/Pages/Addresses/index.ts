@@ -3,28 +3,32 @@ import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
 import api, { setAuthToken } from 'src/shared/services/api';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
-import { IApiResponseData } from "src/shared/services/types";
+import { IApiResponseData } from 'src/shared/services/types';
 import {
     IAddressDataRawResponse,
     IRequestAddAddressBody,
     IRequestUpdateAddressBody
-} from "src/shared/services/Pages/Addresses/types";
+} from 'src/shared/services/Pages/Addresses/types';
 import { parseOneAddressRawResponse } from 'src/shared/helpers/address/response';
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class AddressesService extends ApiServiceAbstract {
-    public static async getCustomerAddresses(ACTION_TYPE: string, dispatch: Function, customerId: string): Promise<void> {
+    public static async getCustomerAddresses(
+        ACTION_TYPE: string,
+        dispatch: Function,
+        customerId: string
+    ): Promise<void> {
         try {
             const token = await RefreshTokenService.getActualToken(dispatch);
             setAuthToken(token);
 
             const endpoint = `customers/${customerId}/addresses`;
-            const response: IApiResponseData = await api.get(endpoint, {}, { withCredentials: true });
+            const response: IApiResponseData = await api.get(endpoint, {}, {withCredentials: true});
 
             if (response.ok) {
                 const addresses = response.data.data.map((
-                    address: IAddressDataRawResponse
-                ): IAddressItem => ({ id: address.id, ...address.attributes }));
+                    address: IAddressDataRawResponse,
+                ): IAddressItem => ({id: address.id, ...address.attributes}));
 
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
@@ -80,10 +84,12 @@ export class AddressesService extends ApiServiceAbstract {
             });
             toast.error('Unexpected Error: ' + error.message);
         }
-    }public static async addAddress(ACTION_TYPE: string,
-                                   dispatch: Function,
-                                   payload: IAddressItem,
-                                   customerId: string): Promise<void> {
+    }public static async addAddress(
+        ACTION_TYPE: string,
+        dispatch: Function,
+        payload: IAddressItem,
+        customerId: string
+    ): Promise<void> {
         try {
             const token = await RefreshTokenService.getActualToken(dispatch);
             setAuthToken(token);
@@ -96,12 +102,12 @@ export class AddressesService extends ApiServiceAbstract {
             };
 
             const endpoint = `customers/${customerId}/addresses`;
-            const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
 
             if (response.ok) {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    address: { id: response.data.data.id, ...response.data.data.attributes }
+                    address: {id: response.data.data.id, ...response.data.data.attributes},
 
                 });
                 toast.success(FormattedMessageTemplate('new.address.added.message'));
@@ -135,7 +141,7 @@ export class AddressesService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const response: IApiResponseData = await api.delete(
-                `customers/${customerId}/addresses/${addressId}`, {}, { withCredentials: true }
+                `customers/${customerId}/addresses/${addressId}`, {}, {withCredentials: true},
             );
 
             if (response.ok) {
@@ -156,7 +162,7 @@ export class AddressesService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error
+                error,
             });
             toast.error('Unexpected Error: ' + error.message);
         }
@@ -180,7 +186,7 @@ export class AddressesService extends ApiServiceAbstract {
             };
 
             const response: IApiResponseData = await api.patch(
-                `customers/${customerId}/addresses/${addressId}`, body, { withCredentials: true }
+                `customers/${customerId}/addresses/${addressId}`, body, {withCredentials: true},
             );
 
             if (response.ok) {

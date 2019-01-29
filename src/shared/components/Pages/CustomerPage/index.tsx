@@ -41,14 +41,13 @@ interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
 @connect
 @(withRouter as Function)
 export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
-
     public handleLogout = (e: ClickEvent) => {
         e.preventDefault();
         this.props.logout();
     };
 
     public render() {
-        const { classes, location } = this.props;
+        const {classes, location} = this.props;
 
         return (
             <AppMain>
@@ -59,7 +58,9 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
 
                             <MenuList>
                                 { customerProfileNavLinks.map((item: INavLinkData) => {
-                                    const isSelected = (location.pathname === item.path) || location.pathname.includes(item.path);
+                                    const isSelected = (location.pathname === item.path)
+                                        || location.pathname.includes(item.path);
+
                                     return (
                                         <MenuItem
                                             key={ item.title }
@@ -91,7 +92,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                                     <Route path={ pathCustomerAddressesPage } exact
                                            component={ LoadableCustomerAddressPage } />
                                     <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
-                    <Route path={ pathAddressFormNew } component={ AddressFormPage } />
+                                    <Route path={ pathAddressFormNew } component={ AddressFormPage } />
                                     <Route path={ pathWishListsPage } component={ LoadableWishListPage } />
                                     <Route path={ pathWishlistDetailPage } component={ LoadableWishlistDetail } />
                                     <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage } />

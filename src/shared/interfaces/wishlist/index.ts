@@ -7,8 +7,8 @@ export interface IWishlistProduct {
     sku: string;
     name: string;
     image: string;
-    attributes: Array<IProductAttributes>;
-    prices: Array<IProductPricesItem>;
+    attributes: IProductAttributes[];
+    prices: IProductPricesItem[];
     availability: boolean;
 }
 
