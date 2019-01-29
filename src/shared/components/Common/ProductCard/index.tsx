@@ -29,7 +29,7 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
     label: IProductLabel | null;
 }
 
-export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
+export const ProductCardBase: React.SFC<ProductCardProps> = props => {
     const { classes, images, name = '', prices, sku, label } = props;
 
     let actualPriceGross = 0;

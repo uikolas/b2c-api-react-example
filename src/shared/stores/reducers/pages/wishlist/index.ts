@@ -11,7 +11,6 @@ import {
 import { IWishlist, IWishlistProduct } from 'src/shared/interfaces/wishlist/index';
 import { IPageWishlistAction, WishlistState } from 'src/shared/stores/reducers/pages/wishlist/types';
 
-
 export const initialState: WishlistState = {
     data: {
         wishlists: [],

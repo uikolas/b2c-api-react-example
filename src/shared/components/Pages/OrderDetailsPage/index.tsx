@@ -10,12 +10,11 @@ import { OrderProductList } from './OrderProductsList';
 import { OrderDetailsTotals } from './OrderDetailsTotals';
 import { styles } from './styles';
 import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
-import { OrderAddresses } from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/index";
-import { getOrderSelectedItemsData } from "src/shared/components/Pages/OrderDetailsPage/helpers";
-import { EmptyOrder } from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
-import { ClickEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { OrderAddresses } from 'src/shared/components/Pages/OrderDetailsPage/OrderAddresses';
+import { getOrderSelectedItemsData } from 'src/shared/components/Pages/OrderDetailsPage/helpers';
+import { EmptyOrder } from 'src/shared/components/Pages/OrderDetailsPage/EmptyOrder';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
-
 
 @connect
 export class OrderDetailsPageBase extends React.Component<Props, State> {

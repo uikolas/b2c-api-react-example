@@ -23,7 +23,6 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     control: {
         paddingLeft: theme.spacing.unit * 1.5,
         paddingRight: 0,
-
         '&:first-child': {
             paddingRight: theme.spacing.unit * 1.5,
             paddingLeft: 0,

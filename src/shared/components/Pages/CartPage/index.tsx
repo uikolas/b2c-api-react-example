@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedPlural } from 'react-intl';
+import { FormattedPlural, FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -12,7 +12,6 @@ import { OrderSummary } from './OrderSummary';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
-import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {

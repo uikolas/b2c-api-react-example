@@ -58,7 +58,9 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
 
                             <MenuList>
                                 { customerProfileNavLinks.map((item: INavLinkData) => {
-                                    const isSelected = (location.pathname === item.path) || location.pathname.includes(item.path);
+                                    const isSelected = (location.pathname === item.path)
+                                        || location.pathname.includes(item.path);
+
                                     return (
                                         <MenuItem
                                             key={ item.title }

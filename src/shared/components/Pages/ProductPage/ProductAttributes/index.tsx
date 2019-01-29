@@ -6,7 +6,6 @@ import { IProductAttributeNames, IProductAttributes } from 'src/shared/interface
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
-
 interface ProductAttributesProps extends WithStyles<typeof styles> {
     attributes: IProductAttributes;
     attributeNames: IProductAttributeNames | null;

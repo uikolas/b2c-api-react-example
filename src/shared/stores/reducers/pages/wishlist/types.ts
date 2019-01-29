@@ -8,7 +8,8 @@ export interface WishlistState extends IReduxState {
         wishlists: IWishlist[],
         currentWishlist: IWishlist | null,
         currentItems: IWishlistProduct[],
-        isInitial: boolean,
+        isInitialList: boolean,
+        isInitialDetail: boolean,
     };
 }
 

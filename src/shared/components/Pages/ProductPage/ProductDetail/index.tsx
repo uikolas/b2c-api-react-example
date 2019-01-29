@@ -7,7 +7,7 @@ import { ProductAttributes } from 'src/shared/components/Pages/ProductPage/Produ
 import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
 
-export const ProductDetailBase: React.SFC<IProductDetailProps> = (props) => {
+export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
     const {
         classes,
         attributes,

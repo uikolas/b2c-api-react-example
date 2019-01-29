@@ -47,6 +47,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
 
     public render() {
         const { classes } = this.props;
+
         return (
             <React.Fragment>
                 <Typography variant="title" color="inherit" noWrap>

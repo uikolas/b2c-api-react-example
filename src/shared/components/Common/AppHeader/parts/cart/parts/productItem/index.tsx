@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ProductItemProps as Props } from './types';
 import { styles, cartProductImageSize } from './styles';
-import { SquareImage } from 'src/shared/components/Common/SquareImage/index';
-import { priceTypeNameOriginal } from 'src/shared/interfaces/product/index';
+import { SquareImage } from 'src/shared/components/Common/SquareImage';
+import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import { FormattedMessage } from 'react-intl';
 
 export const ProductItemComponent: React.SFC<Props> = ({classes, productData, deleteItem}) => (
@@ -61,7 +61,6 @@ export const ProductItemComponent: React.SFC<Props> = ({classes, productData, de
             </Grid>
         </Grid>
     </Grid>
-    );
-};
+);
 
 export const ProductItem = withStyles(styles)(ProductItemComponent);

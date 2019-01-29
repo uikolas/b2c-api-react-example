@@ -7,7 +7,6 @@ import { styles } from './styles';
 import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
 import { FormattedMessage } from 'react-intl';
 
-
 export const CategoryTeaserBase: React.SFC<ICategoryTeaserProps> = (props): JSX.Element => {
     const {
         classes, title, text, img, path, linkTitle, isOdd

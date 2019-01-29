@@ -19,11 +19,11 @@ export const LinksComponent: React.SFC<Props> = ({classes, title, links, externa
                 <li key={link.name + link.path} className={classes.linkItem}>
                     {external ? (
                         <a href={link.path} className={classes.link} target="_blank">
-                            {link.name}
+                            <FormattedMessage id={link.name} />
                         </a>
                     ) : (
                         <NavLink to={link.path} className={classes.link}>
-                            {link.name}
+                            <FormattedMessage id={link.name} />
                         </NavLink>
                     )}
                 </li>

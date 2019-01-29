@@ -4,7 +4,6 @@ import { IPaymentCreditCardParams } from '../../types/formSettingsTypes';
 import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
 import { FormattedMessage } from 'react-intl';
 
-
 export const getCreditCardFormSettings = (formName: string, params: IPaymentCreditCardParams): IFormSettings => {
     const {
         inputsData: {
@@ -29,7 +28,6 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
         onBlurHandler,
     } = params;
 
-
     const formSettings: IFormSettings = {
         formName,
         onChangeHandler: inputChangeHandler,
@@ -47,7 +45,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     isError: paymentProvider.isError,
                     menuItems: providersCollection,
                     menuItemFirst: {
-                        value: " ",
+                        value: ' ',
                         name: <FormattedMessage id={ 'first.item.in.select' } />,
                         selected: true,
                         disabled: true,
@@ -122,7 +120,6 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
 
     return formSettings;
 };
-
 
 const createItemsForExpiryMonth = (): IMenuItemSelect[] => {
     const data = getRange(1, 12);

@@ -38,12 +38,6 @@ export const getExtraOptionsToSelection = (
     if (!isAddressesCollectionExist) {
         return null;
     }
-export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
-                                           addressType: TAddressType): TExtraOptionsToSelection | null => {
-    let response: TExtraOptionsToSelection = [];
-    if (!isAddressesCollectionExist) {
-        return null;
-    }
 
     if (addressType === 'delivery') {
         response.push({
@@ -69,25 +63,25 @@ export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
 export const getDefaultAddressId = (
     collection: ICheckoutPageProps['addressesCollection'],
     addressType: TAddressType) => {
-
     if (!collection || !collection.length) {
         return null;
     }
-    const variantData = collection.filter((item: IAddressItemCollection) => {
-        if (addressType === 'delivery') {
-            return item.isDefaultShipping === true;
-        } else if (addressType === 'billing') {
-            return item.isDefaultBilling === true;
-        } else {
-            return false;
-        }
-    });
+    const variantData = collection
+        .filter((item: IAddressItemCollection) => {
+            if (addressType === 'delivery') {
+                return item.isDefaultShipping === true;
+            } else if (addressType === 'billing') {
+                return item.isDefaultBilling === true;
+            } else {
+                return false;
+            }
+        });
 
-    return ((variantData && variantData[0]) ? variantData[0].id : null);
+    return ((variantData && variantData[ 0 ]) ? variantData[ 0 ].id : null);
 };
 
 export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
-    const {value, fieldConfig} = param;
+    const { value, fieldConfig } = param;
     if (!value && fieldConfig.isRequired) {
         return false;
     }
@@ -102,14 +96,14 @@ export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
 };
 
 export const checkFormValidity = (param: IParamFormValidity): boolean => {
-    const {form, fieldsConfig} = param;
+    const { form, fieldsConfig } = param;
     let result: boolean = true;
 
     for (const field in form) {
-        const {value} = form[field];
+        const { value } = form[ field ];
         const cleanValue = typeof value === 'string' ? value.trim() : value;
 
-        if (form[field].isError || (fieldsConfig[field].isRequired && !cleanValue)) {
+        if (form[ field ].isError || (fieldsConfig[ field ].isRequired && !cleanValue)) {
             result = false;
         }
     }
@@ -156,11 +150,11 @@ export const getAddressForm = (address: ICheckoutAddressState): IAddressItem => 
     let payloadAddress: IAddressItem = addressDefault;
 
     Object.keys(address).map((field: string) => {
-        const {value} = address[field];
-        payloadAddress = {...payloadAddress, [field]: typeof value === 'string' ? value.trim() : value};
+        const { value } = address[ field ];
+        payloadAddress = { ...payloadAddress, [ field ]: typeof value === 'string' ? value.trim() : value };
     });
 
-    payloadAddress = {...payloadAddress, iso2Code: payloadAddress.country};
+    payloadAddress = { ...payloadAddress, iso2Code: payloadAddress.country };
     delete payloadAddress.country;
 
     return payloadAddress;

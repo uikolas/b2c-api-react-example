@@ -5,7 +5,9 @@ import { IDeliveryFormProps } from 'src/shared/components/Pages/CheckoutPage/Che
 import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
 import { CheckoutPageContext } from '../../context';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { getAddressFormSettings } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
+import {
+    getAddressFormSettings
+} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
 import {
     getDeliverySavedAddressFormSettings
 } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';

@@ -10,7 +10,7 @@ import { getCartId, getTotalItemsQuantity, isCartStateLoading } from '@stores/re
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { TAppCurrency } from 'src/shared/interfaces/currency/index';
 import { getRouterMatchParam } from 'src/shared/helpers/router';
-import { isWishlistDetailsPresent, isWishlistDetailsStateRejected} from '@stores/reducers/Pages/Wishlist/selectors';
+import { isWishlistDetailsPresent, isWishlistDetailsStateRejected } from '@stores/reducers/Pages/Wishlist/selectors';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;

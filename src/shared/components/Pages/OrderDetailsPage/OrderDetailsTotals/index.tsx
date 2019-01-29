@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { IOrderDetailsTotalsProps } from './types';
 import { IOrderDetailsExpenseItem } from 'src/shared/interfaces/order';
-import { TotalItem } from 'src/shared/components/Pages/OrderDetailsPage/TotalItem/index';
+import { TotalItem } from 'src/shared/components/Pages/OrderDetailsPage/TotalItem';
 import { FormattedMessage } from 'react-intl';
 
 export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (props): JSX.Element => {
@@ -28,15 +28,13 @@ export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (prop
                 <TotalItem value={ subtotal } title={ <FormattedMessage id={ 'word.subtotal.title' } /> } />
                 { (!expenses || !expenses.length)
                     ? null
-                    : expenses.map((item: IOrderDetailsExpenseItem) => {
-                        return (
-                            <TotalItem
-                                key={ item.name }
-                                value={ item.sumPrice }
-                                title={ <FormattedMessage id={ 'order.detail.shipment.title' } /> }
-                            />
-                        );
-                    })
+                    : expenses.map((item: IOrderDetailsExpenseItem) => (
+                        <TotalItem
+                            key={ item.name }
+                            value={ item.sumPrice }
+                            title={ <FormattedMessage id={ 'order.detail.shipment.title' } /> }
+                        />
+                    ))
                 }
                 { expenses.length > 1
                     ? <TotalItem

@@ -61,7 +61,6 @@ export class AddressForm extends React.Component<Props, State> {
         }
     };
 
-
     public handleChange = (event: { target: IFieldInput }): void => {
         const {name, value}: IFieldInput = event.target;
         this.setState(state => ({...state, [name]: value}));
@@ -79,6 +78,7 @@ export class AddressForm extends React.Component<Props, State> {
 
         if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
             toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+
             return;
         }
 

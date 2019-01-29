@@ -32,7 +32,9 @@ export const CartTotalBase: React.SFC<CartTotalProps> = props => {
             { totals
                 ? (
                     <div
-                        className={ `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} ` }>
+                        className={
+                            `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom}`
+                        }>
                         <div className={ classes.currency }>
                             <FormattedMessage id={ 'word.tax.title' } />
                         </div>

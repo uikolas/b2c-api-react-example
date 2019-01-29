@@ -9,11 +9,15 @@ export class ApiServiceAbstract {
             errorMessage = response.problem;
         }
 
-        if (response.data && response.data.errors && Array.isArray(response.data.errors) && response.data.errors.length) {
-
-            errorMessage = response.data.errors.reduce((accumulator: string, currentValue: IErrorItem) => {
-                return accumulator + ' ' + currentValue.detail;
-            }, '');
+        if (
+            response.data &&
+            response.data.errors &&
+            Array.isArray(response.data.errors) &&
+            response.data.errors.length
+        ) {
+            errorMessage = response.data.errors.reduce((accumulator: string, currentValue: IErrorItem) => (
+                accumulator + ' ' + currentValue.detail
+            ), '');
         }
 
         return errorMessage;

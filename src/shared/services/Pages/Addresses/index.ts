@@ -84,10 +84,12 @@ export class AddressesService extends ApiServiceAbstract {
             });
             toast.error('Unexpected Error: ' + error.message);
         }
-    }public static async addAddress(ACTION_TYPE: string,
-                                   dispatch: Function,
-                                   payload: IAddressItem,
-                                   customerId: string): Promise<void> {
+    }public static async addAddress(
+        ACTION_TYPE: string,
+        dispatch: Function,
+        payload: IAddressItem,
+        customerId: string
+    ): Promise<void> {
         try {
             const token = await RefreshTokenService.getActualToken(dispatch);
             setAuthToken(token);

@@ -21,7 +21,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     public componentDidMount() {
         this.props.setCurrentAddressAction(null);
 
-         this.initRequestData();
+        this.initRequestData();
     }
 
     public handleAddAddress = () => {

@@ -450,8 +450,14 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                             billingSelections: this.state.billingSelection,
                             currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
                             currentValueBillingSelection: this.getCurrentValueBillingSelection(),
-                            extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
-                            extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
+                            extraOptionsDeliverySelection: getExtraOptionsToSelection(
+                                isAddressesCollectionExist,
+                                'delivery'
+                            ),
+                            extraOptionsBillingSelection: getExtraOptionsToSelection(
+                                isAddressesCollectionExist,
+                                'billing'
+                            ),
                             isCheckoutFulfilled,
                             isUserLoggedIn,
                             shipmentMethods,

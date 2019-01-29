@@ -8,7 +8,7 @@ import {
     WISHLIST_ALL_LISTS,
 } from '@stores/actionTypes/pages/wishlist';
 import { WishlistService } from '@services/Pages/Wishlist';
-import {TWishListId} from 'src/shared/interfaces/wishlist/index';
+import { TWishListId } from 'src/shared/interfaces/wishlist';
 
 export const getAllListPendingState = {
     type: WISHLIST_ALL_LISTS + '_PENDING',

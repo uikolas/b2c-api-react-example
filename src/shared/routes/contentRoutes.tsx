@@ -64,6 +64,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
     if (!isReadyToShow) {
         return <AppMain />;
     }
+
     return (
         <Switch>
             <Route path={ pathHomePage } exact component={ LoadableHomePage }/>

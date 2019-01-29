@@ -34,6 +34,7 @@ export class CartService extends ApiServiceAbstract {
 
                 const responseParsed: ICartDataResponse = parseUserCartResponseMultiValue(response.data);
                 dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
+
                 return responseParsed.id;
             } else {
                 this.errorMessageInform(response, dispatch);
@@ -41,6 +42,7 @@ export class CartService extends ApiServiceAbstract {
         } catch (err) {
             dispatch(cartActions.getCartsRejectedStateAction(err.message));
             toast.error('Request Error: ' + err.message);
+
             return '';
         }
     }
@@ -67,6 +69,7 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 const responseParsed = parseCartCreateResponse(response.data);
                 dispatch(cartActions.cartCreateFulfilledStateAction(responseParsed));
+
                 return responseParsed.id;
             } else {
                 this.errorMessageInform(response, dispatch);

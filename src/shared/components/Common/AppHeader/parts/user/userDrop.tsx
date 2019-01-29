@@ -8,10 +8,10 @@ import { UserDropProps as Props } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
-import { customerProfileNavLinks } from 'src/shared/constants/navLinks/index';
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
-import { SprykerButton } from 'src/shared/components/UI/SprykerButton/index';
-import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
+import { customerProfileNavLinks } from 'src/shared/constants/navLinks';
+import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
+import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
+import { INavLinkData } from 'src/shared/interfaces/navLinks';
 import { FormattedMessage } from 'react-intl';
 import { LogoutSetTimeoutTime } from 'src/shared/constants/customer';
 
@@ -35,15 +35,13 @@ export class UserDropComponent extends React.Component<Props> {
         const loggedInUser = (
             <React.Fragment>
                 <ul className={ classes.userDropNav }>
-                    { customerProfileNavLinks.map((item: INavLinkData) => {
-                        return (
-                            <li key={ item.title } onClick={ this.props.closePopoverHandler }>
-                                <NavLink to={ item.path }>
-                                    <FormattedMessage id={ item.title } />
-                                </NavLink>
-                            </li>
-                        );
-                    }) }
+                    { customerProfileNavLinks.map((item: INavLinkData) => (
+                        <li key={ item.title } onClick={ this.props.closePopoverHandler }>
+                            <NavLink to={ item.path }>
+                                <FormattedMessage id={ item.title } />
+                            </NavLink>
+                        </li>
+                    )) }
                 </ul>
                 <div className={ classes.userBtns }>
                     <SprykerButton

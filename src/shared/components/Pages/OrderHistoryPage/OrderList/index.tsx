@@ -3,13 +3,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { NavLink } from 'react-router-dom';
 import { styles } from './styles';
 import { IOrderItem } from 'src/shared/interfaces/order';
-import { IOrderListProps } from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
-import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
-import { AppPrice } from "src/shared/components/Common/AppPrice/index";
-import { AppTable } from "src/shared/components/Common/AppTable/index";
-import { formatDateToString } from "src/shared/helpers/common/dates";
-import { appFixedDimensions } from "src/shared/theme/properties/new/appFixedDimensions";
-import { pathOrderDetailsPageBase } from "src/shared/routes/contentRoutes";
+import { IOrderListProps } from 'src/shared/components/Pages/OrderHistoryPage/OrderList/types';
+import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
+import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { AppTable } from 'src/shared/components/Common/AppTable';
+import { formatDateToString } from 'src/shared/helpers/common/dates';
+import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
+import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
 import { FormattedMessage } from 'react-intl';
 
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {

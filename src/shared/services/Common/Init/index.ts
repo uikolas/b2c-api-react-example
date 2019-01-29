@@ -84,7 +84,7 @@ export class InitAppService extends ApiServiceAbstract {
         try {
             await this.getCategoriesTree(dispatch);
             dispatch(switchLocaleFulfilledState(payload));
-        } catch(error) {
+        } catch (error) {
             dispatch(switchLocaleRejectedState(error.message));
             toast.error('Error occurs during the changing a language:' + error.message);
         }

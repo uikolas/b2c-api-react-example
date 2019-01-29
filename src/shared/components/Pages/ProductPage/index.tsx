@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ChangeEvent } from "react";
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { toast } from 'react-toastify';
@@ -30,12 +29,12 @@ import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm/index';
+import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
     getQuantityFormSettings,
     getWishListFormSettings
-} from 'src/shared/components/Pages/ProductPage/settings/forms';
-import { ProductDetail } from 'src/shared/components/Pages/ProductPage/ProductDetail/index';
+} from './settings/forms';
+import { ProductDetail } from 'src/shared/components/Pages/ProductPage/ProductDetail';
 import { FormattedMessage } from 'react-intl';
 
 const quantitySelectedInitial = 1;
@@ -151,8 +150,9 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
     };
 
-    public handleProductQuantityChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
-        : void => {
+    public handleProductQuantityChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+    ): void => {
         const valueParsed: number = Number.parseInt(event.target.value, 10);
 
         this.setState((prevState: State) => {
@@ -373,7 +373,9 @@ export class ProductPageBase extends React.Component<Props, State> {
                                             name={this.state.name}
                                             sku={this.state.sku}
                                             price={this.state.priceDefaultGross}
-                                            oldPrice={this.state.priceOriginalGross ? this.state.priceOriginalGross : null}
+                                            oldPrice={
+                                                this.state.priceOriginalGross ? this.state.priceOriginalGross : null
+                                            }
                                             availability={getAvailabilityDisplay(this.state.availability)}
                                         />
 
@@ -423,7 +425,9 @@ export class ProductPageBase extends React.Component<Props, State> {
                                                           className={classes.buyBtnParent}
                                                     >
                                                         <SprykerButton
-                                                            title={<FormattedMessage id={ 'add.to.cart.wishlist.title' } />}
+                                                            title={
+                                                                <FormattedMessage id={ 'add.to.cart.wishlist.title' } />
+                                                            }
                                                             extraClasses={classes.wishListBtn}
                                                             onClick={this.handleAddToWishlist}
                                                             disabled={this.isAddToWishListBtnDisabled()}
@@ -451,4 +455,5 @@ export class ProductPageBase extends React.Component<Props, State> {
 }
 
 export const ProductPage = withStyles(styles)(ProductPageBase);
+
 export default ProductPage;
