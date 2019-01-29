@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     NotificationsMessageTemplate,
-    INotificationsMessage
+    INotificationsMessageTemplate
 } from 'src/shared/components/Common/Notifications/NotificationsMessageTemplate';
 
-export const NotificationsMessage: React.SFC<INotificationsMessage> = (props) => <NotificationsMessageTemplate { ...props } />;
+export const NotificationsMessage: React.SFC<INotificationsMessageTemplate> = (props) =>
+    <NotificationsMessageTemplate { ...props } />;

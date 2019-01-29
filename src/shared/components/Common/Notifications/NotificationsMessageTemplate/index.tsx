@@ -4,15 +4,16 @@ import { SuccessIcon, RejectIcon } from '..//MessageIcons';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
-export interface INotificationsMessage  {
+export interface INotificationsMessageTemplate  {
     message?: string;
     icon?: string;
     id?: string;
 }
 
-export interface INotificationsMessageWithStyles extends WithStyles<typeof styles>, INotificationsMessage  {}
+export interface INotificationsMessageTemplateWithStyles
+    extends WithStyles<typeof styles>, INotificationsMessageTemplate  {}
 
-export const NotificationsMessageBanse: React.SFC<INotificationsMessageWithStyles> = (props) => {
+export const NotificationsMessageTemplateBanse: React.SFC<INotificationsMessageTemplateWithStyles> = (props) => {
     const { message, icon, id, classes } = props;
     let iconComponent;
 
@@ -42,4 +43,4 @@ export const NotificationsMessageBanse: React.SFC<INotificationsMessageWithStyle
     );
 };
 
-export const NotificationsMessageTemplate = withStyles(styles)(NotificationsMessageBanse);
+export const NotificationsMessageTemplate = withStyles(styles)(NotificationsMessageTemplateBanse);
