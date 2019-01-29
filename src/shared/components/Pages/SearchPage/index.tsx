@@ -390,7 +390,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         return (
             <AppMain>
-
                 <AppPageTitle
                     title={ searchTerm
                         ? <FormattedMessage

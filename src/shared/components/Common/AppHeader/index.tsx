@@ -133,15 +133,13 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                                             isSticky={isSticky}
                                             pageWidth={this.state.pageWidth}
                                             pageHeight={this.state.pageHeight}
-                                            locale={locale}
-                                        />
+                                            locale={locale}/>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     );
-                }}
+                } }
             </Sticky>
         );
     }

@@ -18,11 +18,11 @@ import {
     getExtraOptionsToSelection,
     getAddressForm,
 } from "./helpers";
-import { AppMain } from "src/shared/components/Common/AppMain";
-import { CheckoutForms } from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
-import { CartData } from "src/shared/components/Pages/CheckoutPage/CartData";
-import { OrderSuccess } from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
-import { InputSaveErrorMessage } from "src/shared/translation";
+import {AppMain} from "src/shared/components/Common/AppMain";
+import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
+import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
+import {OrderSuccess} from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
+import {InputSaveErrorMessage} from "src/shared/translation";
 import {
     billingNewAddressDefault,
     billingSelectionDefault,
