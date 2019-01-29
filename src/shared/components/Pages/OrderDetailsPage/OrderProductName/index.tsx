@@ -18,7 +18,7 @@ export const OrderProductNameBase: React.SFC<IOrderProductNameProps> = (props): 
     <Typography component="p" color="inherit" >
       {productName}
       <Typography component="span" className={classes.sku} >
-        {`${titleSKU}${sku}`}
+        {titleSKU}{`: ${sku}`}
       </Typography>
     </Typography>
   );

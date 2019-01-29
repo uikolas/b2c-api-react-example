@@ -12,7 +12,7 @@ const RejectIconPath12 = 'M9.629 6.015v6.18c0 .33-.009.66 0 .989 0 .388.4.745.87
 export const SuccessIcon: React.SFC = () => (
     <svg width="21" height="21" viewBox="0 0 21 21">
         <g fill="none" fillRule="evenodd" transform="translate(1 1)">
-            <circle cx="9.5" cy="9.5" r="9.5" stroke="#FFF" stroke-width="1.5" />
+            <circle cx="9.5" cy="9.5" r="9.5" stroke="#FFF" strokeWidth="1.5" />
             <path fill="#FFF" d={ SuccessIconPath1 } />
             <path fill="#FFF" d={ SuccessIconPath12 } />
         </g>
