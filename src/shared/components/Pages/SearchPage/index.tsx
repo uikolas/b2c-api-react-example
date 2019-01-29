@@ -48,6 +48,7 @@ import {
 import { getCategoryNameById } from "src/shared/helpers/categories/index";
 import { DefaultItemsPerPage } from "src/shared/constants/search/index";
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 @(withRouter as Function)
 @connect
@@ -171,7 +172,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         if (!this.validateData()) {
             console.error('can\'t make request in updateSearch method!!!');
-            toast.error(<FormattedMessage id={ 'validate.range.input.error.message' } />);
+            toast.error(NotificationsMessage({
+                id: 'validate.range.input.error.message',
+                type: 'error'
+            }));
             return;
         }
         let query: ISearchQuery = this.getQueryBaseParams();

@@ -14,6 +14,7 @@ import {
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { ICheckoutResponseData } from 'src/shared/stores/reducers/pages/checkout/types';
 import { IApiResponseData } from 'src/shared/services/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 interface IRequestBody {
     data: {
@@ -53,12 +54,20 @@ export class CheckoutService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(getCheckoutDataInitRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: 'error'
+                }));
             }
 
         } catch (error) {
             dispatch(getCheckoutDataInitRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -87,16 +96,27 @@ export class CheckoutService extends ApiServiceAbstract {
 
             if (response.ok) {
                 dispatch(sendCheckoutDataFulfilledStateAction(response.data.data.attributes.orderReference));
-                toast.success('Order created successfully.');
+                toast.success(NotificationsMessage({
+                    id: 'order.successfully.created.message',
+                    type: 'success'
+                }));
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(sendCheckoutDataRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: 'error'
+                }));
             }
 
         } catch (error) {
             dispatch(sendCheckoutDataRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 

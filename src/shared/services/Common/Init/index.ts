@@ -19,6 +19,7 @@ import { IApiResponseData } from 'src/shared/services/types';
 import { ICategory } from 'src/shared/interfaces/category';
 import { IInitData } from 'src/shared/interfaces/init/index';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class InitAppService extends ApiServiceAbstract {
     public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
@@ -47,12 +48,20 @@ export class InitAppService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(initApplicationDataRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: 'error'
+                }));
             }
 
         } catch (error) {
             dispatch(initApplicationDataRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -71,12 +80,20 @@ export class InitAppService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(categoriesRejectedState(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: 'error'
+                }));
             }
 
         } catch (error) {
             dispatch(categoriesRejectedState(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -89,7 +106,11 @@ export class InitAppService extends ApiServiceAbstract {
 
         } catch (error) {
             dispatch(switchLocaleRejectedState(error.message));
-            toast.error('Error occurs during the changing a language:' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'change.language.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 }

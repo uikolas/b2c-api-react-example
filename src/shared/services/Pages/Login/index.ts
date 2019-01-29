@@ -11,7 +11,7 @@ import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServi
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { IApiResponseData } from "src/shared/services/types";
-import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class PagesLoginService extends ApiServiceAbstract {
     public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
@@ -29,7 +29,10 @@ export class PagesLoginService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                 });
 
-                toast.success(FormattedMessageTemplate('register.success.message'));
+                toast.success(NotificationsMessage({
+                    id: 'register.success.message',
+                    type: 'success'
+                }));
 
                 await PagesLoginService.loginRequest(dispatch, {
                     username: payload.email,
@@ -43,9 +46,13 @@ export class PagesLoginService extends ApiServiceAbstract {
                 });
 
                 if (response.status === 422) {
-                    toast.warn(errorMessage);
+                    toast.warn(NotificationsMessage({
+                        message: errorMessage
+                    }));
                 } else {
-                    toast.error(errorMessage);
+                    toast.error(NotificationsMessage({
+                        message: errorMessage
+                    }));
                 }
             }
 
@@ -54,7 +61,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -76,7 +87,10 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch(saveLoginDataToStoreAction({ email: payload.username }));
                 saveAccessDataToLocalStorage(responseParsed);
                 dispatch(loginCustomerFulfilledStateAction(responseParsed));
-                toast.success(FormattedMessageTemplate('customer.login.message'));
+                toast.success(NotificationsMessage({
+                    id: 'customer.login.message',
+                    type: 'success'
+                }));
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(loginCustomerRejectedStateAction(errorMessage));
@@ -85,7 +99,11 @@ export class PagesLoginService extends ApiServiceAbstract {
 
         } catch (error) {
             dispatch(loginCustomerRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -104,7 +122,10 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                 });
-                toast.success('Link for restore password sended to your Email.');
+                toast.success(NotificationsMessage({
+                    id: 'link.sanded.created.message',
+                    type: 'success'
+                }));
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
@@ -118,7 +139,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -139,13 +164,20 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                 });
-                toast.success('Password updated successfull.');
+                toast.success(NotificationsMessage({
+                    id: 'password.successfull.updated.message',
+                    type: 'success'
+                }));
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: response.problem },
                 });
-                toast.error('Request Error: ' + response.problem);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: response.problem,
+                    type: 'error'
+                }));
             }
 
         } catch (error) {
@@ -153,7 +185,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 }

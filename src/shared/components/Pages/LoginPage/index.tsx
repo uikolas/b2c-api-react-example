@@ -13,7 +13,7 @@ import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentR
 import { WithRouter } from 'src/shared/interfaces/common/react';
 import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
-import { RegisterForm } from './RegisterForm';
+import { RegisterFormComponent } from './RegisterFormComponent';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
@@ -66,7 +66,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
                       container
                       justify="center"
                       alignItems="center">
-                    <RegisterForm handleSubmit={ this.props.handleSubmitRegisterForm } />
+                    <RegisterFormComponent handleSubmit={ this.props.handleSubmitRegisterForm } />
                 </Grid>
             </AppMain>
         );

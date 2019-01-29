@@ -6,6 +6,7 @@ import { IProductCard } from 'src/shared/interfaces/product';
 import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { IApiResponseData } from "src/shared/services/types";
 import { TRowProductResponseIncluded } from "src/shared/helpers/product/types";
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class CatalogService extends ApiServiceAbstract {
     public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
@@ -26,7 +27,11 @@ export class CatalogService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error('Request Error: ' + errorMessage);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: 'error'
+                }));
             }
 
         } catch (error) {
@@ -34,7 +39,11 @@ export class CatalogService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -81,7 +90,11 @@ export class CatalogService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: { error: errorMessage },
                 });
-                toast.error('Request Error: ' + errorMessage);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: 'error'
+                }));
                 return null;
             }
 
@@ -90,7 +103,11 @@ export class CatalogService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: { error: error.message },
             });
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 }

@@ -12,6 +12,7 @@ import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State,
 import { styles } from './styles';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -83,7 +84,9 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         const { firstName, lastName, salutation, email } = this.state.inputs;
 
         if (!firstName || !lastName || !email || !salutation) {
-            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+            toast.warn(NotificationsMessage({
+                id: 'empty.required.fields.message'
+            }));
             return null;
         }
         const profileData = { salutation, firstName, lastName, email };
@@ -94,11 +97,15 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         event.preventDefault();
         const { password, newPassword, confirmPassword } = this.state.inputs;
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
-            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+            toast.warn(NotificationsMessage({
+                id: 'empty.required.fields.message'
+            }));
             return null;
         }
         if (newPassword !== confirmPassword) {
-            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
+            toast.warn(NotificationsMessage({
+                id: 'password.not.equal.message'
+            }));
             return null;
         }
         const passwordData = { password, newPassword, confirmPassword };

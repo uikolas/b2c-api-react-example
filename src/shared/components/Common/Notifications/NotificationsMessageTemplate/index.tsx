@@ -4,20 +4,22 @@ import { SuccessIcon, RejectIcon } from '..//MessageIcons';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
-export interface INotificationsMessageTemplate  {
+export interface INotificationsMessage {
     message?: string;
-    icon?: string;
+    messageWithCustomText?: string;
+    type?: string;
     id?: string;
 }
 
-export interface INotificationsMessageTemplateWithStyles
-    extends WithStyles<typeof styles>, INotificationsMessageTemplate  {}
+export interface INotificationsMessageWithStyles extends WithStyles<typeof styles>, INotificationsMessage {
 
-export const NotificationsMessageTemplateBanse: React.SFC<INotificationsMessageTemplateWithStyles> = (props) => {
-    const { message, icon, id, classes } = props;
-    let iconComponent;
+}
 
-    switch (icon) {
+export const NotificationsMessageTemplateBase: React.SFC<INotificationsMessageWithStyles> = (props) => {
+    const {message, messageWithCustomText, type, id, classes} = props;
+    let iconComponent: boolean | React.ReactNode = false;
+
+    switch (type) {
         case 'error':
             iconComponent = <RejectIcon />;
             break;
@@ -28,19 +30,23 @@ export const NotificationsMessageTemplateBanse: React.SFC<INotificationsMessageT
             iconComponent = null;
     }
 
+    const messageWithInformation = messageWithCustomText
+        ? <FormattedMessage id={messageWithCustomText} values={{messageText: message}} />
+        : message;
+
     return (
         <>
-            { icon &&
-                <span className={ classes.icon }>
-                    { iconComponent }
+            {iconComponent &&
+                <span className={classes.icon}>
+                    {iconComponent}
                 </span>
             }
-            { id
-                ? <FormattedMessage id={ id } />
-                : message
+            {id
+                ? <FormattedMessage id={id} />
+                : messageWithInformation
             }
         </>
     );
 };
 
-export const NotificationsMessageTemplate = withStyles(styles)(NotificationsMessageTemplateBanse);
+export const NotificationsMessageTemplate = withStyles(styles)(NotificationsMessageTemplateBase);

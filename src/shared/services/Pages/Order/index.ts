@@ -14,6 +14,7 @@ import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import {IApiResponseData} from "src/shared/services/types";
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class OrderService extends ApiServiceAbstract {
 
@@ -35,12 +36,20 @@ export class OrderService extends ApiServiceAbstract {
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(ordersCollectionRejectedStateAction(errorMessage));
-        toast.error('Request Error: ' + errorMessage);
+        toast.error(NotificationsMessage({
+            messageWithCustomText: 'request.error.message',
+            message: errorMessage,
+            type: 'error'
+        }));
       }
 
     } catch (error) {
       dispatch(ordersCollectionRejectedStateAction(error.message));
-      toast.error('Unexpected Error: ' + error.message);
+      toast.error(NotificationsMessage({
+          messageWithCustomText: 'unexpected.error.message',
+          message: error.message,
+          type: 'error'
+      }));
     }
   }
 
@@ -63,12 +72,20 @@ export class OrderService extends ApiServiceAbstract {
       } else {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(orderDetailsRejectedStateAction(errorMessage));
-        toast.error('Request Error: ' + errorMessage);
+        toast.error(NotificationsMessage({
+            messageWithCustomText: 'request.error.message',
+            message: errorMessage,
+            type: 'error'
+        }));
       }
 
     } catch (error) {
       dispatch(orderDetailsRejectedStateAction(error.message));
-      toast.error('Unexpected Error: ' + error.message);
+      toast.error(NotificationsMessage({
+          messageWithCustomText: 'unexpected.error.message',
+          message: error.message,
+          type: 'error'
+      }));
     }
   }
 }

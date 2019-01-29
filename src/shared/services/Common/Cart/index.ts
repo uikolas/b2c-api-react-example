@@ -16,7 +16,6 @@ import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
 import { IResponseError } from 'src/shared/services/apiAbstractions/types';
 import { IApiResponseData } from 'src/shared/services/types';
-import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 import { NotificationsMessage } from 'src/shared/components/Common/Notifications/NotificationsMessage';
 
 export class CartService extends ApiServiceAbstract {
@@ -43,7 +42,11 @@ export class CartService extends ApiServiceAbstract {
             }
         } catch (err) {
             dispatch(cartActions.getCartsRejectedStateAction(err.message));
-            toast.error('Request Error: ' + err.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'request.error.message',
+                message: err.message,
+                type: 'error'
+            }));
             return '';
         }
     }
@@ -78,7 +81,11 @@ export class CartService extends ApiServiceAbstract {
 
         } catch (error) {
             dispatch(cartActions.cartCreateRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
             return '';
         }
     }
@@ -107,14 +114,22 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
                 dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
-                toast.success(FormattedMessageTemplate('items.added.message'));
+                toast.success(NotificationsMessage({
+                    id: 'items.added.message',
+                    type: 'success'
+                }));
+
             } else {
                 this.errorMessageInform(response, dispatch);
             }
 
         } catch (error) {
             dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -143,7 +158,10 @@ export class CartService extends ApiServiceAbstract {
                     payloadCartDeleteItemFulfilled: { itemId }
                 });
 
-                toast.success(FormattedMessageTemplate('items.removed.message'));
+                toast.success(NotificationsMessage({
+                    id: 'items.removed.message',
+                    type: 'success'
+                }));
                 const newCartResponse: IApiResponseData = await api.get(`carts/${cartId}`);
 
                 if (newCartResponse.ok) {
@@ -161,7 +179,11 @@ export class CartService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error: error.message
             });
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -190,14 +212,21 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
                 dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
-                toast.success(FormattedMessageTemplate('cart.changed.quantity.message'));
+                toast.success(NotificationsMessage({
+                    id: 'cart.changed.quantity.message',
+                    type: 'success'
+                }));
             } else {
                 this.errorMessageInform(response, dispatch);
             }
 
         } catch (error) {
             dispatch(cartActions.cartUpdateItemRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -210,7 +239,11 @@ export class CartService extends ApiServiceAbstract {
             }
         } catch (err) {
             dispatch(cartActions.cartAddItemRejectedStateAction(err.message));
-            toast.error('Unexpected Error: ' + err.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -253,7 +286,11 @@ export class CartService extends ApiServiceAbstract {
             }
         } catch (error) {
             dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: 'error'
+            }));
         }
     }
 
@@ -285,6 +322,10 @@ export class CartService extends ApiServiceAbstract {
     private static errorMessageInform(response: IResponseError, dispatch: Function): void {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
-        toast.error(NotificationsMessage({message: `Request Error: ${errorMessage}`, icon: 'error'}));
+        toast.error(NotificationsMessage({
+            messageWithCustomText: 'request.error.message',
+            message: errorMessage,
+            type: 'error'
+        }));
     }
 }

@@ -3,7 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
     icon: {
-        lineHeight: 1,
+        lineHeight: 0,
         minWidth: 25,
         marginRight: 16
     }

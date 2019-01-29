@@ -39,6 +39,7 @@ import {
 } from "src/shared/components/Pages/ProductPage/settings/forms";
 import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 const quantitySelectedInitial = 1;
 
@@ -209,7 +210,10 @@ export class ProductPageBase extends React.Component<Props, State> {
                 });
             });
         } catch (error) {
-            toast.error(<FormattedMessage id={ 'error.durning.add.product.to.cart.message' } />);
+            toast.error(NotificationsMessage({
+                id: 'error.durning.add.product.to.cart.message',
+                type: 'error'
+            }));
         }
     };
 

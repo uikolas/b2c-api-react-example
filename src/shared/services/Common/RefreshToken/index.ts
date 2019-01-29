@@ -5,6 +5,7 @@ import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataRes
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class RefreshTokenService extends ApiServiceAbstract {
     public static async getActualToken(dispatch: Function): Promise<string> {
@@ -27,7 +28,11 @@ export class RefreshTokenService extends ApiServiceAbstract {
                     type: REFRESH_TOKEN_REQUEST + '_REJECTED',
                     error: error.message
                 });
-                toast.error('Unexpected error: ' + error.message);
+                toast.error(NotificationsMessage({
+                    messageWithCustomText: 'unexpected.error.message',
+                    message: error.message,
+                    type: 'error'
+                }));
                 return Promise.reject(error.message);
             }
         }
@@ -67,7 +72,11 @@ export class RefreshTokenService extends ApiServiceAbstract {
                 type: REFRESH_TOKEN_REQUEST + '_REJECTED',
                 error: errorMessage
             });
-            toast.error('Request Error: ' + errorMessage);
+            toast.error(NotificationsMessage({
+                messageWithCustomText: 'request.error.message',
+                message: errorMessage,
+                type: 'error'
+            }));
             return Promise.reject(errorMessage);
         }
     }

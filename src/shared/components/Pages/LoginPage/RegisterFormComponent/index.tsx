@@ -14,6 +14,7 @@ import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class RegisterFormBase extends React.Component<Props, State> {
     public state = {
@@ -42,12 +43,16 @@ export class RegisterFormBase extends React.Component<Props, State> {
         const { salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms } = this.state;
         e.preventDefault();
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+            toast.warn(NotificationsMessage({
+                id: 'empty.required.fields.message'
+            }));
             return null;
         }
 
         if (password !== confirmPassword) {
-            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
+            toast.warn(NotificationsMessage({
+                id: 'password.not.equal.message'
+            }));
             return null;
         }
 
@@ -197,4 +202,4 @@ export class RegisterFormBase extends React.Component<Props, State> {
     }
 }
 
-export const RegisterForm = withStyles(formStyles)(RegisterFormBase);
+export const RegisterFormComponent = withStyles(formStyles)(RegisterFormBase);
