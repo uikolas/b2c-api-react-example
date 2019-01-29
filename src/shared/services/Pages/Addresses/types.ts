@@ -1,7 +1,7 @@
-import { IAddressItem } from 'src/shared/interfaces/addresses/index';
+import { IAddressItem } from 'src/shared/interfaces/addresses';
 
 export interface IAddressRawResponse {
-    data: Array<IAddressDataRawResponse>;
+    data: IAddressDataRawResponse[];
 }
 
 export interface IAddressDataRawResponse {

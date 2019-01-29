@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ChangeEvent, ReactNode } from "react";
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
@@ -9,15 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import { ChevronLeft } from '@material-ui/icons';
 import InputLabel from '@material-ui/core/InputLabel';
 import { styles } from './styles';
-import { IMenuItemFirst, IMenuItemSelect } from "src/shared/components/UI/SprykerSelect/types";
+import { IMenuItemFirst, IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
 import { FormattedMessage } from 'react-intl';
-
 
 export interface SprykerSelectProps extends WithStyles<typeof styles> {
     currentMode: string | number | boolean;
-    changeHandler: (event: ChangeEvent<HTMLSelectElement>, child: ReactNode) => void;
+    changeHandler: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
     name: string;
-    menuItems: Array<IMenuItemSelect>;
+    menuItems: IMenuItemSelect[];
     menuItemFirst?: IMenuItemFirst | null;
     title?: string;
     label?: string;
@@ -33,8 +31,7 @@ export interface SprykerSelectProps extends WithStyles<typeof styles> {
     extraSelectFieldClassName?: string;
 }
 
-
-export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
+export const SprykerSelectBase: React.SFC<SprykerSelectProps> = props => {
     const {
         classes,
         currentMode,
@@ -43,7 +40,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
         name,
         menuItemFirst = {
             // Do not change default value!!!!
-            value: " ",
+            value: ' ',
             name: <FormattedMessage id={ 'first.item.in.select' } />,
             selected: false,
             disabled: false,
@@ -66,18 +63,19 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
         if (!menuItemFirst) {
             return null;
         }
+
         return (
             <MenuItem
-                value={ menuItemFirst.value }
-                selected={ menuItemFirst.selected }
-                disabled={ menuItemFirst.disabled }
+                value={menuItemFirst.value}
+                selected={menuItemFirst.selected}
+                disabled={menuItemFirst.disabled}
                 disableGutters
-                classes={ {
+                classes={{
                     selected: classes.selected,
-                } }
-                className={ classes.menuItem }
+                }}
+                className={classes.menuItem}
             >
-                { menuItemFirst.name }
+                {menuItemFirst.name}
             </MenuItem>
         );
     };
@@ -92,59 +90,59 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props) => {
         <Grid container
               justify="center"
               alignItems="center"
-              className={ `${classes.root} ${extraRootClassName ? extraRootClassName : ''}` }
+              className={`${classes.root} ${extraRootClassName ? extraRootClassName : ''}`}
         >
-            <Grid item xs={ 12 }>
+            <Grid item xs={12}>
                 <FormControl
-                    required={ isRequired ? isRequired : false }
-                    className={ `${classes.formControl} ${extraFormControlClassName ? extraFormControlClassName : ''}` }
+                    required={isRequired ? isRequired : false}
+                    className={`${classes.formControl} ${extraFormControlClassName ? extraFormControlClassName : ''}`}
                 >
-                    { (title && isMenuItemsExist)
+                    {(title && isMenuItemsExist)
                         ? <Typography
                             component="span"
-                            className={ `${classes.title} ${extraTitleClassName ? extraTitleClassName : ''}` }
+                            className={`${classes.title} ${extraTitleClassName ? extraTitleClassName : ''}`}
                         >
-                            { title }
+                            {title}
                         </Typography>
                         : null
                     }
 
-                    { label
+                    {label
                         ? <InputLabel
                             shrink
-                            classes={ { root: `${classes.label} ${extraLabelClassName ? extraLabelClassName : ''}` } }
+                            classes={{root: `${classes.label} ${extraLabelClassName ? extraLabelClassName : ''}`}}
                         >
-                            { label }
+                            {label}
                         </InputLabel>
                         : null
                     }
 
                     <Select
-                        value={ currentMode }
-                        onChange={ changeHandler }
-                        name={ name }
-                        classes={ {
+                        value={currentMode}
+                        onChange={changeHandler}
+                        name={name}
+                        classes={{
                             root: `${classes.inputRoot} ${extraInputRootClassName ? extraInputRootClassName : ''}`,
                             icon: classes.icon,
                             select: `${classes.input} ${selectClassName ? selectClassName : ''}`,
-                        } }
-                        disableUnderline={ true }
-                        IconComponent={ ChevronLeft }
-                        fullWidth={ isFullWidth ? isFullWidth : false }
-                        className={ selectClassNames }
+                        }}
+                        disableUnderline={true}
+                        IconComponent={ChevronLeft}
+                        fullWidth={isFullWidth ? isFullWidth : false}
+                        className={selectClassNames}
                     >
-                        { getMenuItemFirst() }
-                        { isMenuItemsExist && menuItems.map((item) => (
+                        {getMenuItemFirst()}
+                        {isMenuItemsExist && menuItems.map(item => (
                             <MenuItem
-                                value={ item.value }
-                                key={ `${item.name}-${item.value}` }
+                                value={item.value}
+                                key={`${item.name}-${item.value}`}
                                 disableGutters
-                                classes={ {
+                                classes={{
                                     selected: classes.selected,
-                                } }
-                                className={ `${classes.menuItem} ${menuItemClassName ? menuItemClassName : ''}` }
+                                }}
+                                className={`${classes.menuItem} ${menuItemClassName ? menuItemClassName : ''}`}
                             >
-                                { item.name }
+                                {item.name}
                             </MenuItem>
                         ))
                         }

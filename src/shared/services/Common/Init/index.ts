@@ -70,7 +70,7 @@ export class InitAppService extends ApiServiceAbstract {
             const response: IApiResponseData = await api.get('category-trees', {}, { withCredentials: true });
 
             if (response.ok) {
-                let tree: Array<ICategory> = response.data.data[ 0 ].attributes.categoryNodesStorage;
+                let tree: ICategory[] = response.data.data[ 0 ].attributes.categoryNodesStorage;
 
                 if (!Array.isArray(tree)) {
                     tree = [];

@@ -13,7 +13,6 @@ import { ICartItem } from 'src/shared/interfaces/cart';
 import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import { FormattedMessage } from 'react-intl';
 
-
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {
     private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private designImgWidth: number = 0.33;
@@ -33,61 +32,62 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
 
     private setListItemHeight = () => {
         if (this.containerRef && this.containerRef.current) {
-            this.setState({ heightListItem: this.containerRef.current.offsetWidth * this.designImgWidth });
+            this.setState({heightListItem: this.containerRef.current.offsetWidth * this.designImgWidth});
         }
     };
 
     public render() {
-        const { classes, products, totals, order, isSendBtnDisabled, sendData } = this.props;
+        const {classes, products, totals, order, isSendBtnDisabled, sendData} = this.props;
 
         const rows = products.map((item: ICartItem) => (
             <ListItem
-                key={ item.sku }
+                key={item.sku}
                 disableGutters
                 divider
-                className={ classes.listItem }
+                className={classes.listItem}
             >
                 <SquareImage
-                    image={ item.image }
-                    size={ this.state.heightListItem }
-                    alt={ item.name }
+                    image={item.image}
+                    size={this.state.heightListItem}
+                    alt={item.name}
                 />
-                <div className={ classes.itemWrapper }>
-                    <div className={ classes.itemName }>{ item.name }</div>
-                    <AppPrice value={ item.calculations.sumPriceToPayAggregation }
-                              extraClassName={ classes.priceAndQtyInfo } />
+                <div className={classes.itemWrapper}>
+                    <div className={classes.itemName}>{item.name}</div>
+                    <AppPrice value={item.calculations.sumPriceToPayAggregation}
+                        extraClassName={classes.priceAndQtyInfo}
+                    />
                     {
                         item.calculations.sumPriceToPayAggregation !== item.calculations.sumGrossPrice
                             ? <AppPrice
-                                value={ item.calculations.sumGrossPrice }
-                                extraClassName={ `${classes.priceAndQtyInfo} ${classes.smallFont}` }
-                                priceType={ priceTypeNameOriginal }
+                                value={item.calculations.sumGrossPrice}
+                                extraClassName={`${classes.priceAndQtyInfo} ${classes.smallFont}`}
+                                priceType={priceTypeNameOriginal}
                             />
                             : null
                     }
-                    <div className={ `${classes.priceAndQtyInfo} ${classes.marginTopQty}` }>
-                        { `Quantity: ${item.quantity}` }
+                    <div className={`${classes.priceAndQtyInfo} ${classes.marginTopQty}`}>
+                        {`Quantity: ${item.quantity}`}
                     </div>
                 </div>
             </ListItem>
         ));
 
         return (
-            <div className={ classes.root } ref={ this.containerRef }>
+            <div className={classes.root} ref={this.containerRef}>
                 <CustomerPageTitle
-                    title={ order
-                        ? <FormattedMessage id={ 'word.total.title' } />
-                        : <FormattedMessage id={ 'word.cart.title' } /> }
+                    title={order
+                        ? <FormattedMessage id={'word.total.title'} />
+                        : <FormattedMessage id={'word.cart.title'} /> }
                 />
                 <List>
-                    { rows }
+                    {rows}
                 </List>
 
-                { order ? null : <CustomerPageTitle title={ <FormattedMessage id={ 'word.total.title' } /> } /> }
+                { order ? null : <CustomerPageTitle title={<FormattedMessage id={ 'word.total.title' } /> }/>}
 
                 <CartTotal
-                    totals={ totals }
-                    title={ <FormattedMessage id={ `${order ? 'order.amount' : 'grand.total.title'}` } /> }
+                    totals={totals}
+                    title={<FormattedMessage id={`${order ? 'order.amount' : 'grand.total.title'}`} /> }
                 />
 
                 {
@@ -96,12 +96,12 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
                         : <Button
                             variant="contained"
                             color="primary"
-                            disabled={ isSendBtnDisabled }
+                            disabled={isSendBtnDisabled}
                             fullWidth
-                            className={ classes.btnWrapper }
-                            onClick={ sendData }
+                            className={classes.btnWrapper}
+                            onClick={sendData}
                         >
-                            { <FormattedMessage id={ 'place.order.title' } /> }
+                            {<FormattedMessage id={'place.order.title'} />}
                         </Button>
                 }
             </div>

@@ -13,7 +13,7 @@ import { FormattedMessage } from 'react-intl';
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
     private deleteFromCart = (cartItemId: string) => {
-        const { cartDeleteItemAction, removeItemGuestCartAction, cartId, anonymId, isUserLoggedIn } = this.props;
+        const {cartDeleteItemAction, removeItemGuestCartAction, cartId, anonymId, isUserLoggedIn} = this.props;
 
         if (isUserLoggedIn) {
             cartDeleteItemAction(cartId, cartItemId);
@@ -26,17 +26,17 @@ export class CartDropComponent extends React.PureComponent<Props> {
         const { classes, cartItems, totals } = this.props;
 
         return (
-            <div className={ classes.cartDrop }>
+            <div className={classes.cartDrop}>
                 <Typography gutterBottom component="h3" className={ classes.title }>
                     <FormattedMessage id={ 'word.cart.title' } />
                 </Typography>
 
-                <ul className={ classes.cartDropProductsList }>
-                    { cartItems.map(cartItem => (
-                        <li key={ cartItem.sku }>
-                            <ProductItem productData={ cartItem } deleteItem={ this.deleteFromCart } />
+                <ul className={classes.cartDropProductsList}>
+                    {cartItems.map(cartItem => (
+                        <li key={cartItem.sku}>
+                            <ProductItem productData={cartItem} deleteItem={this.deleteFromCart}/>
                         </li>
-                    )) }
+                    ))}
                 </ul>
 
                 <div className={ classes.cartTotalContainer }>

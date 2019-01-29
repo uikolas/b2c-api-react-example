@@ -1,5 +1,3 @@
-// tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -9,20 +7,20 @@ import { styles } from './styles';
 import {
     checkoutFormsNames,
     checkoutSelectionInputs,
-} from "./constants";
-import { ICheckoutPageProps, ICheckoutPageState } from "./types";
-import { CheckoutPageContext } from "./context";
+} from './constants';
+import { ICheckoutPageProps, ICheckoutPageState } from './types';
+import { CheckoutPageContext } from './context';
 import {
     getCheckoutPanelsSettings,
     getDefaultAddressId,
     getExtraOptionsToSelection,
     getAddressForm,
-} from "./helpers";
-import {AppMain} from "src/shared/components/Common/AppMain";
-import {CheckoutForms} from "src/shared/components/Pages/CheckoutPage/CheckoutForms";
-import {CartData} from "src/shared/components/Pages/CheckoutPage/CartData";
-import {OrderSuccess} from "src/shared/components/Pages/CheckoutPage/OrderSuccess";
-import {InputSaveErrorMessage} from "src/shared/translation";
+} from './helpers';
+import { AppMain } from 'src/shared/components/Common/AppMain';
+import { CheckoutForms } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms';
+import { CartData } from 'src/shared/components/Pages/CheckoutPage/CartData';
+import { OrderSuccess } from 'src/shared/components/Pages/CheckoutPage/OrderSuccess';
+import { InputSaveErrorMessage } from 'src/shared/translation';
 import {
     billingNewAddressDefault,
     billingSelectionDefault,
@@ -31,24 +29,24 @@ import {
     paymentCreditCardDefault,
     paymentInvoiceDefault,
     stepCompletionCheckoutDefault,
-} from "src/shared/components/Pages/CheckoutPage/constants/stateDefaults";
+} from 'src/shared/components/Pages/CheckoutPage/constants/stateDefaults';
 import {
     billingConfigInputStable,
     creditCardConfigInputStable,
     deliveryConfigInputStable,
-} from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
+} from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
 import {
     mutateBillingNewAddressValidity,
     mutateCreditCardValidity,
     mutateDeliveryNewAddressValidity,
     mutateInvoiceValidity
-} from "src/shared/components/Pages/CheckoutPage/stateMutations/validity";
+} from 'src/shared/components/Pages/CheckoutPage/stateMutations/validity';
 import {
     mutateBillingInputs,
     mutateCreditCardInputs,
     mutateDeliveryInputs,
     mutateInvoiceInputs
-} from "src/shared/components/Pages/CheckoutPage/stateMutations/inputs";
+} from 'src/shared/components/Pages/CheckoutPage/stateMutations/inputs';
 import {
     mutateBillingSelectionAddNew,
     mutateBillingSelectionAddressId,
@@ -57,7 +55,7 @@ import {
     mutateDeliverySelectionAddressId,
     mutatePaymentMethod,
     mutateShipmentMethod,
-} from "src/shared/components/Pages/CheckoutPage/stateMutations/selections";
+} from 'src/shared/components/Pages/CheckoutPage/stateMutations/selections';
 import {
     validateBillingInput,
     validateBillingNewAddressForm,
@@ -67,17 +65,16 @@ import {
     validateDeliveryNewAddressForm,
     validateInvoiceForm,
     validateInvoiceInput
-} from "src/shared/components/Pages/CheckoutPage/helpers/validation";
-import { AppPageTitle } from "src/shared/components/Common/AppPageTitle/index";
-import { InputChangeEvent, FormEvent, BlurEvent } from "src/shared/interfaces/common/react";
-import { IAddressItemCollection } from "src/shared/interfaces/addresses";
-import { ICheckoutRequest } from "src/shared/interfaces/checkout";
-import { ICartItem, ICartTotals } from "src/shared/interfaces/cart";
+} from 'src/shared/components/Pages/CheckoutPage/helpers/validation';
+import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
+import { InputChangeEvent, FormEvent, BlurEvent } from 'src/shared/interfaces/common/react';
+import { IAddressItem, IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import { ICheckoutRequest } from 'src/shared/interfaces/checkout';
+import { ICartItem, ICartTotals } from 'src/shared/interfaces/cart';
 import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
-
     public successOrderTotals: ICartTotals = {
         expenseTotal: 0,
         discountTotal: 0,
@@ -89,22 +86,22 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     public successOrderProducts: ICartItem[] = [];
 
     public state: ICheckoutPageState = {
-        deliverySelection: { ...deliverySelectionDefault },
-        billingSelection: { ...billingSelectionDefault },
-        deliveryNewAddress: { ...deliveryNewAddressDefault },
-        billingNewAddress: { ...billingNewAddressDefault },
-        stepsCompletion: { ...stepCompletionCheckoutDefault },
+        deliverySelection: {...deliverySelectionDefault},
+        billingSelection: {...billingSelectionDefault},
+        deliveryNewAddress: {...deliveryNewAddressDefault},
+        billingNewAddress: {...billingNewAddressDefault},
+        stepsCompletion: {...stepCompletionCheckoutDefault},
         shipmentMethod: null,
         paymentMethod: null,
-        paymentCreditCardData: { ...paymentCreditCardDefault },
-        paymentInvoiceData: { ...paymentInvoiceDefault },
+        paymentCreditCardData: {...paymentCreditCardDefault},
+        paymentInvoiceData: {...paymentInvoiceDefault},
     };
 
     public componentDidMount() {
         if (this.props.isUserLoggedIn) {
-            this.props.getCheckoutData({ idCart: this.props.cartId }, '');
+            this.props.getCheckoutData({idCart: this.props.cartId}, '');
         } else {
-            this.props.getCheckoutData({ idCart: this.props.cartId }, this.props.anonymId);
+            this.props.getCheckoutData({idCart: this.props.cartId}, this.props.anonymId);
         }
     }
 
@@ -153,7 +150,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         } else {
             const shippingAddress = addressesCollection.find((address: IAddressItemCollection) =>
                 address.id === deliverySelection.selectedAddressId);
-            payload.shippingAddress = { ...shippingAddress, country: '' };
+            payload.shippingAddress = {...shippingAddress, country: ''};
         }
 
         if (billingSelection.isAddNew) {
@@ -163,17 +160,17 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         } else {
             const billingAddress = addressesCollection.find((address: IAddressItemCollection) =>
                 address.id === deliverySelection.selectedAddressId);
-            payload.billingAddress = { ...billingAddress, country: '' };
+            payload.billingAddress = {...billingAddress, country: ''};
         }
 
         payload.idCart = cartId;
 
-        payload.payments = [ {
+        payload.payments = [{
             paymentProviderName: 'DummyPayment',
             paymentMethodName: paymentMethod,
-        } ];
+        }];
 
-        payload.shipment = { idShipmentMethod: parseInt(shipmentMethod, 10) };
+        payload.shipment = {idShipmentMethod: parseInt(shipmentMethod, 10)};
 
         if (isUserLoggedIn) {
             payload.customer = {
@@ -197,7 +194,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     };
 
     public handleSelectionsChange = (event: InputChangeEvent): void => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
         if (name === 'deliverySelection') {
             this.handleDeliverySelection(value);
         } else if (name === 'billingSelection' || name === checkoutSelectionInputs.isSameAsDeliveryValue) {
@@ -226,16 +223,16 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     };
 
     public handleDeliveryInputs = (event: InputChangeEvent): void => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
 
         if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
             throw new Error(InputSaveErrorMessage);
         }
         const isInputValid = validateDeliveryInput(name, value);
 
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateDeliveryInputs(prevState, name, value, !isInputValid);
-        }, () => {
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateDeliveryInputs(prevState, name, value, !isInputValid)
+        ), () => {
             // Validate form when select input is changed
             if (name === deliveryConfigInputStable.salutation.inputName
                 || name === deliveryConfigInputStable.country.inputName
@@ -246,7 +243,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     };
 
     public handleBillingInputs = (event: InputChangeEvent): void => {
-        const { name, value } = event.target;
+        const {name, value} = event.target;
 
         if (!this.state.billingNewAddress.hasOwnProperty(name)) {
             throw new Error(InputSaveErrorMessage);
@@ -254,9 +251,9 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
         const isInputValid = validateBillingInput(name, value);
 
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateBillingInputs(prevState, name, value, !isInputValid);
-        }, () => {
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateBillingInputs(prevState, name, value, !isInputValid)
+        ), () => {
             // Validate form when select input is changed
             if (name === billingConfigInputStable.salutation.inputName
                 || name === billingConfigInputStable.country.inputName
@@ -267,25 +264,25 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     };
 
     public handleInvoiceInputs = (event: InputChangeEvent): void => {
-        const { name: key, value } = event.target;
+        const {name: key, value} = event.target;
         if (!this.state.paymentInvoiceData.hasOwnProperty(key)) {
             throw new Error(InputSaveErrorMessage);
         }
         const isInputValid = validateInvoiceInput(key, value);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateInvoiceInputs(prevState, key, value, !isInputValid);
-        });
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateInvoiceInputs(prevState, key, value, !isInputValid)
+        ));
     };
 
     public handleCreditCardInputs = (event: InputChangeEvent): void => {
-        const { name: key, value } = event.target;
+        const {name: key, value} = event.target;
         if (!this.state.paymentCreditCardData.hasOwnProperty(key)) {
             throw new Error(InputSaveErrorMessage);
         }
         const isInputValid = validateCreditCardInput(key, value);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateCreditCardInputs(prevState, key, value, !isInputValid);
-        }, () => {
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateCreditCardInputs(prevState, key, value, !isInputValid)
+        ), () => {
             // Validate form when select input is changed
             if (key === creditCardConfigInputStable.paymentProvider.inputName
                 || key === creditCardConfigInputStable.cardExpiryMonth.inputName
@@ -298,9 +295,10 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     private handleBillingNewAddressValidity = (): boolean => {
         const isFormValid = validateBillingNewAddressForm(this.state.billingNewAddress);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateBillingNewAddressValidity(prevState, isFormValid);
-        });
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateBillingNewAddressValidity(prevState, isFormValid)
+        ));
+
         return isFormValid;
     };
 
@@ -310,80 +308,79 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             delete newAddress.email;
         }
         const isFormValid = validateDeliveryNewAddressForm(newAddress);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateDeliveryNewAddressValidity(prevState, isFormValid);
-        });
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateDeliveryNewAddressValidity(prevState, isFormValid)
+        ));
     };
 
     private handleInvoiceValidity = (): void => {
         const isFormValid = validateInvoiceForm(this.state.paymentInvoiceData);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateInvoiceValidity(prevState, isFormValid);
-        });
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateInvoiceValidity(prevState, isFormValid)
+        ));
     };
 
     private handleCreditCardValidity = (): void => {
         const isFormValid = validateCreditCardForm(this.state.paymentCreditCardData);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateCreditCardValidity(prevState, isFormValid);
-        });
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateCreditCardValidity(prevState, isFormValid)
+        ));
     };
 
     private handleDeliverySelection = (value: string): void => {
         if (value === checkoutSelectionInputs.isAddNewDeliveryValue) {
-            this.setState((prevState: ICheckoutPageState) => {
-                return mutateDeliverySelectionAddNew(prevState);
-            });
+            this.setState((prevState: ICheckoutPageState) => (
+                mutateDeliverySelectionAddNew(prevState)
+            ));
         } else {
-            this.setState((prevState: ICheckoutPageState) => {
-                return mutateDeliverySelectionAddressId(prevState, value);
-            });
+            this.setState((prevState: ICheckoutPageState) => (
+                mutateDeliverySelectionAddressId(prevState, value)
+            ));
         }
     };
 
     private handleBillingSelection = (value: string): void => {
         if (value === checkoutSelectionInputs.isAddNewBillingValue) {
-            this.setState((prevState: ICheckoutPageState) => {
-                return mutateBillingSelectionAddNew(prevState);
-            });
+            this.setState((prevState: ICheckoutPageState) => (
+                mutateBillingSelectionAddNew(prevState)
+            ));
         } else if (value === checkoutSelectionInputs.isSameAsDeliveryValue) {
-            this.setState((prevState: ICheckoutPageState) => {
-                return mutateBillingSelectionSameAsDelivery(prevState);
-            });
+            this.setState((prevState: ICheckoutPageState) => (
+                mutateBillingSelectionSameAsDelivery(prevState)
+            ));
         } else {
-            this.setState((prevState: ICheckoutPageState) => {
-                return mutateBillingSelectionAddressId(prevState, value);
-            });
+            this.setState((prevState: ICheckoutPageState) => (
+                mutateBillingSelectionAddressId(prevState, value)
+            ));
         }
     };
 
     private handleShipmentMethodSelection = (value: string): void => {
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutateShipmentMethod(prevState, value);
-        });
-
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateShipmentMethod(prevState, value)
+        ));
     };
 
     private handlePaymentMethodSelection = (value: string): void => {
         const isInvoiceFormValid = validateInvoiceForm(this.state.paymentInvoiceData);
         const isCreditCardFormValid = validateCreditCardForm(this.state.paymentCreditCardData);
-        this.setState((prevState: ICheckoutPageState) => {
-            return mutatePaymentMethod(prevState, value, isInvoiceFormValid, isCreditCardFormValid);
-        });
+        this.setState((prevState: ICheckoutPageState) => (
+            mutatePaymentMethod(prevState, value, isInvoiceFormValid, isCreditCardFormValid)
+        ));
     };
 
-    private getCurrentValueBillingSelection = (): IAddressItemCollection["id"] | string | null => {
-        return this.state.billingSelection.selectedAddressId
-            || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
-            || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
-            || null;
-    };
+    private getCurrentValueBillingSelection = (): IAddressItemCollection['id'] | string | null => (
+        this.state.billingSelection.selectedAddressId
+        || (this.state.billingSelection.isAddNew && checkoutSelectionInputs.isAddNewBillingValue)
+        || (this.state.billingSelection.isSameAsDelivery && checkoutSelectionInputs.isSameAsDeliveryValue)
+        || null
+    );
 
-    private getCurrentValueDeliverySelection = (): IAddressItemCollection["id"] | string | null => {
-        return this.state.deliverySelection.selectedAddressId
-            || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
-            || null;
-    };
+    private getCurrentValueDeliverySelection = (): IAddressItemCollection['id'] | string | null => (
+        this.state.deliverySelection.selectedAddressId
+        || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
+        || null
+    );
 
     private setDefaultAddresses = (): void => {
         const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
@@ -402,7 +399,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     };
 
     private checkCheckoutFormValidity = (): boolean => {
-        const { first, second, third, fourth } = this.state.stepsCompletion;
+        const {first, second, third, fourth} = this.state.stepsCompletion;
+
         return first && second && third && fourth;
     };
 
@@ -450,8 +448,14 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                             billingSelections: this.state.billingSelection,
                             currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
                             currentValueBillingSelection: this.getCurrentValueBillingSelection(),
-                            extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
-                            extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
+                            extraOptionsDeliverySelection: getExtraOptionsToSelection(
+                                isAddressesCollectionExist,
+                                'delivery'
+                            ),
+                            extraOptionsBillingSelection: getExtraOptionsToSelection(
+                                isAddressesCollectionExist,
+                                'billing'
+                            ),
                             isCheckoutFulfilled,
                             isUserLoggedIn,
                             shipmentMethods,

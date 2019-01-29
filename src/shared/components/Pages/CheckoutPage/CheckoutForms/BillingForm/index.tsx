@@ -3,27 +3,28 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { IBillingFormProps } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/types";
+import { IBillingFormProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/types';
 import { CheckoutPageContext } from '../../context';
-import { formStyles } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/styles";
-import { SprykerForm } from "src/shared/components/UI/SprykerForm";
-import { getAddressFormSettings } from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings";
+import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
+import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
+import {
+    getAddressFormSettings
+} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
 import {
     getSameAsDeliveryFormSettings
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/sameAsDeliverySettings";
+} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/sameAsDeliverySettings';
 import {
     getBillingSavedAddressFormSettings
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings";
-import { AppPageSubTitle } from "src/shared/components/Common/AppPageSubTitle";
-import { checkoutFormsNames } from "src/shared/components/Pages/CheckoutPage/constants";
+} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
+import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
+import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
 import {
     IAddressParams,
     IBillingAddressesParams,
     ISameAsDeliveryParams
-} from "src/shared/components/Pages/CheckoutPage/types/formSettingsTypes";
-import { billingConfigInputStable } from "src/shared/components/Pages/CheckoutPage/constants/inputsConfig";
+} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { billingConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
 import { FormattedMessage } from 'react-intl';
-
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
     const {
@@ -32,21 +33,21 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
 
     return (
         <CheckoutPageContext.Consumer>
-            { ({
-                   submitHandler,
-                   onBlurHandler,
-                   selectionsChangeHandler,
-                   handleBillingInputs,
-                   isBillingSameAsDelivery,
-                   billingNewAddress,
-                   billingSelections,
-                   currentValueBillingSelection,
-                   addressesCollection,
-                   extraOptionsBillingSelection,
-                   isCheckoutFulfilled,
-                   isUserLoggedIn,
-                   countriesCollection
-               }) => {
+            {({
+                submitHandler,
+                onBlurHandler,
+                selectionsChangeHandler,
+                handleBillingInputs,
+                isBillingSameAsDelivery,
+                billingNewAddress,
+                billingSelections,
+                currentValueBillingSelection,
+                addressesCollection,
+                extraOptionsBillingSelection,
+                isCheckoutFulfilled,
+                isUserLoggedIn,
+                countriesCollection
+            }) => {
                 const billingParams: IAddressParams = {
                     inputsData: billingNewAddress,
                     inputsConfig: billingConfigInputStable,
@@ -76,28 +77,30 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                 );
 
                 const inputsForm = isBillingSameAsDelivery ? null :
-                    <SprykerForm key="inputsForm" form={ billingFormSettings } />;
-                const sameAsDeliveryForm = <SprykerForm key="sameAsDeliveryForm" form={ sameAsDeliveryFormSettings } />;
-                const selectionForm = <SprykerForm key="selectionForm" form={ savedAddressFormSettings } />;
+                    <SprykerForm key="inputsForm" form={billingFormSettings}/>;
+                const sameAsDeliveryForm = <SprykerForm key="sameAsDeliveryForm" form={sameAsDeliveryFormSettings}/>;
+                const selectionForm = <SprykerForm key="selectionForm" form={savedAddressFormSettings}/>;
 
                 return (
-                    <Grid container className={ classes.root }>
-                        <Grid item xs={ 12 }>
-                            { isUserLoggedIn
+                    <Grid container className={classes.root}>
+                        <Grid item xs={12}>
+                            {isUserLoggedIn
                                 ? (!isCheckoutFulfilled)
                                     ? <AppPageSubTitle
-                                        title={ <FormattedMessage id={ 'form.waiting.for.response.title' } /> }
-                                    />
+                                        title={<FormattedMessage id={ 'form.waiting.for.response.title' } />}/>
                                     : (<React.Fragment>
-                                        { addressesCollection && addressesCollection.length ? selectionForm : sameAsDeliveryForm }
-                                        { billingSelections.isAddNew && inputsForm }
+                                        {
+                                            addressesCollection && addressesCollection.length ?
+                                            selectionForm : sameAsDeliveryForm
+                                        }
+                                        {billingSelections.isAddNew && inputsForm}
                                     </React.Fragment>)
-                                : [ sameAsDeliveryForm, inputsForm ]
+                                : [sameAsDeliveryForm, inputsForm]
                             }
                         </Grid>
                     </Grid>
                 );
-            } }
+            }}
         </CheckoutPageContext.Consumer>
     );
 };

@@ -1,18 +1,12 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import MenuItem from '@material-ui/core/MenuItem';
-import Grid from '@material-ui/core/Grid';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { TextField, Button, Typography, MenuItem, Grid, Checkbox, FormControlLabel } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
-import { SalutationVariants } from 'src/shared/constants/customer/index';
+import { SalutationVariants } from 'src/shared/constants/customer';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
-import { InputChangeEvent, FormEvent } from "src/shared/interfaces/common/react";
+import { InputChangeEvent, FormEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
@@ -28,25 +22,27 @@ export class RegisterFormBase extends React.Component<Props, State> {
     };
 
     public handleChangeSalutation = (event: InputChangeEvent): void => {
-        this.setState(() => ({ salutation: event.target.value }));
+        this.setState(() => ({salutation: event.target.value}));
     };
 
     public handleChangeAgreement = (event: InputChangeEvent): void => {
-        this.setState(() => ({ acceptedTerms: !this.state.acceptedTerms }));
+        this.setState(() => ({acceptedTerms: !this.state.acceptedTerms}));
     };
 
-    public handleChange = ({ target: { name, value } }: InputChangeEvent): void => {
-        this.setState(() => ({ ...this.state, [ name ]: value }));
+    public handleChange = ({target: {name, value}}: InputChangeEvent): void => {
+        this.setState(() => ({...this.state, [name]: value}));
     };
 
     public handleSubmitForm = (e: FormEvent): void => {
-        const { salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms } = this.state;
         e.preventDefault();
+        const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
+
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
                 type: 'warning'
             });
+
             return null;
         }
 
@@ -55,6 +51,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                 id: 'password.not.equal.message',
                 type: 'warning'
             });
+
             return null;
         }
 
@@ -62,7 +59,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
     };
 
     public render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <React.Fragment>
@@ -70,129 +67,123 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <FormattedMessage id={ 'word.register.title' } />
                 </Typography>
                 <form
-                    className={ classes.container }
+                    className={classes.container}
                     noValidate
                     autoComplete="off"
-                    onSubmit={ this.handleSubmitForm }
+                    onSubmit={this.handleSubmitForm}
                     id="RegisterForm"
                 >
                     <TextField
                         required
                         id="register-salutation"
                         select
-                        label={ <FormattedMessage id={ 'salutation.label' } /> }
+                        label={<FormattedMessage id={ 'salutation.label' } />}
                         name="salutation"
-                        className={ classes.textField }
-                        value={ this.state.salutation }
-                        onChange={ this.handleChangeSalutation }
-                        SelectProps={ {
+                        className={classes.textField}
+                        value={this.state.salutation}
+                        onChange={this.handleChangeSalutation}
+                        SelectProps={{
                             MenuProps: {
                                 className: classes.menu,
                             },
-                        } }
+                        }}
                         margin="normal"
                         fullWidth
-                        InputLabelProps={ { shrink: true } }
+                        InputLabelProps={{shrink: true}}
                     >
-                        { SalutationVariants.map((option: TSalutationVariant) => (
-                            <MenuItem key={ option.value } value={ option.value }>{ option.label }</MenuItem>
-                        )) }
+                        {SalutationVariants.map((option: TSalutationVariant) => (
+                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        ))}
                     </TextField>
 
                     <TextField
                         required
                         id="register-first-name"
-                        label={ <FormattedMessage id={ 'first.name.label' } /> }
+                        label={<FormattedMessage id={ 'first.name.label' } />}
                         name="firstName"
                         type="text"
-                        value={ this.state.firstName }
-                        className={ classes.textField }
+                        value={this.state.firstName}
+                        className={classes.textField}
                         margin="normal"
                         fullWidth
-                        onChange={ this.handleChange }
-                        InputLabelProps={ { shrink: true } }
-                        InputProps={ { className: classes.input } }
+                        onChange={this.handleChange}
+                        InputLabelProps={{shrink: true}}
+                        InputProps={{className: classes.input}}
                     />
 
                     <TextField
                         required
                         id="register-last-name"
-                        label={ <FormattedMessage id={ 'last.name.label' } /> }
+                        label={<FormattedMessage id={ 'last.name.label' } />}
                         name="lastName"
                         type="text"
-                        value={ this.state.lastName }
-                        onChange={ this.handleChange }
-                        className={ classes.textField }
+                        value={this.state.lastName}
+                        onChange={this.handleChange}
+                        className={classes.textField}
                         margin="normal"
                         fullWidth
-                        InputLabelProps={ { shrink: true } }
-                        InputProps={ { className: classes.input } }
+                        InputLabelProps={{shrink: true}}
+                        InputProps={{className: classes.input}}
                     />
 
                     <TextField
                         required
                         id="register-email"
-                        label={ <FormattedMessage id={ 'email.label' } /> }
+                        label={<FormattedMessage id={ 'email.label' } />}
                         name="email"
                         type="email"
-                        value={ this.state.email }
-                        onChange={ this.handleChange }
-                        className={ classes.textField }
+                        value={this.state.email}
+                        onChange={this.handleChange}
+                        className={classes.textField}
                         margin="normal"
                         fullWidth
-                        InputLabelProps={ { shrink: true } }
-                        InputProps={ { className: classes.input } }
+                        InputLabelProps={{shrink: true}}
+                        InputProps={{className: classes.input}}
                     />
 
-                    <Grid
-                        container
-                        direction="row"
-                        justify="space-between"
-                        alignItems="center"
-                        spacing={ 16 }
-                    >
-                        <Grid item xs={ 12 } sm={ 6 }>
+                    <Grid container direction="row" justify="space-between" alignItems="center" spacing={16}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 required
                                 id="register-password"
-                                label={ <FormattedMessage id={ 'word.password.title' } /> }
+                                label={<FormattedMessage id={ 'word.password.title' } />}
                                 name="password"
                                 type="password"
-                                value={ this.state.password }
-                                onChange={ this.handleChange }
-                                className={ classes.textField }
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                className={classes.textField}
                                 margin="normal"
                                 fullWidth
-                                InputLabelProps={ { shrink: true } }
-                                InputProps={ { className: classes.input } }
+                                InputLabelProps={{shrink: true}}
+                                InputProps={{className: classes.input}}
                             />
                         </Grid>
-                        <Grid item xs={ 12 } sm={ 6 }>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 required
                                 id="register-confirm-password"
-                                label={ <FormattedMessage id={ 'confirm.password.title' } /> }
+                                label={<FormattedMessage id={ 'confirm.password.title' } />}
                                 name="confirmPassword"
                                 type="password"
-                                value={ this.state.confirmPassword }
-                                onChange={ this.handleChange }
-                                className={ classes.textField }
+                                value={this.state.confirmPassword}
+                                onChange={this.handleChange}
+                                className={classes.textField}
                                 margin="normal"
                                 fullWidth
-                                InputLabelProps={ { shrink: true } }
-                                InputProps={ { className: classes.input } }
+                                InputLabelProps={{shrink: true}}
+                                InputProps={{className: classes.input}}
                             />
                         </Grid>
                     </Grid>
                     <FormControlLabel
                         control={
                             <Checkbox
-                                checked={ this.state.acceptedTerms }
-                                onChange={ this.handleChangeAgreement }
+                                checked={this.state.acceptedTerms}
+                                onChange={this.handleChangeAgreement}
                                 name="acceptedTerms"
                             />
                         }
-                        label={ <FormattedMessage id={ 'accept.terms.title' } /> }
+                        label={<FormattedMessage id={ 'accept.terms.title' } />}
                     />
 
                     <Button type="submit" variant="contained" className={ classes.button }>

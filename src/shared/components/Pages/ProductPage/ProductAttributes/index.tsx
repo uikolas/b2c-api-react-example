@@ -6,29 +6,29 @@ import { IProductAttributeNames, IProductAttributes } from 'src/shared/interface
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
-
 interface ProductAttributesProps extends WithStyles<typeof styles> {
     attributes: IProductAttributes;
     attributeNames: IProductAttributeNames | null;
 }
 
 export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props): JSX.Element => {
-    const { classes, attributes, attributeNames } = props;
+    const {classes, attributes, attributeNames} = props;
+
     if (!attributes) {
         return null;
     }
 
     return (
         <div>
-            <Typography component="h3" color="inherit" className={ classes.attributesTitle }>
+            <Typography component="h3" color="inherit" className={classes.attributesTitle}>
                 <FormattedMessage id={ 'product.details.title' } />
             </Typography>
-            <Grid container justify="center" className={ classes.root }>
-                { Object.entries(attributes).map((data: [ string, string ]) => {
-                    return (
-                        <Grid key={ data[ 0 ] } item xs={ 12 } sm={ 12 } md={ 6 } className={ classes.element }>
-                            <Typography component="div" color="inherit" gutterBottom={ true }
-                                        className={ classes.valuesBlock }>
+            <Grid container justify="center" className={classes.root}>
+                {
+                    Object.entries(attributes).map((data: [string, string]) => (
+                        <Grid key={data[0]} item xs={12} sm={12} md={6} className={classes.element}>
+                            <Typography component="div" color="inherit" gutterBottom={true}
+                                        className={classes.valuesBlock}>
                                 <p>
                                     <Typography variant="subheading" component="strong">
                                         { `${attributeNames[ data[ 0 ] ]
@@ -38,12 +38,11 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
                                     </Typography>
                                 </p>
                                 <Typography variant="subheading" component="span">
-                                    { data[ 1 ] }
+                                    {data[1]}
                                 </Typography>
                             </Typography>
                         </Grid>
-                    );
-                })
+                    ))
                 }
             </Grid>
         </div>

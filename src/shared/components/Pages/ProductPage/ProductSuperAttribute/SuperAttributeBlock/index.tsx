@@ -11,36 +11,35 @@ export class SuperAttributeBlockComponent extends React.PureComponent<Props, Sta
     };
 
     private selectAttribute = (value: string) => {
-        const { onValueChanged, attributeData: { name } } = this.props;
+        const {onValueChanged, attributeData: {name}} = this.props;
 
-        onValueChanged({ name, value });
-        this.setState(() => ({ selectedItemValue: value }));
+        onValueChanged({name, value});
+        this.setState(() => ({selectedItemValue: value}));
     };
 
     public render() {
-        const { classes, attributeData } = this.props;
-        const { selectedItemValue } = this.state;
-
+        const {classes, attributeData} = this.props;
+        const {selectedItemValue} = this.state;
 
         return (
-            <div className={ classes.attributeBlock }>
-                <h4 className={ classes.attributeTitle }>
+            <div className={classes.attributeBlock}>
+                <h4 className={classes.attributeTitle}>
                     <FormattedMessage id={ 'word.select.title' } /> { attributeData.nameToShow }:
                 </h4>
 
-                <div className={ classes.attributesList }>
-                    { attributeData.data.map(attribute => (
+                <div className={classes.attributesList}>
+                    {attributeData.data.map(attribute => (
                         <SuperAttributeItem
-                            key={ attribute.value.length > 0 ? attribute.value : attribute.name }
-                            attributeItemData={ attribute }
-                            onSelect={ this.selectAttribute }
+                            key={attribute.value.length > 0 ? attribute.value : attribute.name}
+                            attributeItemData={attribute}
+                            onSelect={this.selectAttribute}
                             isSelected={
                                 attribute.value.length > 0
                                     ? attribute.value === selectedItemValue
                                     : attribute.name === selectedItemValue
                             }
                         />
-                    )) }
+                    ))}
                 </div>
             </div>
         );

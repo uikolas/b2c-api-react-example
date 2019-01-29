@@ -9,7 +9,7 @@ import {
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { IApiResponseData } from "src/shared/services/types";
+import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 export class PagesLoginService extends ApiServiceAbstract {
@@ -21,7 +21,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                     attributes: payload,
                 },
             };
-            const response: IApiResponseData = await api.post('customers', body, { withCredentials: true });
+            const response: IApiResponseData = await api.post('customers', body, {withCredentials: true});
 
             if (response.ok) {
                 dispatch({
@@ -41,7 +41,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: { error: errorMessage },
+                    payloadRejected: {error: errorMessage},
                 });
 
                 if (response.status === 422) {
@@ -60,7 +60,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: { error: error.message },
+                payloadRejected: {error: error.message},
             });
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
@@ -81,11 +81,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 },
             };
 
-            const response: IApiResponseData = await api.post('access-tokens', body, { withCredentials: true });
+            const response: IApiResponseData = await api.post('access-tokens', body, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed = parseLoginDataResponse(response.data);
-                dispatch(saveLoginDataToStoreAction({ email: payload.username }));
+                dispatch(saveLoginDataToStoreAction({email: payload.username}));
                 saveAccessDataToLocalStorage(responseParsed);
                 dispatch(loginCustomerFulfilledStateAction(responseParsed));
                 NotificationsMessage({
@@ -116,11 +116,15 @@ export class PagesLoginService extends ApiServiceAbstract {
             const body = {
                 data: {
                     type: 'customer-forgotten-password',
-                    attributes: { email },
+                    attributes: {email},
                 },
             };
 
-            const response: IApiResponseData = await api.post('customer-forgotten-password', body, { withCredentials: true });
+            const response: IApiResponseData = await api.post(
+                'customer-forgotten-password',
+                body,
+                {withCredentials: true}
+            );
 
             if (response.ok) {
                 dispatch({
@@ -133,7 +137,7 @@ export class PagesLoginService extends ApiServiceAbstract {
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: { error: response.problem },
+                    payloadRejected: {error: response.problem},
                 });
                 NotificationsMessage({
                     message: response.problem,
@@ -144,7 +148,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: { error: error.message },
+                payloadRejected: {error: error.message},
             });
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
@@ -154,9 +158,11 @@ export class PagesLoginService extends ApiServiceAbstract {
         }
     }
 
-    public static async resetPassword(ACTION_TYPE: string,
-                                      dispatch: Function,
-                                      payload: IResetPasswordPayload): Promise<void> {
+    public static async resetPassword(
+        ACTION_TYPE: string,
+        dispatch: Function,
+        payload: IResetPasswordPayload
+    ): Promise<void> {
         try {
             const body = {
                 data: {
@@ -165,7 +171,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 },
             };
 
-            const response: IApiResponseData = await api.patch('customer-restore-password', body, { withCredentials: true });
+            const response: IApiResponseData = await api.patch(
+                'customer-restore-password',
+                body,
+                {withCredentials: true}
+            );
 
             if (response.ok) {
                 dispatch({
@@ -178,7 +188,7 @@ export class PagesLoginService extends ApiServiceAbstract {
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: { error: response.problem },
+                    payloadRejected: {error: response.problem},
                 });
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
@@ -190,7 +200,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: { error: error.message },
+                payloadRejected: {error: error.message},
             });
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',

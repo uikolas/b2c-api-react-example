@@ -21,7 +21,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     public componentDidMount() {
         this.props.setCurrentAddressAction(null);
 
-         this.initRequestData();
+        this.initRequestData();
     }
 
     public handleAddAddress = () => {
@@ -43,7 +43,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     };
 
     public render(): JSX.Element {
-        const { classes, addresses, isLoading, deleteAddressAction } = this.props;
+        const {classes, addresses, isLoading, deleteAddressAction} = this.props;
 
         const rows = addresses.map((item: IAddressItem) => (
             <div key={ item.id || item.zipCode } className={ classes.addressData }>
@@ -105,8 +105,8 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                     </div> }
                 </Grid>
 
-                <Grid item xs={ 12 }>
-                    { rows }
+                <Grid item xs={12}>
+                    {rows}
                 </Grid>
 
                 <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>

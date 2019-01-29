@@ -21,17 +21,19 @@ export class RefreshTokenService extends ApiServiceAbstract {
         if (now > +tokenExpire) {
             try {
                 const newToken = await RefreshTokenService.refreshTokenRequest(dispatch, refreshToken);
+
                 return newToken;
             } catch (error) {
                 dispatch({
                     type: REFRESH_TOKEN_REQUEST + '_REJECTED',
-                    error: error.message
+                    error: error.message,
                 });
                 NotificationsMessage({
                     messageWithCustomText: 'unexpected.error.message',
                     message: error.message,
                     type: 'error'
                 });
+
                 return Promise.reject(error.message);
             }
         }
@@ -40,28 +42,27 @@ export class RefreshTokenService extends ApiServiceAbstract {
     }
 
     public static async refreshTokenRequest(dispatch: Function, refreshToken: string): Promise<string> {
-
         const refresh_token = refreshToken;
         const body = {
             data: {
                 type: 'refresh-tokens',
                 attributes: {
                     'refreshToken': refreshToken,
-                    'refresh_token': refresh_token
-                }
-            }
+                    'refresh_token': refresh_token,
+                },
+            },
         };
 
-        dispatch({ type: REFRESH_TOKEN_REQUEST + '_PENDING' });
+        dispatch({type: REFRESH_TOKEN_REQUEST + '_PENDING'});
 
-        const response: IApiResponseData = await api.post('refresh-tokens', body, { withCredentials: true });
+        const response: IApiResponseData = await api.post('refresh-tokens', body, {withCredentials: true});
 
         if (response.ok) {
             const responseParsed = parseLoginDataResponse(response.data);
             saveAccessDataToLocalStorage(responseParsed);
             dispatch({
                 type: REFRESH_TOKEN_REQUEST + '_FULFILLED',
-                payloadRefreshTokenFulfilled: responseParsed
+                payloadRefreshTokenFulfilled: responseParsed,
             });
 
             return responseParsed.accessToken;
@@ -69,13 +70,14 @@ export class RefreshTokenService extends ApiServiceAbstract {
             const errorMessage = this.getParsedAPIError(response);
             dispatch({
                 type: REFRESH_TOKEN_REQUEST + '_REJECTED',
-                error: errorMessage
+                error: errorMessage,
             });
             NotificationsMessage({
                 messageWithCustomText: 'request.error.message',
                 message: errorMessage,
                 type: 'error'
             });
+
             return Promise.reject(errorMessage);
         }
     }

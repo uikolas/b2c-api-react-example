@@ -10,60 +10,60 @@ import { UserDrop } from './userDrop';
 import { UserProps as Props, UserState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
-import {PopoverWrapper} from "src/shared/components/Common/AppHeader/parts/PopoverWrapper";
+import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper';
 import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 
 @connect
 @(withRouter as Function)
 export class UserComponent extends React.PureComponent<Props, State> {
-  public state: State = {
-    anchorEl: null,
-  };
+    public state: State = {
+        anchorEl: null,
+    };
 
-  public componentDidUpdate(prevProps: Props) {
-    if (this.props.location !== prevProps.location) {
-      this.closePopover();
+    public componentDidUpdate(prevProps: Props) {
+        if (this.props.location !== prevProps.location) {
+            this.closePopover();
+        }
     }
-  }
 
-  private openPopover = ({currentTarget}: ClickEvent) => {
-    if (window.innerWidth < BreakpointsSM) {
-      if (this.props.isUserLoggedIn) {
-        this.props.history.push(pathCustomerProfilePage);
-      } else {
-        this.props.history.push(pathLoginPage);
-      }
-    } else {
-      this.setState(() => ({anchorEl: currentTarget}));
+    private openPopover = ({currentTarget}: ClickEvent) => {
+        if (window.innerWidth < BreakpointsSM) {
+            if (this.props.isUserLoggedIn) {
+                this.props.history.push(pathCustomerProfilePage);
+            } else {
+                this.props.history.push(pathLoginPage);
+            }
+        } else {
+            this.setState(() => ({anchorEl: currentTarget}));
+        }
+    };
+    private closePopover = () => this.setState(() => ({anchorEl: null}));
+
+    public render() {
+        const {anchorEl} = this.state;
+        const {classes, popoverPosLeft, popoverPosTop} = this.props;
+        const open = Boolean(anchorEl);
+
+        return (
+            <div>
+                <IconButton aria-label="person" onClick={this.openPopover}>
+                    <PersonIcon/>
+                </IconButton>
+
+                <PopoverWrapper
+                    popoverPosLeft={popoverPosLeft}
+                    popoverPosTop={popoverPosTop}
+                    anchorEl={anchorEl}
+                    closePopoverHandler={this.closePopover}
+                    extraContentClassName={classes.userContent}
+                    extraHelperClassName={classes.popoverTriangle}
+                >
+                    <UserDrop closePopoverHandler={this.closePopover}/>
+                </PopoverWrapper>
+
+            </div>
+        );
     }
-  };
-  private closePopover = () => this.setState(() => ({anchorEl: null}));
-
-  public render() {
-    const {anchorEl} = this.state;
-    const {classes, popoverPosLeft, popoverPosTop} = this.props;
-    const open = Boolean(anchorEl);
-
-    return (
-      <div>
-        <IconButton aria-label="person" onClick={ this.openPopover }>
-          <PersonIcon/>
-        </IconButton>
-
-        <PopoverWrapper
-          popoverPosLeft={popoverPosLeft}
-          popoverPosTop={popoverPosTop}
-          anchorEl={anchorEl}
-          closePopoverHandler={this.closePopover}
-          extraContentClassName={classes.userContent}
-          extraHelperClassName={classes.popoverTriangle}
-        >
-          <UserDrop closePopoverHandler={this.closePopover} />
-        </PopoverWrapper>
-
-      </div>
-    );
-  }
 }
 
 export const User = withStyles(styles)(UserComponent);

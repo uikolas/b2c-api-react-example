@@ -1,5 +1,3 @@
-// tslint:disable:max-file-line-count
-
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -29,14 +27,13 @@ import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
-import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
-import { SprykerForm } from "src/shared/components/UI/SprykerForm/index";
-import { ChangeEvent } from "react";
+import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
+import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import {
     getQuantityFormSettings,
     getWishListFormSettings
-} from "src/shared/components/Pages/ProductPage/settings/forms";
-import { ProductDetail } from "src/shared/components/Pages/ProductPage/ProductDetail/index";
+} from './settings/forms';
+import { ProductDetail } from 'src/shared/components/Pages/ProductPage/ProductDetail';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
@@ -44,7 +41,6 @@ const quantitySelectedInitial = 1;
 
 @connect
 export class ProductPageBase extends React.Component<Props, State> {
-
     public state: State = {
         attributeMap: null,
         superAttrSelected: {},
@@ -71,7 +67,6 @@ export class ProductPageBase extends React.Component<Props, State> {
     };
 
     // Component lifecycle methods
-
     public componentDidMount() {
         if (this.props.product) {
             this.setInitialData();
@@ -88,17 +83,18 @@ export class ProductPageBase extends React.Component<Props, State> {
         }
 
         // First load of the App
-        // tslint:disable:max-line-length
         if (!this.props.isFulfilled
             && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)
         ) {
             this.props.getProductData(this.props.locationProductSKU);
+
             return;
         }
 
         // Update of the product
         if (this.props.product.abstractProduct.sku !== this.props.locationProductSKU) {
             this.props.getProductData(this.props.locationProductSKU);
+
             return;
         }
 
@@ -112,8 +108,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
 
     // Action handlers
-
-    public handleSuperAttributesChange = ({ name, value }: { name: string, value: string }): void => {
+    public handleSuperAttributesChange = ({name, value}: { name: string, value: string }): void => {
         let productData: IProductPropFullData | null;
 
         if (value === defaultItemValueDropdown) {
@@ -133,20 +128,21 @@ export class ProductPageBase extends React.Component<Props, State> {
                 // Such product exists
                 productData = getCurrentProductDataObject(
                     this.props.product.abstractProduct,
-                    this.props.product.concreteProducts[ idProductConcrete ],
+                    this.props.product.concreteProducts[idProductConcrete],
                 );
             }
         }
 
         this.setState((prevState: State) => {
-            if (prevState.superAttrSelected[ name ] === value) {
+            if (prevState.superAttrSelected[name] === value) {
                 return;
             }
+
             return ({
                 ...prevState,
                 superAttrSelected: {
                     ...prevState.superAttrSelected,
-                    [ name ]: value,
+                    [name]: value,
                 },
                 quantitySelected: quantitySelectedInitial,
                 ...productData,
@@ -154,14 +150,16 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
     };
 
-    public handleProductQuantityChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
-        : void => {
-
+    public handleProductQuantityChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
+    ): void => {
         const valueParsed: number = Number.parseInt(event.target.value, 10);
+
         this.setState((prevState: State) => {
             if (prevState.quantitySelected === valueParsed) {
                 return;
             }
+
             return ({
                 ...prevState,
                 quantitySelected: valueParsed,
@@ -169,14 +167,15 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
     };
 
-    public handleWishListChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
+    public handleWishListChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
         : void => {
-
         const value = event.target.value;
+
         this.setState((prevState: State) => {
             if (this.state.wishListSelected === value) {
                 return;
             }
+
             return ({
                 ...prevState,
                 wishListSelected: value,
@@ -190,24 +189,20 @@ export class ProductPageBase extends React.Component<Props, State> {
 
     private runProcessCart = async (): Promise<void> => {
         try {
-            await this.setState((prevState: State) => {
-                return ({
-                    isBuyBtnDisabled: true,
-                    isProcessCartLoading: true,
-                });
-            });
+            await this.setState((prevState: State) => ({
+                isBuyBtnDisabled: true,
+                isProcessCartLoading: true,
+            }));
             await this.runAddToCart();
             // await this.props.getProductAvailability(this.state.sku);
-            await this.setState((prevState: State) => {
-                return ({
-                    ...prevState,
-                    quantity: this.props.product.concreteProducts[ this.state.sku ].quantity,
-                    availability: this.props.product.concreteProducts[ this.state.sku ].availability,
-                    quantitySelected: quantitySelectedInitial,
-                    isBuyBtnDisabled: false,
-                    isProcessCartLoading: false,
-                });
-            });
+            await this.setState((prevState: State) => ({
+                ...prevState,
+                quantity: this.props.product.concreteProducts[this.state.sku].quantity,
+                availability: this.props.product.concreteProducts[this.state.sku].availability,
+                quantitySelected: quantitySelectedInitial,
+                isBuyBtnDisabled: false,
+                isProcessCartLoading: false,
+            }));
         } catch (error) {
             NotificationsMessage({
                 id: 'error.durning.add.product.to.cart.message',
@@ -236,8 +231,10 @@ export class ProductPageBase extends React.Component<Props, State> {
             && !this.props.isWishListsFetched
         ) {
             this.props.getWishLists();
+
             return true;
         }
+
         return false;
     };
 
@@ -253,11 +250,13 @@ export class ProductPageBase extends React.Component<Props, State> {
             if (prevState.wishListSelected === wishListSelected) {
                 return;
             }
+
             return ({
                 ...prevState,
                 wishListSelected,
             });
         });
+
         return true;
     };
 
@@ -267,7 +266,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         const productData: IProductPropFullData | null = getCurrentProductDataObject(
             this.props.product.abstractProduct,
             isOneConcreteProduct
-                ? this.props.product.concreteProducts[ concreteProductsIds[ 0 ] ]
+                ? this.props.product.concreteProducts[concreteProductsIds[0]]
                 : getCurrentProductDataObject(this.props.product.abstractProduct, null),
         );
 
@@ -289,12 +288,13 @@ export class ProductPageBase extends React.Component<Props, State> {
         if (!this.props.isWishListsFetched) {
             return null;
         }
-        return (this.props.wishLists.length > 0) ? this.props.wishLists[ 0 ].id : null;
+
+        return (this.props.wishLists.length > 0) ? this.props.wishLists[0].id : null;
     };
 
     private getIdProductConcrete = (key: string, value: string) => {
-        const selected = { ...this.state.superAttrSelected };
-        selected[ key ] = value;
+        const selected = {...this.state.superAttrSelected};
+        selected[key] = value;
         const path = createPathToIdProductConcrete(selected);
         if (!path) {
             return false;
@@ -303,32 +303,28 @@ export class ProductPageBase extends React.Component<Props, State> {
         return findIdProductConcreteByPath(path, this.state.attributeMap.attribute_variants);
     };
 
-    private getImageData = (images: Array<IProductCardImages>): Array<IImageSlide> | null => images
+    private getImageData = (images: IProductCardImages[]): IImageSlide[] | null => images
         ? images.map((element: IProductCardImages, index: number) => ({
             id: index,
             src: element.externalUrlLarge,
         })) : null;
 
-    private canShowQuantity = () => {
-        return Boolean(this.state.productType === concreteProductType && this.state.availability);
-    };
+    private canShowQuantity = () => (
+        Boolean(this.state.productType === concreteProductType && this.state.availability)
+    );
 
     private checkBuyBtnStatus = () => {
         if (this.state.isProcessCartLoading) {
             return;
         }
         if (this.state.isBuyBtnDisabled && this.canShowQuantity()) {
-            this.setState((prevState: State) => {
-                return ({
-                    isBuyBtnDisabled: false,
-                });
-            });
+            this.setState((prevState: State) => ({
+                isBuyBtnDisabled: false,
+            }));
         } else if (!this.state.isBuyBtnDisabled && !this.canShowQuantity()) {
-            this.setState((prevState: State) => {
-                return ({
-                    isBuyBtnDisabled: true,
-                });
-            });
+            this.setState((prevState: State) => ({
+                isBuyBtnDisabled: true,
+            }));
         }
     };
 
@@ -336,107 +332,108 @@ export class ProductPageBase extends React.Component<Props, State> {
         this.props.addToWishlist(this.state.wishListSelected, this.state.sku);
     };
 
-    private isAddToWishListBtnDisabled = () => {
-        return !this.props.isWishListsFetched || this.state.productType !== concreteProductType;
-    };
+    private isAddToWishListBtnDisabled = () => (
+        !this.props.isWishListsFetched || this.state.productType !== concreteProductType
+    );
 
     public render(): JSX.Element {
-        const { classes } = this.props;
+        const {classes} = this.props;
         const images = this.getImageData(this.state.images);
 
-        const formQuantitySettings: IFormSettings = getQuantityFormSettings(
-            {
-                inputValue: this.state.quantitySelected,
-                quantity: this.state.quantity,
-                onChangeHandler: this.handleProductQuantityChange,
-                controlsGroupClassName: classes.controlsGroupQuantity,
-            }
-        );
-        const formWishListSettings: IFormSettings = getWishListFormSettings(
-            {
-                inputValue: this.state.wishListSelected,
-                wishLists: this.props.wishLists,
-                onChangeHandler: this.handleWishListChange
-            }
-        );
+        const formQuantitySettings: IFormSettings = getQuantityFormSettings({
+            inputValue: this.state.quantitySelected,
+            quantity: this.state.quantity,
+            onChangeHandler: this.handleProductQuantityChange,
+            controlsGroupClassName: classes.controlsGroupQuantity,
+        });
+
+        const formWishListSettings: IFormSettings = getWishListFormSettings({
+            inputValue: this.state.wishListSelected,
+            wishLists: this.props.wishLists,
+            onChangeHandler: this.handleWishListChange,
+        });
 
         return (
             <AppMain>
-                { (!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
+                {(!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
                     ? null
                     : (
-                        <div className={ classes.root }>
-                            <Grid container justify="center" className={ classes.productMain }>
-                                <Grid item xs={ 12 } sm={ 12 } md={ 7 } className={ classes.sliderParent }>
-                                    <div className={ classes.sliderParentContainer }>
+                        <div className={classes.root}>
+                            <Grid container justify="center" className={classes.productMain}>
+                                <Grid item xs={12} sm={12} md={7} className={classes.sliderParent}>
+                                    <div className={classes.sliderParentContainer}>
                                         <ImageSlider
-                                            images={ images }
-                                            uniqueKey={ this.state.sku }
-                                            showThumbs={ false }
-                                            showStatus={ false }
+                                            images={images}
+                                            uniqueKey={this.state.sku}
+                                            showThumbs={false}
+                                            showStatus={false}
                                         />
                                     </div>
                                 </Grid>
-                                <Grid item xs={ 12 } sm={ 12 } md={ 5 } className={ classes.generalInfoParent }>
-                                    <div className={ classes.infoParent }>
+                                <Grid item xs={12} sm={12} md={5} className={classes.generalInfoParent}>
+                                    <div className={classes.infoParent}>
                                         <ProductGeneralInfo
-                                            name={ this.state.name }
-                                            sku={ this.state.sku }
-                                            price={ this.state.priceDefaultGross }
-                                            oldPrice={ this.state.priceOriginalGross ? this.state.priceOriginalGross : null }
-                                            availability={ getAvailabilityDisplay(this.state.availability) }
+                                            name={this.state.name}
+                                            sku={this.state.sku}
+                                            price={this.state.priceDefaultGross}
+                                            oldPrice={
+                                                this.state.priceOriginalGross ? this.state.priceOriginalGross : null
+                                            }
+                                            availability={getAvailabilityDisplay(this.state.availability)}
                                         />
 
-                                        { this.state.superAttributes
+                                        {this.state.superAttributes
                                             ? <ProductSuperAttribute
-                                                productData={ this.state.superAttributes }
-                                                onChange={ this.handleSuperAttributesChange }
+                                                productData={this.state.superAttributes}
+                                                onChange={this.handleSuperAttributesChange}
                                             />
                                             : null
                                         }
 
                                         <Grid container>
-                                            { this.canShowQuantity()
-                                                ? <Grid item xs={ 12 } md={ 12 } className={ classes.blockControl }>
+                                            {this.canShowQuantity()
+                                                ? <Grid item xs={12} md={12} className={classes.blockControl}>
                                                     <SprykerForm
-                                                        form={ formQuantitySettings }
-                                                        formClassName={ classes.formQuantity }
+                                                        form={formQuantitySettings}
+                                                        formClassName={classes.formQuantity}
                                                     />
                                                 </Grid>
                                                 : null
                                             }
-                                            <Grid item xs={ 12 } md={ 12 } className={ classes.buyBtnParent }>
+                                            <Grid item xs={12} md={12} className={classes.buyBtnParent}>
                                                 <SprykerButton
-                                                    title={ <FormattedMessage id={ 'add.to.cart.button.title' } /> }
-                                                    extraClasses={ classes.buyBtn }
-                                                    onClick={ this.handleBuyBtnClick }
-                                                    disabled={ this.state.isBuyBtnDisabled }
+                                                    title={<FormattedMessage id={ 'add.to.cart.button.title' } />}
+                                                    extraClasses={classes.buyBtn}
+                                                    onClick={this.handleBuyBtnClick}
+                                                    disabled={this.state.isBuyBtnDisabled}
                                                 />
                                             </Grid>
                                         </Grid>
 
-                                        { this.props.isUserLoggedIn
-                                            ? (<Grid container spacing={ 24 } className={ classes.wishlistBtnArea }>
-                                                    { this.state.wishListSelected
+                                        {this.props.isUserLoggedIn
+                                            ? (<Grid container spacing={24} className={classes.wishlistBtnArea}>
+                                                    {this.state.wishListSelected
                                                         ?
-                                                        <Grid item xs={ 12 } sm={ 12 } md={ 6 }>
+                                                        <Grid item xs={12} sm={12} md={6}>
                                                             <SprykerForm
-                                                                form={ formWishListSettings }
-                                                                formClassName={ classes.formWishList }
+                                                                form={formWishListSettings}
+                                                                formClassName={classes.formWishList}
                                                             />
                                                         </Grid>
                                                         : null
                                                     }
                                                     <Grid item
-                                                          xs={ 12 }
-                                                          md={ this.state.wishListSelected ? 6 : 12 }
-                                                          className={ classes.buyBtnParent }
+                                                          xs={12}
+                                                          md={this.state.wishListSelected ? 6 : 12}
+                                                          className={classes.buyBtnParent}
                                                     >
                                                         <SprykerButton
-                                                            title={ <FormattedMessage id={ 'add.to.cart.wishlist.title' } /> }
-                                                            extraClasses={ classes.wishListBtn }
-                                                            onClick={ this.handleAddToWishlist }
-                                                            disabled={ this.isAddToWishListBtnDisabled() }
+                                                            title={
+                                                                <FormattedMessage id={ 'add.to.cart.wishlist.title' } />
+                                                            }
+                                                            extraClasses={classes.wishListBtn}
+                                                            onClick={this.handleAddToWishlist}
+                                                            disabled={this.isAddToWishListBtnDisabled()}
                                                         />
                                                     </Grid>
                                                 </Grid>
@@ -447,10 +444,10 @@ export class ProductPageBase extends React.Component<Props, State> {
                                 </Grid>
                             </Grid>
                             <ProductDetail
-                                attributes={ this.state.attributes }
-                                attributeNames={ this.state.attributeNames }
-                                description={ this.state.description }
-                                sku={ this.state.sku ? this.state.sku : this.props.product.abstractProduct.sku }
+                                attributes={this.state.attributes}
+                                attributeNames={this.state.attributeNames}
+                                description={this.state.description}
+                                sku={this.state.sku ? this.state.sku : this.props.product.abstractProduct.sku}
                             />
                         </div>
                     )
@@ -460,5 +457,6 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
 }
 
-const ProductPage = withStyles(styles)(ProductPageBase);
+export const ProductPage = withStyles(styles)(ProductPageBase);
+
 export default ProductPage;

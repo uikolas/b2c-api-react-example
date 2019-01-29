@@ -1,5 +1,5 @@
-import {IReduxOwnProps, IReduxStore} from "@stores/reducers/types";
-import {IWishlist} from "src/shared/interfaces/wishlist/index";
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { IWishlist } from 'src/shared/interfaces/wishlist';
 
 function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
     return Boolean(state.pageWishlist);

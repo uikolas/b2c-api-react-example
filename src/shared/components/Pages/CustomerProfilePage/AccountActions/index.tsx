@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,7 +8,7 @@ import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { FormattedMessage } from 'react-intl';
 
 interface AccountActionsProps extends WithStyles<typeof styles> {
-    submitDeleteHandler: (event: FormEvent<HTMLFormElement>) => void;
+    submitDeleteHandler: (event: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.Element => {
@@ -25,7 +24,7 @@ export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.E
                     <FormattedMessage id={ 'delete.account.title' } />
                 </Typography>
 
-                <Divider />
+                <Divider/>
             </Grid>
 
             <Grid item xs={ 12 }>
@@ -46,4 +45,3 @@ export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.E
 };
 
 export const AccountActions = withStyles(styles)(AccountActionsBase);
-

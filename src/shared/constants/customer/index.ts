@@ -6,7 +6,7 @@ const SalutationVariantMrsValue = 'Mrs';
 const SalutationVariantDrValue = 'Dr';
 const SalutationVariantMsValue = 'Ms';
 
-export const SalutationVariants: Array<TSalutationVariant> = [
+export const SalutationVariants: TSalutationVariant[] = [
     {
         value: SalutationVariantMrValue,
         label: FormattedMessageTemplate('salutation.variant.mr')

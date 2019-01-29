@@ -30,66 +30,70 @@ export const getShipmentMethodsFormSettings = (formName: string, params: IShippi
                     isItemsInRow: true,
                     isRequired: false,
                     label: carrierName,
-                    labelIcon: shipmentCarrierNameToIcon[ carrierName ] ? shipmentCarrierNameToIcon[ carrierName ] : null,
+                    labelIcon: shipmentCarrierNameToIcon[carrierName] ? shipmentCarrierNameToIcon[carrierName] : null,
                     isError: false,
                     radioItems: getRadioItems(shipmentMethods),
                 }
             ],
         ],
     };
+
     return formSettings;
 };
 
-const getRadioItems = (collection: IShippingMethodsParams["shipmentMethods"]) => {
-    let items = convertShipmentsToRadioItems(collection);
+const getRadioItems = (collection: IShippingMethodsParams['shipmentMethods']) => {
+    const items = convertShipmentsToRadioItems(collection);
+
     if (!items) {
         return null;
     }
+
     return items;
 };
 
-const isShippingMethodsExist = (collection: IShippingMethodsParams["shipmentMethods"]) => {
-    return Boolean(collection && Array.isArray(collection) && collection.length > 0);
-};
+const isShippingMethodsExist = (collection: IShippingMethodsParams['shipmentMethods']) => (
+    Boolean(collection && Array.isArray(collection) && collection.length > 0)
+);
 
-const convertShipmentsToRadioItems = (collection: IShippingMethodsParams["shipmentMethods"]) => {
-
-    return (isShippingMethodsExist(collection)
-            ? collection.map((item: IShipmentMethod) => ({ value: item.id, label: createRadioItemLabel(item) }))
-            : null
-    );
-};
+const convertShipmentsToRadioItems = (collection: IShippingMethodsParams['shipmentMethods']) => ((
+    isShippingMethodsExist(collection)
+        ? collection.map((item: IShipmentMethod) => ({value: item.id, label: createRadioItemLabel(item)}))
+        : null
+));
 
 const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
-    let response: Array<React.ReactNode> = [];
+    const response: React.ReactNode[] = [];
 
     if (shipmentMethod.name) {
-        response.push(<Typography key={ `text-${shipmentMethod.id}` }
-                                  align="left"
-                                  component="p"
-                                  color="inherit"
+        response.push(
+            <Typography key={`text-${shipmentMethod.id}`}
+                align="left"
+                component="p"
+                color="inherit"
             >
-                { shipmentMethod.name }
+                {shipmentMethod.name}
             </Typography>
         );
     }
 
     if (shipmentMethod.price) {
-        response.push(<AppPrice
-                key={ `price-${shipmentMethod.id}` }
-                value={ shipmentMethod.price }
+        response.push(
+            <AppPrice
+                key={`price-${shipmentMethod.id}`}
+                value={shipmentMethod.price}
                 isStylesInherited
             />
         );
     }
 
     if (shipmentMethod.taxRate) {
-        response.push(<Typography key={ `taxRate-${shipmentMethod.id}` }
-                                  align="left"
-                                  component="p"
-                                  color="inherit"
+        response.push(
+            <Typography key={`taxRate-${shipmentMethod.id}`}
+                align="left"
+                component="p"
+                color="inherit"
             >
-                <FormattedMessage id={ 'shipment.tax.rate.label' } />: {shipmentMethod.taxRate}
+                {`${InputLabelShipmentTaxRate}: ${shipmentMethod.taxRate}`}
             </Typography>
         );
     }

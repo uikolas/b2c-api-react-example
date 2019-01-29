@@ -9,7 +9,7 @@ import { styles } from '../styles';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
 import { setFormFields, IFieldInput } from './settings';
-import { FormEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
@@ -44,12 +44,13 @@ export class AddressForm extends React.Component<Props, State> {
     };
 
     public componentDidUpdate = (prevProps: Props, prevState: State) => {
-
         // After updating data
         if (!prevState.submitted && this.state.submitted) {
             this.props.routerGoBack();
+
             return;
         }
+
         // First load of the page
         if (!this.props.isRejected && !this.props.isAddressExist && !this.state.submitted) {
             this.initRequestData();
@@ -60,10 +61,9 @@ export class AddressForm extends React.Component<Props, State> {
         }
     };
 
-
     public handleChange = (event: { target: IFieldInput }): void => {
-        const { name, value }: IFieldInput = event.target;
-        this.setState(state => ({ ...state, [ name ]: value }));
+        const {name, value}: IFieldInput = event.target;
+        this.setState(state => ({...state, [name]: value}));
     };
 
     public handleCheckbox = (event: InputChangeEvent): void => {
@@ -73,18 +73,19 @@ export class AddressForm extends React.Component<Props, State> {
 
     public handleSubmitForm = (e: FormEvent) => {
         e.preventDefault();
-        const { salutation, firstName, lastName, address1, address2, zipCode, city, iso2Code } = this.state;
-        this.setState(() => ({ submitted: true }));
+        const {salutation, firstName, lastName, address1, address2, zipCode, city, iso2Code} = this.state;
+        this.setState(() => ({submitted: true}));
 
         if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
                 type: 'warning'
             });
+
             return;
         }
 
-        const payload = { ...this.state };
+        const payload = {...this.state};
         delete payload.submitted;
 
         if (this.props.currentAddress) {

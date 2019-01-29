@@ -75,6 +75,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
 
         if (!this.props.isAppDataSet) {
             this.props.initApplicationData(null);
+
             return;
         }
     }
@@ -100,9 +101,9 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
         }
     };
 
-    private isDataFulfilled = () => {
-        return Boolean(this.props.cartCreated && this.props.isInitStateFulfilled);
-    };
+    private isDataFulfilled = () => (
+        Boolean(this.props.cartCreated && this.props.isInitStateFulfilled)
+    );
 
     private mobileNavToggle = () => this.setState(({ mobileNavOpened }) => ({ mobileNavOpened: !mobileNavOpened }));
 

@@ -1,9 +1,9 @@
-import { SalutationVariants } from 'src/shared/constants/customer/index';
+import { SalutationVariants } from 'src/shared/constants/customer';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
 import { AddressFormState } from './types';
 import { InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { ICountry } from 'src/shared/interfaces/country/index';
+import { ICountry } from 'src/shared/interfaces/country';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
@@ -16,7 +16,7 @@ export const setFormFields = (
     currentState: AddressFormState,
     countries: ICountry[],
     handleCheckBox: (event: InputChangeEvent) => void
-): Array<IFormField[]> => {
+): IFormField[][] => {
     const {
         salutation,
         firstName,
@@ -46,7 +46,7 @@ export const setFormFields = (
             menuItems: SalutationVariants
                 .map((item: TSalutationVariant) => ({ value: item.value, name: item.label })),
             menuItemFirst: {
-                value: " ",
+                value: ' ',
                 name: <FormattedMessage id={ 'first.item.in.select' } />,
                 selected: true,
                 disabled: true,
@@ -123,7 +123,7 @@ export const setFormFields = (
             menuItems: countries
                 .map((country: ICountry) => ({ value: country.iso2Code, name: country.name })),
             menuItemFirst: {
-                value: " ",
+                value: ' ',
                 name: <FormattedMessage id={ 'first.item.in.select' } />,
                 selected: true,
                 disabled: true,

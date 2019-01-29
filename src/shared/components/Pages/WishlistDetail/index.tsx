@@ -40,10 +40,10 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     };
 
     public componentDidUpdate(prevProps: Props, prevState: State) {
-        const { cartItemsLength, cartId, wishlist } = this.props;
+        const {cartItemsLength, cartId, wishlist} = this.props;
         if (prevState.movedItem && cartItemsLength > prevProps.cartItemsLength) {
             this.props.deleteItemAction(wishlist.id, prevState.movedItem);
-            this.setState({ movedItem: '' });
+            this.setState({movedItem: ''});
         }
 
         if (prevState.multiProducts.length && cartItemsLength > prevProps.cartItemsLength) {
@@ -58,15 +58,17 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 
     public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
         event.persist();
-        this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[ 0 ]}`);
+        this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
     };
 
     private initRequestData = () => {
         if (this.props.isLoading) { return; }
         if (this.props.isAppDataSet && this.props.wishlistIdParam) {
             this.props.getDetailWishlistAction(this.props.wishlistIdParam);
+
             return true;
         }
+
         return false;
     };
 
@@ -77,30 +79,30 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 
     public moveToCart = (sku: string) => (event: ClickEvent) => {
         event.persist();
-        this.setState(() => ({ movedItem: sku }));
+        this.setState(() => ({movedItem: sku}));
         this.props.addItemToCartAction(createCartItemAddToCart(sku, 1), this.props.cartId);
     };
 
     public moveAllProductsToCart = (event: ClickEvent) => {
         event.persist();
-        const { products, cartId, wishlist } = this.props;
-        const availableProducts: string[] = products.filter(({ availability }) => availability).map(({ sku }) => sku);
+        const {products, cartId, wishlist} = this.props;
+        const availableProducts: string[] = products.filter(({availability}) => availability).map(({sku}) => sku);
         this.props.multiItemsCartAction(cartId, availableProducts);
-        this.setState({ multiProducts: availableProducts });
+        this.setState({multiProducts: availableProducts});
     };
 
     public wishlistMenu = () => {
-        const { classes, wishlist } = this.props;
+        const {classes, wishlist} = this.props;
 
         return (
-            <MenuList className={ classes.menu }>
-                <MenuItem className={ classes.menuItem }>
-                    <NavLink to={ pathWishListsPage } className={ classes.link }>
+            <MenuList className={classes.menu}>
+                <MenuItem className={classes.menuItem}>
+                    <NavLink to={pathWishListsPage} className={classes.link}>
                         <FormattedMessage id={ 'word.wishlist.title' } />
                     </NavLink>
                 </MenuItem>
-                { (wishlist && wishlist.name)
-                    ? <MenuItem className={ classes.menuItem }>{ wishlist.name }</MenuItem>
+                {(wishlist && wishlist.name)
+                    ? <MenuItem className={classes.menuItem}>{wishlist.name}</MenuItem>
                     : null
                 }
             </MenuList>
@@ -108,7 +110,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
     };
 
     public render() {
-        const { classes, products, isLoading, cartLoading, currency } = this.props;
+        const {classes, products, isLoading, cartLoading, currency} = this.props;
         const tableAction = cartLoading ? classes.tableActionDisabled : classes.tableAction;
 
         if (!products.length && isLoading) {
@@ -117,16 +119,16 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 
         const headerCellPart = 'header-';
         const bodyCellPart = 'body-';
-        const headerCells: Array<ICellInfo> = [
-            { content: <FormattedMessage id={ 'word.product.title' } />, id: `${headerCellPart}1` },
-            { content: <FormattedMessage id={ 'word.price.title' } />, id: `${headerCellPart}2` },
-            { content: <FormattedMessage id={ 'word.availability.title' } />, id: `${headerCellPart}3` },
-            { content: '', id: `${headerCellPart}4` },
-            { content: '', id: `${headerCellPart}5` },
+        const headerCells: ICellInfo[] = [
+            {content: <FormattedMessage id={ 'word.product.title' } />, id: `${headerCellPart}1`},
+            {content: <FormattedMessage id={ 'word.price.title' } />, id: `${headerCellPart}2`},
+            {content: <FormattedMessage id={ 'word.availability.title' } />, id: `${headerCellPart}3`},
+            {content: '', id: `${headerCellPart}4`},
+            {content: '', id: `${headerCellPart}5`},
         ];
 
-        const bodyRows: Array<ITableRow> = products.map((item: IWishlistProduct) => {
-            const prices: { default: string, original: string } = { default: '', original: '' };
+        const bodyRows: ITableRow[] = products.map((item: IWishlistProduct) => {
+            const prices: { default: string, original: string } = {default: '', original: ''};
 
             item.prices.forEach((price: IProductPricesItem) => {
                 if (price.priceTypeName.toLowerCase() === 'default') {

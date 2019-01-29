@@ -1,13 +1,12 @@
-import {TProductQuantity, TProductSKU} from '@interfaces/product/index';
-import {ICartItem, ICartTotals, TCartId} from '@interfaces/cart/index';
-import {ICartState} from './types';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import { TProductQuantity, TProductSKU } from '@interfaces/product/index';
+import { ICartItem, ICartTotals, TCartId } from '@interfaces/cart/index';
+import { ICartState } from '@stores/reducers/common/cart/types';
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 
 // Number of products(including quantity per each product) in the cart
 export function getTotalProductsQuantity(state: IReduxStore, props: IReduxOwnProps): TProductQuantity {
-  return state.cart.data.items.reduce((acc: number, item: ICartItem) => {
-    return acc + item.quantity;
-  }, 0);
+  return state.cart.data.items.reduce((acc: number, item: ICartItem) =>
+    acc + item.quantity, 0);
 }
 
 // Number of items in the cart

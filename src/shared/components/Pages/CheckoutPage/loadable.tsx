@@ -1,14 +1,12 @@
-// tslint:disable:max-line-length
 import * as React from 'react';
 import Loadable from 'react-loadable';
-import { Preloader } from '@components/Common/Preloader';
 
 export const LoadableCheckoutPage = Loadable({
-  loader: () =>
-    import(
-      /* webpackPrefetch: true, webpackChunkName: "LoadableCheckoutPage" */
-      'src/shared/components/Pages/CheckoutPage').then(
-      module => module.default,
-    ),
-  loading: () => <Preloader />,
+    loader: () =>
+        import(
+            /* webpackPrefetch: true, webpackChunkName: "LoadableCheckoutPage" */
+            'src/shared/components/Pages/CheckoutPage').then(
+            module => module.default,
+        ),
+    loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,
 });

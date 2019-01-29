@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedPlural } from 'react-intl';
+import { FormattedPlural, FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
@@ -12,7 +12,6 @@ import { OrderSummary } from './OrderSummary';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
-import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
@@ -40,13 +39,16 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     private setListItemHeight = () => {
         if (this.listRef
             && this.listRef.current
-            && Math.floor(this.listRef.current.offsetWidth * this.designImgWidth) !== Math.floor(this.state.heightListItem)) {
-            this.setState({ heightListItem: this.listRef.current.offsetWidth * this.designImgWidth });
+            && Math.floor(
+                this.listRef.current.offsetWidth * this.designImgWidth
+            ) !== Math.floor(this.state.heightListItem)
+        ) {
+            this.setState({heightListItem: this.listRef.current.offsetWidth * this.designImgWidth});
         }
     };
 
     public handleDeleteItem = (sku: string) => {
-        const { cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn, anonymId } = this.props;
+        const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn, anonymId} = this.props;
 
         if (isUserLoggedIn) {
             cartDeleteItemAction(cartId, sku);
@@ -56,7 +58,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     };
 
     public handleChangeQty = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        const { name, value }: { name: string, value: string } = event.target;
+        const {name, value}: { name: string, value: string } = event.target;
         const {
             cartDeleteItemAction,
             removeItemGuestCartAction,
@@ -90,23 +92,23 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
     };
 
     public handleChangeVouchercode = (e: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ voucherCode: e.target.value });
+        this.setState({voucherCode: e.target.value});
     };
 
     public render() {
-        const { classes, items, totals, isUserLoggedIn, totalQty } = this.props;
-        const { heightListItem, voucherCode } = this.state;
+        const {classes, items, totals, isUserLoggedIn, totalQty} = this.props;
+        const {heightListItem, voucherCode} = this.state;
 
         if (!items || !items.length) {
             return (
                 <AppMain>
-                    <Grid item xs={ 12 }>
+                    <Grid item xs={12}>
                         <Typography
                             variant="display2"
                             noWrap
                             align="center"
                         >
-                            <FormattedMessage id={ 'cart.is.empty.message' } />
+                            <FormattedMessage id={'cart.is.empty.message'} />
                         </Typography>
                     </Grid>
                 </AppMain>
@@ -158,9 +160,9 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
                     </Grid>
 
                     <OrderSummary
-                        handleChangeVouchercode={ this.handleChangeVouchercode }
-                        voucherCode={ voucherCode }
-                        totals={ totals }
+                        handleChangeVouchercode={this.handleChangeVouchercode}
+                        voucherCode={voucherCode}
+                        totals={totals}
                     />
                 </Grid>
             </AppMain>

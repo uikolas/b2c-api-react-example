@@ -17,7 +17,7 @@ import { RegisterFormComponent } from './RegisterFormComponent';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
-import { IReduxOwnProps, IReduxStore } from "src/shared/stores/reducers/types";
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 
 interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRouter {
     dispatch?: Function;
@@ -27,9 +27,7 @@ interface LoginPageProps extends WithStyles<typeof styles>, RouteProps, WithRout
     getCustomerCart: Function;
 }
 
-interface LoginPageState {
-
-}
+interface LoginPageState {}
 
 @(withRouter as Function)
 export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
@@ -43,30 +41,32 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
     }
 
     public render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <AppMain>
-                <Grid item xs={ 12 } sm={ 12 } md={ 6 }
-                      direction="column"
-                      container
-                      justify="center"
-                      alignItems="center">
-                    <LoginForm handleSubmit={ this.props.handleSubmitLoginForm }
+                <Grid item xs={12} sm={12} md={6}
+                    direction="column"
+                    container
+                    justify="center"
+                    alignItems="center"
+                >
+                    <LoginForm handleSubmit={this.props.handleSubmitLoginForm}
                     />
-                    <div className={ classes.link }>
-                        <NavLink to={ pathForgotPassword }>
+                    <div className={classes.link}>
+                        <NavLink to={pathForgotPassword}>
                             <FormattedMessage id={ 'forgot.password.title' } />
                         </NavLink>
                     </div>
                 </Grid>
-                <div className={ classes.divider } id="divider" />
-                <Grid item xs={ 12 } sm={ 12 } md={ 6 }
-                      direction="column"
-                      container
-                      justify="center"
-                      alignItems="center">
-                    <RegisterFormComponent handleSubmit={ this.props.handleSubmitRegisterForm } />
+                <div className={classes.divider} id="divider"/>
+                <Grid item xs={12} sm={12} md={6}
+                    direction="column"
+                    container
+                    justify="center"
+                    alignItems="center"
+                >
+                    <RegisterFormComponent handleSubmit={this.props.handleSubmitRegisterForm}/>
                 </Grid>
             </AppMain>
         );
@@ -78,20 +78,19 @@ const LoginPage = withStyles(styles)(LoginPageBase);
 export const ConnectedLogin = reduxify(
     (state: IReduxStore, ownProps: IReduxOwnProps) => {
         const pagesLoginProps: ILoginState = state.pagesLogin ? state.pagesLogin : null;
+
         return (
             {
                 isAuth: pagesLoginProps && pagesLoginProps.data ? pagesLoginProps.data.isAuth : false,
             }
         );
     },
-    (dispatch: Function) => {
-        return {
-            dispatch,
-            handleSubmitRegisterForm: (data: ICustomerProfile): void => dispatch(customerRegisterAction(data)),
-            handleSubmitLoginForm: (payload: ICustomerLoginData): void => dispatch(loginCustomerAction(payload)),
-            getCustomerCart: () => dispatch(getCustomerCartsAction()),
-        };
-    },
+    (dispatch: Function) => ({
+        dispatch,
+        handleSubmitRegisterForm: (data: ICustomerProfile): void => dispatch(customerRegisterAction(data)),
+        handleSubmitLoginForm: (payload: ICustomerLoginData): void => dispatch(loginCustomerAction(payload)),
+        getCustomerCart: () => dispatch(getCustomerCartsAction()),
+    }),
 )(LoginPage);
 
 export default ConnectedLogin;

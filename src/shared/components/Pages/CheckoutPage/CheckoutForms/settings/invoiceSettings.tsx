@@ -1,7 +1,7 @@
+import React from 'react';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
 import { IPaymentInvoiceParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 import { FormattedMessage } from 'react-intl';
-import React from 'react';
 
 export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoiceParams): IFormSettings => {
     const {
@@ -15,7 +15,6 @@ export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoice
         inputChangeHandler,
         onBlurHandler,
     } = params;
-
 
     const formSettings: IFormSettings = {
         formName,
@@ -36,5 +35,6 @@ export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoice
             ],
         ],
     };
+
     return formSettings;
 };

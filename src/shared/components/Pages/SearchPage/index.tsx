@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ChangeEvent, ReactNode } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
@@ -42,9 +41,9 @@ import { SearchFilterList } from './SearchFilterList';
 import { SearchPageContext } from './context';
 import {
     addToQueryActiveRangeFilters,
-} from "src/shared/components/Pages/SearchPage/helpers/queries";
-import { getCategoryNameById } from "src/shared/helpers/categories/index";
-import { DefaultItemsPerPage } from "src/shared/constants/search/index";
+} from 'src/shared/components/Pages/SearchPage/helpers/queries';
+import { getCategoryNameById } from 'src/shared/helpers/categories/index';
+import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
@@ -54,8 +53,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     constructor(props: ISearchPageProps) {
         super(props);
 
-        const activeFilters: { [ key: string ]: string[] } = {};
-        const activeRangeFilters: { [ key: string ]: RangeType } = {};
+        const activeFilters: { [key: string]: string[] } = {};
+        const activeRangeFilters: { [key: string]: RangeType } = {};
 
         this.state = {
             activeFilters,
@@ -74,7 +73,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
 
     public componentDidUpdate = (prevProps: ISearchPageProps, prevState: ISearchPageState): void => {
-        const { locationCategoryId, currency } = this.props;
+        const {locationCategoryId, currency} = this.props;
 
         if (locationCategoryId && currency && locationCategoryId !== prevProps.locationCategoryId) {
             this.runNewCategoryPage();
@@ -84,10 +83,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         if (this.state.isReadyToNewRequest) {
             if (!prevState.isReadyToNewRequest && this.state.isNeedNewRequest) {
                 this.updateSearch();
-                this.setState({ isReadyToNewRequest: false });
+                this.setState({isReadyToNewRequest: false});
             }
             if (this.state.isReadyToNewRequest && !this.state.isNeedNewRequest) {
-                this.setState({ isReadyToNewRequest: false });
+                this.setState({isReadyToNewRequest: false});
             }
         }
 
@@ -103,11 +102,11 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         }
     };
 
-    public updateActiveFilters = (name: string, values: Array<string>) => {
+    public updateActiveFilters = (name: string, values: string[]) => {
         this.setState((prevState: ISearchPageState) => ({
             activeFilters: {
                 ...prevState.activeFilters,
-                [ name ]: values,
+                [name]: values,
             },
             paginationPage: 1,
             isFiltersReset: false,
@@ -115,8 +114,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         }));
     };
 
-    public updateRangeFilters = (name: TRangeInputName, { min, max }: RangeType) => {
-        const currentData = this.props.rangeFilters.filter((filter: RangeFacets) => (filter.name === name))[ 0 ];
+    public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
+        const currentData = this.props.rangeFilters.filter((filter: RangeFacets) => (filter.name === name))[0];
         const currentDataActiveMin = rangeFilterValueToFront(currentData.activeMin, rangeMinType);
         const currentDataActiveMax = rangeFilterValueToFront(currentData.activeMax, rangeMaxType);
 
@@ -124,30 +123,30 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             return;
         }
 
-        this.setState((prevState: ISearchPageState) => {
-            return {
+        this.setState((prevState: ISearchPageState) => (
+            {
                 activeRangeFilters: {
                     ...prevState.activeRangeFilters,
-                    [ name ]: { min, max },
+                    [name]: {min, max},
                 },
                 paginationPage: 1,
                 isFiltersReset: false,
                 isNeedNewRequest: true,
-            };
-        });
+            }
+        ));
     };
 
-    private validateData = (): boolean => {
-        return isValidRangeInput(this.state.activeRangeFilters, this.props.rangeFilters);
-    };
+    private validateData = (): boolean => (
+        isValidRangeInput(this.state.activeRangeFilters, this.props.rangeFilters)
+    );
 
-    public resetRangeFilter = ({ name }: IFilterItemToDelete): boolean => {
+    public resetRangeFilter = ({name}: IFilterItemToDelete): boolean => {
         if (!name) {
             return;
         }
 
-        const { ...activeRanges } = this.state.activeRangeFilters;
-        delete activeRanges[ name ];
+        const {...activeRanges} = this.state.activeRangeFilters;
+        delete activeRanges[name];
 
         this.setState((prevState: ISearchPageState) => ({
             activeRangeFilters: {
@@ -157,12 +156,14 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             isNeedNewRequest: true,
             paginationPage: 1,
         }));
+
         return true;
     };
 
-    public resetFilterOneValue = ({ name, value }: IFilterItemToDelete): boolean => {
-        const values = [ ...this.state.activeFilters[ name ] ].filter((val: TFilterItemValue) => val !== value);
+    public resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
+        const values = [...this.state.activeFilters[name]].filter((val: TFilterItemValue) => val !== value);
         this.updateActiveFilters(name, values);
+
         return true;
     };
 
@@ -174,12 +175,14 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                 id: 'validate.range.input.error.message',
                 type: 'error'
             });
+
             return;
         }
-        let query: ISearchQuery = this.getQueryBaseParams();
+
+        const query: ISearchQuery = this.getQueryBaseParams();
 
         if (needResetURLParam === true) {
-            this.setPaginationParam("1");
+            this.setPaginationParam('1');
         }
 
         this.props.sendSearch(query);
@@ -193,15 +196,15 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         return true;
     };
 
-    public handleSetSorting = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
+    public handleSetSorting = (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode): void => {
         this.runSetSorting(event.target.value);
     };
 
-    public handleSetItemsPerPage = (event: ChangeEvent<HTMLSelectElement>, child: ReactNode): void => {
+    public handleSetItemsPerPage = (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode): void => {
         this.runSetItemsPerPage(+event.target.value);
     };
 
-    public handlePagination = (event: ChangeEvent<{}>, value: number | string): void => {
+    public handlePagination = (event: React.ChangeEvent<{}>, value: number | string): void => {
         this.runSetPaginationPage(value);
     };
 
@@ -218,7 +221,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                 this.resetRangeFilter(itemToDelete);
             }
 
-            this.setState({ isReadyToNewRequest: true });
+            this.setState({isReadyToNewRequest: true});
         };
 
     public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
@@ -226,16 +229,17 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     };
 
     public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
-        this.setState({ isReadyToNewRequest: true });
+        this.setState({isReadyToNewRequest: true});
     };
 
     public onAfterChangeRangeFilterHandler = (value: number[]): void => {
-        this.setState({ isReadyToNewRequest: true });
+        this.setState({isReadyToNewRequest: true});
     };
 
     private initCategoryRequest = async (): Promise<void> => {
         const parsedGetParams = qs.parse(this.props.location.search);
-        let query: ISearchQuery = this.getQueryBaseParams();
+        const query: ISearchQuery = this.getQueryBaseParams();
+
         if (parsedGetParams && parsedGetParams.page) {
             query.page = parsedGetParams.page;
         }
@@ -246,7 +250,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     private setPaginationParam = (page: string): void => {
         const searchQuery = new URLSearchParams(this.props.history.location.search);
         searchQuery.set('page', page);
-        this.props.history.replace({ ...this.props.history.location, search: searchQuery.toString() });
+        this.props.history.replace({...this.props.history.location, search: searchQuery.toString()});
     };
 
     private getQueryBaseParams = (): ISearchQuery => {
@@ -275,20 +279,21 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             query.ipp = this.state.itemsPerPage;
         }
         if (this.state.activeFilters) {
-            query = { ...query, ...this.state.activeFilters };
+            query = {...query, ...this.state.activeFilters};
         }
         if (this.state.activeRangeFilters) {
-            query = { ...query, ...addToQueryActiveRangeFilters(this.state.activeRangeFilters) };
+            query = {...query, ...addToQueryActiveRangeFilters(this.state.activeRangeFilters)};
         }
         if (this.state.paginationPage) {
             query.page = this.state.paginationPage;
         }
+
         return query;
     };
 
     private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<void> => {
-        await this.setState((prevState: ISearchPageState) => {
-            return ({
+        await this.setState((prevState: ISearchPageState) => (
+            {
                 ...prevState,
                 activeFilters: {},
                 activeRangeFilters: {},
@@ -297,8 +302,8 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                 isNeedNewRequest: false,
                 isReadyToNewRequest: false,
                 paginationPage: 1,
-            });
-        });
+            }
+        ));
 
         if (needUpdateSearch) {
             await this.updateSearch();
@@ -306,23 +311,23 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     };
 
     private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<void> => {
-        await this.setState({ paginationPage: 1, itemsPerPage, isReadyToNewRequest: true });
+        await this.setState({paginationPage: 1, itemsPerPage, isReadyToNewRequest: true});
         await this.updateSearch();
     };
 
     private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<void> => {
-        await this.setState({ paginationPage: page, isReadyToNewRequest: true });
+        await this.setState({paginationPage: page, isReadyToNewRequest: true});
         this.setPaginationParam(String(page));
         await this.updateSearch(false);
     };
 
     private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<void> => {
-        await this.setState({ sort: sortMode, isReadyToNewRequest: true });
+        await this.setState({sort: sortMode, isReadyToNewRequest: true});
         await this.updateSearch();
     };
 
     private runNewCategoryPage = async (): Promise<void> => {
-        await this.setState({ paginationPage: null });
+        await this.setState({paginationPage: null});
         await this.initCategoryRequest();
     };
 
@@ -353,9 +358,9 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         const sortPanelNumberMode = (
             <SprykerSelect
-                currentMode={ this.state.itemsPerPage }
-                changeHandler={ this.handleSetItemsPerPage }
-                menuItems={ pagination.validItemsPerPageOptions.map((item: number) => ({ value: item, name: item })) }
+                currentMode={this.state.itemsPerPage}
+                changeHandler={this.handleSetItemsPerPage}
+                menuItems={pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item}))}
                 menuItemFirst={ {
                     value: ' ',
                     name: <FormattedMessage id={ 'products.per.page.title' } />,
@@ -367,12 +372,15 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         const sortPanelSorterMode = (
             <SprykerSelect
-                currentMode={ this.state.sort || ' ' }
-                changeHandler={ this.handleSetSorting }
-                menuItems={ sortParams.filter((item: string) => item !== 'rating').map((item: string) => ({
+                currentMode={this.state.sort || ' '}
+                changeHandler={this.handleSetSorting}
+                menuItems={sortParams.filter((item: string) => item !== 'rating').map((item: string) => ({
                     value: item,
-                    name: (sortParamLocalizedNames && sortParamLocalizedNames[ item ]) ? sortParamLocalizedNames[ item ] : `${item}`,
-                })) }
+                    name:
+                        (
+                            sortParamLocalizedNames && sortParamLocalizedNames[item]
+                        ) ? sortParamLocalizedNames[item] : `${item}`,
+                }))}
                 menuItemFirst={ {
                     value: ' ',
                     name: (!isSortParamsExist && !this.state.sort)
@@ -381,7 +389,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                     disabled: !isSortParamsExist,
                 } }
                 name="sort"
-                title={ null }
+                title={null}
             />
         );
 
@@ -402,59 +410,59 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                     intro={ <SearchIntro className={ classes.spellingSuggestion }
                                          spellingSuggestion={ spellingSuggestion } /> }
                 />
-                <Grid container className={ classes.container }>
+                <Grid container className={classes.container}>
                     <SearchPageContext.Provider
-                        value={ {
+                        value={{
                             selectCategoryHandler: this.selectCategory,
                             deleteActiveFilterHandler: this.deleteActiveFilterHandler,
-                        } }
+                        }}
                     >
-                        <Grid item xs={ isCategoriesExist ? 12 : null } md={ isCategoriesExist ? 3 : null }>
+                        <Grid item xs={isCategoriesExist ? 12 : null} md={isCategoriesExist ? 3 : null}>
                             <CategoriesList
-                                categories={ category }
-                                localizedName={ categoriesLocalizedName }
-                                categoriesTree={ categoriesTree }
-                                selectedCategory={ currentCategory }
+                                categories={category}
+                                localizedName={categoriesLocalizedName}
+                                categoriesTree={categoriesTree}
+                                selectedCategory={currentCategory}
                             />
                         </Grid>
 
-                        <Grid item xs={ 12 } md={ isCategoriesExist ? 9 : 12 }>
+                        <Grid item xs={12} md={isCategoriesExist ? 9 : 12}>
                             <Grid container>
                                 <SearchFilterList
-                                    filters={ filters }
-                                    updateFilterHandler={ this.updateActiveFilters }
-                                    activeValuesFilters={ this.state.activeFilters }
-                                    ranges={ rangeFilters }
-                                    activeValuesRanges={ this.state.activeRangeFilters }
-                                    updateRangeHandler={ this.updateRangeFilters }
-                                    onCloseFilterHandler={ this.onCloseFilterHandler }
-                                    onAfterChangeRangeFilter={ this.onAfterChangeRangeFilterHandler }
-                                    isFiltersReset={ this.state.isFiltersReset }
-                                    isProductsExist={ isProductsExist }
+                                    filters={filters}
+                                    updateFilterHandler={this.updateActiveFilters}
+                                    activeValuesFilters={this.state.activeFilters}
+                                    ranges={rangeFilters}
+                                    activeValuesRanges={this.state.activeRangeFilters}
+                                    updateRangeHandler={this.updateRangeFilters}
+                                    onCloseFilterHandler={this.onCloseFilterHandler}
+                                    onAfterChangeRangeFilter={this.onAfterChangeRangeFilterHandler}
+                                    isFiltersReset={this.state.isFiltersReset}
+                                    isProductsExist={isProductsExist}
                                 />
                                 <ActiveFiltersList
-                                    activeValuesFilters={ this.state.activeFilters }
-                                    activeValuesRanges={ this.state.activeRangeFilters }
-                                    rangeFilters={ rangeFilters }
-                                    resetHandler={ this.resetActiveFilters }
-                                    filtersLocalizedNames={ getFiltersLocalizedNames(filters) }
-                                    rangesLocalizedNames={ getRangeFiltersLocalizedNames(rangeFilters) }
+                                    activeValuesFilters={this.state.activeFilters}
+                                    activeValuesRanges={this.state.activeRangeFilters}
+                                    rangeFilters={rangeFilters}
+                                    resetHandler={this.resetActiveFilters}
+                                    filtersLocalizedNames={getFiltersLocalizedNames(filters)}
+                                    rangesLocalizedNames={getRangeFiltersLocalizedNames(rangeFilters)}
                                 />
                                 <SortPanel
-                                    foundItems={ <FoundItems numberFound={ pagination.numFound } /> }
-                                    numberMode={ sortPanelNumberMode }
-                                    sorterMode={ sortPanelSorterMode }
-                                    isProductsExist={ isProductsExist }
+                                    foundItems={<FoundItems numberFound={pagination.numFound}/>}
+                                    numberMode={sortPanelNumberMode}
+                                    sorterMode={sortPanelSorterMode}
+                                    isProductsExist={isProductsExist}
                                 />
                                 <ProductsList
-                                    products={ items }
-                                    selectProductHandler={ this.onSelectProductHandler }
-                                    currency={ currency }
-                                    isLoading={ !!isLoading }
-                                    productsLabeled={ productsLabeled }
-                                    availableLabels={ availableLabels }
+                                    products={items}
+                                    selectProductHandler={this.onSelectProductHandler}
+                                    currency={currency}
+                                    isLoading={!!isLoading}
+                                    productsLabeled={productsLabeled}
+                                    availableLabels={availableLabels}
                                 />
-                                <AppPagination pagination={ pagination } onChangeHandler={ this.handlePagination } />
+                                <AppPagination pagination={pagination} onChangeHandler={this.handlePagination}/>
                             </Grid>
                         </Grid>
                     </SearchPageContext.Provider>

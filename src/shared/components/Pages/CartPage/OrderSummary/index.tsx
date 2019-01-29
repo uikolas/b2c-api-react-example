@@ -11,36 +11,36 @@ import { CartTotal } from 'src/shared/components/Common/CartTotal';
 import { FormattedMessage } from 'react-intl';
 
 export const OrderSummaryComponent: React.SFC<Props> = (
-    { classes, handleChangeVouchercode, voucherCode, totals },
+    {classes, handleChangeVouchercode, voucherCode, totals},
 ) => (
-    <Grid item xs={ 12 } md={ 4 }>
+    <Grid item xs={12} md={4}>
         <Typography
             variant="display1"
             noWrap
             align="left"
             color="primary"
         >
-            <FormattedMessage id={ 'word.total.title' } />
+            <FormattedMessage id={'word.total.title'} />
         </Typography>
 
         <CartTotal
-            extraClass={ classes.cartTotalIndent }
-            totals={ totals }
-            title={ <FormattedMessage id={ 'grand.total.title' } /> }
+            extraClass={classes.cartTotalIndent}
+            totals={totals}
+            title={<FormattedMessage id={ 'grand.total.title' } />}
         />
 
         <NavLink
-            to={ pathCheckoutPage }
-            className={ classes.fullWidth }
-            style={ { textDecoration: 'none' } }
+            to={pathCheckoutPage}
+            className={classes.fullWidth}
+            style={{textDecoration: 'none'}}
         >
             <Button
                 variant="contained"
                 color="primary"
                 fullWidth
-                className={ classes.btnWrapper }
+                className={classes.btnWrapper}
             >
-                <FormattedMessage id={ 'continue.checkout.title' } />
+                <FormattedMessage id={'continue.checkout.title'} />
             </Button>
         </NavLink>
     </Grid>

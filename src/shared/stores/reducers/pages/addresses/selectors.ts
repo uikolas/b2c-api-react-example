@@ -1,6 +1,5 @@
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
-import { IAddressItem } from 'src/shared/interfaces/addresses/index';
-
+import { IAddressItem } from 'src/shared/interfaces/addresses';
 
 export function isPageAddressesStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
     return Boolean(isStateExist(state, props) && state.pageAddresses.pending);
@@ -35,12 +34,12 @@ export function getAddressesCollection(state: IReduxStore, props: IReduxOwnProps
         : [];
 }
 
-export const checkAddressesCollectionExist = (state: IReduxStore, props: IReduxOwnProps): boolean => {
-    return Boolean(isStateExist(state, props)
+export const checkAddressesCollectionExist = (state: IReduxStore, props: IReduxOwnProps): boolean => (
+    Boolean(isStateExist(state, props)
         && state.pageAddresses.data.addresses
         && state.pageAddresses.data.addresses.length
-    );
-};
+    )
+);
 
 function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
     return Boolean(state.pageAddresses.data);

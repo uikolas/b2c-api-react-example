@@ -1,15 +1,13 @@
-import {IOrderCollectionParsed} from "src/shared/interfaces/order/index";
-import {IReduxState} from "src/typings/app";
-import {IActionData} from "src/shared/stores/reducers/types";
+import { IOrderCollectionParsed } from 'src/shared/interfaces/order';
+import { IReduxState } from 'src/typings/app';
+import { IActionData } from 'src/shared/stores/reducers/types';
 
-export interface IOrdersData extends IOrderCollectionParsed {
-
-}
+export interface IOrdersData extends IOrderCollectionParsed {}
 
 export interface IOrderHistoryState extends IReduxState {
-  data: IOrdersData;
+    data: IOrdersData;
 }
 
 export interface IPageOrderHistoryAction extends IActionData {
-  payloadFulfilled?: IOrderCollectionParsed;
+    payloadFulfilled?: IOrderCollectionParsed;
 }

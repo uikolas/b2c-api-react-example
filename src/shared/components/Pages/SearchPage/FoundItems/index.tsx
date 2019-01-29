@@ -6,20 +6,21 @@ import { styles } from './styles';
 import { IFoundItemsProps } from 'src/shared/components/Pages/SearchPage/FoundItems/types';
 import { FormattedMessage } from 'react-intl';
 
-export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
+export const FoundItemsBase: React.SFC<IFoundItemsProps> = props => {
     const {
         classes,
         numberFound,
     } = props;
 
     return (
-        <Grid container
-              justify="flex-start"
-              alignItems="center"
-              className={ classes.root }
+        <Grid
+            container
+            justify="flex-start"
+            alignItems="center"
+            className={classes.root}
         >
-            <Grid item xs={ 12 }>
-                <Typography color="inherit" component="p" className={ classes.paragraph }>
+            <Grid item xs={12}>
+                <Typography color="inherit" component="p" className={classes.paragraph}>
                     { numberFound
                         ? <FormattedMessage
                             id={ (numberFound === 1)
@@ -30,12 +31,10 @@ export const FoundItemsBase: React.SFC<IFoundItemsProps> = (props) => {
                         />
                         : <FormattedMessage id={ 'no.found.message' } />
                     }
-
                 </Typography>
             </Grid>
         </Grid>
     );
-
 };
 
 export const FoundItems = withStyles(styles)(FoundItemsBase);

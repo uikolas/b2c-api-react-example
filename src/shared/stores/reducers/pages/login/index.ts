@@ -7,13 +7,12 @@ import {
     RESET_PASSWORD,
 } from '@stores/actionTypes/Pages/Login';
 import { SET_AUTH_FROM_STORAGE } from '@stores/actionTypes/Common/Init';
-import { TAccessToken } from 'src/shared/interfaces/login/index';
+import { TAccessToken } from 'src/shared/interfaces/login';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { TCustomerEmail, TCustomerUsername } from 'src/shared/interfaces/customer/index';
 import { LOGIN_DATA_SET_TO_STORE } from '@stores/actionTypes/Pages/CustomerProfile';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {ILoginState, IPageLoginAction} from "src/shared/stores/reducers/pages/login/types";
-
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { ILoginState, IPageLoginAction } from 'src/shared/stores/reducers/pages/login/types';
 
 export const initialState: ILoginState = {
     data: {
@@ -27,7 +26,7 @@ export const initialState: ILoginState = {
     },
 };
 
-export const pagesLogin = function(state: ILoginState = initialState, action: IPageLoginAction): ILoginState {
+export const pagesLogin = function (state: ILoginState = initialState, action: IPageLoginAction): ILoginState {
     switch (action.type) {
         case `${PAGES_CUSTOMER_REGISTER}_PENDING`:
         case `${REFRESH_TOKEN_REQUEST}_PENDING`:
@@ -69,6 +68,7 @@ export const pagesLogin = function(state: ILoginState = initialState, action: IP
             };
         case `${LOGIN_DATA_SET_TO_STORE}_FULFILLED`:
             const customerUsername = action.payloadStoreFulfilled.email ? action.payloadStoreFulfilled.email : null;
+
             return {
                 ...state,
                 data: {
@@ -87,6 +87,7 @@ export const pagesLogin = function(state: ILoginState = initialState, action: IP
             };
         case PAGES_CUSTOMER_LOGOUT:
             localStorage.clear();
+
             return {
                 ...state,
                 data: initialState.data,
@@ -137,6 +138,7 @@ export function getCustomerUsername(state: IReduxStore, props: IReduxOwnProps):
             if (!customerUsername) {
                 return null;
             }
+
             return customerUsername;
         }
     }

@@ -12,8 +12,8 @@ import { RouteProps } from 'react-router';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { formStyles } from '../styles';
 import { getRouterHistoryBack } from 'src/shared/helpers/router/index';
-import { IReduxOwnProps, IReduxStore } from "src/shared/stores/reducers/types";
-import { ClickEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
@@ -32,7 +32,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
     };
 
     public handleChange = (e: InputChangeEvent) => {
-        this.setState({ email: e.target.value });
+        this.setState({email: e.target.value});
     };
 
     public submitRequest = (e: ClickEvent) => {
@@ -46,13 +46,12 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
         return (
             <AppMain>
                 <Grid
-                    item xs={ 12 }
+                    item xs={12}
                     container
                     justify="center"
                 >
-                    <Paper className={ classes.forgot }>
-                        <Typography color="primary" variant="headline"
-                                    paragraph>
+                    <Paper className={classes.forgot}>
+                        <Typography color="primary" variant="headline" paragraph>
                             <FormattedMessage id={ 'recovery.password.title' } />
                         </Typography>
                         <Typography variant="title" paragraph>
@@ -61,10 +60,10 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                         <form autoComplete="off">
                             <TextField
                                 required
-                                inputProps={ { type: 'email' } }
-                                label={ <FormattedMessage id={ 'email.label' } /> }
-                                className={ classes.email }
-                                value={ email }
+                                inputProps={{type: 'email'}}
+                                label={<FormattedMessage id={ 'email.label' } />}
+                                className={classes.email}
+                                value={email}
                                 helperText={ <FormattedMessage id={ 'email.label' } /> }
                                 FormHelperTextProps={{
                                     classes: {
@@ -72,24 +71,24 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                                         filled: email.length > 0 ? classes.filled : null
                                     }
                                 }}
-                                onChange={ this.handleChange }
+                                onChange={this.handleChange}
                             />
                         </form>
                         <Grid container justify="flex-end">
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                className={ classes.passwordButtons }
-                                onClick={ () => routerGoBack() }
+                                className={classes.passwordButtons}
+                                onClick={() => routerGoBack()}
                             >
-                                <BackIcon />
+                                <BackIcon/>
                                 <FormattedMessage id={ 'word.back.title' } />
                             </Button>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                className={ classes.passwordButtons }
-                                onClick={ this.submitRequest }
+                                className={classes.passwordButtons}
+                                onClick={this.submitRequest}
                             >
                                 <FormattedMessage id={ 'word.submit.title' } />
                             </Button>
@@ -106,18 +105,17 @@ const ForgotPassword = withStyles(formStyles)(ForgotPasswordPageBase);
 export const ForgotPasswordPage = reduxify(
     (state: IReduxStore, ownProps: IReduxOwnProps) => {
         const routerGoBack = getRouterHistoryBack(state, ownProps);
+
         return (
             {
                 routerGoBack,
             }
         );
     },
-    (dispatch: Function) => {
-        return {
-            dispatch,
-            sendForgotRequest: (email: string) => dispatch(forgotPasswordAction(email)),
-        };
-    },
+    (dispatch: Function) => ({
+        dispatch,
+        sendForgotRequest: (email: string) => dispatch(forgotPasswordAction(email)),
+    }),
 )(ForgotPassword);
 
 export default ForgotPasswordPage;

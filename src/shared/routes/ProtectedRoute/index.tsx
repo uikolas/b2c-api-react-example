@@ -13,7 +13,6 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     };
 
     // Component lifecycle methods
-
     public componentDidMount(): void {
         this.checkAuthorized(false);
     }
@@ -34,7 +33,6 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     }
 
     // Helper functions
-
     private checkAuthorized = (prevIsUserLoggedIn: boolean): void => {
         if (!prevIsUserLoggedIn && !this.props.isUserLoggedIn) {
             this.props.history.push(pathLoginPage);
@@ -43,7 +41,7 @@ export class ProtectedRoute extends React.PureComponent<Props> {
 
     public render(): React.ReactNode {
         return this.props.isUserLoggedIn
-            ? <Route { ...this.props } />
+            ? <Route {...this.props} />
             : null;
     }
 }

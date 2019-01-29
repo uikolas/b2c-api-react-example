@@ -12,27 +12,29 @@ interface CartTotalProps extends WithStyles<typeof styles> {
     extraClass?: string;
 }
 
-export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
-    const { classes, totals, title, extraClass } = props;
+export const CartTotalBase: React.SFC<CartTotalProps> = props => {
+    const {classes, totals, title, extraClass} = props;
 
     return (
-        <div className={ `${classes.fullWidth} ${extraClass ? extraClass : null}` }>
-            <Divider className={ classes.fullWidth } />
+        <div className={`${classes.fullWidth} ${extraClass ? extraClass : null}`}>
+            <Divider className={classes.fullWidth}/>
 
             <div className={
                 `${classes.totalMsg} ${((totals && totals.discountTotal) || (totals && totals.taxTotal))
                     ? null
                     : classes.marginBottom}`
             }>
-                <div className={ classes.currency }>
-                    <FormattedMessage id={ 'word.subtotal.title' } />
+                <div className={classes.currency}>
+                    <FormattedMessage id={'word.subtotal.title'} />
                 </div>
-                <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={ classes.currency } /> }</div>
+                <div>{totals && <AppPrice value={totals.subtotal} extraClassName={classes.currency} /> }</div>
             </div>
             { totals
                 ? (
                     <div
-                        className={ `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} ` }>
+                        className={
+                            `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom}`
+                        }>
                         <div className={ classes.currency }>
                             <FormattedMessage id={ 'word.tax.title' } />
                         </div>
@@ -55,16 +57,16 @@ export const CartTotalBase: React.SFC<CartTotalProps> = (props) => {
                 ) : null
             }
 
-            <Divider className={ classes.fullWidth } />
+            <Divider className={classes.fullWidth}/>
 
-            <div className={ `${classes.totalMsg}` }>
-                <div className={ classes.grandTotal }>
-                    { title }
+            <div className={`${classes.totalMsg}`}>
+                <div className={classes.grandTotal}>
+                    {title}
                 </div>
-                <div>{ totals && <AppPrice value={ totals.grandTotal } extraClassName={ classes.grandTotal } /> }</div>
+                <div>{totals && <AppPrice value={totals.grandTotal} extraClassName={classes.grandTotal}/>}</div>
             </div>
 
-            <Divider className={ classes.fullWidth } />
+            <Divider className={classes.fullWidth}/>
         </div>
     );
 };

@@ -1,19 +1,19 @@
 import {
     ICheckoutFormsProps,
-} from "src/shared/components/Pages/CheckoutPage/CheckoutForms/types";
+} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/types';
 import {
     ICheckoutAddressState,
     ICheckoutPageProps,
     ICheckoutStepsCompletionState
-} from "src/shared/components/Pages/CheckoutPage/types";
-import { IAddressItem, IAddressItemCollection } from "src/shared/interfaces/addresses";
-import { IParamFormValidity, IParamInputValidity } from "src/shared/components/Pages/CheckoutPage/types/validityTypes";
+} from 'src/shared/components/Pages/CheckoutPage/types';
+import { IAddressItem, IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import { IParamFormValidity, IParamInputValidity } from 'src/shared/components/Pages/CheckoutPage/types/validityTypes';
 import {
     TAddressType,
     TExtraOptionsToSelection
-} from "src/shared/components/Pages/CheckoutPage/types/constantTypes";
-import { checkoutSelectionInputs } from "src/shared/components/Pages/CheckoutPage/constants";
-import { RegExpZipCode } from "src/shared/constants/forms/regexp";
+} from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
+import { checkoutSelectionInputs } from 'src/shared/components/Pages/CheckoutPage/constants';
+import { RegExpZipCode } from 'src/shared/constants/forms/regexp';
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export const addressDefault: IAddressItem = {
@@ -30,9 +30,11 @@ export const addressDefault: IAddressItem = {
     phone: '',
 };
 
-export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
-                                           addressType: TAddressType): TExtraOptionsToSelection | null => {
-    let response: TExtraOptionsToSelection = [];
+export const getExtraOptionsToSelection = (
+    isAddressesCollectionExist: boolean,
+    addressType: TAddressType): TExtraOptionsToSelection | null => {
+    const response: TExtraOptionsToSelection = [];
+
     if (!isAddressesCollectionExist) {
         return null;
     }
@@ -58,8 +60,9 @@ export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
     return response;
 };
 
-export const getDefaultAddressId = (collection: ICheckoutPageProps["addressesCollection"],
-                                    addressType: TAddressType) => {
+export const getDefaultAddressId = (
+    collection: ICheckoutPageProps['addressesCollection'],
+    addressType: TAddressType) => {
     if (!collection || !collection.length) {
         return null;
     }
@@ -73,6 +76,7 @@ export const getDefaultAddressId = (collection: ICheckoutPageProps["addressesCol
                 return false;
             }
         });
+
     return ((variantData && variantData[ 0 ]) ? variantData[ 0 ].id : null);
 };
 
@@ -84,8 +88,10 @@ export const checkFormInputValidity = (param: IParamInputValidity): boolean => {
     if (fieldConfig.inputName === 'zipCode' && typeof value === 'string') {
         const regExp = new RegExp(RegExpZipCode);
         const result = regExp.test(value);
+
         return result;
     }
+
     return true;
 };
 
@@ -105,8 +111,7 @@ export const checkFormValidity = (param: IParamFormValidity): boolean => {
     return result;
 };
 
-export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState): ICheckoutFormsProps["panels"] => {
-
+export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState): ICheckoutFormsProps['panels'] => {
     const {
         first,
         second,
