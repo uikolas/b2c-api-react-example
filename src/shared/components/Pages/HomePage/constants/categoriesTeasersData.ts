@@ -1,21 +1,5 @@
 import {ICategoriesTeasersData} from 'src/shared/components/Pages/HomePage/types';
 import {
-  CategoryIntroComputers,
-  CategoryIntroNotebooks,
-  CategoryIntroTablets,
-  CategoryIntroWorkstations,
-  CategoryNameComputers,
-  CategoryNameNotebooks,
-  CategoryNameTablets,
-  CategoryNameWorkstations
-} from 'src/shared/translation';
-import {
-  HomePageComputersBtnTitle,
-  HomePageNotebooksBtnTitle,
-  HomePageTabletsBtnTitle,
-  HomePageWorkstationsBtnTitle
-} from 'src/shared/translation';
-import {
   pathCategoryComputers,
   pathCategoryNotebooks,
   pathCategoryTablets,
@@ -25,31 +9,31 @@ import {computersSrc, notebooksSrc, tabletsSrc, workstationsSrc} from 'src/img/i
 
 export const categoriesTeasersData: Array<ICategoriesTeasersData> = [
   {
-    title: CategoryNameComputers,
-    text: CategoryIntroComputers,
+    title: 'category.name.computers',
+    text: 'category.intro.computers',
     img: computersSrc,
     path: pathCategoryComputers,
-    linkTitle: HomePageComputersBtnTitle,
+    linkTitle: 'home.page.computers.button.title',
   },
   {
-    title: CategoryNameNotebooks,
-    text: CategoryIntroNotebooks,
+    title: 'category.name.notebooks',
+    text: 'category.intro.notebooks',
     img: notebooksSrc,
     path: pathCategoryNotebooks,
-    linkTitle: HomePageNotebooksBtnTitle,
+    linkTitle: 'home.page.notebooks.button.title',
   },
   {
-    title: CategoryNameTablets,
-    text: CategoryIntroTablets,
+    title: 'category.name.tablets',
+    text: 'category.intro.tablets',
     img: tabletsSrc,
     path: pathCategoryTablets,
-    linkTitle: HomePageTabletsBtnTitle,
+    linkTitle: 'home.page.tablets.button.title',
   },
   {
-    title: CategoryNameWorkstations,
-    text: CategoryIntroWorkstations,
+    title: 'category.name.workstations',
+    text: 'category.intro.workstations',
     img: workstationsSrc,
     path: pathCategoryWorkstations,
-    linkTitle: HomePageWorkstationsBtnTitle,
+    linkTitle: 'home.page.workstations.button.title',
   },
 ];

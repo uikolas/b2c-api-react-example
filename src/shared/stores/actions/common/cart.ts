@@ -10,7 +10,7 @@ import { GuestCartService } from '@services/Common/Cart/guestCart';
 import { ICartCreatePayload } from '@services/Common/Cart/types';
 import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '@interfaces/cart';
 import { TProductSKU } from '@interfaces/product';
-import {ICartAction} from "@stores/reducers/Common/Cart/types";
+import {ICartAction} from "@stores/reducers/common/Cart/types";
 
 export const addItemToCartAction = function(payload: ICartAddItem, cartId: TCartId) {
   return (dispatch: Function, getState: Function) => {

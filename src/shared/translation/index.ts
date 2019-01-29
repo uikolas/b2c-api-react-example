@@ -1,207 +1,426 @@
 /* tslint:disable */
-export const AcceptTermsLabelTitle = 'Accept terms';
-export const AccountTitle = 'Your Account';
-export const ActiveFiltersTitle = 'Active Filters';
-export const AddAllProductsToCartMessage = 'Add all available products to cart';
-export const AddressAdd = 'New address added successfully.';
-export const AddressDelete = 'Address were removed successfully.';
-export const AddressUpdate = 'Address were updated successfully.';
-export const AddToCartBtnTitle = 'Add to cart';
-export const AddToWishlistBtnTitle = 'Add to Wishlist';
-export const AllSuggestedProductsTitle = 'See all suggested products';
-export const AvailabilityHeaderTitle = 'Availability';
-export const AvailableTitle = 'Available';
-export const ButtonAddAddressTitle = 'Add Address';
-export const ButtonAddTitle = 'Add';
-export const ButtonAgreeTitle = 'Agree';
-export const ButtonBackTitle = 'Back';
-export const ButtonDisagreeTitle = 'Disagree';
-export const ButtonSaveTitle = 'Save';
-export const ButtonSubmitTitle = 'Submit';
-export const ButtonUpdateTitle = 'Update';
-export const CartAddProducts = 'Items added successfully.';
+interface IMessages {
+    [name: string]: object;
+}
+
+export const messages: IMessages = {
+    'en': {
+        'accept.terms.title': 'Accept terms',
+        'account.title': 'Your Account',
+        'active.filters.title': 'Active Filters',
+        'add.address.title': 'Add Address',
+        'add.all.products.to.cart.title': 'Add all available products to cart',
+        'add.new.address.title': 'Add New Address',
+        'add.new.billing.address.label': 'Add new billing address',
+        'add.new.delivery.address.label': 'Add new delivery address',
+        'add.new.wishlist.title': 'Add new wishlist',
+        'add.to.cart.button.title': 'Add to cart',
+        'add.to.cart.wishlist.title': 'Add to Wishlist',
+        'address.removed.message': 'Address were removed successfully.',
+        'address.updated.message': 'Address were updated successfully.',
+        'all.suggested.products.title': 'See all suggested products',
+        'available.title': 'Available',
+        'billing.address.title': 'Billing Address',
+        'cart.changed.quantity.message': 'The quantity of your items was changed.',
+        'cart.is.empty.message': 'Empty cart, go shopping',
+        'cart.quest.with.items.title': 'Cart (guest) {items}',
+        'cart.with.items.title': 'Cart {items}',
+        'categories.panel.title': 'Categories',
+        'category.intro.computers': 'Into gaming? Great. As we offer the most powerful computers that will enhance your online gaming experience.',
+        'category.intro.notebooks': 'Always stay ahead of the crowd with the latest Notebook selection to fit any lifestyle or purpose.',
+        'category.intro.tablets': 'Always stay ahead of the crowd with the latest Tablet selection to fit any purpose.',
+        'category.intro.workstations': 'Always stay ahead of the crowd with the latest Workstation selection to fit any purpose.',
+        'category.name.computers': 'Computers',
+        'category.name.new': 'New',
+        'category.name.notebooks': 'Notebooks',
+        'category.name.sale': 'Sale %',
+        'category.name.tablets': 'Tablets',
+        'category.name.workstations': 'Pcs & Workstations',
+        'category.results.filter.title': 'Filter your results',
+        'category.suggestion.title': 'Did you mean',
+        'change.password.title': 'Change Password',
+        'city.label': 'City',
+        'company.label': 'Company',
+        'confirm.delete.account.message': 'Are you sure you want to delete your account',
+        'confirm.password.label': 'Confirm New Password',
+        'confirm.password.title': 'Confirm Passwort',
+        'continue.checkout.title': 'Continue to checkout',
+        'country.label': 'Country',
+        'create.list.message': 'You do not have any lists yet, create one above to get started.',
+        'customer.login.message': 'You are now logged in.',
+        'customer.logout.message': 'You are now logged out.',
+        'default.billing.address.label': 'Default Billing Address',
+        'default.shipping.address.label': 'Default Shipping Address',
+        'delete.account.message': 'All personal information and account history will be permanently deleted.',
+        'delete.account.title': 'Delete Account',
+        'delivery.address.title': 'Delivery Address',
+        'edit.address.title': 'Edit Address',
+        'email.label': 'Email Address',
+        'empty.address.message': 'You do not have any saved addresses within your account.',
+        'empty.cart.title': 'Cart is empty',
+        'empty.message': 'Empty message',
+        'empty.page.title': 'Nothing to show.',
+        'empty.required.fields.message': 'Not all fields are filled',
+        'enter.email.address.message': 'Enter the e-mail address associated with your account.',
+        'enter.new.password.message': 'Enter new password and confirm it',
+        'error.durning.add.product.to.cart.message': 'Error occurs during the adding product to the cart',
+        'first.item.in.select': 'Please select',
+        'first.name.label': 'First Name',
+        'forgot.password.title': 'Forgot Passwort',
+        'form.waiting.for.response.title': 'Waiting for data.',
+        'grand.total.title': 'Grand Total',
+        'header.form.autosuggest.placeholder': 'What are you looking for?',
+        'home.page.banner.button.title': 'Shop now',
+        'home.page.banner.title.first': 'More Power.',
+        'home.page.banner.title.intro': 'Our newest laptop is packed full of the latest hardware.',
+        'home.page.banner.title.second': 'More everything.',
+        'home.page.computers.button.title': 'SEE ALL COMPUTERS',
+        'home.page.notebooks.button.title': 'SEE ALL NOTEBOOKS',
+        'home.page.tablets.button.title': 'SEE ALL TABLETS',
+        'home.page.workstations.button.title': 'SEE ALL PCS & Workstations',
+        'inc.vat.message': '(Inc. 20% VAT)',
+        'items.added.message': 'Items added successfully.',
+        'items.removed.message': 'Items were removed successfully.',
+        'language.deutsch.title': 'Deutsch',
+        'language.english.title': 'English',
+        'last.name.label': 'Last Name',
+        'loading.page.title': 'Waiting for results',
+        'log.in.button.title': 'Log In',
+        'log.out.button.title': 'Log Out',
+        'logo.spryker.main.title': 'API demo',
+        'logo.spryker.title': 'Artboard 1',
+        'manage.addresses': 'Manage Addresses',
+        'new.address.added.message': 'New address added successfully.',
+        'new.password.label': 'New Password',
+        'no.found.message': 'Sorry, we couldn\'t find any results matching your search term',
+        'no.name.title': 'No name',
+        'no.order.message': 'You do not have any previous orders.',
+        'no.price.title': 'No price',
+        'no.products.in.checkout.title': 'You have not got any products in the cart.',
+        'no.tramslations.title': 'No translation',
+        'number.label': 'Number',
+        'optional.placeholder': 'Optional',
+        'order.amount': 'Amount Paid',
+        'order.detail.canceled.title': 'Canceled',
+        'order.detail.date.title': 'Order date: ',
+        'order.detail.number.title': 'Order # {number}',
+        'order.detail.price.title': 'Price mode: ',
+        'order.detail.shipment.title': 'Shipping Fee',
+        'order.detail.shipment.total.title': 'Shipping',
+        'order.detail.view.all.title': 'View all orders',
+        'order.id.title': 'Order ID',
+        'order.success.thank.message': 'Thank you for your order! You can view details of your order',
+        'orders.date.title': 'Order Date',
+        'orders.history.title': 'Orders History',
+        'orders.total.title': 'Total',
+        'orders.view.order.title': 'View Order',
+        'page.not.found.message': 'Page not found.',
+        'password.label': 'Current Password',
+        'password.not.equal.message': 'The passwords must match',
+        'payment.credit.card.cvc.label': 'CVC',
+        'payment.credit.card.name.label': 'Name on Card',
+        'payment.credit.card.number.label': 'Card Number',
+        'payment.date.of.birth.label': 'Date of Birth',
+        'payment.expiry.date.label': 'Expiry Date',
+        'payment.provider.label': 'Card Type',
+        'phone.label': 'Phone',
+        'place.order.title': 'Place Order',
+        'product.deskription.title': 'Description',
+        'product.details.title': 'Product details',
+        'product.sku.title': 'SKU',
+        'products.per.page.title': 'Products Per Page',
+        'range.input.error.less.message': 'It can\'t be less than {value}',
+        'range.input.error.more.message': 'It can\'t be more than {value}',
+        'range.input.from.title': '{titleName} from',
+        'range.input.less.title': 'less',
+        'range.input.more.title': 'more',
+        'range.input.to.title': '{titleName} to',
+        'recovery.password.title': 'Recover my password',
+        'register.success.message': 'You have successfully registered',
+        'relevance.sort.model.title': 'Sort by relevance',
+        'remove.button.title': 'Remove',
+        'reset.all.filters.title': 'Reset All Filters',
+        'reset.password.title': 'Reset Passwort',
+        'salutation.label': 'Salutation',
+        'salutation.variant.dr': 'Dr.',
+        'salutation.variant.mr': 'Mr.',
+        'salutation.variant.mrs': 'Mrs.',
+        'salutation.variant.ms': 'Ms.',
+        'same.as.delivery.label': 'Same as Delivery Address',
+        'same.ass.current.delivery.address.label': 'Same as current delivery Address',
+        'search.page.multiple.found.items': '{itemsNumber} items found',
+        'search.page.one.found.items': '{itemsNumber} item found',
+        'search.result.default.title': 'Start searching',
+        'search.result.title': 'Results for "{terms}"',
+        'select.billing.address.label': 'Select billing address',
+        'select.delivery.address.label': 'Select delivery address',
+        'select.wish.list.label': 'Select wish list',
+        'shipment.tax.rate.label': 'Tax Rate',
+        'shipping.address.title': 'Shipping Address',
+        'social.facebook.title': 'Facebook',
+        'social.instagram.title': 'Instagram',
+        'social.linkedin.title': 'LinkedIn',
+        'social.media.title': 'Social Media',
+        'social.twitter.title': 'Twitter',
+        'social.xing.title': 'Xing',
+        'social.youTube.title': 'YouTube',
+        'sort.model.title': 'Choose sort mode',
+        'spryker.name.title': '&copy; Spryker GmbH',
+        'street.extra.label': 'Additional address field',
+        'street.label': 'Street',
+        'suggested.products.title': 'Suggested Products',
+        'unavailable.title': 'Unavailable',
+        'validate.range.input.error.message': 'Please, fix errors in the fields!',
+        'wishlist.add.product.message': 'This item have added in wishlist {name}',
+        'wishlist.created.message': 'New wishlist created.',
+        'wishlist.deleted.message': 'Wishlist deleted successfully.',
+        'wishlist.empty.message': 'Currently no items in your wishlist.',
+        'wishlist.name.title': 'Wishlist Name',
+        'wishlist.removed.items.message': 'Items were removed from wishlist successfully.',
+        'word.addresses.title': 'Addresses',
+        'word.agree.title': 'Agree',
+        'word.availability.title': 'Availability',
+        'word.back.title': 'Back',
+        'word.cart.title': 'Cart',
+        'word.checkout.title': 'Checkout',
+        'word.delete.title': 'Delete',
+        'word.disagree.title': 'Disagree',
+        'word.discount.title': 'Discount',
+        'word.edit.title': 'Edit',
+        'word.item.title': 'Item',
+        'word.items.title': 'Items',
+        'word.login.title': 'Login',
+        'word.order.history.title': 'Order History',
+        'word.password.title': 'Password',
+        'word.payment.title': 'Payment',
+        'word.price.title': 'Price',
+        'word.product.title': 'Product',
+        'word.profile.title': 'Profile',
+        'word.quantity.title': 'Quantity',
+        'word.register.title': 'Register',
+        'word.save.title': 'Save',
+        'word.select.title': 'Select',
+        'word.shipment.title': 'Shipment',
+        'word.submit.title': 'Submit',
+        'word.subtotal.title': 'Subtotal',
+        'word.success.title': 'Success',
+        'word.tax.title': 'Tax',
+        'word.total.title': 'Total',
+        'word.update.title': 'Update',
+        'word.wishlist.title': 'Wishlist',
+        'zip.code.label': 'Zipcode'
+    },
+    'de': {
+        'accept.terms.title': 'Ich stimme AGB und Datenschutz zu.',
+        'account.title': 'Mein Konto',
+        'active.filters.title': 'Aktive Filter',
+        'add.address.title': 'ADRESSE HINZUFÜGEN',
+        'add.all.products.to.cart.title': 'ALLE PRODUKTE ZUM WARENKORB HINZUFÜGEN',
+        'add.new.address.title': 'Neue Adresse Hinzufügen',
+        'add.new.billing.address.label': 'Neue Rechungsadress hinzufügen',
+        'add.new.delivery.address.label': 'Neue Lieferadresse hinzufügen',
+        'add.new.wishlist.title': 'Neue Liste hinzufügen',
+        'add.to.cart.button.title': 'IN DEN WARENKORB',
+        'add.to.cart.wishlist.title': 'AUF DEN WUNSCHZETTEL',
+        'address.removed.message': 'Adresse wurde erfolgreich entfernt.',
+        'address.updated.message': 'Adresse wurde erfolgreich aktualisiert.',
+        'all.suggested.products.title': 'Alle vorgeschlagenen Produkte anzeigen',
+        'available.title': 'Verfügbar',
+        'billing.address.title': 'Rechungsadress',
+        'cart.changed.quantity.message': 'Die Menge Ihrer Artikel wurde geändert.',
+        'cart.is.empty.message': 'Warenkorb leeren, einkaufen gehen',
+        'cart.quest.with.items.title': 'Warenkorb (gast) {items}',
+        'cart.with.items.title': 'Warenkorb {items}',
+        'categories.panel.title': 'KATEGORIEN',
+        'category.intro.computers': 'Du magst Gaming? Super, denn wir bieten die leistungsstärksten PCs an, die diene Online-Gaming Erfahrungen verbessern werden.',
+        'category.intro.notebooks': 'Sei immer einen Schritt voraus mit der neuesten Laptop Auswahl, die jedem Lebensstil oder Zweck bedient.',
+        'category.intro.tablets': 'Sei immer einen Schritt voraus mit der neuesten Tablet Auswahl.',
+        'category.intro.workstations': 'Sei immer einen Schritt voraus mit der neuesten Auswahl an Workstations, für jeden Lebensstil oder Zweck.',
+        'category.name.computers': 'Computer',
+        'category.name.new': 'Neu',
+        'category.name.notebooks': 'Notebooks',
+        'category.name.sale': 'Sale %',
+        'category.name.tablets': 'Tablets',
+        'category.name.workstations': 'Pcs & Workstations',
+        'category.results.filter.title': 'Resultate filtern',
+        'category.suggestion.title': 'Meinten Sie',
+        'change.password.title': 'Passwort ändern',
+        'city.label': 'Stadt',
+        'company.label': 'Firma',
+        'confirm.delete.account.message': 'Möchten Sie Ihr Konto wirklich löschen?',
+        'confirm.password.label': 'Passwort bestätigen',
+        'confirm.password.title': 'Passwort bestätigen',
+        'continue.checkout.title': 'Zur Kasse',
+        'country.label': 'Land',
+        'create.list.message': 'Du hast noch keine Wunschzettel',
+        'customer.login.message': 'Sie sind jetzt angemeldet.',
+        'customer.logout.message': 'Sie sind jetzt abgemeldet.',
+        'default.billing.address.label': 'Standard Lieferadresse',
+        'default.shipping.address.label': 'Standard LIEFERADRESSE',
+        'delete.account.message': 'Zusammen mit dem Account werden alle persönlichen Daten gelöscht.',
+        'delete.account.title': 'Account löschen',
+        'delivery.address.title': 'Lieferadresse',
+        'edit.address.title': 'Adresse Bearbeitens',
+        'email.label': 'E-Mail Adresse',
+        'empry.cart.title': 'Einkaufswagen ist leer',
+        'empty.address.message': 'Sie haben keine gespeicherten Adressen in Ihrem Konto.',
+        'empty.message': 'Leere Nachricht',
+        'empty.page.title': 'Nichts zu zeigen.',
+        'empty.required.fields.message': 'Nicht alle Felder sind ausgefüllt',
+        'enter.email.address.message': 'Geben Sie die E-Mail-Adresse an, welche mit Ihrem Konto verknüpft ist.',
+        'enter.new.password.message': 'Neues Passwort eingeben und bestätigen',
+        'error.durning.add.product.to.cart.message': 'Fehler beim Hinzufügen des Produkts zum Einkaufswagen',
+        'first.item.in.select': 'Bitte auswählen',
+        'first.name.label': 'Vorname',
+        'forgot.password.title': 'Passwort vergessen',
+        'form.waiting.for.response.title': 'Warten auf Daten',
+        'grand.total.title': 'Gesamtsumme',
+        'header.form.autosuggest.placeholder': 'Wonach suchen Sie?',
+        'home.page.banner.button.title': 'Jetzt entdecken',
+        'home.page.banner.title.first': 'More Power.',
+        'home.page.banner.title.intro': 'Unsere neuen Laptops sind voll mit der neuesten Hardware.',
+        'home.page.banner.title.second': 'More everything.',
+        'home.page.computers.button.title': 'ALLE COMPUTER SEHEN',
+        'home.page.notebooks.button.title': 'ALLE NOTEBOOKS SEHEN',
+        'home.page.tablets.button.title': 'ALLE TABLETS SEHEN',
+        'home.page.workstations.button.title': 'ALLE PCS & WORKSTATIONS SEHEN',
+        'inc.vat.message': '(Inkl. 20% MwSt.)',
+        'items.added.message': 'Elemente wurden erfolgreich hinzugefügt.',
+        'items.removed.message': 'Elemente wurden erfolgreich entfernt.',
+        'language.deutsch.title': 'Deutsch',
+        'language.english.title': 'English',
+        'last.name.label': 'Nachname',
+        'loading.page.title': 'Warten auf Ergebnisse',
+        'log.in.button.title': 'Ammelden',
+        'log.out.button.title': 'Abmelden',
+        'logo.spryker.main.title': 'API-Demo',
+        'logo.spryker.title': 'Artboard 1',
+        'manage.addresses': 'Adressen verwalten',
+        'new.address.added.message': 'Neue Adresse wurde erfolgreich hinzugefügt.',
+        'new.password.label': 'Neues Passwort',
+        'no.found.message': 'Keine Suchresultatte',
+        'no.name.title': 'Kein Name',
+        'no.order.message': 'Sie haben keine früheren Bestellungen.',
+        'no.price.title': 'Kein Preis',
+        'no.products.in.checkout.title': 'Sie haben keine Produkte im Warenkorb.',
+        'no.tramslations.title': 'Keine Übersetzung',
+        'number.label': 'Nummer',
+        'optional.placeholder': 'Optional',
+        'order.amount': 'Amount Paid',
+        'order.authenticate.error.message': 'Sie sollten sich anmelden, um den Verlauf Ihrer Bestellungen zu sehen',
+        'order.detail.canceled.title': 'Abgebrochen',
+        'order.detail.date.title': 'Datum: ',
+        'order.detail.number.title': 'Bestellung # {number}',
+        'order.detail.price.title': 'Preismodus: ',
+        'order.detail.shipment.title': 'Lieferkosten',
+        'order.detail.shipment.total.title': 'Versand',
+        'order.detail.view.all.title': 'Alle Bestellungen sehen',
+        'order.id.title': 'Bestellnummer: ',
+        'order.success.thank.message': 'Sie können die Details der Bestellung hier einsehen.',
+        'orders.date.title': 'Datum',
+        'orders.history.title': 'Bestellungen',
+        'orders.total.title': 'Summe',
+        'orders.view.order.title': 'Bestellung ansehen',
+        'page.not.found.message': 'Seite nicht gefunden.',
+        'password.label': 'Altes Passwort',
+        'password.not.equal.message': 'Die Passwörter müssen übereinstimmen',
+        'payment.credit.card.cvc.label': 'CVC',
+        'payment.credit.card.name.label': 'Name auf der Karte',
+        'payment.credit.card.number.label': 'Kartennummer',
+        'payment.date.of.birth.label': 'Geburtsdatum',
+        'payment.expiry.date.label': 'Verfallsdatum',
+        'payment.provider.label': 'Speicherkarten-Typ',
+        'phone.label': 'Telefon',
+        'place.order.title': 'Jetzt Kaufen',
+        'product.deskription.title': 'Beschreibung',
+        'product.details.title': 'Details',
+        'product.sku.title': 'SKU',
+        'products.per.page.title': 'Produkte pro Seite',
+        'range.input.error.less.message': 'Es kann nicht weniger sein als {value}',
+        'range.input.error.more.message': 'Es kann nicht mehr sein als {value}',
+        'range.input.from.title': '{titleName} von',
+        'range.input.to.title': '{titleName} zu',
+        'recovery.password.title': 'Passwort vergessen',
+        'register.success.message': 'Sie haben sich erfolgreich registriert',
+        'relevance.sort.model.title': 'Nach Relevanz sortieren',
+        'remove.button.title': 'Entfermen',
+        'reset.all.filters.title': 'Alle Filter zurücksetzen',
+        'reset.password.title': 'Passwort zurücksetzen',
+        'salutation.label': 'Anrede',
+        'salutation.variant.dr': 'Dr.',
+        'salutation.variant.mr': 'Herr',
+        'salutation.variant.mrs': 'Frau',
+        'salutation.variant.ms': 'Frau',
+        'same.as.delivery.label': 'Gleiche Lieferadresse',
+        'same.ass.current.delivery.address.label': 'Rechnungsadresse gleich Lieferadresse',
+        'search.page.multiple.found.items': '{itemsNumber} artikel gefunden',
+        'search.page.one.found.items': '{itemsNumber} artikel gefunden',
+        'search.result.default.title': 'Fang an zu suchen',
+        'search.result.title': 'Ergebnisse für ',
+        'select.billing.address.label': 'Rechungsadress wählen',
+        'select.delivery.address.label': 'Lieferadresse wählen',
+        'select.wish.list.label': 'Wunschliste auswählen',
+        'shipment.tax.rate.label': 'Steuersatz',
+        'shipping.address.title': 'Lieferadresse',
+        'social.facebook.title': 'Facebook',
+        'social.instagram.title': 'Instagram',
+        'social.linkedin.title': 'LinkedIn',
+        'social.media.title': 'Sozialen Medien',
+        'social.twitter.title': 'Twitter',
+        'social.xing.title': 'Xing',
+        'social.youTube.title': 'YouTube',
+        'sort.model.title': 'Wählen Sie den Sortiermodus',
+        'spryker.name.title': '&copy; Spryker GmbH',
+        'street.extra.label': 'Adresszusatz',
+        'street.label': 'Straße',
+        'suggested.products.title': 'Vorgeschlagene Produkte',
+        'unavailable.title': 'Nicht verfügbar',
+        'validate.range.input.error.message': 'Bitte korrigieren Sie Fehler in den Feldern!',
+        'wishlist.add.product.message': 'Dieser Artikel wurde in die Wunschliste aufgenommen',
+        'wishlist.created.message': 'Neue Wunschliste erstellt.',
+        'wishlist.deleted.message': 'Wunschliste erfolgreich gelöscht.',
+        'wishlist.empty.message': 'Derzeit befinden sich keine Artikel in Ihrer Wunschliste.',
+        'wishlist.name.title': 'Name',
+        'wishlist.removed.items.message': 'Artikel wurden erfolgreich aus der Wunschliste entfernt.',
+        'word.addresses.title': 'Adressen',
+        'word.agree.title': 'Zustimmen',
+        'word.availability.title': 'Verfügbarkeit',
+        'word.back.title': 'Zurück',
+        'word.cart.title': 'Warenkorb',
+        'word.checkout.title': 'Zur Kasse',
+        'word.delete.title': 'Löschen',
+        'word.disagree.title': 'Nicht zustimmen',
+        'word.discount.title': 'Rabatt',
+        'word.edit.title': 'Bearbeiten',
+        'word.item.title': 'Artikel',
+        'word.items.title': 'Artikel',
+        'word.login.title': 'Anmelden',
+        'word.order.history.title': 'Bestellungen',
+        'word.password.title': 'Passwort',
+        'word.payment.title': 'Zahlung',
+        'word.price.title': 'Preis',
+        'word.product.title': 'Produkt',
+        'word.profile.title': 'Benutzerdaten',
+        'word.quantity.title': 'Menge',
+        'word.register.title': 'Registrieren',
+        'word.save.title': 'Sparen',
+        'word.select.title': 'Auswählen',
+        'word.shipment.title': 'Versand',
+        'word.submit.title': 'Speichern',
+        'word.subtotal.title': 'Zwischensumme',
+        'word.success.title': 'Success',
+        'word.tax.title': 'Mehrwertsteuer',
+        'word.total.title': 'Gesamtsumme',
+        'word.update.title': 'Speichern',
+        'word.wishlist.title': 'Wunschzettel',
+        'zip.code.label': 'PLZ'
+    }
+}
+
+// Console Messages
 export const CartAuthenticateErrorMessage = 'You should login to add item to the cart';
-export const CartChangeQty = 'The quantity of your items was changed.';
-export const CartDiscountsTitle = 'Discounts';
-export const CartIsEmptyGoShoppingMessage = 'Empty cart, go shopping';
-export const CartIsEmptyTooltipMessage = 'Cart is empty';
-export const CartProductQuantity = 'Quantity';
-export const CartQuestTitle = 'Cart (guest)';
-export const CartRemoveItems = 'Items were removed successfully.';
-export const CartTitle = 'Cart';
-export const CartItemTitle = 'item';
-export const CartTotalTitle = 'Total';
-export const CategoriesPanelTitle = 'Categories';
-export const CategoryIntroComputers = 'Into gaming? Great. As we offer the most powerful computers that will enhance your online gaming experience.';
-export const CategoryIntroNotebooks = 'Always stay ahead of the crowd with the latest Notebook selection to fit any lifestyle or purpose.';
-export const CategoryIntroTablets = 'Always stay ahead of the crowd with the latest Tablet selection to fit any purpose.';
-export const CategoryIntroWorkstations = 'Always stay ahead of the crowd with the latest Workstation selection to fit any purpose.';
-export const CategoryNameComputers = 'Computers';
-export const CategoryNameNew = 'New';
-export const CategoryNameNotebooks = 'Notebooks';
-export const CategoryNameSale = 'Sale %';
-export const CategoryNameTablets = 'Tablets';
-export const CategoryNameWorkstations = 'Pcs & Workstations';
-export const CheckoutTitle = 'Checkout';
-export const ConfirmDeleteAccountMessage = 'Are you sure you want to delete your account';
-export const ConfirmPasswordTitle = 'Confirm Password';
-export const ContinueCheckoutTitle = 'Continue to checkout';
-export const CreateListMessage = 'You do not have any lists yet, create one above to get started.';
-export const CustomerLogin = 'You are now logged in.';
-export const CustomerLogout = 'You are now logged out.';
 export const CustomerProfileAuthenticateErrorMessage = 'You should login to see your Profile';
-export const DeleteAccountMessage = 'All personal information and account history will be permanently deleted.';
-export const DeleteAccountTitle = 'Delete Account';
-export const EmptyAddressMessage = 'You do not have any saved addresses within your account.';
-export const EmptyMessage = 'Empty message';
-export const EmptyPageTitle = 'Nothing to show.';
-export const EmptyRequiredFieldsErrorMessage = 'Not all fields are filled';
 export const EmptyValueErrorMessage = 'Selected value is empty!';
-export const EnterEmailAddressMessage = 'Enter the e-mail address associated with your account.';
-export const EnterNewPasswordMessage = 'Enter new password and confirm it.';
-export const ErrorDurningAddProductToTheCartMessage = 'Error occurs during the adding product to the cart';
-export const FirstItemInSelect = "please select";
-export const ForgotPasswordTitle = 'Forgot Password';
-export const FormWaitingForResponseTitle = "Waiting for data.";
-export const FoundTitle = 'found';
-export const HomePageBannerBtnTitle = 'Shop now';
-export const HomePageBannerIntro = 'Our newest laptop is packed full of the latest hardware.';
-export const HomePageBannerTitleFirst = "More Power.";
-export const HomePageBannerTitleSecond = "More everything.";
-export const HomePageComputersBtnTitle = 'SEE ALL COMPUTERS';
-export const HomePageNotebooksBtnTitle = 'SEE ALL NOTEBOOKS';
-export const HomePageTabletsBtnTitle = 'SEE ALL TABLETS';
-export const HomePageWorkstationsBtnTitle = 'SEE ALL PCS & Workstations';
-export const IncVatMessage = 'Inc. 20% VAT';
-export const InputLabelAddNewBillingAddress = "Add new billing address";
-export const InputLabelAddNewDeliveryAddress = "Add new delivery address";
-export const InputLabelCity = "City";
-export const InputLabelCompany = "Company";
-export const InputLabelConfirmPassword = "Confirm New Password";
-export const InputLabelCountry = "Country";
-export const InputLabelDefaultDeliveryAddress = "Default Billing Address";
-export const InputLabelDefaultShippingAddress = "Default Shipping Address";
-export const InputLabelEmail = "Email Address";
-export const InputLabelFirstName = "First Name";
-export const InputLabelLastName = "Last Name";
-export const InputLabelNewPassword = "New Password";
-export const InputLabelNumber = "Number";
-export const InputLabelPassword = "Current Password";
-export const InputLabelPaymentCreditCardCVC = "CVC";
-export const InputLabelPaymentCreditCardName = "Name on Card";
-export const InputLabelPaymentCreditCardNumber = "Card Number";
-export const InputLabelPaymentDateOfBirth = "Date of Birth";
-export const InputLabelPaymentExpiryDate = "Expiry Date";
-export const InputLabelPaymentProvider = "Card Type";
-export const InputLabelPhone = "Phone";
-export const InputLabelProductQuantity = "Quantity";
-export const InputLabelProductSelectWishList = "Select wish list";
-export const InputLabelSalutation = "Salutation";
-export const InputLabelSameAsCurrentDelivery = "Same as current delivery Address";
-export const InputLabelSameAsDelivery = "Same as Delivery Address";
-export const InputLabelSelectSavedBillingAddress = "Select billing address";
-export const InputLabelSelectSavedDeliveryAddress = "Select delivery address";
-export const InputLabelShipmentTaxRate = "Tax Rate";
-export const InputLabelStreet = "Street";
-export const InputLabelStreetExtra = "Additional address field";
-export const InputLabelZipCode = "Zipcode";
 export const InputSaveErrorMessage = 'Can\'t handle this value or field name';
-export const LanguageDeutschTest = 'Deutsch';
-export const LanguageEnglishTest = 'English';
-export const LoadingPageTitle = 'Waiting for results';
-export const LogInBtnTitle = 'Log In';
-export const LogindTitle = 'Login';
-export const LogoSprykerMainTitle = 'API demo';
-export const LogoSprykerTitle = 'Artboard 1';
-export const LogOutBtnTitle = 'Log Out';
-export const NavLinkTitleAddresses = "Addresses";
-export const NavLinkTitleOrderHistory = "Order History";
-export const NavLinkTitleProfile = "Profile";
-export const NavLinkTitleWishlist = "Wishlist";
-export const NoFoundMessage = 'Nothing found...';
-export const NoNameTitle = 'No name';
-export const NoOrderMessage = 'You do not have any previous orders.';
-export const NoPriceTitle = 'No price';
-export const NoProductsInCheckoutMessage = 'You have not got any products in the cart.';
-export const NotAvailableTitle = 'Not Available';
-export const NoTranslationTitle = 'No translation';
-export const OptionalPlaceholder = "Optional";
-export const OrderAmount = 'Amount Paid';
 export const OrderAuthenticateErrorMessage = 'You should login to see your history of orders';
-export const OrderCreatedSuccess = 'Success';
-export const OrderDetailBillingAddressTitle = 'Billing address';
-export const OrderDetailCanceled = 'Canceled';
-export const OrderDetailDateTitle = 'Order date: ';
-export const OrderDetailDiscount = 'Discount';
-export const OrderDetailGrandTotal = 'Grand Total';
-export const OrderDetailPageTitle = 'Order #';
-export const OrderDetailPriceModeTitle = 'Price mode: ';
-export const OrderDetailProductSKU = 'SKU: ';
-export const OrderDetailShipment = 'Shipping Fee';
-export const OrderDetailShipmentTotal = 'Shipping';
-export const OrderDetailShippingAddressTitle = 'Shipping address';
-export const OrderDetailSubtotal = 'Subtotal';
-export const OrderDetailTableHeaderItems = 'Items';
-export const OrderDetailTableHeaderPrice = 'Price';
-export const OrderDetailTableHeaderQuantity = 'Quantity';
-export const OrderDetailTableHeaderTotal = 'Total';
-export const OrderDetailTax = 'Tax';
-export const OrderDetailViewAllOrders = 'View all orders';
-export const OrderId = 'Order ID: ';
-export const OrdersHistoryPageTitle = 'Orders History';
-export const OrdersHistoryTableHeaderDate = 'Order Date';
-export const OrdersHistoryTableHeaderID = 'Order ID';
-export const OrdersHistoryTableHeaderTotal = 'Total';
-export const OrdersHistoryViewDetailBtnTitle = 'View Order';
-export const OrderSummaryTitle = 'Order summary';
-export const OrderThank = 'Thank you for your order! You can view details of your order ';
-export const PageNotFoundMessage = 'Page not found.'
-export const PageSauggestionTitle = 'Did you mean ';
-export const PanelBillingAddressTitle = 'Billing Address';
-export const PanelDeliveryAddressTitle = 'Delivery Address';
-export const PanelPaymentTitle = 'Payment';
-export const PanelShipmentTitle = 'Shipment';
-export const PasswordsNotEqualErrorMessage = 'The passwords must match';
-export const PasswordTitle = 'Password';
-export const PlaceOrder = 'Place Order';
-export const ProductBlockTitleAttribute = 'Select ';
-export const ProductBlockTitleDescription = 'Description';
-export const ProductBlockTitleProductDetails = 'Product details';
-export const ProductHeaderTitle = 'Product';
-export const ProductSKUTitle = 'SKU';
-export const ProductsPerPageTitle = 'products per page';
-export const RangeInputFrom = 'from';
-export const RangeInputTo = 'to';
-export const RecoveryPasswordMessage = 'Recover my password';
-export const RegisterBtnTitle = 'Register';
-export const RegisterSuccess = 'You have successfully registered';
-export const RegisterTitle = 'Register';
-export const RelevanceSortModeTitle = 'Sort by relevance';
-export const RemoveBtnTitle = 'Remove';
-export const ResetAllFiltersButtonTitle = 'Reset All Filters'
-export const ResetPasswordTitle = 'Reset password';
-export const SalutationTitle = 'Register';
-export const SalutationVariantDr = 'Dr';
-export const SalutationVariantMr = 'Mr';
-export const SalutationVariantMrs = 'Mrs';
-export const SalutationVariantMs = 'Ms';
-export const SearchResultDefaultTitle = 'Start searching';
-export const SearchResultTitle = 'Results for ';
-export const SocialFacebookTitle = 'Facebook';
-export const SocialInstagramTitle = 'Instagram';
-export const SocialLinkedInTitle = 'LinkedIn';
-export const SocialTwitterTitle = 'Twitter';
-export const SocialXingTitle = 'Xing';
-export const SocialYouTubeTitle = 'YouTube';
-export const SortModeTitle = 'Choose sort mode';
-export const SprykerNameTitle = '&copy; Spryker GmbH';
-export const SuggestedProductsTitle = 'Suggested Products';
-export const UnexpectedServerError = 'Sorry, we have an unexpected server error';
-export const ValidateRangeInputsError = 'Please, fix errors in the fields!';
-export const WishlistAddProduct = 'This item have added in wishlist';
 export const WishlistAuthenticateErrorMessage = 'You should login to see your history of orders';
-export const WishlistCreated = 'New wishlist created.';
-export const WishlistDeleted = 'Wishlist deleted successfully.';
-export const WishlistEmptyMessage = 'Currently no items in your wishlist.';
-export const WishlistNameTitle = 'Wishlist Name';
-export const WishlistRemoveItems = 'Items were removed from wishlist successfully.';

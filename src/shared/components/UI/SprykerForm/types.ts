@@ -15,7 +15,7 @@ export interface IFormField {
   isRequired?: boolean;
   onChangeOwnHandler?: (event: InputChangeEvent) => void;
   onBlurOwnHandler?: (event: BlurEvent) => void;
-  label?: string;
+  label?: React.ReactNode | string;
   isError?: boolean;
   menuItems?: SprykerSelectProps["menuItems"];
   menuItemFirst?: SprykerSelectProps["menuItemFirst"];

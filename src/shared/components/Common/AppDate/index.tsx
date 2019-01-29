@@ -4,7 +4,7 @@ import {FormattedDate} from 'react-intl';
 import {getAppTimeZone} from '@stores/reducers/common/init';
 import {TOrderDate} from 'src/shared/interfaces/order';
 import {IReduxOwnProps, IReduxStore} from "@stores/reducers/types";
-import {TAppTimeZone} from "src/shared/interfaces/locale/index";
+import {TAppTimeZone} from "src/shared/interfaces/locale";
 
 interface AppDateProps {
   value: TOrderDate;
