@@ -27,7 +27,7 @@ export const NotificationsMessageTemplateBase: React.SFC<INotificationsMessageWi
             iconComponent = <SuccessIcon />;
             break;
         default:
-            iconComponent = null;
+            iconComponent = false;
     }
 
     const messageWithInformation = messageWithCustomText
