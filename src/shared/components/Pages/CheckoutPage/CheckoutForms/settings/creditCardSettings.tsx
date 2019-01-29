@@ -1,9 +1,8 @@
+import React from 'react';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
 import { IPaymentCreditCardParams } from '../../types/formSettingsTypes';
 import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
 import { FormattedMessage } from 'react-intl';
-import React from 'react';
-
 
 export const getCreditCardFormSettings = (formName: string, params: IPaymentCreditCardParams): IFormSettings => {
     const {
@@ -29,7 +28,6 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
         onBlurHandler,
     } = params;
 
-
     const formSettings: IFormSettings = {
         formName,
         onChangeHandler: inputChangeHandler,
@@ -47,7 +45,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     isError: paymentProvider.isError,
                     menuItems: providersCollection,
                     menuItemFirst: {
-                        value: " ",
+                        value: ' ',
                         name: <FormattedMessage id={ 'first.item.in.select' } />,
                         selected: true,
                         disabled: true,
@@ -119,25 +117,29 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
             ],
         ],
     };
+
     return formSettings;
 };
 
-
-const createItemsForExpiryMonth = (): Array<IMenuItemSelect> => {
+const createItemsForExpiryMonth = (): IMenuItemSelect[] => {
     const data = getRange(1, 12);
+
     return data.map((item: number) => ({ value: `${item}`, name: item }));
 };
 
-const createItemsForExpiryYear = (): Array<IMenuItemSelect> => {
+const createItemsForExpiryYear = (): IMenuItemSelect[] => {
     const currentYear = (new Date()).getFullYear();
     const data = getRange(currentYear, currentYear + 5);
+
     return data.map((item: number) => ({ value: `${item}`, name: item }));
 };
 
-const getRange = (start: number, end: number): Array<number> => {
+const getRange = (start: number, end: number): number[] => {
     const list = [];
+
     for (let i = start; i <= end; i++) {
         list.push(i);
     }
+
     return list;
 };

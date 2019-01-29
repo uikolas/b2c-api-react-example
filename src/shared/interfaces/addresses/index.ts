@@ -6,7 +6,7 @@ import {
     TCustomerMiddleName,
     TCustomerPoBox,
     TCustomerSalutation,
-} from "src/shared/interfaces/customer";
+} from 'src/shared/interfaces/customer';
 
 export type TAddress = string;
 export type TAddressZipCode = string;
@@ -15,6 +15,7 @@ export type TAddressCountry = string;
 export type TAddressCompany = string;
 export type TAddressPhone = string;
 export type TIso2Code = string;
+
 export interface IAddressCountryComposed {
     id_country: number;
     iso2_code: string;
@@ -24,6 +25,7 @@ export interface IAddressCountryComposed {
     postal_code_regex: string;
     regions: object;
 }
+
 export type TAddressComment = string;
 export type TAddressDescription = string;
 
@@ -61,5 +63,5 @@ export interface IAddressItemOrder extends IAbstractAddressItem {
     comment: TAddressComment | null;
     description: TAddressDescription | null;
     middleName: TCustomerMiddleName | null;
-    poBox: TCustomerPoBox| null;
+    poBox: TCustomerPoBox | null;
 }

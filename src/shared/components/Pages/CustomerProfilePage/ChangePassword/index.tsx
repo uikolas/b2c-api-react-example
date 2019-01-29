@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { styles } from '../styles';
@@ -9,8 +8,8 @@ import { TCustomerPassword } from 'src/shared/interfaces/customer';
 import { FormattedMessage } from 'react-intl';
 
 interface ChangePasswordProps extends WithStyles<typeof styles> {
-    submitHandler: (event: FormEvent<HTMLFormElement>) => void;
-    inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+    submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+    inputChangeHandler: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
     password: TCustomerPassword;
     newPassword: TCustomerPassword;
     confirmPassword: TCustomerPassword;

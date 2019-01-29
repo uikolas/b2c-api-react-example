@@ -7,7 +7,7 @@ import { Provider, Store } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { Route } from 'react-router';
-import { ScrollToTopRoute } from '../../routes/ScrollToTopRoute';
+import { ScrollToTopRoute } from '@routes/ScrollToTopRoute';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,13 +24,13 @@ const store: Store<any> = configureStore(history);
 
 export const App = () => (
     <BrowserRouter>
-        <Provider store={ store }>
-            { /* ConnectedRouter will use the store from Provider automatically */ }
-            <ConnectedRouter history={ history }>
+        <Provider store={store}>
+            {/* ConnectedRouter will use the store from Provider automatically */}
+            <ConnectedRouter history={history}>
                 <ScrollToTopRoute>
-                    <MuiThemeProvider theme={ sprykerTheme }>
+                    <MuiThemeProvider theme={sprykerTheme}>
                         <CssBaseline/>
-                        <Route path={ config.WEB_PATH } component={ PageContent } />
+                        <Route path={config.WEB_PATH} component={PageContent}/>
                     </MuiThemeProvider>
                 </ScrollToTopRoute>
             </ConnectedRouter>

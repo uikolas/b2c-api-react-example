@@ -1,18 +1,17 @@
 import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/Common/Init';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICartCreatePayload } from '../../../../services/Common/Cart/types';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {IApiErrorResponse} from "src/shared/services/types";
-import {TAppTimeZone} from "src/shared/interfaces/locale";
-import {TAppCurrency} from "src/shared/interfaces/currency/index";
-import {TAppPriceMode} from "src/shared/interfaces/product/index";
-import {TAppStore} from "src/shared/interfaces/store/index";
-import {ICategory} from "src/shared/interfaces/category";
-import {ICountry} from "src/shared/interfaces/country/index";
-import {IInitData} from "src/shared/interfaces/init/index";
-import {IInitState, IInitAction} from "src/shared/stores/reducers/common/init/types";
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IApiErrorResponse } from 'src/shared/services/types';
+import { TAppTimeZone } from 'src/shared/interfaces/locale/index';
+import { TAppCurrency } from 'src/shared/interfaces/currency/index';
+import { TAppPriceMode } from 'src/shared/interfaces/product/index';
+import { TAppStore } from 'src/shared/interfaces/store/index';
+import { ICategory } from 'src/shared/interfaces/category/index';
+import { ICountry } from 'src/shared/interfaces/country/index';
+import { IInitData } from 'src/shared/interfaces/init/index';
+import { IInitState, IInitAction } from 'src/shared/stores/reducers/common/init/types';
 import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
-
 
 export const initialState: IInitState = {
     data: {
@@ -67,8 +66,8 @@ export const init = function(state: IInitState = initialState,
 };
 
 // handlers
-const handleInitAppFulfilled = (appState: IInitState, payload: IInitData) => {
-    return {
+const handleInitAppFulfilled = (appState: IInitState, payload: IInitData) =>
+    ({
         ...appState,
         data: {
             ...appState.data,
@@ -82,28 +81,25 @@ const handleInitAppFulfilled = (appState: IInitState, payload: IInitData) => {
             anonymId: payload.anonymId,
         },
         ...getReducerPartFulfilled(),
-    };
-};
+    });
 
-const handleInitAppRejected = (appState: IInitState, payload: IApiErrorResponse) => {
-    return {
+const handleInitAppRejected = (appState: IInitState, payload: IApiErrorResponse) =>
+    ({
         ...appState,
         data: {
             ...appState.data,
             ok: false,
         },
         ...getReducerPartRejected(payload.error),
-    };
-};
-const handleInitAppPending = (appState: IInitState) => {
-    return {
+    });
+const handleInitAppPending = (appState: IInitState) =>
+    ({
         ...appState,
         data: {
             ...appState.data,
         },
         ...getReducerPartPending(),
-    };
-};
+    });
 
 // selectors
 

@@ -29,7 +29,7 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
     label: IProductLabel | null;
 }
 
-export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
+export const ProductCardBase: React.SFC<ProductCardProps> = props => {
     const { classes, images, name = '', prices, sku, label } = props;
 
     let actualPriceGross = 0;
@@ -58,40 +58,40 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
     };
 
     return (
-        <Card className={ classes.card } raised={ true }>
-            <CardActionArea onClick={ handleProductClick } className={ classes.actionArea }>
-                { image
+        <Card className={classes.card} raised={true}>
+            <CardActionArea onClick={handleProductClick} className={classes.actionArea}>
+                {image
                     ? <CardMedia
                         component="img"
-                        className={ classes.media }
-                        image={ image }
-                        title={ name }
+                        className={classes.media}
+                        image={image}
+                        title={name}
                     />
                     : null
                 }
-                <ProductLabel label={ label } />
-                <div className={ classes.actionAreaOverlay }></div>
+                <ProductLabel label={label}/>
+                <div className={classes.actionAreaOverlay}></div>
             </CardActionArea>
-            <CardContent className={ classes.cardContent }>
-                <Typography gutterBottom component="h2" className={ classes.productName } data-type="productName">
-                    { name }
+            <CardContent className={classes.cardContent}>
+                <Typography gutterBottom component="h2" className={classes.productName} data-type="productName">
+                    {name}
                 </Typography>
-                <div className={ classes.productPrice }>
+                <div className={classes.productPrice}>
                     <Typography
                         component="span"
                         color="textPrimary"
                         data-type="priceToShow"
-                        className={ classes.productCurrentPrice }
+                        className={classes.productCurrentPrice}
                     >
-                        <AppPrice value={ actualPriceGross } />
+                        <AppPrice value={actualPriceGross}/>
                     </Typography>
-                    { oldPriceGross
+                    {oldPriceGross
                         ? <Typography
                             component="span"
                             color="textPrimary"
-                            className={ classes.productOldPrice }
+                            className={classes.productOldPrice}
                         >
-                            <AppPrice value={ oldPriceGross } priceType={ priceTypeNameOriginal } />
+                            <AppPrice value={oldPriceGross} priceType={priceTypeNameOriginal}/>
                         </Typography>
                         : null
                     }

@@ -1,5 +1,3 @@
-// tslint:disable:max-file-line-count
-
 import api, { setAuthToken } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
 import { TProductSKU } from 'src/shared/interfaces/product';
@@ -30,12 +28,13 @@ export class CartService extends ApiServiceAbstract {
             const response: IApiResponseData = await api.get('/carts', {}, { withCredentials: true });
 
             if (response.ok) {
-                if (!response.data.data[ 0 ].id) {
+                if (!response.data.data[0].id) {
                     return '';
                 }
 
                 const responseParsed: ICartDataResponse = parseUserCartResponseMultiValue(response.data);
                 dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
+
                 return responseParsed.id;
             } else {
                 this.errorMessageInform(response, dispatch);
@@ -43,6 +42,7 @@ export class CartService extends ApiServiceAbstract {
         } catch (err) {
             dispatch(cartActions.getCartsRejectedStateAction(err.message));
             toast.error('Request Error: ' + err.message);
+
             return '';
         }
     }
@@ -54,8 +54,8 @@ export class CartService extends ApiServiceAbstract {
             const body = {
                 data: {
                     type: 'carts',
-                    attributes: payload
-                }
+                    attributes: payload,
+                },
             };
 
             const token = await RefreshTokenService.getActualToken(dispatch);
@@ -69,15 +69,18 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 const responseParsed = parseCartCreateResponse(response.data);
                 dispatch(cartActions.cartCreateFulfilledStateAction(responseParsed));
+
                 return responseParsed.id;
             } else {
                 this.errorMessageInform(response, dispatch);
+
                 return '';
             }
 
         } catch (error) {
             dispatch(cartActions.cartCreateRejectedStateAction(error.message));
             toast.error('Unexpected Error: ' + error.message);
+
             return '';
         }
     }
@@ -90,8 +93,8 @@ export class CartService extends ApiServiceAbstract {
             const body = {
                 data: {
                     type: 'items',
-                    attributes: payload
-                }
+                    attributes: payload,
+                },
             };
 
             const token = await RefreshTokenService.getActualToken(dispatch);
@@ -101,7 +104,7 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items`;
-            const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
@@ -134,12 +137,12 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items/${itemId}`;
-            const response: IApiResponseData = await api.delete(endpoint, {}, { withCredentials: true });
+            const response: IApiResponseData = await api.delete(endpoint, {}, {withCredentials: true});
 
             if (response.ok) {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    payloadCartDeleteItemFulfilled: { itemId }
+                    payloadCartDeleteItemFulfilled: {itemId},
                 });
 
                 toast.success(FormattedMessageTemplate('items.removed.message'));
@@ -158,33 +161,39 @@ export class CartService extends ApiServiceAbstract {
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                error: error.message
+                error: error.message,
             });
             toast.error('Unexpected Error: ' + error.message);
         }
     }
 
     // Update cart item quantity.
-    public static async cartUpdateItem(dispatch: Function, payload: ICartAddItem, cartId: TCartId | null): Promise<void> {
+    public static async cartUpdateItem(
+        dispatch: Function,
+        payload: ICartAddItem,
+        cartId: TCartId | null
+    ): Promise<void> {
         try {
             dispatch(cartActions.cartUpdateItemPendingStateAction());
 
             const body = {
                 data: {
                     type: 'items',
-                    attributes: payload
-                }
+                    attributes: payload,
+                },
             };
-            const { sku } = payload;
+            const {sku} = payload;
 
             const token = await RefreshTokenService.getActualToken(dispatch);
+
             if (!token) {
                 throw new Error(CartAuthenticateErrorMessage);
             }
+
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items/${sku}`;
-            const response: IApiResponseData = await api.patch(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.patch(endpoint, body, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
@@ -203,7 +212,7 @@ export class CartService extends ApiServiceAbstract {
     public static async moveItemsToCart(dispatch: Function, cartId: TCartId, productsList: string[]): Promise<void> {
         try {
             for (const sku of productsList) {
-                const payload = { sku, quantity: 1 };
+                const payload = {sku, quantity: 1};
 
                 await CartService.cartAddItem(dispatch, payload, cartId);
             }
@@ -214,13 +223,16 @@ export class CartService extends ApiServiceAbstract {
     }
 
     // Adds multiple items to the cart.
-    public static async cartMultipleItems(dispatch: Function,
-                                          payload: TCartAddItemCollection,
-                                          cartId: TCartId | null,
-                                          payloadCartCreate: ICartCreatePayload): Promise<void> {
+    public static async cartMultipleItems(
+        dispatch: Function,
+        payload: TCartAddItemCollection,
+        cartId: TCartId | null,
+        payloadCartCreate: ICartCreatePayload
+    ): Promise<void> {
         if (!payload) {
             return;
         }
+
         try {
             // Create cart if not exist
             if (!cartId) {
@@ -236,11 +248,16 @@ export class CartService extends ApiServiceAbstract {
 
             for (const item of payload) {
                 if (!globalResponse) {
-                    dispatch(cartActions.cartAddItemRejectedStateAction('Error in processing adding products in sequence'));
+                    dispatch(
+                        cartActions.cartAddItemRejectedStateAction('Error in processing adding products in sequence')
+                    );
                     break;
                 }
+
                 dispatch(cartActions.cartAddItemPendingStateAction());
+
                 const processResult = await this.addingItemProcess(dispatch, item, cartId);
+
                 if (processResult.ok) {
                     const responseParsed: ICartDataResponse = parseUserCartResponseMultiValue(processResult.data);
                     dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
@@ -256,14 +273,16 @@ export class CartService extends ApiServiceAbstract {
         }
     }
 
-    private static async addingItemProcess(dispatch: Function,
-                                           payload: ICartAddItem,
-                                           cartId: TCartId): Promise<IApiResponseData> {
+    private static async addingItemProcess(
+        dispatch: Function,
+        payload: ICartAddItem,
+        cartId: TCartId
+    ): Promise<IApiResponseData> {
         const body = {
             data: {
                 type: 'items',
-                attributes: payload
-            }
+                attributes: payload,
+            },
         };
 
         try {
@@ -274,7 +293,8 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items`;
-            const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
+
             return response;
         } catch (err) {
             console.error('CartService: cartAddItem: err', err);

@@ -1,17 +1,16 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import { IOrderHistoryPageProps, IOrderHistoryPageState } from "./types";
+import { IOrderHistoryPageProps, IOrderHistoryPageState } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { OrderList } from './OrderList';
-import { CustomerPageTitle } from "src/shared/components/Common/CustomerPageTitle/index";
-import { EmptyOrder } from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
+import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle/index';
+import { EmptyOrder } from 'src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index';
 import { FormattedMessage } from 'react-intl';
 
 @connect
 export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps, IOrderHistoryPageState> {
-
     public state: IOrderHistoryPageState = {};
 
     public componentDidMount = () => {
@@ -29,39 +28,40 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
         if (!this.props.isFulfilled && !prevProps.isHasOrders) {
             this.props.getOrdersCollection();
         }
-
     };
 
     private initRequestData = (): boolean => {
         if (!this.props.isInitiated && this.props.isAppDataSet) {
             this.props.getOrdersCollection();
+
             return true;
         }
+
         return false;
     };
 
     public render(): JSX.Element {
-        const { classes, isHasOrders, isFulfilled, orders } = this.props;
+        const {classes, isHasOrders, isFulfilled, orders} = this.props;
 
         return (
             <div>
-                { (isFulfilled === false)
+                {(isFulfilled === false)
                     ? null
                     : (
-                        <div className={ classes.root }>
+                        <div className={classes.root}>
                             <Grid container justify="center">
-                                <Grid item xs={ 12 }>
+                                <Grid item xs={12}>
                                     <CustomerPageTitle
-                                        title={ <FormattedMessage id={ 'orders.history.title' } /> }
+                                        title={<FormattedMessage id={ 'orders.history.title' } />}
                                     />
                                 </Grid>
                             </Grid>
                             <Grid container>
-                                { isHasOrders
-                                    ? <Grid item xs={ 12 }>
-                                        <OrderList orders={ orders } />
+                                {isHasOrders
+                                    ? <Grid item xs={12}>
+                                        <OrderList orders={orders}/>
                                     </Grid>
-                                    : <EmptyOrder intro={ <FormattedMessage id={ 'no.order.message' } /> } />
+                                    : <EmptyOrder intro={<FormattedMessage id={ 'no.order.message' } />}/>
                                 }
                             </Grid>
                         </div>

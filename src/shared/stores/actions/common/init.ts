@@ -10,9 +10,7 @@ import { IInitData } from 'src/shared/interfaces/init/index';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
 import { ILocaleActionPayload, IInitAction } from '@stores/reducers/common/Init/types';
 
-export interface IInitApplicationDataPayload {
-
-}
+export interface IInitApplicationDataPayload {}
 
 export const initApplicationDataPendingStateAction = () => ({
     type: INIT_APP_ACTION_TYPE + '_PENDING',
@@ -37,7 +35,7 @@ export const categoriesRejectedState = (message: string) => ({
     payloadRejected: {error: message},
 });
 
-export const categoriesFulfilledState = (categories: Array<ICategory>) => ({
+export const categoriesFulfilledState = (categories: ICategory[]) => ({
     type: CATEGORIES_TREE_REQUEST + '_FULFILLED',
     payloadCategoriesTreeFulfilled: {categories},
 });
@@ -73,7 +71,7 @@ export const setAuthFromStorageAction = (payload: ICustomerLoginDataParsed) => (
     payloadAuthFulfilled: payload,
 });
 
-export const getCategoriesAction = function() {
+export const getCategoriesAction = function () {
     return (dispatch: Function, getState: Function) => {
         InitAppService.getCategoriesTree(dispatch);
     };

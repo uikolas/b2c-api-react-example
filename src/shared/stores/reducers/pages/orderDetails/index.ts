@@ -1,13 +1,12 @@
 import { ORDER_DETAILS_REQUEST } from '@stores/actionTypes/Pages/Order';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { IOrderDetailsParsed } from 'src/shared/interfaces/order/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
+import { IOrderDetailsParsed } from 'src/shared/interfaces/order';
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import {
     IOrderDetailsState,
     IPageOrderDetailsAction,
-} from "src/shared/stores/reducers/pages/orderDetails/types";
-import {IApiErrorResponse} from "src/shared/services/types";
-
+} from 'src/shared/stores/reducers/pages/orderDetails/types';
+import { IApiErrorResponse } from 'src/shared/services/types';
 
 export const initialState: IOrderDetailsState = {
     data: {
@@ -23,8 +22,10 @@ export const initialState: IOrderDetailsState = {
     },
 };
 
-export const orderDetails = function(state: IOrderDetailsState = initialState,
-                                     action: IPageOrderDetailsAction): IOrderDetailsState {
+export const orderDetails = function (
+    state: IOrderDetailsState = initialState,
+    action: IPageOrderDetailsAction
+): IOrderDetailsState {
     switch (action.type) {
         case `${ORDER_DETAILS_REQUEST}_PENDING`:
             return handlePending(state);
@@ -38,36 +39,36 @@ export const orderDetails = function(state: IOrderDetailsState = initialState,
 };
 
 // handlers
-const handleFulfilled = (orderDetailsState: IOrderDetailsState, payload: IOrderDetailsParsed | null) => {
-    return {
+const handleFulfilled = (orderDetailsState: IOrderDetailsState, payload: IOrderDetailsParsed | null) => (
+    {
         ...orderDetailsState,
         data: {
             ...orderDetailsState.data,
             ...payload,
         },
         ...getReducerPartFulfilled(),
-    };
-};
+    }
+);
 
-const handleRejected = (orderDetailsState: IOrderDetailsState, payload: IApiErrorResponse) => {
-    return {
+const handleRejected = (orderDetailsState: IOrderDetailsState, payload: IApiErrorResponse) => (
+    {
         ...orderDetailsState,
         data: {
             ...orderDetailsState.data,
         },
         ...getReducerPartRejected(payload.error),
-    };
-};
+    }
+);
 
-const handlePending = (orderDetailsState: IOrderDetailsState) => {
-    return {
+const handlePending = (orderDetailsState: IOrderDetailsState) => (
+    {
         ...orderDetailsState,
         data: {
             ...orderDetailsState.data,
         },
         ...getReducerPartPending(),
-    };
-};
+    }
+);
 
 // selectors
 export function getOrderDetailsFromStore(state: IReduxStore, props: IReduxOwnProps): IOrderDetailsParsed {

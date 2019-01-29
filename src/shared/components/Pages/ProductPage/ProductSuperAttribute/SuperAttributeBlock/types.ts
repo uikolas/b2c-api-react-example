@@ -3,10 +3,11 @@ import { ISuperAttribute } from 'src/shared/helpers/product/types';
 import { styles } from './styles';
 
 export interface SuperAttributeBlockProps extends WithStyles<typeof styles> {
-  attributeData: ISuperAttribute;
-  onValueChanged(selectedData: {name: string, value: string}): void;
+    attributeData: ISuperAttribute;
+
+    onValueChanged(selectedData: { name: string, value: string }): void;
 }
 
 export interface SuperAttributeBlockState {
-  selectedItemValue: string;
+    selectedItemValue: string;
 }

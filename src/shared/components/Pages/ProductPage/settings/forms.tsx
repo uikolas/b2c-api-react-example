@@ -3,7 +3,7 @@ import { IProductQuantityParams, IProductWishListParams } from './types';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
 import { createQuantityVariants } from 'src/shared/helpers/product/quantity';
 import { createWishListMenuVariants } from 'src/shared/helpers/wishlist/list';
-import { defaultItemValueDropdown } from 'src/shared/interfaces/product/index';
+import { defaultItemValueDropdown } from 'src/shared/interfaces/product';
 import { FormattedMessage } from 'react-intl';
 
 export const getQuantityFormSettings = (params: IProductQuantityParams): IFormSettings => {
@@ -24,7 +24,7 @@ export const getQuantityFormSettings = (params: IProductQuantityParams): IFormSe
             [
                 {
                     type: 'select',
-                    inputName: "quantity",
+                    inputName: 'quantity',
                     inputValue,
                     spaceNumber: 4,
                     isRequired: false,
@@ -35,6 +35,7 @@ export const getQuantityFormSettings = (params: IProductQuantityParams): IFormSe
             ],
         ]
     };
+
     return formSettings;
 };
 
@@ -54,7 +55,7 @@ export const getWishListFormSettings = (params: IProductWishListParams): IFormSe
             [
                 {
                     type: 'select',
-                    inputName: "wishlists",
+                    inputName: 'wishlists',
                     inputValue,
                     spaceNumber: 12,
                     isRequired: false,
@@ -70,5 +71,6 @@ export const getWishListFormSettings = (params: IProductWishListParams): IFormSe
             ],
         ]
     };
+
     return formSettings;
 };

@@ -9,17 +9,16 @@ import {
 import { IAddressItem } from '@interfaces/addresses';
 import { AddressesService } from '@services/Pages/Addresses';
 
-
 export const getAllListPendingState = {
-    type: ADDRESSES_LIST + '_PENDING'
+    type: ADDRESSES_LIST + '_PENDING',
 };
 
 export const addAddressPendingState = {
-    type: ADD_ADDRESS + '_PENDING'
+    type: ADD_ADDRESS + '_PENDING',
 };
 
 export const updateAddressPendingState = {
-    type: UPDATE_ADDRESS + '_PENDING'
+    type: UPDATE_ADDRESS + '_PENDING',
 };
 
 export const deleteAddressPendingState = {
@@ -68,6 +67,6 @@ export const updateAddressAction = function (addressId: string, customerId: stri
 export const setCurrentAddressAction = function (addressId: string) {
     return {
         type: SET_CURRENT_ADDRESS,
-        addressId
+        addressId,
     };
 };

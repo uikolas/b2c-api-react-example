@@ -37,8 +37,8 @@ export class CartComponent extends React.PureComponent<Props, State> {
         }
     }
 
-    private openPopover = ({ currentTarget }: ClickEvent) => {
-        const { cartItemsQuantity } = this.props;
+    private openPopover = ({currentTarget}: ClickEvent) => {
+        const {cartItemsQuantity} = this.props;
 
         if (window.innerWidth < BreakpointsSM) {
             if (cartItemsQuantity !== 0) {
@@ -51,29 +51,29 @@ export class CartComponent extends React.PureComponent<Props, State> {
     private closePopover = () => this.setState(() => ({ anchorEl: null }));
 
     private handleCloseCartNotification = () => {
-        this.setState(() => ({ isCartNotificationOpen: false }));
+        this.setState(() => ({isCartNotificationOpen: false}));
     };
 
     private handleOpenCartNotification = () => {
-        this.setState(() => ({ isCartNotificationOpen: true }));
+        this.setState(() => ({isCartNotificationOpen: true}));
     };
 
     public render() {
-        const { anchorEl, isCartNotificationOpen } = this.state;
-        const { classes, cartItemsQuantity, popoverPosLeft, popoverPosTop } = this.props;
+        const {anchorEl, isCartNotificationOpen} = this.state;
+        const {classes, cartItemsQuantity, popoverPosLeft, popoverPosTop} = this.props;
         const open = Boolean(anchorEl);
 
         const cartButton = (
-            <IconButton aria-label="cart" onClick={ this.openPopover } color="inherit">
+            <IconButton aria-label="cart" onClick={this.openPopover} color="inherit">
                 <Badge
-                    badgeContent={ cartItemsQuantity }
-                    classes={ {
+                    badgeContent={cartItemsQuantity}
+                    classes={{
                         colorPrimary: classes.badge,
                         badge: cartItemsQuantity === 0 && classes.hideBadge,
-                    } }
+                    }}
                     color="primary"
                 >
-                    <CartIcon />
+                    <CartIcon/>
                 </Badge>
             </IconButton>
         );
@@ -99,16 +99,6 @@ export class CartComponent extends React.PureComponent<Props, State> {
                 >
                     <CartDrop />
                 </PopoverWrapper>
-
-                { /* <SprykerNotification
-          message="Your product was added to your cart"
-          extraClasses={ classes.cartNotification }
-          isOpen={ isCartNotificationOpen }
-          onClickClose={ this.handleCloseCartNotification }
-          onClickOpen={ this.handleOpenCartNotification }
-          vertical="top"
-          horizontal="right"
-        />*/ }
             </div>
         );
     }

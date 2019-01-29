@@ -1,10 +1,9 @@
 import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '@stores/actionTypes/Pages/Product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import {IConcreteProductAvailability, IProductDataParsed} from 'src/shared/interfaces/product/index';
-import {IReduxOwnProps, IReduxStore} from "src/shared/stores/reducers/types";
-import {IPageProductAction, IProductState} from "src/shared/stores/reducers/pages/product/types";
-import {IApiErrorResponse} from "src/shared/services/types";
-
+import { IConcreteProductAvailability, IProductDataParsed } from 'src/shared/interfaces/product/index';
+import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IPageProductAction, IProductState } from 'src/shared/stores/reducers/pages/product/types';
+import { IApiErrorResponse } from 'src/shared/services/types';
 
 export const initialState: IProductState = {
     data: {
@@ -49,7 +48,7 @@ export const initialState: IProductState = {
   return res;
 };*/
 
-export const pageProduct = function(state: IProductState = initialState, action: IPageProductAction): IProductState {
+export const pageProduct = function (state: IProductState = initialState, action: IPageProductAction): IProductState {
     switch (action.type) {
         case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
         case `${PRODUCT_AVAILABILITY_REQUEST}_REJECTED`:
@@ -67,21 +66,21 @@ export const pageProduct = function(state: IProductState = initialState, action:
 };
 
 // handlers
-const handleFulfilled = (productState: IProductState, payload: IProductDataParsed | null) => {
-    return {
+const handleFulfilled = (productState: IProductState, payload: IProductDataParsed | null) =>
+    ({
         ...productState,
         data: {
             ...productState.data,
             selectedProduct: {...payload},
         },
         ...getReducerPartFulfilled(),
-    };
-};
+    });
 
 const handleAvailabilityFulfilled = (productState: IProductState, payload: IConcreteProductAvailability | null) => {
     if (!payload) {
         return {...productState};
     }
+
     return {
         ...productState,
         data: {
@@ -102,25 +101,25 @@ const handleAvailabilityFulfilled = (productState: IProductState, payload: IConc
     };
 };
 
-const handleRejected = (productState: IProductState, payload: IApiErrorResponse) => {
-    return {
+const handleRejected = (productState: IProductState, payload: IApiErrorResponse) => (
+    {
         ...productState,
         data: {
             ...productState.data,
         },
         ...getReducerPartRejected(payload.error),
-    };
-};
+    }
+);
 
-const handlePending = (productState: IProductState) => {
-    return {
+const handlePending = (productState: IProductState) => (
+    {
         ...productState,
         data: {
             ...productState.data,
         },
         ...getReducerPartPending(),
-    };
-};
+    }
+);
 
 // selectors
 export function isPageProductStateInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
@@ -147,6 +146,7 @@ export function getProduct(state: IReduxStore, props: IReduxOwnProps): IProductD
     if (isPageProductStateRejected(state, props)) {
         return null;
     }
+
     return (isStateExist(state, props) && state.pageProduct.data.selectedProduct)
         ? state.pageProduct.data.selectedProduct
         : null;

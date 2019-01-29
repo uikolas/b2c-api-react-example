@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ChangeEvent, FormEvent } from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { styles } from '../styles';
@@ -16,14 +15,13 @@ import { SalutationVariants } from 'src/shared/constants/customer/index';
 import { FormattedMessage } from 'react-intl';
 
 interface UpdateProfileProps extends WithStyles<typeof styles> {
-    submitHandler: (event: FormEvent<HTMLFormElement>) => void;
-    inputChangeHandler: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
+    submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+    inputChangeHandler: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void;
     firstName: TCustomerFirstName;
     lastName: TCustomerLastName;
     salutation: TCustomerSalutation;
     email: TCustomerEmail;
 }
-
 
 export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Element => {
     const {

@@ -13,10 +13,10 @@ import { CartRowsProps as Props } from './types';
 import { FormattedMessage } from 'react-intl';
 
 export const CartRowsComponent: React.SFC<Props> = (
-    { classes, items, heightListItem, handleDeleteItem, handleChangeQty },
+    {classes, items, heightListItem, handleDeleteItem, handleChangeQty},
 ) => (
     <>
-        { items.map((item: ICartItem) => {
+        {items.map((item: ICartItem) => {
             const quantities: number[] = [];
             const maxItems = item.availableQuantity < 10 ? item.availableQuantity : 10;
 
@@ -62,40 +62,40 @@ export const CartRowsComponent: React.SFC<Props> = (
                     <form
                         noValidate
                         autoComplete="off"
-                        className={ classes.quantityForm }
+                        className={classes.quantityForm}
                     >
                         <TextField
                             required
                             select
-                            name={ item.sku }
-                            value={ item.quantity }
-                            onChange={ handleChangeQty }
+                            name={item.sku}
+                            value={item.quantity}
+                            onChange={handleChangeQty}
                             variant="outlined"
-                            SelectProps={ {
-                                SelectDisplayProps: { className: classes.select },
-                            } }
+                            SelectProps={{
+                                SelectDisplayProps: {className: classes.select},
+                            }}
                         >
-                            { quantities.map((i: number) => (
+                            {quantities.map((i: number) => (
                                 <MenuItem
-                                    value={ i }
-                                    key={ `qty-${item.sku}-${i}` }
-                                >{ i }</MenuItem>
-                            )) }
+                                    value={i}
+                                    key={`qty-${item.sku}-${i}`}
+                                >{i}</MenuItem>
+                            ))}
                         </TextField>
                     </form>
 
-                    <div className={ classes.priceWrapper }>
-                        <div className={ classes.sumWrapper }>
-                            <AppPrice value={ item.calculations.sumPriceToPayAggregation }
-                                      extraClassName={ classes.mainCurrency } />
+                    <div className={classes.priceWrapper}>
+                        <div className={classes.sumWrapper}>
+                            <AppPrice value={item.calculations.sumPriceToPayAggregation}
+                                extraClassName={classes.mainCurrency}/>
                         </div>
-                        { item.quantity > 1
+                        {item.quantity > 1
                             ? (
-                                <div className={ classes.itemAttr }>
+                                <div className={classes.itemAttr}>
                                     <span>(</span>
                                     <AppPrice
-                                        value={ item.calculations.unitPriceToPayAggregation }
-                                        extraClassName={ `${classes.itemAttr} ${classes.eachCurrency}` }
+                                        value={item.calculations.unitPriceToPayAggregation}
+                                        extraClassName={`${classes.itemAttr} ${classes.eachCurrency}`}
                                     />
                                     <span> each)</span>
                                 </div>
@@ -104,7 +104,7 @@ export const CartRowsComponent: React.SFC<Props> = (
                     </div>
                 </ListItem>
             );
-        }) }
+        })}
     </>
 );
 

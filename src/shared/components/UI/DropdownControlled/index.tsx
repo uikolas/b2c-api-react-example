@@ -5,9 +5,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { styles } from './styles';
-import { defaultItemValueDropdown } from '../../../interfaces/product/';
+import { defaultItemValueDropdown } from '@interfaces/product/';
 import { FormattedMessage } from 'react-intl';
-
 
 export interface IMenuItemsDropdown {
     value: string | number;
@@ -19,7 +18,7 @@ interface DropdownControlledProps extends WithStyles<typeof styles> {
     nameToShow?: string;
     value: string;
     handleChange: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
-    menuItems: Array<IMenuItemsDropdown>;
+    menuItems: IMenuItemsDropdown[];
     menuItemFirst?: IMenuItemsDropdown;
     isHiddenMenuItemFirst?: boolean;
 }
@@ -35,7 +34,7 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
     };
 
     private handleChangeShowing = (): void => {
-        this.setState(prev => ({ isOpen: !prev.isOpen }));
+        this.setState(prev => ({isOpen: !prev.isOpen}));
     };
 
     public render() {
@@ -57,50 +56,46 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
         if (!nameAttr || !handleChange || !menuItems) {
             return null;
         }
-        const getMenuItemFirst = () => {
-            return (
-                <MenuItem
-                    value={ menuItemFirst.value }
-                    selected={ !isHiddenMenuItemFirst }
-                    disabled={ !!isHiddenMenuItemFirst }
-                >
-                    <em>{ menuItemFirst.name }</em>
-                </MenuItem>
-            );
-        };
+        const getMenuItemFirst = () => (
+            <MenuItem
+                value={menuItemFirst.value}
+                selected={!isHiddenMenuItemFirst}
+                disabled={!!isHiddenMenuItemFirst}
+            >
+                <em>{menuItemFirst.name}</em>
+            </MenuItem>
+        );
         const inputId = `${nameAttr}-controlled-open-select`;
 
         return (
-            <div className={ classes.root }>
-                { nameToShow
-                    ? <Button className={ classes.button } onClick={ this.handleChangeShowing }>
-                        { nameToShow }
+            <div className={classes.root}>
+                {nameToShow
+                    ? <Button className={classes.button} onClick={this.handleChangeShowing}>
+                        {nameToShow}
                     </Button>
                     : null
                 }
-                <FormControl className={ classes.formControl }>
+                <FormControl className={classes.formControl}>
                     <Select
-                        open={ this.state.isOpen }
-                        onClose={ this.handleChangeShowing }
-                        onOpen={ this.handleChangeShowing }
-                        value={ value }
-                        onChange={ handleChange }
-                        id={ inputId }
-                        name={ nameAttr }
+                        open={this.state.isOpen}
+                        onClose={this.handleChangeShowing}
+                        onOpen={this.handleChangeShowing}
+                        value={value}
+                        onChange={handleChange}
+                        id={inputId}
+                        name={nameAttr}
                         variant="filled"
                         displayEmpty
                     >
-                        { getMenuItemFirst() }
-                        { menuItems.map((item) => {
-                            return (
-                                <MenuItem
-                                    key={ item.value }
-                                    value={ item.value }
-                                >
-                                    { item.name }
-                                </MenuItem>
-                            );
-                        }) }
+                        {getMenuItemFirst()}
+                        {menuItems.map(item => (
+                            <MenuItem
+                                key={item.value}
+                                value={item.value}
+                            >
+                                {item.name}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </FormControl>
             </div>
@@ -109,4 +104,3 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
 }
 
 export const DropdownControlled = withStyles(styles)(DropdownControlledBase);
-

@@ -4,7 +4,8 @@ import { ICartTotals } from 'src/shared/interfaces/cart';
 import { styles } from '../styles';
 
 export interface OrderSummaryProps extends WithStyles<typeof styles> {
-  handleChangeVouchercode(event: React.ChangeEvent<HTMLInputElement>): void;
-  voucherCode: string;
-  totals: ICartTotals;
+    totals: ICartTotals;
+    voucherCode: string;
+
+    handleChangeVouchercode(event: React.ChangeEvent<HTMLInputElement>): void;
 }

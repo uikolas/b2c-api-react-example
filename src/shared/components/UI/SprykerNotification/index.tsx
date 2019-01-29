@@ -15,7 +15,7 @@ interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOr
     isOpen?: boolean;
 }
 
-export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (props) => {
+export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = props => {
     const {
         classes,
         message = <FormattedMessage id={ 'empty.message' } />,
@@ -28,26 +28,26 @@ export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (pro
 
     return (
         <Snackbar
-            anchorOrigin={ { vertical, horizontal } }
-            open={ isOpen }
-            onClose={ onClickClose }
-            ContentProps={ {
+            anchorOrigin={{vertical, horizontal}}
+            open={isOpen}
+            onClose={onClickClose}
+            ContentProps={{
                 'aria-describedby': 'message-id',
-            } }
-            message={ <span id="message-id">{ message }</span> }
-            className={ `${classes.root} ${extraClasses}` }
-            autoHideDuration={ 1000 }
-            action={ [
+            }}
+            message={<span id="message-id">{message}</span>}
+            className={`${classes.root} ${extraClasses}`}
+            autoHideDuration={1000}
+            action={[
                 <IconButton
                     key="close"
                     aria-label="Close"
                     color="inherit"
-                    className={ classes.close }
-                    onClick={ onClickClose }
+                    className={classes.close}
+                    onClick={onClickClose}
                 >
-                    <CloseIcon />
+                    <CloseIcon/>
                 </IconButton>,
-            ] }
+            ]}
         />
     );
 };

@@ -5,17 +5,17 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     form: {
         paddingBottom: 0,
         paddingTop: 0,
-        "&:first-child": {
+        '&:first-child': {
             paddingTop: theme.spacing.unit * 1.5,
         },
     },
     controlsGroup: {
         paddingBottom: theme.spacing.unit * 1.5,
         paddingTop: theme.spacing.unit * 2.5,
-        "&:last-child": {
+        '&:last-child': {
             paddingBottom: 0,
         },
-        [ theme.breakpoints.down('xs') ]: {
+        [theme.breakpoints.down('xs')]: {
             paddingBottom: 0,
             paddingTop: 0,
         },
@@ -23,27 +23,26 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     control: {
         paddingLeft: theme.spacing.unit * 1.5,
         paddingRight: 0,
-
-        "&:first-child": {
+        '&:first-child': {
             paddingRight: theme.spacing.unit * 1.5,
             paddingLeft: 0,
-            [ theme.breakpoints.down('xs') ]: {
+            [theme.breakpoints.down('xs')]: {
                 paddingRight: 0,
             },
         },
-        [ theme.breakpoints.down('xs') ]: {
+        [theme.breakpoints.down('xs')]: {
             marginTop: theme.spacing.unit * 2,
             paddingLeft: 0,
         },
     },
     controlFullWidthOnlyChild: {
-        "&:only-child": {
+        '&:only-child': {
             paddingRight: 0,
             paddingLeft: 0,
         },
     },
     controlFullWidth: {
-        "&:only-child": {
+        '&:only-child': {
             paddingRight: 0,
             paddingLeft: 0,
         },
@@ -58,8 +57,8 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         position: 'relative',
         paddingBottom: theme.spacing.unit,
         color: theme.appColors.black,
-        top: "auto",
-        left: "auto",
+        top: 'auto',
+        left: 'auto',
         width: '100%',
         fontWeight: 600,
     },
@@ -67,8 +66,7 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         paddingBottom: 0,
     },
     inputRoot: {
-
-        "label + &": {
+        'label + &': {
             marginTop: 0,
         }
     },
@@ -78,17 +76,17 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         backgroundColor: theme.appColors.white,
         padding: theme.spacing.unit * 1.5,
         width: '100%',
-        height: "auto",
-        lineHeight: "normal",
+        height: 'auto',
+        lineHeight: 'normal',
         letterSpacing: 0.5,
         color: theme.appColors.black,
         fontSize: theme.appFixedDimensions.fontSize.small,
-        fontWeight: "normal",
-        [ theme.breakpoints.down('sm') ]: {
+        fontWeight: 'normal',
+        [theme.breakpoints.down('sm')]: {
             width: 100,
         },
 
-        "&:focus": {
+        '&:focus': {
             border: `solid 1px ${theme.appColors.blue}`,
         },
     },
@@ -103,18 +101,18 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         paddingRight: theme.spacing.unit * 1.5,
         marginLeft: 0,
         marginRight: 0,
-        width: "100%",
+        width: '100%',
     },
     radioGroupInRow: {
-        display: "flex",
-        flexDirection: "row",
+        display: 'flex',
+        flexDirection: 'row',
     },
     radioGroupNoLabel: {
         marginTop: 0,
     },
     inputItemsInRow: {
-        display: "flex",
-        width: "auto",
+        display: 'flex',
+        width: 'auto',
         marginRight: theme.spacing.unit * 3,
     },
     checkedInputRadio: {
@@ -130,7 +128,7 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         letterSpacing: 0.5,
     },
     checkedRadio: {
-        "& svg": {
+        '& svg': {
             color: theme.appColors.blue,
         }
     },
@@ -139,12 +137,12 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         paddingRight: theme.spacing.unit,
         borderRadius: theme.appFixedDimensions.borderRadius,
         color: theme.appColors.weakGrey,
-        "& svg": {
+        '& svg': {
             fontSize: 30,
         }
     },
     checkedCheckbox: {
-        "& svg": {
+        '& svg': {
             color: theme.appColors.blue,
         }
     },
@@ -153,30 +151,30 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
     },
     selectRoot: {
         paddingLeft: 0,
-        display: "flex",
+        display: 'flex',
     },
     selectClassName: {},
     selectFormControlClassName: {
-        display: "flex",
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
     },
     selectInputRootClassName: {
         width: '100%',
     },
     selectLabel: {
-        display: "flex",
+        display: 'flex',
     },
     selectInputRoot: {
-        display: "flex",
+        display: 'flex',
     },
     menuItemClassName: {},
     btnSubmitOuter: {},
     error: {
         color: theme.palette.error.main,
-        "& input": {
+        '& input': {
             borderColor: theme.palette.error.main,
         },
-        "& [role='button']": {
+        '& [role="button"]': {
             borderColor: theme.palette.error.main,
         }
     },

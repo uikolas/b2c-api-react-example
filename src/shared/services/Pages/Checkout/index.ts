@@ -1,6 +1,6 @@
 import api, { setAuthToken } from 'src/shared/services/api';
 import { toast } from 'react-toastify';
-import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
+import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
 import { ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod } from 'src/shared/interfaces/checkout';
 import {
     getCheckoutDataInitPendingStateAction,
@@ -8,7 +8,7 @@ import {
     getCheckoutDataInitFulfilledStateAction,
     sendCheckoutDataPendingStateAction,
     sendCheckoutDataRejectedStateAction,
-    sendCheckoutDataFulfilledStateAction
+    sendCheckoutDataFulfilledStateAction,
 } from '@stores/actions/pages/checkout';
 
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
@@ -24,22 +24,26 @@ interface IRequestBody {
 }
 
 export class CheckoutService extends ApiServiceAbstract {
-    public static async getCheckoutData(dispatch: Function, payload: ICheckoutRequest, anonymId: string): Promise<void> {
+    public static async getCheckoutData(
+        dispatch: Function,
+        payload: ICheckoutRequest,
+        anonymId: string
+    ): Promise<void> {
         try {
             let headers: { withCredentials: boolean, headers?: {} };
 
             if (anonymId) {
-                headers = { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } };
+                headers = {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}};
             } else {
                 const token = await RefreshTokenService.getActualToken(dispatch);
                 setAuthToken(token);
-                headers = { withCredentials: true };
+                headers = {withCredentials: true};
             }
 
             const body: IRequestBody = {
                 data: {
                     type: 'checkout-data',
-                    attributes: payload
+                    attributes: payload,
                 }
             };
 
@@ -67,17 +71,17 @@ export class CheckoutService extends ApiServiceAbstract {
             let headers: { withCredentials: boolean, headers?: {} };
 
             if (anonymId) {
-                headers = { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } };
+                headers = {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}};
             } else {
                 const token = await RefreshTokenService.getActualToken(dispatch);
                 setAuthToken(token);
-                headers = { withCredentials: true };
+                headers = {withCredentials: true};
             }
 
             const body: IRequestBody = {
                 data: {
                     type: 'checkout',
-                    attributes: payload
+                    attributes: payload,
                 }
             };
 
@@ -101,21 +105,21 @@ export class CheckoutService extends ApiServiceAbstract {
     }
 
     private static parseCheckoutData(data: IcheckoutResponse): ICheckoutResponseData {
-        let payments: IPaymentMethod[] = [];
+        const payments: IPaymentMethod[] = [];
 
         Array.isArray(data.paymentProviders) && data.paymentProviders.forEach(provider => {
             provider.paymentMethods.forEach(paymentMethod => {
                 payments.push({
                     ...paymentMethod,
-                    paymentProviderName: provider.paymentProviderName
+                    paymentProviderName: provider.paymentProviderName,
                 });
             });
         });
 
         return ({
             payments,
-            shipments: data.shipmentMethods.map((method: IShipmentMethod) => ({ ...method, id: method.id.toString() })),
-            addressesCollection: Array.isArray(data.addresses) ? data.addresses : []
+            shipments: data.shipmentMethods.map((method: IShipmentMethod) => ({...method, id: method.id.toString()})),
+            addressesCollection: Array.isArray(data.addresses) ? data.addresses : [],
         });
     }
 }

@@ -22,11 +22,9 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
     };
 
     // Component variables
-
     private stickyTriggerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     // Component lifecycle methods
-
     public componentDidMount() {
         window.addEventListener('resize', this.onWindowResize);
         window.addEventListener('scroll', this.onWindowScroll);
@@ -43,7 +41,6 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
     }
 
     // Event handlers
-
     private onWindowResize = debounce(() => {
         this.setTriggerOffset();
         this.updateWindowDimensions();
@@ -62,7 +59,6 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
     };
 
     // Action handlers
-
     private setTriggerOffset = () => {
         const stickyTriggerOffset = this.stickyTriggerRef.current.offsetTop;
 
@@ -81,6 +77,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
     public render() {
         const {classes, isLoading, isMobileNavOpened, onMobileNavToggle, locale} = this.props;
         const {stickyTriggerOffset, showSearch} = this.state;
+
         return (
             <Sticky topOffset={stickyTriggerOffset}>
                 {(stickyState: StickyChildArgs) => {
@@ -116,7 +113,11 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                                 <div className={classes.headerBottom} ref={this.stickyTriggerRef}>
                                     <div className={classes.headerContainer}>
                                         <div
-                                            className={`${classes.hamburger} ${isMobileNavOpened ? classes.hamburgerOpened : ''}`}
+                                            className={
+                                                `${classes.hamburger} ${
+                                                    isMobileNavOpened ? classes.hamburgerOpened : ''
+                                                }`
+                                            }
                                             onClick={onMobileNavToggle}
                                         >
                                             <span />

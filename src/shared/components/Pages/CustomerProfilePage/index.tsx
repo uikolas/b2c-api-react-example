@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormEvent, MouseEvent, SyntheticEvent } from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
@@ -66,55 +65,58 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     };
 
     public handleProfileInputChange = (event: { target: IProfileFieldInput }): void => {
-        const { name, value }: IProfileFieldInput = event.target;
+        const {name, value}: IProfileFieldInput = event.target;
         const cleanValue = value.trim();
-        const { inputs } = this.state;
+        const {inputs} = this.state;
 
-        if (inputs.hasOwnProperty(name) && inputs[ name ] !== cleanValue) {
-            this.setState({ inputs: { ...inputs, [ name ]: cleanValue } });
+        if (inputs.hasOwnProperty(name) && inputs[name] !== cleanValue) {
+            this.setState({inputs: {...inputs, [name]: cleanValue}});
         }
     };
 
-    public handleSubmitUpdateProfile = (event: FormEvent<HTMLFormElement>): void => {
+    public handleSubmitUpdateProfile = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         if (this.props.isLoading || !this.props.customerReference) {
             return;
         }
-        const { firstName, lastName, salutation, email } = this.state.inputs;
+        const {firstName, lastName, salutation, email} = this.state.inputs;
 
         if (!firstName || !lastName || !email || !salutation) {
             toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+
             return null;
         }
         const profileData = { salutation, firstName, lastName, email };
         this.props.updateCustomerData(this.props.customerReference, profileData);
     };
 
-    public handleSubmitPassword = (event: FormEvent<HTMLFormElement>): void => {
+    public handleSubmitPassword = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const { password, newPassword, confirmPassword } = this.state.inputs;
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
             toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+
             return null;
         }
         if (newPassword !== confirmPassword) {
             toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
+
             return null;
         }
         const passwordData = { password, newPassword, confirmPassword };
         this.props.updateCustomerPassword(this.props.customerReference, passwordData);
     };
 
-    public handleSubmitDeleteAccount = (event: FormEvent<HTMLFormElement>): void => {
+    public handleSubmitDeleteAccount = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        this.setState(prev => ({ isDeleteProfileDialogOpen: true }));
+        this.setState(prev => ({isDeleteProfileDialogOpen: true}));
     };
 
-    public handleDeleteProfileDialogShowing = (event: SyntheticEvent<{}>): void => {
-        this.setState(prev => ({ isDeleteProfileDialogOpen: !prev.isDeleteProfileDialogOpen }));
+    public handleDeleteProfileDialogShowing = (event: React.SyntheticEvent<{}>): void => {
+        this.setState(prev => ({isDeleteProfileDialogOpen: !prev.isDeleteProfileDialogOpen}));
     };
 
-    public handleDeleteProfileDialogAgree = (event: MouseEvent<HTMLElement>): void => {
+    public handleDeleteProfileDialogAgree = (event: React.MouseEvent<HTMLElement>): void => {
         if (this.props.isLoading || !this.props.customerReference) {
             return;
         }
@@ -123,7 +125,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         this.props.routerPush(`${pathLoginPage}`);
     };
 
-    public handleDeleteProfileDialogDisagree = (event: MouseEvent<HTMLElement>): void => {
+    public handleDeleteProfileDialogDisagree = (event: React.MouseEvent<HTMLElement>): void => {
         this.handleDeleteProfileDialogShowing(event);
     };
 
@@ -145,18 +147,19 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
     };
 
     public render(): JSX.Element {
-        const { classes } = this.props;
+        const {classes} = this.props;
 
         return (
             <div>
                 <CustomerPageTitle title="profile" />
+
                 <UpdateProfile
-                    submitHandler={ this.handleSubmitUpdateProfile }
-                    inputChangeHandler={ this.handleProfileInputChange }
-                    firstName={ this.state.inputs[ keyFirstName ] }
-                    lastName={ this.state.inputs[ keyLastName ] }
-                    salutation={ this.state.inputs[ keySalutation ] }
-                    email={ this.state.inputs[ keyEmail ] }
+                    submitHandler={this.handleSubmitUpdateProfile}
+                    inputChangeHandler={this.handleProfileInputChange}
+                    firstName={this.state.inputs[keyFirstName]}
+                    lastName={this.state.inputs[keyLastName]}
+                    salutation={this.state.inputs[keySalutation]}
+                    email={this.state.inputs[keyEmail]}
                 />
 
                 <CustomerPageTitle title={<FormattedMessage id={ 'change.password.title' } />} />
@@ -168,7 +171,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
                     confirmPassword={ this.state.inputs[ keyConfirmPassword ] }
                 />
 
-                <AccountActions submitDeleteHandler={ this.handleSubmitDeleteAccount } />
+                <AccountActions submitDeleteHandler={this.handleSubmitDeleteAccount}/>
 
                 { this.state.isDeleteProfileDialogOpen
                     ? (

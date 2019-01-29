@@ -8,12 +8,11 @@ import { SprykerLogoBlack } from 'src/shared/assets/icons/SprykerLogoBlack';
 import { FormattedMessage } from 'react-intl';
 
 export const LogoComponent: React.SFC<Props> = ({ classes }) => (
-
-    <div className={ classes.logoContainer }>
-        <NavLink to={ pathHomePage } className={ classes.logo }>
+    <div className={classes.logoContainer}>
+        <NavLink to={pathHomePage} className={classes.logo}>
             <SprykerLogoBlack />
         </NavLink>
-        <span className={ classes.logoCopy }>
+        <span className={classes.logoCopy}>
             <FormattedMessage id={ 'spryker.name.title' } />
         </span>
     </div>

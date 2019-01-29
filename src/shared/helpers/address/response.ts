@@ -1,12 +1,12 @@
-import {IAddressRawResponseOneValue} from "src/shared/services/Pages/Addresses/types";
-import {IAddressItem} from "src/shared/interfaces/addresses/index";
+import { IAddressRawResponseOneValue } from 'src/shared/services/Pages/Addresses/types';
+import { IAddressItem } from 'src/shared/interfaces/addresses/index';
 
 export const parseOneAddressRawResponse = (response: IAddressRawResponseOneValue): IAddressItem | null => {
     if (!response) {
         return null;
     }
     const {data, data: {attributes, id}} = response;
-    let result: IAddressItem = {
+    const result: IAddressItem = {
         id: null,
         salutation:  null,
         firstName:  null,

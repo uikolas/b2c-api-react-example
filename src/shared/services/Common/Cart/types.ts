@@ -1,5 +1,5 @@
 export interface ICartCreatePayload {
-  priceMode: string;
-  currency: string;
-  store: string;
+    priceMode: string;
+    currency: string;
+    store: string;
 }

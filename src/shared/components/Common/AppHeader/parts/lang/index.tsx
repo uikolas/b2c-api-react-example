@@ -12,7 +12,6 @@ import { TAppLocale } from 'src/shared/interfaces/locale';
 import api from '@services/api';
 import { FormattedMessage } from 'react-intl';
 
-
 const availableLanguages: language[] = [
     {
         name: <FormattedMessage id={ 'language.english.title' } />,

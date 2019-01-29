@@ -8,22 +8,22 @@ import { AppFooterProps as Props } from './types';
 import { styles } from './styles';
 
 export const AppFooterComponent: React.SFC<Props> = ({classes}) => (
-  <div className={ classes.footer }>
-    <div className={ classes.footerContainer }>
-      <div className={ `${classes.footerCol} ${classes.logo}` }>
-        <Logo/>
-      </div>
-      <div className={ classes.footerCol }>
-        <Links title='categories.panel.title' links={ categoriesLinks }/>
-      </div>
-      <div className={ classes.footerCol }>
-        <Links title='social.media.title' links={ socialMediaLinks } external/>
-      </div>
-      <div className={ `${classes.footerCol} ${classes.partners}` }>
-        <Logos/>
-      </div>
+    <div className={classes.footer}>
+        <div className={classes.footerContainer}>
+            <div className={`${classes.footerCol} ${classes.logo}`}>
+                <Logo/>
+            </div>
+            <div className={classes.footerCol}>
+                <Links title="categories.panel.title" links={categoriesLinks}/>
+            </div>
+            <div className={classes.footerCol}>
+                <Links title="social.media.title" links={socialMediaLinks} external/>
+            </div>
+            <div className={`${classes.footerCol} ${classes.partners}`}>
+                <Logos/>
+            </div>
+        </div>
     </div>
-  </div>
 );
 
 export const AppFooter = withStyles(styles)(AppFooterComponent);

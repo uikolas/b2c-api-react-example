@@ -19,9 +19,9 @@ import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loada
 import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
 
 import config from '../configs/server';
-import {AppMain} from "src/shared/components/Common/AppMain/index";
-import {LoadableOrderDetailsPage} from "src/shared/components/Pages/OrderDetailsPage/loadable";
-import {AddressFormPage} from "src/shared/components/Pages/CustomerAddressesPage/AddressForm/index";
+import { AppMain } from 'src/shared/components/Common/AppMain/index';
+import { LoadableOrderDetailsPage } from 'src/shared/components/Pages/OrderDetailsPage/loadable';
+import { AddressFormPage } from 'src/shared/components/Pages/CustomerAddressesPage/AddressForm/index';
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
@@ -61,30 +61,31 @@ export const pathCheckoutPage = `${config.WEB_PATH}checkout`;
 export const pathNotFoundPage = `${config.WEB_PATH}*`;
 
 export const getContentRoutes = function(isReadyToShow: boolean) {
-  if (!isReadyToShow) {
-    return <AppMain />;
-  }
-  return (
-    <Switch>
-      <Route path={ pathHomePage } exact component={ LoadableHomePage }/>
-      <Route path={ pathSearchPage } component={ LoadableSearchPage }/>
-      <Route path={ pathCategoryPage } component={ LoadableSearchPage }/>
-      <Route path={ pathProductPage } component={ LoadableProductPage }/>
-      <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
-      <Route path={ pathCartPage } component={ LoadableCartPage }/>
-      <ProtectedRoute path={ pathCustomerPage } component={ LoadableCustomerPage }/>
-      <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
-      <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
+    if (!isReadyToShow) {
+        return <AppMain />;
+    }
 
-      <ProtectedRoute path={ pathWishListsPage } component={ LoadableWishListPage }/>
-      <ProtectedRoute path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
+    return (
+        <Switch>
+            <Route path={ pathHomePage } exact component={ LoadableHomePage }/>
+            <Route path={ pathSearchPage } component={ LoadableSearchPage }/>
+            <Route path={ pathCategoryPage } component={ LoadableSearchPage }/>
+            <Route path={ pathProductPage } component={ LoadableProductPage }/>
+            <Route path={ pathLoginPage } component={ LoadableLoginPage }/>
+            <Route path={ pathCartPage } component={ LoadableCartPage }/>
+            <ProtectedRoute path={ pathCustomerPage } component={ LoadableCustomerPage }/>
+            <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
+            <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
 
-      { /* TODO: Change to ProtectedRoute */ }
-      <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
-      <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
-      <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
+            <ProtectedRoute path={ pathWishListsPage } component={ LoadableWishListPage }/>
+            <ProtectedRoute path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
 
-      <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
-    </Switch>
-  );
+            { /* TODO: Change to ProtectedRoute */ }
+            <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
+            <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
+            <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
+
+            <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
+        </Switch>
+    );
 };
