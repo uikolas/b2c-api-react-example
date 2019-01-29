@@ -27,7 +27,7 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const response: IApiResponseData = await api.get('/carts', {}, { withCredentials: true });
+            const response: IApiResponseData = await api.get('/carts', {}, {withCredentials: true});
 
             if (response.ok) {
                 if (!response.data.data[ 0 ].id) {
@@ -68,7 +68,7 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const response: IApiResponseData = await api.post('carts', body, { withCredentials: true });
+            const response: IApiResponseData = await api.post('carts', body, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed = parseCartCreateResponse(response.data);
@@ -109,7 +109,7 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items`;
-            const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
@@ -150,12 +150,12 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items/${itemId}`;
-            const response: IApiResponseData = await api.delete(endpoint, {}, { withCredentials: true });
+            const response: IApiResponseData = await api.delete(endpoint, {}, {withCredentials: true});
 
             if (response.ok) {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    payloadCartDeleteItemFulfilled: { itemId }
+                    payloadCartDeleteItemFulfilled: {itemId}
                 });
 
                 toast.success(NotificationsMessage({
@@ -198,7 +198,7 @@ export class CartService extends ApiServiceAbstract {
                     attributes: payload
                 }
             };
-            const { sku } = payload;
+            const {sku} = payload;
 
             const token = await RefreshTokenService.getActualToken(dispatch);
             if (!token) {
@@ -207,7 +207,7 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items/${sku}`;
-            const response: IApiResponseData = await api.patch(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.patch(endpoint, body, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
@@ -233,12 +233,12 @@ export class CartService extends ApiServiceAbstract {
     public static async moveItemsToCart(dispatch: Function, cartId: TCartId, productsList: string[]): Promise<void> {
         try {
             for (const sku of productsList) {
-                const payload = { sku, quantity: 1 };
+                const payload = {sku, quantity: 1};
 
                 await CartService.cartAddItem(dispatch, payload, cartId);
             }
-        } catch (err) {
-            dispatch(cartActions.cartAddItemRejectedStateAction(err.message));
+        } catch (error) {
+            dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
             toast.error(NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
@@ -312,7 +312,7 @@ export class CartService extends ApiServiceAbstract {
             setAuthToken(token);
 
             const endpoint = `carts/${cartId}/items`;
-            const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
+            const response: IApiResponseData = await api.post(endpoint, body, {withCredentials: true});
             return response;
         } catch (err) {
             console.error('CartService: cartAddItem: err', err);
