@@ -6,38 +6,30 @@ import {
     pathCategoryTablets,
     pathCategoryWorkstations
 } from 'src/shared/routes/categoriesRoutes';
-import {
-    CategoryNameComputers,
-    CategoryNameNew,
-    CategoryNameNotebooks,
-    CategoryNameSale,
-    CategoryNameTablets,
-    CategoryNameWorkstations
-} from 'src/shared/translation';
 
 export const navLinks = [
     {
-        name: CategoryNameComputers,
+        name: 'category.name.computers',
         path: pathCategoryComputers,
     },
     {
-        name: CategoryNameNotebooks,
+        name: 'category.name.notebooks',
         path: pathCategoryNotebooks,
     },
     {
-        name: CategoryNameWorkstations,
+        name: 'category.name.workstations',
         path: pathCategoryWorkstations,
     },
     {
-        name: CategoryNameTablets,
+        name: 'category.name.tablets',
         path: pathCategoryTablets,
     },
     {
-        name: CategoryNameSale,
+        name: 'category.name.sale',
         path: pathCategorySale,
     },
     {
-        name: CategoryNameNew,
+        name: 'category.name.new',
         path: pathCategoryNew,
     },
 ];

@@ -4,6 +4,7 @@ import {
     DELETE_ADDRESS,
     UPDATE_ADDRESS,
     SET_CURRENT_ADDRESS,
+    GET_ONE_ADDRESS
 } from '@stores/actionTypes/pages/addresses';
 import { IAddressItem } from '@interfaces/addresses';
 import { AddressesService } from '@services/Pages/Addresses';
@@ -21,13 +22,24 @@ export const updateAddressPendingState = {
 };
 
 export const deleteAddressPendingState = {
-    type: DELETE_ADDRESS + '_PENDING',
+    type: DELETE_ADDRESS + '_PENDING'
+};
+
+export const getOneAddressPendingState = {
+    type: GET_ONE_ADDRESS + '_PENDING',
 };
 
 export const getAddressesAction = function (customerId: string) {
     return (dispatch: Function, getState: Function) => {
         dispatch(getAllListPendingState);
         AddressesService.getCustomerAddresses(ADDRESSES_LIST, dispatch, customerId);
+    };
+};
+
+export const getOneAddressAction = function (customerId: string, addressId: string) {
+    return (dispatch: Function, getState: Function) => {
+        dispatch(getOneAddressPendingState);
+        AddressesService.getOneCustomerAddress(GET_ONE_ADDRESS, dispatch, customerId, addressId);
     };
 };
 

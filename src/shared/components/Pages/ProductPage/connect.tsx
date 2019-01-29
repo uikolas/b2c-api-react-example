@@ -10,10 +10,10 @@ import {
     isProductDetailsPresent,
 } from '@stores/reducers/pages/product';
 import {
-    getWishlistsCollectionFromStore,
-    isPageWishlistStateLoading,
-    isWishlistsCollectionInitiated,
-} from '@stores/reducers/pages/wishlist';
+  getWishlistsCollectionFromStore,
+  isPageWishlistStateLoading,
+  isWishlistsCollectionInitiated,
+} from '@stores/reducers/Pages/Wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getRouterMatchParam } from 'src/shared/helpers/router';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';

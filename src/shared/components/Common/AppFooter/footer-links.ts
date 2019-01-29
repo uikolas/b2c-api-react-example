@@ -7,71 +7,57 @@ import {
     pathCategoryTablets,
     pathCategoryWorkstations
 } from 'src/shared/routes/categoriesRoutes';
-import {
-    CategoryNameComputers,
-    CategoryNameNew,
-    CategoryNameNotebooks,
-    CategoryNameSale,
-    CategoryNameTablets,
-    CategoryNameWorkstations,
-    SocialInstagramTitle,
-    SocialFacebookTitle,
-    SocialXingTitle,
-    SocialLinkedInTitle,
-    SocialTwitterTitle,
-    SocialYouTubeTitle
-} from 'src/shared/translation';
 
 export const categoriesLinks: link[] = [
     {
-        name: CategoryNameComputers,
+        name: 'category.name.computers',
         path: pathCategoryComputers,
     },
     {
-        name: CategoryNameNotebooks,
+        name: 'category.name.notebooks',
         path: pathCategoryNotebooks,
     },
     {
-        name: CategoryNameWorkstations,
+        name: 'category.name.workstations',
         path: pathCategoryWorkstations,
     },
     {
-        name: CategoryNameTablets,
+        name: 'category.name.tablets',
         path: pathCategoryTablets,
     },
     {
-        name: CategoryNameSale,
+        name: 'category.name.sale',
         path: pathCategorySale,
     },
     {
-        name: CategoryNameNew,
+        name: 'category.name.new',
         path: pathCategoryNew,
     },
 ];
 
 export const socialMediaLinks: link[] = [
     {
-        name: SocialInstagramTitle,
+        name: 'social.instagram.title',
         path: 'https://www.instagram.com/spryker/',
     },
     {
-        name: SocialYouTubeTitle,
+        name: 'social.youTube.title',
         path: 'https://www.youtube.com/channel/UC6lVOEbqXxUh0W5FMTvlPDQ',
     },
     {
-        name: SocialFacebookTitle,
+        name: 'social.facebook.title',
         path: 'https://www.facebook.com/Spryker/',
     },
     {
-        name: SocialTwitterTitle,
+        name: 'social.twitter.title',
         path: 'https://twitter.com/sprysys',
     },
     {
-        name: SocialLinkedInTitle,
+        name: 'social.linkedin.title',
         path: 'https://www.linkedin.com/company/spryker-systems-gmbh',
     },
     {
-        name: SocialXingTitle,
+        name: 'social.xing.title',
         path: 'https://www.xing.com/companies/sprykersystemsgmbh',
     },
 ];

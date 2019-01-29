@@ -5,8 +5,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import { styles } from './styles';
-import { defaultItemValueDropdown } from '@interfaces/product';
-import { FirstItemInSelect } from 'src/shared/translation';
+import { defaultItemValueDropdown } from '@interfaces/product/';
+import { FormattedMessage } from 'react-intl';
 
 export interface IMenuItemsDropdown {
     value: string | number;
@@ -48,7 +48,7 @@ export class DropdownControlledBase extends React.Component<DropdownControlledPr
             menuItemFirst = {
                 // Do not change default value!!!!
                 value: defaultItemValueDropdown,
-                name: FirstItemInSelect,
+                name: <FormattedMessage id={ 'first.item.in.select' } />,
             },
             isHiddenMenuItemFirst = false,
         } = this.props;

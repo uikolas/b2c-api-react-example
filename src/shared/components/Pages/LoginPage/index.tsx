@@ -15,7 +15,7 @@ import { AppMain } from '../../Common/AppMain';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { styles } from './styles';
-import { ForgotPasswordTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 
@@ -55,7 +55,7 @@ export class LoginPageBase extends React.Component<LoginPageProps, LoginPageStat
                     />
                     <div className={classes.link}>
                         <NavLink to={pathForgotPassword}>
-                            {ForgotPasswordTitle}
+                            <FormattedMessage id={ 'forgot.password.title' } />
                         </NavLink>
                     </div>
                 </Grid>

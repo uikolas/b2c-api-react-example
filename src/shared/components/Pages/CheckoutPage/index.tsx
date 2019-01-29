@@ -21,7 +21,7 @@ import { AppMain } from 'src/shared/components/Common/AppMain';
 import { CheckoutForms } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms';
 import { CartData } from 'src/shared/components/Pages/CheckoutPage/CartData';
 import { OrderSuccess } from 'src/shared/components/Pages/CheckoutPage/OrderSuccess';
-import { InputSaveErrorMessage, NoProductsInCheckoutMessage } from 'src/shared/translation';
+import { InputSaveErrorMessage } from 'src/shared/translation';
 import {
     billingNewAddressDefault,
     billingSelectionDefault,
@@ -72,6 +72,7 @@ import { InputChangeEvent, FormEvent, BlurEvent } from 'src/shared/interfaces/co
 import { IAddressItem, IAddressItemCollection } from 'src/shared/interfaces/addresses';
 import { ICheckoutRequest } from 'src/shared/interfaces/checkout';
 import { ICartItem, ICartTotals } from 'src/shared/interfaces/cart';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
@@ -428,11 +429,11 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
         return (
             <AppMain>
-                {isCheckoutLoading ? <AppBackdrop isOpen={true}/> : null}
-                {!isProductsExists && !orderId
-                    ? <AppPageTitle title={NoProductsInCheckoutMessage}/>
+                { isCheckoutLoading ? <AppBackdrop isOpen={ true } /> : null }
+                { !isProductsExists && !orderId
+                    ? <AppPageTitle title={ <FormattedMessage id={ 'no.products.in.checkout.title' } /> } />
                     : <CheckoutPageContext.Provider
-                        value={{
+                        value={ {
                             submitHandler: this.handleSubmit,
                             onBlurHandler: this.handleFormValidityOnBlur,
                             selectionsChangeHandler: this.handleSelectionsChange,
@@ -449,14 +450,8 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                             billingSelections: this.state.billingSelection,
                             currentValueDeliverySelection: this.getCurrentValueDeliverySelection(),
                             currentValueBillingSelection: this.getCurrentValueBillingSelection(),
-                            extraOptionsDeliverySelection: getExtraOptionsToSelection(
-                                isAddressesCollectionExist,
-                                'delivery'
-                            ),
-                            extraOptionsBillingSelection: getExtraOptionsToSelection(
-                                isAddressesCollectionExist,
-                                'billing'
-                            ),
+                            extraOptionsDeliverySelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'delivery'),
+                            extraOptionsBillingSelection: getExtraOptionsToSelection(isAddressesCollectionExist, 'billing'),
                             isCheckoutFulfilled,
                             isUserLoggedIn,
                             shipmentMethods,
@@ -465,25 +460,25 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                             currentValuePaymentMethod: this.state.paymentMethod,
                             paymentCreditCardDataInputs: this.state.paymentCreditCardData,
                             paymentInvoiceDataInputs: this.state.paymentInvoiceData,
-                        }}
+                        } }
                     >
-                        <Grid container className={classes.container}>
-                            <Grid item xs={12} md={7} className={classes.leftColumn}>
+                        <Grid container className={ classes.container }>
+                            <Grid item xs={ 12 } md={ 7 } className={ classes.leftColumn }>
                                 {
                                     orderId
-                                        ? <OrderSuccess order={orderId}/>
+                                        ? <OrderSuccess order={ orderId } />
                                         : <CheckoutForms
-                                            panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
+                                            panels={ getCheckoutPanelsSettings(this.state.stepsCompletion) }
                                         />
                                 }
                             </Grid>
-                            <Grid item xs={12} md={5} className={classes.rightColumn}>
+                            <Grid item xs={ 12 } md={ 5 } className={ classes.rightColumn }>
                                 <CartData
-                                    products={orderId ? this.successOrderProducts : products}
-                                    totals={orderId ? this.successOrderTotals : totals}
-                                    isSendBtnDisabled={!this.checkCheckoutFormValidity()}
-                                    sendData={this.handleSubmit}
-                                    order={orderId}
+                                    products={ orderId ? this.successOrderProducts : products }
+                                    totals={ orderId ? this.successOrderTotals : totals }
+                                    isSendBtnDisabled={ !this.checkCheckoutFormValidity() }
+                                    sendData={ this.handleSubmit }
+                                    order={ orderId }
                                 />
                             </Grid>
                         </Grid>

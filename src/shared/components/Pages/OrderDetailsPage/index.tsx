@@ -1,25 +1,21 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
 import { connect } from './connect';
 import { IOrderDetailsItem, IOrderDetailsSelectedItems } from 'src/shared/interfaces/order';
+import { EmptyValueErrorMessage } from 'src/shared/translation';
 import { ICartAddItem } from 'src/shared/interfaces/cart';
 import { OrderDetailsGeneralInfo } from './OrderDetailsGeneralInfo';
 import { OrderProductList } from './OrderProductsList';
 import { OrderDetailsTotals } from './OrderDetailsTotals';
 import { styles } from './styles';
 import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
-import { OrderAddresses } from 'src/shared/components/Pages/OrderDetailsPage/OrderAddresses';
-import { getOrderSelectedItemsData } from 'src/shared/components/Pages/OrderDetailsPage/helpers';
-import {
-    NoOrderMessage,
-    EmptyValueErrorMessage,
-    OrderDetailBillingAddressTitle,
-    OrderDetailShippingAddressTitle
-} from 'src/shared/translation';
-import { EmptyOrder } from 'src/shared/components/Pages/OrderDetailsPage/EmptyOrder';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
+import { OrderAddresses } from "src/shared/components/Pages/OrderDetailsPage/OrderAddresses/index";
+import { getOrderSelectedItemsData } from "src/shared/components/Pages/OrderDetailsPage/helpers";
+import { EmptyOrder } from "src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index";
+import { ClickEvent, InputChangeEvent } from "src/shared/interfaces/common/react";
+import { FormattedMessage } from 'react-intl';
+
 
 @connect
 export class OrderDetailsPageBase extends React.Component<Props, State> {
@@ -136,11 +132,11 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
                                     <OrderAddresses
                                         billingAddress={order.billingAddress}
                                         shippingAddress={order.shippingAddress}
-                                        billingBlockTitle={OrderDetailBillingAddressTitle}
-                                        shippingBlockTitle={OrderDetailShippingAddressTitle}
+                                        billingBlockTitle={<FormattedMessage id={ 'billing.address.title' } />}
+                                        shippingBlockTitle={<FormattedMessage id={ 'shipping.address.title' } />}
                                     />
                                 </Grid>
-                                : <EmptyOrder intro={NoOrderMessage}/>
+                                : <EmptyOrder intro={<FormattedMessage id={ 'no.order.message' } />}/>
                             }
                         </Grid>
                     )

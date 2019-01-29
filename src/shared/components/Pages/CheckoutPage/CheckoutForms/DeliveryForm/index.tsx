@@ -1,20 +1,14 @@
 import * as React from 'react';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
 import { IDeliveryFormProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types';
 import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
 import { CheckoutPageContext } from '../../context';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import {
-    getAddressFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
+import { getAddressFormSettings } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
 import {
     getDeliverySavedAddressFormSettings
 } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
-import { FormWaitingForResponseTitle, InputLabelEmail } from 'src/shared/translation';
-
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
 import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
 import {
@@ -23,6 +17,7 @@ import {
 } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 import { deliveryConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
 import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
+import { FormattedMessage } from 'react-intl';
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {
     const {
@@ -70,7 +65,7 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                         inputValue: deliveryNewAddress.email.value,
                         spaceNumber: 6,
                         isRequired: true,
-                        label: InputLabelEmail,
+                        label: <FormattedMessage id={'email.label'} />,
                         isError: deliveryNewAddress.email.isError,
                     };
 
@@ -84,21 +79,23 @@ export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Elem
                 const inputsForm = <SprykerForm form={deliveryFormSettings}/>;
 
                 return (
-                    <Grid container className={classes.root}>
-                        <Grid item xs={12}>
-                            {isUserLoggedIn
+                    <Grid container className={ classes.root }>
+                        <Grid item xs={ 12 }>
+                            { isUserLoggedIn
                                 ? (!isCheckoutFulfilled)
-                                    ? <AppPageSubTitle title={FormWaitingForResponseTitle}/>
+                                    ? <AppPageSubTitle
+                                        title={ <FormattedMessage id={ 'form.waiting.for.response.title' } /> }
+                                    />
                                     : <React.Fragment>
-                                        {addressesCollection && addressesCollection.length && selectionForm}
-                                        {deliverySelections.isAddNew ? inputsForm : null}
+                                        { addressesCollection && addressesCollection.length && selectionForm }
+                                        { deliverySelections.isAddNew ? inputsForm : null }
                                     </React.Fragment>
                                 : inputsForm
                             }
                         </Grid>
                     </Grid>
                 );
-            }}
+            } }
         </CheckoutPageContext.Consumer>
     );
 };

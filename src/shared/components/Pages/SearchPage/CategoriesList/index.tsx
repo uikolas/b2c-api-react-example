@@ -11,8 +11,8 @@ import {
 } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
 import { ICategory } from 'src/shared/interfaces/category';
-import { CategoriesPanelTitle, NoNameTitle } from 'src/shared/translation';
-import { getFormattedActiveCategories } from 'src/shared/components/Pages/SearchPage/helpers';
+import { getFormattedActiveCategories } from 'src/shared/components/Pages/SearchPage/helpers/index';
+import { FormattedMessage } from 'react-intl';
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
     {classes, categories, categoriesTree, selectedCategory, localizedName},
@@ -41,7 +41,10 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
                     categoryValue={category.nodeId}
                     isSelected={(+selectedId) === category.nodeId}
                     isActive={Boolean(quantity)}
-                    displayName={`${category.name ? category.name : NoNameTitle} (${quantity})`}
+                    displayName={ `${category.name
+                        ? category.name
+                        : <FormattedMessage id={ 'no.name.title' } />
+                    } (${quantity})` }
                 >
                     {(Array.isArray(category.children) && category.children.length && category.children.length > 0)
                         ? getCategoriesList(category.children, activeData, selectedCategory)
@@ -60,8 +63,10 @@ export const CategoriesListBase: React.SFC<ICategoriesListProps> = (
             className={classes.root}
         >
             <Grid item xs={12}>
-                <AppPageSubTitle title={localizedName ? localizedName : CategoriesPanelTitle}
-                                 extraClass={classes.title}/>
+                <AppPageSubTitle
+                    title={ localizedName ? localizedName : <FormattedMessage id={ 'categories.panel.title' } /> }
+                    extraClass={ classes.title }
+                />
                 <List component="nav" className={classes.list}>
                     {getCategoriesList(categoriesTree, activeCategories, selectedCategory)}
                 </List>

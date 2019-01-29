@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import { IRangeInputError } from 'src/shared/components/UI/SprykerRangeFilter/types';
 import { BlurEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { RangeInputFrom, RangeInputTo } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
     title: string;
@@ -36,23 +36,27 @@ export const RangeInputBase: React.SFC<RangeInputProps> = props => {
         isLessError,
     } = props;
 
-    let errorText: string;
     const isError = (isMoreError || isLessError);
-    if (isError) {
-        errorText = `It can't be ${isLessError ? `less` : `more`} than ${isLessError ? min : max}!`;
-    }
 
     return (
         <FormControl className={className}>
             <Grid container justify="flex-start" alignItems="center">
                 <Grid item>
                     <span className={classes.title}>
-                        {isMin ? `${title} ${RangeInputFrom}` : `${title} ${RangeInputTo}`}
+                        <FormattedMessage
+                            id={ isMin ? 'range.input.from.title' : 'range.input.to.title' }
+                            values={ { titleName: title } }
+                        />
                     </span>
                 </Grid>
                 <Grid item>
-                    {isError
-                        ? <label className={classes.label}>{errorText}</label>
+                    { isError
+                        ? <label className={ classes.label }>
+                            <FormattedMessage
+                                id={ isLessError ? 'range.input.error.less.message' : 'range.input.error.more.message' }
+                                values={ { value: isLessError ? min : max } }
+                            />
+                        </label>
                         : null
                     }
                     <TextField

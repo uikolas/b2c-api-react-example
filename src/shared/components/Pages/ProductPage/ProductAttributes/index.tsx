@@ -4,7 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product';
 import { styles } from './styles';
-import { ProductBlockTitleProductDetails, NoTranslationTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
+
 
 interface ProductAttributesProps extends WithStyles<typeof styles> {
     attributes: IProductAttributes;
@@ -21,7 +22,7 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
     return (
         <div>
             <Typography component="h3" color="inherit" className={classes.attributesTitle}>
-                {ProductBlockTitleProductDetails}
+                <FormattedMessage id={ 'product.details.title' } />
             </Typography>
             <Grid container justify="center" className={classes.root}>
                 {
@@ -31,7 +32,10 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
                                         className={classes.valuesBlock}>
                                 <p>
                                     <Typography variant="subheading" component="strong">
-                                        {`${attributeNames[data[0]] ? attributeNames[data[0]] : NoTranslationTitle}: `}
+                                        { `${attributeNames[ data[ 0 ] ]
+                                            ? attributeNames[ data[ 0 ] ]
+                                            : <FormattedMessage id={ 'no.tramslations.title' } />}: `
+                                        }
                                     </Typography>
                                 </p>
                                 <Typography variant="subheading" component="span">

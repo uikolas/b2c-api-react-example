@@ -1,16 +1,9 @@
+import React from 'react';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import {
-    IPaymentCreditCardParams
-} from '../../types/formSettingsTypes';
-import {
-    InputLabelPaymentCreditCardCVC,
-    InputLabelPaymentCreditCardName,
-    InputLabelPaymentCreditCardNumber,
-    InputLabelPaymentExpiryDate,
-    InputLabelPaymentProvider,
-    FirstItemInSelect
-} from 'src/shared/translation';
+import { IPaymentCreditCardParams } from '../../types/formSettingsTypes';
 import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
+import { FormattedMessage } from 'react-intl';
+
 
 export const getCreditCardFormSettings = (formName: string, params: IPaymentCreditCardParams): IFormSettings => {
     const {
@@ -36,6 +29,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
         onBlurHandler,
     } = params;
 
+
     const formSettings: IFormSettings = {
         formName,
         onChangeHandler: inputChangeHandler,
@@ -49,12 +43,12 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: paymentProvider.value,
                     spaceNumber: 6,
                     isRequired: paymentProviderConfig.isRequired,
-                    label: InputLabelPaymentProvider,
+                    label: <FormattedMessage id={ 'payment.provider.label' } />,
                     isError: paymentProvider.isError,
                     menuItems: providersCollection,
                     menuItemFirst: {
-                        value: ' ',
-                        name: FirstItemInSelect,
+                        value: " ",
+                        name: <FormattedMessage id={ 'first.item.in.select' } />,
                         selected: true,
                         disabled: true,
                     },
@@ -67,7 +61,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardNumber.value,
                     spaceNumber: 6,
                     isRequired: cardNumberConfig.isRequired,
-                    label: InputLabelPaymentCreditCardNumber,
+                    label: <FormattedMessage id={ 'payment.credit.card.number.label' } />,
                     isError: cardNumber.isError,
                 },
                 {
@@ -76,7 +70,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardName.value,
                     spaceNumber: 6,
                     isRequired: cardNameConfig.isRequired,
-                    label: InputLabelPaymentCreditCardName,
+                    label: <FormattedMessage id={ 'payment.credit.card.name.label' } />,
                     isError: cardName.isError,
                 },
             ],
@@ -87,15 +81,15 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardExpiryMonth.value,
                     spaceNumber: 3,
                     isRequired: cardExpiryMonthConfig.isRequired,
-                    label: InputLabelPaymentExpiryDate,
+                    label: <FormattedMessage id={ 'payment.expiry.date.label' } />,
                     isError: cardExpiryMonth.isError,
                     menuItems: createItemsForExpiryMonth(),
                     /* menuItemFirst: {
-					   value: " ",
-					   name: FirstItemInSelect,
-					   selected: true,
-					   disabled: true,
-					 },*/
+                       value: " ",
+                       name: <FormattedMessage id={ 'first.item.in.select' } />,
+                       selected: true,
+                       disabled: true,
+                     },*/
                 },
                 {
                     type: 'select',
@@ -107,11 +101,11 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     isError: cardExpiryYear.isError,
                     menuItems: createItemsForExpiryYear(),
                     /*menuItemFirst: {
-					  value: " ",
-					  name: FirstItemInSelect,
-					  selected: true,
-					  disabled: true,
-					},*/
+                      value: " ",
+                      name: <FormattedMessage id={ 'first.item.in.select' } />,
+                      selected: true,
+                      disabled: true,
+                    },*/
                 },
                 {
                     type: 'input',
@@ -119,7 +113,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardCVC.value,
                     spaceNumber: 3,
                     isRequired: cardCVCConfig.isRequired,
-                    label: InputLabelPaymentCreditCardCVC,
+                    label: <FormattedMessage id={ 'payment.credit.card.cvc.label' } />,
                     isError: cardCVC.isError,
                 },
             ],
@@ -129,21 +123,23 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
     return formSettings;
 };
 
+
 const createItemsForExpiryMonth = (): IMenuItemSelect[] => {
     const data = getRange(1, 12);
 
-    return data.map((item: number) => ({value: `${item}`, name: item}));
+    return data.map((item: number) => ({ value: `${item}`, name: item }));
 };
 
 const createItemsForExpiryYear = (): IMenuItemSelect[] => {
     const currentYear = (new Date()).getFullYear();
     const data = getRange(currentYear, currentYear + 5);
 
-    return data.map((item: number) => ({value: `${item}`, name: item}));
+    return data.map((item: number) => ({ value: `${item}`, name: item }));
 };
 
 const getRange = (start: number, end: number): number[] => {
     const list = [];
+
     for (let i = start; i <= end; i++) {
         list.push(i);
     }

@@ -10,7 +10,7 @@ import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { ICartItem } from 'src/shared/interfaces/cart';
 import { styles } from '../styles';
 import { CartRowsProps as Props } from './types';
-import { RemoveBtnTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export const CartRowsComponent: React.SFC<Props> = (
     {classes, items, heightListItem, handleDeleteItem, handleChangeQty},
@@ -26,34 +26,35 @@ export const CartRowsComponent: React.SFC<Props> = (
 
             return (
                 <ListItem
-                    key={item.sku}
+                    key={ item.sku }
                     disableGutters
                     divider
-                    className={classes.listItem}
+                    className={ classes.listItem }
                 >
                     <SquareImage
-                        image={item.image}
-                        size={heightListItem}
-                        alt={item.name}
+                        image={ item.image }
+                        size={ heightListItem }
+                        alt={ item.name }
                     />
-                    <div className={classes.itemWrapper}>
-                        <div className={classes.itemName}>{item.name}</div>
-                        {item.superAttributes
-                            ? item.superAttributes.map((attr: { [key: string]: string }, idx: number) => (
-                                <div key={`${item.sku}-attr-${idx}`}
-                                    className={`${classes.itemAttr} ${classes.textCapitalize}`}
-                                >
-                                    <span>{Object.keys(attr)[0].split('_').join(' ')}</span>
-                                    <span style={{marginRight: '5px'}}>:</span>
-                                    <span>{Object.values(attr)[0]}</span>
+                    <div className={ classes.itemWrapper }>
+                        <div className={ classes.itemName }>{ item.name }</div>
+                        { item.superAttributes
+                            ? item.superAttributes.map((attr: { [ key: string ]: string }, idx: number) => (
+                                <div key={ `${item.sku}-attr-${idx}` }
+                                     className={ `${classes.itemAttr} ${classes.textCapitalize}` }>
+                                    <span>{ Object.keys(attr)[ 0 ].split('_').join(' ') }</span>
+                                    <span style={ { marginRight: '5px' } }>:</span>
+                                    <span>{ Object.values(attr)[ 0 ] }</span>
                                 </div>
                             ))
                             : null
                         }
                         <div>
-                            <span className={`${classes.itemAttr} ${classes.remove}`}>{RemoveBtnTitle}</span>
-                            <IconButton onClick={() => handleDeleteItem(item.sku)}>
-                                <DeleteIcon/>
+                            <span className={ `${classes.itemAttr} ${classes.remove}` }>
+                                <FormattedMessage id={ 'remove.button.title' } />
+                            </span>
+                            <IconButton onClick={ () => handleDeleteItem(item.sku) }>
+                                <DeleteIcon />
                             </IconButton>
                         </div>
                     </div>

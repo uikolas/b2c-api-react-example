@@ -4,10 +4,10 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { IProductDetailProps } from './types';
 import { ProductAttributes } from 'src/shared/components/Pages/ProductPage/ProductAttributes';
-import { ProductBlockTitleDescription, ProductSKUTitle } from 'src/shared/translation';
 import Typography from '@material-ui/core/Typography';
+import { FormattedMessage } from 'react-intl';
 
-export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
+export const ProductDetailBase: React.SFC<IProductDetailProps> = (props) => {
     const {
         classes,
         attributes,
@@ -24,7 +24,7 @@ export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
                 </Grid>
                 <Grid item xs={12} sm={6} className={classes.descriptionBlock}>
                     <Typography component="h3" color="inherit" className={classes.descriptionTitle}>
-                        {ProductBlockTitleDescription}
+                        <FormattedMessage id={ 'product.deskription.title' } />
                     </Typography>
                     <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
                         {description}
@@ -35,7 +35,7 @@ export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
                         gutterBottom={true}
                         className={classes.descriptionSku}
                     >
-                        {ProductSKUTitle}: {sku}
+                        <FormattedMessage id={ 'product.sku.title' } />: { sku }
                     </Typography>
                 </Grid>
             </Grid>

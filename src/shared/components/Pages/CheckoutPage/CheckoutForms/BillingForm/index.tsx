@@ -16,8 +16,6 @@ import {
 import {
     getBillingSavedAddressFormSettings
 } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
-import { FormWaitingForResponseTitle } from 'src/shared/translation';
-
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
 import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
 import {
@@ -26,6 +24,7 @@ import {
     ISameAsDeliveryParams
 } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 import { billingConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
+import { FormattedMessage } from 'react-intl';
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {
     const {
@@ -87,7 +86,8 @@ export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Elemen
                         <Grid item xs={12}>
                             {isUserLoggedIn
                                 ? (!isCheckoutFulfilled)
-                                    ? <AppPageSubTitle title={FormWaitingForResponseTitle}/>
+                                    ? <AppPageSubTitle
+                                        title={<FormattedMessage id={ 'form.waiting.for.response.title' } />}/>
                                     : (<React.Fragment>
                                         {
                                             addressesCollection && addressesCollection.length ?

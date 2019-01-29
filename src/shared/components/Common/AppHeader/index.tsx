@@ -3,7 +3,6 @@ import { Sticky, StickyChildArgs } from 'react-sticky';
 import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { merge } from 'src/shared/helpers/common';
 import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import CatalogSearch from '../CatalogSearch';
 import { Preloader } from '../Preloader';
@@ -76,9 +75,8 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
     private handleSearch = () => this.setState(({showSearch}) => ({showSearch: !showSearch}));
 
     public render() {
-        const {classes, isLoading, isMobileNavOpened, onMobileNavToggle} = this.props;
+        const {classes, isLoading, isMobileNavOpened, onMobileNavToggle, locale} = this.props;
         const {stickyTriggerOffset, showSearch} = this.state;
-
         return (
             <Sticky topOffset={stickyTriggerOffset}>
                 {(stickyState: StickyChildArgs) => {
@@ -101,34 +99,29 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                                 }}
                             >
                                 <div className={classes.headerTop}>
-                                    <div className={merge([classes.headerContainer, classes.headerTopContainer])}>
+                                    <div className={`${classes.headerContainer} ${classes.headerTopContainer}`}>
                                         <div className={classes.logoContainer}>
-                                            <Logo/>
+                                            <Logo />
                                         </div>
 
                                         <div className={classes.headerSearchContainer}>
-                                            <CatalogSearch id={'2'}/>
+                                            <CatalogSearch id={'2'} locale={locale} />
                                         </div>
                                     </div>
                                 </div>
                                 <div className={classes.headerBottom} ref={this.stickyTriggerRef}>
                                     <div className={classes.headerContainer}>
                                         <div
-                                            className={
-                                                merge([
-                                                    classes.hamburger,
-                                                    isMobileNavOpened ? classes.hamburgerOpened : ''
-                                                ])
-                                            }
+                                            className={`${classes.hamburger} ${isMobileNavOpened ? classes.hamburgerOpened : ''}`}
                                             onClick={onMobileNavToggle}
                                         >
-                                            <span/>
-                                            <span/>
+                                            <span />
+                                            <span />
                                         </div>
 
                                         {this.props.location.pathname.endsWith(pathCheckoutPage)
                                             ? <div className={classes.checkout}>Checkout</div>
-                                            : <MainNav mobileNavState={isMobileNavOpened}/>
+                                            : <MainNav mobileNavState={isMobileNavOpened} />
                                         }
 
                                         <AddNav
@@ -137,9 +130,10 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                                             isSticky={isSticky}
                                             pageWidth={this.state.pageWidth}
                                             pageHeight={this.state.pageHeight}
+                                            locale={locale}
                                         />
                                     </div>
-                                    {isLoading ? <Preloader extraClasses={classes.preloader}/> : null}
+                                    {isLoading ? <Preloader extraClasses={classes.preloader} /> : null}
                                 </div>
                             </div>
                         </div>

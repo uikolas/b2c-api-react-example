@@ -13,6 +13,10 @@ export interface IAddressDataRawResponse {
     type: string;
 }
 
+export interface IAddressRawResponseOneValue {
+    data: IAddressDataRawResponse;
+}
+
 export interface IRequestAddAddressBody {
     data: {
         type: string;

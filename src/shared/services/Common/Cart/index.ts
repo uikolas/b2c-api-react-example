@@ -8,12 +8,13 @@ import {
     parseUserCartResponseOneValue
 } from 'src/shared/helpers/cart';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAddProducts, CartChangeQty, CartRemoveItems, CartAuthenticateErrorMessage } from 'src/shared/translation';
+import { CartAuthenticateErrorMessage } from 'src/shared/translation';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
 import { IResponseError } from 'src/shared/services/apiAbstractions/types';
 import { IApiResponseData } from 'src/shared/services/types';
+import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class CartService extends ApiServiceAbstract {
     public static async getCustomerCarts(dispatch: Function): Promise<string> {
@@ -24,7 +25,7 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const response: IApiResponseData = await api.get('/carts', {}, {withCredentials: true});
+            const response: IApiResponseData = await api.get('/carts', {}, { withCredentials: true });
 
             if (response.ok) {
                 if (!response.data.data[0].id) {
@@ -33,7 +34,6 @@ export class CartService extends ApiServiceAbstract {
 
                 const responseParsed: ICartDataResponse = parseUserCartResponseMultiValue(response.data);
                 dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
-
                 return responseParsed.id;
             } else {
                 this.errorMessageInform(response, dispatch);
@@ -41,7 +41,6 @@ export class CartService extends ApiServiceAbstract {
         } catch (err) {
             dispatch(cartActions.getCartsRejectedStateAction(err.message));
             toast.error('Request Error: ' + err.message);
-
             return '';
         }
     }
@@ -58,19 +57,16 @@ export class CartService extends ApiServiceAbstract {
             };
 
             const token = await RefreshTokenService.getActualToken(dispatch);
-
             if (!token) {
                 throw new Error(CartAuthenticateErrorMessage);
             }
-
             setAuthToken(token);
 
-            const response: IApiResponseData = await api.post('carts', body, {withCredentials: true});
+            const response: IApiResponseData = await api.post('carts', body, { withCredentials: true });
 
             if (response.ok) {
                 const responseParsed = parseCartCreateResponse(response.data);
                 dispatch(cartActions.cartCreateFulfilledStateAction(responseParsed));
-
                 return responseParsed.id;
             } else {
                 this.errorMessageInform(response, dispatch);
@@ -110,7 +106,7 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
                 dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
-                toast.success(CartAddProducts);
+                toast.success(FormattedMessageTemplate('items.added.message'));
             } else {
                 this.errorMessageInform(response, dispatch);
             }
@@ -146,7 +142,7 @@ export class CartService extends ApiServiceAbstract {
                     payloadCartDeleteItemFulfilled: {itemId},
                 });
 
-                toast.success(CartRemoveItems);
+                toast.success(FormattedMessageTemplate('items.removed.message'));
                 const newCartResponse: IApiResponseData = await api.get(`carts/${cartId}`);
 
                 if (newCartResponse.ok) {
@@ -199,10 +195,11 @@ export class CartService extends ApiServiceAbstract {
             if (response.ok) {
                 const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(response.data);
                 dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
-                toast.success(CartChangeQty);
+                toast.success(FormattedMessageTemplate('cart.changed.quantity.message'));
             } else {
                 this.errorMessageInform(response, dispatch);
             }
+
         } catch (error) {
             dispatch(cartActions.cartUpdateItemRejectedStateAction(error.message));
             toast.error('Unexpected Error: ' + error.message);

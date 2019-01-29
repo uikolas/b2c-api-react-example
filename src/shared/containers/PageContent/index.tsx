@@ -16,19 +16,19 @@ import {
 } from '@stores/reducers/common/init';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getLocaleData } from 'src/shared/helpers/locale';
-import { APP_LOCALE_DEFAULT } from 'src/shared/configs/environment';
 import {
     initApplicationDataAction,
     setAuthFromStorageAction,
     IInitApplicationDataPayload
-} from '@stores/actions/Common/Init';
+} from '@stores/actions/Common/init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { clearSearchTermAction } from '@stores/actions/pages/search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
-import { TAppLocale } from 'src/shared/interfaces/locale/index';
+import { TAppLocale } from 'src/shared/interfaces/locale';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
+import { messages } from 'src/shared/translation/index';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -56,7 +56,7 @@ interface PageContentState {
 @(withRouter as any)
 export class PageContentBase extends React.Component<PageContentProps, PageContentState> {
     public state: PageContentState = {
-        mobileNavOpened: false,
+        mobileNavOpened: false
     };
 
     public componentDidMount() {
@@ -70,7 +70,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
                 accessToken,
                 expiresIn,
                 refreshToken,
-                customerRef,
+                customerRef
             });
         }
 
@@ -106,34 +106,34 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
         Boolean(this.props.cartCreated && this.props.isInitStateFulfilled)
     );
 
-    private mobileNavToggle = () => this.setState(({mobileNavOpened}) => ({mobileNavOpened: !mobileNavOpened}));
+    private mobileNavToggle = () => this.setState(({ mobileNavOpened }) => ({ mobileNavOpened: !mobileNavOpened }));
 
     public render(): JSX.Element {
-        const {isLoading, locale} = this.props;
-        const {mobileNavOpened} = this.state;
+        const { isLoading, locale } = this.props;
+        const { mobileNavOpened } = this.state;
         addLocaleData(getLocaleData(locale));
 
         return (
-            <IntlProvider locale={locale} key={locale}>
-                <div className={className}>
+            <IntlProvider locale={ locale } messages={ messages[ locale ] }>
+                <div className={ className }>
                     <StickyContainer>
                         <AppHeader
-                            isLoading={isLoading}
-                            onMobileNavToggle={this.mobileNavToggle}
-                            isMobileNavOpened={mobileNavOpened}
+                            isLoading={ isLoading }
+                            onMobileNavToggle={ this.mobileNavToggle }
+                            isMobileNavOpened={ mobileNavOpened }
                         />
-                        {getContentRoutes(this.isDataFulfilled())}
+                        { getContentRoutes(this.isDataFulfilled()) }
                         <ToastContainer
-                            autoClose={3000}
-                            transition={Slide}
-                            position={toast.POSITION.BOTTOM_LEFT}
-                            pauseOnHover={true}
-                            style={{
+                            autoClose={ 3000 }
+                            transition={ Slide }
+                            position={ toast.POSITION.BOTTOM_LEFT }
+                            pauseOnHover={ true }
+                            style={ {
                                 width: '90%',
-                                left: 0,
-                            }}
+                                left: 0
+                            } }
                         />
-                        <AppFooter/>
+                        <AppFooter />
                     </StickyContainer>
                 </div>
             </IntlProvider>
@@ -144,7 +144,7 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
 export const PageContent = reduxify(
     (state: IReduxStore, ownProps: IReduxOwnProps) => {
         const isLoading = isStateLoading(state, ownProps) || false;
-        const locale = getAppLocale(state, ownProps) || APP_LOCALE_DEFAULT;
+        const locale = getAppLocale(state, ownProps);
         const isAppDataSet: boolean = isAppInitiated(state, ownProps);
         const isCustomerAuth: boolean = isUserAuthenticated(state, ownProps);
         const anonymId = getAnonymId(state, ownProps);
@@ -158,7 +158,7 @@ export const PageContent = reduxify(
             isCustomerAuth,
             anonymId,
             cartCreated,
-            isInitStateFulfilled,
+            isInitStateFulfilled
         });
     },
     (dispatch: Function) => ({
@@ -167,6 +167,6 @@ export const PageContent = reduxify(
         setAuth: (payload: ICustomerLoginDataParsed) => dispatch(setAuthFromStorageAction(payload)),
         getCustomerCart: () => dispatch(getCustomerCartsAction()),
         getGuestCart: (anonymId: string) => dispatch(getGuestCartAction(anonymId)),
-        clearSearchTerm: () => dispatch(clearSearchTermAction()),
-    }),
+        clearSearchTerm: () => dispatch(clearSearchTermAction())
+    })
 )(PageContentBase);

@@ -9,7 +9,7 @@ import { ChevronLeft } from '@material-ui/icons';
 import InputLabel from '@material-ui/core/InputLabel';
 import { styles } from './styles';
 import { IMenuItemFirst, IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
-import { FirstItemInSelect } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export interface SprykerSelectProps extends WithStyles<typeof styles> {
     currentMode: string | number | boolean;
@@ -41,7 +41,7 @@ export const SprykerSelectBase: React.SFC<SprykerSelectProps> = props => {
         menuItemFirst = {
             // Do not change default value!!!!
             value: ' ',
-            name: FirstItemInSelect,
+            name: <FormattedMessage id={ 'first.item.in.select' } />,
             selected: false,
             disabled: false,
         },

@@ -2,15 +2,6 @@ import {
     ICheckoutFormsProps,
 } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/types';
 import {
-    InputLabelAddNewBillingAddress,
-    InputLabelAddNewDeliveryAddress,
-    InputLabelSameAsCurrentDelivery,
-    PanelDeliveryAddressTitle,
-    PanelBillingAddressTitle,
-    PanelShipmentTitle,
-    PanelPaymentTitle
-} from 'src/shared/translation';
-import {
     ICheckoutAddressState,
     ICheckoutPageProps,
     ICheckoutStepsCompletionState
@@ -23,6 +14,7 @@ import {
 } from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
 import { checkoutSelectionInputs } from 'src/shared/components/Pages/CheckoutPage/constants';
 import { RegExpZipCode } from 'src/shared/constants/forms/regexp';
+import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export const addressDefault: IAddressItem = {
     firstName: '',
@@ -46,13 +38,28 @@ export const getExtraOptionsToSelection = (
     if (!isAddressesCollectionExist) {
         return null;
     }
+export const getExtraOptionsToSelection = (isAddressesCollectionExist: boolean,
+                                           addressType: TAddressType): TExtraOptionsToSelection | null => {
+    let response: TExtraOptionsToSelection = [];
+    if (!isAddressesCollectionExist) {
+        return null;
+    }
 
     if (addressType === 'delivery') {
-        response.push({value: checkoutSelectionInputs.isAddNewDeliveryValue, label: InputLabelAddNewDeliveryAddress});
+        response.push({
+            value: checkoutSelectionInputs.isAddNewDeliveryValue,
+            label: FormattedMessageTemplate('add.new.delivery.address.label')
+        });
     } else if (addressType === 'billing') {
         response.push(
-            {value: checkoutSelectionInputs.isAddNewBillingValue, label: InputLabelAddNewBillingAddress},
-            {value: checkoutSelectionInputs.isSameAsDeliveryValue, label: InputLabelSameAsCurrentDelivery}
+            {
+                value: checkoutSelectionInputs.isAddNewBillingValue,
+                label: FormattedMessageTemplate('add.new.billing.address.label')
+            },
+            {
+                value: checkoutSelectionInputs.isSameAsDeliveryValue,
+                label: FormattedMessageTemplate('same.ass.current.delivery.address.label')
+            }
         );
     }
 
@@ -125,19 +132,19 @@ export const getCheckoutPanelsSettings = (params: ICheckoutStepsCompletionState)
 
     const response = {
         first: {
-            title: PanelDeliveryAddressTitle,
+            title: FormattedMessageTemplate('delivery.address.title'),
             isDisabled: isFirstPanelDisabled,
         },
         second: {
-            title: PanelBillingAddressTitle,
+            title: FormattedMessageTemplate('billing.address.title'),
             isDisabled: isSecondPanelDisabled,
         },
         third: {
-            title: PanelShipmentTitle,
+            title: FormattedMessageTemplate('word.shipment.title'),
             isDisabled: isThirdPanelDisabled,
         },
         fourth: {
-            title: PanelPaymentTitle,
+            title: FormattedMessageTemplate('word.payment.title'),
             isDisabled: isFourthPanelDisabled,
         },
     };

@@ -5,10 +5,10 @@ import {
     DELETE_ADDRESS,
     SET_CURRENT_ADDRESS,
     UPDATE_ADDRESS,
-} from '@stores/actionTypes/pages/addresses';
-import { IAddressItem } from 'src/shared/interfaces/addresses/index';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
-import { IAddressesState, IPageAddressesAction } from 'src/shared/stores/reducers/pages/addresses/types';
+    GET_ONE_ADDRESS,
+} from '@stores/actionTypes/Pages/Addresses';
+import { IAddressItem } from 'src/shared/interfaces/addresses';
+import { IAddressesState, IPageAddressesAction } from '@stores/reducers/Pages/Addresses/types';
 
 const initialState: IAddressesState = {
     data: {
@@ -24,6 +24,7 @@ export const pageAddresses = produce<IAddressesState>(
             case `${ADD_ADDRESS}_PENDING`:
             case `${DELETE_ADDRESS}_PENDING`:
             case `${UPDATE_ADDRESS}_PENDING`:
+            case `${GET_ONE_ADDRESS}_PENDING`:
                 draft.error = null;
                 draft.pending = true;
                 draft.fulfilled = false;
@@ -34,6 +35,7 @@ export const pageAddresses = produce<IAddressesState>(
             case `${ADD_ADDRESS}_REJECTED`:
             case `${DELETE_ADDRESS}_REJECTED`:
             case `${UPDATE_ADDRESS}_REJECTED`:
+            case `${GET_ONE_ADDRESS}_REJECTED`:
                 draft.error = action.error || action.payloadRejected.error;
                 draft.pending = false;
                 draft.fulfilled = false;
@@ -75,7 +77,7 @@ export const pageAddresses = produce<IAddressesState>(
             case `${UPDATE_ADDRESS}_FULFILLED`: {
                 const addresses: IAddressItem[] = draft.data.addresses
                     .map((address: IAddressItem) => (
-                        address.id === action.addressId
+                        address.id === action.payloadFulfilled.addressId
                             ? {...action.payloadFulfilled.data, id: action.payloadFulfilled.addressId}
                             : address)
                     );
@@ -85,7 +87,6 @@ export const pageAddresses = produce<IAddressesState>(
                 draft.pending = false;
                 draft.fulfilled = true;
                 draft.rejected = false;
-                draft.initiated = true;
                 break;
             }
             case SET_CURRENT_ADDRESS: {
@@ -99,43 +100,17 @@ export const pageAddresses = produce<IAddressesState>(
                 }
                 break;
             }
+            case `${GET_ONE_ADDRESS}_FULFILLED`: {
+                draft.data.currentAddress = action.payloadFulfilled.data;
+                draft.error = null;
+                draft.pending = false;
+                draft.fulfilled = true;
+                draft.rejected = false;
+                break;
+            }
             default:
                 break;
         }
     },
     initialState,
 );
-
-export function isPageAddressesStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
-    return Boolean(isStateExist(state, props) && state.pageAddresses.pending);
-}
-
-export function isAddressesStateRejected(state: IReduxStore, props: IReduxOwnProps): boolean {
-    return Boolean(isStateExist(state, props) && state.pageAddresses.rejected);
-}
-
-export function isAddressesInitiated(state: IReduxStore, props: IReduxOwnProps): boolean {
-    return Boolean(isStateExist(state, props) && state.pageAddresses.initiated);
-}
-
-export function getCurrentAddress(state: IReduxStore, props: IReduxOwnProps): IAddressItem | null {
-    return (isStateExist(state, props) && state.pageAddresses.data.currentAddress)
-        ? state.pageAddresses.data.currentAddress
-        : null;
-}
-
-export function getAddressesCollection(state: IReduxStore, props: IReduxOwnProps): IAddressItem[] {
-    return isStateExist(state, props)
-        ? state.pageAddresses.data.addresses
-        : [];
-}
-
-export const checkAddressesCollectionExist = (state: IReduxStore, props: IReduxOwnProps): boolean =>
-    Boolean(isStateExist(state, props)
-        && state.pageAddresses.data.addresses
-        && state.pageAddresses.data.addresses.length
-    );
-
-function isStateExist(state: IReduxStore, props: IReduxOwnProps): boolean {
-    return Boolean(state.pageAddresses.data);
-}

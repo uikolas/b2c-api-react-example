@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ChangeEvent } from "react";
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { toast } from 'react-toastify';
@@ -28,13 +29,14 @@ import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
-import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { SprykerForm } from '@components/UI/SprykerForm';
-import { getQuantityFormSettings, getWishListFormSettings } from '@components/Pages/ProductPage/settings/forms';
-import { ProductDetail } from '@components/Pages/ProductPage/ProductDetail';
+import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
+import { SprykerForm } from 'src/shared/components/UI/SprykerForm/index';
 import {
-    AddToCartBtnTitle, AddToWishlistBtnTitle, ErrorDurningAddProductToTheCartMessage
-} from 'src/shared/translation';
+    getQuantityFormSettings,
+    getWishListFormSettings
+} from 'src/shared/components/Pages/ProductPage/settings/forms';
+import { ProductDetail } from 'src/shared/components/Pages/ProductPage/ProductDetail/index';
+import { FormattedMessage } from 'react-intl';
 
 const quantitySelectedInitial = 1;
 
@@ -82,7 +84,6 @@ export class ProductPageBase extends React.Component<Props, State> {
         }
 
         // First load of the App
-        // tslint:disable:max-line-length
         if (!this.props.isFulfilled
             && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)
         ) {
@@ -203,7 +204,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                 isProcessCartLoading: false,
             }));
         } catch (error) {
-            toast.error(ErrorDurningAddProductToTheCartMessage);
+            toast.error(<FormattedMessage id={ 'error.durning.add.product.to.cart.message' } />);
         }
     };
 
@@ -396,7 +397,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                                             }
                                             <Grid item xs={12} md={12} className={classes.buyBtnParent}>
                                                 <SprykerButton
-                                                    title={AddToCartBtnTitle}
+                                                    title={<FormattedMessage id={ 'add.to.cart.button.title' } />}
                                                     extraClasses={classes.buyBtn}
                                                     onClick={this.handleBuyBtnClick}
                                                     disabled={this.state.isBuyBtnDisabled}
@@ -422,7 +423,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                                                           className={classes.buyBtnParent}
                                                     >
                                                         <SprykerButton
-                                                            title={AddToWishlistBtnTitle}
+                                                            title={<FormattedMessage id={ 'add.to.cart.wishlist.title' } />}
                                                             extraClasses={classes.wishListBtn}
                                                             onClick={this.handleAddToWishlist}
                                                             disabled={this.isAddToWishListBtnDisabled()}

@@ -1,6 +1,5 @@
 import api from 'src/shared/services/api';
 import { toast } from 'react-toastify';
-
 import { REFRESH_TOKEN_REQUEST } from '@stores/actionTypes/pages/login';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataResponse';
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';

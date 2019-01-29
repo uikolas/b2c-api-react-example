@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import {Theme} from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
@@ -84,6 +84,26 @@ export const styles = (theme: Theme) => createStyles({
         position: 'absolute',
         left: '40%',
         zIndex: 10,
+    },
+    placeholder: {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        left: '21px',
+        right: '61px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        zIndex: 3,
+        pointerEvents: 'none',
+        fontSize: 16,
+        lineHeight: '20px',
+        fontWeight: 500,
+        letterSpacing: '0.5px',
+        opacity: 0.5
+    },
+    filled: {
+        display: 'none'
     },
     completion: {
         display: 'flex',

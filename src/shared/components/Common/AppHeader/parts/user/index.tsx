@@ -11,6 +11,7 @@ import { UserProps as Props, UserState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper';
+import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 
 @connect
 @(withRouter as Function)
@@ -26,7 +27,7 @@ export class UserComponent extends React.PureComponent<Props, State> {
     }
 
     private openPopover = ({currentTarget}: ClickEvent) => {
-        if (window.innerWidth < 500) {
+        if (window.innerWidth < BreakpointsSM) {
             if (this.props.isUserLoggedIn) {
                 this.props.history.push(pathCustomerProfilePage);
             } else {

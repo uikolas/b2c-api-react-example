@@ -1,15 +1,10 @@
 import * as React from 'react';
 import Divider from '@material-ui/core/Divider';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import {
-    OrderDetailSubtotal,
-    OrderDetailTax,
-    OrderDetailDiscount,
-} from 'src/shared/translation';
-
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ICartTotals } from 'src/shared/interfaces/cart';
 import { styles } from './styles';
+import { FormattedMessage } from 'react-intl';
 
 interface CartTotalProps extends WithStyles<typeof styles> {
     totals: ICartTotals;
@@ -29,28 +24,32 @@ export const CartTotalBase: React.SFC<CartTotalProps> = props => {
                     ? null
                     : classes.marginBottom}`
             }>
-                <div className={classes.currency}>{OrderDetailSubtotal}</div>
-                <div>{totals && <AppPrice value={totals.subtotal} extraClassName={classes.currency}/>}</div>
+                <div className={classes.currency}>
+                    <FormattedMessage id={'word.subtotal.title'} />
+                </div>
+                <div>{totals && <AppPrice value={totals.subtotal} extraClassName={classes.currency} /> }</div>
             </div>
-            {totals
+            { totals
                 ? (
                     <div
-                        className={
-                            `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom}`
-                        }
-                    >
-                        <div className={classes.currency}>{OrderDetailTax}</div>
-                        <div>{totals && <AppPrice value={totals.taxTotal | 0} extraClassName={classes.currency}/>}</div>
+                        className={ `${classes.totalMsg} ${(totals && totals.discountTotal) ? null : classes.marginBottom} ` }>
+                        <div className={ classes.currency }>
+                            <FormattedMessage id={ 'word.tax.title' } />
+                        </div>
+                        <div>{ totals &&
+                        <AppPrice value={ totals.taxTotal | 0 } extraClassName={ classes.currency } /> }</div>
                     </div>
                 ) : null
             }
-            {totals && totals.discountTotal
+            { totals && totals.discountTotal
                 ? (
-                    <div className={`${classes.totalMsg} ${classes.marginBottom}`}>
-                        <div className={classes.currency}>{OrderDetailDiscount}</div>
+                    <div className={ `${classes.totalMsg} ${classes.marginBottom}` }>
+                        <div className={ classes.currency }>
+                            <FormattedMessage id={ 'word.discount.title' } />
+                        </div>
                         <div>
                             <span>- </span>
-                            <AppPrice value={totals.discountTotal} extraClassName={classes.currency}/>
+                            <AppPrice value={ totals.discountTotal } extraClassName={ classes.currency } />
                         </div>
                     </div>
                 ) : null

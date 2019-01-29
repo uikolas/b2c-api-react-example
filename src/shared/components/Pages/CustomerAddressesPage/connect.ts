@@ -6,9 +6,9 @@ import { getCustomerReference } from '@stores/reducers/pages/login';
 import {
     getAddressesCollection,
     getCurrentAddress,
-    isPageAddressesStateLoading,
     isAddressesInitiated,
-} from '@stores/reducers/pages/addresses';
+    isPageAddressesStateLoading
+} from '@stores/reducers/Pages/Addresses/selectors';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import {
     getAddressesAction,

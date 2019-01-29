@@ -22,24 +22,21 @@ import { styles } from './styles';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { connect } from './connect';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import {
-    NavLinkTitleWishlist,
-    ProductHeaderTitle,
-    OrderDetailTableHeaderPrice,
-    AvailabilityHeaderTitle,
-    AvailableTitle,
-    NotAvailableTitle,
-    AddToCartBtnTitle,
-    RemoveBtnTitle,
-    AddAllProductsToCartMessage,
-    WishlistEmptyMessage
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class WishlistDetailBase extends React.Component<Props, State> {
     public state: State = {
         movedItem: '',
-        multiProducts: [],
+        multiProducts: []
+    };
+
+    public componentDidMount = () => {
+        if (!this.props.isWishlistExist
+            || (this.props.isWishlistExist && this.props.wishlistIdParam !== this.props.wishlist.id)
+        ) {
+            this.initRequestData();
+        }
     };
 
     public componentDidUpdate(prevProps: Props, prevState: State) {
@@ -51,13 +48,28 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 
         if (prevState.multiProducts.length && cartItemsLength > prevProps.cartItemsLength) {
             this.props.deleteMultiItemsAction(wishlist.id, prevState.multiProducts);
-            this.setState({multiProducts: []});
+            this.setState({ multiProducts: [] });
+        }
+
+        if (!this.props.isRejected && !this.props.isWishlistExist) {
+            this.initRequestData();
         }
     }
 
     public renderProduct = (sku: string, name: string) => (event: ClickEvent) => {
         event.persist();
         this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
+    };
+
+    private initRequestData = () => {
+        if (this.props.isLoading) { return; }
+        if (this.props.isAppDataSet && this.props.wishlistIdParam) {
+            this.props.getDetailWishlistAction(this.props.wishlistIdParam);
+
+            return true;
+        }
+
+        return false;
     };
 
     public handleDeleteItem = (sku: string) => (event: ClickEvent) => {
@@ -85,7 +97,9 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         return (
             <MenuList className={classes.menu}>
                 <MenuItem className={classes.menuItem}>
-                    <NavLink to={pathWishListsPage} className={classes.link}>{NavLinkTitleWishlist}</NavLink>
+                    <NavLink to={pathWishListsPage} className={classes.link}>
+                        <FormattedMessage id={ 'word.wishlist.title' } />
+                    </NavLink>
                 </MenuItem>
                 {(wishlist && wishlist.name)
                     ? <MenuItem className={classes.menuItem}>{wishlist.name}</MenuItem>
@@ -106,9 +120,9 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         const headerCellPart = 'header-';
         const bodyCellPart = 'body-';
         const headerCells: ICellInfo[] = [
-            {content: ProductHeaderTitle, id: `${headerCellPart}1`},
-            {content: OrderDetailTableHeaderPrice, id: `${headerCellPart}2`},
-            {content: AvailabilityHeaderTitle, id: `${headerCellPart}3`},
+            {content: <FormattedMessage id={ 'word.product.title' } />, id: `${headerCellPart}1`},
+            {content: <FormattedMessage id={ 'word.price.title' } />, id: `${headerCellPart}2`},
+            {content: <FormattedMessage id={ 'word.availability.title' } />, id: `${headerCellPart}3`},
             {content: '', id: `${headerCellPart}4`},
             {content: '', id: `${headerCellPart}5`},
         ];
@@ -130,23 +144,23 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 id: item.sku,
                 cells: [
                     {
-                        content: (<WishlistItemBaseInfo productItem={item} renderProduct={this.renderProduct}/>),
+                        content: (<WishlistItemBaseInfo productItem={ item } renderProduct={ this.renderProduct } />),
                         id: `${bodyCellPart}1`
                     },
                     {
                         content: (
-                            <div className={classes.vertical}>
+                            <div className={ classes.vertical }>
                                 <AppPrice
-                                    value={prices.original}
-                                    extraClassName={classes.price}
-                                    currency={currency}
-                                    priceType={priceTypeNameOriginal}
+                                    value={ prices.original }
+                                    extraClassName={ classes.price }
+                                    currency={ currency }
+                                    priceType={ priceTypeNameOriginal }
                                 />
                                 <AppPrice
-                                    value={prices.default}
-                                    extraClassName={classes.price}
-                                    currency={currency}
-                                    priceType={priceTypeNameDefault}
+                                    value={ prices.default }
+                                    extraClassName={ classes.price }
+                                    currency={ currency }
+                                    priceType={ priceTypeNameDefault }
                                 />
                             </div>
                         ),
@@ -154,25 +168,28 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                     },
                     {
                         content: (
-                            <span className={item.availability ? classes.available : classes.noAvailable}>
-                {item.availability ? AvailableTitle : NotAvailableTitle}
-              </span>
+                            <span className={ item.availability ? classes.available : classes.noAvailable }>
+                                <FormattedMessage
+                                    id={ `${item.availability ? 'available.title' : 'unavailable.title'}` }
+                                />
+                            </span>
                         ),
                         id: `${bodyCellPart}3`
                     },
                     {
                         content: (
-                            <Typography component="span" className={tableAction} onClick={this.moveToCart(item.sku)}>
-                                {AddToCartBtnTitle}
+                            <Typography component="span" className={ tableAction }
+                                        onClick={ this.moveToCart(item.sku) }>
+                                <FormattedMessage id={ 'add.to.cart.button.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}4`
                     },
                     {
                         content: (
-                            <Typography component="span" className={tableAction}
-                                        onClick={this.handleDeleteItem(item.sku)}>
-                                {RemoveBtnTitle}
+                            <Typography component="span" className={ tableAction }
+                                        onClick={ this.handleDeleteItem(item.sku) }>
+                                <FormattedMessage id={ 'remove.button.title' } />
                             </Typography>
                         ),
                         id: `${bodyCellPart}5`
@@ -183,34 +200,37 @@ export class WishlistDetailBase extends React.Component<Props, State> {
 
         return (
             <Grid container>
-                <Grid item xs={12}>
+                <Grid item xs={ 12 }>
                     <AppPageTitle
-                        classes={{root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader}}
-                        title={NavLinkTitleWishlist}
+                        classes={ { root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader } }
+                        title={ <FormattedMessage id={ 'word.wishlist.title' } /> }
                     />
                 </Grid>
 
-                <Grid item xs={12}>
-                    {this.wishlistMenu()}
-                    {bodyRows.length
+                <Grid item xs={ 12 }>
+                    { this.wishlistMenu() }
+                    { bodyRows.length
                         ? (
-                            <Paper elevation={0}>
-                                <AppTable classes={{bodyCell: classes.bodyCell}} headerCells={headerCells}
-                                          bodyRows={bodyRows}/>
+                            <Paper elevation={ 0 }>
+                                <AppTable classes={ { bodyCell: classes.bodyCell } } headerCells={ headerCells }
+                                          bodyRows={ bodyRows } />
                                 <Button
-                                    className={classes.addAllBtn}
+                                    className={ classes.addAllBtn }
                                     color="primary"
                                     variant="contained"
-                                    onClick={this.moveAllProductsToCart}
-                                    disabled={isLoading || cartLoading}
+                                    onClick={ this.moveAllProductsToCart }
+                                    disabled={ isLoading || cartLoading }
                                 >
-                                    {AddAllProductsToCartMessage}
+                                    <FormattedMessage id={ 'add.all.products.to.cart.title' } />
                                 </Button>
                             </Paper>
                         ) : (
-                            <Paper elevation={0}>
-                                <Divider/>
-                                <Typography paragraph className={classes.noItems}>{WishlistEmptyMessage}</Typography>
+                            <Paper elevation={ 0 }>
+                                <Divider />
+                                <Typography paragraph
+                                            className={ classes.noItems }>
+                                    <FormattedMessage id={ 'wishlist.empty.message' } />
+                                </Typography>
                             </Paper>
                         )
                     }

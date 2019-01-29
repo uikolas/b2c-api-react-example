@@ -1,14 +1,13 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
 import { IOrderHistoryPageProps, IOrderHistoryPageState } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
-import { NoOrderMessage, OrdersHistoryPageTitle } from 'src/shared/translation';
 import { OrderList } from './OrderList';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
-import { EmptyOrder } from 'src/shared/components/Pages/OrderDetailsPage/EmptyOrder';
+import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle/index';
+import { EmptyOrder } from 'src/shared/components/Pages/OrderDetailsPage/EmptyOrder/index';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps, IOrderHistoryPageState> {
@@ -29,7 +28,6 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
         if (!this.props.isFulfilled && !prevProps.isHasOrders) {
             this.props.getOrdersCollection();
         }
-
     };
 
     private initRequestData = (): boolean => {
@@ -53,7 +51,9 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
                         <div className={classes.root}>
                             <Grid container justify="center">
                                 <Grid item xs={12}>
-                                    <CustomerPageTitle title={OrdersHistoryPageTitle}/>
+                                    <CustomerPageTitle
+                                        title={<FormattedMessage id={ 'orders.history.title' } />}
+                                    />
                                 </Grid>
                             </Grid>
                             <Grid container>
@@ -61,7 +61,7 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
                                     ? <Grid item xs={12}>
                                         <OrderList orders={orders}/>
                                     </Grid>
-                                    : <EmptyOrder intro={NoOrderMessage}/>
+                                    : <EmptyOrder intro={<FormattedMessage id={ 'no.order.message' } />}/>
                                 }
                             </Grid>
                         </div>

@@ -67,7 +67,6 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
         paddingBottom: 0,
     },
     inputRoot: {
-
         'label + &': {
             marginTop: 0,
         }
@@ -180,4 +179,24 @@ export const sprykerFormStyles = (theme: Theme) => createStyles({
             borderColor: theme.palette.error.main,
         }
     },
+    placeholder: {
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        left: '0',
+        right: '0',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        zIndex: 3,
+        pointerEvents: 'none',
+        fontSize: 16,
+        lineHeight: '20px',
+        fontWeight: 500,
+        color: '#111111',
+        opacity: 0.43
+    },
+    filled: {
+        display: 'none'
+    }
 });

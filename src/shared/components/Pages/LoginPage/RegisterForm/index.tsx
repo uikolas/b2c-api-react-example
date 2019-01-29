@@ -7,18 +7,7 @@ import { SalutationVariants } from 'src/shared/constants/customer';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from 'src/shared/interfaces/common/react';
-import {
-    EmptyRequiredFieldsErrorMessage,
-    RegisterTitle,
-    SalutationTitle,
-    InputLabelFirstName,
-    AcceptTermsLabelTitle,
-    InputLabelLastName,
-    InputLabelEmail,
-    PasswordTitle,
-    ConfirmPasswordTitle,
-    PasswordsNotEqualErrorMessage
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export class RegisterFormBase extends React.Component<Props, State> {
     public state = {
@@ -48,13 +37,13 @@ export class RegisterFormBase extends React.Component<Props, State> {
         const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
 
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
 
             return null;
         }
 
         if (password !== confirmPassword) {
-            toast.warn(PasswordsNotEqualErrorMessage);
+            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
 
             return null;
         }
@@ -67,7 +56,9 @@ export class RegisterFormBase extends React.Component<Props, State> {
 
         return (
             <React.Fragment>
-                <Typography variant="title" color="inherit" noWrap>{RegisterTitle}</Typography>
+                <Typography variant="title" color="inherit" noWrap>
+                    <FormattedMessage id={ 'word.register.title' } />
+                </Typography>
                 <form
                     className={classes.container}
                     noValidate
@@ -79,7 +70,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                         required
                         id="register-salutation"
                         select
-                        label={SalutationTitle}
+                        label={<FormattedMessage id={ 'salutation.label' } />}
                         name="salutation"
                         className={classes.textField}
                         value={this.state.salutation}
@@ -101,7 +92,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <TextField
                         required
                         id="register-first-name"
-                        label={InputLabelFirstName}
+                        label={<FormattedMessage id={ 'first.name.label' } />}
                         name="firstName"
                         type="text"
                         value={this.state.firstName}
@@ -116,7 +107,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <TextField
                         required
                         id="register-last-name"
-                        label={InputLabelLastName}
+                        label={<FormattedMessage id={ 'last.name.label' } />}
                         name="lastName"
                         type="text"
                         value={this.state.lastName}
@@ -131,7 +122,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <TextField
                         required
                         id="register-email"
-                        label={InputLabelEmail}
+                        label={<FormattedMessage id={ 'email.label' } />}
                         name="email"
                         type="email"
                         value={this.state.email}
@@ -148,7 +139,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                             <TextField
                                 required
                                 id="register-password"
-                                label={PasswordTitle}
+                                label={<FormattedMessage id={ 'word.password.title' } />}
                                 name="password"
                                 type="password"
                                 value={this.state.password}
@@ -164,7 +155,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                             <TextField
                                 required
                                 id="register-confirm-password"
-                                label={ConfirmPasswordTitle}
+                                label={<FormattedMessage id={ 'confirm.password.title' } />}
                                 name="confirmPassword"
                                 type="password"
                                 value={this.state.confirmPassword}
@@ -185,10 +176,12 @@ export class RegisterFormBase extends React.Component<Props, State> {
                                 name="acceptedTerms"
                             />
                         }
-                        label={AcceptTermsLabelTitle}
+                        label={<FormattedMessage id={ 'accept.terms.title' } />}
                     />
 
-                    <Button type="submit" variant="contained" className={classes.button}>{RegisterTitle}</Button>
+                    <Button type="submit" variant="contained" className={ classes.button }>
+                        <FormattedMessage id={ 'word.register.title' } />
+                    </Button>
                 </form>
             </React.Fragment>
         );

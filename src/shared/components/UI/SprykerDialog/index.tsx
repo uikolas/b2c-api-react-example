@@ -8,7 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { styles } from './styles';
-import { ButtonAgreeTitle, ButtonDisagreeTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface SprykerDialogProps extends WithStyles<typeof styles> {
     title?: string;
@@ -32,8 +32,8 @@ export const SprykerDialogBase: React.SFC<SprykerDialogProps> = (props): JSX.Ele
         title,
         content,
         isOpen,
-        titleAgree = ButtonAgreeTitle,
-        titleDisagree = ButtonDisagreeTitle,
+        titleAgree = <FormattedMessage id={ 'word.agree.title' } />,
+        titleDisagree = <FormattedMessage id={ 'word.disagree.title' } />,
     } = props;
 
     const Transition = (props: SprykerDialogProps) => (

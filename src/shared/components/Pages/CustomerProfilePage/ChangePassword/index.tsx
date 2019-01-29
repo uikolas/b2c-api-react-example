@@ -1,17 +1,11 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
 import { styles } from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
 import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
 import { TCustomerPassword } from 'src/shared/interfaces/customer';
-import {
-    InputLabelPassword,
-    InputLabelNewPassword,
-    InputLabelConfirmPassword,
-    ButtonUpdateTitle
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface ChangePasswordProps extends WithStyles<typeof styles> {
     submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -33,28 +27,28 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
 
     return (
         <SprykerForm
-            form={{
+            form={ {
                 formName: 'passwordForm',
                 onChangeHandler: inputChangeHandler,
                 onSubmitHandler: submitHandler,
                 fields: [
-                    [{
+                    [ {
                         type: 'input',
                         inputName: 'password',
                         inputValue: password,
                         inputType: 'password',
                         spaceNumber: 5,
                         isRequired: true,
-                        label: InputLabelPassword,
+                        label: <FormattedMessage id={ 'password.label' } />,
                         isError: false,
-                    }], [{
+                    } ], [ {
                         type: 'input',
                         inputName: 'newPassword',
                         inputValue: newPassword,
                         inputType: 'password',
                         spaceNumber: 5,
                         isRequired: true,
-                        label: InputLabelNewPassword,
+                        label: <FormattedMessage id={ 'new.password.label' } />,
                         isError: false,
                     }, {
                         type: 'input',
@@ -63,19 +57,23 @@ export const ChangePasswordBase: React.SFC<ChangePasswordProps> = (props): JSX.E
                         inputType: 'password',
                         spaceNumber: 5,
                         isRequired: true,
-                        label: InputLabelConfirmPassword,
+                        label: <FormattedMessage id={ 'confirm.password.label' } />,
                         isError: false,
-                    }]
+                    } ]
                 ]
-            }}
+            } }
             SubmitButton={
                 <Grid container>
-                    <Grid item xs={12} sm={2}>
-                        <SprykerButton title={ButtonUpdateTitle} btnType="submit" extraClasses={classes.submitButton}/>
+                    <Grid item xs={ 12 } sm={ 2 }>
+                        <SprykerButton
+                            title={ <FormattedMessage id={ 'word.update.title' } /> }
+                            btnType="submit"
+                            extraClasses={ classes.submitButton }
+                        />
                     </Grid>
                 </Grid>
             }
-            formClassName={classes.form}
+            formClassName={ classes.form }
         />
     );
 };

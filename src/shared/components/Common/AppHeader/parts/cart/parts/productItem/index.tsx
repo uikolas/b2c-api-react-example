@@ -6,9 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ProductItemProps as Props } from './types';
 import { styles, cartProductImageSize } from './styles';
-import { SquareImage } from 'src/shared/components/Common/SquareImage';
-import { RemoveBtnTitle, CartProductQuantity } from 'src/shared/translation';
-import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
+import { SquareImage } from 'src/shared/components/Common/SquareImage/index';
+import { priceTypeNameOriginal } from 'src/shared/interfaces/product/index';
+import { FormattedMessage } from 'react-intl';
 
 export const ProductItemComponent: React.SFC<Props> = ({classes, productData, deleteItem}) => (
     <Grid container className={classes.productItem}>
@@ -16,12 +16,9 @@ export const ProductItemComponent: React.SFC<Props> = ({classes, productData, de
             <SquareImage size={cartProductImageSize} image={productData.image} alt={productData.name}/>
         </Grid>
         <Grid item className={classes.contentOuter}>
-
             <Grid container className={classes.content}>
-
                 <Grid item xs={12}>
                     <Grid container>
-
                         <Grid item xs={12} sm={9}>
                             <Typography component="h5" className={classes.name}>
                                 {productData.name}
@@ -50,21 +47,21 @@ export const ProductItemComponent: React.SFC<Props> = ({classes, productData, de
                                 : null
                             }
                         </Grid>
-
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} className={classes.actionArea}>
-                    <Typography component="p" className={classes.quantity}>
-                        {CartProductQuantity}: {productData.quantity}
+                <Grid item xs={ 12 } className={ classes.actionArea }>
+                    <Typography component="p" className={ classes.quantity }>
+                        <FormattedMessage id={ 'word.quantity.title' } />: { productData.quantity }
                     </Typography>
-                    <Button onClick={() => deleteItem(productData.sku)} className={classes.removeBtn}>
-                        {RemoveBtnTitle}
+                    <Button onClick={ () => deleteItem(productData.sku) } className={ classes.removeBtn }>
+                        <FormattedMessage id={ 'remove.button.title' } />
                     </Button>
                 </Grid>
             </Grid>
         </Grid>
     </Grid>
-);
+    );
+};
 
 export const ProductItem = withStyles(styles)(ProductItemComponent);

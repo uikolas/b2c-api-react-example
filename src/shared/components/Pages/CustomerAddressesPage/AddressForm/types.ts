@@ -9,15 +9,21 @@ export interface AddressFormProps extends WithStyles<typeof styles> {
     countries: ICountry[];
     routerGoBack: Function;
     isLoading: boolean;
+    isRejected: boolean;
+    addressIdParam: string;
+    isAppDataSet: boolean;
+    isAddressExist: boolean;
     dispatch: Function;
 
     addAddress(payload: IAddressItem, customerId: string): void;
 
     updateAddress(addressId: string, customerId: string, payload: IAddressItem): void;
+
+    getOneAddress: (customerId: string, addressId: string) => void;
 }
 
 export interface AddressFormState extends IAddressItem {
     submitted: boolean;
 
-    [key: string]: string | number | boolean;
+    [ key: string ]: string | number | boolean;
 }

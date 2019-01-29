@@ -10,8 +10,8 @@ import {
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
-import { CustomerLogin, RegisterSuccess } from 'src/shared/translation';
 import { IApiResponseData } from 'src/shared/services/types';
+import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class PagesLoginService extends ApiServiceAbstract {
     public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
@@ -29,7 +29,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                 });
 
-                toast.success(RegisterSuccess);
+                toast.success(FormattedMessageTemplate('register.success.message'));
 
                 await PagesLoginService.loginRequest(dispatch, {
                     username: payload.email,
@@ -76,7 +76,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch(saveLoginDataToStoreAction({email: payload.username}));
                 saveAccessDataToLocalStorage(responseParsed);
                 dispatch(loginCustomerFulfilledStateAction(responseParsed));
-                toast.success(CustomerLogin);
+                toast.success(FormattedMessageTemplate('customer.login.message'));
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(loginCustomerRejectedStateAction(errorMessage));

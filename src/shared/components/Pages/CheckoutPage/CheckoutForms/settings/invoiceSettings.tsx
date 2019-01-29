@@ -1,8 +1,7 @@
+import React from 'react';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import {
-    IPaymentInvoiceParams
-} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { InputLabelPaymentDateOfBirth } from 'src/shared/translation';
+import { IPaymentInvoiceParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { FormattedMessage } from 'react-intl';
 
 export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoiceParams): IFormSettings => {
     const {
@@ -30,7 +29,7 @@ export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoice
                     inputValue: dateOfBirth.value,
                     spaceNumber: 6,
                     isRequired: dateOfBirthConfig.isRequired,
-                    label: InputLabelPaymentDateOfBirth,
+                    label: <FormattedMessage id={ 'payment.date.of.birth.label' } />,
                     isError: dateOfBirth.isError,
                 },
             ],

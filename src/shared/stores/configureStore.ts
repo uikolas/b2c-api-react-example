@@ -4,7 +4,6 @@ import { routerMiddleware, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import { History } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
-
 import { reducers } from './reducers';
 import { IReduxStore } from './reducers/types';
 

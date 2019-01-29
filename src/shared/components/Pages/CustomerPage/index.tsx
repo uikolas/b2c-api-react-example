@@ -7,19 +7,18 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
-
 import { ClickEvent, WithRouter } from 'src/shared/interfaces/common/react';
 import {
-    pathAddressFormPage,
-    pathCustomerAddressesPage,
-    pathCustomerPage,
-    pathCustomerProfilePage,
-    pathOrderDetailsPage,
-    pathOrderHistoryPage,
-    pathWishListPage,
-    pathWishListsPage,
+  pathAddressFormNew,
+  pathAddressFormUpdate,
+  pathCustomerAddressesPage,
+  pathCustomerPage,
+  pathCustomerProfilePage,
+  pathOrderDetailsPage,
+  pathOrderHistoryPage,
+  pathWishlistDetailPage,
+  pathWishListsPage,
 } from 'src/shared/routes/contentRoutes';
-
 import { AppMain } from '../../Common/AppMain';
 import { LoadableWishListPage } from '../WishListPage/loadable';
 import { LoadableWishlistDetail } from '../WishlistDetail/loadable';
@@ -28,12 +27,11 @@ import { AddressFormPage } from '../CustomerAddressesPage/AddressForm';
 import { LoadableOrderDetailsPage } from '../OrderDetailsPage/loadable';
 import { LoadableOrderHistoryPage } from '../OrderHistoryPage/loadable';
 import { LoadableCustomerProfilePage } from '../CustomerProfilePage/loadable';
-import { Logo } from './logo';
 import { styles } from './styles';
 import { connect } from './connect';
-import { customerProfileNavLinks } from 'src/shared/constants/navLinks';
-import { LogOutBtnTitle } from 'src/shared/translation';
-import { INavLinkData } from 'src/shared/interfaces/navLinks';
+import { customerProfileNavLinks } from 'src/shared/constants/navLinks/index';
+import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
+import { FormattedMessage } from 'react-intl';
 
 interface CustomerPageProps extends WithStyles<typeof styles>, WithRouter {
     isUserLoggedIn: boolean;
@@ -53,48 +51,51 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
 
         return (
             <AppMain>
-                <Grid container justify="space-between" className={classes.customerContainer}>
-                    <Grid item xs={12} sm={4} md={3} container direction="column">
-                        <Paper className={classes.rootPaper}>
-                            <MenuList>
-                                {customerProfileNavLinks.map((item: INavLinkData) => {
-                                    const isSelected = (location.pathname === item.path)
-                                        || location.pathname.includes(item.path);
+                <Grid container justify="space-between" className={ classes.customerContainer }>
+                    <Grid item xs={ 12 } sm={ 4 } md={ 3 } container direction="column">
+                        <Paper className={ classes.rootPaper }>
+                            { /*<Logo />*/ }
 
+                            <MenuList>
+                                { customerProfileNavLinks.map((item: INavLinkData) => {
+                                    const isSelected = (location.pathname === item.path) || location.pathname.includes(item.path);
                                     return (
                                         <MenuItem
-                                            key={item.title}
-                                            selected={isSelected}
+                                            key={ item.title }
+                                            selected={ isSelected }
                                         >
-                                            <NavLink to={item.path} className={classes.link}>{item.title}</NavLink>
+                                            <NavLink to={ item.path }
+                                                     className={ classes.link }>
+                                                <FormattedMessage id={ item.title } />
+                                            </NavLink>
                                         </MenuItem>
                                     );
-                                })}
+                                }) }
                             </MenuList>
-
-                            <Divider/>
+                            <Divider />
 
                             <div
-                                className={`${classes.link} ${classes.logoutLink}`}
-                                onClick={this.handleLogout}
+                                className={ `${classes.link} ${classes.logoutLink}` }
+                                onClick={ this.handleLogout }
                             >
-                                {LogOutBtnTitle}
+                                <FormattedMessage id={ 'log.out.button.title' } />
                             </div>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={8} md={9}>
-                        <Grid container className={classes.rightPart}>
-                            <Grid item xs={12}>
+                    <Grid item xs={ 12 } sm={ 8 } md={ 9 }>
+                        <Grid container className={ classes.rightPart }>
+                            <Grid item xs={ 12 }>
                                 <Switch>
-                                    <Route path={pathCustomerPage} exact component={LoadableCustomerProfilePage}/>
-                                    <Route path={pathCustomerAddressesPage} exact
-                                           component={LoadableCustomerAddressPage}/>
-                                    <Route path={pathAddressFormPage} component={AddressFormPage}/>
-                                    <Route path={pathWishListsPage} component={LoadableWishListPage}/>
-                                    <Route path={pathWishListPage} component={LoadableWishlistDetail}/>
-                                    <Route path={pathOrderHistoryPage} exact component={LoadableOrderHistoryPage}/>
-                                    <Route path={pathOrderDetailsPage} component={LoadableOrderDetailsPage}/>
-                                    <Route path={pathCustomerProfilePage} component={LoadableCustomerProfilePage}/>
+                                    <Route path={ pathCustomerPage } exact component={ LoadableCustomerProfilePage } />
+                                    <Route path={ pathCustomerAddressesPage } exact
+                                           component={ LoadableCustomerAddressPage } />
+                                    <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
+                                    <Route path={ pathAddressFormNew } component={ AddressFormPage } />
+                                    <Route path={ pathWishListsPage } component={ LoadableWishListPage } />
+                                    <Route path={ pathWishlistDetailPage } component={ LoadableWishlistDetail } />
+                                    <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage } />
+                                    <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage } />
+                                    <Route path={ pathCustomerProfilePage } component={ LoadableCustomerProfilePage } />
                                 </Switch>
                             </Grid>
                         </Grid>

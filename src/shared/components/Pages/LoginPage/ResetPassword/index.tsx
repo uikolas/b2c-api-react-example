@@ -14,12 +14,7 @@ import { formStyles } from '../styles';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { IResetPasswordPayload } from 'src/shared/interfaces/customer';
-import {
-    ResetPasswordTitle,
-    EnterNewPasswordMessage,
-    ConfirmPasswordTitle,
-    PasswordTitle
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
     dispatch?: Function;
@@ -63,6 +58,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
 
     public render() {
         const {classes} = this.props;
+        const { confirmPassword, password, submitted } = this.state;
 
         return (
             <AppMain>
@@ -72,41 +68,55 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
                     justify="center"
                 >
                     <Paper className={classes.forgot}>
-                        <Typography variant="headline" paragraph>{ResetPasswordTitle}</Typography>
-                        <div>{EnterNewPasswordMessage}</div>
+                        <Typography variant="headline" paragraph>
+                            <FormattedMessage id={ 'reset.password.title' } />
+                        </Typography>
+                        <div><FormattedMessage id={ 'enter.new.password.message' } /></div>
                         <form noValidate autoComplete="off">
 
                             <TextField
                                 required
                                 type="password"
-                                label={PasswordTitle}
+                                label={ <FormattedMessage id={ 'word.password.title' } /> }
                                 name="password"
-                                value={this.state.password}
-                                placeholder={PasswordTitle}
+                                value={ password }
+                                helperText={ <FormattedMessage id={ 'word.password.title' } /> }
+                                FormHelperTextProps={{
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: password.length > 0 ? classes.filled : null
+                                    }
+                                }}
                                 margin="normal"
-                                onChange={this.handleChange}
-                                className={classes.textField}
+                                onChange={ this.handleChange }
+                                className={ classes.textField }
                             />
                             <TextField
                                 required
                                 type="password"
-                                error={this.state.submitted && this.state.password !== this.state.confirmPassword}
-                                label={ConfirmPasswordTitle}
+                                error={ submitted && password !== confirmPassword }
+                                label={ <FormattedMessage id={ 'confirm.password.title' } /> }
                                 name="confirmPassword"
-                                value={this.state.confirmPassword}
-                                placeholder={ConfirmPasswordTitle}
+                                value={ confirmPassword }
+                                helperText={ <FormattedMessage id={ 'confirm.password.title' } /> }
+                                FormHelperTextProps={{
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: confirmPassword.length > 0 ? classes.filled : null
+                                    }
+                                }}
                                 margin="normal"
-                                onChange={this.handleChange}
-                                className={classes.textField}
+                                onChange={ this.handleChange }
+                                className={ classes.textField }
                             />
 
                         </form>
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={this.submitRequest}
+                            onClick={ this.submitRequest }
                         >
-                            Submit
+                            <FormattedMessage id={ 'word.submit.title' } />
                         </Button>
                     </Paper>
                 </Grid>

@@ -3,9 +3,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-
 import { styles } from './styles';
 import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
@@ -14,13 +11,7 @@ import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitl
 import { CartDataProps, CartDataState } from './types';
 import { ICartItem } from 'src/shared/interfaces/cart';
 import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
-import {
-    OrderSummaryTitle,
-    OrderAmount,
-    CartTitle,
-    PlaceOrder,
-    OrderDetailGrandTotal,
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {
     private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -83,16 +74,20 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
 
         return (
             <div className={classes.root} ref={this.containerRef}>
-                <CustomerPageTitle title={order ? OrderSummaryTitle : CartTitle}/>
+                <CustomerPageTitle
+                    title={order
+                        ? <FormattedMessage id={'word.total.title'} />
+                        : <FormattedMessage id={'word.cart.title'} /> }
+                />
                 <List>
                     {rows}
                 </List>
 
-                {order ? null : <CustomerPageTitle title={OrderSummaryTitle}/>}
+                { order ? null : <CustomerPageTitle title={<FormattedMessage id={ 'word.total.title' } /> }/>}
 
                 <CartTotal
                     totals={totals}
-                    title={order ? OrderAmount : OrderDetailGrandTotal}
+                    title={<FormattedMessage id={`${order ? 'order.amount' : 'grand.total.title'}`} /> }
                 />
 
                 {
@@ -106,7 +101,7 @@ export class CartDataBase extends React.Component<CartDataProps, CartDataState> 
                             className={classes.btnWrapper}
                             onClick={sendData}
                         >
-                            {PlaceOrder}
+                            {<FormattedMessage id={'place.order.title'} />}
                         </Button>
                 }
             </div>

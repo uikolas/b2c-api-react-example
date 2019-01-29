@@ -8,15 +8,13 @@ export interface WishlistPageProps extends WithStyles<typeof styles> {
     isLoading: boolean;
     isInitial: boolean;
 
-    addWishlistAction(name: string): void;
+  addWishlistAction(name: string): void;
 
-    deleteWishlistAction(wishlistId: string): void;
+  deleteWishlistAction(wishlistId: string): void;
 
-    getDetailWishlistAction(wishlistId: string): void;
+  getWishlistsAction(): void;
 
-    getWishlistsAction(): void;
-
-    updateWishlistAction(wishlistId: string, name: string): void;
+  updateWishlistAction(wishlistId: string, name: string): void;
 }
 
 export interface WishlistPageState {

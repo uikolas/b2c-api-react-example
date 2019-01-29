@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { styles } from '../styles';
 import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { DeleteAccountTitle, DeleteAccountMessage } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface AccountActionsProps extends WithStyles<typeof styles> {
     submitDeleteHandler: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -18,26 +18,26 @@ export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.E
     } = props;
 
     return (
-        <Grid container justify="flex-start" className={classes.section}>
-            <Grid item xs={12}>
-                <Typography variant="title" className={classes.sectionTitle}>
-                    {DeleteAccountTitle}
+        <Grid container justify="flex-start" className={ classes.section }>
+            <Grid item xs={ 12 }>
+                <Typography variant="title" className={ classes.sectionTitle }>
+                    <FormattedMessage id={ 'delete.account.title' } />
                 </Typography>
 
                 <Divider/>
             </Grid>
 
-            <Grid item xs={12}>
-                <Typography variant="body1" className={classes.warningTitle}>
-                    {DeleteAccountMessage}
+            <Grid item xs={ 12 }>
+                <Typography variant="body1" className={ classes.warningTitle }>
+                    <FormattedMessage id={ 'delete.account.message' } />
                 </Typography>
             </Grid>
 
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={ 12 } sm={ 2 }>
                 <SprykerButton
-                    title={DeleteAccountTitle}
-                    onClick={submitDeleteHandler}
-                    extraClasses={classes.deleteBtn}
+                    title={ <FormattedMessage id={ 'delete.account.title' } /> }
+                    onClick={ submitDeleteHandler }
+                    extraClasses={ classes.deleteBtn }
                 />
             </Grid>
         </Grid>

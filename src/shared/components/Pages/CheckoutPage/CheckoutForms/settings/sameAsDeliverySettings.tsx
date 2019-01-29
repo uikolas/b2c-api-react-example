@@ -1,8 +1,7 @@
-import {
-    InputLabelSameAsDelivery,
-} from 'src/shared/translation';
+import React from 'react';
 import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
 import { ISameAsDeliveryParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { FormattedMessage } from 'react-intl';
 
 export const getSameAsDeliveryFormSettings = (formName: string, params: ISameAsDeliveryParams): IFormSettings => {
     const {
@@ -23,7 +22,7 @@ export const getSameAsDeliveryFormSettings = (formName: string, params: ISameAsD
                     inputValue: isSameAsDelivery,
                     spaceNumber: 12,
                     isRequired: false,
-                    label: InputLabelSameAsDelivery,
+                    label: <FormattedMessage id={ 'same.as.delivery.label' } />,
                     isError: false,
                 }
             ]

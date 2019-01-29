@@ -4,9 +4,9 @@ import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { parseGuestCartResponse } from 'src/shared/helpers/cart';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAddProducts, CartChangeQty, CartRemoveItems } from 'src/shared/translation';
 import { IApiResponseData } from 'src/shared/services/types';
 import { IResponseError } from 'src/shared/services/apiAbstractions/types';
+import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 
 export class GuestCartService extends ApiServiceAbstract {
     public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<void> {
@@ -28,13 +28,13 @@ export class GuestCartService extends ApiServiceAbstract {
                 {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
             );
 
-            if (response.ok) {
-                toast.success(CartAddProducts);
-                const responseParsed = parseGuestCartResponse(response.data);
-                dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
-            } else {
-                this.errorMessageInform(response, dispatch);
-            }
+        if (response.ok) {
+            toast.success(FormattedMessageTemplate('items.added.message'));
+            const responseParsed = parseGuestCartResponse(response.data);
+            dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
+        } else {
+            this.errorMessageInform(response, dispatch);
+        }
 
         } catch (error) {
             dispatch(cartActions.cartAddItemRejectedStateAction(error.message));
@@ -97,12 +97,11 @@ export class GuestCartService extends ApiServiceAbstract {
             );
 
             if (response.ok) {
-                toast.success(CartRemoveItems);
+                toast.success(FormattedMessageTemplate('items.removed.message'));
                 await GuestCartService.getGuestCart(dispatch, anonymId);
             } else {
                 this.errorMessageInform(response, dispatch);
             }
-
         } catch (error) {
             dispatch(cartActions.getCartsRejectedStateAction(error.message));
             toast.error('Unexpected Error: ' + error.message);
@@ -131,13 +130,13 @@ export class GuestCartService extends ApiServiceAbstract {
                 {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}},
             );
 
-            if (response.ok) {
-                toast.success(CartChangeQty);
-                const responseParsed = parseGuestCartResponse(response.data);
-                dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
-            } else {
-                this.errorMessageInform(response, dispatch);
-            }
+        if (response.ok) {
+            toast.success(FormattedMessageTemplate('cart.changed.quantity.message'));
+            const responseParsed = parseGuestCartResponse(response.data);
+            dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
+        } else {
+            this.errorMessageInform(response, dispatch);
+        }
 
         } catch (error) {
             dispatch(cartActions.cartUpdateItemRejectedStateAction(error.message));

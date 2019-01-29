@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {
-    EmptyRequiredFieldsErrorMessage,
-    PasswordsNotEqualErrorMessage,
-    ConfirmDeleteAccountMessage
-} from 'src/shared/translation';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { SprykerDialog } from '../../UI/SprykerDialog';
 import { UpdateProfile } from './UpdateProfile';
@@ -15,6 +10,7 @@ import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitl
 import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State, IProfileFieldInput } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
+import { FormattedMessage } from 'react-intl';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -86,28 +82,25 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         const {firstName, lastName, salutation, email} = this.state.inputs;
 
         if (!firstName || !lastName || !email || !salutation) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
-
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
             return null;
         }
-        const profileData = {salutation, firstName, lastName, email};
+        const profileData = { salutation, firstName, lastName, email };
         this.props.updateCustomerData(this.props.customerReference, profileData);
     };
 
     public handleSubmitPassword = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        const {password, newPassword, confirmPassword} = this.state.inputs;
+        const { password, newPassword, confirmPassword } = this.state.inputs;
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
-            toast.warn(EmptyRequiredFieldsErrorMessage);
-
+            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
             return null;
         }
         if (newPassword !== confirmPassword) {
-            toast.warn(PasswordsNotEqualErrorMessage);
-
+            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
             return null;
         }
-        const passwordData = {password, newPassword, confirmPassword};
+        const passwordData = { password, newPassword, confirmPassword };
         this.props.updateCustomerPassword(this.props.customerReference, passwordData);
     };
 
@@ -166,26 +159,25 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
                     email={this.state.inputs[keyEmail]}
                 />
 
-                <CustomerPageTitle title="change password" />
-
+                <CustomerPageTitle title={<FormattedMessage id={ 'change.password.title' } />} />
                 <ChangePassword
-                    submitHandler={this.handleSubmitPassword}
-                    inputChangeHandler={this.handleProfileInputChange}
-                    password={this.state.inputs[keyOldPassword]}
-                    newPassword={this.state.inputs[keyNewPassword]}
-                    confirmPassword={this.state.inputs[keyConfirmPassword]}
+                    submitHandler={ this.handleSubmitPassword }
+                    inputChangeHandler={ this.handleProfileInputChange }
+                    password={ this.state.inputs[ keyOldPassword ] }
+                    newPassword={ this.state.inputs[ keyNewPassword ] }
+                    confirmPassword={ this.state.inputs[ keyConfirmPassword ] }
                 />
 
                 <AccountActions submitDeleteHandler={this.handleSubmitDeleteAccount}/>
 
-                {this.state.isDeleteProfileDialogOpen
+                { this.state.isDeleteProfileDialogOpen
                     ? (
                         <SprykerDialog
-                            handleShow={this.handleDeleteProfileDialogShowing}
-                            content={ConfirmDeleteAccountMessage}
-                            isOpen={this.state.isDeleteProfileDialogOpen}
-                            handleAgree={this.handleDeleteProfileDialogAgree}
-                            handleDisagree={this.handleDeleteProfileDialogDisagree}
+                            handleShow={ this.handleDeleteProfileDialogShowing }
+                            content={ <FormattedMessage id={ 'confirm.delete.account.message' } /> }
+                            isOpen={ this.state.isDeleteProfileDialogOpen }
+                            handleAgree={ this.handleDeleteProfileDialogAgree }
+                            handleDisagree={ this.handleDeleteProfileDialogDisagree }
                         />
                     ) : null
                 }

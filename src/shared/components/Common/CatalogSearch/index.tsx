@@ -23,12 +23,7 @@ import { SquareImage } from '../SquareImage';
 import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
-import {
-    NoFoundMessage,
-    CategoriesPanelTitle,
-    SuggestedProductsTitle,
-    AllSuggestedProductsTitle
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
@@ -115,7 +110,6 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     };
 
     /* Render Helpers */
-
     private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
     private renderInputComponent = (inputProps: any): JSX.Element => {
@@ -296,7 +290,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 <div {...options.containerProps}>
                     <Paper square>
                         <Typography paragraph variant="headline">
-                            {NoFoundMessage}
+                            <FormattedMessage id={'no.found.message'} />
                         </Typography>
                     </Paper>
                 </div>
@@ -304,16 +298,18 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         }
 
         return (
-            <div {...options.containerProps}>
-                <div className={classes.insideContWrapper}>
-                    <div>{completions}</div>
-                    <Typography component="h4" className={classes.categoryTitle}>
-                        {CategoriesPanelTitle}
+            <div { ...options.containerProps }>
+                <div className={ classes.insideContWrapper }>
+                    <div>{ completions }</div>
+                    <Typography component="h4" className={ classes.categoryTitle }>
+                        <FormattedMessage id={ 'categories.panel.title' } />
                     </Typography>
-                    <Divider/>
-                    <div className={classes.marginTop}>{renderedCategories}</div>
-                    <Typography component="h4" className={classes.categoryTitle}>
-                        {SuggestedProductsTitle}
+
+                    <Divider />
+
+                    <div className={ classes.marginTop }>{ renderedCategories }</div>
+                    <Typography component="h4" className={ classes.categoryTitle }>
+                        <FormattedMessage id={ 'suggested.products.title' } />
                     </Typography>
 
                     <Divider/>
@@ -321,12 +317,12 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                     <div>{options.children}</div>
 
                     <NavLink
-                        to={pathSearchPage}
-                        data-query={options.query}
-                        onClick={this.handleSearchCompletion}
-                        className={classes.linkAll}
+                        to={ pathSearchPage }
+                        data-query={ options.query }
+                        onClick={ this.handleSearchCompletion }
+                        className={ classes.linkAll }
                     >
-                        {AllSuggestedProductsTitle}
+                        <FormattedMessage id={ 'all.suggested.products.title' } />
                     </NavLink>
                 </div>
             </div>
@@ -334,9 +330,10 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     };
 
     /* RENDER */
-
     public render() {
-        const {classes, suggestions, /*isLoading*/ id} = this.props;
+        const { value } = this.state;
+        const { classes, suggestions, /*isLoading*/ id } = this.props;
+        const filledClass = value.length > 0 ? classes.filled : '';
 
         const autosuggestProps = {
             id,
@@ -347,33 +344,35 @@ export class CatalogSearchBase extends React.Component<Props, State> {
             getSuggestionValue: this.getSuggestionValue,
             renderSuggestion: this.renderSuggestion,
             renderSuggestionsContainer: this.renderSuggestionsContainer,
-            shouldRenderSuggestions: this.shouldRenderSuggestions,
+            shouldRenderSuggestions: this.shouldRenderSuggestions
         };
 
         return (
-            <div className={classes.root} id="CatalogSearch" ref={this.containerRef}>
+            <div className={ classes.root } id="CatalogSearch" ref={ this.containerRef }>
                 <Autosuggest
-                    {...autosuggestProps}
-                    inputProps={{
+                    { ...autosuggestProps }
+                    inputProps={ {
                         classes,
-                        placeholder: 'What are you looking for?',
-                        value: this.state.value,
+                        value,
                         onChange: this.handleChange,
                         type: 'text',
-                    }}
-                    theme={{
+                    } }
+                    theme={ {
                         container: classes.container,
                         suggestionsContainer: classes.suggestionsContainer,
                         suggestionsContainerOpen: classes.suggestionsContainerOpen,
                         suggestionsList: classes.suggestionsList,
                         suggestion: classes.suggestion,
-                    }}
+                    } }
                 />
-                {this.props.isLoading ? (
-                    <div className={classes.pendingProgress}>
-                        <CircularProgress size={34} color="primary"/>
+                <span className={ `${classes.placeholder} ${filledClass}` }>
+                    <FormattedMessage id={ 'header.form.autosuggest.placeholder' } />
+                </span>
+                { this.props.isLoading ? (
+                    <div className={ classes.pendingProgress }>
+                        <CircularProgress size={ 34 } color="primary" />
                     </div>
-                ) : null}
+                ) : null }
             </div>
         );
     }

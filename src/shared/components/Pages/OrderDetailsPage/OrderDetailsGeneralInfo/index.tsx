@@ -5,16 +5,11 @@ import { NavLink } from 'react-router-dom';
 
 import { styles } from './styles';
 import { IOrderDetailsGeneralInfoProps } from './types';
-import {
-    OrderDetailDateTitle,
-    OrderDetailPageTitle,
-    OrderDetailPriceModeTitle,
-    OrderDetailViewAllOrders,
-} from 'src/shared/translation';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
+import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle/index';
 import { pathOrderHistoryPage } from 'src/shared/routes/contentRoutes';
-import { OrderDate } from 'src/shared/components/Pages/OrderDetailsPage/OrderDate';
-import { OrderPriceMode } from 'src/shared/components/Pages/OrderDetailsPage/OrderPriceMode';
+import { OrderDate } from 'src/shared/components/Pages/OrderDetailsPage/OrderDate/index';
+import { OrderPriceMode } from 'src/shared/components/Pages/OrderDetailsPage/OrderPriceMode/index';
+import { FormattedMessage } from 'react-intl';
 
 export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProps> = (props): JSX.Element => {
     const {classes, orderId, date, priceMode, timeZone} = props;
@@ -23,16 +18,19 @@ export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProp
         <Grid container justify="space-between" className={classes.titleContainer}>
             <Grid item xs={12} sm={8}>
                 <CustomerPageTitle
-                    title={`${OrderDetailPageTitle}${orderId}`}
+                    title={ <FormattedMessage
+                        id={ 'order.detail.number.title' }
+                        values={{ number: orderId }}
+                    /> }
                     intro={
                         <React.Fragment>
                             <OrderDate
                                 date={date}
                                 timeZone={timeZone}
-                                title={OrderDetailDateTitle}
+                                title={<FormattedMessage id={ 'order.detail.date.title' } />}
                             />
                             <OrderPriceMode
-                                title={OrderDetailPriceModeTitle}
+                                title={<FormattedMessage id={ 'order.detail.price.title' } />}
                                 priceMode={priceMode}
                             />
                         </React.Fragment>
@@ -46,7 +44,7 @@ export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProp
                     to={`${pathOrderHistoryPage}`}
                     className={classes.linkBack}
                 >
-                    {OrderDetailViewAllOrders}
+                    <FormattedMessage id={ 'order.detail.view.all.title' } />
                 </NavLink>
             </Grid>
         </Grid>

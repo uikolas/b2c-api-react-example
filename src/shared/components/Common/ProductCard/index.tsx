@@ -14,13 +14,12 @@ import {
     TProductCurrency,
     TProductName,
     TProductSKU,
-} from '../../../interfaces/product';
+} from '@interfaces/product';
 import { styles } from './styles';
 import { AppPrice } from '../AppPrice';
 import { ProductLabel } from 'src/shared/components/Common/ProductLabel';
 import { getOneProductImage } from 'src/shared/helpers/product/imageSetsParser';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
-import { NoNameTitle } from 'src/shared/translation';
 
 interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
     onSelectProduct: Function;
@@ -30,8 +29,8 @@ interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
     label: IProductLabel | null;
 }
 
-export const ProductCardBase: React.SFC<ProductCardProps> = props => {
-    const {classes, images, name = NoNameTitle, prices, sku, label} = props;
+export const ProductCardBase: React.SFC<ProductCardProps> = (props) => {
+    const { classes, images, name = '', prices, sku, label } = props;
 
     let actualPriceGross = 0;
     let actualPriceNet = 0;

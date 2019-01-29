@@ -1,17 +1,15 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-
 import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-
 import { ProductItem } from '../productItem';
 import { CartDropProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
-import { CartDiscountsTitle, CartTitle, CartTotalTitle, CheckoutTitle } from 'src/shared/translation';
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
-import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
+import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
+import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop/index';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CartDropComponent extends React.PureComponent<Props> {
@@ -32,8 +30,8 @@ export class CartDropComponent extends React.PureComponent<Props> {
             <div className={classes.cartDrop}>
                 {isCartLoading ? <AppBackdrop isOpen/> : null}
 
-                <Typography gutterBottom component="h3" className={classes.title}>
-                    {CartTitle}
+                <Typography gutterBottom component="h3" className={ classes.title }>
+                    <FormattedMessage id={ 'word.cart.title' } />
                 </Typography>
 
                 <ul className={classes.cartDropProductsList}>
@@ -44,35 +42,43 @@ export class CartDropComponent extends React.PureComponent<Props> {
                     ))}
                 </ul>
 
-                <div className={classes.cartTotalContainer}>
-                    {(totals.discountTotal && totals.discountTotal > 0)
-                        ? <div className={classes.cartTotal}>
-                            <Typography component="h5" className={classes.fontTotal}>
-                                {CartDiscountsTitle}
+                <div className={ classes.cartTotalContainer }>
+                    { (totals.discountTotal && totals.discountTotal > 0)
+                        ? <div className={ classes.cartTotal }>
+                            <Typography component="h5" className={ classes.fontTotal }>
+                                <FormattedMessage id={ 'word.discount.title' } />
                             </Typography>
                             <AppPrice
-                                value={totals.discountTotal}
+                                value={ totals.discountTotal }
                                 isMinus
-                                extraClassName={classes.fontTotal}
+                                extraClassName={ classes.fontTotal }
                             />
                         </div>
                         : null
                     }
-                    <div className={classes.cartTotal}>
-                        <Typography component="h5" className={classes.fontTotal}>
-                            {CartTotalTitle}
+                    <div className={ classes.cartTotal }>
+                        <Typography component="h5" className={ classes.fontTotal }>
+                            <FormattedMessage id={ 'word.total.title' } />
                         </Typography>
                         <AppPrice
-                            value={totals.grandTotal}
-                            extraClassName={classes.fontTotal}
+                            value={ totals.grandTotal }
+                            extraClassName={ classes.fontTotal }
                         />
                     </div>
                 </div>
 
-                <div className={classes.cartBtns}>
-                    <AppBtnLink title={CartTitle} path={pathCartPage} extraClassName={classes.action}/>
-                    <AppBtnLink title={CheckoutTitle} path={pathCheckoutPage} type="black"
-                                extraClassName={classes.action}/>
+                <div className={ classes.cartBtns }>
+                    <AppBtnLink
+                        title={ <FormattedMessage id={ 'word.cart.title' } /> }
+                        path={ pathCartPage }
+                        extraClassName={ classes.action }
+                    />
+                    <AppBtnLink
+                        title={ <FormattedMessage id={ 'word.checkout.title' } /> }
+                        path={ pathCheckoutPage }
+                        type="black"
+                        extraClassName={ classes.action }
+                    />
                 </div>
             </div>
         );

@@ -1,22 +1,16 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { NavLink } from 'react-router-dom';
-
 import { styles } from './styles';
 import { IOrderItem } from 'src/shared/interfaces/order';
-import {
-    OrdersHistoryTableHeaderDate,
-    OrdersHistoryTableHeaderID,
-    OrdersHistoryTableHeaderTotal,
-    OrdersHistoryViewDetailBtnTitle
-} from 'src/shared/translation';
-import { IOrderListProps } from 'src/shared/components/Pages/OrderHistoryPage/OrderList/types';
-import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { AppTable } from 'src/shared/components/Common/AppTable';
-import { formatDateToString } from 'src/shared/helpers/common/dates';
-import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
-import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
+import { IOrderListProps } from "src/shared/components/Pages/OrderHistoryPage/OrderList/types";
+import { ICellInfo, ITableRow } from "src/shared/components/Common/AppTable/types";
+import { AppPrice } from "src/shared/components/Common/AppPrice/index";
+import { AppTable } from "src/shared/components/Common/AppTable/index";
+import { formatDateToString } from "src/shared/helpers/common/dates";
+import { appFixedDimensions } from "src/shared/theme/properties/new/appFixedDimensions";
+import { pathOrderDetailsPageBase } from "src/shared/routes/contentRoutes";
+import { FormattedMessage } from 'react-intl';
 
 export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element => {
     const {classes, orders} = props;
@@ -25,9 +19,9 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
     const rowPart = 'order-';
 
     const headerCells: ICellInfo[] = [
-        {id: `${headerCellPart}1`, content: OrdersHistoryTableHeaderID},
-        {id: `${headerCellPart}2`, content: OrdersHistoryTableHeaderDate},
-        {id: `${headerCellPart}3`, content: OrdersHistoryTableHeaderTotal},
+        {id: `${headerCellPart}1`, content: <FormattedMessage id={ 'order.id.title' } />},
+        {id: `${headerCellPart}2`, content: <FormattedMessage id={ 'orders.date.title' } />},
+        {id: `${headerCellPart}3`, content: <FormattedMessage id={ 'orders.total.title' } />},
         {id: `${headerCellPart}4`, content: ''},
     ];
 
@@ -51,7 +45,7 @@ export const OrderListBase: React.SFC<IOrderListProps> = (props): JSX.Element =>
                     to={`${pathOrderDetailsPageBase}/${item.id}`}
                     className={classes.orderBtn}
                 >
-                    {OrdersHistoryViewDetailBtnTitle}
+                    <FormattedMessage id={ 'orders.view.order.title' } />
                 </NavLink>
             },
         ],

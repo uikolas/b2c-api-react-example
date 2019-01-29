@@ -7,71 +7,84 @@ import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
-import { LanguageDeutschTest, LanguageEnglishTest } from 'src/shared/translation';
+import { connect } from './connect';
+import { TAppLocale } from 'src/shared/interfaces/locale';
+import api from '@services/api';
+import { FormattedMessage } from 'react-intl';
 
 const availableLanguages: language[] = [
     {
-        name: LanguageEnglishTest,
+        name: <FormattedMessage id={ 'language.english.title' } />,
         code: 'en',
     },
     {
-        name: LanguageDeutschTest,
+        name: <FormattedMessage id={ 'language.deutsch.title' } />,
         code: 'de',
     },
 ];
 
+@connect
 export class LangComponent extends React.PureComponent<Props, State> {
     public state: State = {
-        anchorEl: null,
-        selectedLang: {
-            name: LanguageEnglishTest,
-            code: 'en',
-        },
+        anchorEl: null
     };
 
-    private openLang = ({currentTarget}: React.MouseEvent<HTMLElement>) => {
-        this.setState(() => ({anchorEl: currentTarget}));
+    private openLang = ({ currentTarget }: React.MouseEvent<HTMLElement>) => {
+        this.setState(() => ({ anchorEl: currentTarget }));
     };
-    private closeLang = () => this.setState(() => ({anchorEl: null}));
-    private selectLang = (lang: language) => () => this.setState(() => ({selectedLang: lang, anchorEl: null}));
+    private closeLang = () => this.setState(() => ({ anchorEl: null }));
+    private selectLang = (lang: language) => (event: React.MouseEvent<HTMLElement>) => {
+        const locale: TAppLocale = lang.code;
+
+        api.setHeader('Accept-Language', locale);
+        this.setState({ anchorEl: null });
+        this.props.switchLocaleAction({ locale });
+    };
 
     public render() {
-        const {anchorEl, selectedLang} = this.state;
-        const {classes} = this.props;
+        const { appLocale } = this.props;
+        if (!appLocale) {
+            return null;
+        }
+        const { anchorEl } = this.state;
+        const selectedLang = availableLanguages.filter((item: language) => (item.code === appLocale))[ 0 ];
+        const { classes } = this.props;
         const open = Boolean(anchorEl);
 
         return (
             <div>
                 <Button
-                    className={classes.langBtn}
+                    className={ classes.langBtn }
                     size="small"
-                    aria-owns={open ? 'lang-menu' : null}
+                    aria-owns={ open ? 'lang-menu' : null }
                     aria-haspopup="true"
-                    onClick={this.openLang}
+                    onClick={ this.openLang }
                 >
-                    {selectedLang.name}
-                    {Boolean(anchorEl) ? <KeyboardArrowUp/> : <KeyboardArrowDown/>}
+                    { selectedLang.name }
+                    { Boolean(anchorEl) ? <KeyboardArrowUp /> : <KeyboardArrowDown /> }
                 </Button>
 
                 <Menu
                     id="lang-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={this.closeLang}
+                    anchorEl={ anchorEl }
+                    open={ open }
+                    onClose={ this.closeLang }
                 >
-                    {availableLanguages.map(language => (
+                    { availableLanguages.map(language => (
                         <MenuItem
-                            key={language.code}
-                            selected={language.code === selectedLang.code}
-                            onClick={this.selectLang(language)}
+                            key={ language.code }
+                            selected={ language.code === selectedLang.code }
+                            onClick={ this.selectLang(language) }
                         >
-                            {language.name}
+                            { language.name }
                         </MenuItem>
-                    ))}
+                    )) }
                 </Menu>
             </div>
         );
     }
 }
 
-export const Lang = withStyles(styles)(LangComponent);
+export const LanguageSwitcher = withStyles(styles)(LangComponent);
+
+export default LanguageSwitcher;

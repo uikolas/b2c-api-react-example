@@ -1,24 +1,18 @@
 import * as React from 'react';
-import { FormattedDate } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Grid, Typography, Paper, TextField, Button, Divider, IconButton } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { pathCustomerPage } from 'src/shared/routes/contentRoutes';
+import { pathWishListPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import { IWishlist } from 'src/shared/interfaces/wishlist';
-import {
-    WishlistNameTitle,
-    CreateListMessage,
-    ButtonAddTitle,
-    NavLinkTitleWishlist
-} from 'src/shared/translation';
+import { IWishlist, TWishListId } from 'src/shared/interfaces/wishlist/index';
 
 @connect
 export class WishListBase extends React.Component<Props, State> {
@@ -59,7 +53,7 @@ export class WishListBase extends React.Component<Props, State> {
         this.setState(() => ({updatedList: '', updatedName: ''}));
     };
 
-    public handleDeleteWishlist = (wishlistId: string) => (e: ClickEvent) => {
+    public handleDeleteWishlist = (wishlistId: TWishListId) => (e: ClickEvent) => {
         this.props.deleteWishlistAction(wishlistId);
     };
 
@@ -67,13 +61,9 @@ export class WishListBase extends React.Component<Props, State> {
         this.setState(() => ({updatedList: id, updatedName: name}));
     };
 
-    public setCurrentWishlist = (wishlistId: string) => (event: ClickEvent) => {
-        event.persist();
-        this.props.getDetailWishlistAction(wishlistId);
-    };
-
     public render() {
-        const {classes, wishlists, isLoading} = this.props;
+        const { classes, wishlists, isLoading } = this.props;
+        const { name } = this.state;
         const tableAction = isLoading ? classes.tableActionDisabled : classes.tableAction;
 
         if (!wishlists.length && isLoading) {
@@ -110,9 +100,8 @@ export class WishListBase extends React.Component<Props, State> {
                                 </form>
                             ) : (
                                 <NavLink
-                                    className={classes.link}
-                                    to={`${pathCustomerPage}/wishlist/${item.name}`}
-                                    onClick={this.setCurrentWishlist(item.id)}
+                                    className={ classes.link }
+                                    to={ `${pathWishListPageBase}/wishlist/${item.name}` }
                                 >
                                     {item.name}
                                 </NavLink>
@@ -133,7 +122,7 @@ export class WishListBase extends React.Component<Props, State> {
                             className={tableAction}
                             onClick={this.setUpdatedWishlist(item.id, item.name)}
                         >
-                            Edit
+                            <FormattedMessage id={ 'word.edit.title' } />
                         </Typography>
                     ),
                     id: `${bodyCellPart}4`
@@ -142,7 +131,7 @@ export class WishListBase extends React.Component<Props, State> {
                     content: (
                         <Typography component="span" className={tableAction}
                                     onClick={this.handleDeleteWishlist(item.id)}>
-                            Delete
+                            <FormattedMessage id={ 'word.delete.title' } />
                         </Typography>
                     ),
                     id: `${bodyCellPart}5`
@@ -155,24 +144,33 @@ export class WishListBase extends React.Component<Props, State> {
                 <Grid item xs={12}>
                     <AppPageTitle
                         classes={{root: classes.appPageTitleRoot, pageHeader: classes.appPageTitleRootPageHeader}}
-                        title={NavLinkTitleWishlist}
+                        title={<FormattedMessage id={ 'word.wishlist.title' } />}
                     />
                 </Grid>
 
                 <Grid item xs={12}>
                     <form noValidate autoComplete="off" onSubmit={this.addWishlist} className={classes.form}>
-                        <Typography paragraph className={classes.titleForm}>Add New Wishlist</Typography>
+                        <Typography paragraph className={ classes.titleForm }>
+                            <FormattedMessage id={ 'add.new.wishlist.title' } />
+                        </Typography>
                         <Paper elevation={0} className={classes.formItem}>
                             <TextField
-                                className={classes.textFieldForm}
-                                placeholder={WishlistNameTitle}
-                                value={this.state.name}
-                                variant={'outlined'}
-                                onChange={this.handleChangeName}
-                                inputProps={{className: classes.input}}
+                                className={ classes.textFieldForm }
+                                value={ name }
+                                helperText={ <FormattedMessage id={ 'wishlist.name.title' } /> }
+                                FormHelperTextProps={ {
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: name.length > 0 ? classes.filled : null
+                                    }
+                                } }
+                                variant={ 'outlined' }
+                                onChange={ this.handleChangeName }
+                                inputProps={ { className: classes.input } }
                             />
-                            <Button type="submit" variant="contained" color="primary" className={classes.formSubmit}>
-                                {ButtonAddTitle}
+                            <Button type="submit" variant="contained" color="primary"
+                                    className={ classes.formSubmit }>
+                                <FormattedMessage id={ 'add.new.wishlist.title' } />
                             </Button>
                         </Paper>
                     </form>
@@ -183,7 +181,7 @@ export class WishListBase extends React.Component<Props, State> {
                             <Paper elevation={0}>
                                 <Divider/>
                                 <Typography paragraph className={classes.noItems}>
-                                    {CreateListMessage}
+                                    <FormattedMessage id={ 'create.list.message' } />
                                 </Typography>
                             </Paper>
                         )

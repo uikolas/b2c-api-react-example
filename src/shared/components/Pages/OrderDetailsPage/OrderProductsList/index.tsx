@@ -1,21 +1,14 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 import { styles } from './styles';
 import { IOrderProductListProps } from './types';
 import { IOrderDetailsItem } from 'src/shared/interfaces/order';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import {
-    OrderDetailProductSKU,
-    OrderDetailTableHeaderItems,
-    OrderDetailTableHeaderPrice,
-    OrderDetailTableHeaderQuantity,
-    OrderDetailTableHeaderTotal
-} from 'src/shared/translation';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { AppPrice } from 'src/shared/components/Common/AppPrice/index';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
-import { AppTable } from 'src/shared/components/Common/AppTable';
-import { OrderProductName } from 'src/shared/components/Pages/OrderDetailsPage/OrderProductName';
+import { AppTable } from 'src/shared/components/Common/AppTable/index';
+import { OrderProductName } from 'src/shared/components/Pages/OrderDetailsPage/OrderProductName/index';
+import { FormattedMessage } from 'react-intl';
 
 export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): JSX.Element => {
     const {classes, items} = props;
@@ -23,10 +16,10 @@ export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): 
     const headerCellPart = 'header-';
     const rowPart = 'order-';
     const headerCells: ICellInfo[] = [
-        {id: `${headerCellPart}1`, content: OrderDetailTableHeaderItems},
-        {id: `${headerCellPart}2`, content: OrderDetailTableHeaderPrice},
-        {id: `${headerCellPart}3`, content: OrderDetailTableHeaderQuantity},
-        {id: `${headerCellPart}4`, content: OrderDetailTableHeaderTotal, extraClassName: classes.total},
+        {id: `${headerCellPart}1`, content: <FormattedMessage id={ 'word.items.title' } />},
+        {id: `${headerCellPart}2`, content: <FormattedMessage id={ 'word.price.title' } />},
+        {id: `${headerCellPart}3`, content: <FormattedMessage id={ 'word.quantity.title' } />},
+        {id: `${headerCellPart}4`, content: <FormattedMessage id={ 'word.total.title' } />, extraClassName: classes.total},
     ];
 
     const bodyRows: ITableRow[] = items.map((item: IOrderDetailsItem) => ({
@@ -36,7 +29,7 @@ export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): 
                 id: `name-${item.sku}`,
                 content: <OrderProductName
                     productName={item.name}
-                    titleSKU={OrderDetailProductSKU}
+                    titleSKU={<FormattedMessage id={ 'product.sku.title' } />}
                     sku={item.sku}
                 />
             },

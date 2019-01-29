@@ -30,25 +30,25 @@ export type TAddressComment = string;
 export type TAddressDescription = string;
 
 interface IAbstractAddressItem {
-    id?: string;
-    salutation: TCustomerSalutation;
-    firstName: TCustomerFirstName;
-    lastName: TCustomerLastName;
-    address1: TAddress;
-    address2: TAddress;
+    id?: string | null;
+    salutation: TCustomerSalutation | null;
+    firstName: TCustomerFirstName | null;
+    lastName: TCustomerLastName | null;
+    address1: TAddress | null;
+    address2: TAddress | null;
     address3: TAddress | null;
-    zipCode: TAddressZipCode;
-    city: TAddressCity;
-    company?: TAddressCompany;
+    zipCode: TAddressZipCode | null;
+    city: TAddressCity | null;
+    company?: TAddressCompany | null;
     phone?: TAddressPhone | null;
     isDefaultShipping?: boolean;
     isDefaultBilling?: boolean;
-    iso2Code?: TIso2Code;
+    iso2Code?: TIso2Code | null;
 }
 
 export interface IAddressItem extends IAbstractAddressItem {
-    country?: TAddressCountry;
-    email?: TCustomerEmail;
+    country?: TAddressCountry | null;
+    email?: TCustomerEmail | null;
 }
 
 export interface IAddressItemCollection extends IAbstractAddressItem {

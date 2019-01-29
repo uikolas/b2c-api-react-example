@@ -2,7 +2,6 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
-
 import { styles } from './styles';
 import {
     filterTypeFilter,
@@ -17,7 +16,7 @@ import {
     createRangeFilterItemCombined,
 } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/helper';
 import { IActiveFiltersListProps } from 'src/shared/components/Pages/SearchPage/ActiveFiltersList/types';
-import { ActiveFiltersTitle, ResetAllFiltersButtonTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props => {
     const {
@@ -65,8 +64,9 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props =
                             isPrice,
                             value: activeValuesRanges[rangeName],
                             rangeName,
-                            title: (rangesLocalizedNames && rangesLocalizedNames[rangeName]) ?
-                                    rangesLocalizedNames[rangeName] : '',
+                            title: (rangesLocalizedNames && rangesLocalizedNames[rangeName])
+                                ? rangesLocalizedNames[rangeName]
+                                : '',
                             priceClassName: classes.price
                         }),
                     );
@@ -88,7 +88,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props =
               className={classes.root}
         >
             <Grid item xs={12}>
-                <AppPageSubTitle title={ActiveFiltersTitle}/>
+                <AppPageSubTitle title={<FormattedMessage id={ 'active.filters.title' } />}/>
             </Grid>
 
             <Grid container
@@ -108,7 +108,7 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props =
                 ))
                 }
                 <Chip
-                    label={ResetAllFiltersButtonTitle}
+                    label={<FormattedMessage id={ 'reset.all.filters.title' } />}
                     className={`${classes.reset}`}
                     onClick={resetHandler}
                     classes={{label: classes.resetLabel}}

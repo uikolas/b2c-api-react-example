@@ -11,14 +11,8 @@ import {
     TCustomerSalutation,
     TSalutationVariant,
 } from 'src/shared/interfaces/customer';
-import { SalutationVariants } from 'src/shared/constants/customer';
-import {
-    InputLabelSalutation,
-    InputLabelFirstName,
-    InputLabelLastName,
-    InputLabelEmail,
-    ButtonUpdateTitle
-} from 'src/shared/translation';
+import { SalutationVariants } from 'src/shared/constants/customer/index';
+import { FormattedMessage } from 'react-intl';
 
 interface UpdateProfileProps extends WithStyles<typeof styles> {
     submitHandler: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -42,28 +36,28 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
 
     return (
         <SprykerForm
-            form={{
+            form={ {
                 formName: 'profileForm',
                 onChangeHandler: inputChangeHandler,
                 onSubmitHandler: submitHandler,
                 fields: [
-                    [{
+                    [ {
                         type: 'select',
                         inputName: 'salutation',
                         inputValue: salutation,
                         spaceNumber: 2,
                         isRequired: true,
-                        label: InputLabelSalutation,
+                        label: <FormattedMessage id={ 'salutation.label' } />,
                         isError: false,
                         menuItems: SalutationVariants
-                            .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
+                            .map((item: TSalutationVariant) => ({ value: item.value, name: item.label })),
                     }, {
                         type: 'input',
                         inputName: 'firstName',
                         inputValue: firstName,
                         spaceNumber: 5,
                         isRequired: true,
-                        label: InputLabelFirstName,
+                        label: <FormattedMessage id={ 'first.name.label' } />,
                         isError: false,
                     }, {
                         type: 'input',
@@ -71,28 +65,32 @@ export const UpdateProfileBase: React.SFC<UpdateProfileProps> = (props): JSX.Ele
                         inputValue: lastName,
                         spaceNumber: 5,
                         isRequired: true,
-                        label: InputLabelLastName,
+                        label: <FormattedMessage id={ 'last.name.label' } />,
                         isError: false,
-                    }], [{
+                    } ], [ {
                         type: 'input',
                         inputName: 'email',
                         inputValue: email,
                         inputType: 'email',
                         spaceNumber: 5,
                         isRequired: true,
-                        label: InputLabelEmail,
+                        label: <FormattedMessage id={ 'email.label' } />,
                         isError: false,
-                    }]
+                    } ]
                 ]
-            }}
+            } }
             SubmitButton={
                 <Grid container>
-                    <Grid item xs={12} sm={2}>
-                        <SprykerButton title={ButtonUpdateTitle} btnType="submit" extraClasses={classes.submitButton}/>
+                    <Grid item xs={ 12 } sm={ 2 }>
+                        <SprykerButton
+                            title={ <FormattedMessage id={ 'word.update.title' } /> }
+                            btnType="submit"
+                            extraClasses={ classes.submitButton }
+                        />
                     </Grid>
                 </Grid>
             }
-            formClassName={classes.form}
+            formClassName={ classes.form }
         />
     );
 };

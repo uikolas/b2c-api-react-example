@@ -4,7 +4,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
 import { withRouter } from 'react-router';
-
 import { RangeFacets, ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { pathCategoryPageBase, pathProductPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
@@ -45,16 +44,9 @@ import { SearchPageContext } from './context';
 import {
     addToQueryActiveRangeFilters,
 } from 'src/shared/components/Pages/SearchPage/helpers/queries';
-import { getCategoryNameById } from 'src/shared/helpers/categories';
-import { DefaultItemsPerPage } from 'src/shared/constants/search';
-import {
-    SearchResultTitle,
-    SearchResultDefaultTitle,
-    SortModeTitle,
-    RelevanceSortModeTitle,
-    ProductsPerPageTitle,
-    ValidateRangeInputsError
-} from 'src/shared/translation';
+import { getCategoryNameById } from 'src/shared/helpers/categories/index';
+import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
+import { FormattedMessage } from 'react-intl';
 
 @(withRouter as Function)
 @connect
@@ -180,7 +172,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         if (!this.validateData()) {
             console.error('can\'t make request in updateSearch method!!!');
-            toast.error(ValidateRangeInputsError);
+            toast.error(<FormattedMessage id={ 'validate.range.input.error.message' } />);
 
             return;
         }
@@ -367,7 +359,11 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                 currentMode={this.state.itemsPerPage}
                 changeHandler={this.handleSetItemsPerPage}
                 menuItems={pagination.validItemsPerPageOptions.map((item: number) => ({value: item, name: item}))}
-                menuItemFirst={{value: ' ', name: ProductsPerPageTitle, disabled: true}}
+                menuItemFirst={ {
+                    value: ' ',
+                    name: <FormattedMessage id={ 'products.per.page.title' } />,
+                    disabled: true
+                } }
                 name="pages"
             />
         );
@@ -383,11 +379,13 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                             sortParamLocalizedNames && sortParamLocalizedNames[item]
                         ) ? sortParamLocalizedNames[item] : `${item}`,
                 }))}
-                menuItemFirst={{
+                menuItemFirst={ {
                     value: ' ',
-                    name: (!isSortParamsExist && !this.state.sort) ? SortModeTitle : RelevanceSortModeTitle,
+                    name: (!isSortParamsExist && !this.state.sort)
+                        ? <FormattedMessage id={ 'sort.model.title' } />
+                        : <FormattedMessage id={ 'relevance.sort.model.title' } />,
                     disabled: !isSortParamsExist,
-                }}
+                } }
                 name="sort"
                 title={null}
             />
@@ -399,12 +397,17 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             <AppMain>
                 {isLoading ? <AppBackdrop isOpen={true}/> : null}
                 <AppPageTitle
-                    title={searchTerm
-                        ? `${SearchResultTitle} "${searchTerm}"`
-                        : (currentCategory && categoryDisplayName) ? categoryDisplayName : SearchResultDefaultTitle
+                    title={ searchTerm
+                        ? <FormattedMessage
+                            id={ 'search.result.title' }
+                            values={ { terms: searchTerm } }
+                        />
+                        : (currentCategory && categoryDisplayName)
+                            ? categoryDisplayName
+                            : <FormattedMessage id={ 'search.result.default.title' } />
                     }
-                    intro={<SearchIntro className={classes.spellingSuggestion}
-                                        spellingSuggestion={spellingSuggestion}/>}
+                    intro={ <SearchIntro className={ classes.spellingSuggestion }
+                                         spellingSuggestion={ spellingSuggestion } /> }
                 />
                 <Grid container className={classes.container}>
                     <SearchPageContext.Provider

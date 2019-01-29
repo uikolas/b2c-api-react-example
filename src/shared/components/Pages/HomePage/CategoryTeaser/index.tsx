@@ -1,13 +1,12 @@
 import * as React from 'react';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import { ICategoryTeaserProps } from './types';
 import { styles } from './styles';
+import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
+import { FormattedMessage } from 'react-intl';
 
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
 
 export const CategoryTeaserBase: React.SFC<ICategoryTeaserProps> = (props): JSX.Element => {
     const {
@@ -34,16 +33,20 @@ export const CategoryTeaserBase: React.SFC<ICategoryTeaserProps> = (props): JSX.
                         align="left"
                         className={classes.title}
                     >
-                        {title}
+                        <FormattedMessage id={ title } />
                     </Typography>
                     <Typography component="p"
                         color="inherit"
                         align="left"
                         className={classes.text}
                     >
-                        {text}
+                        <FormattedMessage id={ text } />
                     </Typography>
-                    <AppBtnLink title={linkTitle} path={path} extraClassName={classes.btn}/>
+                    <AppBtnLink
+                        title={<FormattedMessage id={ linkTitle } />}
+                        path={path}
+                        extraClassName={classes.btn}
+                    />
                 </Grid>
             </Grid>
         </Grid>

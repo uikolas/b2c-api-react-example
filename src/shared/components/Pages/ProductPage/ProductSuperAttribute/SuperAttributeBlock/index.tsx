@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { SuperAttributeItem } from '../SuperAttributeItem';
 import { SuperAttributeBlockProps as Props, SuperAttributeBlockState as State } from './types';
 import { styles } from './styles';
-import { ProductBlockTitleAttribute } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export class SuperAttributeBlockComponent extends React.PureComponent<Props, State> {
     public state: State = {
@@ -24,7 +24,7 @@ export class SuperAttributeBlockComponent extends React.PureComponent<Props, Sta
         return (
             <div className={classes.attributeBlock}>
                 <h4 className={classes.attributeTitle}>
-                    {`${ProductBlockTitleAttribute} ${attributeData.nameToShow}:`}
+                    <FormattedMessage id={ 'word.select.title' } /> { attributeData.nameToShow }:
                 </h4>
 
                 <div className={classes.attributesList}>

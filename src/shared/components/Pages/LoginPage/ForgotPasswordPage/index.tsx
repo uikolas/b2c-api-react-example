@@ -11,15 +11,10 @@ import { forgotPasswordAction } from '@stores/actions/pages/login';
 import { RouteProps } from 'react-router';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { formStyles } from '../styles';
-import { getRouterHistoryBack } from 'src/shared/helpers/router';
+import { getRouterHistoryBack } from 'src/shared/helpers/router/index';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import {
-    ButtonBackTitle,
-    ButtonSubmitTitle,
-    RecoveryPasswordMessage,
-    EnterEmailAddressMessage
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface ForgotPasswordPageProps extends WithStyles<typeof formStyles>, RouteProps {
     dispatch?: Function;
@@ -45,7 +40,8 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
     };
 
     public render() {
-        const {classes, routerGoBack} = this.props;
+        const { classes, routerGoBack } = this.props;
+        const { email } = this.state;
 
         return (
             <AppMain>
@@ -55,16 +51,26 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                     justify="center"
                 >
                     <Paper className={classes.forgot}>
-                        <Typography color="primary" variant="headline" paragraph>{RecoveryPasswordMessage}</Typography>
-                        <Typography variant="title" paragraph>{EnterEmailAddressMessage}</Typography>
+                        <Typography color="primary" variant="headline" paragraph>
+                            <FormattedMessage id={ 'recovery.password.title' } />
+                        </Typography>
+                        <Typography variant="title" paragraph>
+                            <FormattedMessage id={ 'enter.email.address.message' } />
+                        </Typography>
                         <form autoComplete="off">
                             <TextField
                                 required
                                 inputProps={{type: 'email'}}
-                                label="Email Address"
+                                label={<FormattedMessage id={ 'email.label' } />}
                                 className={classes.email}
-                                value={this.state.email}
-                                placeholder="Email Address"
+                                value={email}
+                                helperText={ <FormattedMessage id={ 'email.label' } /> }
+                                FormHelperTextProps={{
+                                    classes: {
+                                        root: classes.placeholder,
+                                        filled: email.length > 0 ? classes.filled : null
+                                    }
+                                }}
                                 onChange={this.handleChange}
                             />
                         </form>
@@ -76,7 +82,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                                 onClick={() => routerGoBack()}
                             >
                                 <BackIcon/>
-                                <span>{ButtonBackTitle}</span>
+                                <FormattedMessage id={ 'word.back.title' } />
                             </Button>
                             <Button
                                 variant="contained"
@@ -84,7 +90,7 @@ export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPagePr
                                 className={classes.passwordButtons}
                                 onClick={this.submitRequest}
                             >
-                                {ButtonSubmitTitle}
+                                <FormattedMessage id={ 'word.submit.title' } />
                             </Button>
                         </Grid>
                     </Paper>

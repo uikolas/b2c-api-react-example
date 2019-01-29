@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { formStyles } from '../styles';
 import { TCustomerPassword, TCustomerUsername } from 'src/shared/interfaces/customer';
 import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { InputLabelEmail, PasswordTitle, LogindTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 interface LoginFormProps extends WithStyles<typeof formStyles> {
     handleSubmit: Function;
@@ -46,60 +46,54 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
     };
 
     public render() {
-        const {classes} = this.props;
-
+        const { classes } = this.props;
         return (
             <React.Fragment>
                 <Typography variant="title" color="inherit" noWrap>
-                    {LogindTitle}
+                    <FormattedMessage id={ 'word.login.title' } />
                 </Typography>
-                <form
-                    className={classes.container}
-                    noValidate
-                    autoComplete="off"
-                    onSubmit={this.handleSubmit}
-                    id="LoginForm"
-                >
+                <form className={ classes.container } noValidate autoComplete="off" onSubmit={ this.handleSubmit }
+                      id="LoginForm">
                     <TextField
                         required
                         id="login-email"
-                        label={InputLabelEmail}
+                        label={ <FormattedMessage id={ 'email.label' } /> }
                         name="username"
-                        onChange={this.handleChange('username')}
+                        onChange={ this.handleChange('username') }
                         type="email"
                         defaultValue=""
-                        className={classes.textField}
+                        className={ classes.textField }
                         margin="normal"
                         fullWidth
-                        InputLabelProps={{
+                        InputLabelProps={ {
                             shrink: true,
-                        }}
-                        InputProps={{
+                        } }
+                        InputProps={ {
                             className: classes.input,
-                        }}
+                        } }
                     />
 
                     <TextField
                         required
                         id="login-password"
-                        label={PasswordTitle}
+                        label={ <FormattedMessage id={ 'word.password.title' } /> }
                         name="password"
-                        onChange={this.handleChange('password')}
+                        onChange={ this.handleChange('password') }
                         type="password"
                         defaultValue=""
-                        className={classes.textField}
+                        className={ classes.textField }
                         margin="normal"
                         fullWidth
-                        InputLabelProps={{
+                        InputLabelProps={ {
                             shrink: true,
-                        }}
-                        InputProps={{
+                        } }
+                        InputProps={ {
                             className: classes.input,
-                        }}
+                        } }
                     />
 
-                    <Button type="submit" variant="contained" className={classes.button}>
-                        {LogindTitle}
+                    <Button type="submit" variant="contained" className={ classes.button }>
+                        <FormattedMessage id={ 'word.login.title' } />
                     </Button>
 
                 </form>

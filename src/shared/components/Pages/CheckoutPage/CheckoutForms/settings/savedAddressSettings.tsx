@@ -1,16 +1,13 @@
 import * as React from 'react';
-import {
-    InputLabelSelectSavedBillingAddress,
-    InputLabelSelectSavedDeliveryAddress
-} from 'src/shared/translation';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import { IFormSettings } from "src/shared/components/UI/SprykerForm/types";
+import { IAddressItemCollection } from "src/shared/interfaces/addresses";
 import {
     IAddressesParams,
     IBillingAddressesParams,
     IDeliveryAddressesParams
 } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
 import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
+import { FormattedMessage } from 'react-intl';
 
 export const getDeliverySavedAddressFormSettings = (
     formName: string,
@@ -36,7 +33,7 @@ export const getDeliverySavedAddressFormSettings = (
                     inputValue: currentValueInSelection,
                     spaceNumber: 12,
                     isRequired: false,
-                    label: InputLabelSelectSavedDeliveryAddress,
+                    label: <FormattedMessage id={ 'select.delivery.address.label' } />,
                     isError: false,
                     radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
                 }
@@ -71,7 +68,7 @@ export const getBillingSavedAddressFormSettings = (
                     inputValue: currentValueInSelection,
                     spaceNumber: 12,
                     isRequired: false,
-                    label: InputLabelSelectSavedBillingAddress,
+                    label: <FormattedMessage id={ 'select.billing.address.label' } />,
                     isError: false,
                     radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
                 }

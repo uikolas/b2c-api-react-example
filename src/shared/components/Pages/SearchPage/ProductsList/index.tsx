@@ -8,7 +8,7 @@ import { ProductCard } from 'src/shared/components/Common/ProductCard';
 import { AppPageHeadline } from 'src/shared/components/Common/AppPageHeadline';
 import { getProductLabel } from 'src/shared/helpers/product/label';
 import { IProductsListProps } from 'src/shared/components/Pages/SearchPage/ProductsList/types';
-import { EmptyPageTitle, LoadingPageTitle } from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 export const ProductsListBase: React.SFC<IProductsListProps> = props => {
     const {
@@ -49,7 +49,9 @@ export const ProductsListBase: React.SFC<IProductsListProps> = props => {
                     );
                 })
                 : <Grid item xs>
-                    <AppPageHeadline title={isLoading ? LoadingPageTitle : EmptyPageTitle}/>
+                    <AppPageHeadline
+                        title={ <FormattedMessage id={ isLoading ? 'loading.page.title' : 'empty.page.title' } />}
+                    />
                 </Grid>
             }
         </Grid>

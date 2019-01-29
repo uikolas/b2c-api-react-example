@@ -12,15 +12,7 @@ import { OrderSummary } from './OrderSummary';
 import { styles } from './styles';
 import { connect } from './connect';
 import { CartPageProps, CartPageState } from './types';
-import {
-    CartIsEmptyGoShoppingMessage,
-    OrderDetailTableHeaderPrice,
-    OrderDetailTableHeaderItems,
-    OrderDetailTableHeaderQuantity,
-    CartTitle,
-    CartQuestTitle,
-    CartItemTitle
-} from 'src/shared/translation';
+import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps, CartPageState> {
@@ -117,7 +109,7 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
                             noWrap
                             align="center"
                         >
-                            {CartIsEmptyGoShoppingMessage}
+                            <FormattedMessage id={'cart.is.empty.message'} />
                         </Typography>
                     </Grid>
                 </AppMain>
@@ -126,37 +118,44 @@ export class CartPageBase extends React.Component<CartPageProps, CartPageState> 
 
         return (
             <AppMain>
-                <Grid item xs={12} container spacing={24} className={classes.root}>
-                    <Grid item xs={12} md={8}>
+                <Grid item xs={ 12 } container spacing={ 24 } className={ classes.root }>
+                    <Grid item xs={ 12 } md={ 8 }>
                         <Typography
                             variant="display1"
                             noWrap
                             align="left"
                             color="primary"
                         >
-                            <span>
-                                {isUserLoggedIn ? CartTitle : CartQuestTitle}
-                            </span>
-                            <span>{` - ${totalQty} `}</span>
+                            <FormattedMessage
+                                id={ `${isUserLoggedIn ? 'cart.with.items.title' : 'cart.quest.with.items.title'}` }
+                                values={{ items: totalQty }}
+                            />
+                            <span>{ ` - ${totalQty} ` }</span>
                             <FormattedPlural
-                                value={totalQty}
-                                one={CartItemTitle}
-                                other={OrderDetailTableHeaderItems}
+                                value={ totalQty }
+                                one={ <FormattedMessage id={ 'word.item.title' } /> }
+                                other={ <FormattedMessage id={ 'word.items.title' } /> }
                             />
                         </Typography>
-                        <div className={classes.listTitle} ref={this.listRef}>
-                            <div style={{width: '20%'}}>{OrderDetailTableHeaderItems}</div>
-                            <div className={classes.itemWrapper}/>
-                            <div className={classes.quantityForm}>{OrderDetailTableHeaderQuantity}</div>
-                            <div className={classes.priceWrapper}>{OrderDetailTableHeaderPrice}</div>
+                        <div className={ classes.listTitle } ref={ this.listRef }>
+                            <div style={ { width: '20%' } }>
+                                <FormattedMessage id={ 'word.items.title' } />
+                            </div>
+                            <div className={ classes.itemWrapper } />
+                            <div className={ classes.quantityForm }>
+                                <FormattedMessage id={ 'word.quantity.title' } />;
+                            </div>
+                            <div className={ classes.priceWrapper }>
+                                <FormattedMessage id={ 'word.price.title' } />
+                            </div>
                         </div>
-                        <Divider className={classes.fullWidth}/>
+                        <Divider className={ classes.fullWidth } />
                         <List>
                             <CartRows
-                                items={items}
-                                heightListItem={heightListItem}
-                                handleDeleteItem={this.handleDeleteItem}
-                                handleChangeQty={this.handleChangeQty}
+                                items={ items }
+                                heightListItem={ heightListItem }
+                                handleDeleteItem={ this.handleDeleteItem }
+                                handleChangeQty={ this.handleChangeQty }
                             />
                         </List>
                     </Grid>

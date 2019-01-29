@@ -11,8 +11,9 @@ import { CartProps as Props, CartState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
-import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper';
-import { CartIsEmptyTooltipMessage } from 'src/shared/translation';
+import { PopoverWrapper } from 'src/shared/components/Common/AppHeader/parts/PopoverWrapper/index';
+import { FormattedMessage } from 'react-intl';
+import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 
 @(withRouter as Function)
 @connect
@@ -39,15 +40,15 @@ export class CartComponent extends React.PureComponent<Props, State> {
     private openPopover = ({currentTarget}: ClickEvent) => {
         const {cartItemsQuantity} = this.props;
 
-        if (window.innerWidth < 500) {
+        if (window.innerWidth < BreakpointsSM) {
             if (cartItemsQuantity !== 0) {
                 this.props.history.push(pathCartPage);
             }
         } else {
-            this.setState(() => ({anchorEl: cartItemsQuantity !== 0 ? currentTarget : null}));
+            this.setState(() => ({ anchorEl: cartItemsQuantity !== 0 ? currentTarget : null }));
         }
     };
-    private closePopover = () => this.setState(() => ({anchorEl: null}));
+    private closePopover = () => this.setState(() => ({ anchorEl: null }));
 
     private handleCloseCartNotification = () => {
         this.setState(() => ({isCartNotificationOpen: false}));
@@ -79,22 +80,24 @@ export class CartComponent extends React.PureComponent<Props, State> {
 
         return (
             <div>
-                {cartItemsQuantity === 0
-                    ? (<Tooltip disableFocusListener placement="top" title={CartIsEmptyTooltipMessage}>
-                        {cartButton}
+                { cartItemsQuantity === 0
+                    ? (<Tooltip disableFocusListener
+                                placement="top"
+                                title={ <FormattedMessage id={ 'empty.cart.title' } /> }>
+                        { cartButton }
                     </Tooltip>)
                     : cartButton
                 }
 
                 <PopoverWrapper
-                    popoverPosLeft={popoverPosLeft}
-                    popoverPosTop={popoverPosTop}
-                    anchorEl={anchorEl}
-                    closePopoverHandler={this.closePopover}
-                    extraContentClassName={classes.cartContent}
-                    extraHelperClassName={classes.popoverTriangle}
+                    popoverPosLeft={ popoverPosLeft }
+                    popoverPosTop={ popoverPosTop }
+                    anchorEl={ anchorEl }
+                    closePopoverHandler={ this.closePopover }
+                    extraContentClassName={ classes.cartContent }
+                    extraHelperClassName={ classes.popoverTriangle }
                 >
-                    <CartDrop/>
+                    <CartDrop />
                 </PopoverWrapper>
             </div>
         );

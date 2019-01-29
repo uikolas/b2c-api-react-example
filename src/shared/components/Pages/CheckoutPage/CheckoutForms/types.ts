@@ -11,6 +11,6 @@ export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
 }
 
 export interface IPanelData {
-    title: string;
+    title: React.ReactNode;
     isDisabled: boolean;
 }
