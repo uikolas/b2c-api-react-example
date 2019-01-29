@@ -4,5 +4,4 @@ import {
     INotificationsMessage
 } from 'src/shared/components/Common/Notifications/NotificationsMessageTemplate';
 
-export const NotificationsMessage: React.SFC<INotificationsMessage> = (props) =>
-    <NotificationsMessageTemplate {...props} />;
+export const NotificationsMessage: Function = (props: INotificationsMessage) => <NotificationsMessageTemplate {...props} />;
