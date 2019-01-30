@@ -10,6 +10,10 @@ import {
 } from 'src/shared/services/Pages/Addresses/types';
 import { parseOneAddressRawResponse } from 'src/shared/helpers/address/response';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import {
+    typeMessageSuccess,
+    typeMessageError
+} from 'src/shared/constants/notifications';
 
 export class AddressesService extends ApiServiceAbstract {
     public static async getCustomerAddresses(
@@ -42,7 +46,7 @@ export class AddressesService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -54,7 +58,7 @@ export class AddressesService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -85,7 +89,7 @@ export class AddressesService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
         } catch (error) {
@@ -96,7 +100,7 @@ export class AddressesService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }public static async addAddress(
@@ -127,7 +131,7 @@ export class AddressesService extends ApiServiceAbstract {
                 });
                 NotificationsMessage({
                     id: 'new.address.added.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
 
                 // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
@@ -141,7 +145,7 @@ export class AddressesService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -153,7 +157,7 @@ export class AddressesService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -173,7 +177,7 @@ export class AddressesService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'address.removed.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
@@ -188,7 +192,7 @@ export class AddressesService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -200,7 +204,7 @@ export class AddressesService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -236,7 +240,7 @@ export class AddressesService extends ApiServiceAbstract {
                 });
                 NotificationsMessage({
                     id: 'address.updated.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -247,7 +251,7 @@ export class AddressesService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -259,7 +263,7 @@ export class AddressesService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }

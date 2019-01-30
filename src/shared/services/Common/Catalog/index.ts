@@ -6,6 +6,7 @@ import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { IApiResponseData } from 'src/shared/services/types';
 import { TRowProductResponseIncluded } from 'src/shared/helpers/product/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageError } from 'src/shared/constants/notifications';
 
 export class CatalogService extends ApiServiceAbstract {
     public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
@@ -28,7 +29,7 @@ export class CatalogService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -40,7 +41,7 @@ export class CatalogService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -57,7 +58,7 @@ export class CatalogService extends ApiServiceAbstract {
             if (response.ok) {
                 const {data} = response;
 
-                const products: IProductCard[] = data.data[ 0 ].attributes.abstractProducts.slice(0, 4);
+                const products: IProductCard[] = data.data[0].attributes.abstractProducts.slice(0, 4);
                 let counter = 0;
 
                 data.included && data.included.some((row: TRowProductResponseIncluded) => {
@@ -79,10 +80,8 @@ export class CatalogService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                     payloadSuggestionFulfilled: {
                         suggestions: products,
-                        categories: data.data[ 0 ].attributes.categories,
-                        /*searchTerm: query,
-                        currency: data.data[0].attributes.currency || '',*/
-                        completion: data.data[ 0 ].attributes.completion
+                        categories: data.data[0].attributes.categories,
+                        completion: data.data[0].attributes.completion
                     }
                 });
             } else {
@@ -94,7 +93,7 @@ export class CatalogService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
 
                 return null;
@@ -107,7 +106,7 @@ export class CatalogService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }

@@ -12,23 +12,24 @@ import { setFormFields, IFieldInput } from './settings';
 import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageWarning } from 'src/shared/constants/notifications';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
     public state: State = {
-            salutation : '',
-            firstName : '',
-            lastName : '',
-            company : '',
-            address1 : '',
-            address2 : '',
-            address3 : '',
-            zipCode : '',
-            city:  '',
-            country : '',
-            iso2Code : '',
-            phone : '',
-            isDefaultShipping: false,
+        salutation: '',
+        firstName: '',
+        lastName: '',
+        company: '',
+        address1: '',
+        address2: '',
+        address3: '',
+        zipCode: '',
+        city: '',
+        country: '',
+        iso2Code: '',
+        phone: '',
+        isDefaultShipping: false,
         isDefaultBilling: false,
         submitted: false
     };
@@ -38,7 +39,7 @@ export class AddressForm extends React.Component<Props, State> {
             this.setInitialData();
         } else if (!this.props.isAddressExist
             || (this.props.isAddressExist && this.props.addressIdParam !== this.props.currentAddress.id)
-            ) {
+        ) {
             this.initRequestData();
         }
     };
@@ -61,14 +62,14 @@ export class AddressForm extends React.Component<Props, State> {
         }
     };
 
-    public handleChange = (event: { target: IFieldInput }): void => {
+    public handleChange = (event: {target: IFieldInput}): void => {
         const {name, value}: IFieldInput = event.target;
-        this.setState(state => ({...state, [name]: value}));
+        this.setState(state => ({...state, [ name ]: value}));
     };
 
     public handleCheckbox = (event: InputChangeEvent): void => {
         event.persist();
-        this.setState((prevState: State) => ({ ...prevState, [ event.target.name ]: !prevState[ event.target.name ] }));
+        this.setState((prevState: State) => ({...prevState, [ event.target.name ]: !prevState[ event.target.name ]}));
     };
 
     public handleSubmitForm = (e: FormEvent) => {
@@ -79,7 +80,7 @@ export class AddressForm extends React.Component<Props, State> {
         if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
-                type: 'warning'
+                type: typeMessageWarning
             });
 
             return;
@@ -105,7 +106,7 @@ export class AddressForm extends React.Component<Props, State> {
     };
 
     private setInitialData = () => {
-        const { currentAddress } = this.props;
+        const {currentAddress} = this.props;
         const isAddressDataExist = Boolean(currentAddress);
 
         const stateData = {
@@ -132,45 +133,45 @@ export class AddressForm extends React.Component<Props, State> {
     };
 
     public render(): JSX.Element {
-        const { classes, currentAddress, countries, routerGoBack, isLoading } = this.props;
+        const {classes, currentAddress, countries, routerGoBack, isLoading} = this.props;
         const pageTitle = currentAddress ? 'edit.address.title' : 'add.new.address.title';
-        const currentState = { ...this.state };
+        const currentState = {...this.state};
 
         return (
             <Grid container>
-                <Grid item xs={ 12 }>
+                <Grid item xs={12}>
                     <CustomerPageTitle
-                        title={<FormattedMessage id={ pageTitle } />}
+                        title={<FormattedMessage id={pageTitle} />}
                     />
                 </Grid>
 
-                <Grid item xs={ 9 }>
+                <Grid item xs={9}>
                     <SprykerForm
-                        form={ {
+                        form={{
                             formName: 'addressForm',
                             onChangeHandler: this.handleChange,
                             onSubmitHandler: this.handleSubmitForm,
                             fields: setFormFields(currentState, countries, this.handleCheckbox)
-                        } }
+                        }}
                         SubmitButton={
                             <Grid container>
-                                <Grid item xs={ 12 } sm={ 4 }>
+                                <Grid item xs={12} sm={4}>
                                     <SprykerButton
-                                        title={ <FormattedMessage id={ 'word.save.title' } /> }
+                                        title={<FormattedMessage id={'word.save.title'} />}
                                         btnType="submit"
                                         extraClasses={classes.addButton}
-                                        disabled={ isLoading }
+                                        disabled={isLoading}
                                     />
                                 </Grid>
                             </Grid>
                         }
                     />
                 </Grid>
-                <Grid item xs={ 12 } className={ classes.addButton }>
+                <Grid item xs={12} className={classes.addButton}>
                     <Button
                         color="primary"
-                        onClick={ () => routerGoBack() }
-                        disabled={ isLoading }
+                        onClick={() => routerGoBack()}
+                        disabled={isLoading}
                     >
                         Cancel
                     </Button>

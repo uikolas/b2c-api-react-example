@@ -46,6 +46,7 @@ import { getCategoryNameById } from 'src/shared/helpers/categories/index';
 import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageError } from 'src/shared/constants/notifications';
 
 @(withRouter as Function)
 @connect
@@ -173,7 +174,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             console.error('can\'t make request in updateSearch method!!!');
             NotificationsMessage({
                 id: 'validate.range.input.error.message',
-                type: 'error'
+                type: typeMessageError
             });
 
             return;

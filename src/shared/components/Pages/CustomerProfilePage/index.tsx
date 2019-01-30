@@ -11,6 +11,7 @@ import { styles } from './styles';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageWarning } from 'src/shared/constants/notifications';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -84,7 +85,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         if (!firstName || !lastName || !email || !salutation) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
-                type: 'warning'
+                type: typeMessageWarning
             });
 
             return null;
@@ -99,7 +100,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
-                type: 'warning'
+                type: typeMessageWarning
             });
 
             return null;
@@ -107,7 +108,7 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         if (newPassword !== confirmPassword) {
             NotificationsMessage({
                 id: 'password.not.equal.message',
-                type: 'warning'
+                type: typeMessageWarning
             });
 
             return null;

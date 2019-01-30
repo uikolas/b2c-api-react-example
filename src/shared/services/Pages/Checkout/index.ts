@@ -14,6 +14,10 @@ import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServi
 import { ICheckoutResponseData } from 'src/shared/stores/reducers/pages/checkout/types';
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import {
+    typeMessageSuccess,
+    typeMessageError
+} from 'src/shared/constants/notifications';
 
 interface IRequestBody {
     data: {
@@ -60,7 +64,7 @@ export class CheckoutService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -69,7 +73,7 @@ export class CheckoutService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -101,7 +105,7 @@ export class CheckoutService extends ApiServiceAbstract {
                 dispatch(sendCheckoutDataFulfilledStateAction(response.data.data.attributes.orderReference));
                 NotificationsMessage({
                     id: 'order.successfully.created.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -109,7 +113,7 @@ export class CheckoutService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -118,7 +122,7 @@ export class CheckoutService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }

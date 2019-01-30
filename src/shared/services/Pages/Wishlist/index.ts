@@ -12,6 +12,10 @@ import {
     TRowWishlistIncludedResponse
 } from 'src/shared/services/Pages/Wishlist/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import {
+    typeMessageSuccess,
+    typeMessageError
+} from 'src/shared/constants/notifications';
 
 interface IRequestBody {
     data: {
@@ -49,7 +53,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -61,7 +65,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -97,7 +101,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -109,7 +113,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -131,7 +135,7 @@ export class WishlistService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'wishlist.created.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
                 const parsedWishlist: IWishlist = WishlistService.parseWishlistResponse(response.data.data);
                 dispatch({
@@ -149,7 +153,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
 
                 return '';
@@ -163,7 +167,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
 
             return '';
@@ -184,7 +188,7 @@ export class WishlistService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'wishlist.deleted.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
@@ -199,7 +203,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -211,7 +215,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -254,7 +258,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -266,7 +270,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -314,7 +318,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'wishlist.add.product.message',
                     message: wishlist.name,
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -325,7 +329,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -337,7 +341,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -359,7 +363,7 @@ export class WishlistService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'wishlist.removed.items.message',
-                    type: 'success'
+                    type: typeMessageSuccess
                 });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
@@ -377,7 +381,7 @@ export class WishlistService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
             }
 
@@ -389,7 +393,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }
@@ -417,7 +421,7 @@ export class WishlistService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: 'error'
+                type: typeMessageError
             });
         }
     }

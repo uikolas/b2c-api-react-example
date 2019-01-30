@@ -14,6 +14,7 @@ import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageError } from 'src/shared/constants/notifications';
 
 export class OrderService extends ApiServiceAbstract {
     // Get collection of orders
@@ -37,7 +38,7 @@ export class OrderService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
       }
 
@@ -46,7 +47,7 @@ export class OrderService extends ApiServiceAbstract {
             NotificationsMessage({
               messageWithCustomText: 'unexpected.error.message',
               message: error.message,
-              type: 'error'
+              type: typeMessageError
           });
         }
     }
@@ -73,7 +74,7 @@ export class OrderService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: 'error'
+                    type: typeMessageError
                 });
       }
 
@@ -82,7 +83,7 @@ export class OrderService extends ApiServiceAbstract {
             NotificationsMessage({
               messageWithCustomText: 'unexpected.error.message',
               message: error.message,
-              type: 'error'
+              type: typeMessageError
           });
         }
     }

@@ -4,6 +4,7 @@ import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../contentRoutes';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageSuccess } from 'src/shared/constants/notifications';
 
 @connect
 @(withRouter as Function)
@@ -22,7 +23,7 @@ export class ProtectedRoute extends React.PureComponent<Props> {
             this.props.history.push(pathLoginPage);
             NotificationsMessage({
                 id: 'customer.logout.message',
-                type: 'success'
+                type: typeMessageSuccess
             });
             setTimeout(() => {
                 this.props.getGuestCartAction(this.props.anonymId);

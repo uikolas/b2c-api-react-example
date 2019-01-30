@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { SuccessIcon, RejectIcon } from '..//MessageIcons';
+
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
@@ -9,26 +9,15 @@ export interface INotificationsMessage {
     messageWithCustomText?: string;
     type?: string;
     id?: string;
+    icon?: React.ReactNode;
 }
 
 export interface INotificationsMessageWithStyles extends WithStyles<typeof styles>, INotificationsMessage {
 
 }
 
-export const NotificationsMessageTemplateBase: React.SFC<INotificationsMessageWithStyles> = (props) => {
-    const {message, messageWithCustomText, type, id, classes} = props;
-    let iconComponent: boolean | React.ReactNode = false;
-
-    switch (type) {
-        case 'error':
-            iconComponent = <RejectIcon />;
-            break;
-        case 'success':
-            iconComponent = <SuccessIcon />;
-            break;
-        default:
-            iconComponent = false;
-    }
+export const NotificationsMessageTemplateBase: React.SFC<INotificationsMessageWithStyles> = props => {
+    const {message, messageWithCustomText, icon, id, classes} = props;
 
     const messageWithInformation = messageWithCustomText
         ? <FormattedMessage id={messageWithCustomText} values={{messageText: message}} />
@@ -36,9 +25,9 @@ export const NotificationsMessageTemplateBase: React.SFC<INotificationsMessageWi
 
     return (
         <>
-            {iconComponent &&
+            {icon &&
                 <span className={classes.icon}>
-                    {iconComponent}
+                    {icon}
                 </span>
             }
             {id

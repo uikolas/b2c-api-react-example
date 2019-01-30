@@ -36,6 +36,7 @@ import {
 import { ProductDetail } from 'src/shared/components/Pages/ProductPage/ProductDetail';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeMessageError } from 'src/shared/constants/notifications';
 
 const quantitySelectedInitial = 1;
 
@@ -206,7 +207,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         } catch (error) {
             NotificationsMessage({
                 id: 'error.durning.add.product.to.cart.message',
-                type: 'error'
+                type: typeMessageError
             });
         }
     };
