@@ -16,7 +16,6 @@ import {
     getExtraOptionsToSelection,
     getAddressForm,
 } from './helpers';
-import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { CheckoutForms } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms';
 import { CartData } from 'src/shared/components/Pages/CheckoutPage/CartData';
@@ -424,13 +423,12 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         } = this.props;
 
         if (isAppStateLoading) {
-            return <AppMain><AppBackdrop isOpen={true}/></AppMain>;
+            return <AppMain/>;
         }
 
         return (
             <AppMain>
-                { isCheckoutLoading ? <AppBackdrop isOpen={ true } /> : null }
-                { !isProductsExists && !orderId
+                {  !isProductsExists && !orderId
                     ? <AppPageTitle title={ <FormattedMessage id={ 'no.products.in.checkout.title' } /> } />
                     : <CheckoutPageContext.Provider
                         value={ {

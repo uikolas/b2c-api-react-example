@@ -1,11 +1,12 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
 import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { IApiResponseData } from 'src/shared/services/types';
 import { TRowProductResponseIncluded } from 'src/shared/helpers/product/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class CatalogService extends ApiServiceAbstract {
     public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
@@ -17,23 +18,31 @@ export class CatalogService extends ApiServiceAbstract {
                 const responseParsed = parseCatalogSearchResponse(response.data);
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
-                    payloadSearchFulfilled: responseParsed,
+                    payloadSearchFulfilled: responseParsed
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: {error: errorMessage},
+                    payloadRejected: {error: errorMessage}
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: {error: error.message},
+                payloadRejected: {error: error.message}
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -43,7 +52,7 @@ export class CatalogService extends ApiServiceAbstract {
             const response: IApiResponseData = await api.get(
                 'catalog-search-suggestions',
                 {q: query, include: 'abstract-products,abstract-product-prices'},
-                {withCredentials: true},
+                {withCredentials: true}
             );
 
             if (response.ok) {
@@ -72,27 +81,33 @@ export class CatalogService extends ApiServiceAbstract {
                     payloadSuggestionFulfilled: {
                         suggestions: products,
                         categories: data.data[0].attributes.categories,
-                        /*searchTerm: query,
-                        currency: data.data[0].attributes.currency || '',*/
-                        completion: data.data[0].attributes.completion,
-                    },
+                        completion: data.data[0].attributes.completion
+                    }
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: {error: errorMessage},
+                    payloadRejected: {error: errorMessage}
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
 
                 return null;
             }
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: {error: error.message},
+                payloadRejected: {error: error.message}
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 }

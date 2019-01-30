@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { toast } from 'react-toastify';
 import { Route, withRouter } from 'react-router';
 import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../contentRoutes';
-import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationSuccess } from 'src/shared/constants/notifications';
 
 @connect
 @(withRouter as Function)
@@ -21,7 +21,10 @@ export class ProtectedRoute extends React.PureComponent<Props> {
     public componentDidUpdate(prevProps: Props): void {
         if (prevProps.isUserLoggedIn && !this.props.isUserLoggedIn) {
             this.props.history.push(pathLoginPage);
-            toast.success(<FormattedMessage id={ 'customer.logout.message' } />);
+            NotificationsMessage({
+                id: 'customer.logout.message',
+                type: typeNotificationSuccess
+            });
             setTimeout(() => {
                 this.props.getGuestCartAction(this.props.anonymId);
             }, 100);

@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import api from 'src/shared/services/api';
 import { saveLoginDataToStoreAction } from '@stores/actions/pages/customerProfile';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer';
@@ -11,7 +10,12 @@ import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServi
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { IApiResponseData } from 'src/shared/services/types';
-import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import {
+    typeNotificationSuccess,
+    typeNotificationError,
+    typeNotificationWarning
+} from 'src/shared/constants/notifications';
 
 export class PagesLoginService extends ApiServiceAbstract {
     public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
@@ -29,7 +33,10 @@ export class PagesLoginService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_FULFILLED',
                 });
 
-                toast.success(FormattedMessageTemplate('register.success.message'));
+                NotificationsMessage({
+                    id: 'register.success.message',
+                    type: typeNotificationSuccess
+                });
 
                 await PagesLoginService.loginRequest(dispatch, {
                     username: payload.email,
@@ -43,9 +50,15 @@ export class PagesLoginService extends ApiServiceAbstract {
                 });
 
                 if (response.status === 422) {
-                    toast.warn(errorMessage);
+                    NotificationsMessage({
+                        message: errorMessage,
+                        type: typeNotificationWarning
+                    });
                 } else {
-                    toast.error(errorMessage);
+                    NotificationsMessage({
+                        message: errorMessage,
+                        type: typeNotificationError
+                    });
                 }
             }
 
@@ -54,7 +67,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: {error: error.message},
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -76,16 +93,26 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch(saveLoginDataToStoreAction({email: payload.username}));
                 saveAccessDataToLocalStorage(responseParsed);
                 dispatch(loginCustomerFulfilledStateAction(responseParsed));
-                toast.success(FormattedMessageTemplate('customer.login.message'));
+                NotificationsMessage({
+                    id: 'customer.login.message',
+                    type: typeNotificationSuccess
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(loginCustomerRejectedStateAction(errorMessage));
-                toast.error(errorMessage);
+                NotificationsMessage({
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
             dispatch(loginCustomerRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -108,13 +135,19 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                 });
-                toast.success('Link for restore password sended to your Email.');
+                NotificationsMessage({
+                    id: 'link.sanded.created.message',
+                    type: typeNotificationSuccess
+                });
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: {error: response.problem},
                 });
-                toast.error(response.problem);
+                NotificationsMessage({
+                    message: response.problem,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
@@ -122,7 +155,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: {error: error.message},
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -149,13 +186,20 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                 });
-                toast.success('Password updated successfull.');
+                NotificationsMessage({
+                    id: 'password.successfull.updated.message',
+                    type: typeNotificationSuccess
+                });
             } else {
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     payloadRejected: {error: response.problem},
                 });
-                toast.error('Request Error: ' + response.problem);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: response.problem,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
@@ -163,7 +207,11 @@ export class PagesLoginService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 payloadRejected: {error: error.message},
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 }

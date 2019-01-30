@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
 import api, { setAuthToken } from 'src/shared/services/api';
@@ -10,7 +9,11 @@ import {
     IRequestUpdateAddressBody
 } from 'src/shared/services/Pages/Addresses/types';
 import { parseOneAddressRawResponse } from 'src/shared/helpers/address/response';
-import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import {
+    typeNotificationSuccess,
+    typeNotificationError
+} from 'src/shared/constants/notifications';
 
 export class AddressesService extends ApiServiceAbstract {
     public static async getCustomerAddresses(
@@ -40,7 +43,11 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
@@ -48,7 +55,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error: error.message
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -75,14 +86,22 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
         } catch (error) {
             dispatch({
                 type: ACTION_TYPE + '_REJECTED',
                 error: error.message
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }public static async addAddress(
         ACTION_TYPE: string,
@@ -110,7 +129,10 @@ export class AddressesService extends ApiServiceAbstract {
                     address: {id: response.data.data.id, ...response.data.data.attributes},
 
                 });
-                toast.success(FormattedMessageTemplate('new.address.added.message'));
+                NotificationsMessage({
+                    id: 'new.address.added.message',
+                    type: typeNotificationSuccess
+                });
 
                 // TODO - when after adding address in response will be id !== null - delete getCustomerAddresses
                 await AddressesService.getCustomerAddresses('ADDRESSES_LIST', dispatch, customerId);
@@ -120,7 +142,11 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
@@ -128,7 +154,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -145,7 +175,10 @@ export class AddressesService extends ApiServiceAbstract {
             );
 
             if (response.ok) {
-                toast.success(FormattedMessageTemplate('address.removed.message'));
+                NotificationsMessage({
+                    id: 'address.removed.message',
+                    type: typeNotificationSuccess
+                });
                 dispatch({
                     type: ACTION_TYPE + '_FULFILLED',
                     addressId
@@ -156,7 +189,11 @@ export class AddressesService extends ApiServiceAbstract {
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
@@ -164,7 +201,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error,
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -197,14 +238,21 @@ export class AddressesService extends ApiServiceAbstract {
                         data: response.data.data.attributes
                     }
                 });
-                toast.success(FormattedMessageTemplate('address.updated.message'));
+                NotificationsMessage({
+                    id: 'address.updated.message',
+                    type: typeNotificationSuccess
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
                     type: ACTION_TYPE + '_REJECTED',
                     error: errorMessage
                 });
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
@@ -212,7 +260,11 @@ export class AddressesService extends ApiServiceAbstract {
                 type: ACTION_TYPE + '_REJECTED',
                 error
             });
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 }

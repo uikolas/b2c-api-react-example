@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { StickyContainer } from 'react-sticky';
-import { Slide, toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { addLocaleData, IntlProvider } from 'react-intl';
 
 import { withRouter } from 'react-router';
@@ -20,7 +18,7 @@ import {
     initApplicationDataAction,
     setAuthFromStorageAction,
     IInitApplicationDataPayload
-} from '@stores/actions/Common/init';
+} from '@stores/actions/common/init';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import { isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { clearSearchTermAction } from '@stores/actions/pages/search';
@@ -28,6 +26,7 @@ import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { TAppLocale } from 'src/shared/interfaces/locale';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
+import { Notifications } from 'src/shared/components/Common/Notifications';
 import { messages } from 'src/shared/translation/index';
 
 const styles = require('./style.scss');
@@ -122,18 +121,9 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
                             onMobileNavToggle={ this.mobileNavToggle }
                             isMobileNavOpened={ mobileNavOpened }
                         />
-                        { getContentRoutes(this.isDataFulfilled()) }
-                        <ToastContainer
-                            autoClose={ 3000 }
-                            transition={ Slide }
-                            position={ toast.POSITION.BOTTOM_LEFT }
-                            pauseOnHover={ true }
-                            style={ {
-                                width: '90%',
-                                left: 0
-                            } }
-                        />
-                        <AppFooter />
+                        {getContentRoutes(this.isDataFulfilled())}
+                        <Notifications />
+                        <AppFooter/>
                     </StickyContainer>
                 </div>
             </IntlProvider>
