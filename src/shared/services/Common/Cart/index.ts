@@ -15,8 +15,8 @@ import { IResponseError } from 'src/shared/services/apiAbstractions/types';
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from 'src/shared/components/Common/Notifications/NotificationsMessage';
 import {
-    typeMessageSuccess,
-    typeMessageError
+    typeNotificationSuccess,
+    typeNotificationError
 } from 'src/shared/constants/notifications';
 
 export class CartService extends ApiServiceAbstract {
@@ -47,7 +47,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'request.error.message',
                 message: err.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
 
             return '';
@@ -89,7 +89,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
 
             return '';
@@ -122,7 +122,7 @@ export class CartService extends ApiServiceAbstract {
                 dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
                 NotificationsMessage({
                     id: 'items.added.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
 
             } else {
@@ -134,7 +134,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -166,7 +166,7 @@ export class CartService extends ApiServiceAbstract {
 
                 NotificationsMessage({
                     id: 'items.removed.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
                 const newCartResponse: IApiResponseData = await api.get(`carts/${cartId}`);
 
@@ -188,7 +188,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -226,7 +226,7 @@ export class CartService extends ApiServiceAbstract {
                 dispatch(cartActions.cartUpdateItemFulfilledStateAction(responseParsed));
                 NotificationsMessage({
                     id: 'cart.changed.quantity.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 this.errorMessageInform(response, dispatch);
@@ -237,7 +237,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -254,7 +254,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -309,7 +309,7 @@ export class CartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -348,7 +348,7 @@ export class CartService extends ApiServiceAbstract {
         NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
-            type: typeMessageError
+            type: typeNotificationError
         });
     }
 }

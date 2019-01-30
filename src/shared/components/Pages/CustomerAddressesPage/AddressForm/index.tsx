@@ -12,7 +12,7 @@ import { setFormFields, IFieldInput } from './settings';
 import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeMessageWarning } from 'src/shared/constants/notifications';
+import { typeNotificationWarning } from 'src/shared/constants/notifications';
 
 @connect
 export class AddressForm extends React.Component<Props, State> {
@@ -80,7 +80,7 @@ export class AddressForm extends React.Component<Props, State> {
         if (!salutation || !firstName || !lastName || !address1 || !address2 || !zipCode || !city || !iso2Code) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
-                type: typeMessageWarning
+                type: typeNotificationWarning
             });
 
             return;

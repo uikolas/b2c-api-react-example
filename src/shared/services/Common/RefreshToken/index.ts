@@ -5,7 +5,7 @@ import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeMessageError } from 'src/shared/constants/notifications';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class RefreshTokenService extends ApiServiceAbstract {
     public static async getActualToken(dispatch: Function): Promise<string> {
@@ -32,7 +32,7 @@ export class RefreshTokenService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'unexpected.error.message',
                     message: error.message,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
 
                 return Promise.reject(error.message);
@@ -76,7 +76,7 @@ export class RefreshTokenService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'request.error.message',
                 message: errorMessage,
-                type: typeMessageError
+                type: typeNotificationError
             });
 
             return Promise.reject(errorMessage);

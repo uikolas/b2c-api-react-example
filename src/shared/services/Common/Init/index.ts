@@ -19,7 +19,7 @@ import { ICategory } from 'src/shared/interfaces/category';
 import { IInitData } from 'src/shared/interfaces/init/index';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeMessageError } from 'src/shared/constants/notifications';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class InitAppService extends ApiServiceAbstract {
     public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {
@@ -51,7 +51,7 @@ export class InitAppService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -60,7 +60,7 @@ export class InitAppService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -83,7 +83,7 @@ export class InitAppService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -92,7 +92,7 @@ export class InitAppService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -109,7 +109,7 @@ export class InitAppService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'change.language.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }

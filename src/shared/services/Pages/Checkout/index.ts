@@ -15,8 +15,8 @@ import { ICheckoutResponseData } from 'src/shared/stores/reducers/pages/checkout
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import {
-    typeMessageSuccess,
-    typeMessageError
+    typeNotificationSuccess,
+    typeNotificationError
 } from 'src/shared/constants/notifications';
 
 interface IRequestBody {
@@ -64,7 +64,7 @@ export class CheckoutService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -73,7 +73,7 @@ export class CheckoutService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -105,7 +105,7 @@ export class CheckoutService extends ApiServiceAbstract {
                 dispatch(sendCheckoutDataFulfilledStateAction(response.data.data.attributes.orderReference));
                 NotificationsMessage({
                     id: 'order.successfully.created.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -113,7 +113,7 @@ export class CheckoutService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -122,7 +122,7 @@ export class CheckoutService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }

@@ -6,7 +6,7 @@ import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { IApiResponseData } from 'src/shared/services/types';
 import { TRowProductResponseIncluded } from 'src/shared/helpers/product/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeMessageError } from 'src/shared/constants/notifications';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class CatalogService extends ApiServiceAbstract {
     public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
@@ -29,7 +29,7 @@ export class CatalogService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -41,7 +41,7 @@ export class CatalogService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -93,7 +93,7 @@ export class CatalogService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
 
                 return null;
@@ -106,7 +106,7 @@ export class CatalogService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }

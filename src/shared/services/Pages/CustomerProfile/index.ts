@@ -14,8 +14,8 @@ import { logout } from '@stores/actions/pages/login';
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import {
-    typeMessageSuccess,
-    typeMessageError
+    typeNotificationSuccess,
+    typeNotificationError
 } from 'src/shared/constants/notifications';
 
 interface IRequestBody {
@@ -57,7 +57,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -66,7 +66,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -103,7 +103,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 dispatch(CustomerProfileActions.updateCustomerProfileFulfilledStateAction(responseParsed));
                 NotificationsMessage({
                     id: 'profile.data.successfully.updated.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -111,7 +111,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -120,7 +120,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -152,7 +152,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 dispatch(CustomerProfileActions.updateCustomerPasswordFulfilledStateAction());
                 NotificationsMessage({
                     id: 'password.successfully.updated.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -160,7 +160,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -169,7 +169,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -192,7 +192,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 dispatch(CustomerProfileActions.deleteCustomerFulfilledStateAction());
                 NotificationsMessage({
                     id: 'account.was.deleted.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
@@ -200,7 +200,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -210,7 +210,7 @@ export class CustomerProfileService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }

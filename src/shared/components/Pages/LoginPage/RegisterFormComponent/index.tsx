@@ -8,7 +8,7 @@ import { RegisterFormProps as Props, RegisterFormState as State } from './types'
 import { InputChangeEvent, FormEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeMessageWarning } from 'src/shared/constants/notifications';
+import { typeNotificationWarning } from 'src/shared/constants/notifications';
 
 export class RegisterFormBase extends React.Component<Props, State> {
     public state = {
@@ -40,7 +40,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
-                type: typeMessageWarning
+                type: typeNotificationWarning
             });
 
             return null;
@@ -49,7 +49,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
         if (password !== confirmPassword) {
             NotificationsMessage({
                 id: 'password.not.equal.message',
-                type: typeMessageWarning
+                type: typeNotificationWarning
             });
 
             return null;

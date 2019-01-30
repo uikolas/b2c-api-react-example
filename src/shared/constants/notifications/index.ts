@@ -1,3 +1,3 @@
-export const typeMessageError = 'error';
-export const typeMessageWarning = 'warning';
-export const typeMessageSuccess = 'success';
+export const typeNotificationError = 'error';
+export const typeNotificationWarning = 'warning';
+export const typeNotificationSuccess = 'success';

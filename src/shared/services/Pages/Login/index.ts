@@ -12,9 +12,9 @@ import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import {
-    typeMessageSuccess,
-    typeMessageError,
-    typeMessageWarning
+    typeNotificationSuccess,
+    typeNotificationError,
+    typeNotificationWarning
 } from 'src/shared/constants/notifications';
 
 export class PagesLoginService extends ApiServiceAbstract {
@@ -35,7 +35,7 @@ export class PagesLoginService extends ApiServiceAbstract {
 
                 NotificationsMessage({
                     id: 'register.success.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
 
                 await PagesLoginService.loginRequest(dispatch, {
@@ -52,12 +52,12 @@ export class PagesLoginService extends ApiServiceAbstract {
                 if (response.status === 422) {
                     NotificationsMessage({
                         message: errorMessage,
-                        type: typeMessageWarning
+                        type: typeNotificationWarning
                     });
                 } else {
                     NotificationsMessage({
                         message: errorMessage,
-                        type: typeMessageError
+                        type: typeNotificationError
                     });
                 }
             }
@@ -70,7 +70,7 @@ export class PagesLoginService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -95,14 +95,14 @@ export class PagesLoginService extends ApiServiceAbstract {
                 dispatch(loginCustomerFulfilledStateAction(responseParsed));
                 NotificationsMessage({
                     id: 'customer.login.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(loginCustomerRejectedStateAction(errorMessage));
                 NotificationsMessage({
                     message: errorMessage,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -111,7 +111,7 @@ export class PagesLoginService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -137,7 +137,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 });
                 NotificationsMessage({
                     id: 'link.sanded.created.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 dispatch({
@@ -146,7 +146,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 });
                 NotificationsMessage({
                     message: response.problem,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -158,7 +158,7 @@ export class PagesLoginService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -188,7 +188,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 });
                 NotificationsMessage({
                     id: 'password.successfull.updated.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
             } else {
                 dispatch({
@@ -198,7 +198,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: response.problem,
-                    type: typeMessageError
+                    type: typeNotificationError
                 });
             }
 
@@ -210,7 +210,7 @@ export class PagesLoginService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }

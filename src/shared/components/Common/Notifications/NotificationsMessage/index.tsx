@@ -6,9 +6,9 @@ import {
 import { toast } from 'react-toastify';
 import { SuccessIcon, RejectIcon } from '../MessageIcons';
 import {
-    typeMessageWarning,
-    typeMessageSuccess,
-    typeMessageError
+    typeNotificationWarning,
+    typeNotificationSuccess,
+    typeNotificationError
 } from 'src/shared/constants/notifications';
 
 export const NotificationsMessage: Function = (props: INotificationsMessage) => {
@@ -17,15 +17,15 @@ export const NotificationsMessage: Function = (props: INotificationsMessage) => 
     let iconComponent;
 
     switch (type) {
-        case typeMessageError:
+        case typeNotificationError:
             iconComponent = <RejectIcon />;
             toastType = toast.TYPE.ERROR;
             break;
-        case typeMessageSuccess:
+        case typeNotificationSuccess:
             iconComponent = <SuccessIcon />;
             toastType = toast.TYPE.SUCCESS;
             break;
-        case typeMessageWarning:
+        case typeNotificationWarning:
             toastType = toast.TYPE.WARNING;
             break;
         default:

@@ -7,8 +7,8 @@ import { IApiResponseData } from 'src/shared/services/types';
 import { IResponseError } from 'src/shared/services/apiAbstractions/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import {
-    typeMessageSuccess,
-    typeMessageError
+    typeNotificationSuccess,
+    typeNotificationError
 } from 'src/shared/constants/notifications';
 
 export class GuestCartService extends ApiServiceAbstract {
@@ -34,7 +34,7 @@ export class GuestCartService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'items.added.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
                 const responseParsed = parseGuestCartResponse(response.data);
                 dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
@@ -47,7 +47,7 @@ export class GuestCartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -88,7 +88,7 @@ export class GuestCartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
 
             return '';
@@ -113,7 +113,7 @@ export class GuestCartService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'items.removed.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
                 await GuestCartService.getGuestCart(dispatch, anonymId);
             } else {
@@ -125,7 +125,7 @@ export class GuestCartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -155,7 +155,7 @@ export class GuestCartService extends ApiServiceAbstract {
             if (response.ok) {
                 NotificationsMessage({
                     id: 'cart.changed.quantity.message',
-                    type: typeMessageSuccess
+                    type: typeNotificationSuccess
                 });
 
                 const responseParsed = parseGuestCartResponse(response.data);
@@ -169,7 +169,7 @@ export class GuestCartService extends ApiServiceAbstract {
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
-                type: typeMessageError
+                type: typeNotificationError
             });
         }
     }
@@ -180,7 +180,7 @@ export class GuestCartService extends ApiServiceAbstract {
         NotificationsMessage({
             messageWithCustomText: 'request.error.message',
             message: errorMessage,
-            type: typeMessageError
+            type: typeNotificationError
         });
     }
 }
