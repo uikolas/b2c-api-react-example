@@ -47,6 +47,7 @@ import {
 import { getCategoryNameById } from 'src/shared/helpers/categories/index';
 import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
 import { FormattedMessage } from 'react-intl';
+import { Breadcrumbs } from 'src/shared/components/Common/Breadcrumbs';
 
 @(withRouter as Function)
 @connect
@@ -396,6 +397,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         return (
             <AppMain>
                 {isLoading ? <AppBackdrop isOpen={true}/> : null}
+                <Breadcrumbs {...this.props} />
                 <AppPageTitle
                     title={ searchTerm
                         ? <FormattedMessage
