@@ -423,7 +423,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         } = this.props;
 
         if (isAppStateLoading) {
-          return <AppMain />;
+            return <AppMain/>;
         }
 
         return (

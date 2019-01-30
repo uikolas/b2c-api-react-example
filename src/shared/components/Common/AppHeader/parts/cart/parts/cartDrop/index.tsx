@@ -27,7 +27,7 @@ export class CartDropComponent extends React.PureComponent<Props> {
 
         return (
             <div className={classes.cartDrop}>
-                <Typography gutterBottom component="h3" className={classes.title}>
+                <Typography gutterBottom component="h3" className={ classes.title }>
                     <FormattedMessage id={ 'word.cart.title' } />
                 </Typography>
 

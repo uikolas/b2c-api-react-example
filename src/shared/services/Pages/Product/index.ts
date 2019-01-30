@@ -1,5 +1,4 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { parseProductResponse } from 'src/shared/helpers/product';
 import {
     getProductAvailabilityFulfilledStateAction,
@@ -13,6 +12,8 @@ import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServi
 import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from 'src/shared/interfaces/product/index';
 import { parseProductAvailabilityResponse } from 'src/shared/helpers/product/productResponse';
 import { IApiResponseData } from 'src/shared/services/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class ProductService extends ApiServiceAbstract {
     public static async getAbstractData(dispatch: Function, sku: string): Promise<void> {
@@ -34,12 +35,20 @@ export class ProductService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(getProductDataRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
             dispatch(getProductDataRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 
@@ -61,12 +70,20 @@ export class ProductService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(getProductAvailabilityRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
             }
 
         } catch (error) {
             dispatch(getProductAvailabilityRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error);
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
+            });
         }
     }
 }

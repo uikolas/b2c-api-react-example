@@ -1,5 +1,4 @@
 import api, { setAuthToken } from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken/index';
 import {
     orderDetailsFulfilledStateAction,
@@ -14,6 +13,8 @@ import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class OrderService extends ApiServiceAbstract {
     // Get collection of orders
@@ -34,12 +35,20 @@ export class OrderService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(ordersCollectionRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
-            }
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
+      }
 
         } catch (error) {
             dispatch(ordersCollectionRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+              messageWithCustomText: 'unexpected.error.message',
+              message: error.message,
+              type: typeNotificationError
+          });
         }
     }
 
@@ -62,12 +71,20 @@ export class OrderService extends ApiServiceAbstract {
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch(orderDetailsRejectedStateAction(errorMessage));
-                toast.error('Request Error: ' + errorMessage);
-            }
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
+                });
+      }
 
         } catch (error) {
             dispatch(orderDetailsRejectedStateAction(error.message));
-            toast.error('Unexpected Error: ' + error.message);
+            NotificationsMessage({
+              messageWithCustomText: 'unexpected.error.message',
+              message: error.message,
+              type: typeNotificationError
+          });
         }
     }
 }

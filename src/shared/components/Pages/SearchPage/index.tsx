@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
@@ -46,6 +45,8 @@ import {
 import { getCategoryNameById } from 'src/shared/helpers/categories/index';
 import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 @(withRouter as Function)
 @connect
@@ -171,7 +172,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
         if (!this.validateData()) {
             console.error('can\'t make request in updateSearch method!!!');
-            toast.error(<FormattedMessage id={ 'validate.range.input.error.message' } />);
+            NotificationsMessage({
+                id: 'validate.range.input.error.message',
+                type: typeNotificationError
+            });
 
             return;
         }
@@ -395,7 +399,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         return (
             <AppMain>
                 <AppPageTitle
-                      title={ searchTerm
+                    title={ searchTerm
                         ? <FormattedMessage
                             id={ 'search.result.title' }
                             values={ { terms: searchTerm } }
