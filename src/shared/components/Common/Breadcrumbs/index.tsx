@@ -1,15 +1,47 @@
 import * as React from 'react';
+import { pathCategoryPageBase, pathHomePage } from '@routes/contentRoutes';
+import { NavLink } from 'react-router-dom';
+import { ICategoryForBreadcrumbs } from 'src/shared/interfaces/category/index';
+import { WithStyles } from '@material-ui/core';
+import { styles } from './styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-export const Breadcrumbs: any = props => {
-    let parts = this.props.location.pathname.split('/');
-    const place = parts[ parts.length - 1 ];
+interface IBreadcrumbst extends WithStyles<typeof styles> {
+    breadcrumbsList: ICategoryForBreadcrumbs[];
+}
 
-    console.log(place);
-    console.log(this.props.location);
+export const BreadcrumbsBase: React.SFC<IBreadcrumbst> = props => {
+    const {breadcrumbsList, classes} = props;
 
     return (
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum deserunt excepturi exercitationem minima necessitatibus nihil, odit quae quibusdam reiciendis repellendus repudiandae sed voluptate voluptatum. Exercitationem omnis porro suscipit tenetur voluptatibus?
-        </div>
+        <ul className={classes.list}>
+            <li className={classes.item}>
+                <NavLink className={classes.link} to={pathHomePage}>Home</NavLink>
+                {breadcrumbsList &&
+                    <span className={classes.separator}></span>
+                }
+            </li>
+            {breadcrumbsList &&
+                breadcrumbsList.map((value: ICategoryForBreadcrumbs) => {
+                    const {name, nodeId, current} = value;
+                    const currentClassName = current ? classes.current : null;
+
+                    return (
+                        <li className={classes.item}>
+                            <NavLink
+                                className={`${classes.link} ${currentClassName}`}
+                                to={`${pathCategoryPageBase}/${nodeId}`}>
+                                {name}
+                            </NavLink>
+                            {!current &&
+                                <span className={classes.separator}></span>
+                            }
+                        </li>
+                    );
+                })
+            }
+        </ul>
     );
 };
+
+export const Breadcrumbs = withStyles(styles)(BreadcrumbsBase);
