@@ -1,7 +1,6 @@
 import { IReduxState } from 'src/typings/app';
 import {
-    FlyoutSearch, ICatalogSearchDataParsed, ISearchPageData,
-    ISearchTermData
+    FlyoutSearch, ICatalogSearchDataParsed, ISearchPageData
 } from 'src/shared/interfaces/searchPageData/index';
 import { IActionData } from 'src/shared/stores/reducers/types';
 
