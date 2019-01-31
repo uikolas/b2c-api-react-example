@@ -12,5 +12,4 @@ export interface ISearchState extends IReduxState {
 export interface IPageSearchAction extends IActionData {
     payloadSearchFulfilled?: ICatalogSearchDataParsed;
     payloadSuggestionFulfilled?: FlyoutSearch;
-    payloadSearchTermFulfilled?: ISearchTermData;
 }
