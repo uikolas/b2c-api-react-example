@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { pathCategoryPageBase, pathHomePage } from '@routes/contentRoutes';
 import { NavLink } from 'react-router-dom';
-import { ICategoryForBreadcrumbs } from 'src/shared/interfaces/category/index';
+import { ICategoryForBreadcrumbs } from 'src/shared/interfaces/category';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -27,7 +27,7 @@ export const BreadcrumbsBase: React.SFC<IBreadcrumbst> = props => {
                     const currentClassName = current ? classes.current : null;
 
                     return (
-                        <li className={classes.item}>
+                        <li className={classes.item} key={`${name}${nodeId}`}>
                             <NavLink
                                 className={`${classes.link} ${currentClassName}`}
                                 to={`${pathCategoryPageBase}/${nodeId}`}>
