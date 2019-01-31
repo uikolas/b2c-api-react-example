@@ -1,13 +1,14 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { TextField, Button, Typography, MenuItem, Grid, Checkbox, FormControlLabel } from '@material-ui/core';
-import { toast } from 'react-toastify';
 import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer';
 import { formStyles } from '../styles';
 import { RegisterFormProps as Props, RegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationWarning } from 'src/shared/constants/notifications';
 
 export class RegisterFormBase extends React.Component<Props, State> {
     public state = {
@@ -37,13 +38,19 @@ export class RegisterFormBase extends React.Component<Props, State> {
         const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
 
         if (!salutation || !firstName || !lastName || !email || !password || !confirmPassword || !acceptedTerms) {
-            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+            NotificationsMessage({
+                id: 'empty.required.fields.message',
+                type: typeNotificationWarning
+            });
 
             return null;
         }
 
         if (password !== confirmPassword) {
-            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
+            NotificationsMessage({
+                id: 'password.not.equal.message',
+                type: typeNotificationWarning
+            });
 
             return null;
         }
@@ -188,4 +195,4 @@ export class RegisterFormBase extends React.Component<Props, State> {
     }
 }
 
-export const RegisterForm = withStyles(formStyles)(RegisterFormBase);
+export const RegisterFormComponent = withStyles(formStyles)(RegisterFormBase);

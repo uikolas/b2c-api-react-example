@@ -14,7 +14,7 @@ export const OrderPriceModeBase: React.SFC<IOrderPriceModeProps> = (props): JSX.
 
     return (
         <Typography component="span" color="inherit">
-            {`${title}${priceMode}`}
+            {title}{priceMode}
         </Typography>
     );
 };

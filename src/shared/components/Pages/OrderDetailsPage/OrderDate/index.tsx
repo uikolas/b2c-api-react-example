@@ -19,7 +19,7 @@ export const OrderDateBase: React.SFC<IOrderDateProps> = (props): JSX.Element =>
 
     return (
         <React.Fragment>
-            {`${title} ${dateToShow}, `}
+            {title} {`${dateToShow}, `}
             <FormattedDate
                 value={dateUTC}
                 timeZone={timeZone}

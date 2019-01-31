@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { toast } from 'react-toastify';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { SprykerDialog } from '../../UI/SprykerDialog';
@@ -11,6 +10,8 @@ import { ICustomerProfilePageProps as Props, ICustomerProfilePageState as State,
 import { styles } from './styles';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationWarning } from 'src/shared/constants/notifications';
 
 const keySalutation = 'salutation';
 const keyFirstName = 'firstName';
@@ -82,7 +83,10 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         const {firstName, lastName, salutation, email} = this.state.inputs;
 
         if (!firstName || !lastName || !email || !salutation) {
-            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+            NotificationsMessage({
+                id: 'empty.required.fields.message',
+                type: typeNotificationWarning
+            });
 
             return null;
         }
@@ -94,12 +98,18 @@ export class CustomerProfilePageBase extends React.Component<Props, State> {
         event.preventDefault();
         const { password, newPassword, confirmPassword } = this.state.inputs;
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
-            toast.warn(<FormattedMessage id={ 'empty.required.fields.message' } />);
+            NotificationsMessage({
+                id: 'empty.required.fields.message',
+                type: typeNotificationWarning
+            });
 
             return null;
         }
         if (newPassword !== confirmPassword) {
-            toast.warn(<FormattedMessage id={ 'password.not.equal.message' } />);
+            NotificationsMessage({
+                id: 'password.not.equal.message',
+                type: typeNotificationWarning
+            });
 
             return null;
         }
