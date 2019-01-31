@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { pathCategoryPageBase, pathHomePage } from '@routes/contentRoutes';
 import { NavLink } from 'react-router-dom';
-import { ICategoryForBreadcrumbs } from 'src/shared/interfaces/category';
+import { ICategoryForBreadcrumbs } from 'src/shared/interfaces/category/index';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import withStyles from '@material-ui/core/styles/withStyles';

@@ -48,7 +48,7 @@ import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
-import { Breadcrumbs } from 'src/shared/components/Common/Breadcrumbs';
+import { Breadcrumbs } from 'src/shared/components/Pages/SearchPage/CategoriesBreadcrumbs';
 import { ICategory } from '@interfaces/category';
 
 @(withRouter as Function)
