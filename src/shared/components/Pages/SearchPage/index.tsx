@@ -478,4 +478,4 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     }
 }
 
-export const SearchPageContainer = withStyles(styles)(SearchPageBase);
+export const SearchPage = withStyles(styles)(SearchPageBase);
