@@ -26,11 +26,14 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = props => 
         updateRangeHandler,
         onCloseFilterHandler,
         onAfterChangeRangeFilter,
-        isFiltersReset,
     } = props;
 
     let filterItems: JSX.Element[] | null = [];
     let rangeItems: JSX.Element[] | null = [];
+    const activeFilterItems: {
+        [key: string]: string
+    } = {};
+    const activerangeItems: object = {};
 
     const priceValueFormatter = (value: number) => (
         <AppPrice value={value * 100} extraClassName={classes.priceClassName}/>
@@ -59,6 +62,7 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = props => 
                         key={filter.name}
                     />,
                 );
+                if (filter.activeValue) activeFilterItems[filter.name] = filter.activeValue;
             }
         });
     }

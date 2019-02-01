@@ -6,6 +6,8 @@ import {
     ValueFacets,
 } from 'src/shared/interfaces/searchPageData';
 import { ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse } from 'src/shared/helpers/catalog/types';
+import { rangeFilterValueToFront } from '@helpers/common/transform';
+import { rangeMinType, rangeMaxType, RangeType } from '@components/Pages/SearchPage/types';
 
 export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed | null => {
     if (!response) {
@@ -21,6 +23,9 @@ export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse):
     const attributes = data[0].attributes;
     const pagination = attributes.pagination;
     const filters: ValueFacets[] = [];
+    const activeFilters: { [name: string]: string[] } = {};
+    const activeRangeFilters: { [key: string]: RangeType } = {};
+
     let category: FilterValue[] = [];
     let currentCategory: string = '';
     let categoriesLocalizedName: TLocalizedName | null = null;
@@ -32,16 +37,32 @@ export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse):
             categoriesLocalizedName = filter.localizedName;
         } else {
             filters.push(filter);
+
+            if (filter.activeValue) {
+                activeFilters[filter.name] = Array.isArray(filter.activeValue)
+                    ? filter.activeValue : [filter.activeValue];
+            }
+        }
+    });
+
+    attributes.rangeFacets.forEach(range => {
+        if (range.activeMin !== range.min || range.activeMax !== range.max) {
+            activeRangeFilters[range.name] = {
+                min: rangeFilterValueToFront(range.activeMin, rangeMinType),
+                max: rangeFilterValueToFront(range.activeMax, rangeMaxType)
+            };
         }
     });
 
     const result: ICatalogSearchDataParsed = {
         items: attributes.abstractProducts,
         filters,
+        activeFilters,
         category,
         currentCategory,
         currentSort: attributes.sort.currentSortParam,
         rangeFilters: attributes.rangeFacets,
+        activeRangeFilters,
         sortParams: attributes.sort.sortParamNames,
         sortParamLocalizedNames: attributes.sort.sortParamLocalizedNames,
         categoriesLocalizedName,

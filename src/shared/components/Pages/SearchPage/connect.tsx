@@ -11,7 +11,11 @@ import {
 import { getAppCurrency, getCategoriesTree } from '@stores/reducers/common/init';
 import { ISearchQuery, TSpellingSuggestion } from 'src/shared/interfaces/searchPageData';
 import { getRouterMatchParam } from 'src/shared/helpers/router';
-import { sendSearchAction } from '@stores/actions/pages/search';
+import {
+    sendSearchAction,
+    clearActiveFiltersAction,
+    clearSearchTermAction
+} from '@stores/actions/pages/search';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ICategory } from 'src/shared/interfaces/category';
 import { TAppCurrency } from 'src/shared/interfaces/currency';
@@ -32,7 +36,9 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         items: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.items : null,
         searchTerm: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.searchTerm : '',
         filters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.filters : null,
+        activeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.activeFilters : {},
         rangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.rangeFilters : null,
+        activeRangeFilters: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.activeRangeFilters : {},
         sortParams: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.sortParams : null,
         currentSort: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.currentSort : null,
         pagination: pageSearchProps && pageSearchProps.data ? pageSearchProps.data.pagination : null,
@@ -59,5 +65,7 @@ export const connect = reduxify(
         dispatch,
         changeLocation: (location: string) => dispatch(push(location)),
         sendSearch: (params: ISearchQuery) => dispatch(sendSearchAction(params)),
+        clearActiveFilters: () => dispatch(clearActiveFiltersAction()),
+        clearSearchTerm: () => dispatch(clearSearchTermAction())
     }),
 );
