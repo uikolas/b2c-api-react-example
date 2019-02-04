@@ -173,72 +173,70 @@ export class ProductPageBase extends React.Component<Props, State> {
         const images = this.getImageData(this.state.images);
 
         return (
-            <ErrorBoundary>
-                <AppMain>
-                    {(!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
-                        ? null
-                        : (
-                            <div className={classes.root}>
-                                <Grid container justify="center" className={classes.productMain}>
-                                    <Grid item xs={12} sm={12} md={7} className={classes.sliderParent}>
-                                        <div className={classes.sliderParentContainer}>
-                                            <ImageSlider
-                                                images={images}
-                                                uniqueKey={this.state.sku}
-                                                showThumbs={false}
-                                                showStatus={false}
-                                            />
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={5} className={classes.generalInfoParent}>
-                                        <ProductGeneralInfo
-                                            name={this.state.name}
-                                            sku={this.state.sku}
-                                            price={this.state.priceDefaultGross}
-                                            oldPrice={
-                                                this.state.priceOriginalGross ? this.state.priceOriginalGross : null
-                                            }
-                                            availability={getAvailabilityDisplay(this.state.availability)}
+            <AppMain>
+                {(!this.props.product || !this.state.productType || !this.props.isAppDataSet || this.props.isRejected)
+                    ? null
+                    : (
+                        <div className={classes.root}>
+                            <Grid container justify="center" className={classes.productMain}>
+                                <Grid item xs={12} sm={12} md={7} className={classes.sliderParent}>
+                                    <div className={classes.sliderParentContainer}>
+                                        <ImageSlider
+                                            images={images}
+                                            uniqueKey={this.state.sku}
+                                            showThumbs={false}
+                                            showStatus={false}
                                         />
-
-                                        {this.state.superAttributes &&
-                                            <ErrorBoundary>
-                                                <ProductSuperAttribute
-                                                    productData={this.state.superAttributes}
-                                                    onChange={this.handleSuperAttributesChange}
-                                                />
-                                            </ErrorBoundary>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={5} className={classes.generalInfoParent}>
+                                    <ProductGeneralInfo
+                                        name={this.state.name}
+                                        sku={this.state.sku}
+                                        price={this.state.priceDefaultGross}
+                                        oldPrice={
+                                            this.state.priceOriginalGross ? this.state.priceOriginalGross : null
                                         }
+                                        availability={getAvailabilityDisplay(this.state.availability)}
+                                    />
 
+                                    {this.state.superAttributes &&
                                         <ErrorBoundary>
-                                            <ProductConfiguratorAddToCart
+                                            <ProductSuperAttribute
+                                                productData={this.state.superAttributes}
+                                                onChange={this.handleSuperAttributesChange}
+                                            />
+                                        </ErrorBoundary>
+                                    }
+
+                                    <ErrorBoundary>
+                                        <ProductConfiguratorAddToCart
+                                            productType={this.state.productType}
+                                            product={this.props.product.concreteProducts[this.state.sku]}
+                                            sku={this.state.sku}
+                                        />
+                                    </ErrorBoundary>
+
+                                    {this.props.isUserLoggedIn &&
+                                        <ErrorBoundary>
+                                            <ProductConfiguratorAddToWishlist
                                                 productType={this.state.productType}
-                                                product={this.props.product.concreteProducts[this.state.sku]}
                                                 sku={this.state.sku}
                                             />
                                         </ErrorBoundary>
-
-                                        {this.props.isUserLoggedIn &&
-                                            <ErrorBoundary>
-                                                <ProductConfiguratorAddToWishlist
-                                                    productType={this.state.productType}
-                                                    sku={this.state.sku}
-                                                />
-                                            </ErrorBoundary>
-                                        }
-                                    </Grid>
+                                    }
                                 </Grid>
-                                <ProductDetail
-                                    attributes={this.state.attributes}
-                                    attributeNames={this.state.attributeNames}
-                                    description={this.state.description}
-                                    sku={this.state.sku ? this.state.sku : this.props.product.abstractProduct.sku}
-                                />
-                            </div>
-                        )
-                    }
-                </AppMain>
-            </ErrorBoundary>
+                            </Grid>
+                            <ProductDetail
+                                attributes={this.state.attributes}
+                                attributeNames={this.state.attributeNames}
+                                description={this.state.description}
+                                sku={this.state.sku ? this.state.sku : this.props.product.abstractProduct.sku}
+                            />
+                        </div>
+                    )
+                }
+            </AppMain>
         );
     }
 }
