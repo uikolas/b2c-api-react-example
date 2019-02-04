@@ -1,13 +1,13 @@
 import { WithStyles } from '@material-ui/core';
-import { formStyles } from 'src/shared/components/Pages/LoginPage/styles';
+import { styles } from './styles';
 import {
     TCustomerEmail,
     TCustomerFirstName,
     TCustomerLastName, TCustomerPassword,
     TCustomerSalutation,
-} from 'src/shared/interfaces/customer';
+} from 'src/shared/interfaces/customer/index';
 
-export interface RegisterFormProps extends WithStyles<typeof formStyles> {
+export interface RegisterFormProps extends WithStyles<typeof styles> {
     handleSubmit: Function;
 }
 

@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
 import { connect } from './connect';
+import { styles } from './styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { LoginPageProps, LoginPageState } from './types';
 import Grid from '@material-ui/core/Grid';
 import { NavLink } from 'react-router-dom';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
-import { AppMain } from '../../Common/AppMain';
-import { LoginForm } from './LoginForm';
-import { RegisterFormComponent } from './RegisterFormComponent';
-import { styles } from './styles';
+import { AppMain } from '@components/Common/AppMain';
+import { LoginForm } from '@components/containers/LoginForm';
+import { RegisterFormComponent } from '@components/containers/RegisterFormComponent';
 import { FormattedMessage } from 'react-intl';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
-@(withStyles(styles) as Function)
 @(withRouter as Function)
 @connect
-export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
+export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
     public state: LoginPageState = {};
 
     public componentDidUpdate(prevProps: LoginPageProps) {
@@ -26,33 +26,39 @@ export class LoginPage extends React.Component<LoginPageProps, LoginPageState> {
     }
 
     public render() {
-        const {classes} = this.props;
+        const {classes, handleSubmitLoginForm, handleSubmitRegisterForm} = this.props;
 
         return (
             <AppMain>
                 <Grid item xs={12} sm={12} md={6}
-                    direction="column"
-                    container
-                    justify="center"
-                    alignItems="center"
+                      direction="column"
+                      container
+                      justify="center"
+                      alignItems="center"
                 >
-                    <LoginForm handleSubmit={this.props.handleSubmitLoginForm} />
+                    <ErrorBoundary>
+                        <LoginForm handleSubmit={handleSubmitLoginForm} />
+                    </ErrorBoundary>
                     <div className={classes.link}>
                         <NavLink to={pathForgotPassword}>
-                            <FormattedMessage id={ 'forgot.password.title' } />
+                            <FormattedMessage id={'forgot.password.title'} />
                         </NavLink>
                     </div>
                 </Grid>
-                <div className={classes.divider} id="divider"/>
+                <div className={classes.divider} id="divider" />
                 <Grid item xs={12} sm={12} md={6}
-                    direction="column"
-                    container
-                    justify="center"
-                    alignItems="center"
+                      direction="column"
+                      container
+                      justify="center"
+                      alignItems="center"
                 >
-                    <RegisterFormComponent handleSubmit={this.props.handleSubmitRegisterForm}/>
+                    <ErrorBoundary>
+                        <RegisterFormComponent handleSubmit={handleSubmitRegisterForm} />
+                    </ErrorBoundary>
                 </Grid>
             </AppMain>
         );
     }
 }
+
+export const LoginPageComponent = withStyles(styles)(LoginPageBase);

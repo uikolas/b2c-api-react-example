@@ -1,6 +1,6 @@
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { isUserAuthenticated } from '@stores/reducers/Pages/Login';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { ICustomerLoginData, ICustomerProfile } from '@interfaces/customer';
 import { customerRegisterAction, loginCustomerAction } from '@stores/actions/pages/login';
 import { getCustomerCartsAction } from '@stores/actions/common/cart';

@@ -1,43 +1,29 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles  from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { reduxify } from 'src/shared/lib/redux-helper';
 import { resetPasswordAction } from '@stores/actions/pages/login';
 import { AppMain } from 'src/shared/components/Common/AppMain';
-import { getRouterMatchParam } from 'src/shared/helpers/router';
-import { TRouterMatchParam } from 'src/shared/helpers/router/types';
-import { formStyles } from '../styles';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { ResetPasswordPageProps, ResetPasswordPageState } from './types';
+import { styles } from './styles';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { IResetPasswordPayload } from 'src/shared/interfaces/customer';
+import { IResetPasswordPayload } from 'src/shared/interfaces/customer/index';
 import { FormattedMessage } from 'react-intl';
-
-interface ResetPasswordPageProps extends WithStyles<typeof formStyles> {
-    dispatch?: Function;
-    restoreKey?: TRouterMatchParam;
-}
-
-interface ResetPasswordPageState {
-    password: string;
-    confirmPassword: string;
-    submitted: boolean;
-}
 
 export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProps, ResetPasswordPageState> {
     public state: ResetPasswordPageState = {
         password: '',
         confirmPassword: '',
-        submitted: false,
+        submitted: false
     };
 
     public handleChange = (event: InputChangeEvent) => {
         const {name, value} = event.target;
         this.setState({
-            ...this.state, [name]: value,
+            ...this.state, [name]: value
         });
     };
 
@@ -50,7 +36,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
         const payload: IResetPasswordPayload = {
             restorePasswordKey: this.props.restoreKey,
             password: this.state.password,
-            confirmPassword: this.state.confirmPassword,
+            confirmPassword: this.state.confirmPassword
         };
 
         this.props.dispatch(resetPasswordAction(payload));
@@ -58,7 +44,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
 
     public render() {
         const {classes} = this.props;
-        const { confirmPassword, password, submitted } = this.state;
+        const {confirmPassword, password, submitted} = this.state;
 
         return (
             <AppMain>
@@ -69,18 +55,18 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
                 >
                     <Paper className={classes.forgot}>
                         <Typography variant="headline" paragraph>
-                            <FormattedMessage id={ 'reset.password.title' } />
+                            <FormattedMessage id={'reset.password.title'} />
                         </Typography>
-                        <div><FormattedMessage id={ 'enter.new.password.message' } /></div>
+                        <div><FormattedMessage id={'enter.new.password.message'} /></div>
                         <form noValidate autoComplete="off">
 
                             <TextField
                                 required
                                 type="password"
-                                label={ <FormattedMessage id={ 'word.password.title' } /> }
+                                label={<FormattedMessage id={'word.password.title'} />}
                                 name="password"
-                                value={ password }
-                                helperText={ <FormattedMessage id={ 'word.password.title' } /> }
+                                value={password}
+                                helperText={<FormattedMessage id={'word.password.title'} />}
                                 FormHelperTextProps={{
                                     classes: {
                                         root: classes.placeholder,
@@ -88,17 +74,17 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
                                     }
                                 }}
                                 margin="normal"
-                                onChange={ this.handleChange }
-                                className={ classes.textField }
+                                onChange={this.handleChange}
+                                className={classes.textField}
                             />
                             <TextField
                                 required
                                 type="password"
-                                error={ submitted && password !== confirmPassword }
-                                label={ <FormattedMessage id={ 'confirm.password.title' } /> }
+                                error={submitted && password !== confirmPassword}
+                                label={<FormattedMessage id={'confirm.password.title'} />}
                                 name="confirmPassword"
-                                value={ confirmPassword }
-                                helperText={ <FormattedMessage id={ 'confirm.password.title' } /> }
+                                value={confirmPassword}
+                                helperText={<FormattedMessage id={'confirm.password.title'} />}
                                 FormHelperTextProps={{
                                     classes: {
                                         root: classes.placeholder,
@@ -106,17 +92,17 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
                                     }
                                 }}
                                 margin="normal"
-                                onChange={ this.handleChange }
-                                className={ classes.textField }
+                                onChange={this.handleChange}
+                                className={classes.textField}
                             />
 
                         </form>
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={ this.submitRequest }
+                            onClick={this.submitRequest}
                         >
-                            <FormattedMessage id={ 'word.submit.title' } />
+                            <FormattedMessage id={'word.submit.title'} />
                         </Button>
                     </Paper>
                 </Grid>
@@ -125,16 +111,4 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
     }
 }
 
-const ResetPassword = withStyles(formStyles)(ResetPasswordPageBase);
-
-export const ResetPasswordPage = reduxify(
-    (state: IReduxStore, ownProps: IReduxOwnProps) => {
-        const restoreKey = getRouterMatchParam(state, ownProps, 'restoreKey');
-
-        return (
-            {restoreKey}
-        );
-    },
-)(ResetPassword);
-
-export default ResetPasswordPage;
+export const ResetPasswordPage = withStyles(styles)(ResetPasswordPageBase);
