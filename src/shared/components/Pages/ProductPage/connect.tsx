@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAnonymId, getPayloadForCreateCart, isAppInitiated } from '@stores/reducers/common/init';
+import { getAnonymId, isAppInitiated } from '@stores/reducers/common/init';
 import {
     getProduct,
     isPageProductStateFulfilled,
@@ -16,25 +16,13 @@ import {
 } from '@stores/reducers/Pages/Wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getRouterMatchParam } from 'src/shared/helpers/router';
-import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
-import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
-import { getProductAvailabilityAction, getProductDataAction } from '@stores/actions/pages/product';
+import { getProductDataAction } from '@stores/actions/pages/product';
 import { addItemAction, getWishlistsAction } from '@stores/actions/pages/wishlist';
-import {
-    addItemGuestCartAction,
-    addItemToCartAction,
-    createCartAndAddItemAction,
-} from '@stores/actions/common/cart';
-import { TProductSKU } from 'src/shared/interfaces/product';
-import { getCartId, isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const product = getProduct(state, ownProps);
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
-    const cartCreated: boolean = isCartCreated(state, ownProps);
-    const cartId: TCartId = getCartId(state, ownProps);
-    const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const isAppDataSet: boolean = isAppInitiated(state, ownProps);
     const isLoading: boolean = isPageProductStateLoading(state, ownProps);
     const isRejected: boolean = isPageProductStateRejected(state, ownProps);
@@ -49,10 +37,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
 
     return ({
         product,
-        cartCreated,
-        cartId,
         isAppDataSet,
-        payloadForCreateCart,
         isUserLoggedIn,
         isInitiated,
         isLoading,
@@ -74,12 +59,5 @@ export const connect = reduxify(
         getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
         getWishLists: () => dispatch(getWishlistsAction()),
         addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
-        createCartAndAddItem: (
-            payload: ICartCreatePayload,
-            item: ICartAddItem
-        ) => dispatch(createCartAndAddItemAction(payload, item)),
-        addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
-        addItemGuestCart: (item: ICartAddItem, anonymId: string) => dispatch(addItemGuestCartAction(item, anonymId)),
-        getProductAvailability: (sku: TProductSKU) => dispatch(getProductAvailabilityAction(sku)),
     }),
 );
