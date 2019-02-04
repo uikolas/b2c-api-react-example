@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { IProductDetailProps } from './types';
-import { ProductAttributes } from 'src/shared/components/Pages/ProductPage/ProductAttributes';
+import { ProductAttributes } from '@components/components/ProductAttributes';
 import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
 

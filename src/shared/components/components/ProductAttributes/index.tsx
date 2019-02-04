@@ -2,7 +2,7 @@ import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product';
+import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product/index';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
@@ -33,7 +33,7 @@ export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props):
                                     <Typography variant="subheading" component="strong">
                                         { `${attributeNames[ data[ 0 ] ]
                                             ? attributeNames[ data[ 0 ] ]
-                                            : <FormattedMessage id={ 'no.tramslations.title' } />}: `
+                                            : <FormattedMessage id={ 'no.translations.title' } />}: `
                                         }
                                     </Typography>
                                 </p>

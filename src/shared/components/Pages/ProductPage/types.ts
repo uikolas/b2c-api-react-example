@@ -8,12 +8,9 @@ import {
     IProductPropFullData,
     ISuperAttributes,
     TAppPriceMode,
-    TProductQuantity,
 } from 'src/shared/interfaces/product';
-import { TCartId } from 'src/shared/interfaces/cart';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 import { TRouterMatchParam } from 'src/shared/helpers/router/types';
-import { IWishlist, TWishListName } from 'src/shared/interfaces/wishlist';
 import { TAppStore } from 'src/shared/interfaces/store';
 
 export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
@@ -22,24 +19,14 @@ export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps 
     isUserLoggedIn: boolean;
     appPriceMode: TAppPriceMode;
     appStore: TAppStore;
-    addItemToCart: Function;
-    addItemGuestCart: Function;
     getProductData: Function;
-    getWishLists: Function;
-    addToWishlist: Function;
-    createCartAndAddItem: Function;
-    cartCreated: boolean;
-    cartId: TCartId;
     payloadForCreateCart: ICartCreatePayload;
     isLoading: boolean;
     isRejected: boolean;
     isFulfilled: boolean;
     isInitiated: boolean;
     locationProductSKU?: TRouterMatchParam;
-    isWishListsFetched: boolean;
-    wishLists: IWishlist[];
     isProductExist: boolean;
-    isWishListLoading: boolean;
     anonymId: string;
     getProductAvailability: Function;
 }
@@ -47,8 +34,4 @@ export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps 
 export interface ProductPageState extends IProductPropFullData, ISuperAttributes {
     attributeMap: IProductAttributeMap | null;
     superAttrSelected: IProductAttributes;
-    quantitySelected: TProductQuantity;
-    wishListSelected: TWishListName | null;
-    isBuyBtnDisabled: boolean;
-    isProcessCartLoading: boolean;
 }

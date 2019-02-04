@@ -2,10 +2,9 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import {
-    concreteProductType,
     defaultItemValueDropdown,
     IProductCardImages,
-    IProductPropFullData,
+    IProductPropFullData
 } from 'src/shared/interfaces/product';
 import { IImageSlide } from 'src/shared/components/Common/ImageSlider';
 import {
@@ -13,27 +12,18 @@ import {
     findIdProductConcreteByPath,
     getAvailabilityDisplay,
     getInitialSuperAttrSelected,
-    getCurrentProductDataObject,
+    getCurrentProductDataObject
 } from 'src/shared/helpers/product';
-import { TWishListName } from 'src/shared/interfaces/wishlist';
-import { ClickEvent } from 'src/shared/interfaces/common/react';
-import { AppMain } from '../../Common/AppMain';
-import { ImageSlider } from '../../Common/ImageSlider';
-import { SprykerButton } from '../../UI/SprykerButton';
-import { ProductGeneralInfo } from './ProductGeneralInfo';
-import { ProductSuperAttribute } from './ProductSuperAttribute';
+import { AppMain } from '@components/Common/AppMain';
+import { ImageSlider } from '@components/Common/ImageSlider';
+import { ProductGeneralInfo } from '@components/components/ProductGeneralInfo';
+import { ProductSuperAttribute } from '@components/containers/ProductSuperAttribute';
+import { ProductConfiguratorAddToCart } from '@components/containers/ProductConfiguratorAddToCart';
+import { ProductConfiguratorAddToWishlist } from '@components/containers/ProductConfiguratorAddToWishlist';
 import { connect } from './connect';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import { styles } from './styles';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import {
-    getWishListFormSettings
-} from './settings/forms';
-import { ProductDetail } from 'src/shared/components/Pages/ProductPage/ProductDetail';
-import { FormattedMessage } from 'react-intl';
-import { ProductConfigurator } from '@components/containers/ProductConfigurator';
-import { ProductConfiguratorAddToWishlist } from '@components/containers/ProductConfiguratorAddToWishlist';
+import { ProductDetail } from 'src/shared/components/components/ProductDetail';
 
 @connect
 export class ProductPageBase extends React.Component<Props, State> {
@@ -54,8 +44,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         priceDefaultGross: null,
         priceDefaultNet: null,
         attributes: null,
-        attributeNames: null,
-        wishListSelected: null, // TO DELETE
+        attributeNames: null
     };
 
     // Component lifecycle methods
@@ -96,7 +85,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
 
     // Action handlers
-    public handleSuperAttributesChange = ({name, value}: { name: string, value: string }): void => {
+    public handleSuperAttributesChange = ({name, value}: {name: string, value: string}): void => {
         let productData: IProductPropFullData | null;
 
         if (value === defaultItemValueDropdown) {
@@ -116,7 +105,7 @@ export class ProductPageBase extends React.Component<Props, State> {
                 // Such product exists
                 productData = getCurrentProductDataObject(
                     this.props.product.abstractProduct,
-                    this.props.product.concreteProducts[idProductConcrete],
+                    this.props.product.concreteProducts[idProductConcrete]
                 );
             }
         }
@@ -130,9 +119,9 @@ export class ProductPageBase extends React.Component<Props, State> {
                 ...prevState,
                 superAttrSelected: {
                     ...prevState.superAttrSelected,
-                    [name]: value,
+                    [name]: value
                 },
-                ...productData,
+                ...productData
             });
         });
     };
@@ -144,7 +133,7 @@ export class ProductPageBase extends React.Component<Props, State> {
             this.props.product.abstractProduct,
             isOneConcreteProduct
                 ? this.props.product.concreteProducts[concreteProductsIds[0]]
-                : getCurrentProductDataObject(this.props.product.abstractProduct, null),
+                : getCurrentProductDataObject(this.props.product.abstractProduct, null)
         );
 
         // Parsing superAttributes to set initial data for this.state.superAttrSelected
@@ -155,7 +144,7 @@ export class ProductPageBase extends React.Component<Props, State> {
             superAttributes: this.props.product.superAttributes,
             attributeMap: this.props.product.attributeMap,
             superAttrSelected: selectedAttrNames,
-            ...productData,
+            ...productData
         }));
 
         return true;
@@ -175,7 +164,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     private getImageData = (images: IProductCardImages[]): IImageSlide[] | null => images
         ? images.map((element: IProductCardImages, index: number) => ({
             id: index,
-            src: element.externalUrlLarge,
+            src: element.externalUrlLarge
         })) : null;
 
     public render(): JSX.Element {
@@ -200,39 +189,35 @@ export class ProductPageBase extends React.Component<Props, State> {
                                     </div>
                                 </Grid>
                                 <Grid item xs={12} sm={12} md={5} className={classes.generalInfoParent}>
-                                    <div className={classes.infoParent}>
-                                        <ProductGeneralInfo
-                                            name={this.state.name}
-                                            sku={this.state.sku}
-                                            price={this.state.priceDefaultGross}
-                                            oldPrice={
-                                                this.state.priceOriginalGross ? this.state.priceOriginalGross : null
-                                            }
-                                            availability={getAvailabilityDisplay(this.state.availability)}
-                                        />
-
-                                        {this.state.superAttributes &&
-                                            <ProductSuperAttribute
-                                                productData={this.state.superAttributes}
-                                                onChange={this.handleSuperAttributesChange}
-                                            />
+                                    <ProductGeneralInfo
+                                        name={this.state.name}
+                                        sku={this.state.sku}
+                                        price={this.state.priceDefaultGross}
+                                        oldPrice={
+                                            this.state.priceOriginalGross ? this.state.priceOriginalGross : null
                                         }
+                                        availability={getAvailabilityDisplay(this.state.availability)}
+                                    />
 
-                                        <ProductConfigurator
-                                            classes={classes}
+                                    {this.state.superAttributes &&
+                                        <ProductSuperAttribute
+                                            productData={this.state.superAttributes}
+                                            onChange={this.handleSuperAttributesChange}
+                                        />
+                                    }
+
+                                    <ProductConfiguratorAddToCart
+                                        productType={this.state.productType}
+                                        product={this.props.product.concreteProducts[this.state.sku]}
+                                        sku={this.state.sku}
+                                    />
+
+                                    {this.props.isUserLoggedIn &&
+                                        <ProductConfiguratorAddToWishlist
                                             productType={this.state.productType}
-                                            product={this.props.product.concreteProducts[this.state.sku]}
                                             sku={this.state.sku}
                                         />
-
-                                        {this.props.isUserLoggedIn &&
-                                            <ProductConfiguratorAddToWishlist
-                                                classes={classes}
-                                                productType={this.state.productType}
-                                                sku={this.state.sku}
-                                            />
-                                        }
-                                    </div>
+                                    }
                                 </Grid>
                             </Grid>
                             <ProductDetail
@@ -249,6 +234,4 @@ export class ProductPageBase extends React.Component<Props, State> {
     }
 }
 
-export const ProductPage = withStyles(styles)(ProductPageBase);
-
-export default ProductPage;
+export const ProductPageContainer = withStyles(styles)(ProductPageBase);

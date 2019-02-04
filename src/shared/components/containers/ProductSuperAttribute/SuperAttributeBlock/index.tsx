@@ -1,6 +1,6 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { SuperAttributeItem } from '../SuperAttributeItem';
+import { SuperAttributeItem } from '../SuperAttributeItem/index';
 import { SuperAttributeBlockProps as Props, SuperAttributeBlockState as State } from './types';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';

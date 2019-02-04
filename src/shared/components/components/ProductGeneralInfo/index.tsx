@@ -1,7 +1,7 @@
 import * as React from 'react';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import { ProductAvailability } from '../ProductAvailability';
+import { ProductAvailability } from '@components/components/ProductAvailability';
 import { styles } from './styles';
 import {
     priceTypeNameOriginal,
@@ -9,8 +9,8 @@ import {
     TPriceTypeOriginalGross,
     TProductName,
     TProductSKU,
-} from 'src/shared/interfaces/product';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
+} from 'src/shared/interfaces/product/index';
+import { AppPrice } from 'src/shared/components/Common/AppPrice/index';
 import { FormattedMessage } from 'react-intl';
 
 interface ProductGeneralInfoProps extends WithStyles<typeof styles> {

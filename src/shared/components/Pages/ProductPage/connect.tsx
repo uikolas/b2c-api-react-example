@@ -9,15 +9,9 @@ import {
     isPageProductStateRejected,
     isProductDetailsPresent,
 } from '@stores/reducers/pages/product';
-import {
-  getWishlistsCollectionFromStore,
-  isPageWishlistStateLoading,
-  isWishlistsCollectionInitiated,
-} from '@stores/reducers/Pages/Wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getRouterMatchParam } from 'src/shared/helpers/router';
 import { getProductDataAction } from '@stores/actions/pages/product';
-import { addItemAction, getWishlistsAction } from '@stores/actions/pages/wishlist';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
@@ -30,9 +24,6 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isInitiated: boolean = isPageProductStateInitiated(state, ownProps);
     const locationProductSKU = getRouterMatchParam(state, ownProps, 'productId');
     const isProductExist: boolean = isProductDetailsPresent(state, ownProps);
-    const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
-    const wishLists = getWishlistsCollectionFromStore(state, ownProps);
-    const isWishListsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
     const anonymId = getAnonymId(state, ownProps);
 
     return ({
@@ -44,10 +35,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         isRejected,
         isFulfilled,
         locationProductSKU,
-        wishLists,
-        isWishListsFetched,
         isProductExist,
-        isWishListLoading,
         anonymId,
     });
 };
@@ -56,8 +44,6 @@ export const connect = reduxify(
     mapStateToProps,
     (dispatch: Function) => ({
         dispatch,
-        getProductData: (sku: string) => dispatch(getProductDataAction(sku)),
-        getWishLists: () => dispatch(getWishlistsAction()),
-        addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
+        getProductData: (sku: string) => dispatch(getProductDataAction(sku))
     }),
 );
