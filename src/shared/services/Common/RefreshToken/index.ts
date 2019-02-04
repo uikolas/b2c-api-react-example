@@ -19,7 +19,7 @@ export class RefreshTokenService extends ApiServiceAbstract {
 
         const now: number = Math.floor(Date.now() / 1000);
 
-        if (now > +tokenExpire) {
+        if (now > Number(tokenExpire)) {
             try {
                 const newToken = await RefreshTokenService.refreshTokenRequest(dispatch, refreshToken);
 

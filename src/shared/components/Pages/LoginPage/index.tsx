@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { ILoginState } from '@stores/reducers/pages/login/types';
 import { customerRegisterAction, loginCustomerAction } from '@stores/actions/pages/login';
-import { ICustomerLoginData, ICustomerProfile, TCustomerReference } from 'src/shared/interfaces/customer';
+import { ICustomerLoginData, ICustomerProfile } from 'src/shared/interfaces/customer';
 import { getCustomerCartsAction } from '@stores/actions/common/cart';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
 import { WithRouter } from 'src/shared/interfaces/common/react';

@@ -8,7 +8,7 @@ import {
 } from '@stores/actions/pages/login';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
-import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
+import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
 import { IApiResponseData } from 'src/shared/services/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import {
@@ -18,7 +18,12 @@ import {
 } from 'src/shared/constants/notifications';
 
 export class PagesLoginService extends ApiServiceAbstract {
-    public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {
+    public static async register(
+        ACTION_TYPE: string,
+        dispatch: Function,
+        payload: ICustomerProfile,
+        anonymId: string
+    ): Promise<void> {
         try {
             const body = {
                 data: {
@@ -26,7 +31,13 @@ export class PagesLoginService extends ApiServiceAbstract {
                     attributes: payload,
                 },
             };
-            const response: IApiResponseData = await api.post('customers', body, {withCredentials: true});
+            const response: IApiResponseData = await api.post(
+                'customers',
+                body,
+                {
+                    withCredentials: true,
+                    headers: {'X-Anonymous-Customer-Unique-Id': anonymId}
+                });
 
             if (response.ok) {
                 dispatch({
@@ -41,7 +52,7 @@ export class PagesLoginService extends ApiServiceAbstract {
                 await PagesLoginService.loginRequest(dispatch, {
                     username: payload.email,
                     password: payload.password,
-                });
+                }, anonymId);
             } else {
                 const errorMessage = this.getParsedAPIError(response);
                 dispatch({
@@ -75,7 +86,7 @@ export class PagesLoginService extends ApiServiceAbstract {
         }
     }
 
-    public static async loginRequest(dispatch: Function, payload: ICustomerLoginData): Promise<void> {
+    public static async loginRequest(dispatch: Function, payload: ICustomerLoginData, anonymId: string): Promise<void> {
         try {
             dispatch(loginCustomerPendingStateAction());
 
@@ -86,7 +97,14 @@ export class PagesLoginService extends ApiServiceAbstract {
                 },
             };
 
-            const response: IApiResponseData = await api.post('access-tokens', body, {withCredentials: true});
+            const response: IApiResponseData = await api.post(
+                'access-tokens',
+                body,
+                {
+                    withCredentials: true,
+                    headers: {'X-Anonymous-Customer-Unique-Id': anonymId}
+                }
+            );
 
             if (response.ok) {
                 const responseParsed = parseLoginDataResponse(response.data);

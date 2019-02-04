@@ -147,10 +147,12 @@ export class CartService extends ApiServiceAbstract {
         }
     }
 
-    public static async cartDeleteItem(ACTION_TYPE: string,
-                                       dispatch: Function,
-                                       cartId: TCartId,
-                                       itemId: TProductSKU): Promise<void> {
+    public static async cartDeleteItem(
+        ACTION_TYPE: string,
+        dispatch: Function,
+        cartId: TCartId,
+        itemId: TProductSKU
+    ): Promise<void> {
         try {
             const token = await RefreshTokenService.getActualToken(dispatch);
             setAuthToken(token);
