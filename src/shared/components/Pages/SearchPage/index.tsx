@@ -17,8 +17,9 @@ import {
     getFiltersLocalizedNames,
     getRangeFiltersLocalizedNames,
     isValidRangeInput,
-    getLabeledCategory
-} from 'src/shared/components/Pages/SearchPage/helpers/index';
+    getLabeledCategory,
+    getCurrentCategoriesTree
+} from 'src/shared/components/Pages/SearchPage/helpers';
 import { AppMain } from '../../Common/AppMain';
 import {
     filterTypeFilter,
@@ -45,10 +46,11 @@ import { DefaultItemsPerPage } from 'src/shared/constants/search/index';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
+import { Breadcrumbs } from 'src/shared/components/Pages/SearchPage/CategoriesBreadcrumbs';
 
 @(withRouter as Function)
 @connect
-export default class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
+export class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
     constructor(props: ISearchPageProps) {
         super(props);
 
@@ -63,7 +65,7 @@ export default class SearchPage extends React.Component<ISearchPageProps, ISearc
             isFiltersReset: false,
             isNeedNewRequest: false,
             isReadyToNewRequest: false,
-            paginationPage: null,
+            paginationPage: null
         };
     }
 
@@ -393,9 +395,11 @@ export default class SearchPage extends React.Component<ISearchPageProps, ISearc
         );
 
         const categoryDisplayName = getCategoryNameById(currentCategory, categoriesTree);
+        const formattedCategoriesTree = getCurrentCategoriesTree(categoriesTree, currentCategory);
 
         return (
             <AppMain>
+                <Breadcrumbs breadcrumbsList={formattedCategoriesTree} />
                 <AppPageTitle
                     title={ searchTerm
                         ? <FormattedMessage
