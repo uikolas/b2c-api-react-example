@@ -5,7 +5,7 @@ export interface ICategory {
     children: ICategory[] | object;
 }
 
-export interface ICategoryForBreadcrumbs {
+export interface IBreadcrumbItem {
     nodeId: number;
     name: string;
     current?: boolean;

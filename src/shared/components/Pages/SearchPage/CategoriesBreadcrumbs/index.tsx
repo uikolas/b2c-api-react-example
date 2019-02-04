@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { pathCategoryPageBase, pathHomePage } from '@routes/contentRoutes';
 import { NavLink } from 'react-router-dom';
-import { ICategoryForBreadcrumbs } from 'src/shared/interfaces/category/index';
+import { IBreadcrumbItem } from '@interfaces/category';
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-interface IBreadcrumbst extends WithStyles<typeof styles> {
-    breadcrumbsList: ICategoryForBreadcrumbs[];
+interface IBreadcrumbsProps extends WithStyles<typeof styles> {
+    breadcrumbsList: IBreadcrumbItem[];
 }
 
-export const BreadcrumbsBase: React.SFC<IBreadcrumbst> = props => {
+export const BreadcrumbsBase: React.SFC<IBreadcrumbsProps> = props => {
     const {breadcrumbsList, classes} = props;
 
     return (
@@ -22,7 +22,7 @@ export const BreadcrumbsBase: React.SFC<IBreadcrumbst> = props => {
                 }
             </li>
             {breadcrumbsList &&
-                breadcrumbsList.map((value: ICategoryForBreadcrumbs) => {
+                breadcrumbsList.map((value: IBreadcrumbItem) => {
                     const {name, nodeId, current} = value;
                     const currentClassName = current ? classes.current : null;
 

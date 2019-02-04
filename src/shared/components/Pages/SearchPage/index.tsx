@@ -50,7 +50,7 @@ import { Breadcrumbs } from 'src/shared/components/Pages/SearchPage/CategoriesBr
 
 @(withRouter as Function)
 @connect
-export default class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
+export class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
     constructor(props: ISearchPageProps) {
         super(props);
 

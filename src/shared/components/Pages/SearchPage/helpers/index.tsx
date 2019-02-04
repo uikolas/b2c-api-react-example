@@ -4,7 +4,7 @@ import {
     ISearchPageData,
     RangeFacets,
     ValueFacets
-} from 'src/shared/interfaces/searchPageData';
+} from '@interfaces/searchPageData';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import {
     rangeMaxType,
@@ -14,7 +14,7 @@ import {
 } from 'src/shared/components/Pages/SearchPage/types';
 import { IActiveFilterCategories } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { labeledCategories } from 'src/shared/routes/categoriesRoutes';
-import { ICategory, ICategoryForBreadcrumbs } from 'src/shared/interfaces/category/index';
+import { ICategory, IBreadcrumbItem } from '@interfaces/category';
 
 export const isValidRangeInput = (
     activeRanges: TActiveRangeFilters,
@@ -100,7 +100,7 @@ export const getLabeledCategory = (category: string | number): string | null => 
 
 export const getCurrentCategoriesTree = (
     categiesTree: ICategory[],
-    categoryId: string): ICategoryForBreadcrumbs[] | null => {
+    categoryId: string): IBreadcrumbItem[] | null => {
 
     if (!categoryId) {
         return null;
