@@ -7,4 +7,5 @@ export interface IBannerProps extends WithStyles<typeof styles> {
     intro: string;
     linkPath: string;
     linkTitle: string;
+    imagePath: string;
 }

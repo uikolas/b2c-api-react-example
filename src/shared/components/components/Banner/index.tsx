@@ -1,21 +1,18 @@
 import * as React from 'react';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
 import { IBannerProps } from './types';
 import { styles } from './styles';
-
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
+import { AppBtnLink } from '@components/Common/AppBtnLink';
 
 export const BannerBase: React.SFC<IBannerProps> = (props): JSX.Element => {
     const {
-        classes, titleFirst, titleSecond, intro, linkPath, linkTitle
+        classes, titleFirst, titleSecond, intro, linkPath, linkTitle, imagePath
     } = props;
 
     return (
-        <Grid container className={classes.root}>
+        <Grid container className={classes.root} style={{backgroundImage: `url(${imagePath})`}}>
             <Grid item xs={12} className={classes.container}>
                 <Grid container className={classes.content}>
                     <Grid item xs={12} sm={8} lg={6} className={classes.holder}>

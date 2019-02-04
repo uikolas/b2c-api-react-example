@@ -1,17 +1,17 @@
 import * as React from 'react';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
-import { ICategoriesTeasersProps } from './types';
+import {
+    ICategoriesTeasersData,
+    ICategoriesTeasersProps
+} from './types';
 import { styles } from './styles';
-
-import { ICategoriesTeasersData } from 'src/shared/components/Pages/HomePage/types';
-import { CategoryTeaser } from 'src/shared/components/Pages/HomePage/CategoryTeaser';
+import { CategoryTeaser } from './CategoryTeaser/index';
+import { categoriesTeasersData as teasers } from './fixtures';
 
 export const CategoriesTeasersBase: React.SFC<ICategoriesTeasersProps> = (props): JSX.Element => {
     const {
-        classes, teasers
+        classes
     } = props;
 
     if (!teasers || !Array.isArray(teasers) || !teasers.length) {

@@ -1,10 +1,8 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { homepageHeroSrc } from 'src/img';
 
 export const styles = (theme: Theme) => createStyles({
     root: {
-        backgroundImage: `url(${homepageHeroSrc})`,
         backgroundColor: theme.appColors.weakGrey,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
