@@ -1,5 +1,4 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { rgba } from 'src/shared/helpers/common/hextorgba';
 import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({

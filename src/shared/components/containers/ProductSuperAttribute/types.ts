@@ -12,4 +12,5 @@ export interface ProductSuperAttributeState {
     selectedValues: {
         [name: string]: string;
     } | null;
+    selectedItemValue: string;
 }

@@ -1,49 +1,41 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { SuperAttributeItem } from '../SuperAttributeItem/index';
-import { SuperAttributeBlockProps as Props, SuperAttributeBlockState as State } from './types';
+import { SuperAttributeBlockProps as Props } from './types';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
-export class SuperAttributeBlockComponent extends React.PureComponent<Props, State> {
-    public state: State = {
-        selectedItemValue: '',
-    };
+export const SuperAttributeBlockComponent: React.SFC<Props> = props => {
+    const {classes, attributeData, selectedItemValue} = props;
 
-    private selectAttribute = (value: string) => {
-        const {onValueChanged, attributeData: {name}} = this.props;
+    const selectAttribute = (value: string) => {
+        const {onValueChanged, attributeData: {name}} = props;
 
         onValueChanged({name, value});
-        this.setState(() => ({selectedItemValue: value}));
     };
 
-    public render() {
-        const {classes, attributeData} = this.props;
-        const {selectedItemValue} = this.state;
+    return (
+        <div className={classes.attributeBlock}>
+            <h4 className={classes.attributeTitle}>
+                <FormattedMessage id={ 'word.select.title' } /> { attributeData.nameToShow }:
+            </h4>
 
-        return (
-            <div className={classes.attributeBlock}>
-                <h4 className={classes.attributeTitle}>
-                    <FormattedMessage id={ 'word.select.title' } /> { attributeData.nameToShow }:
-                </h4>
-
-                <div className={classes.attributesList}>
-                    {attributeData.data.map(attribute => (
-                        <SuperAttributeItem
-                            key={attribute.value.length > 0 ? attribute.value : attribute.name}
-                            attributeItemData={attribute}
-                            onSelect={this.selectAttribute}
-                            isSelected={
-                                attribute.value.length > 0
-                                    ? attribute.value === selectedItemValue
-                                    : attribute.name === selectedItemValue
-                            }
-                        />
-                    ))}
-                </div>
+            <div className={classes.attributesList}>
+                {attributeData.data.map(attribute => (
+                    <SuperAttributeItem
+                        key={attribute.value.length > 0 ? attribute.value : attribute.name}
+                        attributeItemData={attribute}
+                        onSelect={() => selectAttribute(attribute.value)}
+                        isSelected={
+                            attribute.value.length > 0
+                                ? attribute.value === selectedItemValue
+                                : attribute.name === selectedItemValue
+                        }
+                    />
+                ))}
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export const SuperAttributeBlock = withStyles(styles)(SuperAttributeBlockComponent);

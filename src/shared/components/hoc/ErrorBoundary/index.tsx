@@ -9,7 +9,7 @@ interface IState {
 interface IProps {
 }
 
-export class Index extends React.PureComponent<IProps, IState> {
+export class ErrorBoundary extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
