@@ -56,7 +56,6 @@ export const pageSearch = produce<ISearchState>(
                 draft.fulfilled = false;
                 draft.rejected = false;
                 draft.initiated = true;
-                draft.data.searchTerm = action.payloadSearchTermFulfilled.searchTerm;
                 break;
             case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
                 draft.data.flyoutSearch.pending = true;
@@ -91,6 +90,7 @@ export const pageSearch = produce<ISearchState>(
                 draft.data.spellingSuggestion = action.payloadSearchFulfilled.spellingSuggestion || null;
                 draft.data.productsLabeled = action.payloadSearchFulfilled.productsLabeled || null;
                 draft.data.availableLabels = action.payloadSearchFulfilled.availableLabels || null;
+                draft.data.searchTerm = action.payloadSearchFulfilled.searchTerm;
                 draft.error = null;
                 draft.pending = false;
                 draft.fulfilled = true;

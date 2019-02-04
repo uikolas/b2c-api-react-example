@@ -78,6 +78,7 @@ export interface ICatalogSearchDataParsed {
     spellingSuggestion: TSpellingSuggestion | null;
     productsLabeled: IProductsLabeledCollection | null;
     availableLabels: IAvailableLabelsCollection | null;
+    searchTerm?: TSearchTerm;
 }
 
 export interface ISearchPageData extends ICatalogSearchDataParsed, ISearchTermData {
@@ -96,8 +97,4 @@ export interface ISearchQuery {
     page?: string | number;
 
     [key: string]: string | number | string[];
-}
-
-export interface ISearchTermData {
-    searchTerm?: TSearchTerm;
 }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
 import { withRouter } from 'react-router';
@@ -34,7 +33,6 @@ import {
     TFilterItemValue,
 } from './types';
 import { connect } from './connect';
-import { styles } from './styles';
 import { SearchIntro } from './SearchIntro';
 import { CategoriesList } from './CategoriesList';
 import { SearchFilterList } from './SearchFilterList';
@@ -50,7 +48,7 @@ import { typeNotificationError } from 'src/shared/constants/notifications';
 
 @(withRouter as Function)
 @connect
-export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPageState> {
+export default class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
     constructor(props: ISearchPageProps) {
         super(props);
 
@@ -334,7 +332,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
     public render() {
         const {
-            classes,
             items,
             searchTerm,
             currency,
@@ -351,6 +348,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             currentCategory,
             productsLabeled,
             availableLabels,
+            sendSearch
         } = this.props;
 
         const isSortParamsExist = (sortParams.length > 0);
@@ -408,10 +406,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                             ? categoryDisplayName
                             : <FormattedMessage id={ 'search.result.default.title' } />
                     }
-                    intro={ <SearchIntro className={ classes.spellingSuggestion }
-                                         spellingSuggestion={ spellingSuggestion } /> }
+                    intro={ <SearchIntro spellingSuggestion={ spellingSuggestion }
+                                         onLinkClick={() => sendSearch({q: spellingSuggestion})} /> }
                 />
-                <Grid container className={classes.container}>
+                <Grid container>
                     <SearchPageContext.Provider
                         value={{
                             selectCategoryHandler: this.selectCategory,
@@ -472,7 +470,3 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         );
     }
 }
-
-export const SearchPage = withStyles(styles)(SearchPageBase);
-
-export default SearchPage;
