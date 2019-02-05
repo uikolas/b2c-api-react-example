@@ -1,17 +1,12 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles  from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { IProductAttributeNames, IProductAttributes } from 'src/shared/interfaces/product/index';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
+import { IProductAttributesProps } from './types';
 
-interface ProductAttributesProps extends WithStyles<typeof styles> {
-    attributes: IProductAttributes;
-    attributeNames: IProductAttributeNames | null;
-}
-
-export const ProductAttributesBase: React.SFC<ProductAttributesProps> = (props): JSX.Element => {
+export const ProductAttributesBase: React.SFC<IProductAttributesProps> = (props): JSX.Element => {
     const {classes, attributes, attributeNames} = props;
 
     if (!attributes) {
