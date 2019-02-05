@@ -4,7 +4,7 @@ import {
     INotificationsMessage
 } from 'src/shared/components/Common/Notifications/NotificationsMessageTemplate';
 import { toast } from 'react-toastify';
-import { SuccessIcon, RejectIcon } from '../MessageIcons';
+import { SuccessIcon, RejectIcon } from '../icons';
 import {
     typeNotificationWarning,
     typeNotificationSuccess,
