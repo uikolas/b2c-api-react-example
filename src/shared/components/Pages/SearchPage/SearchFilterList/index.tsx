@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
 import { ValueFacets } from 'src/shared/interfaces/searchPageData';
-import { rangeMaxType, rangeMinType } from 'src/shared/components/Pages/SearchPage/types';
+import { rangeMaxType, rangeMinType, TActiveFilters } from '@components/Pages/SearchPage/types';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import { FilterWrapper } from 'src/shared/components/Pages/SearchPage/FilterWrapper';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
@@ -30,10 +30,6 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = props => 
 
     let filterItems: JSX.Element[] | null = [];
     let rangeItems: JSX.Element[] | null = [];
-    const activeFilterItems: {
-        [key: string]: string
-    } = {};
-    const activerangeItems: object = {};
 
     const priceValueFormatter = (value: number) => (
         <AppPrice value={value * 100} extraClassName={classes.priceClassName}/>
@@ -62,7 +58,6 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = props => 
                         key={filter.name}
                     />,
                 );
-                if (filter.activeValue) activeFilterItems[filter.name] = filter.activeValue;
             }
         });
     }

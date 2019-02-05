@@ -2,7 +2,7 @@ import { IProductCard } from '../product';
 import { IPagination } from 'src/shared/components/Common/AppPagination/types';
 import { TCategoryId } from 'src/shared/components/Pages/SearchPage/types';
 import { TAppCurrency } from 'src/shared/interfaces/currency';
-import { RangeType } from '@components/Pages/SearchPage/types';
+import { TActiveFilters, TActiveRangeFilters } from '@components/Pages/SearchPage/types';
 
 export type TSpellingSuggestion = string;
 export type TLocalizedName = string;
@@ -68,12 +68,12 @@ export interface ILocalizedNamesMap {
 export interface ICatalogSearchDataParsed {
     items: IProductCard[] | null;
     filters: ValueFacets[] | null;
-    activeFilters: { [key: string]: string[] } | {};
+    activeFilters: TActiveFilters;
     category: FilterValue[];
     currentCategory: string | null;
     currentSort: string | null;
     rangeFilters: RangeFacets[] | null;
-    activeRangeFilters: { [key: string]: RangeType } | null;
+    activeRangeFilters: TActiveRangeFilters;
     sortParams: string[] | null;
     sortParamLocalizedNames: ILocalizedNamesMap | null;
     categoriesLocalizedName: TLocalizedName | null;

@@ -97,16 +97,20 @@ export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props =
                   className={classes.list}
             >
                 {
-                    itemsGlobalCollection.map((item: IFilterItem) => (
-                        <ActiveFilterItem
-                            key={`${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}`}
-                            value={item.value}
-                            name={item.name}
-                            label={item.label}
-                            type={item.type}
-                            rangeSubType={item.rangeSubType}
-                        />
-                    ))
+                    itemsGlobalCollection.map((item: IFilterItem) => {
+                        const itemKey = `${item.name}-${item.value}${item.rangeSubType ? item.rangeSubType : ''}`;
+
+                        return (
+                            <ActiveFilterItem
+                                key={ itemKey }
+                                value={item.value}
+                                name={item.name}
+                                label={item.label}
+                                type={item.type}
+                                rangeSubType={item.rangeSubType}
+                            />
+                        );
+                    })
                 }
                 <Chip
                     label={<FormattedMessage id={ 'reset.all.filters.title' } />}

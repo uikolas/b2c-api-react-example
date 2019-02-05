@@ -7,7 +7,12 @@ import {
 } from 'src/shared/interfaces/searchPageData';
 import { ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse } from 'src/shared/helpers/catalog/types';
 import { rangeFilterValueToFront } from '@helpers/common/transform';
-import { rangeMinType, rangeMaxType, RangeType } from '@components/Pages/SearchPage/types';
+import {
+    rangeMinType,
+    rangeMaxType,
+    TActiveFilters,
+    TActiveRangeFilters
+} from '@components/Pages/SearchPage/types';
 
 export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed | null => {
     if (!response) {
@@ -23,8 +28,8 @@ export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse):
     const attributes = data[0].attributes;
     const pagination = attributes.pagination;
     const filters: ValueFacets[] = [];
-    const activeFilters: { [name: string]: string[] } = {};
-    const activeRangeFilters: { [key: string]: RangeType } = {};
+    const activeFilters: TActiveFilters = {};
+    const activeRangeFilters: TActiveRangeFilters = {};
 
     let category: FilterValue[] = [];
     let currentCategory: string = '';
