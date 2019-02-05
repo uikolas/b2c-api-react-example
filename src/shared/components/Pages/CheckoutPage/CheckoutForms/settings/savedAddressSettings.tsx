@@ -108,7 +108,7 @@ const createRadioItemLabel = (address: IAddressItemCollection) => {
     let response: React.ReactNode = '';
 
     if (address.salutation) {
-        response += getSalutationToShow(address.salutation);
+        response = getSalutationToShow(address.salutation);
     }
     if (address.firstName) {
         response += ` ${address.firstName}`;

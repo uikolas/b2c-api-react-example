@@ -1,49 +1,59 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { parseCatalogSearchResponse } from 'src/shared/helpers/catalog/catalogSearchResponse';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from 'src/shared/interfaces/product';
 import { ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { IApiResponseData } from 'src/shared/services/types';
 import { TRowProductResponseIncluded } from 'src/shared/helpers/product/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
+import {
+    sendSearchPendingState,
+    sendSearchRejectState,
+    sendSearchFulfilledState,
+    suggestPendingState,
+    suggestRejectState,
+    suggestFullfiledState
+} from '@stores/actions/pages/search';
 
 export class CatalogService extends ApiServiceAbstract {
-    public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
+    public static async catalogSearch(dispatch: Function, params: ISearchQuery): Promise<void> {
+        dispatch(sendSearchPendingState());
         try {
             params.include = 'abstract-products,product-labels,';
             const response: IApiResponseData = await api.get('catalog-search', params, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed = parseCatalogSearchResponse(response.data);
-                dispatch({
-                    type: ACTION_TYPE + '_FULFILLED',
-                    payloadSearchFulfilled: responseParsed,
-                });
+                dispatch(sendSearchFulfilledState(responseParsed, params.q));
             } else {
                 const errorMessage = this.getParsedAPIError(response);
-                dispatch({
-                    type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: {error: errorMessage},
+                dispatch(sendSearchRejectState(errorMessage));
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
                 });
-                toast.error('Request Error: ' + errorMessage);
             }
 
         } catch (error) {
-            dispatch({
-                type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: {error: error.message},
+            dispatch(sendSearchRejectState(error.message));
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
             });
-            toast.error('Unexpected Error: ' + error.message);
         }
     }
 
-    public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<void> {
+    public static async catalogSuggestion(dispatch: Function, query: string): Promise<void> {
+        dispatch(suggestPendingState());
         try {
 
             const response: IApiResponseData = await api.get(
                 'catalog-search-suggestions',
                 {q: query, include: 'abstract-products,abstract-product-prices'},
-                {withCredentials: true},
+                {withCredentials: true}
             );
 
             if (response.ok) {
@@ -67,32 +77,31 @@ export class CatalogService extends ApiServiceAbstract {
                     return counter >= 4;
                 });
 
-                dispatch({
-                    type: ACTION_TYPE + '_FULFILLED',
-                    payloadSuggestionFulfilled: {
-                        suggestions: products,
-                        categories: data.data[0].attributes.categories,
-                        /*searchTerm: query,
-                        currency: data.data[0].attributes.currency || '',*/
-                        completion: data.data[0].attributes.completion,
-                    },
-                });
+                const payloadSuggestionFulfilled = {
+                    suggestions: products,
+                    categories: data.data[0].attributes.categories,
+                    completion: data.data[0].attributes.completion
+                };
+
+                dispatch(suggestFullfiledState(payloadSuggestionFulfilled));
             } else {
                 const errorMessage = this.getParsedAPIError(response);
-                dispatch({
-                    type: ACTION_TYPE + '_REJECTED',
-                    payloadRejected: {error: errorMessage},
+                dispatch(suggestRejectState(errorMessage));
+                NotificationsMessage({
+                    messageWithCustomText: 'request.error.message',
+                    message: errorMessage,
+                    type: typeNotificationError
                 });
-                toast.error('Request Error: ' + errorMessage);
 
                 return null;
             }
         } catch (error) {
-            dispatch({
-                type: ACTION_TYPE + '_REJECTED',
-                payloadRejected: {error: error.message},
+            dispatch(suggestRejectState(error.message));
+            NotificationsMessage({
+                messageWithCustomText: 'unexpected.error.message',
+                message: error.message,
+                type: typeNotificationError
             });
-            toast.error('Unexpected Error: ' + error.message);
         }
     }
 }

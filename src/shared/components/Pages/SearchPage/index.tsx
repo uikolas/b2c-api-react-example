@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { toast } from 'react-toastify';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
 import { withRouter } from 'react-router';
@@ -19,8 +17,9 @@ import {
     getFiltersLocalizedNames,
     getRangeFiltersLocalizedNames,
     isValidRangeInput,
-    getLabeledCategory
-} from 'src/shared/components/Pages/SearchPage/helpers/index';
+    getLabeledCategory,
+    getCurrentCategoriesTree
+} from 'src/shared/components/Pages/SearchPage/helpers';
 import { AppMain } from '../../Common/AppMain';
 import {
     filterTypeFilter,
@@ -35,7 +34,6 @@ import {
     TFilterItemValue,
 } from './types';
 import { connect } from './connect';
-import { styles } from './styles';
 import { SearchIntro } from './SearchIntro';
 import { CategoriesList } from './CategoriesList';
 import { SearchFilterList } from './SearchFilterList';
@@ -45,10 +43,13 @@ import {
 } from 'src/shared/components/Pages/SearchPage/helpers/queries';
 import { getCategoryNameById } from 'src/shared/helpers/categories';
 import { FormattedMessage } from 'react-intl';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
+import { Breadcrumbs } from 'src/shared/components/Pages/SearchPage/CategoriesBreadcrumbs';
 
 @(withRouter as Function)
 @connect
-export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPageState> {
+export class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
     constructor(props: ISearchPageProps) {
         super(props);
 
@@ -60,7 +61,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             isFiltersReset: false,
             isNeedNewRequest: false,
             isReadyToNewRequest: false,
-            paginationPage: null,
+            paginationPage: null
         };
     }
 
@@ -166,7 +167,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
     public updateSearch = (needResetURLParam: boolean = true): boolean => {
         if (!this.validateData()) {
             console.error('can\'t make request in updateSearch method!!!');
-            toast.error(<FormattedMessage id={ 'validate.range.input.error.message' } />);
+            NotificationsMessage({
+                id: 'validate.range.input.error.message',
+                type: typeNotificationError
+            });
 
             return;
         }
@@ -360,7 +364,6 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
 
     public render() {
         const {
-            classes,
             items,
             searchTerm,
             currency,
@@ -379,6 +382,7 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
             currentCategory,
             productsLabeled,
             availableLabels,
+            sendSearch
         } = this.props;
 
         const isSortParamsExist = (sortParams.length > 0);
@@ -425,9 +429,12 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         );
 
         const categoryDisplayName = getCategoryNameById(currentCategory, categoriesTree);
+        const formattedCategoriesTree = getCurrentCategoriesTree(categoriesTree, currentCategory);
 
         return (
             <AppMain>
+                <Breadcrumbs breadcrumbsList={formattedCategoriesTree} />
+
                 <AppPageTitle
                     title={ searchTerm
                         ? <FormattedMessage
@@ -438,10 +445,10 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
                             ? categoryDisplayName
                             : <FormattedMessage id={ 'search.result.default.title' } />
                     }
-                    intro={ <SearchIntro className={ classes.spellingSuggestion }
-                                         spellingSuggestion={ spellingSuggestion } /> }
+                    intro={ <SearchIntro spellingSuggestion={ spellingSuggestion }
+                                         onLinkClick={() => sendSearch({q: spellingSuggestion})} /> }
                 />
-                <Grid container className={classes.container}>
+                <Grid container>
                     <SearchPageContext.Provider
                         value={{
                             selectCategoryHandler: this.selectCategory,
@@ -502,7 +509,3 @@ export class SearchPageBase extends React.Component<ISearchPageProps, ISearchPag
         );
     }
 }
-
-export const SearchPage = withStyles(styles)(SearchPageBase);
-
-export default SearchPage;

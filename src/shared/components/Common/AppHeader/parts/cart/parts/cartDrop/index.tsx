@@ -8,7 +8,6 @@ import { CartDropProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
 import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
-import { AppBackdrop } from 'src/shared/components/Common/AppBackdrop/index';
 import { FormattedMessage } from 'react-intl';
 
 @connect
@@ -24,12 +23,10 @@ export class CartDropComponent extends React.PureComponent<Props> {
     };
 
     public render() {
-        const {classes, cartItems, totals, isCartLoading} = this.props;
+        const { classes, cartItems, totals } = this.props;
 
         return (
             <div className={classes.cartDrop}>
-                {isCartLoading ? <AppBackdrop isOpen/> : null}
-
                 <Typography gutterBottom component="h3" className={ classes.title }>
                     <FormattedMessage id={ 'word.cart.title' } />
                 </Typography>

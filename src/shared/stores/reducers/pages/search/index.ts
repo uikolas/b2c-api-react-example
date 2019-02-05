@@ -97,6 +97,7 @@ export const pageSearch = produce<ISearchState>(
                 draft.data.spellingSuggestion = action.payloadSearchFulfilled.spellingSuggestion || null;
                 draft.data.productsLabeled = action.payloadSearchFulfilled.productsLabeled || null;
                 draft.data.availableLabels = action.payloadSearchFulfilled.availableLabels || null;
+                draft.data.searchTerm = action.payloadSearchFulfilled.searchTerm;
                 draft.error = null;
                 draft.pending = false;
                 draft.fulfilled = true;

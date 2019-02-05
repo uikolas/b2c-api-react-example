@@ -6,20 +6,43 @@ import {
     PAGES_SEARCH_FILTERS_CLEAR
 } from '@stores/actionTypes/pages/search';
 import { CatalogService } from '@services/Common/Catalog';
-import { ISearchQuery, TSearchTerm } from '@interfaces/searchPageData';
+import { ICatalogSearchDataParsed, ISearchQuery, TSearchTerm } from '@interfaces/searchPageData';
 
-export const suggestPendingState = {
-    type: PAGES_SUGGESTION_REQUEST + '_PENDING',
-};
+export const suggestPendingState = () => ({
+    type: PAGES_SUGGESTION_REQUEST + '_PENDING'
+});
+
+export const suggestRejectState = (message: string) => ({
+    type: PAGES_SUGGESTION_REQUEST + '_REJECTED',
+    payloadRejected: {error: message}
+});
+
+export const suggestFullfiledState = (payload: object) => ({
+    type: PAGES_SUGGESTION_REQUEST + '_FULFILLED',
+    payloadSuggestionFulfilled: payload
+});
 
 export const sendSuggestionAction = function (query: string) {
     return (dispatch: Function, getState: Function) => {
-        dispatch(suggestPendingState);
-        CatalogService.catalogSuggestion(PAGES_SUGGESTION_REQUEST, dispatch, query);
+        CatalogService.catalogSuggestion(dispatch, query);
     };
 };
 
-export const sendSearchAction = function (params: ISearchQuery) {
+export const sendSearchPendingState = () => ({
+    type: PAGES_SEARCH_REQUEST + '_PENDING'
+});
+
+export const sendSearchRejectState = (message: string) => ({
+    type: PAGES_SEARCH_REQUEST + '_REJECTED',
+    payloadRejected: {error: message}
+});
+
+export const sendSearchFulfilledState = (payloadCategory: ICatalogSearchDataParsed, query: string) => ({
+    type: PAGES_SEARCH_REQUEST + '_FULFILLED',
+    payloadSearchFulfilled: {...payloadCategory, searchTerm: query}
+});
+
+export const sendSearchAction = function (payload: ISearchQuery) {
     return (dispatch: Function, getState: Function) => {
         dispatch({
             type: PAGES_SEARCH_REQUEST + '_PENDING',
@@ -30,12 +53,10 @@ export const sendSearchAction = function (params: ISearchQuery) {
     };
 };
 
-export const clearSuggestions = function (searchTerm: TSearchTerm) {
-    return {
-        type: PAGES_SEARCH_REQUEST_CLEAR,
-        payloadSearchTermFulfilled: {searchTerm},
-    };
-};
+export const clearSuggestions = (searchTerm: TSearchTerm) => ({
+    type: PAGES_SEARCH_REQUEST_CLEAR,
+    payloadSearchTermFulfilled: {searchTerm}
+});
 
 export const clearSearchTermAction = function () {
     return {

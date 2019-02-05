@@ -1,10 +1,11 @@
 import api from 'src/shared/services/api';
-import { toast } from 'react-toastify';
 import { REFRESH_TOKEN_REQUEST } from '@stores/actionTypes/pages/login';
 import { parseLoginDataResponse } from 'src/shared/helpers/customer/loginDataResponse';
 import { saveAccessDataToLocalStorage } from 'src/shared/helpers/localStorage';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class RefreshTokenService extends ApiServiceAbstract {
     public static async getActualToken(dispatch: Function): Promise<string> {
@@ -28,7 +29,11 @@ export class RefreshTokenService extends ApiServiceAbstract {
                     type: REFRESH_TOKEN_REQUEST + '_REJECTED',
                     error: error.message,
                 });
-                toast.error('Unexpected error: ' + error.message);
+                NotificationsMessage({
+                    messageWithCustomText: 'unexpected.error.message',
+                    message: error.message,
+                    type: typeNotificationError
+                });
 
                 return Promise.reject(error.message);
             }
@@ -68,7 +73,11 @@ export class RefreshTokenService extends ApiServiceAbstract {
                 type: REFRESH_TOKEN_REQUEST + '_REJECTED',
                 error: errorMessage,
             });
-            toast.error('Request Error: ' + errorMessage);
+            NotificationsMessage({
+                messageWithCustomText: 'request.error.message',
+                message: errorMessage,
+                type: typeNotificationError
+            });
 
             return Promise.reject(errorMessage);
         }
