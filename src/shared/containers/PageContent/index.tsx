@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { IComponent } from 'src/typings/app';
 import { getContentRoutes, pathCategoryPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
 import { AppHeader } from 'src/shared/components/containers/AppHeader';
-import { AppFooter } from 'src/shared/components/Common/AppFooter';
+import { AppFooter } from 'src/shared/components/components/AppFooter';
 import { isStateLoading } from '@stores/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {

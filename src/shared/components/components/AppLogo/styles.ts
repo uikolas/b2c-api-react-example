@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => createStyles({
     logoContainer: {
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'column',
+        flexDirection: 'column'
     },
     logo: {
         display: 'block',

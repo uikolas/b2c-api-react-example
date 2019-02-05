@@ -3,14 +3,14 @@ import { WithRouter } from 'src/shared/interfaces/common/react';
 import { styles } from './styles';
 import { TProductQuantity } from 'src/shared/interfaces/product';
 
-export interface MiniCartDropDownProps extends WithStyles<typeof styles>, WithRouter {
+export interface IMiniCartDropDownProps extends WithStyles<typeof styles>, WithRouter {
     cartItemsQuantity?: TProductQuantity;
     cartProductsQuantity?: TProductQuantity;
     popoverPosLeft: number;
     popoverPosTop: number;
 }
 
-export interface MiniCartDropDownState {
+export interface IMiniCartDropDownState {
     anchorEl: HTMLElement | null;
     isCartNotificationOpen: boolean;
 }

@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton/IconButton';
 import { LanguageSwitcher } from '@components/containers/LanguageSwitcher';
 import { UserDropNavigation } from '@components/containers/UserDropNavigation';
 import { MiniCartDropDown } from '@components/containers/MiniCartDropDown';
-import { AddNavProps as Props } from './types';
+import { IAddNavProps as Props } from './types';
 import { styles } from './styles';
 import { appContainerStyles } from 'src/shared/theme/properties/new/appContainerStyles';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';

@@ -5,14 +5,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
-import { LangProps as Props, LangState as State, language } from './types';
+import { ILangProps as Props, ILangState as State, TLanguage } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
 import { TAppLocale } from 'src/shared/interfaces/locale/index';
 import api from '@services/api';
 import { FormattedMessage } from 'react-intl';
 
-const availableLanguages: language[] = [
+const availableLanguages: TLanguage[] = [
     {
         name: <FormattedMessage id={'language.english.title'} />,
         code: 'en'
@@ -35,7 +35,7 @@ export class LanguageSwitcherComponent extends React.Component<Props, State> {
 
     private closeLang = () => this.setState(() => ({anchorEl: null}));
 
-    private selectLang = (lang: language) => (event: React.MouseEvent<HTMLElement>) => {
+    private selectLang = (lang: TLanguage) => (event: React.MouseEvent<HTMLElement>) => {
         const locale: TAppLocale = lang.code;
 
         api.setHeader('Accept-Language', locale);
@@ -49,7 +49,7 @@ export class LanguageSwitcherComponent extends React.Component<Props, State> {
             return null;
         }
         const {anchorEl} = this.state;
-        const selectedLang = availableLanguages.filter((item: language) => (item.code === appLocale))[0];
+        const selectedLang = availableLanguages.filter((item: TLanguage) => (item.code === appLocale))[0];
         const {classes} = this.props;
         const open = Boolean(anchorEl);
 

@@ -5,13 +5,14 @@ import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import CatalogSearch from '@components/Common/CatalogSearch';
-import { LogoWhite } from '@components/components/LogoWhite';
+import { AppLogo } from '@components/components/AppLogo';
 import { MainNavigation } from '@components/containers/MainNavigation';
 import { AdditionalNavigation } from './AdditionalNavigation/index';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { AppHeaderProps as Props, AppHeaderState as State } from './types';
+import { IAppHeaderProps as Props, IAppHeaderState as State } from './types';
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
+import { SprykerLogoWhite } from './SprykerLogoWhite';
 
 @(withRouter as Function)
 export class AppHeaderComponent extends React.PureComponent<Props, State> {
@@ -100,7 +101,7 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
                                 <div className={classes.headerTop}>
                                     <div className={`${classes.headerContainer} ${classes.headerTopContainer}`}>
                                         <div className={classes.logoContainer}>
-                                            <LogoWhite />
+                                            <AppLogo customLogo={<SprykerLogoWhite />} />
                                         </div>
 
                                         <div className={classes.headerSearchContainer}>

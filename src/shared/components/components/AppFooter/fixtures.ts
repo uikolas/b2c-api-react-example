@@ -1,4 +1,4 @@
-import { link } from './parts/Links/types';
+import { link } from './NavigationList/types';
 import {
     pathCategoryComputers,
     pathCategoryNew,

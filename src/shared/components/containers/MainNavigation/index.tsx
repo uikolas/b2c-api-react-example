@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { MainNavProps as Props } from './types';
+import { IMainNavProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
 import { fixtures } from './fixtures';

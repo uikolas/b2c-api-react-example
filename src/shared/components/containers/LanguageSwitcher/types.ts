@@ -4,16 +4,16 @@ import { styles } from './styles';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
 import { TAppLocale } from 'src/shared/interfaces/locale/index';
 
-export type language = {
+export type TLanguage = {
     name: React.ReactNode,
     code: TAppLocale,
 };
 
-export interface LangProps extends WithStyles<typeof styles> {
+export interface ILangProps extends WithStyles<typeof styles> {
     appLocale: TAppLocale;
     switchLocaleAction: (payload: ILocaleActionPayload) => void;
 }
 
-export interface LangState {
+export interface ILangState {
     anchorEl: HTMLElement | null;
 }

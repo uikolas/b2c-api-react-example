@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
-import { UserDropProps as Props } from './types';
+import { IUserDropProps as Props } from './types';
 import { styles } from './styles';
 import { customerProfileNavLinks } from 'src/shared/constants/navLinks/index';
 import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';

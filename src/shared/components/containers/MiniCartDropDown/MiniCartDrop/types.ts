@@ -3,7 +3,7 @@ import { ICartTotals, TCartId, ICartItem } from 'src/shared/interfaces/cart/inde
 import { TProductSKU } from 'src/shared/interfaces/product/index';
 import { styles } from './styles';
 
-export interface MiniCartDropProps extends WithStyles<typeof styles> {
+export interface IMiniCartDropProps extends WithStyles<typeof styles> {
     totals: ICartTotals | null;
     cartItems: ICartItem[] | null;
     isUserLoggedIn: boolean;

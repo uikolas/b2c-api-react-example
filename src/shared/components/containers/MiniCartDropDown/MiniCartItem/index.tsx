@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { MiniCartItemProps as Props } from './types';
+import { IMiniCartItemProps as Props } from './types';
 import { styles, cartProductImageSize } from './styles';
 import { SquareImage } from 'src/shared/components/Common/SquareImage';
 import { priceTypeNameOriginal } from 'src/shared/interfaces/product';

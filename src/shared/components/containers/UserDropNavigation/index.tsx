@@ -6,7 +6,7 @@ import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { pathCustomerPage, pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
 import { UserIcon } from './icons';
 import { UserDrop } from './UserDrop/index';
-import { UserDropNavigationProps as Props, UserDropNavigationState as State } from './types';
+import { IUserDropNavigationProps as Props, IUserDropNavigationState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { PopoverWrapper } from 'src/shared/components/components/PopoverWrapper';

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { MiniCartItem } from '../MiniCartItem';
-import { MiniCartDropProps as Props } from './types';
+import { IMiniCartDropProps as Props } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
 import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';

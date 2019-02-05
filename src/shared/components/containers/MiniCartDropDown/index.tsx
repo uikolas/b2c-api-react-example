@@ -7,7 +7,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { MiniCartDrop } from './MiniCartDrop';
 import { CartIcon } from './icons';
-import { MiniCartDropDownProps as Props, MiniCartDropDownState as State } from './types';
+import { IMiniCartDropDownProps as Props, IMiniCartDropDownState as State } from './types';
 import { connect } from './connect';
 import { styles } from './styles';
 import { pathCartPage } from 'src/shared/routes/contentRoutes';
