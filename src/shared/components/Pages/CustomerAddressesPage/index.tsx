@@ -5,7 +5,6 @@ import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } 
 import { ClickEvent } from '@interfaces/common/react';
 import { pathAddressFormNew, pathAddressFormUpdateBase } from '@routes/contentRoutes';
 
-import { ErrorBoundary } from '@components/Library/ErrorBoundary';
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { SprykerButton } from '@components/UI/SprykerButton';
 import { AddressesList } from './components/addressesList';
@@ -55,15 +54,13 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <ErrorBoundary>
-                        <AddressesList
-                            isLoading={ isLoading }
-                            customer={ customer }
-                            customerAddresses={ addresses }
-                            updatedAddressHandler={ this.setUpdatedAddress }
-                            deleteAddressHandler={ deleteAddressAction }
-                        />
-                    </ErrorBoundary>
+                    <AddressesList
+                        isLoading={ isLoading }
+                        customer={ customer }
+                        customerAddresses={ addresses }
+                        updatedAddressHandler={ this.setUpdatedAddress }
+                        deleteAddressHandler={ deleteAddressAction }
+                    />
                 </Grid>
 
                 <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
