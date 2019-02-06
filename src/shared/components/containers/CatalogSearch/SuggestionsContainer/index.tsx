@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { pathCategoryPageBase, pathSearchPage } from '@routes/contentRoutes';
-import SearchIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import SearchIcon from '@material-ui/icons/Search';
 import { getCategoryIdByName } from '@helpers/categories';
 import Paper from '@material-ui/core/Paper/Paper';
 import Typography from '@material-ui/core/Typography/Typography';
@@ -9,12 +9,12 @@ import { FormattedMessage } from 'react-intl';
 import Divider from '@material-ui/core/Divider/Divider';
 import { ClickEvent } from '@interfaces/common/react';
 import { connect } from './connect';
+import { ISuggestionsContainerProps as Props } from './types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { styles } from './styles';
 
 @connect
-export class SuggestionsContainer extends React.Component<any, any> {
-    public state: any = {
-
-    };
+export class SuggestionsContainerBase extends React.Component<Props> {
 
     private handleSearchCompletion = (e: ClickEvent): void => {
         const query = e.currentTarget.dataset.query.trim();
@@ -120,3 +120,5 @@ export class SuggestionsContainer extends React.Component<any, any> {
         );
     }
 }
+
+export const SuggestionsContainer = withStyles(styles)(SuggestionsContainerBase);

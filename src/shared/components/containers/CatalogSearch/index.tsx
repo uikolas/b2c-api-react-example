@@ -1,17 +1,21 @@
-// tslint:disable:max-file-line-count
 import * as React from 'react';
 import Autosuggest from 'react-autosuggest';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { IProductCard } from 'src/shared/interfaces/product/index';
+import { InputChangeEvent } from '@interfaces/common/react';
+import { IProductCard } from '@interfaces/product';
 import { styles } from './styles';
-import { CatalogProps as Props, CatalogState as State } from './types';
+import {
+    ICatalogProps as Props,
+    ICatalogState as State,
+    IInputProps
+} from './types';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { InputComponent } from './InputComponent';
 import { Suggestions } from './Suggestions';
 import { SuggestionsContainer } from './SuggestionsContainer';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
@@ -19,7 +23,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     public timer: number | null;
 
     public state: State = {
-        value: '',
+        value: ''
     };
 
     private getSuggestionValue = (suggestion: IProductCard): string => suggestion.abstractName;
@@ -38,7 +42,9 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         }
     };
 
-    private handleSuggestionsClearRequested = (): void => {};
+    private handleSuggestionsClearRequested = (): void => {
+        return;
+    };
 
     private clearSuggestion = (value: string): void => {
         this.props.clearSuggestions(value);
@@ -59,20 +65,16 @@ export class CatalogSearchBase extends React.Component<Props, State> {
 
     private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
 
-    private renderInputComponent = (inputProps: any): JSX.Element => {
-        console.log(inputProps);
-
-        const propsForComponent = {
+    private renderInputComponent = (inputProps: IInputProps): JSX.Element => {
+        const inputComponentProps = {
             inputProps: {...inputProps},
-            value: this.state.value,
-            clearSuggestion: this.clearSuggestion,
-            currency: this.props.currency,
-            isLoading: this.props.isLoading,
-            completion: this.props.completion
-        }
+            clearSuggestion: this.clearSuggestion
+        };
 
         return (
-            <InputComponent {...propsForComponent} />
+            <ErrorBoundary>
+                <InputComponent {...inputComponentProps} />
+            </ErrorBoundary>
         );
     };
 
@@ -81,40 +83,37 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         {query, isHighlighted}: {query: string; isHighlighted: boolean}
     ) => {
 
-        const {classes} = this.props;
+        const suggestionsProps = {
+            isHighlighted,
+            query,
+            suggestion,
+            clearSuggestion: this.clearSuggestion,
+            containerRef: this.containerRef
+        };
 
         return (
-            <Suggestions
-                isHighlighted={isHighlighted}
-                query={query}
-                classes={classes}
-                suggestion={suggestion}
-                clearSuggestion={this.clearSuggestion}
-                containerRef={this.containerRef}
-            />
+            <ErrorBoundary>
+                <Suggestions {...suggestionsProps} />
+            </ErrorBoundary>
         );
     };
 
     private renderSuggestionsContainer = (options: Autosuggest.RenderSuggestionsContainerParams): JSX.Element => {
-        const {categories, completion, suggestions, categoriesTree, classes} = this.props;
+        const suggestionsContainerProps = {
+            options,
+            clearSuggestion: this.clearSuggestion
+        };
 
         return (
-          <SuggestionsContainer
-              categories={categories}
-              completion={completion}
-              suggestions={suggestions}
-              categoriesTree={categoriesTree}
-              classes={classes}
-              options={options}
-              clearSuggestion={this.clearSuggestion}
-          />
+            <ErrorBoundary>
+                <SuggestionsContainer {...suggestionsContainerProps} />
+            </ErrorBoundary>
         );
     };
 
-    /* RENDER */
     public render() {
         const {value} = this.state;
-        const {classes, suggestions, /*isLoading*/ id} = this.props;
+        const {classes, suggestions, isLoading, id} = this.props;
         const filledClass = value.length > 0 ? classes.filled : '';
 
         const autosuggestProps = {
@@ -150,11 +149,11 @@ export class CatalogSearchBase extends React.Component<Props, State> {
                 <span className={`${classes.placeholder} ${filledClass}`}>
                     <FormattedMessage id={'header.form.autosuggest.placeholder'} />
                 </span>
-                {this.props.isLoading ? (
+                {isLoading &&
                     <div className={classes.pendingProgress}>
                         <CircularProgress size={34} color="primary" />
                     </div>
-                ) : null}
+                }
             </div>
         );
     }

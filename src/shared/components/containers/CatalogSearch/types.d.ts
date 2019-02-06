@@ -1,30 +1,32 @@
 import { WithStyles } from '@material-ui/core';
 import { RouteProps } from 'react-router';
 import { styles } from './styles';
-import { FlyoutSearch, ISearchQuery } from 'src/shared/interfaces/searchPageData/index';
-import { ICategory } from '@interfaces/category';
-import { TAppCurrency } from 'src/shared/interfaces/currency/index';
+import { FlyoutSearch } from '@interfaces/searchPageData';
+import { TAppCurrency } from '@interfaces/currency';
+import * as React from 'react';
+import { BlurEvent, ChangeEvent } from 'react-autosuggest';
 
-export interface CatalogProps extends WithStyles<typeof styles>, RouteProps, FlyoutSearch {
-    // connect
+export interface ICatalogProps extends WithStyles<typeof styles>, RouteProps, FlyoutSearch {
     currency: TAppCurrency;
     isLoading: boolean;
     id: string;
-    categoriesTree: ICategory[] | null;
-
     sendSuggestionAction(query: string): void;
-
     clearSuggestions(query: string): void;
-
-    sendSearchAction(params: ISearchQuery): void;
-
-    getProductDataAction(sku: string): void;
-
-    push(query: string): void;
 }
 
-export interface CatalogState {
+export interface ICatalogState {
     value: string;
     completionValue?: string;
-    heightListItem: number;
+}
+
+export interface IInputProps {
+    value: string;
+    [key: string]: any;
+    onChange(event: React.FormEvent<any>, params?: ChangeEvent): void;
+    onBlur?(event: React.FormEvent<any>, params?: BlurEvent): void;
+}
+
+export interface ICompletionMatch {
+    text: string;
+    highlight: Boolean;
 }

@@ -5,19 +5,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import * as React from 'react';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { styles } from './styles';
 import { pathSearchPage } from '@routes/contentRoutes';
 import { connect } from './connect';
+import { IInputComponentProps as Props, IInputComponentState as State } from './types';
+import { ICompletionMatch } from '../types';
 
 @connect
-export class InputComponent extends React.Component<any> {
-    public state: any = {
+export class InputComponent extends React.Component<Props, State> {
+    public state: State = {
         parts: [],
         matches: []
     };
 
-    public componentDidUpdate(prevProps) {
+    public componentDidUpdate(prevProps: Props) {
         if (prevProps.completion !== this.props.completion) {
             this.suggestQuery();
         }
@@ -25,20 +25,29 @@ export class InputComponent extends React.Component<any> {
 
     private handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-        const {value} = this.props;
-        if (!this.props.isLoading && value.length > 2) {
-            this.props.sendSearchAction({q: value, currency: this.props.currency});
+        const {
+            isLoading,
+            sendSearchAction,
+            push,
+            clearSuggestion,
+            currency,
+            inputProps: {value}
+        } = this.props;
 
-            this.props.push(pathSearchPage);
-            this.props.clearSuggestion(value);
+        if (!isLoading && value.length > 2) {
+            sendSearchAction({q: value, currency});
+
+            push(pathSearchPage);
+            clearSuggestion(value);
         }
     };
 
     public suggestQuery = () => {
-        let suggestQuery: string = this.props.value;
+        const {completion, inputProps: {value}} = this.props;
+        let suggestQuery = value;
 
-        if (this.props.completion.length) {
-            this.props.completion.some((data: string) => {
+        if (completion.length) {
+            completion.some((data: string) => {
                 if (data.startsWith(suggestQuery.toLowerCase())) {
                     suggestQuery = data;
 
@@ -48,21 +57,21 @@ export class InputComponent extends React.Component<any> {
                 return false;
             });
         }
-        const matches = match(suggestQuery, this.props.value);
+        const matches = match(suggestQuery, value);
         const parts = parse(suggestQuery, matches);
 
-        this.setState({parts, matches});
+        this.setState({matches, parts});
     }
 
     public render() {
-        const {classes, ref, ...other} = this.props;
+        const {classes, ref, ...other} = this.props.inputProps;
         const {parts, matches} = this.state;
 
         return (
             <form action="/" method="GET" onSubmit={this.handleFullSearch} className="suggestForm">
                 <div className={classes.completionInput}>
                     {parts.length && matches.length
-                        ? parts.map((part, index: number) => (part.highlight ? (
+                        ? parts.map((part: ICompletionMatch, index: number) => (part.highlight ? (
                             <span key={String(index)} className={classes.hiddenPart}>
                                     {part.text}
                                 </span>
@@ -80,7 +89,7 @@ export class InputComponent extends React.Component<any> {
                         inputRef: node => ref(node),
                         classes: {
                             root: classes.inputRoot,
-                            // formControl: classes.formControl,
+                            formControl: classes.formControl,
                             notchedOutline: classes.inputOutline,
                             input: classes.input
                         },

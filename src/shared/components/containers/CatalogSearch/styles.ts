@@ -13,10 +13,7 @@ export const styles = (theme: Theme) => createStyles({
     container: {
         flexGrow: 1,
     },
-    insideContWrapper: {
-        width: '75%',
-        margin: '40px 12.5% 80px',
-    },
+
     suggestionsContainer: {
         display: 'none',
     },
@@ -71,15 +68,7 @@ export const styles = (theme: Theme) => createStyles({
     inputIcon: {
         fill: `${theme.appColors.grey} !important`,
     },
-    menuItem: {
-        display: 'flex',
-        alignItems: 'center',
-        paddingLeft: 0,
-        marginTop: theme.spacing.unit * 3,
-        height: '100%',
-        paddingTop: 0,
-        paddingBottom: 0,
-    },
+
     pendingProgress: {
         position: 'absolute',
         left: '40%',
@@ -105,59 +94,11 @@ export const styles = (theme: Theme) => createStyles({
     filled: {
         display: 'none'
     },
-    completion: {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: '22px',
-        fontSize: theme.appFixedDimensions.fontSize.medium,
-        color: theme.appColors.black,
-        letterSpacing: '0.5px',
-        textDecoration: 'none',
-    },
-    categoryTitle: {
-        lineHeight: '25px',
-        fontSize: '20px',
-        letterSpacing: '0.6px',
-        marginTop: '60px',
-        marginBottom: theme.spacing.unit * 2,
-    },
+
     searchTitle: {
         marginLeft: theme.spacing.unit * 2,
         marginTop: theme.spacing.unit,
         letterSpacing: '0.5px',
-    },
-    marginTop: {
-        marginTop: theme.spacing.unit * 2,
-    },
-    description: {
-        display: 'flex',
-        flexDirection: 'column',
-        marginLeft: theme.spacing.unit * 2,
-        alignSelf: 'stretch',
-    },
-    itemName: {
-        fontSize: theme.appFixedDimensions.fontSize.medium,
-        letterSpacing: '0.5px',
-        marginTop: theme.spacing.unit * 2,
-        marginBottom: theme.spacing.unit * 2,
-    },
-    mainPrice: {
-        fontSize: theme.appFixedDimensions.fontSize.large,
-        letterSpacing: '1px',
-        color: theme.appColors.black,
-    },
-    oldPrice: {
-        fontSize: theme.appFixedDimensions.fontSize.small,
-        letterSpacing: '1px',
-        color: theme.appColors.grey,
-    },
-    linkAll: {
-        display: 'inline-block',
-        marginTop: theme.spacing.unit * 3,
-        fontSize: theme.appFixedDimensions.fontSize.small,
-        color: theme.appColors.black,
-        letterSpacing: '0.4px',
-        textDecoration: 'underline',
     },
     completionInput: {
         position: 'absolute',
