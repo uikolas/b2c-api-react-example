@@ -1,18 +1,17 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
-import { ClickEvent } from 'src/shared/interfaces/common/react';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
-import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { pathAddressFormNew, pathAddressFormUpdateBase } from 'src/shared/routes/contentRoutes';
-import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { styles } from './styles';
 import { connect } from './connect';
-import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
 import { FormattedMessage } from 'react-intl';
+import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
+import { ClickEvent } from '@interfaces/common/react';
+import { pathAddressFormNew, pathAddressFormUpdateBase } from '@routes/contentRoutes';
+
+import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { SprykerButton } from '@components/UI/SprykerButton';
+import { AddressesList } from './components/addressesList';
+
+import { Grid, withStyles } from '@material-ui/core';
+import { styles } from './styles';
 
 @connect
 export class CustomerAddressBase extends React.Component<Props, State> {
@@ -43,57 +42,7 @@ export class CustomerAddressBase extends React.Component<Props, State> {
     };
 
     public render(): JSX.Element {
-        const {classes, addresses, isLoading, deleteAddressAction} = this.props;
-
-        const rows = addresses.map((item: IAddressItem) => (
-            <div key={ item.id || item.zipCode } className={ classes.addressData }>
-                <div>{ `${item.salutation} ${item.firstName} ${item.lastName},` }</div>
-                <div>{ `${item.company || ''}` }</div>
-                <div>{ `${item.address1} ${item.address2} ${item.address3},` }</div>
-                <div>{ `${item.city} ${item.zipCode},` }</div>
-                <div>{ `${item.country}` }</div>
-                <div>{ `${item.phone || ''}` }</div>
-                <div className={ classes.btnRow }>
-                    <div>
-                        {
-                            item.isDefaultShipping
-                                ? <Chip
-                                    label={ <FormattedMessage id={ 'shipping.address.title' } /> }
-                                    variant="outlined"
-                                    className={ classes.chips }
-                                />
-                                : null
-                        }
-                        {
-                            item.isDefaultBilling
-                                ? <Chip
-                                    label={ <FormattedMessage id={ 'billing.address.title' } /> }
-                                    variant="outlined"
-                                    className={ classes.chips }
-                                />
-                                : null
-                        }
-                    </div>
-                    <div>
-                        <Button
-                            color="primary"
-                            onClick={ this.setUpdatedAddress(item.id) }
-                            disabled={ isLoading }
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            color="primary"
-                            onClick={ () => deleteAddressAction(item.id, this.props.customer) }
-                            disabled={ isLoading }
-                        >
-                            Delete
-                        </Button>
-                    </div>
-                </div>
-                <Divider />
-            </div>
-        ));
+        const { classes, customer, addresses, isLoading, deleteAddressAction } = this.props;
 
         return (
             <Grid container>
@@ -106,7 +55,15 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                 </Grid>
 
                 <Grid item xs={12}>
-                    {rows}
+                    <ErrorBoundary>
+                        <AddressesList
+                            isLoading={ isLoading }
+                            customer={ customer }
+                            customerAddresses={ addresses }
+                            updatedAddressHandler={ this.setUpdatedAddress }
+                            deleteAddressHandler={ deleteAddressAction }
+                        />
+                    </ErrorBoundary>
                 </Grid>
 
                 <Grid item xs={ 12 } sm={ 3 } className={ classes.addButton }>
@@ -116,7 +73,6 @@ export class CustomerAddressBase extends React.Component<Props, State> {
                         disabled={ isLoading }
                     />
                 </Grid>
-
             </Grid>
         );
     }

@@ -1,21 +1,23 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
-import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { styles } from '../styles';
-import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { connect } from './connect';
-import { setFormFields, IFieldInput } from './settings';
-import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
+
+import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { AddressFormProps as Props, AddressFormState as State } from './types';
+import { setFormFields, IFieldInput } from './settings';
+
+import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { SprykerButton } from '@components/UI/SprykerButton';
+import { SprykerForm } from '@components/UI/SprykerForm';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeNotificationWarning } from 'src/shared/constants/notifications';
+
+import { typeNotificationWarning } from '@constants/notifications';
+
+import { Grid, Button, withStyles } from '@material-ui/core';
+import { styles } from './styles';
 
 @connect
-export class AddressForm extends React.Component<Props, State> {
+export class CustomerAddressFormComponent extends React.Component<Props, State> {
     public state: State = {
         salutation: '',
         firstName: '',
@@ -181,4 +183,4 @@ export class AddressForm extends React.Component<Props, State> {
     }
 }
 
-export const AddressFormPage = withStyles(styles)(AddressForm);
+export const CustomerAddressForm = withStyles(styles)(CustomerAddressFormComponent);

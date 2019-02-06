@@ -1,7 +1,11 @@
 import { bindActionCreators, Dispatch } from 'redux';
-
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryBack, getRouterMatchParam } from 'src/shared/helpers/router/index';
+
+import { getRouterHistoryBack, getRouterMatchParam } from '@helpers/router/index';
+import { ICountry } from '@interfaces/country';
+import { IAddressItem } from '@interfaces/addresses';
+
+import { addAddressAction, updateAddressAction, getOneAddressAction } from '@stores/actions/pages/addresses';
 import { getCounties, isAppInitiated } from '@stores/reducers/common/init';
 import { getCustomerReference } from '@stores/reducers/pages/login';
 import {
@@ -10,10 +14,7 @@ import {
     isCurrentAddressPresent,
     isPageAddressesStateLoading
 } from '@stores/reducers/Pages/Addresses/selectors';
-import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { addAddressAction, updateAddressAction, getOneAddressAction } from '@stores/actions/pages/addresses';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
-import { ICountry } from 'src/shared/interfaces/country/index';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const routerGoBack = getRouterHistoryBack(state, ownProps);
