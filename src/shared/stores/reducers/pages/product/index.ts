@@ -1,4 +1,4 @@
-import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '@stores/actionTypes/Pages/Product';
+import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '@stores/actionTypes/pages/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { IConcreteProductAvailability, IProductDataParsed } from 'src/shared/interfaces/product/index';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';

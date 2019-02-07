@@ -3,8 +3,8 @@ import {
     INIT_APP_ACTION_TYPE,
     SET_AUTH_FROM_STORAGE,
     SWITCH_LOCALE
-} from '@stores/actionTypes/Common/Init';
-import { InitAppService } from '@services/Common/Init/index';
+} from '@stores/actionTypes/common/init';
+import { InitAppService } from '@services/Common/Init';
 import { ICategory } from 'src/shared/interfaces/category';
 import { IInitData } from 'src/shared/interfaces/init/index';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
