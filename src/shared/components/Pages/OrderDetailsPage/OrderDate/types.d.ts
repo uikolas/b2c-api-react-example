@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { IOrderDetailsParsed } from 'src/shared/interfaces/order';
-import { TAppTimeZone } from 'src/shared/interfaces/locale';
+import { IOrderDetailsParsed } from '@interfaces/order';
+import { TAppTimeZone } from '@interfaces/locale';
 
 export interface IOrderDateProps extends WithStyles<typeof styles> {
     date: IOrderDetailsParsed['dateCreated'];

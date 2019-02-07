@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { INotFoundProps as Props, INotFoundState as State } from './types';
 import { FormattedMessage } from 'react-intl';
+import { INotFoundProps as Props, INotFoundState as State } from './types';
 
 export class NotFound extends React.PureComponent<Props, State> {
     public displayName: string = 'NotFound';

@@ -5,10 +5,10 @@ import { NavLink } from 'react-router-dom';
 
 import { styles } from './styles';
 import { IOrderDetailsGeneralInfoProps } from './types';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle/index';
+import { CustomerPageTitle } from '@components/Common/CustomerPageTitle/index';
 import { pathOrderHistoryPage } from 'src/shared/routes/contentRoutes';
-import { OrderDate } from 'src/shared/components/Pages/OrderDetailsPage/OrderDate/index';
-import { OrderPriceMode } from 'src/shared/components/Pages/OrderDetailsPage/OrderPriceMode/index';
+import { OrderDate } from '@components/Pages/OrderDetailsPage/OrderDate/index';
+import { OrderPriceMode } from '@components/Pages/OrderDetailsPage/OrderPriceMode/index';
 import { FormattedMessage } from 'react-intl';
 
 export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProps> = (props): JSX.Element => {

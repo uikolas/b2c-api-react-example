@@ -1,19 +1,18 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-
-import { styles } from './styles';
+import { AppPrice } from '@components/Common/AppPrice';
 import { ITotalItemProps } from './types';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { styles } from './styles';
 
-export const TotalItemBase: React.SFC<ITotalItemProps> = (props): JSX.Element => {
+export const TotalItemBase: React.SFC<ITotalItemProps> = props => {
     const {
         classes,
         value,
         title,
         valueSign,
-        extraClassName,
+        extraClassName
     } = props;
 
     if (!value) {
@@ -33,9 +32,11 @@ export const TotalItemBase: React.SFC<ITotalItemProps> = (props): JSX.Element =>
             </Grid>
             <Grid item xs={12} sm={5} className={classes.valueOuter}>
                 {valueSign ? valueSign : null}
-                <AppPrice value={value}
-                          extraClassName={classes.price}
-                          isStylesInherited={true}/>
+                <AppPrice
+                    value={value}
+                    extraClassName={classes.price}
+                    isStylesInherited={true}
+                />
             </Grid>
         </Grid>
     );

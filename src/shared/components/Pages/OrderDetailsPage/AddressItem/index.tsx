@@ -7,8 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { IAddressItemProps } from './types';
 import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
-import { AddressPart } from 'src/shared/components/Pages/OrderDetailsPage/AddressPart';
-import { IAddressPartRow } from 'src/shared/components/Pages/OrderDetailsPage/AddressPart/types';
+import { AddressPart } from '@components/Pages/OrderDetailsPage/AddressPart';
+import { IAddressPartRow } from 'types.d.ts';
 
 export const AddressItemBase: React.SFC<IAddressItemProps> = (props): JSX.Element => {
     const {

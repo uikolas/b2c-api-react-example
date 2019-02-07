@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
 import { IOrderAddressesProps } from './types';
-import { AddressItem } from 'src/shared/components/Pages/OrderDetailsPage/AddressItem';
+import { AddressItem } from '@components/Pages/OrderDetailsPage/AddressItem';
 
 export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = (props): JSX.Element => {
     const {

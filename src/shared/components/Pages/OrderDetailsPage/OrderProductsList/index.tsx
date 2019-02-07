@@ -2,12 +2,12 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import { IOrderProductListProps } from './types';
-import { IOrderDetailsItem } from 'src/shared/interfaces/order';
-import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { IOrderDetailsItem } from '@interfaces/order';
+import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
+import { AppPrice } from '@components/Common/AppPrice';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
-import { AppTable } from 'src/shared/components/Common/AppTable';
-import { OrderProductName } from 'src/shared/components/Pages/OrderDetailsPage/OrderProductName';
+import { AppTable } from '@components/Common/AppTable';
+import { OrderProductName } from '@components/Pages/OrderDetailsPage/OrderProductName';
 import { FormattedMessage } from 'react-intl';
 
 export const OrderProductListBase: React.SFC<IOrderProductListProps> = (props): JSX.Element => {

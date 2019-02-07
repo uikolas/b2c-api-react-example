@@ -3,8 +3,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { IOrderDetailsTotalsProps } from './types';
-import { IOrderDetailsExpenseItem } from 'src/shared/interfaces/order';
-import { TotalItem } from 'src/shared/components/Pages/OrderDetailsPage/TotalItem';
+import { IOrderDetailsExpenseItem } from '@interfaces/order';
+import { TotalItem } from '@components/Pages/OrderDetailsPage/TotalItem';
 import { FormattedMessage } from 'react-intl';
 
 export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (props): JSX.Element => {
