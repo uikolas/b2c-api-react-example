@@ -9,9 +9,7 @@ import { categoriesTeasersData as teasers } from './fixtures';
 import { styles } from './styles';
 
 export const CategoriesTeasersBase: React.SFC<Props> = (props): JSX.Element => {
-    const {
-        classes
-    } = props;
+    const {classes} = props;
 
     if (!teasers || !Array.isArray(teasers) || !teasers.length) {
         return null;
