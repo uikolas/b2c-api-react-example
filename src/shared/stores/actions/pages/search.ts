@@ -2,7 +2,8 @@ import {
     PAGES_SEARCH_REQUEST,
     PAGES_SEARCH_REQUEST_CLEAR,
     PAGES_SEARCH_TERM_CLEAR,
-    PAGES_SUGGESTION_REQUEST
+    PAGES_SUGGESTION_REQUEST,
+    PAGES_SEARCH_FILTERS_CLEAR
 } from '@stores/actionTypes/pages/search';
 import { CatalogService } from '@services/Common/Catalog';
 import { ICatalogSearchDataParsed, ISearchQuery, TSearchTerm } from '@interfaces/searchPageData';
@@ -43,7 +44,12 @@ export const sendSearchFulfilledState = (payloadCategory: ICatalogSearchDataPars
 
 export const sendSearchAction = function (payload: ISearchQuery) {
     return (dispatch: Function, getState: Function) => {
-        CatalogService.catalogSearch(dispatch, payload);
+        dispatch({
+            type: PAGES_SEARCH_REQUEST + '_PENDING',
+            payloadSearchTermFulfilled: {searchTerm: params.q},
+        });
+
+        CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
     };
 };
 
@@ -52,6 +58,12 @@ export const clearSuggestions = (searchTerm: TSearchTerm) => ({
     payloadSearchTermFulfilled: {searchTerm}
 });
 
-export const clearSearchTermAction = () => ({
-    type: PAGES_SEARCH_TERM_CLEAR
+export const clearSearchTermAction = function () {
+    return {
+        type: PAGES_SEARCH_TERM_CLEAR,
+    };
+};
+
+export const clearActiveFiltersAction = () => ({
+    type: PAGES_SEARCH_FILTERS_CLEAR
 });
