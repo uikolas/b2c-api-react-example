@@ -2,13 +2,10 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import Grid from '@material-ui/core/Grid';
-
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { EmptyOrder } from '@components/Pages/OrderDetailsPage/EmptyOrder';
 import { OrderList } from './OrderList';
-
 import { IOrderHistoryPageProps, IOrderHistoryPageState } from './types';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
