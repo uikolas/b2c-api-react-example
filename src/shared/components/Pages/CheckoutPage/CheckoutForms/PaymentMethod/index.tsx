@@ -5,30 +5,30 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { CheckoutPageContext } from '../../context';
-import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { IPaymentMethodProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types';
+import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
+import { SprykerForm } from '@components/UI/SprykerForm';
+import { IPaymentMethodProps } from '@components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types';
 import {
     IPaymentMethodsParams,
     IPaymentProviderToIcon
-} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+} from '@components/Pages/CheckoutPage/types/formSettingsTypes';
 import { PartnerIconMasterCard } from 'src/shared/assets/icons/partnerIconMasterCard';
 import { PartnerIconPaypal } from 'src/shared/assets/icons/partnerIconPaypal';
 import { PartnerIconVisa } from 'src/shared/assets/icons/partnerIconVisa';
 import {
     getPaymentMethodsFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/paymentSettings';
-import { IPaymentMethod } from 'src/shared/interfaces/checkout';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/paymentSettings';
+import { IPaymentMethod } from '@interfaces/checkout';
 import {
     checkoutFormsNames,
     checkoutPaymentMethodsNames
-} from 'src/shared/components/Pages/CheckoutPage/constants';
+} from '@components/Pages/CheckoutPage/constants';
 import { InvoicePaymentForm } from './InvoicePaymentForm';
 import { CreditCardPaymentForm } from './CreditCardPaymentForm';
 import {
     IPaymentMethodsGrouped,
     TPaymentProvidersCollection
-} from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
+} from '@components/Pages/CheckoutPage/types/constantTypes';
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {
     const {

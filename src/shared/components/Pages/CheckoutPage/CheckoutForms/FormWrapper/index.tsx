@@ -12,7 +12,7 @@ import { styles } from './styles';
 import {
     IFormWrapperProps,
     IFormWrapperState
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper/types';
+} from '@components/Pages/CheckoutPage/CheckoutForms/FormWrapper/types';
 
 export class FormWrapperBase extends React.Component<IFormWrapperProps, IFormWrapperState> {
 

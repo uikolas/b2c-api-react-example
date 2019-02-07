@@ -7,7 +7,7 @@ import {
     IDeliveryAddressState,
     IDeliverySelectionState
 } from '../types';
-import { IAddressItem } from 'src/shared/interfaces/addresses';
+import { IAddressItem } from '@interfaces/addresses';
 
 export const deliverySelectionDefault: IDeliverySelectionState = {
     selectedAddressId: null,

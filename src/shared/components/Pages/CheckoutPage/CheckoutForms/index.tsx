@@ -3,12 +3,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { formStyles } from './styles';
-import { ICheckoutFormsProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/types';
-import { DeliveryForm } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm';
-import { FormWrapper } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/FormWrapper';
-import { BillingForm } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm';
-import { ShipmentMethod } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod';
-import { PaymentMethod } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/PaymentMethod';
+import { ICheckoutFormsProps } from '@components/Pages/CheckoutPage/CheckoutForms/types';
+import { DeliveryForm } from '@components/Pages/CheckoutPage/CheckoutForms/DeliveryForm';
+import { FormWrapper } from '@components/Pages/CheckoutPage/CheckoutForms/FormWrapper';
+import { BillingForm } from '@components/Pages/CheckoutPage/CheckoutForms/BillingForm';
+import { ShipmentMethod } from '@components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod';
+import { PaymentMethod } from '@components/Pages/CheckoutPage/CheckoutForms/PaymentMethod';
 
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
     const {

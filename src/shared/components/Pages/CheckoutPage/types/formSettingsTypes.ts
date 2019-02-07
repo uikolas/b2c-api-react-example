@@ -2,15 +2,15 @@ import {
     IPaymentMethod,
     ISameAsDelivery,
     IShipmentMethod
-} from 'src/shared/interfaces/checkout';
-import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
+} from '@interfaces/checkout';
+import { IFormField } from '@components/UI/SprykerForm/types';
 import {
     ICheckoutAddressState,
     ICheckoutCreditCardState,
     ICheckoutInvoiceState,
-} from 'src/shared/components/Pages/CheckoutPage/types';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
-import { TCheckoutPageContext } from 'src/shared/components/Pages/CheckoutPage/types/contextTypes';
+} from '@components/Pages/CheckoutPage/types';
+import { IAddressItemCollection } from '@interfaces/addresses';
+import { TCheckoutPageContext } from '@components/Pages/CheckoutPage/types/contextTypes';
 import {
     ICreditCardObjectConfigInputStable,
     IInvoiceObjectConfigInputStable,
@@ -23,8 +23,8 @@ import {
     TExtraOptionsToSelection,
     TPaymentProvidersCollection
 } from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
-import { BlurEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { ICountry } from 'src/shared/interfaces/country';
+import { BlurEvent, InputChangeEvent } from '@interfaces/common/react';
+import { ICountry } from '@interfaces/country';
 
 // Base handlers for checkout's page forms
 export interface IBaseCheckoutFormHandler {

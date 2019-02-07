@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { IShippingMethodsParams } from '../../types/formSettingsTypes';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IShipmentMethod } from 'src/shared/interfaces/checkout';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IShipmentMethod } from '@interfaces/checkout';
+import { AppPrice } from '@components/Common/AppPrice';
 import { FormattedMessage } from 'react-intl';
 
 export const getShipmentMethodsFormSettings = (formName: string, params: IShippingMethodsParams): IFormSettings => {

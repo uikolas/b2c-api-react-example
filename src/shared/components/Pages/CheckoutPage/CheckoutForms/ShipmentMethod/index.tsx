@@ -4,17 +4,17 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { CheckoutPageContext } from '../../context';
-import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { IShipmentMethodProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod/types';
+import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
+import { SprykerForm } from '@components/UI/SprykerForm';
+import { IShipmentMethodProps } from '@components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod/types';
 import {
     getShipmentMethodsFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/shipmentSettings';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/shipmentSettings';
 import { PartnerIconDhl } from 'src/shared/assets/icons/partnerIconDhl';
 import { PartnerIconHermes } from 'src/shared/assets/icons/partnerIconHermes';
-import { IShippingMethodsParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { IShipmentMethodsGrouped } from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
-import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
+import { IShippingMethodsParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { IShipmentMethodsGrouped } from '@components/Pages/CheckoutPage/types/constantTypes';
+import { checkoutFormsNames } from '@components/Pages/CheckoutPage/constants';
 
 export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.Element => {
     const {

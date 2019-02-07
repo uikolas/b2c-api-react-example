@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     IAddressesParams,
     IBillingAddressesParams,
     IDeliveryAddressesParams
-} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+} from '@components/Pages/CheckoutPage/types/formSettingsTypes';
 import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
 import { FormattedMessage } from 'react-intl';
 

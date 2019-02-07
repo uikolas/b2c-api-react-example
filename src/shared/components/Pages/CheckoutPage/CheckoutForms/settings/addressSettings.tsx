@@ -1,8 +1,8 @@
 import { SalutationVariants } from 'src/shared/constants/customer';
-import { TSalutationVariant } from 'src/shared/interfaces/customer';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IAddressParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { ICountry } from 'src/shared/interfaces/country';
+import { TSalutationVariant } from '@interfaces/customer';
+import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IAddressParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { ICountry } from '@interfaces/country';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 

@@ -67,10 +67,10 @@ import {
     validateInvoiceInput
 } from 'src/shared/components/Pages/CheckoutPage/helpers/validation';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
-import { InputChangeEvent, FormEvent, BlurEvent } from 'src/shared/interfaces/common/react';
-import { IAddressItem, IAddressItemCollection } from 'src/shared/interfaces/addresses';
-import { ICheckoutRequest } from 'src/shared/interfaces/checkout';
-import { ICartItem, ICartTotals } from 'src/shared/interfaces/cart';
+import { InputChangeEvent, FormEvent, BlurEvent } from '@interfaces/common/react';
+import { IAddressItem, IAddressItemCollection } from '@interfaces/addresses';
+import { ICheckoutRequest } from '@interfaces/checkout';
+import { ICartItem, ICartTotals } from '@interfaces/cart';
 import { FormattedMessage } from 'react-intl';
 
 @connect

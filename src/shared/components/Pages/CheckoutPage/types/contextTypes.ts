@@ -6,15 +6,15 @@ import {
     IDeliveryAddressState,
     IDeliverySelectionState
 } from 'src/shared/components/Pages/CheckoutPage/types';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
-import { IPaymentMethod, IShipmentMethod } from 'src/shared/interfaces/checkout';
+import { IAddressItemCollection } from '@interfaces/addresses';
+import { IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 import {
     TCurrentValueBillingSelection,
     TCurrentValueDeliverySelection,
     TExtraOptionsToSelection
 } from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
-import { BlurEvent, FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { ICountry } from 'src/shared/interfaces/country';
+import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { ICountry } from '@interfaces/country';
 
 // Type for Context Provider of the Checkout Page
 export type TCheckoutPageContext = {

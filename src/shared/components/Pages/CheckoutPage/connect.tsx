@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAnonymId, getCounties, isAppInitiated } from '@stores/reducers/common/init';
-import { ICartTotals, ICartItem, TCartId } from 'src/shared/interfaces/cart';
-import { ICheckoutRequest, IPaymentMethod, IShipmentMethod } from 'src/shared/interfaces/checkout';
+import { ICartTotals, ICartItem, TCartId } from '@interfaces/cart';
+import { ICheckoutRequest, IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getCustomerProfile } from '@stores/reducers/pages/customerProfile';
 import { isStateLoading } from '@stores/reducers';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import { IAddressItemCollection } from '@interfaces/addresses';
 import { getCheckoutDataAction, sendCheckoutDataAction } from '@stores/actions/pages/checkout';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import {
@@ -19,10 +19,10 @@ import {
     isPageCheckoutStateRejected,
 } from '@stores/reducers/pages/checkout';
 import { getCustomerProfileAction } from '@stores/actions/pages/customerProfile';
-import { TCustomerReference } from 'src/shared/interfaces/customer';
+import { TCustomerReference } from '@interfaces/customer';
 import { getCartId, getCartTotals, getProductsFromCart } from '@stores/reducers/common/cart/selectors';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
-import { ICountry } from 'src/shared/interfaces/country';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { ICountry } from '@interfaces/country';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);

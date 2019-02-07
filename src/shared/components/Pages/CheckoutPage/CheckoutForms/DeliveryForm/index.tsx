@@ -1,24 +1,24 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import { IDeliveryFormProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types';
-import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
+import { IDeliveryFormProps } from '@components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types';
+import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
 import { CheckoutPageContext } from '../../context';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
+import { SprykerForm } from '@components/UI/SprykerForm';
 import {
     getAddressFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
 import {
     getDeliverySavedAddressFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
-import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
-import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
+import { AppPageSubTitle } from '@components/Common/AppPageSubTitle';
+import { checkoutFormsNames } from '@components/Pages/CheckoutPage/constants';
 import {
     IAddressParams,
     IDeliveryAddressesParams
-} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { deliveryConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
-import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
+} from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { deliveryConfigInputStable } from '@components/Pages/CheckoutPage/constants/inputsConfig';
+import { IFormField } from '@components/UI/SprykerForm/types';
 import { FormattedMessage } from 'react-intl';
 
 export const DeliveryFormBase: React.SFC<IDeliveryFormProps> = (props): JSX.Element => {

@@ -1,8 +1,8 @@
 import { RouteProps } from 'react-router';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from '../styles';
-import { ICartItem, ICartTotals, TCartId } from 'src/shared/interfaces/cart';
-import { ICustomerDataParsed, TCustomerReference } from 'src/shared/interfaces/customer';
+import { ICartItem, ICartTotals, TCartId } from '@interfaces/cart';
+import { ICustomerDataParsed, TCustomerReference } from '@interfaces/customer';
 import {
     IAddNewAddressActions,
     ISameAsDelivery,
@@ -10,10 +10,10 @@ import {
     ICheckoutRequest,
     IShipmentMethod,
     IPaymentMethod,
-} from 'src/shared/interfaces/checkout';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
-import { TFormInputValue } from 'src/shared/components/UI/SprykerForm/types';
-import { ICountry } from 'src/shared/interfaces/country';
+} from '@interfaces/checkout';
+import { IAddressItemCollection } from '@interfaces/addresses';
+import { TFormInputValue } from '@components/UI/SprykerForm/types';
+import { ICountry } from '@interfaces/country';
 
 export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProps {
     isAppDataSet: boolean;

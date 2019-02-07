@@ -4,13 +4,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import { styles } from './styles';
-import { SquareImage } from 'src/shared/components/Common/SquareImage';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
-import { CartTotal } from 'src/shared/components/Common/CartTotal';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
+import { SquareImage } from '@components/Common/SquareImage';
+import { AppPrice } from '@components/Common/AppPrice';
+import { CartTotal } from '@components/Common/CartTotal';
+import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { CartDataProps, CartDataState } from './types';
-import { ICartItem } from 'src/shared/interfaces/cart';
-import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
+import { ICartItem } from '@interfaces/cart';
+import { priceTypeNameOriginal } from '@interfaces/product';
 import { FormattedMessage } from 'react-intl';
 
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {

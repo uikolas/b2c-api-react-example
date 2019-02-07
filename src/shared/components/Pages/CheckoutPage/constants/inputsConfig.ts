@@ -3,7 +3,7 @@ import {
     ICreditCardObjectConfigInputStable,
     IDeliveryObjectConfigInputStable,
     IInvoiceObjectConfigInputStable
-} from 'src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes';
+} from '@components/Pages/CheckoutPage/types/inputsConfigTypes';
 
 export const deliveryConfigInputStable: IDeliveryObjectConfigInputStable = {
     firstName: {

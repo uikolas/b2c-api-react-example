@@ -1,4 +1,4 @@
-import { ICheckoutPageState } from 'src/shared/components/Pages/CheckoutPage/types';
+import { ICheckoutPageState } from '@components/Pages/CheckoutPage/types';
 
 export const mutateDeliveryNewAddressValidity = (
     prevState: ICheckoutPageState,

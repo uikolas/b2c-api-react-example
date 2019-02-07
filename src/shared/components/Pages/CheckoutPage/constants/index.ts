@@ -2,7 +2,7 @@ import {
     ICheckoutFormsNames,
     ICheckoutPaymentMethodsNames,
     ICheckoutSelectionInputs
-} from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
+} from '@components/Pages/CheckoutPage/types/constantTypes';
 
 export const checkoutSelectionInputs: ICheckoutSelectionInputs = {
     isAddNewDeliveryValue: 'isAddNewDeliveryValue',

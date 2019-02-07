@@ -6,7 +6,7 @@ import {
     paymentCreditCardDefault,
     paymentInvoiceDefault
 } from 'src/shared/components/Pages/CheckoutPage/constants/stateDefaults';
-import { BlurEvent, FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
+import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common/react';
 
 export const CheckoutPageContext = React.createContext<TCheckoutPageContext>({
     submitHandler: (event: FormEvent) => {

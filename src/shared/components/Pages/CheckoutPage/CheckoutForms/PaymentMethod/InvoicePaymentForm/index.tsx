@@ -4,16 +4,16 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { CheckoutPageContext } from '../../../context';
-import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
+import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
+import { SprykerForm } from '@components/UI/SprykerForm';
+import { checkoutFormsNames } from '@components/Pages/CheckoutPage/constants';
 import { IInvoicePaymentFormProps } from './types';
 import {
     getInvoiceFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/invoiceSettings';
-import { IPaymentInvoiceParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { invoiceConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
-import { TCheckoutPageContext } from 'src/shared/components/Pages/CheckoutPage/types/contextTypes';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/invoiceSettings';
+import { IPaymentInvoiceParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { invoiceConfigInputStable } from '@components/Pages/CheckoutPage/constants/inputsConfig';
+import { TCheckoutPageContext } from '@components/Pages/CheckoutPage/types/contextTypes';
 
 export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (props): JSX.Element => {
     const {

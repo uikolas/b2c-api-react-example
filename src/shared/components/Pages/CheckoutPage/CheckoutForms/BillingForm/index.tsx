@@ -3,27 +3,27 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { IBillingFormProps } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/BillingForm/types';
+import { IBillingFormProps } from '@components/Pages/CheckoutPage/CheckoutForms/BillingForm/types';
 import { CheckoutPageContext } from '../../context';
-import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
+import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
+import { SprykerForm } from '@components/UI/SprykerForm';
 import {
     getAddressFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
 import {
     getSameAsDeliveryFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/sameAsDeliverySettings';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/sameAsDeliverySettings';
 import {
     getBillingSavedAddressFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
-import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
-import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
+} from '@components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
+import { AppPageSubTitle } from '@components/Common/AppPageSubTitle';
+import { checkoutFormsNames } from '@components/Pages/CheckoutPage/constants';
 import {
     IAddressParams,
     IBillingAddressesParams,
     ISameAsDeliveryParams
-} from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { billingConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
+} from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { billingConfigInputStable } from '@components/Pages/CheckoutPage/constants/inputsConfig';
 import { FormattedMessage } from 'react-intl';
 
 export const BillingFormBase: React.SFC<IBillingFormProps> = (props): JSX.Element => {

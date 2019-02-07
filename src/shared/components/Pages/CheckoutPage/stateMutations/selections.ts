@@ -1,5 +1,5 @@
-import { ICheckoutPageState } from 'src/shared/components/Pages/CheckoutPage/types';
-import { checkoutPaymentMethodsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
+import { ICheckoutPageState } from '@components/Pages/CheckoutPage/types';
+import { checkoutPaymentMethodsNames } from '@components/Pages/CheckoutPage/constants';
 
 export const mutateDeliverySelectionAddNew = (prevState: ICheckoutPageState):
     Pick<ICheckoutPageState, 'deliverySelection' | 'stepsCompletion'> | null => (

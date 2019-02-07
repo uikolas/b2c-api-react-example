@@ -1,6 +1,6 @@
 import React from 'react';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IPaymentInvoiceParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
+import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IPaymentInvoiceParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
 import { FormattedMessage } from 'react-intl';
 
 export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoiceParams): IFormSettings => {

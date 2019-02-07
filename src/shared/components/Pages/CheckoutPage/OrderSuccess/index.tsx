@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DoneIcon from '@material-ui/icons/Done';
 import { styles } from '../styles';
-import { CustomerPageTitle } from 'src/shared/components/Common/CustomerPageTitle';
+import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { OrderSuccessProps } from './types';
 import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
 import { FormattedMessage } from 'react-intl';

@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { ICartItem, ICartTotals } from 'src/shared/interfaces/cart';
-import { ClickEvent } from 'src/shared/interfaces/common/react';
+import { ICartItem, ICartTotals } from '@interfaces/cart';
+import { ClickEvent } from '@interfaces/common/react';
 
 export interface CartDataProps extends WithStyles<typeof styles> {
     products: ICartItem[];

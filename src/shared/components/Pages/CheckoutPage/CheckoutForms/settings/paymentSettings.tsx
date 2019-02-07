@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { IPaymentMethodsParams } from '../../types/formSettingsTypes';
-import { IFormSettings } from 'src/shared/components/UI/SprykerForm/types';
-import { IPaymentMethodGroupItem } from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
+import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IPaymentMethodGroupItem } from '@components/Pages/CheckoutPage/types/constantTypes';
 
 export const getPaymentMethodsFormSettings = (formName: string, params: IPaymentMethodsParams): IFormSettings => {
     const {

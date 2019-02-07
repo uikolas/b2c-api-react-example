@@ -3,14 +3,14 @@ import {
     creditCardConfigInputStable,
     deliveryConfigInputStable,
     invoiceConfigInputStable
-} from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
-import { checkFormInputValidity, checkFormValidity } from 'src/shared/components/Pages/CheckoutPage/helpers';
+} from '@components/Pages/CheckoutPage/constants/inputsConfig';
+import { checkFormInputValidity, checkFormValidity } from '@components/Pages/CheckoutPage/helpers';
 import {
     IBillingAddressState,
     ICheckoutCreditCardState,
     ICheckoutInvoiceState,
     IDeliveryAddressState
-} from 'src/shared/components/Pages/CheckoutPage/types';
+} from '@components/Pages/CheckoutPage/types';
 
 // Inputs Validation
 export const validateDeliveryInput = (key: string, value: string): boolean => (

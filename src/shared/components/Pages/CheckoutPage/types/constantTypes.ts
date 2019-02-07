@@ -1,7 +1,7 @@
-import { IRadioItem } from 'src/shared/components/UI/SprykerForm/types';
-import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
-import { IPaymentMethod, IShipmentMethod } from 'src/shared/interfaces/checkout';
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses';
+import { IRadioItem } from '@components/UI/SprykerForm/types';
+import { IMenuItemSelect } from '@components/UI/SprykerSelect/types';
+import { IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
+import { IAddressItemCollection } from '@interfaces/addresses';
 
 export interface ICheckoutFormsNames {
     billing: string;
