@@ -1,31 +1,22 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
+
 import { WishlistState } from '@stores/reducers/pages/wishlist/types';
-import {
-    addWishlistAction,
-    deleteWishlistAction,
-    getWishlistsAction,
-    updateWishlistAction,
-} from '@stores/actions/pages/wishlist';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { getWishlistsAction } from '@stores/actions/pages/wishlist';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const wishlistProps: WishlistState = state.pageWishlist ? state.pageWishlist : null;
 
     return ({
-        wishlists: wishlistProps && wishlistProps.data ? wishlistProps.data.wishlists : null,
-        isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitialList : false,
-        isLoading: wishlistProps ? wishlistProps.pending : false,
+        isInitial: wishlistProps && wishlistProps.data ? wishlistProps.data.isInitialList : false
     });
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators(
         {
-            addWishlistAction,
-            deleteWishlistAction,
-            getWishlistsAction,
-            updateWishlistAction,
+            getWishlistsAction
         },
         dispatch,
     );

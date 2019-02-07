@@ -2,20 +2,19 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
+import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
 import { IWishlist, TWishListId } from '@interfaces/wishlist';
 import { WishListsTableProps, WishListsTableState } from './types';
 import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
 
 import { AppTable } from '@components/Common/AppTable';
 
+import { NavLink } from 'react-router-dom';
 import { pathWishListPageBase } from '@routes/contentRoutes';
 
-import { NavLink } from 'react-router-dom';
 import { Paper, Divider, Typography, TextField, IconButton, withStyles } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
-
 import { styles } from './styles';
-import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
 
 @connect
 export class WishListsTableComponent extends React.Component<WishListsTableProps, WishListsTableState> {
@@ -30,7 +29,6 @@ export class WishListsTableComponent extends React.Component<WishListsTableProps
     ];
 
     public state: WishListsTableState = {
-        name: '',
         updatedName: '',
         updatedList: '',
     };
@@ -87,7 +85,7 @@ export class WishListsTableComponent extends React.Component<WishListsTableProps
                             ) : (
                                 <NavLink
                                     className={ classes.link }
-                                    to={ `${pathWishListPageBase}/wishlist/${item.name}` }
+                                    to={ `${pathWishListPageBase}/${item.id}` }
                                 >
                                     {item.name}
                                 </NavLink>

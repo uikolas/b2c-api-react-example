@@ -14,7 +14,6 @@ export interface WishListsTableProps extends WithStyles<typeof styles> {
 }
 
 export interface WishListsTableState {
-    name: string;
     updatedName: string;
     updatedList: string;
 }

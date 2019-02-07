@@ -2,51 +2,26 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
-import { WishlistPageProps as Props, WishlistPageState as State } from './types';
-import { InputChangeEvent } from '@interfaces/common/react';
+import { WishlistPageProps as Props } from './types';
 
 import { AppPageTitle } from '@components/Common/AppPageTitle';
+import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { AddNewWishListForm } from './containers/addNewWishListForm';
 import { WishListsTable } from './containers/wishListsTable';
 
-import { Grid, Typography, Paper, TextField, Button, withStyles } from '@material-ui/core';
+import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 @connect
-export class WishListBase extends React.Component<Props, State> {
-    public state: State = {
-        name: '',
-        updatedName: '',
-        updatedList: '',
-    };
-
+export class WishListBase extends React.Component<Props> {
     public componentDidMount() {
         if (!this.props.isInitial) {
             this.props.getWishlistsAction();
         }
     }
 
-    public handleChangeName = (event: InputChangeEvent): void => {
-        event.persist();
-        this.setState(() => ({name: event.target.value}));
-    };
-
-    public addWishlist = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!this.state.name.trim()) {
-            return;
-        }
-        this.props.addWishlistAction(this.state.name);
-        this.setState(() => ({name: ''}));
-    };
-
     public render() {
-        const { classes, wishlists, isLoading } = this.props;
-        const { name } = this.state;
-
-        if (!wishlists.length && isLoading) {
-            return null;
-        }
+        const { classes } = this.props;
 
         return (
             <Grid container>
@@ -58,33 +33,13 @@ export class WishListBase extends React.Component<Props, State> {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <form noValidate autoComplete="off" onSubmit={this.addWishlist} className={classes.form}>
-                        <Typography paragraph className={ classes.titleForm }>
-                            <FormattedMessage id={ 'add.new.wishlist.title' } />
-                        </Typography>
-                        <Paper elevation={0} className={classes.formItem}>
-                            <TextField
-                                className={ classes.textFieldForm }
-                                value={ name }
-                                helperText={ <FormattedMessage id={ 'wishlist.name.title' } /> }
-                                FormHelperTextProps={ {
-                                    classes: {
-                                        root: classes.placeholder,
-                                        filled: name.length > 0 ? classes.filled : null
-                                    }
-                                } }
-                                variant={ 'outlined' }
-                                onChange={ this.handleChangeName }
-                                inputProps={ { className: classes.input } }
-                            />
-                            <Button type="submit" variant="contained" color="primary"
-                                    className={ classes.formSubmit }>
-                                <FormattedMessage id={ 'add.new.wishlist.title' } />
-                            </Button>
-                        </Paper>
-                    </form>
+                    <ErrorBoundary>
+                        <AddNewWishListForm />
+                    </ErrorBoundary>
 
-                    <WishListsTable />
+                    <ErrorBoundary>
+                        <WishListsTable />
+                    </ErrorBoundary>
                 </Grid>
             </Grid>
         );
@@ -92,4 +47,5 @@ export class WishListBase extends React.Component<Props, State> {
 }
 
 export const ConnectedWishlistPage = withStyles(styles)(WishListBase);
+
 export default ConnectedWishlistPage;
