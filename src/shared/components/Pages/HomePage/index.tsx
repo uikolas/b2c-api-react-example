@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { CategoriesTeasers } from '../../components/CategoriesTeasers';
-import { AppMain } from '../../Common/AppMain';
-import { Banner } from '../../components/Banner/index';
-import { pathCategoryComputers } from 'src/shared/routes/categoriesRoutes';
 import { FormattedMessage } from 'react-intl';
+import { pathCategoryComputers } from 'src/shared/routes/categoriesRoutes';
+import { CategoriesTeasers } from '@components/components/CategoriesTeasers';
+import { AppMain } from '@components/Common/AppMain';
+import { Banner } from '@components/components/Banner';
 
 const homepageHeroSrc = require('./img/hero_image_2-min.jpg');
 
-export const HomePage: React.SFC = () => (
+export const HomePageComponent: React.SFC = (): JSX.Element => (
     <>
         <Banner
             titleFirst={<FormattedMessage id="home.page.banner.title.first" />}

@@ -1,5 +1,5 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { ICategoriesTeasersData } from 'src/shared/components/Pages/HomePage/types';
+import { ICategoriesTeasersData } from '../types';
 import { styles } from './styles';
 
 export interface ICategoryTeaserProps extends WithStyles<typeof styles> {

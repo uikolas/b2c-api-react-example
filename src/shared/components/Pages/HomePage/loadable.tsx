@@ -6,7 +6,7 @@ export const LoadableHomePage = Loadable({
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableHomePage" */
             'src/shared/components/Pages/HomePage').then(
-            module => module.HomePage,
+            module => module.HomePageComponent,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,
 });
