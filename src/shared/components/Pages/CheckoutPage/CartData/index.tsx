@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { connect } from './connect';
+import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
-import { styles } from './styles';
 import { SquareImage } from '@components/Common/SquareImage';
 import { AppPrice } from '@components/Common/AppPrice';
 import { CartTotal } from '@components/Common/CartTotal';
@@ -11,8 +12,9 @@ import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { CartDataProps, CartDataState } from './types';
 import { ICartItem } from '@interfaces/cart';
 import { priceTypeNameOriginal } from '@interfaces/product';
-import { FormattedMessage } from 'react-intl';
+import { styles } from './styles';
 
+@connect
 export class CartDataBase extends React.Component<CartDataProps, CartDataState> {
     private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
     private designImgWidth: number = 0.33;
