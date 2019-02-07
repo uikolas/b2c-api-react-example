@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { IEmptyOrderProps } from './types';
 
-export const EmptyOrderBase: React.SFC<IEmptyOrderProps> = (props): JSX.Element => {
+export const EmptyOrderBase: React.SFC<IEmptyOrderProps> = props => {
     const {
         classes,
         intro

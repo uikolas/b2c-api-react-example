@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { IAddressPart, IAddressPartProps } from './types';
 
-export const AddressPartBase: React.SFC<IAddressPartProps> = (props): JSX.Element => {
+export const AddressPartBase: React.SFC<IAddressPartProps> = props => {
     const {
         classes,
         row,

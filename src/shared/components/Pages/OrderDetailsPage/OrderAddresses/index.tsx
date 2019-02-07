@@ -7,7 +7,7 @@ import { styles } from './styles';
 import { IOrderAddressesProps } from './types';
 import { AddressItem } from '@components/Pages/OrderDetailsPage/AddressItem';
 
-export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = (props): JSX.Element => {
+export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = props => {
     const {
         classes, billingAddress, shippingAddress, billingBlockTitle, shippingBlockTitle
     } = props;

@@ -10,7 +10,7 @@ import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
 import { AddressPart } from '@components/Pages/OrderDetailsPage/AddressPart';
 import { IAddressPartRow } from 'types.d.ts';
 
-export const AddressItemBase: React.SFC<IAddressItemProps> = (props): JSX.Element => {
+export const AddressItemBase: React.SFC<IAddressItemProps> = props => {
     const {
         classes,
         blockTitle,

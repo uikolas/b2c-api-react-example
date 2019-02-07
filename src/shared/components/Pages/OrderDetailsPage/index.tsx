@@ -12,7 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 @connect
-export class OrderDetailsPageBase extends React.Component<Props, State> {
+class OrderDetailsPageBase extends React.Component<Props, State> {
     public state: State = {
         selectedItems: {},
         selectedItemsData: null,
@@ -80,5 +80,4 @@ export class OrderDetailsPageBase extends React.Component<Props, State> {
     }
 }
 
-export const OrderDetailsPage = withStyles(styles)(OrderDetailsPageBase);
-export default OrderDetailsPage;
+export const OrderDetailsContainer = withStyles(styles)(OrderDetailsPageBase);

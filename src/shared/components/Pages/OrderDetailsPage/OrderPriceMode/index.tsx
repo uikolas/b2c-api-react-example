@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { IOrderPriceModeProps } from './types';
 
-export const OrderPriceModeBase: React.SFC<IOrderPriceModeProps> = (props): JSX.Element => {
+export const OrderPriceModeBase: React.SFC<IOrderPriceModeProps> = props => {
     const {
         classes,
         priceMode,

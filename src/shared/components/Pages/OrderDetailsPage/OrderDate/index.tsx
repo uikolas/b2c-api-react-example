@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { IOrderDateProps } from './types';
 import { formatDateToString, getDateUtcUnix } from 'src/shared/helpers/common/dates';
 
-export const OrderDateBase: React.SFC<IOrderDateProps> = (props): JSX.Element => {
+export const OrderDateBase: React.SFC<IOrderDateProps> = props => {
     const {
         classes,
         date,

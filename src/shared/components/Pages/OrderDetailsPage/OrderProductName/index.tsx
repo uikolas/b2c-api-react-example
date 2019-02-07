@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
 import { IOrderProductNameProps } from './types';
 
-export const OrderProductNameBase: React.SFC<IOrderProductNameProps> = (props): JSX.Element => {
+export const OrderProductNameBase: React.SFC<IOrderProductNameProps> = props => {
     const {
         classes,
         productName,

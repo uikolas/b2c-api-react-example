@@ -11,7 +11,7 @@ import { OrderDate } from '@components/Pages/OrderDetailsPage/OrderDate/index';
 import { OrderPriceMode } from '@components/Pages/OrderDetailsPage/OrderPriceMode/index';
 import { FormattedMessage } from 'react-intl';
 
-export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProps> = (props): JSX.Element => {
+export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProps> = props => {
     const {classes, orderId, date, priceMode, timeZone} = props;
 
     return (

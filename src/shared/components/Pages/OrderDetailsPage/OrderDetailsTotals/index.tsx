@@ -7,7 +7,7 @@ import { IOrderDetailsExpenseItem } from '@interfaces/order';
 import { TotalItem } from '@components/Pages/OrderDetailsPage/TotalItem';
 import { FormattedMessage } from 'react-intl';
 
-export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = (props): JSX.Element => {
+export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = props => {
     const {
         classes,
         expenses,
