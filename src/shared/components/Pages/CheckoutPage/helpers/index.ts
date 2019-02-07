@@ -1,6 +1,6 @@
 import {
     ICheckoutFormsProps,
-} from '@components/Pages/CheckoutPage/CheckoutForms/types';
+} from './types';
 import {
     ICheckoutAddressState,
     ICheckoutPageProps,

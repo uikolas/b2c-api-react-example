@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAnonymId, getCounties, isAppInitiated } from '@stores/reducers/common/init';
-import { ICartTotals, ICartItem, TCartId } from '@interfaces/cart';
-import { ICheckoutRequest, IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getCustomerProfile } from '@stores/reducers/pages/customerProfile';
 import { isStateLoading } from '@stores/reducers';
-import { IAddressItemCollection } from '@interfaces/addresses';
 import { getCheckoutDataAction, sendCheckoutDataAction } from '@stores/actions/pages/checkout';
 import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import {
@@ -16,13 +13,16 @@ import {
     getCreatedOrder,
     isPageCheckoutFulfilled,
     isPageCheckoutStateLoading,
-    isPageCheckoutStateRejected,
+    isPageCheckoutStateRejected
 } from '@stores/reducers/pages/checkout';
 import { getCustomerProfileAction } from '@stores/actions/pages/customerProfile';
-import { TCustomerReference } from '@interfaces/customer';
 import { getCartId, getCartTotals, getProductsFromCart } from '@stores/reducers/common/cart/selectors';
+import { IAddressItemCollection } from '@interfaces/addresses';
+import { TCustomerReference } from '@interfaces/customer';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { ICountry } from '@interfaces/country';
+import { ICartTotals, ICartItem, TCartId } from '@interfaces/cart';
+import { ICheckoutRequest, IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
@@ -32,7 +32,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isCheckoutRejected: boolean = isPageCheckoutStateRejected(state, ownProps);
     const isCheckoutFulfilled: boolean = isPageCheckoutFulfilled(state, ownProps);
 
-    const {items}: { items: ICartItem[] } = getProductsFromCart(state, ownProps);
+    const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
     const isProductsExists = Boolean(items && items.length);
     const totals: ICartTotals = getCartTotals(state, ownProps);
 
@@ -75,7 +75,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         paymentMethods,
         orderId,
         profile,
-        anonymId,
+        anonymId
     });
 };
 
@@ -95,6 +95,6 @@ export const connect = reduxify(
         updateCart: (): void => dispatch(getCustomerCartsAction()),
         updateGuestCart: (anonymId: string): void => {
             dispatch(getGuestCartAction(anonymId));
-        },
-    }),
+        }
+    })
 );

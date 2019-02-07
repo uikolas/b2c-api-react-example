@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { CheckoutPageContext } from '../../context';
 import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
 import { SprykerForm } from '@components/UI/SprykerForm';
-import { IPaymentMethodProps } from '@components/Pages/CheckoutPage/CheckoutForms/PaymentMethod/types';
+import { IPaymentMethodProps } from './types';
 import {
     IPaymentMethodsParams,
     IPaymentProviderToIcon

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import { IDeliveryFormProps } from '@components/Pages/CheckoutPage/CheckoutForms/DeliveryForm/types';
+import { IDeliveryFormProps } from './types';
 import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
 import { CheckoutPageContext } from '../../context';
 import { SprykerForm } from '@components/UI/SprykerForm';

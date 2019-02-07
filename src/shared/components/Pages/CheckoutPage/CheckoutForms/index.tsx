@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { formStyles } from './styles';
-import { ICheckoutFormsProps } from '@components/Pages/CheckoutPage/CheckoutForms/types';
+import { ICheckoutFormsProps } from './types';
 import { DeliveryForm } from '@components/Pages/CheckoutPage/CheckoutForms/DeliveryForm';
 import { FormWrapper } from '@components/Pages/CheckoutPage/CheckoutForms/FormWrapper';
 import { BillingForm } from '@components/Pages/CheckoutPage/CheckoutForms/BillingForm';

@@ -3,7 +3,7 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { IBillingFormProps } from '@components/Pages/CheckoutPage/CheckoutForms/BillingForm/types';
+import { IBillingFormProps } from './types';
 import { CheckoutPageContext } from '../../context';
 import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
 import { SprykerForm } from '@components/UI/SprykerForm';
