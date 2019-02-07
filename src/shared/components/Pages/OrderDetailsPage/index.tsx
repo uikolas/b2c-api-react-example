@@ -59,7 +59,6 @@ class OrderDetailsPageBase extends React.Component<Props, State> {
                                 />
                                 <OrderProductList items={order.items}/>
                                 <OrderDetailsTotals
-                                    currency={currency}
                                     expenses={order.expenses}
                                     totals={order.totals}
                                 />
