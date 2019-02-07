@@ -19,20 +19,6 @@ export const styles = (theme: Theme) => createStyles({
         width: '100%',
         fontSize: '0.875rem'
     },
-    tableAction: {
-        cursor: 'pointer',
-        transition: 'color 0.5s ease-in-out',
-        '&:hover': {
-            color: theme.appColors.blue
-        },
-    },
-    tableActionDisabled: {
-        pointerEvents: 'none',
-        opacity: 0.5
-    },
-    updateCell: {
-        display: 'flex',
-    },
     form: {
         padding: '2rem 0'
     },
@@ -54,14 +40,6 @@ export const styles = (theme: Theme) => createStyles({
         marginTop: '2rem',
         fontSize: '1rem',
         fontWeight: 'bold'
-    },
-    link: {
-        color: theme.palette.common.black,
-        textDecoration: 'none',
-        transition: 'color 0.5s ease-in-out',
-        '&:hover': {
-            color: theme.appColors.blue
-        },
     },
     placeholder: {
         position: 'absolute',
