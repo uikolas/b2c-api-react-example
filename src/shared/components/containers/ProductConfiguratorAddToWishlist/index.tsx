@@ -18,21 +18,20 @@ import { styles } from './styles';
 
 @connect
 export class ProductConfiguratorAddToWishlistBase extends React.Component<Props, State> {
-    public state: any = {
+    public state: State = {
         wishListSelected: null
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.initRequestWishListsData();
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.setInitialWishList();
         this.initRequestWishListsData();
     }
 
-    public handleWishListChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>)
-        : void => {
+    protected handleWishListChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         const {value} = event.target;
 
         if (this.state.wishListSelected !== value) {
@@ -40,41 +39,30 @@ export class ProductConfiguratorAddToWishlistBase extends React.Component<Props,
         }
     };
 
-    private initRequestWishListsData = (): boolean => {
+    protected initRequestWishListsData = (): void => {
         const {isWishListLoading, isWishListsFetched, getWishLists} = this.props;
 
         if (!isWishListLoading && !isWishListsFetched) {
             getWishLists();
-
-            return true;
         }
-
-        return false;
     };
 
-    private setInitialWishList = (): boolean => {
-        if (this.state.wishListSelected) {
-            return false;
-        }
-        const wishListSelected = this.getFirstWishList();
-        if (!wishListSelected) {
-            return false;
-        }
-        this.setState((prevState: State) => {
-            if (prevState.wishListSelected === wishListSelected) {
-                return;
-            }
+    protected setInitialWishList = (): void => {
+        if (!this.state.wishListSelected) {
+            const wishListSelected = this.getFirstWishlist();
 
-            return ({
-                ...prevState,
-                wishListSelected
+            this.setState((prevState: State) => {
+                if (prevState.wishListSelected !== wishListSelected) {
+                    return ({
+                        ...prevState,
+                        wishListSelected
+                    });
+                }
             });
-        });
-
-        return true;
+        }
     };
 
-    private getFirstWishList = (): TWishListName | null => {
+    protected getFirstWishlist = (): TWishListName | null => {
         if (!this.props.isWishListsFetched) {
             return null;
         }
@@ -82,15 +70,15 @@ export class ProductConfiguratorAddToWishlistBase extends React.Component<Props,
         return (this.props.wishLists.length > 0) ? this.props.wishLists[0].id : null;
     };
 
-    private handleAddToWishlist = (event: ClickEvent) => {
+    protected handleAddToWishlist = (event: ClickEvent): void => {
         this.props.addToWishlist(this.state.wishListSelected, this.props.sku);
     };
 
-    private isAddToWishListBtnDisabled = () => (
+    protected isAddToWishListBtnDisabled = (): boolean => (
         !this.props.isWishListsFetched || this.props.productType !== concreteProductType
     );
 
-    private getWishListFormSettings = (params: IProductWishListParams): IFormSettings => {
+    protected getWishListFormSettings = (params: IProductWishListParams): IFormSettings => {
         const {
             inputValue,
             wishLists,

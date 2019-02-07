@@ -11,7 +11,7 @@ export class ProductSuperAttributeComponent extends React.PureComponent<Props, S
         selectedItemValue: ''
     };
 
-    private onChange = ({name, value}: {name: string, value: string}) => {
+    protected onChange = ({name, value}: {name: string, value: string}): void => {
         const {selectedValues} = this.state;
         const updatedValues = selectedValues === null
             ? {[name]: value}
@@ -27,7 +27,7 @@ export class ProductSuperAttributeComponent extends React.PureComponent<Props, S
         });
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, productData} = this.props;
 
         return (

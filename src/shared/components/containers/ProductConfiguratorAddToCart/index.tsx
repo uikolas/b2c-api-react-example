@@ -23,7 +23,7 @@ const quantitySelectedInitial = 1;
 
 @connect
 export class ProductConfiguratorAddToCartBase extends React.Component<Props, State> {
-    public state: any = {
+    public state: State = {
         quantitySelected: quantitySelectedInitial,
         isBuyBtnDisabled: true,
         isProcessCartLoading: false,
@@ -32,9 +32,10 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         sku: null
     };
 
-    public static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    public static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
+        const isSwitchedOnNewProduct = nextProps.productType === concreteProductType && nextProps.sku !== prevState.sku;
 
-        if (nextProps.productType === concreteProductType && nextProps.sku !== prevState.sku) {
+        if (isSwitchedOnNewProduct) {
             return {
                 sku: nextProps.sku,
                 quantitySelected: quantitySelectedInitial,
@@ -46,11 +47,11 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         return null;
     }
 
-    public componentDidUpdate(prevProps: Props, prevState: State) {
+    public componentDidUpdate(prevProps: Props, prevState: State): void {
         this.checkBuyBtnStatus();
     }
 
-    public handleProductQuantityChange = (
+    protected handleProductQuantityChange = (
         event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
     ): void => {
         const valueParsed: number = Number.parseInt(event.target.value, 10);
@@ -61,26 +62,26 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         }
     };
 
-    private canShowQuantity = () => (
+    protected isShowQuantity = (): boolean => (
         Boolean(this.props.productType === concreteProductType && this.state.availability)
     );
 
-    private checkBuyBtnStatus = () => {
+    protected checkBuyBtnStatus = (): void => {
         if (this.state.isProcessCartLoading) {
             return;
         }
-        if (this.state.isBuyBtnDisabled && this.canShowQuantity()) {
+        if (this.state.isBuyBtnDisabled && this.isShowQuantity()) {
             this.setState({isBuyBtnDisabled: false});
-        } else if (!this.state.isBuyBtnDisabled && !this.canShowQuantity()) {
+        } else if (!this.state.isBuyBtnDisabled && !this.isShowQuantity()) {
             this.setState({isBuyBtnDisabled: true});
         }
     };
 
-    public handleBuyBtnClick = (event: ClickEvent): void => {
+    protected handleBuyBtnClick = (event: ClickEvent): void => {
         this.runProcessCart();
     };
 
-    private runProcessCart = async (): Promise<void> => {
+    protected runProcessCart = async (): Promise<void> => {
         try {
             await this.setState({
                 isBuyBtnDisabled: true,
@@ -104,7 +105,7 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         }
     };
 
-    private runAddToCart = async (): Promise<void> => {
+    protected runAddToCart = async (): Promise<void> => {
         const item: ICartAddItem = createCartItemAddToCart(this.props.sku, this.state.quantitySelected);
         if (this.props.isUserLoggedIn && this.props.cartId) {
             await this.props.addItemToCart(item, this.props.cartId);
@@ -117,7 +118,7 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         }
     };
 
-    public getQuantityFormSettings = (params: IProductQuantityParams): IFormSettings => {
+    protected getQuantityFormSettings = (params: IProductQuantityParams): IFormSettings => {
         const {
             inputValue,
             quantity,
@@ -163,7 +164,7 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         return (
             <>
                 <Grid container>
-                    {this.canShowQuantity() &&
+                    {this.isShowQuantity() &&
                     <Grid item xs={12} md={12} className={classes.blockControl}>
                         <SprykerForm
                             form={formQuantitySettings}

@@ -5,7 +5,7 @@ import { SuperAttributeItem } from '../SuperAttributeItem';
 import { SuperAttributeBlockProps as Props } from './types';
 import { styles } from './styles';
 
-export const SuperAttributeBlockComponent: React.SFC<Props> = props => {
+export const SuperAttributeBlockComponent: React.SFC<Props> = (props): JSX.Element => {
     const {classes, attributeData, selectedItemValue} = props;
 
     const selectAttribute = (value: string) => {

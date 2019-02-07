@@ -3,7 +3,7 @@ import { Button, withStyles } from '@material-ui/core';
 import { SuperAttributeItemProps as Props } from './types';
 import { styles } from './styles';
 
-export const SuperAttributeItemComponent: React.SFC<Props> = props => {
+export const SuperAttributeItemComponent: React.SFC<Props> = (props): JSX.Element => {
     const {classes, attributeItemData, isSelected, onSelect} = props;
 
     const onSelectValue = () => {

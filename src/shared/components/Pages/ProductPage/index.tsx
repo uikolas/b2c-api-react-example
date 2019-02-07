@@ -46,8 +46,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         attributeNames: null
     };
 
-    // Component lifecycle methods
-    public componentDidMount() {
+    public componentDidMount(): void {
         if (this.props.product) {
             this.setInitialData();
         } else {
@@ -57,12 +56,11 @@ export class ProductPageBase extends React.Component<Props, State> {
         }
     }
 
-    public componentDidUpdate(prevProps: Props, prevState: State) {
+    public componentDidUpdate(prevProps: Props, prevState: State): void {
         if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
             return;
         }
 
-        // First load of the App
         if (!this.props.isFulfilled
             && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)
         ) {
@@ -71,7 +69,6 @@ export class ProductPageBase extends React.Component<Props, State> {
             return;
         }
 
-        // Update of the product
         if (this.props.product.abstractProduct.sku !== this.props.locationProductSKU) {
             this.props.getProductData(this.props.locationProductSKU);
 
@@ -83,25 +80,20 @@ export class ProductPageBase extends React.Component<Props, State> {
         }
     }
 
-    // Action handlers
-    public handleSuperAttributesChange = ({name, value}: {name: string, value: string}): void => {
+    protected handleSuperAttributesChange = ({name, value}: {name: string, value: string}): void => {
         let productData: IProductPropFullData | null;
 
         if (value === defaultItemValueDropdown) {
-            // If selected nothing
             productData = getCurrentProductDataObject(
                 this.props.product.abstractProduct,
                 null
             );
         } else {
-            // If selected a concrete product
             const idProductConcrete = this.getIdProductConcrete(name, value);
 
             if (!idProductConcrete) {
-                // Such product does not exist
                 productData = getCurrentProductDataObject(this.props.product.abstractProduct, null);
             } else {
-                // Such product exists
                 productData = getCurrentProductDataObject(
                     this.props.product.abstractProduct,
                     this.props.product.concreteProducts[idProductConcrete]
@@ -125,7 +117,7 @@ export class ProductPageBase extends React.Component<Props, State> {
         });
     };
 
-    private setInitialData = (): boolean => {
+    protected setInitialData = (): void => {
         const concreteProductsIds = Object.keys(this.props.product.concreteProducts);
         const isOneConcreteProduct = Boolean(concreteProductsIds.length === 1);
         const productData: IProductPropFullData | null = getCurrentProductDataObject(
@@ -145,22 +137,19 @@ export class ProductPageBase extends React.Component<Props, State> {
             superAttrSelected: selectedAttrNames,
             ...productData
         }));
-
-        return true;
     };
 
-    private getIdProductConcrete = (key: string, value: string) => {
+    protected getIdProductConcrete = (key: string, value: string): string => {
         const selected = {...this.state.superAttrSelected};
         selected[key] = value;
         const path = createPathToIdProductConcrete(selected);
-        if (!path) {
-            return false;
-        }
 
-        return findIdProductConcreteByPath(path, this.state.attributeMap.attribute_variants);
+        if (path) {
+            return findIdProductConcreteByPath(path, this.state.attributeMap.attribute_variants);
+        }
     };
 
-    private getImageData = (images: IProductCardImages[]): IImageSlide[] | null => images
+    protected getImageData = (images: IProductCardImages[]): IImageSlide[] | null => images
         ? images.map((element: IProductCardImages, index: number) => ({
             id: index,
             src: element.externalUrlLarge

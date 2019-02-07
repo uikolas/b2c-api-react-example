@@ -28,8 +28,8 @@ export interface ProductConfiguratorAddToCartProps extends WithStyles<typeof sty
 export interface ProductConfiguratorAddToCartState {
     quantitySelected: TProductQuantity;
     quantity: TProductQuantity | null;
-    isBuyBtnDisabled: boolean;
-    isProcessCartLoading: boolean;
+    isBuyBtnDisabled?: boolean;
+    isProcessCartLoading?: boolean;
     availability: TProductAvailability | null;
     sku: TProductSKU | null;
 }

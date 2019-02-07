@@ -5,7 +5,7 @@ import { ProductAttributes } from '@components/components/ProductAttributes';
 import { IProductDetailProps } from './types';
 import { styles } from './styles';
 
-export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
+export const ProductDetailBase: React.SFC<IProductDetailProps> = (props): JSX.Element => {
     const {
         classes,
         attributes,
