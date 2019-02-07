@@ -10,7 +10,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 @connect
-export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps, IOrderHistoryPageState> {
+class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps, IOrderHistoryPageState> {
     public state: IOrderHistoryPageState = {};
 
     public componentDidMount = () => {
@@ -58,5 +58,4 @@ export class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps
     }
 }
 
-export const OrderHistoryPage = withStyles(styles)(OrderHistoryPageBase);
-export default OrderHistoryPage;
+export const OrderHistoryContainer = withStyles(styles)(OrderHistoryPageBase);
