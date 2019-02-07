@@ -1,9 +1,9 @@
 import * as React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { AppPrice } from '@components/Common/AppPrice';
 import { ITotalItemProps } from './types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 export const TotalItemBase: React.SFC<ITotalItemProps> = props => {

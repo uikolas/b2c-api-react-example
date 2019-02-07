@@ -10,7 +10,6 @@ import {
 } from '@stores/reducers/pages/orderDetails';
 import {
     getAppCurrency,
-    getAppTimeZone,
     getPayloadForCreateCart,
     isAppInitiated
 } from '@stores/reducers/common/init';
@@ -18,7 +17,6 @@ import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getOrderDetailsAction } from '@stores/actions/pages/order';
 import { getCartId } from '@stores/reducers/common/cart/selectors';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
-import { TAppTimeZone } from '@interfaces/locale';
 import { ICartCreatePayload } from '@services/Common/Cart/types';
 import { TCartId } from '@interfaces/cart';
 import { TOrderId } from '@interfaces/order';
@@ -36,7 +34,6 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const currency = getAppCurrency(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
-    const timeZone: TAppTimeZone = getAppTimeZone(state, ownProps);
 
     return ({
         isLoading,
@@ -50,8 +47,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         order,
         currency,
         payloadForCreateCart,
-        cartId,
-        timeZone
+        cartId
     });
 };
 

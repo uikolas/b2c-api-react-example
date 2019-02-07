@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { AppPrice } from '@components/Common/AppPrice';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography/Typography';
+import { AppPrice } from '@components/Common/AppPrice';
 import { AppTable } from '@components/Common/AppTable';
-import { OrderProductName } from '@components/Pages/OrderDetailsPage/OrderProductName';
 import { IOrderProductListProps } from './types';
 import { IOrderDetailsItem } from '@interfaces/order';
 import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 export const OrderProductListBase: React.SFC<IOrderProductListProps> = props => {
@@ -31,17 +31,19 @@ export const OrderProductListBase: React.SFC<IOrderProductListProps> = props => 
         cells: [
             {
                 id: `name-${item.sku}`,
-                content: <OrderProductName
-                    productName={item.name}
-                    titleSKU={<FormattedMessage id={'product.sku.title'} />}
-                    sku={item.sku}
-                />
+                content: (
+                    <Typography component="p" color="inherit">
+                        {item.name}
+                        <Typography component="span" className={classes.sku}>
+                            <FormattedMessage id={'product.sku.title'} />{`: ${item.sku}`}
+                        </Typography>
+                    </Typography>
+                )
             },
             {
                 id: `price-${item.sku}`,
                 content: <AppPrice
                     value={item.sumPrice}
-                    extraClassName={classes.price}
                     isStylesInherited={true}
                 />
             },
@@ -50,7 +52,6 @@ export const OrderProductListBase: React.SFC<IOrderProductListProps> = props => 
                 id: `total-${item.sku}`,
                 content: <AppPrice
                     value={item.sumPriceToPayAggregation}
-                    extraClassName={classes.price}
                     isStylesInherited={true}
                 />,
                 extraClassName: classes.total

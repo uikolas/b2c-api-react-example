@@ -1,4 +1,5 @@
 import * as React from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
@@ -8,7 +9,6 @@ import { OrderDetailsTotals } from './OrderDetailsTotals';
 import { OrderAddresses } from '@components/Pages/OrderDetailsPage/OrderAddresses';
 import { EmptyOrder } from '@components/Pages/OrderDetailsPage/EmptyOrder';
 import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 @connect
@@ -44,7 +44,7 @@ class OrderDetailsPageBase extends React.Component<Props, State> {
     };
 
     public render() {
-        const {classes, isOrderExist, isFulfilled, currency, order, timeZone} = this.props;
+        const {classes, isOrderExist, isFulfilled, currency, order} = this.props;
 
         return (
             <div className={classes.root}>
@@ -56,7 +56,6 @@ class OrderDetailsPageBase extends React.Component<Props, State> {
                                     orderId={order.id}
                                     date={order.dateCreated}
                                     priceMode={order.priceMode}
-                                    timeZone={timeZone}
                                 />
                                 <OrderProductList items={order.items}/>
                                 <OrderDetailsTotals

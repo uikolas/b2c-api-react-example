@@ -1,20 +1,17 @@
 import * as React from 'react';
-
+import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-
+import { AddressPart } from './AddressPart/index';
+import { IAddressDetailsProps } from './types';
+import { IAddressPartRow } from './AddressPart/types';
 import { styles } from './styles';
-import { IAddressItemProps } from './types';
-import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
-import { AddressPart } from '@components/Pages/OrderDetailsPage/AddressPart';
-import { IAddressPartRow } from 'types.d.ts';
 
-export const AddressItemBase: React.SFC<IAddressItemProps> = props => {
+export const AddressDetailsBase: React.SFC<IAddressDetailsProps> = props => {
     const {
         classes,
         blockTitle,
-        id,
         salutation,
         firstName,
         lastName,
@@ -25,16 +22,13 @@ export const AddressItemBase: React.SFC<IAddressItemProps> = props => {
         city,
         company,
         phone,
-        isDefaultShipping,
-        isDefaultBilling,
-        iso2Code,
         email,
         country,
         cellPhone,
         comment,
         description,
         middleName,
-        poBox,
+        poBox
     } = props;
 
     const salutationToShow = getSalutationToShow(salutation);
@@ -67,10 +61,10 @@ export const AddressItemBase: React.SFC<IAddressItemProps> = props => {
                 >
                     {blockTitle}
                 </Typography>
-                {parts.map((part: IAddressPartRow) => (<AddressPart key={part.key} row={part.data}/>))}
+                {parts.map((part: IAddressPartRow) => (<AddressPart key={part.key} row={part.data} />))}
             </Grid>
         </Grid>
     );
 };
 
-export const AddressItem = withStyles(styles)(AddressItemBase);
+export const AddressDetails = withStyles(styles)(AddressDetailsBase);

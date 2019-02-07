@@ -6,8 +6,10 @@ export const styles = (theme: Theme) => createStyles({
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
     },
-    price: {},
     total: {
         textAlign: 'right',
     },
+    sku: {
+        color: theme.appColors.grey
+    }
 });

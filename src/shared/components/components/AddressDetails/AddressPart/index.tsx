@@ -1,16 +1,11 @@
 import * as React from 'react';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-
-import { styles } from './styles';
 import { IAddressPart, IAddressPartProps } from './types';
+import { styles } from './styles';
 
 export const AddressPartBase: React.SFC<IAddressPartProps> = props => {
-    const {
-        classes,
-        row,
-    } = props;
+    const {classes, row} = props;
 
     if (!row || !Array.isArray(row) || !row.length) {
         return null;
@@ -30,23 +25,21 @@ export const AddressPartBase: React.SFC<IAddressPartProps> = props => {
         >
             {
                 row.map(({text, isBold}: IAddressPart, index: number) => {
-                    if (!text) {
-                        return null;
+                    if (text) {
+                        return (
+                            <span
+                                key={`${text}-${index}`}
+                                className={`${classes.item} ${isBold ? classes.bold : ''}`}
+                            >
+                                    {text}
+                                </span>
+                        );
                     }
-
-                    let classNames = classes.item;
-
-                    if (isBold) {
-                        classNames += ` ${classes.bold}`;
-                    }
-
-                    return (
-                        <span key={`${text}-${index}`} className={classNames}>{text}</span>
-                    );
                 })
             }
         </Typography>
     );
+
 };
 
 export const AddressPart = withStyles(styles)(AddressPartBase);

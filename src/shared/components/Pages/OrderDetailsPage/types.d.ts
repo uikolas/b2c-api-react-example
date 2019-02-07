@@ -6,7 +6,6 @@ import { IOrderDetailsParsed, IOrderDetailsSelectedItems } from '@interfaces/ord
 import { ICartCreatePayload } from '@services/Common/Cart/types';
 import { TCartAddItemCollection, TCartId } from '@interfaces/cart';
 import { TAppCurrency } from '@interfaces/currency';
-import { TAppTimeZone } from '@interfaces/locale';
 
 export interface IOrderDetailsPageProps extends WithStyles<typeof styles>, RouteProps {
     isLoading: boolean;
@@ -24,7 +23,6 @@ export interface IOrderDetailsPageProps extends WithStyles<typeof styles>, Route
     payloadForCreateCart: ICartCreatePayload;
     cartId: TCartId;
     addMultipleItemsToCart: Function;
-    timeZone: TAppTimeZone;
 }
 
 export interface IOrderDetailsPageState {

@@ -5,6 +5,5 @@ export const styles = (theme: Theme) => createStyles({
     root: {
         borderTop: `1px solid ${theme.appColors.blockDivider}`,
         marginTop: theme.spacing.unit * 1.5,
-    },
-    container: {},
+    }
 });

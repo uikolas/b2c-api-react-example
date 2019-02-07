@@ -1,22 +1,24 @@
 import * as React from 'react';
-
-import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
-import { styles } from './styles';
+import { AddressDetails } from '@components/components/AddressDetails';
 import { IOrderAddressesProps } from './types';
-import { AddressItem } from '@components/Pages/OrderDetailsPage/AddressItem';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { styles } from './styles';
 
 export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = props => {
     const {
-        classes, billingAddress, shippingAddress, billingBlockTitle, shippingBlockTitle
+        classes,
+        billingAddress,
+        shippingAddress,
+        billingBlockTitle,
+        shippingBlockTitle
     } = props;
 
     return (
         <Grid container className={classes.root}>
-            <Grid item xs={12} className={classes.container}>
-                <AddressItem {...shippingAddress} blockTitle={shippingBlockTitle}/>
-                <AddressItem {...billingAddress} blockTitle={billingBlockTitle}/>
+            <Grid item xs={12}>
+                <AddressDetails {...shippingAddress} blockTitle={shippingBlockTitle} />
+                <AddressDetails {...billingAddress} blockTitle={billingBlockTitle} />
             </Grid>
         </Grid>
     );
