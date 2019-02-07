@@ -1,9 +1,9 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { SuperAttributeBlock } from './SuperAttributeBlock/index';
+import { withStyles } from '@material-ui/core';
+import { SuperAttributeBlock } from './SuperAttributeBlock';
 import { ProductSuperAttributeProps as Props, ProductSuperAttributeState as State } from './types';
+import { ISuperAttribute } from '@helpers/product/types';
 import { styles } from './styles';
-import { ISuperAttribute } from 'src/shared/helpers/product/types';
 
 export class ProductSuperAttributeComponent extends React.PureComponent<Props, State> {
     public state: State = {
@@ -11,13 +11,13 @@ export class ProductSuperAttributeComponent extends React.PureComponent<Props, S
         selectedItemValue: ''
     };
 
-    private onChange = ({name, value}: { name: string, value: string }) => {
+    private onChange = ({name, value}: {name: string, value: string}) => {
         const {selectedValues} = this.state;
         const updatedValues = selectedValues === null
             ? {[name]: value}
             : {
                 ...selectedValues,
-                [name]: value,
+                [name]: value
             };
 
         this.props.onChange({name, value});

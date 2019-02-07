@@ -1,6 +1,5 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
+import { Button, withStyles } from '@material-ui/core';
 import { SuperAttributeItemProps as Props } from './types';
 import { styles } from './styles';
 

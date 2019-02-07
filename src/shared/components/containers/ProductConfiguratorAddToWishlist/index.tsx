@@ -1,21 +1,20 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { styles } from './styles';
+import { FormattedMessage } from 'react-intl';
+import { createWishListMenuVariants } from '@helpers/wishlist/list';
 import { connect } from './connect';
+import { withStyles, Grid } from '@material-ui/core';
+import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerButton } from '@components/UI/SprykerButton';
 import {
     ProductConfiguratorAddToWishlistProps as Props,
     ProductConfiguratorAddToWishlistState as State,
     IProductWishListParams
 } from './types';
-import Grid from '@material-ui/core/Grid/Grid';
-import { SprykerForm } from '@components/UI/SprykerForm';
-import { SprykerButton } from '@components/UI/SprykerButton';
-import { FormattedMessage } from 'react-intl';
 import { concreteProductType, defaultItemValueDropdown } from '@interfaces/product';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
 import { ClickEvent } from '@interfaces/common/react';
 import { TWishListName } from '@interfaces/wishlist';
-import { createWishListMenuVariants } from '@helpers/wishlist/list';
+import { styles } from './styles';
 
 @connect
 export class ProductConfiguratorAddToWishlistBase extends React.Component<Props, State> {

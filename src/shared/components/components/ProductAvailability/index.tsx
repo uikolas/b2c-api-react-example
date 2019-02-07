@@ -1,6 +1,5 @@
 import * as React from 'react';
-import withStyles  from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
+import { withStyles, Typography } from '@material-ui/core';
 import { IProductAvailabilityProps } from './types';
 import { styles } from './styles';
 

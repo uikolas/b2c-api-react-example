@@ -1,12 +1,5 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import {
-    defaultItemValueDropdown,
-    IProductCardImages,
-    IProductPropFullData
-} from 'src/shared/interfaces/product';
-import { IImageSlide } from 'src/shared/components/Common/ImageSlider';
+import { connect } from './connect';
 import {
     createPathToIdProductConcrete,
     findIdProductConcreteByPath,
@@ -14,17 +7,22 @@ import {
     getInitialSuperAttrSelected,
     getCurrentProductDataObject
 } from 'src/shared/helpers/product';
+import { withStyles, Grid  } from '@material-ui/core';
 import { AppMain } from '@components/Common/AppMain';
-import { ImageSlider } from '@components/Common/ImageSlider';
+import { ImageSlider, IImageSlide } from '@components/Common/ImageSlider';
 import { ProductGeneralInfo } from '@components/components/ProductGeneralInfo';
 import { ProductSuperAttribute } from '@components/containers/ProductSuperAttribute';
 import { ProductConfiguratorAddToCart } from '@components/containers/ProductConfiguratorAddToCart';
 import { ProductConfiguratorAddToWishlist } from '@components/containers/ProductConfiguratorAddToWishlist';
-import { connect } from './connect';
-import { ProductPageProps as Props, ProductPageState as State } from './types';
-import { styles } from './styles';
-import { ProductDetail } from 'src/shared/components/components/ProductDetail';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { ProductDetail } from '@components/components/ProductDetail';
+import { ProductPageProps as Props, ProductPageState as State } from './types';
+import {
+    defaultItemValueDropdown,
+    IProductCardImages,
+    IProductPropFullData
+} from '@interfaces/product';
+import { styles } from './styles';
 
 @connect
 export class ProductPageBase extends React.Component<Props, State> {
@@ -201,12 +199,12 @@ export class ProductPageBase extends React.Component<Props, State> {
                                     />
 
                                     {this.state.superAttributes &&
-                                        <ErrorBoundary>
-                                            <ProductSuperAttribute
-                                                productData={this.state.superAttributes}
-                                                onChange={this.handleSuperAttributesChange}
-                                            />
-                                        </ErrorBoundary>
+                                    <ErrorBoundary>
+                                        <ProductSuperAttribute
+                                            productData={this.state.superAttributes}
+                                            onChange={this.handleSuperAttributesChange}
+                                        />
+                                    </ErrorBoundary>
                                     }
 
                                     <ErrorBoundary>
@@ -218,12 +216,12 @@ export class ProductPageBase extends React.Component<Props, State> {
                                     </ErrorBoundary>
 
                                     {this.props.isUserLoggedIn &&
-                                        <ErrorBoundary>
-                                            <ProductConfiguratorAddToWishlist
-                                                productType={this.state.productType}
-                                                sku={this.state.sku}
-                                            />
-                                        </ErrorBoundary>
+                                    <ErrorBoundary>
+                                        <ProductConfiguratorAddToWishlist
+                                            productType={this.state.productType}
+                                            sku={this.state.sku}
+                                        />
+                                    </ErrorBoundary>
                                     }
                                 </Grid>
                             </Grid>

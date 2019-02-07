@@ -7,8 +7,8 @@ import {
     TProductQuantity,
     TProductSKU,
     TProductType
-} from 'src/shared/interfaces/product';
-import { TCartId } from 'src/shared/interfaces/cart';
+} from '@interfaces/product';
+import { TCartId } from '@interfaces/cart';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 
 export interface ProductConfiguratorAddToCartProps extends WithStyles<typeof styles> {

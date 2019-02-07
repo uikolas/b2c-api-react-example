@@ -1,12 +1,11 @@
 import * as React from 'react';
-import withStyles  from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import { ProductAvailability } from '@components/components/ProductAvailability';
-import { styles } from './styles';
-import { priceTypeNameOriginal } from 'src/shared/interfaces/product';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { FormattedMessage } from 'react-intl';
+import { withStyles, Typography } from '@material-ui/core';
+import { ProductAvailability } from '@components/components/ProductAvailability';
+import { AppPrice } from '@components/Common/AppPrice';
+import { priceTypeNameOriginal } from '@interfaces/product';
 import { IProductGeneralInfoProps } from './types';
+import { styles } from './styles';
 
 export const ProductGeneralInfoBase: React.SFC<IProductGeneralInfoProps> = (props): JSX.Element => {
     const {

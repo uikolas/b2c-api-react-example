@@ -1,10 +1,8 @@
 import * as React from 'react';
-import withStyles  from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
+import { withStyles, Typography, Grid } from '@material-ui/core';
 import { IProductAttributesProps } from './types';
+import { styles } from './styles';
 
 export const ProductAttributesBase: React.SFC<IProductAttributesProps> = (props): JSX.Element => {
     const {classes, attributes, attributeNames} = props;
@@ -16,7 +14,7 @@ export const ProductAttributesBase: React.SFC<IProductAttributesProps> = (props)
     return (
         <div>
             <Typography component="h3" color="inherit" className={classes.attributesTitle}>
-                <FormattedMessage id={ 'product.details.title' } />
+                <FormattedMessage id={'product.details.title'} />
             </Typography>
             <Grid container justify="center" className={classes.root}>
                 {
@@ -26,9 +24,9 @@ export const ProductAttributesBase: React.SFC<IProductAttributesProps> = (props)
                                         className={classes.valuesBlock}>
                                 <p>
                                     <Typography variant="subheading" component="strong">
-                                        { `${attributeNames[ data[ 0 ] ]
-                                            ? attributeNames[ data[ 0 ] ]
-                                            : <FormattedMessage id={ 'no.translations.title' } />}: `
+                                        {`${attributeNames[data[0]]
+                                            ? attributeNames[data[0]]
+                                            : <FormattedMessage id={'no.translations.title'} />}: `
                                         }
                                     </Typography>
                                 </p>

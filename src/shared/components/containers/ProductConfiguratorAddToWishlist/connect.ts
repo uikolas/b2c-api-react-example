@@ -8,7 +8,7 @@ import {
 } from '@stores/reducers/Pages/Wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
-import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
+import { ICartAddItem, TCartId } from '@interfaces/cart';
 import { addItemAction, getWishlistsAction } from '@stores/actions/pages/wishlist';
 import {
     addItemGuestCartAction,
@@ -16,9 +16,7 @@ import {
     createCartAndAddItemAction,
 } from '@stores/actions/common/cart';
 import { getCartId, isCartCreated } from '@stores/reducers/common/cart/selectors';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
-import { TProductSKU } from '@interfaces/product';
-import { getProductAvailabilityAction } from '@stores/actions/pages/product';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
@@ -53,7 +51,6 @@ export const connect = reduxify(
             item: ICartAddItem
         ) => dispatch(createCartAndAddItemAction(payload, item)),
         addItemToCart: (payload: ICartAddItem, cartId: TCartId) => dispatch(addItemToCartAction(payload, cartId)),
-        addItemGuestCart: (item: ICartAddItem, anonymId: string) => dispatch(addItemGuestCartAction(item, anonymId)),
-        getProductAvailability: (sku: TProductSKU) => dispatch(getProductAvailabilityAction(sku)),
+        addItemGuestCart: (item: ICartAddItem, anonymId: string) => dispatch(addItemGuestCartAction(item, anonymId))
     }),
 );

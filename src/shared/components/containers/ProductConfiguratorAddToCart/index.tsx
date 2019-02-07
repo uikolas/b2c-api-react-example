@@ -1,24 +1,23 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { typeNotificationError } from '@constants/notifications';
 import { connect } from './connect';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { styles } from './styles';
+import { createCartItemAddToCart } from '@helpers/cart';
+import { createQuantityVariants } from '@helpers/product';
+import { withStyles, Grid } from '@material-ui/core';
+import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerButton } from '@components/UI/SprykerButton';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { concreteProductType } from '@interfaces/product';
+import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { ClickEvent } from '@interfaces/common/react';
+import { ICartAddItem } from '@interfaces/cart';
 import {
     ProductConfiguratorAddToCartProps as Props,
     ProductConfiguratorAddToCartState as State,
     IProductQuantityParams
 } from './types';
-import Grid from '@material-ui/core/Grid/Grid';
-import { SprykerForm } from '@components/UI/SprykerForm';
-import { SprykerButton } from '@components/UI/SprykerButton';
-import { FormattedMessage } from 'react-intl';
-import { concreteProductType } from '@interfaces/product';
-import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { ClickEvent } from '@interfaces/common/react';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { typeNotificationError } from '@constants/notifications';
-import { ICartAddItem } from '@interfaces/cart';
-import { createCartItemAddToCart } from '@helpers/cart';
-import { createQuantityVariants } from '@helpers/product';
+import { styles } from './styles';
 
 const quantitySelectedInitial = 1;
 

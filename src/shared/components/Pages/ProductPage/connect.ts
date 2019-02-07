@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAnonymId, isAppInitiated } from '@stores/reducers/common/init';
 import {
@@ -10,9 +9,9 @@ import {
     isProductDetailsPresent,
 } from '@stores/reducers/pages/product';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
-import { getRouterMatchParam } from 'src/shared/helpers/router';
+import { getRouterMatchParam } from '@helpers/router';
 import { getProductDataAction } from '@stores/actions/pages/product';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const product = getProduct(state, ownProps);

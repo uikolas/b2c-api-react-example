@@ -1,11 +1,9 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import { styles } from './styles';
-import { IProductDetailProps } from './types';
-import { ProductAttributes } from '@components/components/ProductAttributes';
-import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
+import { withStyles, Typography, Grid } from '@material-ui/core';
+import { ProductAttributes } from '@components/components/ProductAttributes';
+import { IProductDetailProps } from './types';
+import { styles } from './styles';
 
 export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
     const {
@@ -13,18 +11,18 @@ export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
         attributes,
         attributeNames,
         description,
-        sku,
+        sku
     } = props;
 
     return (
         <div className={classes.contentHelper}>
             <Grid container className={classes.contentContainer}>
                 <Grid item xs={12} sm={6} className={classes.productDetailsBlock}>
-                    <ProductAttributes attributes={attributes} attributeNames={attributeNames}/>
+                    <ProductAttributes attributes={attributes} attributeNames={attributeNames} />
                 </Grid>
                 <Grid item xs={12} sm={6} className={classes.descriptionBlock}>
                     <Typography component="h3" color="inherit" className={classes.descriptionTitle}>
-                        <FormattedMessage id={ 'product.deskription.title' } />
+                        <FormattedMessage id={'product.deskription.title'} />
                     </Typography>
                     <Typography color="inherit" variant="body2" component="p" gutterBottom={true}>
                         {description}
@@ -35,7 +33,7 @@ export const ProductDetailBase: React.SFC<IProductDetailProps> = props => {
                         gutterBottom={true}
                         className={classes.descriptionSku}
                     >
-                        <FormattedMessage id={ 'product.sku.title' } />: { sku }
+                        <FormattedMessage id={'product.sku.title'} />: {sku}
                     </Typography>
                 </Grid>
             </Grid>
