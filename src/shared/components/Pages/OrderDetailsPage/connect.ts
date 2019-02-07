@@ -35,10 +35,9 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     });
 };
 
-export const connect = reduxify(
-    mapStateToProps,
-    (dispatch: Function) => ({
-        dispatch,
-        getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId))
-    }),
-);
+const mapDispatchToProps = (dispatch: Function) => ({
+    dispatch,
+    getOrderData: (orderId: TOrderId) => dispatch(getOrderDetailsAction(orderId))
+});
+
+export const connect = reduxify(mapStateToProps, mapDispatchToProps);
