@@ -1,38 +1,40 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from './connect';
+import { FormattedMessage } from 'react-intl';
+
 import { CartRowsProps, CartRowsState } from './types';
-import { createCartItemAddToCart } from '@helpers/cart/item';
-import { List, Divider } from '@material-ui/core';
 import { ICartItem } from '@interfaces/cart';
+
+import { createCartItemAddToCart } from '@helpers/cart/item';
+
 import { CartItem } from '../../components/cartItem';
 
-import withStyles from '@material-ui/core/styles/withStyles';
+import { List, Divider, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 @connect
 export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsState> {
-    private listRef: React.RefObject<HTMLDivElement> = React.createRef();
-    private designImgWidth: number = 0.2;
+    protected listRef: React.RefObject<HTMLDivElement> = React.createRef();
+    protected designImgWidth: number = 0.2;
 
-    public state: CartRowsState = {
+    readonly state: CartRowsState = {
         heightListItem: 129
     };
 
-    public componentDidMount() {
+    public componentDidMount = (): void => {
         window.addEventListener('resize', this.setListItemHeight);
         this.setListItemHeight();
-    }
+    };
 
-    public componentWillUnmount() {
+    public componentWillUnmount = (): void => {
         window.removeEventListener('resize', this.setListItemHeight);
-    }
+    };
 
-    public componentDidUpdate() {
+    public componentDidUpdate = (): void => {
         this.setListItemHeight();
-    }
+    };
 
-    private setListItemHeight = () => {
+    protected setListItemHeight = (): void => {
         if (this.listRef
             && this.listRef.current
             && Math.floor(
@@ -43,7 +45,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
         }
     };
 
-    public handleDeleteItem = (sku: string) => {
+    protected handleDeleteItem = (sku: string): void => {
         const {cartDeleteItemAction, removeItemGuestCartAction, cartId, isUserLoggedIn, anonymId} = this.props;
 
         if (isUserLoggedIn) {
@@ -53,7 +55,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
         }
     };
 
-    public handleChangeQty = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    protected handleChangeQty = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
         const {name, value}: { name: string, value: string } = event.target;
         const {
             cartId,
@@ -64,7 +66,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
             updateItemInCartAction,
             updateGuestCartAction
         } = this.props;
-        // If is selected 0, the cart item should be removed from the cart
+
         if (Number(value) <= 0) {
             if (isUserLoggedIn) {
                 cartDeleteItemAction(cartId, name);
@@ -87,7 +89,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
         }
     };
 
-    public render() {
+    public render = (): JSX.Element => {
         const { classes, items } = this.props;
 
         return (

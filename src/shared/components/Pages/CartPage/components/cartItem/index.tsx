@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+
 import { CartItemProps } from './types';
-import {
-    ListItem,
-    IconButton,
-    MenuItem,
-    TextField
-} from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 import { SquareImage } from '@components/Common/SquareImage';
 import { AppPrice } from '@components/Common/AppPrice';
 
-import withStyles from '@material-ui/core/styles/withStyles';
+import { ListItem, IconButton, MenuItem, TextField, withStyles } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { styles } from './styles';
 
 const CartItemComponent: React.SFC<CartItemProps> = (
@@ -103,7 +99,7 @@ const CartItemComponent: React.SFC<CartItemProps> = (
                             value={calculations.unitPriceToPayAggregation}
                             extraClassName={`${classes.itemAttr} ${classes.eachCurrency}`}
                         />
-                        <span> each)</span>
+                        <span> <FormattedMessage id={ 'word.each.title' } />)</span>
                     </div>
                 ) : null
             }

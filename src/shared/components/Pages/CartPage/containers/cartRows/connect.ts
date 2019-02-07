@@ -1,13 +1,15 @@
-import { reduxify } from '@lib/redux-helper';
+import { bindActionCreators, Dispatch } from 'redux';
+import { reduxify } from 'src/shared/lib/redux-helper';
+
+import { ICartItem, TCartId } from '@interfaces/cart';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+
 import {
     cartDeleteItemAction,
     removeItemGuestCartAction,
     updateItemInCartAction,
     updateGuestCartAction
 } from '@stores/actions/common/cart';
-import { bindActionCreators, Dispatch } from 'redux';
-import { ICartItem, TCartId } from '@interfaces/cart';
-import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { getCartId, getProductsFromCart } from '@stores/reducers/common/cart/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getAnonymId } from '@stores/reducers/common/init';

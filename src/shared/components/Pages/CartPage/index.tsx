@@ -1,15 +1,16 @@
 import * as React from 'react';
-import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { connect } from './connect';
 import { FormattedPlural, FormattedMessage } from 'react-intl';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { AppMain } from 'src/shared/components/Common/AppMain';
+
+import { CartPageProps } from './types';
+
+import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { AppMain } from '@components/Common/AppMain';
 import { CartRows } from './containers/cartRows';
 import { OrderSummary } from './containers/orderSummary';
+
+import { Grid, Typography, withStyles } from '@material-ui/core';
 import { styles } from './styles';
-import { connect } from './connect';
-import { CartPageProps } from './types';
 
 @connect
 export class CartPageBase extends React.Component<CartPageProps> {

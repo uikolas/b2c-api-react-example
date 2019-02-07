@@ -1,7 +1,7 @@
-import { Dispatch } from 'redux';
+import { reduxify } from 'src/shared/lib/redux-helper';
 
-import { reduxify } from '@lib/redux-helper';
 import { ICartTotals } from '@interfaces/cart';
+
 import { getCartTotals } from '@stores/reducers/common/cart/selectors';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
@@ -15,6 +15,4 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
-
-export const connect = reduxify(mapStateToProps, mapDispatchToProps);
+export const connect = reduxify(mapStateToProps);

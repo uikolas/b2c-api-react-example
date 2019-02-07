@@ -1,5 +1,6 @@
-import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { ICartItem, TCartId } from '@interfaces/cart';
+
+import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 export interface CartRowsProps extends WithStyles<typeof styles> {

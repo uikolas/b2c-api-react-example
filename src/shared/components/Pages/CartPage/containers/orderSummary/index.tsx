@@ -1,26 +1,28 @@
 import * as React from 'react';
 import { connect } from './connect';
-import { NavLink } from 'react-router-dom';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button/Button';
-import Typography from '@material-ui/core/Typography/Typography';
-import { pathCheckoutPage } from '@routes/contentRoutes';
-import { styles } from './styles';
-import { OrderSummaryProps, OrderSummaryState } from './types';
-import { CartTotal } from '@components/Common/CartTotal';
 import { FormattedMessage } from 'react-intl';
+
+import { OrderSummaryProps, OrderSummaryState } from './types';
+
+import { NavLink } from 'react-router-dom';
+import { pathCheckoutPage } from '@routes/contentRoutes';
+
+import { CartTotal } from '@components/Common/CartTotal';
+
+import { Typography, Button, withStyles } from '@material-ui/core';
+import { styles } from './styles';
 
 @connect
 export class OrderSummaryComponent extends React.Component<OrderSummaryProps, OrderSummaryState> {
-    public state: OrderSummaryState = {
+    readonly state: OrderSummaryState = {
         voucherCode: '',
     };
 
-    public handleChangeVouchercode = (e: React.ChangeEvent<HTMLInputElement>) => {
+    public handleChangeVouchercode = (e: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState({voucherCode: e.target.value});
     };
 
-    public render() {
+    public render = (): JSX.Element => {
         const { classes, totals } = this.props;
 
         return (
