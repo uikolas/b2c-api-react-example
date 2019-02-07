@@ -44,7 +44,7 @@ class OrderDetailsPageBase extends React.Component<Props, State> {
     };
 
     public render() {
-        const {classes, isOrderExist, isFulfilled, currency, order} = this.props;
+        const {classes, isOrderExist, isFulfilled, order} = this.props;
 
         return (
             <div className={classes.root}>
