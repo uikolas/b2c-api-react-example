@@ -5,48 +5,10 @@ export const styles = (theme: Theme) => createStyles({
     root: {
         ...theme.appContainerStyles,
     },
-    infoParent: {},
-    wishlistBtnArea: {
-        marginTop: theme.spacing.unit / 2,
-    },
-    buyBtnParent: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
     productBtn: {
         width: '100%',
         fontSize: 18,
         margin: 0,
-    },
-    buyBtn: {
-        paddingTop: theme.spacing.unit * 1.5,
-        paddingBottom: theme.spacing.unit * 1.5,
-        boxShadow: 'none',
-        '&:hover': {
-            color: theme.appColors.black,
-            backgroundColor: 'transparent',
-            border: `1px solid ${theme.appColors.deepBlack}`,
-        },
-        '&:disabled': {
-            cursor: 'not-allowed',
-        },
-    },
-    wishListBtn: {
-        color: theme.appColors.black,
-        backgroundColor: 'transparent',
-        border: `1px solid ${theme.appColors.deepBlack}`,
-        boxShadow: 'none',
-        '&:hover': {
-            color: theme.appColors.white,
-            backgroundColor: theme.appColors.deepBlack,
-            border: `1px solid ${theme.appColors.deepBlack}`,
-        },
-        '&:disabled': {
-            cursor: 'not-allowed',
-            border: `1px solid ${theme.appColors.weakGrey}`,
-        },
     },
     generalInfoParent: {
         [theme.breakpoints.down('sm')]: {
@@ -96,37 +58,5 @@ export const styles = (theme: Theme) => createStyles({
         [theme.breakpoints.down('sm')]: {
             marginBottom: theme.spacing.unit * 3,
         },
-    },
-    blockControl: {
-        paddingTop: theme.spacing.unit * 3,
-        paddingBottom: theme.spacing.unit * 3,
-        borderTop: `1px solid ${theme.appColors.blockDivider}`,
-    },
-    formQuantity: {
-        '&:first-child': {
-            paddingTop: 0,
-        },
-        '& [data-form-column="0-0"]': {
-            maxWidth: 142,
-            [theme.breakpoints.down('sm')]: {
-                maxWidth: '100%',
-                flexBasis: '100%',
-                paddingRight: 0,
-            },
-        }
-    },
-    formWishList: {
-        '&:first-child': {
-            paddingTop: 0,
-        },
-        '& > :first-child': {
-            paddingTop: 0,
-        },
-    },
-    controlsGroupQuantity: {
-        paddingTop: 0,
-    },
-    wishlistRoot: {
-        margin: 0
     },
 });

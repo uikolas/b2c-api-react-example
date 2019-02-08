@@ -1,7 +1,7 @@
 import { IProductAttributes, IProductPricesItem } from '../product';
 
-export type TWishListName = string;
-export type TWishListId = string;
+export type TWishlistName = string;
+export type TWishlistId = string;
 
 export interface IWishlistProduct {
     sku: string;
@@ -13,8 +13,8 @@ export interface IWishlistProduct {
 }
 
 export interface IWishlist {
-    id: TWishListId;
-    name: TWishListName;
+    id: TWishlistId;
+    name: TWishlistName;
     numberOfItems: number;
     createdAt: string;
     updatedAt: string;
