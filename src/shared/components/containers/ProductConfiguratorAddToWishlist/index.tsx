@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { createWishListMenuVariants } from '@helpers/wishlist/list';
+import { createWishlistMenuVariants } from '@helpers/wishlist/list';
 import { connect } from './connect';
 import { withStyles, Grid } from '@material-ui/core';
 import { SprykerForm } from '@components/UI/SprykerForm';
@@ -8,87 +8,87 @@ import { SprykerButton } from '@components/UI/SprykerButton';
 import {
     ProductConfiguratorAddToWishlistProps as Props,
     ProductConfiguratorAddToWishlistState as State,
-    IProductWishListParams
+    IProductWishlistParams
 } from './types';
 import { concreteProductType, defaultItemValueDropdown } from '@interfaces/product';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
 import { ClickEvent } from '@interfaces/common/react';
-import { TWishListName } from '@interfaces/wishlist';
+import { TWishlistName } from '@interfaces/wishlist';
 import { styles } from './styles';
 
 @connect
 export class ProductConfiguratorAddToWishlistBase extends React.Component<Props, State> {
     public state: State = {
-        wishListSelected: null
+        wishlistSelected: null
     };
 
     public componentDidMount(): void {
-        this.initRequestWishListsData();
+        this.initRequestWishlistsData();
     }
 
     public componentDidUpdate(): void {
-        this.setInitialWishList();
-        this.initRequestWishListsData();
+        this.setInitialWishlist();
+        this.initRequestWishlistsData();
     }
 
-    protected handleWishListChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    protected handleWishlistChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         const {value} = event.target;
 
-        if (this.state.wishListSelected !== value) {
-            this.setState({wishListSelected: value});
+        if (this.state.wishlistSelected !== value) {
+            this.setState({wishlistSelected: value});
         }
     };
 
-    protected initRequestWishListsData = (): void => {
-        const {isWishListLoading, isWishListsFetched, getWishLists} = this.props;
+    protected initRequestWishlistsData = (): void => {
+        const {isWishlistLoading, isWishlistsFetched, getWishlists} = this.props;
 
-        if (!isWishListLoading && !isWishListsFetched) {
-            getWishLists();
+        if (!isWishlistLoading && !isWishlistsFetched) {
+            getWishlists();
         }
     };
 
-    protected setInitialWishList = (): void => {
-        if (!this.state.wishListSelected) {
-            const wishListSelected = this.getFirstWishlist();
+    protected setInitialWishlist = (): void => {
+        if (!this.state.wishlistSelected) {
+            const wishlistSelected = this.getFirstWishlist();
 
             this.setState((prevState: State) => {
-                if (prevState.wishListSelected !== wishListSelected) {
+                if (prevState.wishlistSelected !== wishlistSelected) {
                     return ({
                         ...prevState,
-                        wishListSelected
+                        wishlistSelected
                     });
                 }
             });
         }
     };
 
-    protected getFirstWishlist = (): TWishListName | null => {
-        if (!this.props.isWishListsFetched) {
+    protected getFirstWishlist = (): TWishlistName | null => {
+        if (!this.props.isWishlistsFetched) {
             return null;
         }
 
-        return (this.props.wishLists.length > 0) ? this.props.wishLists[0].id : null;
+        return (this.props.wishlists.length > 0) ? this.props.wishlists[0].id : null;
     };
 
     protected handleAddToWishlist = (event: ClickEvent): void => {
-        this.props.addToWishlist(this.state.wishListSelected, this.props.sku);
+        this.props.addToWishlist(this.state.wishlistSelected, this.props.sku);
     };
 
-    protected isAddToWishListBtnDisabled = (): boolean => (
-        !this.props.isWishListsFetched || this.props.productType !== concreteProductType
+    protected isAddToWishlistBtnDisabled = (): boolean => (
+        !this.props.isWishlistsFetched || this.props.productType !== concreteProductType
     );
 
-    protected getWishListFormSettings = (params: IProductWishListParams): IFormSettings => {
+    protected getWishlistFormSettings = (params: IProductWishlistParams): IFormSettings => {
         const {
             inputValue,
-            wishLists,
+            wishlists,
             onChangeHandler
         } = params;
         const formSettings: IFormSettings = {
             formName: 'quantityForm',
             onChangeHandler,
             onSubmitHandler: (event: React.FormEvent<HTMLFormElement>) => {
-                console.info('Empty WishList Submit');
+                console.info('Empty Wishlist Submit');
             },
             fields: [
                 [
@@ -100,7 +100,7 @@ export class ProductConfiguratorAddToWishlistBase extends React.Component<Props,
                         isRequired: false,
                         label: null,
                         isError: false,
-                        menuItems: createWishListMenuVariants(wishLists),
+                        menuItems: createWishlistMenuVariants(wishlists),
                         menuItemFirst: {
                             value: defaultItemValueDropdown,
                             name: <FormattedMessage id={'select.wish.list.label'} />,
@@ -116,36 +116,36 @@ export class ProductConfiguratorAddToWishlistBase extends React.Component<Props,
 
     public render(): JSX.Element {
         const {classes} = this.props;
-        const {wishListSelected} = this.state;
+        const {wishlistSelected} = this.state;
 
-        const formWishListSettings: IFormSettings = this.getWishListFormSettings({
-            inputValue: wishListSelected,
-            wishLists: this.props.wishLists,
-            onChangeHandler: this.handleWishListChange
+        const formWishlistSettings: IFormSettings = this.getWishlistFormSettings({
+            inputValue: wishlistSelected,
+            wishlists: this.props.wishlists,
+            onChangeHandler: this.handleWishlistChange
         });
 
         return (
             <Grid container spacing={24} className={classes.wishlistBtnArea}>
-                {wishListSelected &&
+                {wishlistSelected &&
                 <Grid item xs={12} sm={12} md={6}>
                     <SprykerForm
-                        form={formWishListSettings}
-                        formClassName={classes.formWishList}
+                        form={formWishlistSettings}
+                        formClassName={classes.formWishlist}
                     />
                 </Grid>
                 }
                 <Grid item
                       xs={12}
-                      md={wishListSelected ? 6 : 12}
+                      md={wishlistSelected ? 6 : 12}
                       className={classes.buyBtnParent}
                 >
                     <SprykerButton
                         title={
                             <FormattedMessage id={'add.to.cart.wishlist.title'} />
                         }
-                        extraClasses={classes.wishListBtn}
+                        extraClasses={classes.wishlistBtn}
                         onClick={this.handleAddToWishlist}
-                        disabled={this.isAddToWishListBtnDisabled()}
+                        disabled={this.isAddToWishlistBtnDisabled()}
                     />
                 </Grid>
             </Grid>

@@ -5,17 +5,17 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Grid, Typography, Paper, TextField, Button, Divider, IconButton } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { pathWishListPageBase } from 'src/shared/routes/contentRoutes';
+import { pathWishlistPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
 import { styles } from './styles';
 import { connect } from './connect';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import { IWishlist, TWishListId } from 'src/shared/interfaces/wishlist/index';
+import { IWishlist, TWishlistId } from 'src/shared/interfaces/wishlist/index';
 
 @connect
-export class WishListBase extends React.Component<Props, State> {
+export class WishlistBase extends React.Component<Props, State> {
     public state: State = {
         name: '',
         updatedName: '',
@@ -53,7 +53,7 @@ export class WishListBase extends React.Component<Props, State> {
         this.setState(() => ({updatedList: '', updatedName: ''}));
     };
 
-    public handleDeleteWishlist = (wishlistId: TWishListId) => (e: ClickEvent) => {
+    public handleDeleteWishlist = (wishlistId: TWishlistId) => (e: ClickEvent) => {
         this.props.deleteWishlistAction(wishlistId);
     };
 
@@ -101,7 +101,7 @@ export class WishListBase extends React.Component<Props, State> {
                             ) : (
                                 <NavLink
                                     className={ classes.link }
-                                    to={ `${pathWishListPageBase}/wishlist/${item.name}` }
+                                    to={ `${pathWishlistPageBase}/wishlist/${item.name}` }
                                 >
                                     {item.name}
                                 </NavLink>
@@ -192,5 +192,5 @@ export class WishListBase extends React.Component<Props, State> {
     }
 }
 
-export const ConnectedWishlistPage = withStyles(styles)(WishListBase);
+export const ConnectedWishlistPage = withStyles(styles)(WishlistBase);
 export default ConnectedWishlistPage;

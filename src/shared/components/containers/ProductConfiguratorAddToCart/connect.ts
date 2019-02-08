@@ -24,9 +24,9 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const cartCreated: boolean = isCartCreated(state, ownProps);
     const cartId: TCartId = getCartId(state, ownProps);
     const payloadForCreateCart: ICartCreatePayload = getPayloadForCreateCart(state, ownProps);
-    const isWishListLoading: boolean = isPageWishlistStateLoading(state, ownProps);
-    const wishLists = getWishlistsCollectionFromStore(state, ownProps);
-    const isWishListsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
+    const isWishlistLoading: boolean = isPageWishlistStateLoading(state, ownProps);
+    const wishlists = getWishlistsCollectionFromStore(state, ownProps);
+    const isWishlistsFetched: boolean = isWishlistsCollectionInitiated(state, ownProps);
     const anonymId = getAnonymId(state, ownProps);
 
     return ({
@@ -34,9 +34,9 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         cartId,
         payloadForCreateCart,
         isUserLoggedIn,
-        wishLists,
-        isWishListsFetched,
-        isWishListLoading,
+        wishlists,
+        isWishlistsFetched,
+        isWishlistLoading,
         anonymId,
     });
 };
@@ -45,7 +45,7 @@ export const connect = reduxify(
     mapStateToProps,
     (dispatch: Function) => ({
         dispatch,
-        getWishLists: () => dispatch(getWishlistsAction()),
+        getWishlists: () => dispatch(getWishlistsAction()),
         addToWishlist: (wishlistId: string, sku: string) => dispatch(addItemAction(wishlistId, sku)),
         createCartAndAddItem: (
             payload: ICartCreatePayload,

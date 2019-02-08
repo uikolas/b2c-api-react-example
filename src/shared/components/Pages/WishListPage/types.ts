@@ -1,5 +1,5 @@
 import { WithStyles } from '@material-ui/core';
-import { styles } from 'src/shared/components/Pages/WishListPage/styles';
+import { styles } from 'src/shared/components/Pages/WishlistPage/styles';
 import { IWishlist } from 'src/shared/interfaces/wishlist';
 
 export interface WishlistPageProps extends WithStyles<typeof styles> {

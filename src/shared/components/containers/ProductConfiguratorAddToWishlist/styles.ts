@@ -5,7 +5,7 @@ export const styles = (theme: Theme) => createStyles({
     wishlistBtnArea: {
         marginTop: theme.spacing.unit / 2,
     },
-    formWishList: {
+    formWishlist: {
         '&:first-child': {
             paddingTop: 0,
         },
@@ -19,7 +19,7 @@ export const styles = (theme: Theme) => createStyles({
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
-    wishListBtn: {
+    wishlistBtn: {
         color: theme.appColors.black,
         backgroundColor: 'transparent',
         border: `1px solid ${theme.appColors.deepBlack}`,
