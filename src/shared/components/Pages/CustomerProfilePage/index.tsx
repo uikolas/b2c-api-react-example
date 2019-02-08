@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from './connect';
 import { ICustomerProfilePageProps } from './types';
 
-import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { UpdateProfile } from './containers/updateProfile';
 import { ChangePassword } from './containers/changePassword';
 import { AccountActions } from './containers/accountActions';

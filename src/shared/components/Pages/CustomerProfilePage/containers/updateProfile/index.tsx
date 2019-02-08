@@ -61,65 +61,60 @@ export class UpdateProfileComponent extends React.Component<UpdateProfileProps, 
     };
 
     public render = () => {
-        const {
-            classes
-        } = this.props;
+        const { classes } = this.props;
 
-        const {
-            firstName,
-            lastName,
-            salutation,
-            email
-        } = this.state;
+        const { firstName, lastName, salutation, email } = this.state;
+
+        const formOptions = {
+            formName: 'profileForm',
+            onChangeHandler: this.handleInputChange,
+            onSubmitHandler: this.handleSubmitUpdateProfile,
+            fields: [
+                [ {
+                    type: 'select',
+                    inputName: 'salutation',
+                    inputValue: salutation,
+                    spaceNumber: 2,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'salutation.label' } />,
+                    isError: false,
+                    menuItems: SalutationVariants
+                        .map((item: TSalutationVariant) => ({ value: item.value, name: item.label })),
+                }, {
+                    type: 'input',
+                    inputName: 'firstName',
+                    inputValue: firstName,
+                    spaceNumber: 5,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'first.name.label' } />,
+                    isError: false,
+                }, {
+                    type: 'input',
+                    inputName: 'lastName',
+                    inputValue: lastName,
+                    spaceNumber: 5,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'last.name.label' } />,
+                    isError: false,
+                } ], [ {
+                    type: 'input',
+                    inputName: 'email',
+                    inputValue: email,
+                    inputType: 'email',
+                    spaceNumber: 5,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'email.label' } />,
+                    isError: false,
+                } ]
+            ]
+        };
 
         return (
             <>
                 <CustomerPageTitle title="profile" />
 
                 <SprykerForm
-                    form={ {
-                        formName: 'profileForm',
-                        onChangeHandler: this.handleInputChange,
-                        onSubmitHandler: this.handleSubmitUpdateProfile,
-                        fields: [
-                            [ {
-                                type: 'select',
-                                inputName: 'salutation',
-                                inputValue: salutation,
-                                spaceNumber: 2,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'salutation.label' } />,
-                                isError: false,
-                                menuItems: SalutationVariants
-                                    .map((item: TSalutationVariant) => ({ value: item.value, name: item.label })),
-                            }, {
-                                type: 'input',
-                                inputName: 'firstName',
-                                inputValue: firstName,
-                                spaceNumber: 5,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'first.name.label' } />,
-                                isError: false,
-                            }, {
-                                type: 'input',
-                                inputName: 'lastName',
-                                inputValue: lastName,
-                                spaceNumber: 5,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'last.name.label' } />,
-                                isError: false,
-                            } ], [ {
-                                type: 'input',
-                                inputName: 'email',
-                                inputValue: email,
-                                inputType: 'email',
-                                spaceNumber: 5,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'email.label' } />,
-                                isError: false,
-                            } ]
-                        ]
-                    } }
+                    form={ formOptions }
                     SubmitButton={
                         <Grid container>
                             <Grid item xs={ 12 } sm={ 2 }>

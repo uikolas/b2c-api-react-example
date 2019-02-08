@@ -2,38 +2,35 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from './connect';
 
+import { ChangePasswordState } from '@components/Pages/CustomerProfilePage/containers/changePassword/types';
+import { IProfileFieldInput } from '@components/Pages/CustomerProfilePage/types';
 import { ChangePasswordProps } from './types';
+
+import { typeNotificationWarning } from '@constants/notifications';
 
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { SprykerButton } from '@components/UI/SprykerButton';
 import { SprykerForm } from '@components/UI/SprykerForm';
-import { typeNotificationWarning } from '@constants/notifications';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { IProfileFieldInput } from '@components/Pages/CustomerProfilePage/types';
-import { ChangePasswordState } from '@components/Pages/CustomerProfilePage/containers/changePassword/types';
 
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from '../../styles';
 
 @connect
 export class ChangePasswordComponent extends React.Component<ChangePasswordProps, ChangePasswordState> {
-    constructor(props: ChangePasswordProps) {
-        super(props);
+    readonly state: ChangePasswordState = {
+        password: '',
+        newPassword: '',
+        confirmPassword: ''
+    };
 
-        this.state = {
-            password: '',
-            newPassword: '',
-            confirmPassword: ''
-        };
-    }
-
-    public componentDidUpdate = (prevProps: ChangePasswordProps, prevState: ChangePasswordState) => {
+    public componentDidUpdate = (prevProps: ChangePasswordProps, prevState: ChangePasswordState): void => {
         if (this.props.passwordUpdated && !prevProps.passwordUpdated) {
             this.clearPasswords();
         }
     };
 
-    public handleInputChange = (event: { target: IProfileFieldInput }): void => {
+    protected handleInputChange = (event: { target: IProfileFieldInput }): void => {
         const {name, value}: IProfileFieldInput = event.target;
         const cleanValue = value.trim();
 
@@ -42,9 +39,10 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
         }
     };
 
-    public handleSubmitPassword = (event: React.FormEvent<HTMLFormElement>): void => {
+    protected handleSubmitPassword = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const { password, newPassword, confirmPassword } = this.state;
+
         if (!password || !newPassword || !confirmPassword || !this.props.customerReference) {
             NotificationsMessage({
                 id: 'empty.required.fields.message',
@@ -53,6 +51,7 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
 
             return null;
         }
+
         if (newPassword !== confirmPassword) {
             NotificationsMessage({
                 id: 'password.not.equal.message',
@@ -61,11 +60,12 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
 
             return null;
         }
+
         const passwordData = { password, newPassword, confirmPassword };
         this.props.updateCustomerPassword(this.props.customerReference, passwordData);
     };
 
-    private clearPasswords = (): void => {
+    protected clearPasswords = (): void => {
         this.setState({
             newPassword: '',
             password: '',
@@ -74,56 +74,52 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
     };
 
     public render = () => {
-        const {
-            classes
-        } = this.props;
+        const { classes } = this.props;
 
-        const {
-            password,
-            newPassword,
-            confirmPassword
-        } = this.state;
+        const { password, newPassword, confirmPassword } = this.state;
+
+        const formOptions = {
+            formName: 'passwordForm',
+            onChangeHandler: this.handleInputChange,
+            onSubmitHandler: this.handleSubmitPassword,
+            fields: [
+                [ {
+                    type: 'input',
+                    inputName: 'password',
+                    inputValue: password,
+                    inputType: 'password',
+                    spaceNumber: 5,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'password.label' } />,
+                    isError: false,
+                } ], [ {
+                    type: 'input',
+                    inputName: 'newPassword',
+                    inputValue: newPassword,
+                    inputType: 'password',
+                    spaceNumber: 5,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'new.password.label' } />,
+                    isError: false,
+                }, {
+                    type: 'input',
+                    inputName: 'confirmPassword',
+                    inputValue: confirmPassword,
+                    inputType: 'password',
+                    spaceNumber: 5,
+                    isRequired: true,
+                    label: <FormattedMessage id={ 'confirm.password.label' } />,
+                    isError: false,
+                } ]
+            ]
+        };
 
         return (
             <>
                 <CustomerPageTitle title={<FormattedMessage id={ 'change.password.title' } />} />
 
                 <SprykerForm
-                    form={ {
-                        formName: 'passwordForm',
-                        onChangeHandler: this.handleInputChange,
-                        onSubmitHandler: this.handleSubmitPassword,
-                        fields: [
-                            [ {
-                                type: 'input',
-                                inputName: 'password',
-                                inputValue: password,
-                                inputType: 'password',
-                                spaceNumber: 5,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'password.label' } />,
-                                isError: false,
-                            } ], [ {
-                                type: 'input',
-                                inputName: 'newPassword',
-                                inputValue: newPassword,
-                                inputType: 'password',
-                                spaceNumber: 5,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'new.password.label' } />,
-                                isError: false,
-                            }, {
-                                type: 'input',
-                                inputName: 'confirmPassword',
-                                inputValue: confirmPassword,
-                                inputType: 'password',
-                                spaceNumber: 5,
-                                isRequired: true,
-                                label: <FormattedMessage id={ 'confirm.password.label' } />,
-                                isError: false,
-                            } ]
-                        ]
-                    } }
+                    form={ formOptions }
                     SubmitButton={
                         <Grid container>
                             <Grid item xs={ 12 } sm={ 2 }>

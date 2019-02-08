@@ -79,17 +79,15 @@ export class AccountActionsComponent extends React.Component<AccountActionsProps
                     </Grid>
                 </Grid>
 
-                { this.state.isDeleteProfileDialogOpen
-                    ? (
-                        <SprykerDialog
-                            handleShow={ this.handleDeleteProfileDialogShowing }
-                            content={ <FormattedMessage id={ 'confirm.delete.account.message' } /> }
-                            isOpen={ this.state.isDeleteProfileDialogOpen }
-                            handleAgree={ this.handleDeleteProfileDialogAgree }
-                            handleDisagree={ this.handleDeleteProfileDialogDisagree }
-                        />
-                    ) : null
-                }
+                { this.state.isDeleteProfileDialogOpen && (
+                    <SprykerDialog
+                        handleShow={ this.handleDeleteProfileDialogShowing }
+                        content={ <FormattedMessage id={ 'confirm.delete.account.message' } /> }
+                        isOpen={ this.state.isDeleteProfileDialogOpen }
+                        handleAgree={ this.handleDeleteProfileDialogAgree }
+                        handleDisagree={ this.handleDeleteProfileDialogDisagree }
+                    />
+                ) }
             </>
         );
     }
