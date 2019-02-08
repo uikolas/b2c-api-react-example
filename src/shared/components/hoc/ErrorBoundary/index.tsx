@@ -1,34 +1,21 @@
 import * as React from 'react';
-
-interface IState {
-    hasError: boolean;
-    error: Error | null;
-    info: object;
-}
-
-interface IProps {
-}
+import { IProps, IState } from './types';
 
 export class ErrorBoundary extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
-        this.state = {
-            hasError: false,
-            error: null,
-            info: null,
-        };
-    }
+    public state: IState = {
+        hasError: false,
+        error: null,
+        info: null
+    };
 
-    public componentDidCatch(error: Error | null, info: object) {
-        // Display fallback UI
+    public componentDidCatch(error: Error | null, info: object): void {
         this.setState({hasError: true, error, info});
         console.error('ErrorBoundary->componentDidCatch->error', error);
         console.error('ErrorBoundary->componentDidCatch->info', info);
     }
 
-    public render() {
+    public render(): React.ReactNode  {
         if (this.state.hasError) {
-            // You can render any custom fallback UI
             return <h1>{this.state.error.toString()}</h1>;
         }
 
