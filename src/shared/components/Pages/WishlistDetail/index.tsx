@@ -14,7 +14,7 @@ import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from 'src/shared/interfaces/product';
 import { IWishlistProduct } from 'src/shared/interfaces/wishlist';
 import { createCartItemAddToCart } from 'src/shared/helpers/cart';
-import { pathProductPageBase, pathWishListsPage } from 'src/shared/routes/contentRoutes';
+import { pathProductPageBase, pathWishlistsPage } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from '../../Common/AppPageTitle';
 import { AppTable } from '../../Common/AppTable';
 import { WishlistItemBaseInfo } from './WishlistItemBaseInfo';
@@ -97,7 +97,7 @@ export class WishlistDetailBase extends React.Component<Props, State> {
         return (
             <MenuList className={classes.menu}>
                 <MenuItem className={classes.menuItem}>
-                    <NavLink to={pathWishListsPage} className={classes.link}>
+                    <NavLink to={pathWishlistsPage} className={classes.link}>
                         <FormattedMessage id={ 'word.wishlist.title' } />
                     </NavLink>
                 </MenuItem>
