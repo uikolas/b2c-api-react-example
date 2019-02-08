@@ -1,18 +1,15 @@
 import * as React from 'react';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-
-import { ICategoriesTeasersProps } from './types';
+import { withStyles, Grid } from '@material-ui/core';
+import { CategoryTeaser } from './CategoryTeaser';
+import {
+    ICategoriesTeasersData as TeaserData,
+    ICategoriesTeasersProps as Props
+} from './types';
+import { categoriesTeasersData as teasers } from './fixtures';
 import { styles } from './styles';
 
-import { ICategoriesTeasersData } from 'src/shared/components/Pages/HomePage/types';
-import { CategoryTeaser } from 'src/shared/components/Pages/HomePage/CategoryTeaser';
-
-export const CategoriesTeasersBase: React.SFC<ICategoriesTeasersProps> = (props): JSX.Element => {
-    const {
-        classes, teasers
-    } = props;
+export const CategoriesTeasersBase: React.SFC<Props> = (props): JSX.Element => {
+    const {classes} = props;
 
     if (!teasers || !Array.isArray(teasers) || !teasers.length) {
         return null;
@@ -21,7 +18,7 @@ export const CategoriesTeasersBase: React.SFC<ICategoriesTeasersProps> = (props)
     return (
         <Grid container className={classes.root}>
             <Grid item xs={12} className={classes.container}>
-                {teasers.map((teaser: ICategoriesTeasersData, index: number) =>
+                {teasers.map((teaser: TeaserData, index: number) =>
                     (
                         <CategoryTeaser
                             key={teaser.title}

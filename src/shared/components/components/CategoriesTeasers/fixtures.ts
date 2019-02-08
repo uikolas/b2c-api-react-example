@@ -1,11 +1,15 @@
-import { ICategoriesTeasersData } from 'src/shared/components/Pages/HomePage/types';
+import { ICategoriesTeasersData } from './types';
 import {
     pathCategoryComputers,
     pathCategoryNotebooks,
     pathCategoryTablets,
     pathCategoryWorkstations
 } from 'src/shared/routes/categoriesRoutes';
-import { computersSrc, notebooksSrc, tabletsSrc, workstationsSrc } from 'src/img/index';
+
+const computersSrc = require('./img/computers-min.jpg');
+const notebooksSrc = require('./img/notebooks-min.jpg');
+const tabletsSrc = require('./img/tablets-min.jpg');
+const workstationsSrc = require('./img/workstations-min.jpg');
 
 export const categoriesTeasersData: ICategoriesTeasersData[] = [
     {

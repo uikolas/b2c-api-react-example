@@ -1,9 +1,5 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { styles } from 'src/shared/components/Pages/HomePage/styles';
-
-export interface IHomePageProps extends WithStyles<typeof styles> {}
-
-export interface IHomePageState {}
+import { styles } from './styles';
 
 export interface ICategoriesTeasersData {
     title: string;
@@ -11,4 +7,8 @@ export interface ICategoriesTeasersData {
     img: string;
     path: string;
     linkTitle: string;
+}
+
+export interface ICategoriesTeasersProps extends WithStyles<typeof styles> {
+    teasers: ICategoriesTeasersData[];
 }
