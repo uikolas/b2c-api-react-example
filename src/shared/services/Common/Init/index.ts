@@ -11,7 +11,7 @@ import {
     switchLocaleFulfilledState,
     switchLocaleRejectedState,
     getCategoriesAction
-} from '@stores/actions/Common/init';
+} from '@stores/actions/common/init';
 import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
