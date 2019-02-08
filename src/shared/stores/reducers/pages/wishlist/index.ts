@@ -7,7 +7,7 @@ import {
     DETAIL_WISHLIST,
     UPDATE_WISHLIST,
     WISHLIST_ALL_LISTS,
-} from '@stores/actionTypes/Pages/Wishlist';
+} from '@stores/actionTypes/pages/wishlist';
 import { IWishlist, IWishlistProduct } from 'src/shared/interfaces/wishlist/index';
 import { IPageWishlistAction, WishlistState } from 'src/shared/stores/reducers/pages/wishlist/types';
 

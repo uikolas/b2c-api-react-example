@@ -7,9 +7,9 @@ import {
     isOrderHistoryItems,
     isOrderHistoryLoading,
     isOrderHistoryStateRejected,
-} from '@stores/reducers/Pages/OrderHistory';
-import { isAppInitiated } from '@stores/reducers/common/Init/index';
-import { isUserAuthenticated } from '@stores/reducers/Pages/Login';
+} from '@stores/reducers/pages/orderHistory';
+import { isAppInitiated } from '@stores/reducers/common/init';
+import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
