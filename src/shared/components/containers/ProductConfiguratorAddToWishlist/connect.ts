@@ -1,14 +1,11 @@
-import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { getAnonymId, getPayloadForCreateCart } from '@stores/reducers/common/init';
 import {
     getWishlistsCollectionFromStore,
     isPageWishlistStateLoading,
     isWishlistsCollectionInitiated,
-} from '@stores/reducers/Pages/Wishlist/selectors';
+} from '@stores/reducers/pages/wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
-import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
-import { ICartAddItem, TCartId } from '@interfaces/cart';
 import { addItemAction, getWishlistsAction } from '@stores/actions/pages/wishlist';
 import {
     addItemGuestCartAction,
@@ -17,6 +14,8 @@ import {
 } from '@stores/actions/common/cart';
 import { getCartId, isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
+import { ICartAddItem, TCartId } from '@interfaces/cart';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);

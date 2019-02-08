@@ -4,7 +4,7 @@ import {
     getWishlistsCollectionFromStore,
     isPageWishlistStateLoading,
     isWishlistsCollectionInitiated,
-} from '@stores/reducers/Pages/Wishlist/selectors';
+} from '@stores/reducers/pages/wishlist/selectors';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { addItemAction, getWishlistsAction } from '@stores/actions/pages/wishlist';
 import {
