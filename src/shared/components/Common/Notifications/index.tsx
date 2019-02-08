@@ -10,7 +10,7 @@ export const NotificationsBase: React.SFC<INotifications> = (props): JSX.Element
 
     return (
         <ToastContainer
-            autoClose={ 500000 }
+            autoClose={ 5000 }
             transition={ Slide }
             position={ toast.POSITION.TOP_LEFT }
             hideProgressBar={ true }

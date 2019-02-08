@@ -1,5 +1,5 @@
 import { IReduxState } from 'src/typings/app';
-import { IWishlist, IWishlistProduct, TWishListId } from 'src/shared/interfaces/wishlist/index';
+import { IWishlist, IWishlistProduct, TWishlistId } from 'src/shared/interfaces/wishlist/index';
 import { IActionData } from 'src/shared/stores/reducers/types';
 import { TProductSKU } from 'src/shared/interfaces/product';
 
@@ -16,12 +16,12 @@ export interface WishlistState extends IReduxState {
 export interface IPageWishlistAction extends IActionData {
     payloadWishlistDataFulfilled?: {
         data?: IWishlist;
-        wishlistId?: TWishListId;
+        wishlistId?: TWishlistId;
         products?: IWishlistProduct[];
         wishlists?: IWishlist[]
     };
     payloadWishlistProductFulfilled?: {
-        wishlistId: TWishListId;
+        wishlistId: TWishlistId;
         sku: TProductSKU
     };
 }

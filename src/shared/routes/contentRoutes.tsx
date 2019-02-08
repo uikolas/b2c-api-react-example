@@ -13,7 +13,7 @@ import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
 import { LoadableCustomerPage } from '../components/Pages/CustomerPage/loadable';
 import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
 
-import { LoadableWishListPage } from '../components/Pages/WishListPage/loadable';
+import { LoadableWishlistPage } from '../components/Pages/WishlistPage/loadable';
 import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loadable';
 
 import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
@@ -36,9 +36,9 @@ export const pathCartPage = `${config.WEB_PATH}cart`;
 
 export const pathCustomerPage = `${config.WEB_PATH}customer`;
 
-export const pathWishListsPage = `${pathCustomerPage}/wishlists`;
-export const pathWishListPageBase = `${pathCustomerPage}/wishlist`;
-export const pathWishlistDetailPage = `${pathWishListPageBase}/:wishlistId`;
+export const pathWishlistsPage = `${pathCustomerPage}/wishlists`;
+export const pathWishlistPageBase = `${pathCustomerPage}/wishlist`;
+export const pathWishlistDetailPage = `${pathWishlistPageBase}/:wishlistId`;
 
 export const pathOrderHistoryPage = `${pathCustomerPage}/order`;
 export const pathOrderDetailsPageBase = `${pathOrderHistoryPage}/details`;
@@ -77,7 +77,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
             <Route path={ pathForgotPassword } exact component={ LoadablePasswordForgotPage }/>
             <Route path={ `${pathResetPassword}/:restoreKey` } component={ LoadablePasswordResetPage }/>
 
-            <ProtectedRoute path={ pathWishListsPage } component={ LoadableWishListPage }/>
+            <ProtectedRoute path={ pathWishlistsPage } component={ LoadableWishlistPage }/>
             <ProtectedRoute path={ pathWishlistDetailPage } component={ LoadableWishlistDetail }/>
 
             { /* TODO: Change to ProtectedRoute */ }
