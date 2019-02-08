@@ -1,6 +1,6 @@
 import api, { setAuthToken } from 'src/shared/services/api';
 import { RefreshTokenService } from 'src/shared/services/Common/RefreshToken';
-import { IWishlist, IWishlistProduct, TWishListId } from 'src/shared/interfaces/wishlist';
+import { IWishlist, IWishlistProduct, TWishlistId } from 'src/shared/interfaces/wishlist';
 import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
 import { WishlistAuthenticateErrorMessage } from 'src/shared/translation';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
@@ -177,7 +177,7 @@ export class WishlistService extends ApiServiceAbstract {
     public static async deleteWishlist(
         ACTION_TYPE: string,
         dispatch: Function,
-        wishlistId: TWishListId
+        wishlistId: TWishlistId
     ): Promise<void> {
         try {
             const token = await RefreshTokenService.getActualToken(dispatch);

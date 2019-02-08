@@ -2,7 +2,7 @@ import produce from 'immer';
 import {
     CHECKOUT_DATA_INIT_REQUEST,
     SEND_CHECKOUT_DATA,
-} from '@stores/actionTypes/Pages/Checkout';
+} from '@stores/actionTypes/pages/checkout';
 import { IAddressItemCollection } from 'src/shared/interfaces/addresses/index';
 import {
     IPaymentMethod,
