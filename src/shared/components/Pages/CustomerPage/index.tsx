@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { ErrorBoundary } from '@components/Library/ErrorBoundary';
-import { CustomerPageProps } from './types';
 import { withRouter } from 'react-router';
-import { AppMain } from '../../Common/AppMain';
+
+import { CustomerPageProps } from './types';
+
+import { AppMain } from '@components/Common/AppMain';
+import { ErrorBoundary } from '@components/Library/ErrorBoundary';
 import { SideBar } from './containers/sideBar';
 import { CustomerRouting } from './components/customerRouting';
 
@@ -25,9 +27,7 @@ export class CustomerPageBase extends React.PureComponent<CustomerPageProps> {
                     <Grid item xs={ 12 } sm={ 8 } md={ 9 }>
                         <Grid container className={ classes.rightPart }>
                             <Grid item xs={ 12 }>
-                                <ErrorBoundary>
-                                    <CustomerRouting />
-                                </ErrorBoundary>
+                                <CustomerRouting />
                             </Grid>
                         </Grid>
                     </Grid>

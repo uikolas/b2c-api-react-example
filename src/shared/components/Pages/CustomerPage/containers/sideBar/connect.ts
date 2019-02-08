@@ -1,9 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
-
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { logout } from '@stores/actions/pages/login';
 
-const mapStateToProps = () => ({});
+import { logout } from '@stores/actions/pages/login';
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators(
@@ -13,4 +11,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
         dispatch,
     );
 
-export const connect = reduxify(mapStateToProps, mapDispatchToProps);
+export const connect = reduxify(null, mapDispatchToProps);

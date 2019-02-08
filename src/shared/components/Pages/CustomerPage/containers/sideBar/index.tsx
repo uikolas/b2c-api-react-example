@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { ClickEvent } from '@interfaces/common/react';
 import { connect } from './connect';
-import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { INavLinkData } from '@interfaces/navLinks';
-import { customerProfileNavLinks } from '@constants/navLinks';
+
 import { SideBarProps } from './types';
+import { ClickEvent } from '@interfaces/common/react';
+import { INavLinkData } from '@interfaces/navLinks';
+
+import { NavLink } from 'react-router-dom';
+import { customerProfileNavLinks } from '@constants/navLinks';
 
 import {
     withStyles,
@@ -18,8 +20,8 @@ import { styles } from './styles';
 
 @connect
 export class SideBarComponent extends React.Component<SideBarProps> {
-    public handleLogout = (e: ClickEvent) => {
-        e.preventDefault();
+    protected handleLogout = (event: ClickEvent) => {
+        event.preventDefault();
         this.props.logout();
     };
 
