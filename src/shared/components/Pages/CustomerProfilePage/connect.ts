@@ -6,6 +6,7 @@ import {
     isPageCustomerProfileLoading,
     isPageCustomerProfileRejected,
 } from '@stores/reducers/pages/CustomerProfile';
+
 import {
     TCustomerReference,
 } from 'src/shared/interfaces/customer';

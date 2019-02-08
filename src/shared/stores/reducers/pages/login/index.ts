@@ -5,12 +5,12 @@ import {
     PAGES_LOGIN_REQUEST,
     REFRESH_TOKEN_REQUEST,
     RESET_PASSWORD,
-} from '@stores/actionTypes/Pages/Login';
-import { SET_AUTH_FROM_STORAGE } from '@stores/actionTypes/Common/Init';
+} from '@stores/actionTypes/pages/login';
+import { SET_AUTH_FROM_STORAGE } from '@stores/actionTypes/common/init';
 import { TAccessToken } from 'src/shared/interfaces/login';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { TCustomerEmail, TCustomerUsername } from 'src/shared/interfaces/customer/index';
-import { LOGIN_DATA_SET_TO_STORE } from '@stores/actionTypes/Pages/CustomerProfile';
+import { LOGIN_DATA_SET_TO_STORE } from '@stores/actionTypes/pages/customerProfile';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ILoginState, IPageLoginAction } from 'src/shared/stores/reducers/pages/login/types';
 
