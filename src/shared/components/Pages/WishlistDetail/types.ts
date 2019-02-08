@@ -1,6 +1,6 @@
 import { WithStyles } from '@material-ui/core';
 import { styles } from 'src/shared/components/Pages/WishlistDetail/styles';
-import { IWishlist, IWishlistProduct, TWishListId } from 'src/shared/interfaces/wishlist';
+import { IWishlist, IWishlistProduct, TWishlistId } from 'src/shared/interfaces/wishlist';
 import { ICartAddItem, TCartId } from 'src/shared/interfaces/cart';
 import { LocationDescriptor, LocationState } from 'history';
 import { RouterAction } from 'react-router-redux';
@@ -15,7 +15,7 @@ export interface WishlistPageProps extends WithStyles<typeof styles> {
     cartLoading: boolean;
     cartId: TCartId;
     cartItemsLength: number;
-    wishlistIdParam: TWishListId;
+    wishlistIdParam: TWishlistId;
     isAppDataSet: boolean;
     changeLocation(location: LocationDescriptor, state?: LocationState): RouterAction;
     isWishlistExist: boolean;
@@ -25,9 +25,9 @@ export interface WishlistPageProps extends WithStyles<typeof styles> {
 
     multiItemsCartAction(cartId: TCartId, listItems: string[]): void;
 
-    deleteMultiItemsAction(wishlistId: TWishListId, items: string[]): void;
+    deleteMultiItemsAction(wishlistId: TWishlistId, items: string[]): void;
 
-    getDetailWishlistAction(wishlistId: TWishListId): void;
+    getDetailWishlistAction(wishlistId: TWishlistId): void;
 }
 
 export interface WishlistPageState {

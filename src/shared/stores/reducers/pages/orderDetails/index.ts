@@ -1,4 +1,4 @@
-import { ORDER_DETAILS_REQUEST } from '@stores/actionTypes/Pages/Order';
+import { ORDER_DETAILS_REQUEST } from '@stores/actionTypes/pages/order';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { IOrderDetailsParsed } from 'src/shared/interfaces/order';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
