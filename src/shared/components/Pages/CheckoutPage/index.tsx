@@ -18,7 +18,7 @@ import {
 } from './helpers';
 import { AppMain } from 'src/shared/components/Common/AppMain';
 import { CheckoutForms } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms';
-import { CartData } from 'src/shared/components/Pages/CheckoutPage/CartData';
+import { CheckoutCart } from 'src/shared/components/Pages/CheckoutPage/CheckoutCart';
 import { OrderSuccess } from 'src/shared/components/Pages/CheckoutPage/OrderSuccess';
 import { InputSaveErrorMessage } from 'src/shared/translation';
 import {
@@ -68,23 +68,12 @@ import {
 } from 'src/shared/components/Pages/CheckoutPage/helpers/validation';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { InputChangeEvent, FormEvent, BlurEvent } from '@interfaces/common/react';
-import { IAddressItem, IAddressItemCollection } from '@interfaces/addresses';
+import { IAddressItemCollection } from '@interfaces/addresses';
 import { ICheckoutRequest } from '@interfaces/checkout';
-import { ICartItem, ICartTotals } from '@interfaces/cart';
 import { FormattedMessage } from 'react-intl';
 
 @connect
 export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
-    public successOrderTotals: ICartTotals = {
-        expenseTotal: 0,
-        discountTotal: 0,
-        taxTotal: 0,
-        subtotal: 0,
-        grandTotal: 0
-    };
-
-    public successOrderProducts: ICartItem[] = [];
-
     public state: ICheckoutPageState = {
         deliverySelection: {...deliverySelectionDefault},
         billingSelection: {...billingSelectionDefault},
@@ -113,14 +102,6 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
             if (!this.props.profile && this.props.isUserLoggedIn && this.props.customerReference) {
                 this.props.getCustomerData(this.props.customerReference);
             }
-        }
-
-        if (!prevProps.orderId && this.props.orderId) {
-            this.successOrderProducts = prevProps.products;
-            this.successOrderTotals = prevProps.totals;
-            this.props.isUserLoggedIn
-                ? this.props.updateCart()
-                : this.props.updateGuestCart(this.props.anonymId);
         }
     };
 
@@ -407,24 +388,17 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     public render(): JSX.Element {
         const {
             classes,
-            isAppStateLoading,
-            isCheckoutLoading,
             isCheckoutFulfilled,
-            products,
             isProductsExists,
-            totals,
             addressesCollection,
             orderId,
             isAddressesCollectionExist,
             isUserLoggedIn,
             countriesCollection,
             shipmentMethods,
-            paymentMethods
+            paymentMethods,
+            anonymId
         } = this.props;
-
-        if (isAppStateLoading) {
-            return <AppMain />;
-        }
 
         return (
             <AppMain>
@@ -468,21 +442,20 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
                     >
                         <Grid container className={classes.container}>
                             <Grid item xs={12} md={7} className={classes.leftColumn}>
-                                {
-                                    orderId
-                                        ? <OrderSuccess order={orderId} />
-                                        : <CheckoutForms
-                                            panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
-                                        />
+                                {orderId
+                                    ? <OrderSuccess order={orderId} />
+                                    : <CheckoutForms
+                                        panels={getCheckoutPanelsSettings(this.state.stepsCompletion)}
+                                    />
                                 }
                             </Grid>
                             <Grid item xs={12} md={5} className={classes.rightColumn}>
-                                <CartData
-                                    products={orderId ? this.successOrderProducts : products}
-                                    totals={orderId ? this.successOrderTotals : totals}
+                                <CheckoutCart
                                     isSendBtnDisabled={!this.checkCheckoutFormValidity()}
                                     sendData={this.handleSubmit}
                                     order={orderId}
+                                    isUserLoggedIn={isUserLoggedIn}
+                                    anonymId={anonymId}
                                 />
                             </Grid>
                         </Grid>

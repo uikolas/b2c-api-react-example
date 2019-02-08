@@ -21,7 +21,7 @@ import { IAddressItemCollection } from '@interfaces/addresses';
 import { TCustomerReference } from '@interfaces/customer';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { ICountry } from '@interfaces/country';
-import { ICartTotals, ICartItem, TCartId } from '@interfaces/cart';
+import { ICartItem, TCartId } from '@interfaces/cart';
 import { ICheckoutRequest, IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
@@ -34,7 +34,6 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
 
     const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
     const isProductsExists = Boolean(items && items.length);
-    const totals: ICartTotals = getCartTotals(state, ownProps);
 
     const cartId: TCartId = getCartId(state, ownProps);
 
@@ -42,8 +41,6 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const customerReference = getCustomerReference(state, ownProps);
     const profile = getCustomerProfile(state, ownProps);
 
-    // from global state
-    const isAppStateLoading = isStateLoading(state, ownProps);
     // Countries from init state
     const countriesCollection: ICountry[] = getCounties(state, ownProps);
     // From pageCheckout state
@@ -62,14 +59,14 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         isCheckoutLoading,
         isCheckoutRejected,
         isCheckoutFulfilled,
-        products: items,
+
         isProductsExists,
-        totals,
+
         cartId,
         customerReference,
         addressesCollection,
         isAddressesCollectionExist,
-        isAppStateLoading,
+
         countriesCollection,
         shipmentMethods,
         paymentMethods,
@@ -91,10 +88,6 @@ export const connect = reduxify(
         },
         getCustomerData: (customerReference: TCustomerReference): void => {
             dispatch(getCustomerProfileAction(customerReference));
-        },
-        updateCart: (): void => dispatch(getCustomerCartsAction()),
-        updateGuestCart: (anonymId: string): void => {
-            dispatch(getGuestCartAction(anonymId));
         }
     })
 );

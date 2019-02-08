@@ -22,15 +22,16 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
     isCheckoutRejected: boolean;
     isCheckoutFulfilled: boolean;
     profile: ICustomerDataParsed | null;
-    anonymId: string;
-    products: ICartItem[] | null;
+
+
     isProductsExists: boolean;
-    totals: ICartTotals;
+
     cartId: TCartId;
     isAddressesCollectionExist: boolean;
     customerReference: TCustomerReference | null;
     addressesCollection: IAddressItemCollection[] | null;
     orderId: string;
+    anonymId: string;
     isAppStateLoading: boolean;
     countriesCollection: ICountry[];
     shipmentMethods: IShipmentMethod[] | null;
@@ -38,8 +39,7 @@ export interface ICheckoutPageProps extends WithStyles<typeof styles>, RouteProp
     getCheckoutData: (payload: ICheckoutRequest, anonymId: string) => void;
     sendCheckoutData: (payload: ICheckoutRequest, anonymId: string) => void;
     getCustomerData: (customerReference: TCustomerReference) => void;
-    updateCart: () => void;
-    updateGuestCart: (anonymId: string) => void;
+
 }
 
 export interface ICheckoutPageState {
