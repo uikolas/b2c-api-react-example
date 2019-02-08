@@ -11,6 +11,9 @@ export const styles = (theme: Theme) => createStyles({
         letterSpacing: '0.2px',
         color: theme.appColors.grey,
     },
+    itemImage: {
+        width: '20%'
+    },
     itemWrapper: {
         width: '40%',
         paddingLeft: theme.spacing.unit * 3,

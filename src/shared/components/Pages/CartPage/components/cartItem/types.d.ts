@@ -7,7 +7,7 @@ import { styles } from './styles';
 import { styles as parentStyles } from '../../containers/cartRows/styles';
 
 export interface CartItemProps extends ICartItem, WithStyles<typeof styles> {
-    heightListItem: number;
+    imageItemHeight: number;
     quantities: number[];
     handleDeleteItem: Function;
     handleChangeQty: (event: React.ChangeEvent) => void;

@@ -18,30 +18,33 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
     protected designImgWidth: number = 0.2;
 
     readonly state: CartRowsState = {
-        heightListItem: 129
+        imageItemHeight: 129
     };
 
     public componentDidMount = (): void => {
-        window.addEventListener('resize', this.setListItemHeight);
-        this.setListItemHeight();
+        window.addEventListener('resize', this.setListImageHeight);
+        this.setListImageHeight();
     };
 
     public componentWillUnmount = (): void => {
-        window.removeEventListener('resize', this.setListItemHeight);
+        window.removeEventListener('resize', this.setListImageHeight);
     };
 
     public componentDidUpdate = (): void => {
-        this.setListItemHeight();
+        this.setListImageHeight();
     };
 
-    protected setListItemHeight = (): void => {
-        if (this.listRef
-            && this.listRef.current
-            && Math.floor(
-                this.listRef.current.offsetWidth * this.designImgWidth
-            ) !== Math.floor(this.state.heightListItem)
-        ) {
-            this.setState({heightListItem: this.listRef.current.offsetWidth * this.designImgWidth});
+    protected setListImageHeight = (): void => {
+        if (!this.listRef && !this.listRef.current) {
+            return;
+        }
+
+        const newImageHeight = Math.floor(this.listRef.current.offsetWidth * this.designImgWidth);
+
+        if (newImageHeight !== this.state.imageItemHeight) {
+            this.setState({
+                imageItemHeight: newImageHeight
+            });
         }
     };
 
@@ -76,12 +79,12 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
         } else {
             if (isUserLoggedIn) {
                 updateItemInCartAction(
-                    createCartItemAddToCart(name, +value),
+                    createCartItemAddToCart(name, Number(value)),
                     this.props.cartId,
                 );
             } else {
                 updateGuestCartAction(
-                    createCartItemAddToCart(name, +value),
+                    createCartItemAddToCart(name, Number(value)),
                     this.props.cartId,
                     anonymId,
                 );
@@ -95,7 +98,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
         return (
             <>
                 <div className={ classes.listTitle } ref={ this.listRef }>
-                    <div style={ { width: '20%' } }>
+                    <div className={ classes.itemImage } >
                         <FormattedMessage id={ 'word.items.title' } />
                     </div>
                     <div className={ classes.itemWrapper } />
@@ -107,7 +110,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
                     </div>
                 </div>
 
-                <Divider style={ { width: '100%' } } />
+                <Divider />
 
                 <List>
                     { items.map((cartItem: ICartItem) => {
@@ -122,7 +125,7 @@ export class CartRowsComponent extends React.Component<CartRowsProps, CartRowsSt
                             <CartItem
                                 key={ cartItem.sku }
                                 quantities={ quantities }
-                                heightListItem={ this.state.heightListItem }
+                                imageItemHeight={ this.state.imageItemHeight }
                                 handleDeleteItem={ this.handleDeleteItem }
                                 handleChangeQty={ this.handleChangeQty }
                                 parentClasses={ classes }

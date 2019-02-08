@@ -5,6 +5,10 @@ export const styles = (theme: Theme) => createStyles({
     cartTotalIndent: {
         marginTop: '58px'
     },
+    navLink: {
+        textDecoration: 'none',
+        width: '100%'
+    },
     btnWrapper: {
         margin: `${theme.spacing.unit * 4}px 0`,
         height: '44px',

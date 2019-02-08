@@ -15,5 +15,5 @@ export interface CartRowsProps extends WithStyles<typeof styles> {
 }
 
 export interface CartRowsState {
-    heightListItem: number;
+    imageItemHeight: number;
 }

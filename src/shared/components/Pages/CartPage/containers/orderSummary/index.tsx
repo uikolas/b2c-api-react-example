@@ -44,12 +44,7 @@ export class OrderSummaryComponent extends React.Component<OrderSummaryProps, Or
 
                 <NavLink
                     to={pathCheckoutPage}
-                    style={
-                        {
-                            textDecoration: 'none',
-                            width: '100%'
-                        }
-                    }
+                    className={classes.navLink}
                 >
                     <Button
                         variant="contained"

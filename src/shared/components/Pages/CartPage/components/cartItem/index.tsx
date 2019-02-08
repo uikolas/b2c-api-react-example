@@ -19,7 +19,7 @@ const CartItemComponent: React.SFC<CartItemProps> = (
         quantity,
         quantities,
         superAttributes,
-        heightListItem,
+        imageItemHeight,
         calculations,
         handleDeleteItem,
         handleChangeQty
@@ -33,7 +33,7 @@ const CartItemComponent: React.SFC<CartItemProps> = (
     >
         <SquareImage
             image={ image }
-            size={ heightListItem }
+            size={ imageItemHeight }
             alt={ name }
         />
         <div className={ parentClasses.itemWrapper }>
