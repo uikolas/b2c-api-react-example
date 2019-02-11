@@ -26,9 +26,12 @@ export class GuestCartService extends ApiServiceAbstract {
             };
 
             const response: IApiResponseData = await api.post(
-                'guest-cart-items',
+                'guest-cart-items?include=guest-cart-items',
                 body,
-                {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+                {
+                    withCredentials: true,
+                    headers: {'X-Anonymous-Customer-Unique-Id': anonymId}
+                }
             );
 
             if (response.ok) {
@@ -36,6 +39,7 @@ export class GuestCartService extends ApiServiceAbstract {
                     id: 'items.added.message',
                     type: typeNotificationSuccess
                 });
+
                 const responseParsed = parseGuestCartResponse(response.data);
                 dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
             } else {
@@ -59,7 +63,17 @@ export class GuestCartService extends ApiServiceAbstract {
             dispatch(cartActions.getCartsPendingStateAction());
 
             const response: IApiResponseData = await api.get(
-                '/guest-carts', {},
+                '/guest-carts',
+                {
+                    include: 'guest-cart-items,' +
+                    'abstract-product-image-sets,' +
+                    'abstract-product-prices,' +
+                    'abstract-product-availabilities,' +
+                    'concrete-products,' +
+                    'concrete-product-image-sets,' +
+                    'concrete-product-prices,' +
+                    'concrete-product-availabilities',
+                },
                 {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
             );
 
