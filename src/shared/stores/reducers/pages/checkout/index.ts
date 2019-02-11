@@ -2,31 +2,54 @@ import produce from 'immer';
 import {
     CHECKOUT_DATA_INIT_REQUEST,
     SEND_CHECKOUT_DATA,
-    CHECKOUT_MUTATE_DELIVERY_ADDRESS
+    CHECKOUT_MUTATE_DELIVERY_ADDRESS,
+    CHECKOUT_MUTATE_DELIVERY_SELECTION_ADD_NEW,
+    CHECKOUT_MUTATE_DELIVERY_SELECTION_ADDRESS_ID,
+    CHECKOUT_MUTATE_BILLING_SELECTION_ADD_NEW,
+    CHECKOUT_MUTATE_BILLING_SELECTION_ADDRESS_ID,
+    CHECKOUT_MUTATE_BILLING_SELECTION_SAME_AS_DELIVERY,
+    CHECKOUT_MUTATE_BILLING_ADDRESS,
+    CHECKOUT_MUTATE_SHIPMENT_METHOD,
+    CHECKOUT_MUTATE_DELIVERY_STEP,
+    CHECKOUT_MUTATE_BILLING_STEP,
+    CHECKOUT_MUTATE_PAYMENT_METHOD,
+    CHECKOUT_MUTATE_PAYMENT_SECTION,
+    CHECKOUT_MUTATE_INVOICE_FORM,
+    CHECKOUT_MUTATE_CREDIT_CARD_FORM
 } from '@stores/actionTypes/pages/checkout';
 import { IAddressItemCollection } from 'src/shared/interfaces/addresses/index';
 import {
     IPaymentMethod,
-    IShipmentMethod,
+    IShipmentMethod
 } from 'src/shared/interfaces/checkout/index';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ICheckoutState, IPageCheckoutAction } from 'src/shared/stores/reducers/pages/checkout/types';
 import {
     deliverySelectionDefault,
     deliveryNewAddressDefault,
-    stepCompletionCheckoutDefault
+    stepCompletionCheckoutDefault,
+    billingSelectionDefault,
+    billingNewAddressDefault,
+    paymentCreditCardDefault,
+    paymentInvoiceDefault
 } from '@components/Pages/CheckoutPage/constants/stateDefaults';
 
 export const initialState: ICheckoutState = {
     deliveryNewAddress: {...deliveryNewAddressDefault},
     deliverySelection: {...deliverySelectionDefault},
+    billingSelection: {...billingSelectionDefault},
+    billingNewAddress: {...billingNewAddressDefault},
     stepsCompletion: {...stepCompletionCheckoutDefault},
+    shipmentMethod: null,
+    paymentMethod: null,
+    paymentCreditCardData: {...paymentCreditCardDefault},
+    paymentInvoiceData: {...paymentInvoiceDefault},
     data: {
         payments: [],
         shipments: [],
         addressesCollection: [],
-        orderId: '',
-    },
+        orderId: ''
+    }
 };
 
 export const pageCheckout = produce<ICheckoutState>(
@@ -73,9 +96,134 @@ export const pageCheckout = produce<ICheckoutState>(
             case CHECKOUT_MUTATE_DELIVERY_ADDRESS: {
                 draft.deliveryNewAddress = {
                     ...draft.deliveryNewAddress,
-                    [action.payloasssd.key]: {
-                        value: action.payloasssd.value,
-                        isError: action.payloasssd.isError
+                    [action.payload.key]: {
+                        value: action.payload.value,
+                        isError: action.payload.isError
+                    }
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_DELIVERY_SELECTION_ADD_NEW: {
+                draft.deliverySelection = {
+                    selectedAddressId: null,
+                    isAddNew: true
+                };
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    first: false
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_DELIVERY_SELECTION_ADDRESS_ID: {
+                draft.deliverySelection = {
+                    selectedAddressId: action.payload,
+                    isAddNew: false
+                };
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    first: true
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_DELIVERY_STEP: {
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    first: action.payload
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_BILLING_SELECTION_ADD_NEW: {
+                draft.billingSelection = {
+                    selectedAddressId: null,
+                    isAddNew: true,
+                    isSameAsDelivery: false
+                };
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    second: false
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_BILLING_SELECTION_ADDRESS_ID: {
+                draft.billingSelection = {
+                    selectedAddressId: action.payload,
+                    isAddNew: false,
+                    isSameAsDelivery: false
+                };
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    second: true
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_BILLING_SELECTION_SAME_AS_DELIVERY: {
+                draft.billingSelection = {
+                    selectedAddressId: null,
+                    isAddNew: false,
+                    isSameAsDelivery: true
+                };
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    second: true
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_BILLING_STEP: {
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    second: action.payload
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_BILLING_ADDRESS: {
+                draft.billingNewAddress = {
+                    ...draft.billingNewAddress,
+                    [action.payload.key]: {
+                        value: action.payload.value,
+                        isError: action.payload.isError
+                    }
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_SHIPMENT_METHOD: {
+                draft.shipmentMethod = action.payload;
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    third: true
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_PAYMENT_METHOD: {
+                draft.paymentMethod = action.payload.value;
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    fourth: action.payload.isFourthStepCompleted
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_PAYMENT_SECTION: {
+                draft.stepsCompletion = {
+                    ...draft.stepsCompletion,
+                    fourth: action.payload
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_CREDIT_CARD_FORM: {
+                draft.paymentCreditCardData = {
+                    ...draft.paymentCreditCardData,
+                    [action.payload.key]: {
+                        value: action.payload.value,
+                        isError: action.payload.isError
+                    }
+                };
+                break;
+            }
+            case CHECKOUT_MUTATE_INVOICE_FORM: {
+                draft.paymentInvoiceData = {
+                    ...draft.paymentInvoiceData,
+                    [action.payload.key]: {
+                        value: action.payload.value,
+                        isError: action.payload.isError
                     }
                 };
                 break;
@@ -84,7 +232,7 @@ export const pageCheckout = produce<ICheckoutState>(
                 break;
         }
     },
-    initialState,
+    initialState
 );
 
 export function isPageCheckoutStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {

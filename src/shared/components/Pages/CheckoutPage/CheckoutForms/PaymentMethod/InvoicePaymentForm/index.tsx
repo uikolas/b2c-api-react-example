@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { connect } from './connect';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
@@ -14,26 +14,52 @@ import {
 import { IPaymentInvoiceParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
 import { invoiceConfigInputStable } from '@components/Pages/CheckoutPage/constants/inputsConfig';
 import { TCheckoutPageContext } from '@components/Pages/CheckoutPage/types/contextTypes';
+import { InputChangeEvent } from '@interfaces/common/react';
+import { InputSaveErrorMessage } from '../../../../../../translation';
+import {
+    validateInvoiceInput,
+    validateInvoiceForm
+} from '@components/Pages/CheckoutPage/helpers/validation';
 
 export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (props): JSX.Element => {
     const {
         classes,
+        paymentInvoiceData,
+        mutatePaymentSection,
+        mutateStateInvoiceForm
     } = props;
+
+    const handleInvoiceInputs = (event: InputChangeEvent): void => {
+        const {name, value} = event.target;
+        if (!paymentInvoiceData.hasOwnProperty(name)) {
+            throw new Error(InputSaveErrorMessage);
+        }
+        const isInputValid = validateInvoiceInput(name, value);
+        const changedFiledData = {
+            key: name,
+            value,
+            isError: !isInputValid
+        };
+
+        mutateStateInvoiceForm(changedFiledData);
+    };
+
+    const handleInvoiceValidity = (): void => {
+        const isFormValid = validateInvoiceForm(paymentInvoiceData);
+        mutatePaymentSection(isFormValid);
+    };
 
     return (
         <CheckoutPageContext.Consumer>
             {({
-                submitHandler,
-                onBlurHandler,
-                handleInvoiceInputs,
-                paymentInvoiceDataInputs,
-            }: Partial<TCheckoutPageContext>) => {
+                  submitHandler
+              }: Partial<TCheckoutPageContext>) => {
                 const invoiceParams: IPaymentInvoiceParams = {
-                    inputsData: paymentInvoiceDataInputs,
+                    inputsData: paymentInvoiceData,
                     inputsConfig: invoiceConfigInputStable,
                     submitHandler,
                     inputChangeHandler: handleInvoiceInputs,
-                    onBlurHandler: onBlurHandler(checkoutFormsNames.invoice),
+                    onBlurHandler: handleInvoiceValidity
                 };
 
                 const invoiceFormSettings = getInvoiceFormSettings(checkoutFormsNames.invoice, invoiceParams);
@@ -41,7 +67,7 @@ export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (prop
                 return (
                     <Grid container className={classes.root}>
                         <Grid item xs={12}>
-                            <SprykerForm form={invoiceFormSettings}/>
+                            <SprykerForm form={invoiceFormSettings} />
                         </Grid>
                     </Grid>
                 );
@@ -50,4 +76,4 @@ export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (prop
     );
 };
 
-export const InvoicePaymentForm = withStyles(formStyles)(InvoicePaymentFormBase);
+export const InvoicePaymentForm = connect(withStyles(formStyles)(InvoicePaymentFormBase));

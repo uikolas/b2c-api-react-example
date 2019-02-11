@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { connect } from './connect';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -9,6 +9,7 @@ import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles'
 import { SprykerForm } from '@components/UI/SprykerForm';
 import { IPaymentMethodProps } from './types';
 import {
+    IPaymentInvoiceParams,
     IPaymentMethodsParams,
     IPaymentProviderToIcon
 } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
@@ -29,26 +30,50 @@ import {
     IPaymentMethodsGrouped,
     TPaymentProvidersCollection
 } from '@components/Pages/CheckoutPage/types/constantTypes';
+import { InputChangeEvent } from '@interfaces/common/react';
+import {
+    validateCreditCardForm,
+    validateInvoiceForm
+} from '@components/Pages/CheckoutPage/helpers/validation';
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {
     const {
         classes,
+        paymentMethod: currentValuePaymentMethod,
+        paymentMethods,
+        paymentInvoiceData,
+        paymentCreditCardData
     } = props;
 
+    const handleSelectionsChange = (event: InputChangeEvent): void => {
+        const {value} = event.target;
+        const {mutatePaymentMethod} = props;
+
+        const isInvoiceFormValid = validateInvoiceForm(paymentInvoiceData);
+        const isCreditCardFormValid = validateCreditCardForm(paymentCreditCardData);
+
+        let isFourthStepCompleted: boolean = false;
+
+        if (value === checkoutPaymentMethodsNames.invoice && isInvoiceFormValid) {
+            isFourthStepCompleted = true;
+        } else if (value === checkoutPaymentMethodsNames.creditCard && isCreditCardFormValid) {
+            isFourthStepCompleted = true;
+        }
+
+        mutatePaymentMethod({value, isFourthStepCompleted});
+    };
+
     const paymentProviderToIcon: IPaymentProviderToIcon = {
-        masterCard: <PartnerIconMasterCard key="masterCard"/>,
-        paypal: <PartnerIconPaypal key="paypal"/>,
-        visa: <PartnerIconVisa key="visa"/>,
+        masterCard: <PartnerIconMasterCard key="masterCard" />,
+        paypal: <PartnerIconPaypal key="paypal" />,
+        visa: <PartnerIconVisa key="visa" />
     };
 
     return (
         <CheckoutPageContext.Consumer>
             {({
-                submitHandler,
-                selectionsChangeHandler,
-                paymentMethods,
-                currentValuePaymentMethod,
-            }) => {
+                  submitHandler
+              }) => {
                 const isPaymentMethodsExist = Boolean(Array.isArray(paymentMethods) && paymentMethods.length > 0);
                 if (!isPaymentMethodsExist) {
                     return null;
@@ -82,7 +107,7 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
                             color="inherit"
                         >
                             {groupName}
-                        </Typography>,
+                        </Typography>
                     );
 
                     paymentMethodsGrouped[groupName].forEach((item: IPaymentMethod) => {
@@ -105,25 +130,24 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
                     currentValuePaymentMethod,
                     paymentProviderToIcon,
                     submitHandler,
-                    inputChangeHandler: selectionsChangeHandler,
+                    inputChangeHandler: handleSelectionsChange
                 };
-                const paymentMethodFormSettings = getPaymentMethodsFormSettings(checkoutFormsNames.paymentMethod,
+                const paymentMethodFormSettings = getPaymentMethodsFormSettings(
+                    checkoutFormsNames.paymentMethod,
                     paymentMethodsParams
                 );
 
                 return (
                     <Grid container className={classes.root}>
                         <Grid item xs={12}>
-                            <SprykerForm form={paymentMethodFormSettings} formClassName={classes.paymentMethodsForm}/>
-                            {currentValuePaymentMethod === checkoutPaymentMethodsNames.invoice
-                                ? <InvoicePaymentForm/>
-                                : null
+                            <SprykerForm form={paymentMethodFormSettings} formClassName={classes.paymentMethodsForm} />
+                            {(currentValuePaymentMethod === checkoutPaymentMethodsNames.invoice) &&
+                                <InvoicePaymentForm />
                             }
-                            {currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard
-                                ? <CreditCardPaymentForm
+                            {(currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard) &&
+                                <CreditCardPaymentForm
                                     providersCollection={creditCardProvidersCollection}
                                 />
-                                : null
                             }
                         </Grid>
                     </Grid>
@@ -133,4 +157,4 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
     );
 };
 
-export const PaymentMethod = withStyles(formStyles)(PaymentMethodBase);
+export const PaymentMethod = connect(withStyles(formStyles)(PaymentMethodBase));

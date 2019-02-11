@@ -76,7 +76,7 @@ export interface IPaymentProviderToIcon {
 // Param to create payment methods form
 export interface IPaymentMethodsParams extends IBaseCheckoutFormHandler {
     paymentMethodGroupItems: IPaymentMethodGroupItem[] | null;
-    currentValuePaymentMethod: IPaymentMethod['paymentMethodName'] | null;
+    currentValuePaymentMethod?: IPaymentMethod['paymentMethodName'] | null;
 }
 
 // Param to create invoice payment form

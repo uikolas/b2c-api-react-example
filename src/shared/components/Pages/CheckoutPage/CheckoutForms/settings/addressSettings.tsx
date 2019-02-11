@@ -6,7 +6,7 @@ import { ICountry } from '@interfaces/country';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
-export const getAddressFormSettings = (formName: string, params: IAddressParams, isUserLoggedIn: boolean): IFormSettings => {
+export const getAddressFormSettings = (formName: string, params: IAddressParams, shouldNotShowEmail: boolean): IFormSettings => {
     const {
         inputsData: {
             firstName,
@@ -33,7 +33,8 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams,
             city: cityConfig,
             country: countryConfig,
             company: companyConfig,
-            phone: phoneConfig
+            phone: phoneConfig,
+            email: emailConfig
         },
         countriesCollection,
         submitHandler,
@@ -134,10 +135,10 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams,
                 {
                     type: 'input',
                     inputType: 'email',
-                    inputName: 'email',
+                    inputName: emailConfig.inputName,
                     inputValue: email.value,
                     spaceNumber: 6,
-                    isRequired: true,
+                    isRequired: emailConfig.isRequired,
                     label: <FormattedMessage id={'email.label'} />,
                     isError: email.isError
                 }
@@ -195,7 +196,7 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams,
         ]
     };
 
-    if (isUserLoggedIn) {
+    if (shouldNotShowEmail) {
         formSettings.fields.splice(5, 1);
     }
 

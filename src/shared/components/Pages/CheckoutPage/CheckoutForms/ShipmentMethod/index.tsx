@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { connect } from './connect';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
@@ -15,25 +15,32 @@ import { PartnerIconHermes } from 'src/shared/assets/icons/partnerIconHermes';
 import { IShippingMethodsParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
 import { IShipmentMethodsGrouped } from '@components/Pages/CheckoutPage/types/constantTypes';
 import { checkoutFormsNames } from '@components/Pages/CheckoutPage/constants';
+import { InputChangeEvent } from '@interfaces/common/react';
 
 export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.Element => {
     const {
         classes,
+        shipmentMethod,
+        shipmentMethods
     } = props;
 
+    const handleSelectionsChange = (event: InputChangeEvent): void => {
+        const {value} = event.target;
+        const {mutateShipmentMethod} = props;
+
+        mutateShipmentMethod(value);
+    };
+
     const shipmentCarrierNameToIcon: IShippingMethodsParams['shipmentCarrierNameToIcon'] = {
-        'Spryker Dummy Shipment': <PartnerIconDhl/>,
-        'Spryker Drone Shipment': <PartnerIconHermes/>,
+        'Spryker Dummy Shipment': <PartnerIconDhl />,
+        'Spryker Drone Shipment': <PartnerIconHermes />
     };
 
     return (
         <CheckoutPageContext.Consumer>
             {({
-                submitHandler,
-                selectionsChangeHandler,
-                shipmentMethods,
-                currentValueShipmentMethod,
-            }) => {
+                  submitHandler
+              }) => {
                 const isShipmentMethodsExist = Boolean(Array.isArray(shipmentMethods) && shipmentMethods.length > 0);
                 if (!isShipmentMethodsExist) {
                     return null;
@@ -51,18 +58,18 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
                 for (const carrierName in shipmentMethodsGrouped) {
                     const shipmentMethodsParams: IShippingMethodsParams = {
                         shipmentMethods: shipmentMethodsGrouped[carrierName],
-                        currentValueShipmentMethod,
+                        currentValueShipmentMethod: shipmentMethod,
                         carrierName,
                         shipmentCarrierNameToIcon,
                         submitHandler,
-                        inputChangeHandler: selectionsChangeHandler,
+                        inputChangeHandler: handleSelectionsChange
                     };
                     const shipmentMethodFormSettings = getShipmentMethodsFormSettings(
                         `${checkoutFormsNames.shipmentMethodBase}${carrierName}`,
                         shipmentMethodsParams
                     );
 
-                    shipmentMethodsForms.push(<SprykerForm key={carrierName} form={shipmentMethodFormSettings}/>);
+                    shipmentMethodsForms.push(<SprykerForm key={carrierName} form={shipmentMethodFormSettings} />);
                 }
 
                 return (
@@ -77,4 +84,4 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
     );
 };
 
-export const ShipmentMethod = withStyles(formStyles)(ShipmentMethodBase);
+export const ShipmentMethod = connect(withStyles(formStyles)(ShipmentMethodBase));

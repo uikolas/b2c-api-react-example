@@ -52,6 +52,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     );
     const orderId: string = getCreatedOrder(state, ownProps);
     const isAddressesCollectionExist: boolean = addressesCollection && addressesCollection.length > 0;
+    const stepsCompletion = state.pageCheckout.stepsCompletion;
 
     return ({
         isAppDataSet,
@@ -72,7 +73,8 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
         paymentMethods,
         orderId,
         profile,
-        anonymId
+        anonymId,
+        stepsCompletion
     });
 };
 

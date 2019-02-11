@@ -26,7 +26,7 @@ import {
     validateDeliveryInput,
     validateDeliveryNewAddressForm
 } from '@components/Pages/CheckoutPage/helpers/validation';
-import { ICheckoutPageState } from '@components/Pages/CheckoutPage/types';
+import { ICheckoutPageProps, ICheckoutPageState } from '@components/Pages/CheckoutPage/types';
 import { mutateDeliveryInputs } from '@components/Pages/CheckoutPage/stateMutations/inputs';
 import { mutateDeliveryNewAddressValidity } from '@components/Pages/CheckoutPage/stateMutations/validity';
 import {
@@ -35,142 +35,108 @@ import {
 } from '@components/Pages/CheckoutPage/stateMutations/selections';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { connect } from './connect';
-import { getExtraOptionsToSelection } from '@components/Pages/CheckoutPage/helpers';
+import { getDefaultAddressId, getExtraOptionsToSelection } from '@components/Pages/CheckoutPage/helpers';
+import { mutateStateDeliverySelectionAddNewAction } from '@stores/actions/pages/checkout';
 
 @connect
-export class DeliveryFormBase extends React.Component<any, any> {
-    public readonly state: any = {
-        test: this.props.isUserLoggedIn,
-        deliverySelection: {
-            selectedAddressId: null,
-            isAddNew: false
-        },
-        deliveryNewAddress: {
-            firstName: {
-                value: '',
-                isError: false
-            },
-            lastName: {
-                value: '',
-                isError: false
-            },
-            salutation: {
-                value: ' ',
-                isError: false
-            },
-            address1: {
-                value: '',
-                isError: false
-            },
-            address2: {
-                value: '',
-                isError: false
-            },
-            address3: {
-                value: '',
-                isError: false
-            },
-            email: {
-                value: '',
-                isError: false
-            },
-            zipCode: {
-                value: '',
-                isError: false
-            },
-            city: {
-                value: '',
-                isError: false
-            },
-            country: {
-                value: ' ',
-                isError: false
-            },
-            company: {
-                value: '',
-                isError: false
-            },
-            phone: {
-                value: '',
-                isError: false
-            }
+export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
+    public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
+        if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
+            this.setDefaultAddresses();
+        }
+    };
+
+    private handleDeliverySelection = (value: string): void => {
+        const {
+            mutateStateDeliverySelectionAddNew,
+            mutateStateDeliverySelectionAddressId
+        } = this.props;
+
+        if (value === checkoutSelectionInputs.isAddNewDeliveryValue) {
+            mutateStateDeliverySelectionAddNew();
+            this.handleDeliveryNewAddressValidity();
+        } else {
+            mutateStateDeliverySelectionAddressId(value);
+        }
+    };
+
+    private setDefaultAddresses = (): void => {
+        const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
+        if (defaultValueDelivery) {
+            this.handleDeliverySelection(defaultValueDelivery);
+        } else {
+            this.handleDeliverySelection(checkoutSelectionInputs.isAddNewDeliveryValue);
         }
     };
 
     public handleDeliveryInputs = (event: InputChangeEvent): void => {
         const {name, value} = event.target;
+        const {
+            mutateStateNewAddressDelivery,
+            deliveryNewAddress
+        } = this.props;
 
-        if (!this.state.deliveryNewAddress.hasOwnProperty(name)) {
+        if (!deliveryNewAddress.hasOwnProperty(name)) {
             throw new Error(InputSaveErrorMessage);
         }
+
         const isInputValid = validateDeliveryInput(name, value);
-        const payload = {
+        const changedFiledData = {
             key: name,
             value,
             isError: !isInputValid
         };
 
-        this.props.mutateStateDelivery(payload);
-        // console.log(this.props.deliveryNewAddress);
+        mutateStateNewAddressDelivery(changedFiledData);
 
-        this.setState((prevState: ICheckoutPageState) => (
-            mutateDeliveryInputs(prevState, name, value, !isInputValid)
-        ), () => {
-            // Validate form when select input is changed
-            if (name === deliveryConfigInputStable.salutation.inputName
-                || name === deliveryConfigInputStable.country.inputName
-            ) {
-                this.handleDeliveryNewAddressValidity();
-            }
-        });
+        const isSelectChanged = name === deliveryConfigInputStable.salutation.inputName
+            || name === deliveryConfigInputStable.country.inputName;
+
+        if (isSelectChanged) {
+            this.handleDeliveryNewAddressValidity();
+        }
     };
 
     private handleDeliveryNewAddressValidity = (): void => {
-        const newAddress = this.props.deliveryNewAddress;
-        console.log(newAddress);
-        // if (this.props.isUserLoggedIn) {
-        //     delete newAddress.email;
-        // }
+        const {mutateDeliveryStep} = this.props;
+        const newAddress = {...this.props.deliveryNewAddress};
+
+        if (this.props.isUserLoggedIn) {
+            delete newAddress.email;
+        }
         const isFormValid = validateDeliveryNewAddressForm(newAddress);
-        this.setState((prevState: ICheckoutPageState) => (
-            mutateDeliveryNewAddressValidity(prevState, isFormValid)
-        ));
+        mutateDeliveryStep(isFormValid);
     };
 
     public handleSelectionsChange = (event: InputChangeEvent): void => {
         const {value} = event.target;
-        if (value === checkoutSelectionInputs.isAddNewDeliveryValue) {
-            this.setState((prevState: ICheckoutPageState) => (
-                mutateDeliverySelectionAddNew(prevState)
-            ));
-        } else {
-            this.setState((prevState: ICheckoutPageState) => (
-                mutateDeliverySelectionAddressId(prevState, value)
-            ));
-        }
+
+        this.handleDeliverySelection(value);
     };
 
     private getCurrentValueDeliverySelection = (): IAddressItemCollection['id'] | string | null => (
-        this.state.deliverySelection.selectedAddressId
-        || (this.state.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
+        this.props.deliverySelection.selectedAddressId
+        || (this.props.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
         || null
     );
 
-    public render() {
+    public render(): JSX.Element {
         const {
             classes,
             addressesCollection,
             isUserLoggedIn,
             isAddressesCollectionExist,
             isCheckoutFulfilled,
-            countriesCollection
+            countriesCollection,
+            deliverySelection: {
+                isAddNew
+            }
         } = this.props;
 
         return (
             <CheckoutPageContext.Consumer>
                 {({
-                      submitHandler,
-                      onBlurHandler
+                      submitHandler
                   }) => {
 
                     const deliveryParams: IAddressParams = {
@@ -179,7 +145,7 @@ export class DeliveryFormBase extends React.Component<any, any> {
                         countriesCollection,
                         submitHandler,
                         inputChangeHandler: this.handleDeliveryInputs,
-                        onBlurHandler: onBlurHandler(checkoutFormsNames.delivery)
+                        onBlurHandler: this.handleDeliveryNewAddressValidity
                     };
                     const savedDeliveryParams: IDeliveryAddressesParams = {
                         currentValueInSelection: this.getCurrentValueDeliverySelection(),
@@ -205,20 +171,18 @@ export class DeliveryFormBase extends React.Component<any, any> {
                     return (
                         <Grid container className={classes.root}>
                             <Grid item xs={12}>
-                                {isUserLoggedIn
-                                    ? (!isCheckoutFulfilled)
-                                        ? <AppPageSubTitle
-                                            title={<FormattedMessage id={'form.waiting.for.response.title'} />}
-                                        />
-                                        : <React.Fragment>
-                                            {(addressesCollection && addressesCollection.length) &&
-                                                <SprykerForm form={savedAddressFormSettings} />
-                                            }
-                                            {this.state.deliverySelection.isAddNew &&
-                                                <SprykerForm form={deliveryFormSettings} />
-                                            }
-                                        </React.Fragment>
-                                    : <SprykerForm form={deliveryFormSettings} />
+                                {!isCheckoutFulfilled
+                                    ? <AppPageSubTitle
+                                        title={<FormattedMessage id={'form.waiting.for.response.title'} />}
+                                    />
+                                    : <React.Fragment>
+                                        {(addressesCollection && addressesCollection.length) &&
+                                        <SprykerForm form={savedAddressFormSettings} />
+                                        }
+                                        {(isAddNew || !isUserLoggedIn) &&
+                                            <SprykerForm form={deliveryFormSettings} />
+                                        }
+                                    </React.Fragment>
                                 }
                             </Grid>
                         </Grid>
