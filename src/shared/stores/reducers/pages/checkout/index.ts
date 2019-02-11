@@ -2,6 +2,7 @@ import produce from 'immer';
 import {
     CHECKOUT_DATA_INIT_REQUEST,
     SEND_CHECKOUT_DATA,
+    CHECKOUT_MUTATE_DELIVERY_ADDRESS
 } from '@stores/actionTypes/pages/checkout';
 import { IAddressItemCollection } from 'src/shared/interfaces/addresses/index';
 import {
@@ -10,8 +11,16 @@ import {
 } from 'src/shared/interfaces/checkout/index';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ICheckoutState, IPageCheckoutAction } from 'src/shared/stores/reducers/pages/checkout/types';
+import {
+    deliverySelectionDefault,
+    deliveryNewAddressDefault,
+    stepCompletionCheckoutDefault
+} from '@components/Pages/CheckoutPage/constants/stateDefaults';
 
 export const initialState: ICheckoutState = {
+    deliveryNewAddress: {...deliveryNewAddressDefault},
+    deliverySelection: {...deliverySelectionDefault},
+    stepsCompletion: {...stepCompletionCheckoutDefault},
     data: {
         payments: [],
         shipments: [],
@@ -59,6 +68,16 @@ export const pageCheckout = produce<ICheckoutState>(
                 draft.fulfilled = true;
                 draft.rejected = false;
                 draft.initiated = true;
+                break;
+            }
+            case CHECKOUT_MUTATE_DELIVERY_ADDRESS: {
+                draft.deliveryNewAddress = {
+                    ...draft.deliveryNewAddress,
+                    [action.payloasssd.key]: {
+                        value: action.payloasssd.value,
+                        isError: action.payloasssd.isError
+                    }
+                };
                 break;
             }
             default:

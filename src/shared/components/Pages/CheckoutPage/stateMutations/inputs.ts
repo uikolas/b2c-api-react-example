@@ -6,6 +6,7 @@ export const mutateDeliveryInputs = (
     value: string | boolean,
     isError: boolean): Pick<ICheckoutPageState, 'deliveryNewAddress'> | null => (
     {
+
         deliveryNewAddress: {
             ...prevState.deliveryNewAddress,
             [key]: {value, isError},

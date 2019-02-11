@@ -13,7 +13,7 @@ import { PaymentMethod } from '@components/Pages/CheckoutPage/CheckoutForms/Paym
 export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
     const {
         classes,
-        panels,
+        panels
     } = props;
 
     return (
@@ -23,25 +23,25 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
                     title={panels.first.title}
                     isDisabled={panels.first.isDisabled}
                 >
-                    <DeliveryForm/>
+                    <DeliveryForm />
                 </FormWrapper>
                 <FormWrapper
                     title={panels.second.title}
                     isDisabled={panels.second.isDisabled}
                 >
-                    <BillingForm/>
+                    <BillingForm />
                 </FormWrapper>
                 <FormWrapper
                     title={panels.third.title}
                     isDisabled={panels.third.isDisabled}
                 >
-                    <ShipmentMethod/>
+                    <ShipmentMethod />
                 </FormWrapper>
                 <FormWrapper
                     title={panels.fourth.title}
                     isDisabled={panels.fourth.isDisabled}
                 >
-                    <PaymentMethod/>
+                    <PaymentMethod />
                 </FormWrapper>
             </Grid>
         </Grid>

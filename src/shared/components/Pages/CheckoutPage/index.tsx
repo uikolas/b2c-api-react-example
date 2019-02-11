@@ -191,6 +191,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
 
     public handleFormValidityOnBlur = (formName: string) => (event: BlurEvent): void => {
         if (formName === checkoutFormsNames.delivery) {
+            console.log('refactored');
             this.handleDeliveryNewAddressValidity();
         } else if (formName === checkoutFormsNames.billing) {
             this.handleBillingNewAddressValidity();
@@ -201,6 +202,17 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         } else {
             throw new Error(`Undefined type of formName: ${formName}`);
         }
+    };
+
+    private handleDeliveryNewAddressValidity = (): void => {
+        const newAddress = this.state.deliveryNewAddress;
+        if (this.props.isUserLoggedIn) {
+            delete newAddress.email;
+        }
+        const isFormValid = validateDeliveryNewAddressForm(newAddress);
+        this.setState((prevState: ICheckoutPageState) => (
+            mutateDeliveryNewAddressValidity(prevState, isFormValid)
+        ));
     };
 
     public handleDeliveryInputs = (event: InputChangeEvent): void => {
@@ -283,16 +295,16 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         return isFormValid;
     };
 
-    private handleDeliveryNewAddressValidity = (): void => {
-        const newAddress = this.state.deliveryNewAddress;
-        if (this.props.isUserLoggedIn) {
-            delete newAddress.email;
-        }
-        const isFormValid = validateDeliveryNewAddressForm(newAddress);
-        this.setState((prevState: ICheckoutPageState) => (
-            mutateDeliveryNewAddressValidity(prevState, isFormValid)
-        ));
-    };
+    // private handleDeliveryNewAddressValidity = (): void => {
+    //     const newAddress = this.state.deliveryNewAddress;
+    //     if (this.props.isUserLoggedIn) {
+    //         delete newAddress.email;
+    //     }
+    //     const isFormValid = validateDeliveryNewAddressForm(newAddress);
+    //     this.setState((prevState: ICheckoutPageState) => (
+    //         mutateDeliveryNewAddressValidity(prevState, isFormValid)
+    //     ));
+    // };
 
     private handleInvoiceValidity = (): void => {
         const isFormValid = validateInvoiceForm(this.state.paymentInvoiceData);

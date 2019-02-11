@@ -1,6 +1,7 @@
 import {
     CHECKOUT_DATA_INIT_REQUEST,
     SEND_CHECKOUT_DATA,
+    CHECKOUT_MUTATE_DELIVERY_ADDRESS
 } from '@stores/actionTypes/pages/checkout';
 import { CheckoutService } from '@services/Pages/Checkout';
 import { ICheckoutRequest } from '@interfaces/checkout';
@@ -46,3 +47,8 @@ export const sendCheckoutDataAction = function (payload: ICheckoutRequest, anony
         CheckoutService.sendOrderData(dispatch, payload, anonymId);
     };
 };
+
+export const mutateStateDeliveryAction = (payload: ICheckoutRequest) => ({
+    type: CHECKOUT_MUTATE_DELIVERY_ADDRESS,
+    payloasssd: payload,
+});

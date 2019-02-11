@@ -6,7 +6,7 @@ import { ICountry } from '@interfaces/country';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
-export const getAddressFormSettings = (formName: string, params: IAddressParams): IFormSettings => {
+export const getAddressFormSettings = (formName: string, params: IAddressParams, isUserLoggedIn: boolean): IFormSettings => {
     const {
         inputsData: {
             firstName,
@@ -15,11 +15,12 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
             address1,
             address2,
             address3,
+            email,
             zipCode,
             city,
             country,
             company,
-            phone,
+            phone
         },
         inputsConfig: {
             firstName: firstNameConfig,
@@ -32,12 +33,12 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
             city: cityConfig,
             country: countryConfig,
             company: companyConfig,
-            phone: phoneConfig,
+            phone: phoneConfig
         },
         countriesCollection,
         submitHandler,
         inputChangeHandler,
-        onBlurHandler,
+        onBlurHandler
     } = params;
 
     const isCountriesCollectionExist = Boolean(Array.isArray(countriesCollection) && countriesCollection.length > 0);
@@ -55,16 +56,16 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: salutation.value,
                     spaceNumber: 3,
                     isRequired: salutationConfig.isRequired,
-                    label: <FormattedMessage id={ 'salutation.label' } />,
+                    label: <FormattedMessage id={'salutation.label'} />,
                     isError: salutation.isError,
                     menuItems: SalutationVariants
-                        .map((item: TSalutationVariant) => ({ value: item.value, name: item.label })),
+                        .map((item: TSalutationVariant) => ({value: item.value, name: item.label})),
                     menuItemFirst: {
                         value: ' ',
-                        name: <FormattedMessage id={ 'first.item.in.select' } />,
+                        name: <FormattedMessage id={'first.item.in.select'} />,
                         selected: true,
-                        disabled: true,
-                    },
+                        disabled: true
+                    }
                 }
             ],
             [
@@ -74,8 +75,8 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: firstName.value,
                     spaceNumber: 6,
                     isRequired: firstNameConfig.isRequired,
-                    label: <FormattedMessage id={ 'first.name.label' } />,
-                    isError: firstName.isError,
+                    label: <FormattedMessage id={'first.name.label'} />,
+                    isError: firstName.isError
                 },
                 {
                     type: 'input',
@@ -83,8 +84,8 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: lastName.value,
                     spaceNumber: 6,
                     isRequired: lastNameConfig.isRequired,
-                    label: <FormattedMessage id={ 'last.name.label' } />,
-                    isError: lastName.isError,
+                    label: <FormattedMessage id={'last.name.label'} />,
+                    isError: lastName.isError
                 }
             ],
             [
@@ -94,9 +95,9 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: company.value,
                     spaceNumber: 6,
                     isRequired: companyConfig.isRequired,
-                    label: <FormattedMessage id={ 'company.label' } />,
-                    isError: company.isError,
-                },
+                    label: <FormattedMessage id={'company.label'} />,
+                    isError: company.isError
+                }
             ],
             [
                 {
@@ -105,8 +106,8 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: address1.value,
                     spaceNumber: 6,
                     isRequired: address1Config.isRequired,
-                    label: <FormattedMessage id={ 'street.label' } />,
-                    isError: address1.isError,
+                    label: <FormattedMessage id={'street.label'} />,
+                    isError: address1.isError
                 },
                 {
                     type: 'input',
@@ -114,8 +115,8 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: address2.value,
                     spaceNumber: 3,
                     isRequired: address2Config.isRequired,
-                    label: <FormattedMessage id={ 'number.label' } />,
-                    isError: address2.isError,
+                    label: <FormattedMessage id={'number.label'} />,
+                    isError: address2.isError
                 }
             ],
             [
@@ -125,9 +126,21 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: address3.value,
                     spaceNumber: 6,
                     isRequired: address3Config.isRequired,
-                    label: <FormattedMessage id={ 'street.extra.label' } />,
-                    isError: address3.isError,
-                },
+                    label: <FormattedMessage id={'street.extra.label'} />,
+                    isError: address3.isError
+                }
+            ],
+            [
+                {
+                    type: 'input',
+                    inputType: 'email',
+                    inputName: 'email',
+                    inputValue: email.value,
+                    spaceNumber: 6,
+                    isRequired: true,
+                    label: <FormattedMessage id={'email.label'} />,
+                    isError: email.isError
+                }
             ],
             [
                 {
@@ -136,8 +149,8 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: city.value,
                     spaceNumber: 6,
                     isRequired: cityConfig.isRequired,
-                    label: <FormattedMessage id={ 'city.label' } />,
-                    isError: city.isError,
+                    label: <FormattedMessage id={'city.label'} />,
+                    isError: city.isError
                 },
                 {
                     type: 'input',
@@ -145,9 +158,9 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: zipCode.value,
                     spaceNumber: 6,
                     isRequired: zipCodeConfig.isRequired,
-                    label: <FormattedMessage id={ 'zip.code.label' } />,
-                    isError: zipCode.isError,
-                },
+                    label: <FormattedMessage id={'zip.code.label'} />,
+                    isError: zipCode.isError
+                }
             ],
             [
                 {
@@ -156,18 +169,18 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: country.value,
                     spaceNumber: 6,
                     isRequired: countryConfig.isRequired,
-                    label: <FormattedMessage id={ 'country.label' } />,
+                    label: <FormattedMessage id={'country.label'} />,
                     isError: country.isError,
                     menuItems: isCountriesCollectionExist
                         ? countriesCollection
-                            .map((item: ICountry) => ({ value: item.iso2Code, name: item.name }))
+                            .map((item: ICountry) => ({value: item.iso2Code, name: item.name}))
                         : null,
                     menuItemFirst: {
                         value: ' ',
-                        name: <FormattedMessage id={ 'first.item.in.select' } />,
+                        name: <FormattedMessage id={'first.item.in.select'} />,
                         selected: true,
-                        disabled: true,
-                    },
+                        disabled: true
+                    }
                 },
                 {
                     type: 'input',
@@ -175,12 +188,16 @@ export const getAddressFormSettings = (formName: string, params: IAddressParams)
                     inputValue: phone.value,
                     spaceNumber: 6,
                     isRequired: phoneConfig.isRequired,
-                    label: <FormattedMessage id={ 'phone.label' } />,
-                    isError: phone.isError,
-                },
-            ],
-        ],
+                    label: <FormattedMessage id={'phone.label'} />,
+                    isError: phone.isError
+                }
+            ]
+        ]
     };
+
+    if (isUserLoggedIn) {
+        formSettings.fields.splice(5, 1);
+    }
 
     return formSettings;
 };
