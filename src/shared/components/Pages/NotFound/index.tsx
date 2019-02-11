@@ -7,11 +7,6 @@ import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 export class NotFoundComponent extends React.PureComponent<Props, State> {
-    public componentDidCatch(error: Error | null, info: object) {
-        console.error('NotFound->componentDidCatch->error', error);
-        console.error('NotFound->componentDidCatch->info', info);
-    }
-
     public render() {
         const { classes } = this.props;
 
