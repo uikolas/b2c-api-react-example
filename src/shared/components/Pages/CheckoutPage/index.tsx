@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { connect } from './connect';
 import { styles } from './styles';
-import { ICheckoutPageProps, ICheckoutPageState } from './types';
+import { ICheckoutPageProps } from './types';
 import { CheckoutPageContext } from './context';
 import {
     getCheckoutPanelsSettings,
@@ -13,15 +13,6 @@ import { AppMain } from 'src/shared/components/Common/AppMain';
 import { CheckoutForms } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms';
 import { CheckoutCart } from 'src/shared/components/Pages/CheckoutPage/CheckoutCart';
 import { OrderSuccess } from 'src/shared/components/Pages/CheckoutPage/OrderSuccess';
-import {
-    billingNewAddressDefault,
-    billingSelectionDefault,
-    deliveryNewAddressDefault,
-    deliverySelectionDefault,
-    paymentCreditCardDefault,
-    paymentInvoiceDefault,
-    stepCompletionCheckoutDefault
-} from 'src/shared/components/Pages/CheckoutPage/constants/stateDefaults';
 import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
 import { FormEvent } from '@interfaces/common/react';
 import { IAddressItemCollection } from '@interfaces/addresses';
@@ -29,19 +20,7 @@ import { ICheckoutRequest } from '@interfaces/checkout';
 import { FormattedMessage } from 'react-intl';
 
 @connect
-export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheckoutPageState> {
-    public state: ICheckoutPageState = {
-        deliverySelection: {...deliverySelectionDefault},
-        deliveryNewAddress: {...deliveryNewAddressDefault},
-        billingSelection: {...billingSelectionDefault},
-        billingNewAddress: {...billingNewAddressDefault},
-        stepsCompletion: {...stepCompletionCheckoutDefault},
-        shipmentMethod: null,
-        paymentMethod: null,
-        paymentCreditCardData: {...paymentCreditCardDefault},
-        paymentInvoiceData: {...paymentInvoiceDefault}
-    };
-
+export class CheckoutPageBase extends React.Component<ICheckoutPageProps> {
     public componentDidMount() {
         if (this.props.isUserLoggedIn) {
             this.props.getCheckoutData({idCart: this.props.cartId}, '');
@@ -50,7 +29,7 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
         }
     }
 
-    public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
+    public componentDidUpdate = (prevProps: ICheckoutPageProps) => {
         // If we get saved addressesCollection
         if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
             if (!this.props.profile && this.props.isUserLoggedIn && this.props.customerReference) {
@@ -62,20 +41,18 @@ export class CheckoutPageBase extends React.Component<ICheckoutPageProps, ICheck
     public handleSubmit = (event: FormEvent): void => {
         event.preventDefault();
         const {
+            addressesCollection,
+            isUserLoggedIn,
+            cartId,
+            sendCheckoutData,
+            profile,
+            anonymId,
             deliverySelection,
             billingSelection,
             deliveryNewAddress,
             billingNewAddress,
             paymentMethod,
             shipmentMethod
-        } = this.state;
-        const {
-            addressesCollection,
-            isUserLoggedIn,
-            cartId,
-            sendCheckoutData,
-            profile,
-            anonymId
         } = this.props;
 
         const payload: ICheckoutRequest = {};
