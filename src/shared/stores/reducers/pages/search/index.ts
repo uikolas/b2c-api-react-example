@@ -4,7 +4,7 @@ import {
     PAGES_SEARCH_REQUEST_CLEAR,
     PAGES_SEARCH_TERM_CLEAR,
     PAGES_SUGGESTION_REQUEST,
-} from '@stores/actionTypes/Pages/Search';
+} from '@stores/actionTypes/pages/search';
 import {
     IAvailableLabelsCollection,
     ILocalizedNamesMap,

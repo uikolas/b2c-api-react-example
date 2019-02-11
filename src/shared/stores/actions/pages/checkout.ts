@@ -2,9 +2,9 @@ import {
     CHECKOUT_DATA_INIT_REQUEST,
     SEND_CHECKOUT_DATA,
 } from '@stores/actionTypes/pages/checkout';
-import { CheckoutService } from '@services/Pages/checkout';
+import { CheckoutService } from '@services/Pages/Checkout';
 import { ICheckoutRequest } from '@interfaces/checkout';
-import { TOrderId } from 'src/shared/interfaces/order';
+import { TOrderId } from '@interfaces/order';
 import { ICheckoutResponseData, IPageCheckoutAction } from 'src/shared/stores/reducers/pages/checkout/types';
 
 export const getCheckoutDataInitPendingStateAction = () => ({
