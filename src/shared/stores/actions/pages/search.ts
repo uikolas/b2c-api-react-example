@@ -44,12 +44,7 @@ export const sendSearchFulfilledState = (payloadCategory: ICatalogSearchDataPars
 
 export const sendSearchAction = function (payload: ISearchQuery) {
     return (dispatch: Function, getState: Function) => {
-        dispatch({
-            type: PAGES_SEARCH_REQUEST + '_PENDING',
-            payloadSearchTermFulfilled: {searchTerm: params.q},
-        });
-
-        CatalogService.catalogSearch(PAGES_SEARCH_REQUEST, dispatch, params);
+        CatalogService.catalogSearch(dispatch, payload);
     };
 };
 

@@ -60,7 +60,6 @@ export const pageSearch = produce<ISearchState>(
                 draft.rejected = false;
                 draft.initiated = true;
                 draft.data.activeFilters = {};
-                draft.data.searchTerm = action.payloadSearchTermFulfilled.searchTerm;
                 break;
             case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
                 draft.data.flyoutSearch.pending = true;
