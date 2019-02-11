@@ -13,6 +13,7 @@ import { IApiErrorResponse } from 'src/shared/services/types';
 
 export const initialState: ICartState = {
     data: {
+        isCartEmpty: true,
         cartCreated: false,
         currency: null,
         items: [],
@@ -70,7 +71,11 @@ export const cart = function (state: ICartState = initialState, action: ICartAct
 
             return {
                 ...state,
-                data: {...state.data, items: itemsAfterDelete},
+                data: {
+                    ...state.data,
+                    isCartEmpty: !(itemsAfterDelete && itemsAfterDelete.length),
+                    items: itemsAfterDelete
+                },
                 ...getReducerPartFulfilled(),
             };
         case PAGES_CUSTOMER_LOGOUT:
@@ -90,6 +95,7 @@ const handleFulfilled = (cartState: ICartState, payload: ICartDataResponse | nul
         ...cartState,
         data: {
             ...cartState.data,
+            isCartEmpty: !(payload.items && payload.items.length),
             ...payload,
         },
         ...getReducerPartFulfilled(),
@@ -121,6 +127,7 @@ const handleCartFulfilled = (cartState: ICartState, payload: ICartDataResponse) 
         ...cartState,
         data: {
             ...cartState.data,
+            isCartEmpty: !(payload.items && payload.items.length),
             cartCreated: true,
             ...payload,
         },
@@ -133,6 +140,7 @@ const handleCartCreateRejected = (cartState: ICartState, payload: IApiErrorRespo
         ...cartState,
         data: {
             ...cartState.data,
+            isCartEmpty: true,
             cartCreated: false,
         },
         ...getReducerPartRejected(payload.error),
