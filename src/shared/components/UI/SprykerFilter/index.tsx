@@ -30,6 +30,7 @@ interface SprykerFilterState {
 }
 
 export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFilterState> {
+
     public state: SprykerFilterState = {
         isOpen: false,
     };

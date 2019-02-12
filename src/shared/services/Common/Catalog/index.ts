@@ -7,28 +7,25 @@ import { IApiResponseData } from 'src/shared/services/types';
 import { TRowProductResponseIncluded } from 'src/shared/helpers/product/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
-import {
-    sendSearchPendingState,
-    sendSearchRejectState,
-    sendSearchFulfilledState,
-    suggestPendingState,
-    suggestRejectState,
-    suggestFullfiledState
-} from '@stores/actions/pages/search';
 
 export class CatalogService extends ApiServiceAbstract {
-    public static async catalogSearch(dispatch: Function, params: ISearchQuery): Promise<void> {
-        dispatch(sendSearchPendingState());
+    public static async catalogSearch(ACTION_TYPE: string, dispatch: Function, params: ISearchQuery): Promise<void> {
         try {
             params.include = 'abstract-products,product-labels,';
             const response: IApiResponseData = await api.get('catalog-search', params, {withCredentials: true});
 
             if (response.ok) {
                 const responseParsed = parseCatalogSearchResponse(response.data);
-                dispatch(sendSearchFulfilledState(responseParsed, params.q));
+                dispatch({
+                    type: ACTION_TYPE + '_FULFILLED',
+                    payloadSearchFulfilled: responseParsed
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
-                dispatch(sendSearchRejectState(errorMessage));
+                dispatch({
+                    type: ACTION_TYPE + '_REJECTED',
+                    payloadRejected: {error: errorMessage}
+                });
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
@@ -37,7 +34,10 @@ export class CatalogService extends ApiServiceAbstract {
             }
 
         } catch (error) {
-            dispatch(sendSearchRejectState(error.message));
+            dispatch({
+                type: ACTION_TYPE + '_REJECTED',
+                payloadRejected: {error: error.message}
+            });
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,
@@ -46,8 +46,7 @@ export class CatalogService extends ApiServiceAbstract {
         }
     }
 
-    public static async catalogSuggestion(dispatch: Function, query: string): Promise<void> {
-        dispatch(suggestPendingState());
+    public static async catalogSuggestion(ACTION_TYPE: string, dispatch: Function, query: string): Promise<void> {
         try {
 
             const response: IApiResponseData = await api.get(
@@ -77,16 +76,20 @@ export class CatalogService extends ApiServiceAbstract {
                     return counter >= 4;
                 });
 
-                const payloadSuggestionFulfilled = {
-                    suggestions: products,
-                    categories: data.data[0].attributes.categories,
-                    completion: data.data[0].attributes.completion
-                };
-
-                dispatch(suggestFullfiledState(payloadSuggestionFulfilled));
+                dispatch({
+                    type: ACTION_TYPE + '_FULFILLED',
+                    payloadSuggestionFulfilled: {
+                        suggestions: products,
+                        categories: data.data[0].attributes.categories,
+                        completion: data.data[0].attributes.completion
+                    }
+                });
             } else {
                 const errorMessage = this.getParsedAPIError(response);
-                dispatch(suggestRejectState(errorMessage));
+                dispatch({
+                    type: ACTION_TYPE + '_REJECTED',
+                    payloadRejected: {error: errorMessage}
+                });
                 NotificationsMessage({
                     messageWithCustomText: 'request.error.message',
                     message: errorMessage,
@@ -96,7 +99,10 @@ export class CatalogService extends ApiServiceAbstract {
                 return null;
             }
         } catch (error) {
-            dispatch(suggestRejectState(error.message));
+            dispatch({
+                type: ACTION_TYPE + '_REJECTED',
+                payloadRejected: {error: error.message}
+            });
             NotificationsMessage({
                 messageWithCustomText: 'unexpected.error.message',
                 message: error.message,

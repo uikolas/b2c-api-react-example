@@ -14,8 +14,6 @@ export interface ISearchPageProps extends WithStyles<typeof styles>, ISearchPage
     isFulfilled: boolean;
     locationCategoryId: TCategoryId;
     sendSearch: (params: ISearchQuery) => void;
-    clearActiveFilters: () => void;
-    clearSearchTerm: () => void;
 }
 
 export interface ISearchPageState {

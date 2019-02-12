@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
 import { ValueFacets } from 'src/shared/interfaces/searchPageData';
-import { rangeMaxType, rangeMinType, TActiveFilters } from '@components/Pages/SearchPage/types';
+import { rangeMaxType, rangeMinType } from 'src/shared/components/Pages/SearchPage/types';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import { FilterWrapper } from 'src/shared/components/Pages/SearchPage/FilterWrapper';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
@@ -26,6 +26,7 @@ export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = props => 
         updateRangeHandler,
         onCloseFilterHandler,
         onAfterChangeRangeFilter,
+        isFiltersReset,
     } = props;
 
     let filterItems: JSX.Element[] | null = [];

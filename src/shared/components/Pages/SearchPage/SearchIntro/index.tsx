@@ -3,29 +3,19 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import { ISearchIntroProps } from 'src/shared/components/Pages/SearchPage/SearchIntro/types';
 import { FormattedMessage } from 'react-intl';
-import { pathSearchPage } from '@routes/contentRoutes';
-import { NavLink } from 'react-router-dom';
 
 export const SearchIntroBase: React.SFC<ISearchIntroProps> = props => {
-    const {spellingSuggestion, onLinkClick, classes} = props;
+    const {className, spellingSuggestion} = props;
 
     if (!spellingSuggestion) {
         return null;
     }
 
-    const suggestionTermLink = <NavLink
-                                    to={pathSearchPage}
-                                    className={classes.spellingSuggestion}
-                                    onClick={onLinkClick}
-                                >
-                                    {spellingSuggestion}
-                                </NavLink>;
-
     return (
-        <FormattedMessage
-            id={'category.suggestion.title'}
-            values={{suggestionTerm: suggestionTermLink}}
-        />
+        <React.Fragment>
+            <FormattedMessage id={'category.suggestion.title'} />
+            <span className={className}>{spellingSuggestion}</span> ?
+        </React.Fragment>
     );
 };
 
