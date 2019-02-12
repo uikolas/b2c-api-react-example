@@ -2,12 +2,8 @@ import * as React from 'react';
 import { connect } from './connect';
 import { Grid, withStyles } from '@material-ui/core';
 import { SprykerForm } from '@components/UI/SprykerForm';
-import {
-    getAddressFormSettings
-} from 'src/shared/helpers/formCreations/checkout/addressSettings';
-import {
-    getDeliverySavedAddressFormSettings
-} from 'src/shared/helpers/formCreations/checkout/savedAddressSettings';
+import { getAddressFormSettings } from 'src/shared/helpers/formCreations/checkout/addressSettings';
+import { getDeliverySavedAddressFormSettings } from 'src/shared/helpers/formCreations/checkout/savedAddressSettings';
 import {
     checkoutFormsNames,
     checkoutSelectionInputs,
