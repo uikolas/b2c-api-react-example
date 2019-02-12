@@ -4,3 +4,9 @@ export interface ICategory {
     name: string;
     children: ICategory[] | object;
 }
+
+export interface IBreadcrumbItem {
+    nodeId: number;
+    name: string;
+    current?: boolean;
+}

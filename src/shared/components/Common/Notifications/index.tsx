@@ -26,5 +26,4 @@ export const NotificationsBase: React.SFC<INotifications> = (props): JSX.Element
     );
 };
 
-
 export const Notifications = withStyles(styles)(NotificationsBase);

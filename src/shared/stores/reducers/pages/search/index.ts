@@ -15,6 +15,7 @@ import {
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { IPageSearchAction, ISearchState } from 'src/shared/stores/reducers/pages/search/types';
 import { DefaultItemsPerPage } from 'src/shared/constants/search';
+import { PAGES_SEARCH_FILTERS_CLEAR } from '@stores/actionTypes/pages/search';
 
 export const initialState: ISearchState = {
     data: {
@@ -27,7 +28,9 @@ export const initialState: ISearchState = {
         searchTerm: '',
         items: [],
         filters: [],
+        activeFilters: {},
         rangeFilters: [],
+        activeRangeFilters: {},
         sortParams: [],
         sortParamLocalizedNames: null,
         categoriesLocalizedName: null,
@@ -56,7 +59,7 @@ export const pageSearch = produce<ISearchState>(
                 draft.fulfilled = false;
                 draft.rejected = false;
                 draft.initiated = true;
-                draft.data.searchTerm = action.payloadSearchTermFulfilled.searchTerm;
+                draft.data.activeFilters = {};
                 break;
             case `${PAGES_SUGGESTION_REQUEST}_PENDING`:
                 draft.data.flyoutSearch.pending = true;
@@ -80,8 +83,10 @@ export const pageSearch = produce<ISearchState>(
             case `${PAGES_SEARCH_REQUEST}_FULFILLED`:
                 draft.data.items = action.payloadSearchFulfilled.items;
                 draft.data.filters = action.payloadSearchFulfilled.filters;
+                draft.data.activeFilters = action.payloadSearchFulfilled.activeFilters;
                 draft.data.category = action.payloadSearchFulfilled.category;
                 draft.data.rangeFilters = action.payloadSearchFulfilled.rangeFilters;
+                draft.data.activeRangeFilters = action.payloadSearchFulfilled.activeRangeFilters;
                 draft.data.sortParams = action.payloadSearchFulfilled.sortParams;
                 draft.data.sortParamLocalizedNames = action.payloadSearchFulfilled.sortParamLocalizedNames;
                 draft.data.categoriesLocalizedName = action.payloadSearchFulfilled.categoriesLocalizedName;
@@ -91,6 +96,7 @@ export const pageSearch = produce<ISearchState>(
                 draft.data.spellingSuggestion = action.payloadSearchFulfilled.spellingSuggestion || null;
                 draft.data.productsLabeled = action.payloadSearchFulfilled.productsLabeled || null;
                 draft.data.availableLabels = action.payloadSearchFulfilled.availableLabels || null;
+                draft.data.searchTerm = action.payloadSearchFulfilled.searchTerm;
                 draft.error = null;
                 draft.pending = false;
                 draft.fulfilled = true;
@@ -111,6 +117,12 @@ export const pageSearch = produce<ISearchState>(
                 break;
             case PAGES_SEARCH_TERM_CLEAR:
                 draft.data.searchTerm = '';
+                break;
+            case PAGES_SEARCH_FILTERS_CLEAR:
+                draft.data.activeFilters = {};
+                draft.data.activeRangeFilters = {};
+                draft.data.currentSort = null;
+                draft.data.pagination.currentItemsPerPage = draft.data.pagination.validItemsPerPageOptions[0];
                 break;
             default:
                 break;
