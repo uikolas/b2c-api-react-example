@@ -1,17 +1,13 @@
-import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
+import { styles } from './styles';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { IPaymentMethod } from '@interfaces/checkout';
-import { ICheckoutCreditCardState, ICheckoutInvoiceState } from '@components/Pages/CheckoutPage/types';
+import { ICheckoutCreditCardState, ICheckoutInvoiceState } from './types';
+import { IFormUpdatePaymentStatus } from '@stores/reducers/pages/checkout/types';
 
-interface IMutatePaymentMethod {
-    value: string;
-    isFourthStepCompleted: boolean;
-}
-
-export interface IPaymentMethodProps extends WithStyles<typeof formStyles> {
+export interface IPaymentMethodProps extends WithStyles<typeof styles> {
     paymentMethod: IPaymentMethod['paymentMethodName'] | null;
     paymentMethods: IPaymentMethod[] | null;
     paymentCreditCardData: ICheckoutCreditCardState;
     paymentInvoiceData: ICheckoutInvoiceState;
-    mutatePaymentMethod: (IMutatePaymentMethod) => void;
+    mutatePaymentMethod: (IFormUpdatePaymentStatus) => void;
 }

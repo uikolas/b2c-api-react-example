@@ -2,10 +2,16 @@ import { reduxify } from 'src/shared/lib/redux-helper';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { IAddressItemCollection } from '@interfaces/addresses';
-import { getAddressesCollectionFromCheckoutStore, isPageCheckoutFulfilled } from '@stores/reducers/pages/checkout';
+import {
+    getAddressesCollectionFromCheckoutStore
+} from '@stores/reducers/pages/checkout/selectors';
 import { ICountry } from '@interfaces/country';
 import { getCounties } from '@stores/reducers/common/init';
-import { ICheckoutRequest } from '@interfaces/checkout';
+import {
+    IDeliveryAddressState,
+    IDeliverySelectionState,
+    IFormFieldMutate
+} from '@interfaces/checkout';
 import {
     mutateStateNewAddressDeliveryAction,
     mutateStateDeliverySelectionAddNewAction,
@@ -18,16 +24,14 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const addressesCollection: IAddressItemCollection[] | null =
         getAddressesCollectionFromCheckoutStore(state, ownProps);
     const isAddressesCollectionExist: boolean = addressesCollection && addressesCollection.length > 0;
-    const isCheckoutFulfilled: boolean = isPageCheckoutFulfilled(state, ownProps);
     const countriesCollection: ICountry[] = getCounties(state, ownProps);
-    const deliveryNewAddress = state.pageCheckout.deliveryNewAddress;
-    const deliverySelection = state.pageCheckout.deliverySelection;
+    const deliveryNewAddress: IDeliveryAddressState = state.pageCheckout.deliveryNewAddress;
+    const deliverySelection: IDeliverySelectionState = state.pageCheckout.deliverySelection;
 
     return {
         isUserLoggedIn,
         addressesCollection,
         isAddressesCollectionExist,
-        isCheckoutFulfilled,
         countriesCollection,
         deliveryNewAddress,
         deliverySelection
@@ -36,7 +40,7 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
 
 const mapDispatchToProps = (dispatch: Function) => ({
     dispatch,
-    mutateStateNewAddressDelivery: (payload: any): void => {
+    mutateStateNewAddressDelivery: (payload: IFormFieldMutate): void => {
         dispatch(mutateStateNewAddressDeliveryAction(payload));
     },
     mutateStateDeliverySelectionAddNew: (): void => {

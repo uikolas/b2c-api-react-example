@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { IShippingMethodsParams } from '../../types/formSettingsTypes';
+import { IShippingMethodsParams } from './types';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
 import { IShipmentMethod } from '@interfaces/checkout';
 import { AppPrice } from '@components/Common/AppPrice';
@@ -13,7 +13,7 @@ export const getShipmentMethodsFormSettings = (formName: string, params: IShippi
         carrierName,
         shipmentCarrierNameToIcon,
         submitHandler,
-        inputChangeHandler,
+        inputChangeHandler
     } = params;
 
     const formSettings: IFormSettings = {
@@ -32,10 +32,10 @@ export const getShipmentMethodsFormSettings = (formName: string, params: IShippi
                     label: carrierName,
                     labelIcon: shipmentCarrierNameToIcon[carrierName] ? shipmentCarrierNameToIcon[carrierName] : null,
                     isError: false,
-                    radioItems: getRadioItems(shipmentMethods),
+                    radioItems: getRadioItems(shipmentMethods)
                 }
-            ],
-        ],
+            ]
+        ]
     };
 
     return formSettings;
@@ -67,9 +67,9 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
     if (shipmentMethod.name) {
         response.push(
             <Typography key={`text-${shipmentMethod.id}`}
-                align="left"
-                component="p"
-                color="inherit"
+                        align="left"
+                        component="p"
+                        color="inherit"
             >
                 {shipmentMethod.name}
             </Typography>
@@ -89,11 +89,11 @@ const createRadioItemLabel = (shipmentMethod: IShipmentMethod) => {
     if (shipmentMethod.taxRate) {
         response.push(
             <Typography key={`taxRate-${shipmentMethod.id}`}
-                align="left"
-                component="p"
-                color="inherit"
+                        align="left"
+                        component="p"
+                        color="inherit"
             >
-                {`${InputLabelShipmentTaxRate}: ${shipmentMethod.taxRate}`}
+                <FormattedMessage id={'shipment.tax.rate.label'} /> {`: ${shipmentMethod.taxRate}`}
             </Typography>
         );
     }

@@ -1,7 +1,4 @@
-import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { formStyles } from './styles';
-
-export interface ICheckoutFormsProps extends WithStyles<typeof formStyles> {
+export interface ICheckoutFormsProps {
     panels: {
         first: IPanelData;
         second: IPanelData;

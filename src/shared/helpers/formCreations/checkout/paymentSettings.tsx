@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-import { IPaymentMethodsParams } from '../../types/formSettingsTypes';
+import { IPaymentMethodsParams } from './types';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { IPaymentMethodGroupItem } from '@components/Pages/CheckoutPage/types/constantTypes';
+import { IPaymentMethodGroupItem } from 'src/shared/constants/checkout/types';
 
 export const getPaymentMethodsFormSettings = (formName: string, params: IPaymentMethodsParams): IFormSettings => {
     const {
         paymentMethodGroupItems,
         currentValuePaymentMethod,
         submitHandler,
-        inputChangeHandler,
+        inputChangeHandler
     } = params;
 
     const formSettings: IFormSettings = {
@@ -27,10 +27,10 @@ export const getPaymentMethodsFormSettings = (formName: string, params: IPayment
                     isRequired: true,
                     label: null,
                     isError: false,
-                    radioItems: getRadioItems(paymentMethodGroupItems),
+                    radioItems: getRadioItems(paymentMethodGroupItems)
                 }
-            ],
-        ],
+            ]
+        ]
     };
 
     return formSettings;
@@ -50,11 +50,11 @@ const isPaymentMethodsExist = (collection: IPaymentMethodsParams['paymentMethodG
 
 const convertPaymentsToRadioItems = (collection: IPaymentMethodsParams['paymentMethodGroupItems']) =>
     (isPaymentMethodsExist(collection)
-        ? collection.map((item: IPaymentMethodGroupItem) => ({
-            value: item.value,
-            label: createRadioItemLabel(item)
-        }))
-        : null
+            ? collection.map((item: IPaymentMethodGroupItem) => ({
+                value: item.value,
+                label: createRadioItemLabel(item)
+            }))
+            : null
     );
 
 const createRadioItemLabel = (paymentMethod: IPaymentMethodGroupItem) => {

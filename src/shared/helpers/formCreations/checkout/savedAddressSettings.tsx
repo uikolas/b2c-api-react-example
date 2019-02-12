@@ -5,7 +5,7 @@ import {
     IAddressesParams,
     IBillingAddressesParams,
     IDeliveryAddressesParams
-} from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+} from './types';
 import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
 import { FormattedMessage } from 'react-intl';
 
@@ -18,7 +18,7 @@ export const getDeliverySavedAddressFormSettings = (
         submitHandler,
         inputChangeHandler,
         extraOptionsToSelection,
-        currentValueInSelection,
+        currentValueInSelection
     } = params;
 
     const formSettings: IFormSettings = {
@@ -33,12 +33,12 @@ export const getDeliverySavedAddressFormSettings = (
                     inputValue: currentValueInSelection,
                     spaceNumber: 12,
                     isRequired: false,
-                    label: <FormattedMessage id={ 'select.delivery.address.label' } />,
+                    label: <FormattedMessage id={'select.delivery.address.label'} />,
                     isError: false,
-                    radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
+                    radioItems: getRadioItems(addressesCollection, extraOptionsToSelection)
                 }
             ]
-        ],
+        ]
     };
 
     return formSettings;
@@ -53,7 +53,7 @@ export const getBillingSavedAddressFormSettings = (
         submitHandler,
         inputChangeHandler,
         extraOptionsToSelection,
-        currentValueInSelection,
+        currentValueInSelection
     } = params;
 
     const formSettings: IFormSettings = {
@@ -68,12 +68,12 @@ export const getBillingSavedAddressFormSettings = (
                     inputValue: currentValueInSelection,
                     spaceNumber: 12,
                     isRequired: false,
-                    label: <FormattedMessage id={ 'select.billing.address.label' } />,
+                    label: <FormattedMessage id={'select.billing.address.label'} />,
                     isError: false,
-                    radioItems: getRadioItems(addressesCollection, extraOptionsToSelection),
+                    radioItems: getRadioItems(addressesCollection, extraOptionsToSelection)
                 }
             ]
-        ],
+        ]
     };
 
     return formSettings;
@@ -97,8 +97,8 @@ const getRadioItems = (
 
 const convertAddressesToRadioItems = (collection: IAddressesParams['addressesCollection']) =>
     (isAddressesCollectionExist(collection)
-        ? collection.map((item: IAddressItemCollection) => ({value: item.id, label: createRadioItemLabel(item)}))
-        : null
+            ? collection.map((item: IAddressItemCollection) => ({value: item.id, label: createRadioItemLabel(item)}))
+            : null
     );
 
 const isAddressesCollectionExist = (collection: IAddressesParams['addressesCollection']) =>

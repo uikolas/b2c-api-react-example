@@ -1,34 +1,31 @@
 import {
     IPaymentMethod,
     ISameAsDelivery,
-    IShipmentMethod
-} from '@interfaces/checkout';
-import { IFormField } from '@components/UI/SprykerForm/types';
-import {
+    IShipmentMethod,
     ICheckoutAddressState,
     ICheckoutCreditCardState,
-    ICheckoutInvoiceState,
-} from '@components/Pages/CheckoutPage/types';
+    ICheckoutInvoiceState
+} from '@interfaces/checkout';
+import { IFormField } from '@components/UI/SprykerForm/types';
 import { IAddressItemCollection } from '@interfaces/addresses';
-import { TCheckoutPageContext } from '@components/Pages/CheckoutPage/types/contextTypes';
 import {
     ICreditCardObjectConfigInputStable,
     IInvoiceObjectConfigInputStable,
     IObjectConfigInputStable
-} from 'src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes';
+} from 'src/chared/constants/checkout/types';
 import {
     IPaymentMethodGroupItem,
     TCurrentValueBillingSelection,
     TCurrentValueDeliverySelection,
     TExtraOptionsToSelection,
     TPaymentProvidersCollection
-} from 'src/shared/components/Pages/CheckoutPage/types/constantTypes';
-import { BlurEvent, InputChangeEvent } from '@interfaces/common/react';
+} from 'src/shared/constants/checkout/types';
+import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common/react';
 import { ICountry } from '@interfaces/country';
 
 // Base handlers for checkout's page forms
 export interface IBaseCheckoutFormHandler {
-    submitHandler: TCheckoutPageContext['submitHandler'];
+    submitHandler: (event: FormEvent) => void;
     inputChangeHandler: (event: InputChangeEvent) => void;
     onBlurHandler?: (event: BlurEvent) => void;
 }

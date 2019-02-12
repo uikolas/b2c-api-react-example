@@ -1,12 +1,16 @@
 import { SalutationVariants } from 'src/shared/constants/customer';
 import { TSalutationVariant } from '@interfaces/customer';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { IAddressParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { IAddressParams } from './types';
 import { ICountry } from '@interfaces/country';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 
-export const getAddressFormSettings = (formName: string, params: IAddressParams, shouldNotShowEmail: boolean): IFormSettings => {
+export const getAddressFormSettings = (
+    formName: string,
+    params: IAddressParams,
+    shouldNotShowEmail: boolean
+): IFormSettings => {
     const {
         inputsData: {
             firstName,

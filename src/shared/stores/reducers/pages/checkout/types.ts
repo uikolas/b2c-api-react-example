@@ -1,17 +1,20 @@
 import { IAddressItemCollection } from '@interfaces/addresses';
-import { IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 import { IReduxState } from 'src/typings/app';
 import { TOrderId } from '@interfaces/order';
 import { IActionData } from 'src/shared/stores/reducers/types';
 import {
+    IPaymentMethod,
+    IShipmentMethod,
     IBillingAddressState,
     IBillingSelectionState,
     ICheckoutCreditCardState,
     ICheckoutInvoiceState,
     ICheckoutStepsCompletionState,
     IDeliveryAddressState,
-    IDeliverySelectionState
-} from '@components/Pages/CheckoutPage/types';
+    IDeliverySelectionState,
+    IFormUpdatePaymentStatus,
+    IFormFieldMutate
+} from '@interfaces/checkout';
 
 export interface ICheckoutState extends IReduxState {
     deliverySelection: IDeliverySelectionState;
@@ -31,6 +34,10 @@ export interface IPageCheckoutAction extends IActionData {
         orderId: TOrderId;
     };
     payloadGetFulfilled?: ICheckoutResponseData;
+    payloadFormFieldMutate?: IFormFieldMutate;
+    payloadCurrentSelection?: string;
+    payloadFormUpdatePaymentStatus?: IFormUpdatePaymentStatus;
+    payloadUpdateSectionStatus?: boolean;
 }
 
 export interface ICheckoutResponseData {
@@ -39,6 +46,6 @@ export interface ICheckoutResponseData {
     addressesCollection: IAddressItemCollection[];
 }
 
-interface ICheckoutStateData extends ICheckoutResponseData {
+export interface ICheckoutStateData extends ICheckoutResponseData {
     orderId: TOrderId;
 }

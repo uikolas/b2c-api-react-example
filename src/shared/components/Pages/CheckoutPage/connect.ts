@@ -1,80 +1,69 @@
-import * as React from 'react';
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getAnonymId, getCounties, isAppInitiated } from '@stores/reducers/common/init';
+import { getAnonymId } from '@stores/reducers/common/init';
 import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getCustomerProfile } from '@stores/reducers/pages/customerProfile';
-import { isStateLoading } from '@stores/reducers';
 import { getCheckoutDataAction, sendCheckoutDataAction } from '@stores/actions/pages/checkout';
-import { getCustomerCartsAction, getGuestCartAction } from '@stores/actions/common/cart';
 import {
     getAddressesCollectionFromCheckoutStore,
-    getPaymentMethodsFromStore,
-    getShipmentMethodsFromStore,
     getCreatedOrder,
     isPageCheckoutFulfilled,
-    isPageCheckoutStateLoading,
-    isPageCheckoutStateRejected
-} from '@stores/reducers/pages/checkout';
+    isPageCheckoutStateLoading
+} from '@stores/reducers/pages/checkout/selectors';
 import { getCustomerProfileAction } from '@stores/actions/pages/customerProfile';
-import { getCartId, getCartTotals, getProductsFromCart } from '@stores/reducers/common/cart/selectors';
+import { getCartId, getProductsFromCart } from '@stores/reducers/common/cart/selectors';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { TCustomerReference } from '@interfaces/customer';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
-import { ICountry } from '@interfaces/country';
 import { ICartItem, TCartId } from '@interfaces/cart';
-import { ICheckoutRequest, IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
+import {
+    IBillingAddressState, IBillingSelectionState,
+    ICheckoutRequest,
+    ICheckoutStepsCompletionState,
+    IDeliveryAddressState,
+    IDeliverySelectionState, IPaymentMethod, IShipmentMethod
+} from '@interfaces/checkout';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isUserLoggedIn = isUserAuthenticated(state, ownProps);
     const anonymId = getAnonymId(state, ownProps);
-    const isAppDataSet: boolean = isAppInitiated(state, ownProps);
-    const isCheckoutLoading: boolean = isPageCheckoutStateLoading(state, ownProps);
-    const isCheckoutRejected: boolean = isPageCheckoutStateRejected(state, ownProps);
     const isCheckoutFulfilled: boolean = isPageCheckoutFulfilled(state, ownProps);
-
+    const isCheckoutLoading: boolean = isPageCheckoutStateLoading(state, ownProps);
     const {items}: {items: ICartItem[]} = getProductsFromCart(state, ownProps);
     const isProductsExists = Boolean(items && items.length);
-
     const cartId: TCartId = getCartId(state, ownProps);
-
-    // from ILoginState
     const customerReference = getCustomerReference(state, ownProps);
     const profile = getCustomerProfile(state, ownProps);
-
-    // Countries from init state
-    const countriesCollection: ICountry[] = getCounties(state, ownProps);
-    // From pageCheckout state
-    const shipmentMethods: IShipmentMethod[] | null = getShipmentMethodsFromStore(state, ownProps);
-    const paymentMethods: IPaymentMethod[] | null = getPaymentMethodsFromStore(state, ownProps);
     const addressesCollection: IAddressItemCollection[] | null = getAddressesCollectionFromCheckoutStore(
         state,
         ownProps
     );
     const orderId: string = getCreatedOrder(state, ownProps);
-    const isAddressesCollectionExist: boolean = addressesCollection && addressesCollection.length > 0;
-    const stepsCompletion = state.pageCheckout.stepsCompletion;
+    const stepsCompletion: ICheckoutStepsCompletionState = state.pageCheckout.stepsCompletion;
+    const deliveryNewAddress: IDeliveryAddressState = state.pageCheckout.deliveryNewAddress;
+    const deliverySelection: IDeliverySelectionState = state.pageCheckout.deliverySelection;
+    const billingNewAddress: IBillingAddressState = state.pageCheckout.billingNewAddress;
+    const billingSelection: IBillingSelectionState = state.pageCheckout.billingSelection;
+    const paymentMethod: IPaymentMethod['paymentMethodName'] | null = state.pageCheckout.paymentMethod;
+    const shipmentMethod: IShipmentMethod['id'] | null = state.pageCheckout.shipmentMethod;
 
     return ({
-        isAppDataSet,
         isUserLoggedIn,
-        isCheckoutLoading,
-        isCheckoutRejected,
         isCheckoutFulfilled,
-
+        isCheckoutLoading,
         isProductsExists,
-
         cartId,
         customerReference,
         addressesCollection,
-        isAddressesCollectionExist,
-
-        countriesCollection,
-        shipmentMethods,
-        paymentMethods,
         orderId,
         profile,
         anonymId,
-        stepsCompletion
+        stepsCompletion,
+        deliveryNewAddress,
+        deliverySelection,
+        billingNewAddress,
+        billingSelection,
+        paymentMethod,
+        shipmentMethod
     });
 };
 

@@ -1,11 +1,7 @@
-import {
-    ICustomerProfileIdentity,
-} from 'src/shared/interfaces/customer';
-import {
-    IAddressItem,
-    IAddressItemCollection,
-} from 'src/shared/interfaces/addresses';
-import { TCartId } from 'src/shared/interfaces/cart';
+import { ICustomerProfileIdentity, } from '@interfaces/customer';
+import { IAddressItem, IAddressItemCollection } from '@interfaces/addresses';
+import { TCartId } from '@interfaces/cart';
+import { TFormInputValue } from '@components/UI/SprykerForm/types';
 
 export type TShipmentCarrierName = string;
 export type TShipmentId = string;
@@ -14,16 +10,7 @@ export type TShipmentPrice = number;
 export type TShipmentTaxRate = number | null;
 export type TShipmentShipmentDeliveryTime = string | null;
 export type TPaymentProvider = string;
-export type TPaymentMethod = string;
-export type TPaymentAmount = number;
 export type TPaymentMethodName = string;
-export type TPaymentCardType = string;
-export type TPaymentCardNumber = string;
-export type TPaymentCardName = string;
-export type TPaymentCardExpiryMonth = string;
-export type TPaymentCardExpiryYear = string;
-export type TPaymentCardCVC = string;
-export type TPaymentInvoiceDateOfBirth = string;
 
 export interface ISameAsDelivery {
     isSameAsDelivery: boolean;
@@ -33,23 +20,6 @@ export interface IPaymentMethod {
     paymentProviderName: TPaymentProvider;
     paymentMethodName: TPaymentMethodName;
     requiredRequestData?: string[];
-}
-
-export interface IPaymentCreditCardData {
-    paymentMethod?: TPaymentMethod;
-    paymentProvider: TPaymentProvider | null;
-    cardType: TPaymentCardType;
-    cardNumber: TPaymentCardNumber | null;
-    cardName: TPaymentCardName | null;
-    cardExpiryMonth: TPaymentCardExpiryMonth | null;
-    cardExpiryYear: TPaymentCardExpiryYear | null;
-    cardCVC: TPaymentCardCVC | null;
-}
-
-export interface IPaymentInvoiceData {
-    paymentMethod?: TPaymentMethod;
-    paymentProvider: TPaymentProvider | null;
-    invoiceDateOfBirth: TPaymentInvoiceDateOfBirth | null;
 }
 
 export interface IShipmentMethod {
@@ -91,4 +61,77 @@ export interface IcheckoutResponse {
     addresses: IAddressItemCollection[] | {};
     paymentProviders: IPaymentProvider[];
     shipmentMethods: IShipmentMethod[];
+}
+
+export interface ICheckoutAddressState {
+    firstName: IConfigInputState;
+    lastName: IConfigInputState;
+    salutation: IConfigInputState;
+    address1: IConfigInputState;
+    address2: IConfigInputState;
+    address3: IConfigInputState;
+    zipCode: IConfigInputState;
+    city: IConfigInputState;
+    country: IConfigInputState;
+    company: IConfigInputState;
+    phone: IConfigInputState;
+
+    [key: string]: IConfigInputState;
+}
+
+export interface IDeliveryAddressState extends ICheckoutAddressState {
+}
+
+export interface IBillingAddressState extends ICheckoutAddressState {
+}
+
+export interface IConfigInputState {
+    value: TFormInputValue;
+    isError: boolean;
+}
+
+export interface IDeliverySelectionState {
+    selectedAddressId: IUsageSavedAddress['deliverySelectedAddressId'];
+    isAddNew: IAddNewAddressActions['isAddNewDelivery'];
+}
+
+export interface IBillingSelectionState {
+    selectedAddressId: IUsageSavedAddress['billingSelectedAddressId'];
+    isAddNew: IAddNewAddressActions['isAddNewBilling'];
+    isSameAsDelivery: ISameAsDelivery['isSameAsDelivery'];
+}
+
+export interface ICheckoutStepsCompletionState {
+    first: boolean;
+    second: boolean;
+    third: boolean;
+    fourth: boolean;
+}
+
+export interface ICheckoutCreditCardState {
+    paymentProvider: IConfigInputState;
+    cardNumber: IConfigInputState;
+    cardName: IConfigInputState;
+    cardExpiryMonth: IConfigInputState;
+    cardExpiryYear: IConfigInputState;
+    cardCVC: IConfigInputState;
+
+    [key: string]: IConfigInputState;
+}
+
+export interface ICheckoutInvoiceState {
+    dateOfBirth: IConfigInputState;
+
+    [key: string]: IConfigInputState;
+}
+
+export interface IFormFieldMutate {
+    key: string;
+    value: string | boolean;
+    isError: boolean;
+}
+
+export interface IFormUpdatePaymentStatus {
+    value: string;
+    isFourthStepCompleted: boolean;
 }

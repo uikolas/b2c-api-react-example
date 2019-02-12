@@ -4,14 +4,14 @@ import {
     ICreditCardObjectConfigInputStable,
     IDeliveryObjectConfigInputStable,
     IInvoiceObjectConfigInputStable
-} from 'src/shared/components/Pages/CheckoutPage/types/inputsConfigTypes';
-import { TFormInputValue } from 'src/shared/components/UI/SprykerForm/types';
+} from 'src/chared/constants/checkout/types';
+import { TFormInputValue } from '@components/UI/SprykerForm/types';
 import {
     IBillingAddressState,
     ICheckoutCreditCardState,
     ICheckoutInvoiceState,
     IDeliveryAddressState
-} from 'src/shared/components/Pages/CheckoutPage/types';
+} from '@interfaces/checkout';
 
 export interface IParamInputValidity {
     value: TFormInputValue;

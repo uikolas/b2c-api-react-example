@@ -1,44 +1,42 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import { styles } from './styles';
 import {
-    IFormWrapperProps,
-    IFormWrapperState
+    withStyles,
+    Grid,
+    ExpansionPanel,
+    ExpansionPanelSummary,
+    ExpansionPanelDetails,
+    Typography
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {
+    IFormWrapperProps as Props,
+    IFormWrapperState as State
 } from './types';
+import { styles } from './styles';
 
-export class FormWrapperBase extends React.Component<IFormWrapperProps, IFormWrapperState> {
-
-    public state: IFormWrapperState = {
+export class FormWrapperBase extends React.Component<Props, State> {
+    public readonly state: State = {
         expanded: false,
     };
 
-    public componentDidUpdate = (prevProps: IFormWrapperProps, prevState: IFormWrapperState) => {
+    public componentDidUpdate = (prevProps: Props): void => {
         if (!prevProps.isDisabled && this.props.isDisabled) {
-            this.setState((prevState: IFormWrapperState) => ({
-                expanded: false,
-            }));
+            this.setState({expanded: false});
         }
     };
 
-    public handleShowing = (event: React.MouseEvent<{}>): void => {
+    protected handleShowing = (event: React.MouseEvent<{}>): void => {
         if (this.props.isDisabled) {
             return;
         }
-        this.setState((prevState: IFormWrapperState) => ({
+        this.setState((prevState: State) => ({
             expanded: !prevState.expanded,
         }));
     };
 
     public render(): JSX.Element {
-        const {classes, title, isDisabled} = this.props;
+        const {classes, title, isDisabled, children} = this.props;
+        const {expanded} = this.state;
 
         return (
             <Grid container className={classes.root}>
@@ -49,7 +47,7 @@ export class FormWrapperBase extends React.Component<IFormWrapperProps, IFormWra
                             root: classes.panelRoot,
                             expanded: classes.panelExpanded,
                         }}
-                        expanded={this.state.expanded}
+                        expanded={expanded}
                     >
                         <ExpansionPanelSummary
                             onClick={this.handleShowing}
@@ -68,7 +66,7 @@ export class FormWrapperBase extends React.Component<IFormWrapperProps, IFormWra
                         >
                             <Grid container>
                                 <Grid item xs={12} className={classes.formOuter}>
-                                    {this.props.children}
+                                    {children}
                                 </Grid>
                             </Grid>
                         </ExpansionPanelDetails>

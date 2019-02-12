@@ -1,23 +1,17 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-
-import { formStyles } from './styles';
+import { Grid } from '@material-ui/core';
+import { FormWrapper } from '@components/containers/FormWrapper';
+import { DeliveryForm } from './DeliveryForm';
+import { BillingForm } from './BillingForm';
+import { ShipmentMethod } from './ShipmentMethod';
+import { PaymentMethod } from './PaymentMethod';
 import { ICheckoutFormsProps } from './types';
-import { DeliveryForm } from '@components/Pages/CheckoutPage/CheckoutForms/DeliveryForm';
-import { FormWrapper } from '@components/Pages/CheckoutPage/CheckoutForms/FormWrapper';
-import { BillingForm } from '@components/Pages/CheckoutPage/CheckoutForms/BillingForm';
-import { ShipmentMethod } from '@components/Pages/CheckoutPage/CheckoutForms/ShipmentMethod';
-import { PaymentMethod } from '@components/Pages/CheckoutPage/CheckoutForms/PaymentMethod';
 
-export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
-    const {
-        classes,
-        panels
-    } = props;
+export const CheckoutForms: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
+    const {panels} = props;
 
     return (
-        <Grid container className={classes.root}>
+        <Grid container>
             <Grid item xs={12}>
                 <FormWrapper
                     title={panels.first.title}
@@ -48,4 +42,3 @@ export const CheckoutFormsBase: React.SFC<ICheckoutFormsProps> = (props): JSX.El
     );
 };
 
-export const CheckoutForms = withStyles(formStyles)(CheckoutFormsBase);

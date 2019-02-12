@@ -1,19 +1,19 @@
 import React from 'react';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { IPaymentInvoiceParams } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
+import { IPaymentInvoiceParams } from './types';
 import { FormattedMessage } from 'react-intl';
 
 export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoiceParams): IFormSettings => {
     const {
         inputsData: {
-            dateOfBirth,
+            dateOfBirth
         },
         inputsConfig: {
-            dateOfBirth: dateOfBirthConfig,
+            dateOfBirth: dateOfBirthConfig
         },
         submitHandler,
         inputChangeHandler,
-        onBlurHandler,
+        onBlurHandler
     } = params;
 
     const formSettings: IFormSettings = {
@@ -29,11 +29,11 @@ export const getInvoiceFormSettings = (formName: string, params: IPaymentInvoice
                     inputValue: dateOfBirth.value,
                     spaceNumber: 6,
                     isRequired: dateOfBirthConfig.isRequired,
-                    label: <FormattedMessage id={ 'payment.date.of.birth.label' } />,
-                    isError: dateOfBirth.isError,
-                },
-            ],
-        ],
+                    label: <FormattedMessage id={'payment.date.of.birth.label'} />,
+                    isError: dateOfBirth.isError
+                }
+            ]
+        ]
     };
 
     return formSettings;

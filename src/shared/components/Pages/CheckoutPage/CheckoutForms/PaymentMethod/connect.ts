@@ -1,21 +1,25 @@
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import {
     getPaymentMethodsFromStore,
-} from '@stores/reducers/pages/checkout';
-import { IPaymentMethod } from '@interfaces/checkout';
+} from '@stores/reducers/pages/checkout/selectors';
 import {
     mutatePaymentMethodAction,
     mutateStateInvoiceFormAction,
     mutatePaymentSectionAction,
     mutateStateCreditCardAction
 } from '@stores/actions/pages/checkout';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import {
+    ICheckoutCreditCardState,
+    ICheckoutInvoiceState,
+    IPaymentMethod
+} from '@interfaces/checkout';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const paymentMethods: IPaymentMethod[] | null = getPaymentMethodsFromStore(state, ownProps);
-    const paymentMethod = state.pageCheckout.paymentMethod;
-    const paymentInvoiceData = state.pageCheckout.paymentInvoiceData;
-    const paymentCreditCardData = state.pageCheckout.paymentCreditCardData;
+    const paymentMethod: IPaymentMethod['paymentMethodName'] | null = state.pageCheckout.paymentMethod;
+    const paymentInvoiceData: ICheckoutInvoiceState = state.pageCheckout.paymentInvoiceData;
+    const paymentCreditCardData: ICheckoutCreditCardState = state.pageCheckout.paymentCreditCardData;
 
     return {
         paymentMethod,

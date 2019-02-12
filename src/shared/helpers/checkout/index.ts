@@ -1,18 +1,20 @@
 import {
     ICheckoutFormsProps,
-} from '../CheckoutForms/types';
+} from '@components/Pages/CheckoutPage/CheckoutForms/types';
+import {
+    ICheckoutPageProps
+} from '@components/Pages/CheckoutPage/types';
 import {
     ICheckoutAddressState,
-    ICheckoutPageProps,
     ICheckoutStepsCompletionState
-} from '@components/Pages/CheckoutPage/types';
+} from '@interfaces/checkout';
 import { IAddressItem, IAddressItemCollection } from '@interfaces/addresses';
-import { IParamFormValidity, IParamInputValidity } from '@components/Pages/CheckoutPage/types/validityTypes';
+import { IParamFormValidity, IParamInputValidity } from './types';
 import {
     TAddressType,
     TExtraOptionsToSelection
-} from '@components/Pages/CheckoutPage/types/constantTypes';
-import { checkoutSelectionInputs } from '@components/Pages/CheckoutPage/constants';
+} from 'src/shared/constants/checkout/types';
+import { checkoutSelectionInputs } from 'src/shared/constants/checkout';
 import { RegExpZipCode } from 'src/shared/constants/forms/regexp';
 import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
 

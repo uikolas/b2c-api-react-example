@@ -1,43 +1,45 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import { IDeliveryFormProps } from './types';
-import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
-import { CheckoutPageContext } from '../../context';
+import { connect } from './connect';
+import { Grid, withStyles } from '@material-ui/core';
 import { SprykerForm } from '@components/UI/SprykerForm';
+
 import {
     getAddressFormSettings
-} from '@components/Pages/CheckoutPage/CheckoutForms/settings/addressSettings';
+} from 'src/shared/helpers/formCreations/checkout/addressSettings';
 import {
     getDeliverySavedAddressFormSettings
-} from '@components/Pages/CheckoutPage/CheckoutForms/settings/savedAddressSettings';
-import { AppPageSubTitle } from '@components/Common/AppPageSubTitle';
-import { checkoutFormsNames, checkoutSelectionInputs } from '@components/Pages/CheckoutPage/constants';
+} from 'src/shared/helpers/formCreations/checkout/savedAddressSettings';
+import {
+    checkoutFormsNames,
+    checkoutSelectionInputs,
+    deliveryConfigInputStable
+} from 'src/shared/constants/checkout';
+import { InputSaveErrorMessage } from 'src/shared/translation';
+
+import {
+    checkFormInputValidity,
+    checkFormValidity,
+    getDefaultAddressId,
+    getExtraOptionsToSelection
+} from 'src/shared/helpers/checkout';
+
+import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     IAddressParams,
     IDeliveryAddressesParams
-} from '@components/Pages/CheckoutPage/types/formSettingsTypes';
-import { deliveryConfigInputStable } from '@components/Pages/CheckoutPage/constants/inputsConfig';
-import { FormattedMessage } from 'react-intl';
-import { InputChangeEvent } from '@interfaces/common/react';
-import { InputSaveErrorMessage } from '../../../../../translation';
-import {
-    validateDeliveryInput,
-    validateDeliveryNewAddressForm
-} from '@components/Pages/CheckoutPage/helpers/validation';
-import { IAddressItemCollection } from '@interfaces/addresses';
-import { connect } from './connect';
-import { getDefaultAddressId, getExtraOptionsToSelection } from '@components/Pages/CheckoutPage/helpers';
+} from 'src/shared/helpers/formCreations/checkout/types';
+import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { IDeliveryFormProps } from './types';
+import { IDeliveryAddressState } from '@interfaces/checkout';
+import { styles } from './styles';
 
 @connect
 export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
-    public componentDidUpdate = (prevProps: any, prevState: any) => {
-        if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
-            this.setDefaultAddresses();
-        }
+    public componentDidMount = (): void => {
+        this.setDefaultAddresses();
     };
 
-    private handleDeliverySelection = (value: string): void => {
+    protected handleDeliverySelection = (value: string): void => {
         const {
             mutateStateDeliverySelectionAddNew,
             mutateStateDeliverySelectionAddressId
@@ -51,8 +53,9 @@ export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
         }
     };
 
-    private setDefaultAddresses = (): void => {
-        const defaultValueDelivery = getDefaultAddressId(this.props.addressesCollection, 'delivery');
+    protected setDefaultAddresses = (): void => {
+        const {addressesCollection} = this.props;
+        const defaultValueDelivery = getDefaultAddressId(addressesCollection, 'delivery');
         if (defaultValueDelivery) {
             this.handleDeliverySelection(defaultValueDelivery);
         } else {
@@ -60,7 +63,15 @@ export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
         }
     };
 
-    public handleDeliveryInputs = (event: InputChangeEvent): void => {
+    protected validateDeliveryInput = (key: string, value: string): boolean => (
+        checkFormInputValidity({value,fieldConfig: deliveryConfigInputStable[key]})
+    );
+
+    protected validateDeliveryNewAddressForm = (formState: IDeliveryAddressState): boolean => (
+        checkFormValidity({form: formState, fieldsConfig: deliveryConfigInputStable})
+    );
+
+    protected handleDeliveryInputs = (event: InputChangeEvent): void => {
         const {name, value} = event.target;
         const {
             mutateStateNewAddressDelivery,
@@ -71,7 +82,7 @@ export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
             throw new Error(InputSaveErrorMessage);
         }
 
-        const isInputValid = validateDeliveryInput(name, value);
+        const isInputValid = this.validateDeliveryInput(name, value);
         const changedFiledData = {
             key: name,
             value,
@@ -88,100 +99,89 @@ export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
         }
     };
 
-    private handleDeliveryNewAddressValidity = (): void => {
+    protected handleDeliveryNewAddressValidity = (): void => {
         const {mutateDeliveryStep} = this.props;
         const newAddress = {...this.props.deliveryNewAddress};
 
         if (this.props.isUserLoggedIn) {
             delete newAddress.email;
         }
-        const isFormValid = validateDeliveryNewAddressForm(newAddress);
+        const isFormValid = this.validateDeliveryNewAddressForm(newAddress);
         mutateDeliveryStep(isFormValid);
     };
 
-    public handleSelectionsChange = (event: InputChangeEvent): void => {
+    protected handleSelectionsChange = (event: InputChangeEvent): void => {
         const {value} = event.target;
 
         this.handleDeliverySelection(value);
     };
 
-    private getCurrentValueDeliverySelection = (): IAddressItemCollection['id'] | string | null => (
+    protected getCurrentValueDeliverySelection = (): IAddressItemCollection['id'] | string | null => (
         this.props.deliverySelection.selectedAddressId
         || (this.props.deliverySelection.isAddNew && checkoutSelectionInputs.isAddNewDeliveryValue)
         || null
     );
 
+    protected handleSubmit = (event: FormEvent): void => {
+        event.preventDefault();
+    };
+
     public render(): JSX.Element {
         const {
-            classes,
             addressesCollection,
             isUserLoggedIn,
             isAddressesCollectionExist,
-            isCheckoutFulfilled,
             countriesCollection,
+            deliveryNewAddress,
             deliverySelection: {
                 isAddNew
             }
         } = this.props;
 
+        const deliveryParams: IAddressParams = {
+            inputsData: deliveryNewAddress,
+            inputsConfig: deliveryConfigInputStable,
+            countriesCollection,
+            submitHandler: this.handleSubmit,
+            inputChangeHandler: this.handleDeliveryInputs,
+            onBlurHandler: this.handleDeliveryNewAddressValidity
+        };
+        const savedDeliveryParams: IDeliveryAddressesParams = {
+            currentValueInSelection: this.getCurrentValueDeliverySelection(),
+            addressesCollection,
+            extraOptionsToSelection: getExtraOptionsToSelection(
+                isAddressesCollectionExist,
+                'delivery'
+            ),
+            submitHandler: this.handleSubmit,
+            inputChangeHandler: this.handleSelectionsChange
+        };
+        const deliveryFormSettings = getAddressFormSettings(
+            checkoutFormsNames.delivery,
+            deliveryParams,
+            isUserLoggedIn
+        );
+
+        const savedAddressFormSettings = getDeliverySavedAddressFormSettings(
+            checkoutFormsNames.savedDelivery,
+            savedDeliveryParams
+        );
+
         return (
-            <CheckoutPageContext.Consumer>
-                {({
-                      submitHandler
-                  }) => {
-
-                    const deliveryParams: IAddressParams = {
-                        inputsData: this.props.deliveryNewAddress,
-                        inputsConfig: deliveryConfigInputStable,
-                        countriesCollection,
-                        submitHandler,
-                        inputChangeHandler: this.handleDeliveryInputs,
-                        onBlurHandler: this.handleDeliveryNewAddressValidity
-                    };
-                    const savedDeliveryParams: IDeliveryAddressesParams = {
-                        currentValueInSelection: this.getCurrentValueDeliverySelection(),
-                        addressesCollection,
-                        extraOptionsToSelection: getExtraOptionsToSelection(
-                            isAddressesCollectionExist,
-                            'delivery'
-                        ),
-                        submitHandler,
-                        inputChangeHandler: this.handleSelectionsChange
-                    };
-                    const deliveryFormSettings = getAddressFormSettings(
-                        checkoutFormsNames.delivery,
-                        deliveryParams,
-                        isUserLoggedIn
-                    );
-
-                    const savedAddressFormSettings = getDeliverySavedAddressFormSettings(
-                        checkoutFormsNames.savedDelivery,
-                        savedDeliveryParams
-                    );
-
-                    return (
-                        <Grid container className={classes.root}>
-                            <Grid item xs={12}>
-                                {!isCheckoutFulfilled
-                                    ? <AppPageSubTitle
-                                        title={<FormattedMessage id={'form.waiting.for.response.title'} />}
-                                    />
-                                    : <React.Fragment>
-                                        {(addressesCollection && addressesCollection.length) &&
-                                        <SprykerForm form={savedAddressFormSettings} />
-                                        }
-                                        {(isAddNew || !isUserLoggedIn) &&
-                                            <SprykerForm form={deliveryFormSettings} />
-                                        }
-                                    </React.Fragment>
-                                }
-                            </Grid>
-                        </Grid>
-                    );
-                }}
-            </CheckoutPageContext.Consumer>
+            <Grid container>
+                <Grid item xs={12}>
+                    <React.Fragment>
+                        {(addressesCollection && addressesCollection.length) &&
+                            <SprykerForm form={savedAddressFormSettings} />
+                        }
+                        {(isAddNew || !isUserLoggedIn) &&
+                            <SprykerForm form={deliveryFormSettings} />
+                        }
+                    </React.Fragment>
+                </Grid>
+            </Grid>
         );
     }
-};
+}
 
-export const DeliveryForm = withStyles(formStyles)(DeliveryFormBase);
+export const DeliveryForm = withStyles(styles)(DeliveryFormBase);

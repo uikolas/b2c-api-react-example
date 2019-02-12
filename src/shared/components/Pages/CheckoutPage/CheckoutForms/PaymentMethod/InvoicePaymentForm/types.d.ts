@@ -1,4 +1,7 @@
-import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { formStyles } from '@components/Pages/CheckoutPage/CheckoutForms/styles';
+import { ICheckoutInvoiceState, IFormFieldMutate } from '@interfaces/checkout';
 
-export interface IInvoicePaymentFormProps extends WithStyles<typeof formStyles> {}
+export interface IInvoicePaymentFormProps {
+    paymentInvoiceData: ICheckoutInvoiceState;
+    mutatePaymentSection: (payload: boolean) => void;
+    mutateStateInvoiceForm: (payload: IFormFieldMutate) => void;
+}

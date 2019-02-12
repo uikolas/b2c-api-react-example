@@ -1,6 +1,6 @@
 import React from 'react';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { IPaymentCreditCardParams } from '../../types/formSettingsTypes';
+import { IPaymentCreditCardParams } from './types';
 import { IMenuItemSelect } from '@components/UI/SprykerSelect/types';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,7 +12,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
             cardName,
             cardExpiryMonth,
             cardExpiryYear,
-            cardCVC,
+            cardCVC
         },
         inputsConfig: {
             paymentProvider: paymentProviderConfig,
@@ -20,12 +20,12 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
             cardName: cardNameConfig,
             cardExpiryMonth: cardExpiryMonthConfig,
             cardExpiryYear: cardExpiryYearConfig,
-            cardCVC: cardCVCConfig,
+            cardCVC: cardCVCConfig
         },
         providersCollection,
         submitHandler,
         inputChangeHandler,
-        onBlurHandler,
+        onBlurHandler
     } = params;
 
     const formSettings: IFormSettings = {
@@ -41,16 +41,16 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: paymentProvider.value,
                     spaceNumber: 6,
                     isRequired: paymentProviderConfig.isRequired,
-                    label: <FormattedMessage id={ 'payment.provider.label' } />,
+                    label: <FormattedMessage id={'payment.provider.label'} />,
                     isError: paymentProvider.isError,
                     menuItems: providersCollection,
                     menuItemFirst: {
                         value: ' ',
-                        name: <FormattedMessage id={ 'first.item.in.select' } />,
+                        name: <FormattedMessage id={'first.item.in.select'} />,
                         selected: true,
-                        disabled: true,
-                    },
-                },
+                        disabled: true
+                    }
+                }
             ],
             [
                 {
@@ -59,8 +59,8 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardNumber.value,
                     spaceNumber: 6,
                     isRequired: cardNumberConfig.isRequired,
-                    label: <FormattedMessage id={ 'payment.credit.card.number.label' } />,
-                    isError: cardNumber.isError,
+                    label: <FormattedMessage id={'payment.credit.card.number.label'} />,
+                    isError: cardNumber.isError
                 },
                 {
                     type: 'input',
@@ -68,9 +68,9 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardName.value,
                     spaceNumber: 6,
                     isRequired: cardNameConfig.isRequired,
-                    label: <FormattedMessage id={ 'payment.credit.card.name.label' } />,
-                    isError: cardName.isError,
-                },
+                    label: <FormattedMessage id={'payment.credit.card.name.label'} />,
+                    isError: cardName.isError
+                }
             ],
             [
                 {
@@ -79,15 +79,9 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardExpiryMonth.value,
                     spaceNumber: 3,
                     isRequired: cardExpiryMonthConfig.isRequired,
-                    label: <FormattedMessage id={ 'payment.expiry.date.label' } />,
+                    label: <FormattedMessage id={'payment.expiry.date.label'} />,
                     isError: cardExpiryMonth.isError,
-                    menuItems: createItemsForExpiryMonth(),
-                    /* menuItemFirst: {
-                       value: " ",
-                       name: <FormattedMessage id={ 'first.item.in.select' } />,
-                       selected: true,
-                       disabled: true,
-                     },*/
+                    menuItems: createItemsForExpiryMonth()
                 },
                 {
                     type: 'select',
@@ -97,13 +91,7 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     isRequired: cardExpiryYearConfig.isRequired,
                     label: null,
                     isError: cardExpiryYear.isError,
-                    menuItems: createItemsForExpiryYear(),
-                    /*menuItemFirst: {
-                      value: " ",
-                      name: <FormattedMessage id={ 'first.item.in.select' } />,
-                      selected: true,
-                      disabled: true,
-                    },*/
+                    menuItems: createItemsForExpiryYear()
                 },
                 {
                     type: 'input',
@@ -111,11 +99,11 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
                     inputValue: cardCVC.value,
                     spaceNumber: 3,
                     isRequired: cardCVCConfig.isRequired,
-                    label: <FormattedMessage id={ 'payment.credit.card.cvc.label' } />,
-                    isError: cardCVC.isError,
-                },
-            ],
-        ],
+                    label: <FormattedMessage id={'payment.credit.card.cvc.label'} />,
+                    isError: cardCVC.isError
+                }
+            ]
+        ]
     };
 
     return formSettings;
@@ -124,14 +112,14 @@ export const getCreditCardFormSettings = (formName: string, params: IPaymentCred
 const createItemsForExpiryMonth = (): IMenuItemSelect[] => {
     const data = getRange(1, 12);
 
-    return data.map((item: number) => ({ value: `${item}`, name: item }));
+    return data.map((item: number) => ({value: `${item}`, name: item}));
 };
 
 const createItemsForExpiryYear = (): IMenuItemSelect[] => {
     const currentYear = (new Date()).getFullYear();
     const data = getRange(currentYear, currentYear + 5);
 
-    return data.map((item: number) => ({ value: `${item}`, name: item }));
+    return data.map((item: number) => ({value: `${item}`, name: item}));
 };
 
 const getRange = (start: number, end: number): number[] => {
