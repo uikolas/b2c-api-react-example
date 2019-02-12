@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { CustomerPageProps } from './types';
 
 import { AppMain } from '@components/Common/AppMain';
-import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { SideBar } from './containers/sideBar';
 import { CustomerRouting } from './components/customerRouting';
 

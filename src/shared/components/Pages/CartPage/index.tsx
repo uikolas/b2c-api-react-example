@@ -4,7 +4,7 @@ import { FormattedPlural, FormattedMessage } from 'react-intl';
 
 import { CartPageProps } from './types';
 
-import { ErrorBoundary } from '@components/Library/ErrorBoundary';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { AppMain } from '@components/Common/AppMain';
 import { CartRows } from './containers/cartRows';
 import { OrderSummary } from './containers/orderSummary';
