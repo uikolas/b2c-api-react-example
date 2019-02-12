@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Grid } from '@material-ui/core';
 import { FormWrapper } from '@components/containers/FormWrapper';
 import { DeliveryForm } from './DeliveryForm';
-import { BillingForm } from './BillingForm';
+import { BillingFormComponent } from './BillingForm';
 import { ShipmentMethod } from './ShipmentMethod';
 import { PaymentMethod } from './PaymentMethod';
 import { ICheckoutFormsProps } from './types';
@@ -27,7 +27,7 @@ export const CheckoutForms: React.SFC<ICheckoutFormsProps> = (props): JSX.Elemen
                         title={panels.second.title}
                         isDisabled={panels.second.isDisabled}
                     >
-                        <BillingForm />
+                        <BillingFormComponent />
                     </FormWrapper>
                 </ErrorBoundary>
                 <ErrorBoundary>

@@ -192,4 +192,4 @@ export class BillingFormBase extends React.Component<IBillingFormProps> {
     }
 }
 
-export const BillingForm = withStyles(styles)(BillingFormBase);
+export const BillingFormComponent = withStyles(styles)(BillingFormBase);
