@@ -18,7 +18,6 @@ import {
     IDeliveryAddressesParams
 } from '@components/Pages/CheckoutPage/types/formSettingsTypes';
 import { deliveryConfigInputStable } from '@components/Pages/CheckoutPage/constants/inputsConfig';
-import { IFormField } from '@components/UI/SprykerForm/types';
 import { FormattedMessage } from 'react-intl';
 import { InputChangeEvent } from '@interfaces/common/react';
 import { InputSaveErrorMessage } from '../../../../../translation';
@@ -26,21 +25,13 @@ import {
     validateDeliveryInput,
     validateDeliveryNewAddressForm
 } from '@components/Pages/CheckoutPage/helpers/validation';
-import { ICheckoutPageProps, ICheckoutPageState } from '@components/Pages/CheckoutPage/types';
-import { mutateDeliveryInputs } from '@components/Pages/CheckoutPage/stateMutations/inputs';
-import { mutateDeliveryNewAddressValidity } from '@components/Pages/CheckoutPage/stateMutations/validity';
-import {
-    mutateDeliverySelectionAddNew,
-    mutateDeliverySelectionAddressId
-} from '@components/Pages/CheckoutPage/stateMutations/selections';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { connect } from './connect';
 import { getDefaultAddressId, getExtraOptionsToSelection } from '@components/Pages/CheckoutPage/helpers';
-import { mutateStateDeliverySelectionAddNewAction } from '@stores/actions/pages/checkout';
 
 @connect
 export class DeliveryFormBase extends React.Component<IDeliveryFormProps> {
-    public componentDidUpdate = (prevProps: ICheckoutPageProps, prevState: ICheckoutPageState) => {
+    public componentDidUpdate = (prevProps: any, prevState: any) => {
         if (!prevProps.isCheckoutFulfilled && this.props.isCheckoutFulfilled) {
             this.setDefaultAddresses();
         }
