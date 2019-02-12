@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from './connect';
 import { Grid, withStyles } from '@material-ui/core';
 import { SprykerForm } from '@components/UI/SprykerForm';
-
 import {
     getAddressFormSettings
 } from 'src/shared/helpers/formCreations/checkout/addressSettings';
@@ -15,14 +14,12 @@ import {
     deliveryConfigInputStable
 } from 'src/shared/constants/checkout';
 import { InputSaveErrorMessage } from 'src/shared/translation';
-
 import {
     checkFormInputValidity,
     checkFormValidity,
     getDefaultAddressId,
     getExtraOptionsToSelection
 } from 'src/shared/helpers/checkout';
-
 import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     IAddressParams,

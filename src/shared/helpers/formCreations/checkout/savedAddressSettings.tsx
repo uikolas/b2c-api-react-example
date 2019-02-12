@@ -96,20 +96,23 @@ const getRadioItems = (
 };
 
 const convertAddressesToRadioItems = (collection: IAddressesParams['addressesCollection']) =>
-    (isAddressesCollectionExist(collection)
-            ? collection.map((item: IAddressItemCollection) => ({value: item.id, label: createRadioItemLabel(item)}))
-            : null
+    (isAddressesCollectionExist(collection) &&
+        collection.map((item: IAddressItemCollection) => (
+            {value: item.id, label: createRadioItemFullInforamtion(item)}
+        ))
     );
 
 const isAddressesCollectionExist = (collection: IAddressesParams['addressesCollection']) =>
     Boolean(collection && Array.isArray(collection) && collection.length > 0);
 
-const createRadioItemLabel = (address: IAddressItemCollection) => {
-    let response: React.ReactNode = '';
+const createRadioItemFullInforamtion = (address: IAddressItemCollection): string | React.ReactNode => {
+    let response: string = '';
+    let salutation: React.ReactNode = null;
 
     if (address.salutation) {
-        response = getSalutationToShow(address.salutation);
+        salutation = getSalutationToShow(address.salutation);
     }
+
     if (address.firstName) {
         response += ` ${address.firstName}`;
     }
@@ -132,5 +135,5 @@ const createRadioItemLabel = (address: IAddressItemCollection) => {
         response += `, ${address.country.name}`;
     }
 
-    return response;
+    return [salutation, response];
 };

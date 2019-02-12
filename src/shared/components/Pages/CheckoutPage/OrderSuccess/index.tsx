@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import DoneIcon from '@material-ui/icons/Done';
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { OrderSuccessProps } from './types';
-import { styles } from '../styles';
+import { styles } from './styles';
 
 export const OrderSuccessBase: React.SFC<OrderSuccessProps> = (props): JSX.Element => {
     const {classes, order} = props;

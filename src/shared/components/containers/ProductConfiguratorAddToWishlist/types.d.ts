@@ -4,7 +4,7 @@ import { styles } from './styles';
 import { IWishlist, TWishlistName } from '@interfaces/wishlist';
 import { TProductSKU, TProductType } from '@interfaces/product';
 
-export interface ProductConfiguratorAddToWishlistProps extends WithStyles<typeof styles> {
+export interface IProductConfiguratorAddToWishlistProps extends WithStyles<typeof styles> {
     getWishlists: Function;
     addToWishlist: Function;
     isWishlistsFetched: boolean;
@@ -14,13 +14,13 @@ export interface ProductConfiguratorAddToWishlistProps extends WithStyles<typeof
     sku: TProductSKU | null;
 }
 
-export interface ProductConfiguratorAddToWishlistState {
+export interface IProductConfiguratorAddToWishlistState {
     wishlistSelected: TWishlistName | null;
 }
 
 export interface IProductWishlistParams {
     onChangeHandler: (event: ChangeEvent<HTMLSelectElement>) => void;
-    inputValue: ProductConfiguratorAddToWishlistState['wishlistSelected'];
-    wishlists: ProductConfiguratorAddToWishlistProps['wishlists'];
+    inputValue: IProductConfiguratorAddToWishlistState['wishlistSelected'];
+    wishlists: IProductConfiguratorAddToWishlistProps['wishlists'];
     controlsGroupClassName?: string;
 }

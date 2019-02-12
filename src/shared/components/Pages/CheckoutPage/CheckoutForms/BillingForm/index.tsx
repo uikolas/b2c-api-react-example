@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from './connect';
 import { withStyles, Grid } from '@material-ui/core';
 import { SprykerForm } from '@components/UI/SprykerForm';
-
 import {
     getAddressFormSettings
 } from 'src/shared/helpers/formCreations/checkout/addressSettings';
@@ -18,11 +17,12 @@ import {
     getDefaultAddressId,
     getExtraOptionsToSelection
 } from 'src/shared/helpers/checkout';
-
-import { checkoutFormsNames, checkoutSelectionInputs } from 'src/shared/constants/checkout';
-import { billingConfigInputStable } from 'src/shared/constants/checkout';
+import {
+    billingConfigInputStable,
+    checkoutFormsNames,
+    checkoutSelectionInputs
+} from 'src/shared/constants/checkout';
 import { InputSaveErrorMessage } from 'src/shared/translation';
-
 import {
     IAddressParams,
     IBillingAddressesParams,

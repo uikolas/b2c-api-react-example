@@ -5,11 +5,8 @@ import { SprykerForm } from '@components/UI/SprykerForm';
 import {
     getInvoiceFormSettings
 } from 'src/shared/helpers/formCreations/checkout/invoiceSettings';
-
-import { checkoutFormsNames } from 'src/shared/constants/checkout';
-import { invoiceConfigInputStable } from 'src/shared/constants/checkout';
-import { InputSaveErrorMessage } from 'src/shared/translation/index';
-
+import { checkoutFormsNames, invoiceConfigInputStable } from 'src/shared/constants/checkout';
+import { InputSaveErrorMessage } from 'src/shared/translation';
 import { IPaymentInvoiceParams } from 'src/shared/helpers/formCreations/checkout/types';
 import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
 import { ICheckoutInvoiceState } from '@interfaces/checkout';

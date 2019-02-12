@@ -6,6 +6,7 @@ import { BillingForm } from './BillingForm';
 import { ShipmentMethod } from './ShipmentMethod';
 import { PaymentMethod } from './PaymentMethod';
 import { ICheckoutFormsProps } from './types';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 export const CheckoutForms: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
     const {panels} = props;
@@ -13,30 +14,38 @@ export const CheckoutForms: React.SFC<ICheckoutFormsProps> = (props): JSX.Elemen
     return (
         <Grid container>
             <Grid item xs={12}>
-                <FormWrapper
-                    title={panels.first.title}
-                    isDisabled={panels.first.isDisabled}
-                >
-                    <DeliveryForm />
-                </FormWrapper>
-                <FormWrapper
-                    title={panels.second.title}
-                    isDisabled={panels.second.isDisabled}
-                >
-                    <BillingForm />
-                </FormWrapper>
-                <FormWrapper
-                    title={panels.third.title}
-                    isDisabled={panels.third.isDisabled}
-                >
-                    <ShipmentMethod />
-                </FormWrapper>
-                <FormWrapper
-                    title={panels.fourth.title}
-                    isDisabled={panels.fourth.isDisabled}
-                >
-                    <PaymentMethod />
-                </FormWrapper>
+                <ErrorBoundary>
+                    <FormWrapper
+                        title={panels.first.title}
+                        isDisabled={panels.first.isDisabled}
+                    >
+                        <DeliveryForm />
+                    </FormWrapper>
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <FormWrapper
+                        title={panels.second.title}
+                        isDisabled={panels.second.isDisabled}
+                    >
+                        <BillingForm />
+                    </FormWrapper>
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <FormWrapper
+                        title={panels.third.title}
+                        isDisabled={panels.third.isDisabled}
+                    >
+                        <ShipmentMethod />
+                    </FormWrapper>
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <FormWrapper
+                        title={panels.fourth.title}
+                        isDisabled={panels.fourth.isDisabled}
+                    >
+                        <PaymentMethod />
+                    </FormWrapper>
+                </ErrorBoundary>
             </Grid>
         </Grid>
     );

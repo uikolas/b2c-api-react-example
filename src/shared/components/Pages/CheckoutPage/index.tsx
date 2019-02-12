@@ -20,6 +20,7 @@ import {
 import { styles } from './styles';
 import { AppPageSubTitle } from '@components/Common/AppPageSubTitle';
 import { CheckoutForms } from './CheckoutForms';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 @connect
 export class CheckoutPageBase extends React.Component<Props, State> {
@@ -43,14 +44,19 @@ export class CheckoutPageBase extends React.Component<Props, State> {
         }
 
         const {first, second, third, fourth} = this.props.stepsCompletion;
+        const {first: prevFirst, second: prevSecond, third: prevThird, fourth: prevFourth} = prevProps.stepsCompletion;
         const checkCheckoutFormValidity = first && second && third && fourth;
+        const prevCheckCheckoutFormValidity = prevFirst && prevSecond && prevThird && prevFourth;
+        const {isCheckoutLoading: previousStateLoading} = prevProps;
+        const isShouldChangeButtonState = (prevCheckCheckoutFormValidity !== checkCheckoutFormValidity) || previousStateLoading;
 
-        if (this.state.isButtonDisabled !== !checkCheckoutFormValidity) {
+        if (isShouldChangeButtonState) {
             this.setState({isButtonDisabled: !checkCheckoutFormValidity});
         }
     };
 
     protected handleSubmit = (event: FormEvent): void => {
+        this.setState({isButtonDisabled: true});
         event.preventDefault();
         const {
             addressesCollection,
@@ -140,13 +146,15 @@ export class CheckoutPageBase extends React.Component<Props, State> {
                             }
                         </Grid>
                         <Grid item xs={12} md={5} className={classes.rightColumn}>
-                            <CheckoutCart
-                                isSendBtnDisabled={isButtonDisabled}
-                                sendData={this.handleSubmit}
-                                order={orderId}
-                                isUserLoggedIn={isUserLoggedIn}
-                                anonymId={anonymId}
-                            />
+                            <ErrorBoundary>
+                                <CheckoutCart
+                                    isSendBtnDisabled={isButtonDisabled}
+                                    sendData={this.handleSubmit}
+                                    order={orderId}
+                                    isUserLoggedIn={isUserLoggedIn}
+                                    anonymId={anonymId}
+                                />
+                            </ErrorBoundary>
                         </Grid>
                     </Grid>
                 }
