@@ -61,6 +61,8 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
             isFiltersReset: false,
             isNeedNewRequest: false,
             isReadyToNewRequest: false,
+            isCategoryAsFilter: false,
+
             paginationPage: null
         };
     }
@@ -86,11 +88,6 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
                 this.setState({isReadyToNewRequest: false});
             }
         }
-
-        // if searchTerm was changed
-        if (prevProps.searchTerm !== this.props.searchTerm) {
-            this.runResetActiveFilters(false);
-        }
     };
 
     public componentWillUnmount = () => {
@@ -100,6 +97,9 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
     public selectCategory = (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>): void => {
         if (this.props.locationCategoryId !== categoryId) {
             this.props.changeLocation(`${pathCategoryPageBase}/${categoryId}`);
+            this.setState({
+                isCategoryAsFilter: true
+            });
         }
     };
 
@@ -265,7 +265,9 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
             query = Object.assign(query, parsedGetParams);
         }
 
-        await this.props.sendSearch(query);
+        if (!this.props.isLoading) {
+            await this.props.sendSearch(query);
+        }
         this.updatePageUrl(query);
     };
 
@@ -348,18 +350,27 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
     };
 
     private runNewCategoryPage = async (): Promise<void> => {
-        this.updatePageUrl({});
-        this.props.clearSearchTerm();
+        if (!this.state.isCategoryAsFilter) {
+            await this.resetAllFiltersOnNewCategoryPage();
+        }
+        await this.sendCategoryRequest();
+        this.setState({
+            isCategoryAsFilter: false
+        });
+    };
 
-        await this.setState({
+    private resetAllFiltersOnNewCategoryPage = async (): Promise<void> => {
+        this.updatePageUrl({});
+        await this.props.clearSearchTerm();
+        await this.props.clearActiveFilters();
+
+        this.setState({
             activeFilters: {},
             activeRangeFilters: {},
             paginationPage: null,
             sort: '',
             itemsPerPage: this.props.pagination.validItemsPerPageOptions[0],
         });
-        await this.props.clearActiveFilters();
-        await this.sendCategoryRequest();
     };
 
     public render() {

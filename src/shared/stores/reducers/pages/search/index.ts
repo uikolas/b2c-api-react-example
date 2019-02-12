@@ -3,6 +3,7 @@ import {
     PAGES_SEARCH_REQUEST,
     PAGES_SEARCH_REQUEST_CLEAR,
     PAGES_SEARCH_TERM_CLEAR,
+    PAGES_SEARCH_FILTERS_CLEAR,
     PAGES_SUGGESTION_REQUEST,
 } from '@stores/actionTypes/pages/search';
 import {
@@ -15,7 +16,6 @@ import {
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { IPageSearchAction, ISearchState } from 'src/shared/stores/reducers/pages/search/types';
 import { DefaultItemsPerPage } from 'src/shared/constants/search';
-import { PAGES_SEARCH_FILTERS_CLEAR } from '@stores/actionTypes/pages/search';
 
 export const initialState: ISearchState = {
     data: {
