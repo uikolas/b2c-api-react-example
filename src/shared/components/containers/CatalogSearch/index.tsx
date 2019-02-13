@@ -1,34 +1,33 @@
 import * as React from 'react';
+import { connect } from './connect';
+import { FormattedMessage } from 'react-intl';
 import Autosuggest from 'react-autosuggest';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles, CircularProgress } from '@material-ui/core';
+import { InputComponent } from './InputComponent';
+import { Suggestions } from './Suggestions';
+import { SuggestionsContainer } from './SuggestionsContainer';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { InputChangeEvent } from '@interfaces/common/react';
 import { IProductCard } from '@interfaces/product';
-import { styles } from './styles';
 import {
     ICatalogProps as Props,
     ICatalogState as State,
     IInputProps
 } from './types';
-import { connect } from './connect';
-import { FormattedMessage } from 'react-intl';
-import { InputComponent } from './InputComponent';
-import { Suggestions } from './Suggestions';
-import { SuggestionsContainer } from './SuggestionsContainer';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { styles } from './styles';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
-    private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
-    public timer: number | null;
+    protected containerRef: React.RefObject<HTMLDivElement> = React.createRef();
+    protected timer: number | null;
 
-    public state: State = {
+    public readonly state: State = {
         value: ''
     };
 
-    private getSuggestionValue = (suggestion: IProductCard): string => suggestion.abstractName;
+    protected getSuggestionValue = (suggestion: IProductCard): string => suggestion.abstractName;
 
-    private handleSuggestionsFetchRequested = ({value}: {value: string}) => {
+    protected handleSuggestionsFetchRequested = ({value}: {value: string}) => {
         const {value: currentValue} = this.state;
 
         if (!this.props.isLoading && value !== currentValue) {
@@ -42,17 +41,19 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         }
     };
 
-    private handleSuggestionsClearRequested = (): void => {
+    protected handleSuggestionsClearRequested = (): void => {
         return;
     };
 
-    private clearSuggestion = (value: string): void => {
+    protected clearSuggestion = (value: string): void => {
         this.props.clearSuggestions(value);
         this.setState({value: ''});
     };
 
-    private handleChange = (event: InputChangeEvent, {newValue}: {newValue: string}): void => {
-        if (newValue.trim().length < 4) {
+    protected handleChange = (event: InputChangeEvent, {newValue}: {newValue: string}): void => {
+        const maxLettersValueToClearSuggestField = 4;
+
+        if (newValue.trim().length < maxLettersValueToClearSuggestField) {
             this.props.clearSuggestions(newValue);
         }
 
@@ -63,9 +64,13 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         }
     };
 
-    private shouldRenderSuggestions = (value: string): boolean => value && value.trim().length > 2;
+    protected shouldRenderSuggestions = (value: string): boolean => {
+        const minLettersValueToSuggest = 2;
 
-    private renderInputComponent = (inputProps: IInputProps): JSX.Element => {
+        return value && value.trim().length > minLettersValueToSuggest;
+    };
+
+    protected renderInputComponent = (inputProps: IInputProps): JSX.Element => {
         const inputComponentProps = {
             inputProps: {...inputProps},
             clearSuggestion: this.clearSuggestion
@@ -78,11 +83,10 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         );
     };
 
-    private renderSuggestion = (
+    protected renderSuggestion = (
         suggestion: IProductCard,
         {query, isHighlighted}: {query: string; isHighlighted: boolean}
-    ) => {
-
+    ): JSX.Element => {
         const suggestionsProps = {
             isHighlighted,
             query,
@@ -98,7 +102,7 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         );
     };
 
-    private renderSuggestionsContainer = (options: Autosuggest.RenderSuggestionsContainerParams): JSX.Element => {
+    protected renderSuggestionsContainer = (options: Autosuggest.RenderSuggestionsContainerParams): JSX.Element => {
         const suggestionsContainerProps = {
             options,
             clearSuggestion: this.clearSuggestion
@@ -111,10 +115,10 @@ export class CatalogSearchBase extends React.Component<Props, State> {
         );
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {value} = this.state;
         const {classes, suggestions, isLoading, id} = this.props;
-        const filledClass = value.length > 0 ? classes.filled : '';
+        const filledClass = !!value.length ? classes.filled : '';
 
         const autosuggestProps = {
             id,

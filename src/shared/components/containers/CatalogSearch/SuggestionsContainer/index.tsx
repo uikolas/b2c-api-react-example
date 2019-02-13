@@ -102,14 +102,14 @@ export const SuggestionsContainerBase: React.SFC<Props> = (props): JSX.Element =
     return (
         <div {...options.containerProps}>
             <div className={classes.insideContWrapper}>
-                <div>{renderCompletions}</div>
+                <div>{renderCompletions()}</div>
                 <Typography component="h4" className={classes.categoryTitle}>
                     <FormattedMessage id={'categories.panel.title'} />
                 </Typography>
 
                 <Divider />
 
-                <div className={classes.marginTop}>{renderedCategories}</div>
+                <div className={classes.marginTop}>{renderedCategories()}</div>
                 <Typography component="h4" className={classes.categoryTitle}>
                     <FormattedMessage id={'suggested.products.title'} />
                 </Typography>
