@@ -1,47 +1,51 @@
 import * as React from 'react';
 import { pathProductPageBase } from '@routes/contentRoutes';
-import MenuItem from '@material-ui/core/MenuItem/MenuItem';
-import { SquareImage } from '@components/Common/SquareImage';
-import { AppPrice } from '@components/Common/AppPrice';
-import { NavLink } from 'react-router-dom';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
+import { NavLink } from 'react-router-dom';
+import { withStyles, MenuItem } from '@material-ui/core';
+import { SquareImage } from '@components/Common/SquareImage';
+import { AppPrice } from '@components/Common/AppPrice';
 import { ISuggestionsProps as Props, ISuggestionsState as State } from './types';
 import { ICompletionMatch } from '../types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 export class SuggestionsBase extends React.Component<Props, State> {
-    private designImgWidth: number = 0.23;
+    protected designImgWidth: number = 0.23;
 
-    public state: State = {
-        heightListItem: 100
+    public readonly state: State = {
+        listItemHeight: 100
     };
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         window.addEventListener('resize', this.setListItemHeight);
         this.setListItemHeight();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         window.removeEventListener('resize', this.setListItemHeight);
     }
 
-    private setListItemHeight = (): void => {
+    protected setListItemHeight = (): void => {
         const {containerRef} = this.props;
 
         if (containerRef && containerRef.current) {
-            this.setState({
-                heightListItem: containerRef.current.offsetWidth * this.designImgWidth
-            });
+            const listItemHeight = containerRef.current.offsetWidth * this.designImgWidth;
+
+            this.setState({listItemHeight});
         }
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {suggestion, classes, isHighlighted, query, clearSuggestion} = this.props;
-        const {heightListItem} = this.state;
+        const {listItemHeight} = this.state;
         const matches = match(suggestion.abstractName, query);
         const parts = parse(suggestion.abstractName, matches);
+
+        const highlightedLetters = parts.map((part: ICompletionMatch, index: number) => part.highlight
+            ? <span key={String(index)} className={classes.mediumText}>{part.text}</span>
+            : <strong key={String(index)} className={classes.lightText}>{part.text}</strong>
+        );
 
         return (
             <NavLink
@@ -52,21 +56,13 @@ export class SuggestionsBase extends React.Component<Props, State> {
                 <MenuItem selected={isHighlighted} component="div" className={classes.menuItem}>
                     <SquareImage
                         image={suggestion.images.length ? suggestion.images[0].externalUrlSmall : ''}
-                        size={Number(heightListItem)}
+                        size={Number(listItemHeight)}
                         alt={suggestion.abstractName}
                     />
 
                     <div className={classes.description}>
                         <span className={classes.itemName}>
-                            {parts.map((part: ICompletionMatch, index: number) => (part.highlight ? (
-                                <span key={String(index)} style={{fontWeight: 500}}>
-                                        {part.text}
-                                    </span>
-                            ) : (
-                                <strong key={String(index)} style={{fontWeight: 300}}>
-                                    {part.text}
-                                </strong>
-                            )))}
+                            {highlightedLetters}
                         </span>
 
                         <AppPrice

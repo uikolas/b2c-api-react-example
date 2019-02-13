@@ -12,5 +12,5 @@ export interface ISuggestionsProps extends WithStyles<typeof styles> {
 }
 
 export interface ISuggestionsState {
-    heightListItem: number;
+    listItemHeight: number;
 }

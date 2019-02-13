@@ -33,4 +33,10 @@ export const styles = (theme: Theme) => createStyles({
         letterSpacing: '1px',
         color: theme.appColors.grey,
     },
+    mediumText: {
+        fontWeight: 500
+    },
+    lightText: {
+        fontWeight: 300
+    }
 });

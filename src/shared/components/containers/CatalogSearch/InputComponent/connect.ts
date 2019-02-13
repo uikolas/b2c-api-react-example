@@ -3,7 +3,6 @@ import { push } from 'react-router-redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import { sendSearchAction } from '@stores/actions/pages/search';
 import { getAppCurrency } from '@stores/reducers/common/init';
-
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { FlyoutSearch } from '@interfaces/searchPageData';
 import { TAppCurrency } from '@interfaces/currency';

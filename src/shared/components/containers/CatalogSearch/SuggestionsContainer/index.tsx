@@ -16,13 +16,13 @@ import { styles } from './styles';
 @connect
 export class SuggestionsContainerBase extends React.Component<Props> {
 
-    private handleSearchCompletion = (e: ClickEvent): void => {
+    protected handleSearchCompletion = (e: ClickEvent): void => {
         const query = e.currentTarget.dataset.query.trim();
         this.props.sendSearchAction({q: query, currency: this.props.currency});
         this.props.clearSuggestion(query);
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {categories, completion, suggestions, categoriesTree, classes, options} = this.props;
         let suggestQuery: string = options.query.trim();
 

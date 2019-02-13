@@ -1,29 +1,27 @@
-import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
 import * as React from 'react';
+import { connect } from './connect';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { pathSearchPage } from '@routes/contentRoutes';
-import { connect } from './connect';
+import { TextField, InputAdornment, IconButton } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import { IInputComponentProps as Props, IInputComponentState as State } from './types';
 import { ICompletionMatch } from '../types';
 
 @connect
 export class InputComponent extends React.Component<Props, State> {
-    public state: State = {
+    public readonly state: State = {
         parts: [],
         matches: []
     };
 
-    public componentDidUpdate(prevProps: Props) {
+    public componentDidUpdate(prevProps: Props): void {
         if (prevProps.completion !== this.props.completion) {
             this.suggestQuery();
         }
     }
 
-    private handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
+    protected handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const {
             isLoading,
@@ -33,8 +31,9 @@ export class InputComponent extends React.Component<Props, State> {
             currency,
             inputProps: {value}
         } = this.props;
+        const minimalLettersAmount = 2;
 
-        if (!isLoading && value.length > 2) {
+        if (!isLoading && value.length > minimalLettersAmount) {
             sendSearchAction({q: value, currency});
 
             push(pathSearchPage);
@@ -42,7 +41,7 @@ export class InputComponent extends React.Component<Props, State> {
         }
     };
 
-    public suggestQuery = () => {
+    protected suggestQuery = (): void => {
         const {completion, inputProps: {value}} = this.props;
         let suggestQuery = value;
 
@@ -61,26 +60,23 @@ export class InputComponent extends React.Component<Props, State> {
         const parts = parse(suggestQuery, matches);
 
         this.setState({matches, parts});
-    }
+    };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, ref, ...other} = this.props.inputProps;
         const {parts, matches} = this.state;
+
+        const highlightedLetters = parts.map((part: ICompletionMatch, index: number) => part.highlight
+            ? <span key={String(index)} className={classes.hiddenPart}>{part.text}</span>
+            : <strong key={String(index)} className={classes.visiblePart}>{part.text}</strong>
+        );
 
         return (
             <form action="/" method="GET" onSubmit={this.handleFullSearch} className="suggestForm">
                 <div className={classes.completionInput}>
-                    {parts.length && matches.length
-                        ? parts.map((part: ICompletionMatch, index: number) => (part.highlight ? (
-                            <span key={String(index)} className={classes.hiddenPart}>
-                                    {part.text}
-                                </span>
-                        ) : (
-                            <strong key={String(index)} className={classes.visiblePart}>
-                                {part.text}
-                            </strong>
-                        )))
-                        : null}
+                    {(!!parts.length && !!matches.length) &&
+                        highlightedLetters
+                    }
                 </div>
                 <TextField
                     variant="outlined"
