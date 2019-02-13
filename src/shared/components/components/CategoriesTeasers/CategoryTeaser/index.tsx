@@ -2,10 +2,10 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography, Grid } from '@material-ui/core';
 import { AppBtnLink } from '@components/Common/AppBtnLink';
-import { ICategoryTeaserProps } from './types';
+import { ICategoryTeaserProps as Props } from './types';
 import { styles } from './styles';
 
-export const CategoryTeaserBase: React.SFC<ICategoryTeaserProps> = (props): JSX.Element => {
+export const CategoryTeaserBase: React.SFC<Props> = (props): JSX.Element => {
     const {classes, title, text, img, path, linkTitle, isOdd} = props;
 
     const thumbnailStyles: React.CSSProperties = {

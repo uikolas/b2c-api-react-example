@@ -38,5 +38,8 @@ export const styles = (theme: Theme) => createStyles({
     },
     lightText: {
         fontWeight: 300
+    },
+    textWithoutDecoration: {
+        textDecoration: 'none'
     }
 });

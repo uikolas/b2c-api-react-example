@@ -50,7 +50,7 @@ export class SuggestionsBase extends React.Component<Props, State> {
         return (
             <NavLink
                 to={`${pathProductPageBase}/${suggestion.abstractSku}`}
-                style={{textDecoration: 'none'}}
+                className={classes.textWithoutDecoration}
                 onClick={() => clearSuggestion(suggestion.abstractName)}
             >
                 <MenuItem selected={isHighlighted} component="div" className={classes.menuItem}>

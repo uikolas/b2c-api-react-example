@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withStyles, Typography, Grid } from '@material-ui/core';
 import { AppBtnLink } from '@components/Common/AppBtnLink';
-import { IBannerProps } from './types';
+import { IBannerProps as Props } from './types';
 import { styles } from './styles';
 
-export const BannerBase: React.SFC<IBannerProps> = (props): JSX.Element => {
+export const BannerBase: React.SFC<Props> = (props): JSX.Element => {
     const {classes, titleFirst, titleSecond, intro, linkPath, linkTitle, imagePath} = props;
 
     return (
