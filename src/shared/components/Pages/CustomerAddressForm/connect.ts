@@ -13,7 +13,7 @@ import {
     isAddressesStateRejected,
     isCurrentAddressPresent,
     isPageAddressesStateLoading
-} from '@stores/reducers/Pages/Addresses/selectors';
+} from '@stores/reducers/pages/addresses/selectors';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

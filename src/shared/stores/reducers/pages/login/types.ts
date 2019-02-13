@@ -16,6 +16,7 @@ export interface IPageLoginAction extends IActionData {
     payloadRefreshTokenFulfilled?: ICustomerLoginDataParsed;
     payloadAuthFulfilled?: ICustomerLoginDataParsed;
     payloadResetPassword?: IResetPasswordPayload;
+    payload: ICustomerLoginDataParsed;
 }
 
 interface ILoginStateData extends ICustomerLoginDataParsed {

@@ -15,7 +15,7 @@ import {
     getCurrentAddress,
     isAddressesInitiated,
     isPageAddressesStateLoading
-} from '@stores/reducers/Pages/Addresses/selectors';
+} from '@stores/reducers/pages/addresses/selectors';
 import { getCustomerReference } from '@stores/reducers/pages/login';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 

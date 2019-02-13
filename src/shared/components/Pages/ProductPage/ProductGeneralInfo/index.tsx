@@ -1,31 +1,17 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import { ProductAvailability } from '../ProductAvailability';
-import { styles } from './styles';
-import {
-    priceTypeNameOriginal,
-    TPriceTypeDefaultGross,
-    TPriceTypeOriginalGross,
-    TProductName,
-    TProductSKU,
-} from 'src/shared/interfaces/product';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { FormattedMessage } from 'react-intl';
+import { withStyles, Typography } from '@material-ui/core';
+import { ProductAvailability } from './ProductAvailability/index';
+import { AppPrice } from '@components/Common/AppPrice';
+import { priceTypeNameOriginal } from '@interfaces/product';
+import { IProductGeneralInfoProps } from './types';
+import { styles } from './styles';
 
-interface ProductGeneralInfoProps extends WithStyles<typeof styles> {
-    name: TProductName;
-    sku: TProductSKU;
-    price: TPriceTypeOriginalGross;
-    oldPrice: TPriceTypeDefaultGross;
-    availability: string;
-}
-
-export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props): JSX.Element => {
+export const ProductGeneralInfoBase: React.SFC<IProductGeneralInfoProps> = (props): JSX.Element => {
     const {
         classes,
-        name = <FormattedMessage id={ 'no.name.title' } />,
-        price = <FormattedMessage id={ 'no.price.title' } />, oldPrice, availability
+        name = <FormattedMessage id={'no.name.title'} />,
+        price = <FormattedMessage id={'no.price.title'} />, oldPrice, availability
     } = props;
 
     return (
@@ -37,22 +23,22 @@ export const ProductGeneralInfoBase: React.SFC<ProductGeneralInfoProps> = (props
                 {(price || oldPrice)
                     ? <div className={classes.priceBlock}>
                         <Typography component="span" color="inherit" className={classes.price}>
-                            <AppPrice value={price} isStylesInherited/>
+                            <AppPrice value={price} isStylesInherited />
                         </Typography>
                         {oldPrice
                             ? (
                                 <Typography component="span" className={classes.oldPrice}>
-                                    <AppPrice value={oldPrice} priceType={priceTypeNameOriginal} isStylesInherited/>
+                                    <AppPrice value={oldPrice} priceType={priceTypeNameOriginal} isStylesInherited />
                                 </Typography>
                             ) : null
                         }
                         <Typography component="span" className={classes.vat}>
-                            <FormattedMessage id={ 'inc.vat.message' } />
+                            <FormattedMessage id={'inc.vat.message'} />
                         </Typography>
                     </div>
                     : null
                 }
-                <ProductAvailability availability={availability}/>
+                <ProductAvailability availability={availability} />
             </div>
         </div>
     );

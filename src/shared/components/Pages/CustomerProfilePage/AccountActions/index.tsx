@@ -1,47 +1,90 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import { styles } from '../styles';
-import { SprykerButton } from 'src/shared/components/UI/SprykerButton';
+import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
+import { pathLoginPage } from '@routes/contentRoutes';
 
-interface AccountActionsProps extends WithStyles<typeof styles> {
-    submitDeleteHandler: (event: React.FormEvent<HTMLFormElement>) => void;
+import { IAccountActionsProps as Props, IAccountActionsState as State } from './types';
+
+import { Grid, Typography, Divider } from '@material-ui/core';
+import { SprykerButton } from '@components/UI/SprykerButton';
+import { SprykerDialog } from '@components/UI/SprykerDialog';
+
+import withStyles from '@material-ui/core/styles/withStyles';
+import { styles } from './styles';
+
+@connect
+export class AccountActionsComponent extends React.Component<Props, State> {
+    readonly state: State = {
+        isDeleteProfileDialogOpen: false
+    };
+
+    protected handleDeleteProfileDialogAgree = (event: React.MouseEvent<HTMLElement>): void => {
+        if (!this.props.customerReference) {
+            return;
+        }
+        this.props.deleteCustomerEntity(this.props.customerReference);
+        this.handleDeleteProfileDialogShowing(event);
+
+        this.props.routerPush(`${pathLoginPage}`);
+    };
+
+    protected handleDeleteProfileDialogDisagree = (event: React.MouseEvent<HTMLElement>): void => {
+        this.handleDeleteProfileDialogShowing(event);
+    };
+
+    protected handleDeleteProfileDialogShowing = (event: React.SyntheticEvent<{}>): void => {
+        this.setState(prev => ({isDeleteProfileDialogOpen: !prev.isDeleteProfileDialogOpen}));
+    };
+
+    protected handleSubmitDeleteAccount = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
+
+        this.setState({
+            isDeleteProfileDialogOpen: true
+        });
+    };
+
+    public render = (): JSX.Element => {
+        const { classes } = this.props;
+
+        return (
+            <>
+                <Grid container justify="flex-start" className={ classes.section }>
+                    <Grid item xs={ 12 }>
+                        <Typography variant="title" className={ classes.sectionTitle }>
+                            <FormattedMessage id={ 'delete.account.title' } />
+                        </Typography>
+
+                        <Divider/>
+                    </Grid>
+
+                    <Grid item xs={ 12 }>
+                        <Typography variant="body1" className={ classes.warningTitle }>
+                            <FormattedMessage id={ 'delete.account.message' } />
+                        </Typography>
+                    </Grid>
+
+                    <Grid item xs={ 12 } sm={ 2 }>
+                        <SprykerButton
+                            title={ <FormattedMessage id={ 'delete.account.title' } /> }
+                            onClick={ this.handleSubmitDeleteAccount }
+                            extraClasses={ classes.deleteBtn }
+                        />
+                    </Grid>
+                </Grid>
+
+                { this.state.isDeleteProfileDialogOpen && (
+                    <SprykerDialog
+                        handleShow={ this.handleDeleteProfileDialogShowing }
+                        content={ <FormattedMessage id={ 'confirm.delete.account.message' } /> }
+                        isOpen={ this.state.isDeleteProfileDialogOpen }
+                        handleAgree={ this.handleDeleteProfileDialogAgree }
+                        handleDisagree={ this.handleDeleteProfileDialogDisagree }
+                    />
+                ) }
+            </>
+        );
+    }
 }
 
-export const AccountActionsBase: React.SFC<AccountActionsProps> = (props): JSX.Element => {
-    const {
-        classes,
-        submitDeleteHandler,
-    } = props;
-
-    return (
-        <Grid container justify="flex-start" className={ classes.section }>
-            <Grid item xs={ 12 }>
-                <Typography variant="title" className={ classes.sectionTitle }>
-                    <FormattedMessage id={ 'delete.account.title' } />
-                </Typography>
-
-                <Divider/>
-            </Grid>
-
-            <Grid item xs={ 12 }>
-                <Typography variant="body1" className={ classes.warningTitle }>
-                    <FormattedMessage id={ 'delete.account.message' } />
-                </Typography>
-            </Grid>
-
-            <Grid item xs={ 12 } sm={ 2 }>
-                <SprykerButton
-                    title={ <FormattedMessage id={ 'delete.account.title' } /> }
-                    onClick={ submitDeleteHandler }
-                    extraClasses={ classes.deleteBtn }
-                />
-            </Grid>
-        </Grid>
-    );
-};
-
-export const AccountActions = withStyles(styles)(AccountActionsBase);
+export const AccountActions = withStyles(styles)(AccountActionsComponent);
