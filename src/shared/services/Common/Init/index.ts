@@ -16,7 +16,7 @@ import { parseStoreResponse } from 'src/shared/helpers/init/store';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
 import { ICategory } from 'src/shared/interfaces/category';
-import { IInitData } from 'src/shared/interfaces/init/index';
+import { IInitData } from 'src/shared/interfaces/init';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
@@ -100,6 +100,9 @@ export class InitAppService extends ApiServiceAbstract {
     public static async switchLocale(dispatch: Function, payload?: ILocaleActionPayload): Promise<void> {
         dispatch(switchLocalePendingState());
         try {
+            api.setHeader('Accept-Language', payload.locale);
+            localStorage.setItem('locale', payload.locale);
+
             await this.getCategoriesTree(dispatch);
 
             dispatch(switchLocaleFulfilledState(payload));
