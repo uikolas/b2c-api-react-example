@@ -3,8 +3,8 @@ import { connect } from './connect';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
+import { IWishListsTableProps as Props, IWishListsTableState as State } from './types';
 import { IWishlist, TWishListId } from '@interfaces/wishlist';
-import { WishListsTableProps, WishListsTableState } from './types';
 import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
 
 import { AppTable } from '@components/Common/AppTable';
@@ -17,7 +17,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import { styles } from './styles';
 
 @connect
-export class WishListsTableComponent extends React.Component<WishListsTableProps, WishListsTableState> {
+export class WishListsTableComponent extends React.Component<Props, State> {
     readonly headerCellPart = 'header-';
     readonly bodyCellPart = 'body-';
     readonly headerCells: ICellInfo[] = [
@@ -28,33 +28,33 @@ export class WishListsTableComponent extends React.Component<WishListsTableProps
         {content: '', id: `${this.headerCellPart}5`},
     ];
 
-    public state: WishListsTableState = {
+    readonly state: State = {
         updatedName: '',
         updatedList: '',
     };
 
-    public handleChangeUpdatedName = (event: InputChangeEvent): void => {
+    protected handleChangeUpdatedName = (event: InputChangeEvent): void => {
         event.persist();
         this.setState(() => ({updatedName: event.target.value}));
     };
 
-    public handleUpdateWishlist = (e: ClickEvent) => {
+    protected handleUpdateWishlist = (event: ClickEvent): void => {
         this.props.updateWishlistAction(this.state.updatedList, this.state.updatedName);
         this.setState(() => ({updatedList: '', updatedName: ''}));
     };
 
-    public handleDeleteWishlist = (wishlistId: TWishListId) => (e: ClickEvent) => {
+    protected handleDeleteWishlist = (wishlistId: TWishListId) => (event: ClickEvent): void => {
         this.props.deleteWishlistAction(wishlistId);
     };
 
-    private setUpdatedWishlist = (id: string, name: string) => (e: ClickEvent) => {
+    protected setUpdatedWishlist = (id: string, name: string) => (event: ClickEvent): void => {
         this.setState({
             updatedList: id,
             updatedName: name
         });
     };
 
-    public generateTableRows = (): ITableRow[] => {
+    protected generateTableRows = (): ITableRow[] => {
         if (!this.props.wishlists) {
             return [];
         }
@@ -113,8 +113,11 @@ export class WishListsTableComponent extends React.Component<WishListsTableProps
                 },
                 {
                     content: (
-                        <Typography component="span" className={tableAction}
-                                    onClick={this.handleDeleteWishlist(item.id)}>
+                        <Typography
+                            component="span"
+                            className={tableAction}
+                            onClick={this.handleDeleteWishlist(item.id)}
+                        >
                             <FormattedMessage id={ 'word.delete.title' } />
                         </Typography>
                     ),
@@ -124,7 +127,7 @@ export class WishListsTableComponent extends React.Component<WishListsTableProps
         }));
     };
 
-    public render = () => {
+    public render = (): JSX.Element => {
         const { classes } = this.props;
         const bodyRows = this.generateTableRows();
 

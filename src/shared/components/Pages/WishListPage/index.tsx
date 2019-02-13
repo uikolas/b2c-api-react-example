@@ -2,12 +2,12 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
-import { WishlistPageProps as Props } from './types';
+import { IWishlistPageProps as Props } from './types';
 
 import { AppPageTitle } from '@components/Common/AppPageTitle';
 import { ErrorBoundary } from '@components/Library/ErrorBoundary';
-import { AddNewWishListForm } from './containers/addNewWishListForm';
-import { WishListsTable } from './containers/wishListsTable';
+import { AddNewWishListForm } from './AddNewWishListForm';
+import { WishListsTable } from './WishListsTable';
 
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -46,6 +46,6 @@ export class WishListBase extends React.Component<Props> {
     }
 }
 
-export const ConnectedWishlistPage = withStyles(styles)(WishListBase);
+export const WishlistPage = withStyles(styles)(WishListBase);
 
-export default ConnectedWishlistPage;
+export default WishlistPage;

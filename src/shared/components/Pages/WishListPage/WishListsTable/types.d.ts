@@ -1,8 +1,9 @@
-import { WithStyles } from '@material-ui/core';
-import { styles } from './styles';
 import { IWishlist } from '@interfaces/wishlist';
 
-export interface WishListsTableProps extends WithStyles<typeof styles> {
+import { WithStyles } from '@material-ui/core';
+import { styles } from './styles';
+
+export interface IWishListsTableProps extends WithStyles<typeof styles> {
     isLoading: boolean;
     wishlists: IWishlist[] | null;
 
@@ -13,7 +14,7 @@ export interface WishListsTableProps extends WithStyles<typeof styles> {
     deleteWishlistAction(wishlistId: string): void;
 }
 
-export interface WishListsTableState {
+export interface IWishListsTableState {
     updatedName: string;
     updatedList: string;
 }

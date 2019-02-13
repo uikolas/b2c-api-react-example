@@ -3,26 +3,26 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
 import { InputChangeEvent } from '@interfaces/common/react';
-import { AddNewWishListFormProps, AddNewWishListFormState } from './types';
+import { IAddNewWishListFormProps as Props, IAddNewWishListFormState as State } from './types';
 
 import { Typography, Paper, TextField, Button, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 @connect
-export class AddNewWishListFormComponent extends React.Component<AddNewWishListFormProps, AddNewWishListFormState> {
-    public state: AddNewWishListFormState = {
+export class AddNewWishListFormComponent extends React.Component<Props, State> {
+    readonly state: State = {
         name: '',
     };
 
-    public handleChangeName = (event: InputChangeEvent): void => {
+    protected handleChangeName = (event: InputChangeEvent): void => {
         event.persist();
         this.setState({
             name: event.target.value
         });
     };
 
-    public addWishlist = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    protected addWishlist = (event: React.FormEvent<HTMLFormElement>): void => {
+        event.preventDefault();
 
         if (!this.state.name.trim()) {
             return;
@@ -34,7 +34,7 @@ export class AddNewWishListFormComponent extends React.Component<AddNewWishListF
         });
     };
 
-    public render = () => {
+    public render = (): JSX.Element => {
         const { classes } = this.props;
         const { name } = this.state;
 
