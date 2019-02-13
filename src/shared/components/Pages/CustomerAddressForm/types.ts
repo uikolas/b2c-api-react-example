@@ -1,7 +1,8 @@
+import { IAddressItem } from '@interfaces/addresses';
+import { ICountry } from '@interfaces/country';
+
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { styles } from '../styles';
-import { IAddressItem } from 'src/shared/interfaces/addresses';
-import { ICountry } from 'src/shared/interfaces/country';
+import { styles } from './styles';
 
 export interface AddressFormProps extends WithStyles<typeof styles> {
     customer: string;
