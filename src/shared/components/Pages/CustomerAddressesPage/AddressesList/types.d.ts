@@ -3,7 +3,7 @@ import { styles } from './styles';
 
 import { IAddressItem } from '@interfaces/addresses';
 
-export interface AddressesListProps extends WithStyles <typeof styles> {
+export interface IAddressesListProps extends WithStyles <typeof styles> {
     isLoading: boolean;
     customer: string | null;
     customerAddresses: IAddressItem[];

@@ -2,7 +2,7 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 
-export interface CustomerAddressPageProps extends WithStyles<typeof styles> {
+export interface ICustomerAddressPageProps extends WithStyles<typeof styles> {
     customer: string | null;
     addresses: IAddressItem[];
     currentAddress: IAddressItem;
@@ -15,4 +15,4 @@ export interface CustomerAddressPageProps extends WithStyles<typeof styles> {
     routerPush: Function;
 }
 
-export interface CustomerAddressPageState {}
+export interface ICustomerAddressPageState {}

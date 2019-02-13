@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-import { CustomerAddressPageProps as Props, CustomerAddressPageState as State } from './types';
+
+import { ICustomerAddressPageProps as Props, ICustomerAddressPageState as State } from './types';
 import { ClickEvent } from '@interfaces/common/react';
+
 import { pathAddressFormNew, pathAddressFormUpdateBase } from '@routes/contentRoutes';
 
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { SprykerButton } from '@components/UI/SprykerButton';
-import { AddressesList } from './components/addressesList';
+import { AddressesList } from './AddressesList';
 
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';

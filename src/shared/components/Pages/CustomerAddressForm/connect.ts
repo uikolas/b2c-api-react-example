@@ -1,7 +1,7 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
 
-import { getRouterHistoryBack, getRouterMatchParam } from '@helpers/router/index';
+import { getRouterHistoryBack, getRouterMatchParam } from '@helpers/router';
 import { ICountry } from '@interfaces/country';
 import { IAddressItem } from '@interfaces/addresses';
 
