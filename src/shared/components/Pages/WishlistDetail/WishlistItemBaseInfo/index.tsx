@@ -1,7 +1,7 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from '../styles';
-import { WishListRowsProps as Props } from './types';
+import { WishlistRowsProps as Props } from './types';
 import { IProductAttributes } from 'src/shared/interfaces/product';
 
 const WishlistItemBaseInfoComponent: React.SFC<Props> = ({classes, productItem, renderProduct}) => (

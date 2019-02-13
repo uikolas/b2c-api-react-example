@@ -100,7 +100,7 @@ export const messages: IMessages = {
         'no.order.message': 'You do not have any previous orders.',
         'no.price.title': 'No price',
         'no.products.in.checkout.title': 'You have not got any products in the cart.',
-        'no.tramslations.title': 'No translation',
+        'no.translations.title': 'No translation',
         'number.label': 'Number',
         'optional.placeholder': 'Optional',
         'order.amount': 'Amount Paid',
@@ -217,6 +217,7 @@ export const messages: IMessages = {
         'word.total.title': 'Total',
         'word.update.title': 'Update',
         'word.wishlist.title': 'Wishlist',
+        'word.each.title': 'each',
         'zip.code.label': 'Zipcode',
     },
     'de': {
@@ -316,7 +317,7 @@ export const messages: IMessages = {
         'no.order.message': 'Sie haben keine früheren Bestellungen.',
         'no.price.title': 'Kein Preis',
         'no.products.in.checkout.title': 'Sie haben keine Produkte im Warenkorb.',
-        'no.tramslations.title': 'Keine Übersetzung',
+        'no.translations.title': 'Keine Übersetzung',
         'number.label': 'Nummer',
         'optional.placeholder': 'Optional',
         'order.amount': 'Amount Paid',
@@ -432,9 +433,10 @@ export const messages: IMessages = {
         'word.total.title': 'Gesamtsumme',
         'word.update.title': 'Speichern',
         'word.wishlist.title': 'Wunschzettel',
+        'word.each.title': 'jeder',
         'zip.code.label': 'PLZ',
     }
-}
+};
 
 // Console Messages
 export const CartAuthenticateErrorMessage = 'You should login to add item to the cart';

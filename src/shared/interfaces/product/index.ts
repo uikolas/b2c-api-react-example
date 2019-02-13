@@ -92,7 +92,7 @@ export interface ISuperAttributes {
 
 export interface IProductAvailability {
     availability: TProductAvailability | null;
-    quantity: TProductQuantity | null;
+    quantity?: TProductQuantity | null;
     isNeverOutOfStock?: TProductIsNeverOutOfStock;
 }
 

@@ -6,7 +6,7 @@ import {
     SET_CURRENT_ADDRESS,
     UPDATE_ADDRESS,
     GET_ONE_ADDRESS,
-} from '@stores/actionTypes/Pages/Addresses';
+} from '@stores/actionTypes/pages/addresses';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { IAddressesState, IPageAddressesAction } from '@stores/reducers/Pages/Addresses/types';
 
