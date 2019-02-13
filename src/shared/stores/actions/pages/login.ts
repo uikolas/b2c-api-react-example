@@ -32,8 +32,8 @@ export const loginCustomerPendingStateAction = () => ({
 });
 
 export const loginCustomerRejectedStateAction = (message: string) => ({
-    type: PAGES_LOGIN_REQUEST + '_REJECTED',
-    payload: {error: message}
+  type: PAGES_LOGIN_REQUEST + '_REJECTED',
+  payloadRejected: {error: message},
 });
 
 export const loginCustomerFulfilledStateAction = (payload: ICustomerLoginDataParsed) => ({
