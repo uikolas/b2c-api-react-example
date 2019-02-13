@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core';
-import { SuperAttributeBlock } from './SuperAttributeBlock';
+import { SuperAttributeBlock } from './SuperAttributeBlock/index';
 import { ProductSuperAttributeProps as Props, ProductSuperAttributeState as State } from './types';
 import { ISuperAttribute } from '@helpers/product/types';
 import { styles } from './styles';
