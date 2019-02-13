@@ -2,7 +2,11 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
-import { UpdateProfileProps, UpdateProfileState, IProfileFieldInput } from './types';
+import {
+    IUpdateProfileProps as Props,
+    IUpdateProfileState as State,
+    IProfileFieldInput
+} from './types';
 import { TSalutationVariant } from '@interfaces/customer';
 
 import { SprykerButton } from '@components/UI/SprykerButton';
@@ -14,22 +18,18 @@ import { SalutationVariants } from '@constants/customer';
 import { typeNotificationWarning } from '@constants/notifications';
 
 import { Grid, withStyles } from '@material-ui/core';
-import { styles } from '../../styles';
+import { styles } from '../styles';
 
 @connect
-export class UpdateProfileComponent extends React.Component<UpdateProfileProps, UpdateProfileState> {
-    constructor(props: UpdateProfileProps) {
-        super(props);
+export class UpdateProfileComponent extends React.Component<Props, State> {
+    readonly state: State = {
+        salutation: this.props.customerData ? this.props.customerData.salutation : '',
+        firstName: this.props.customerData ? this.props.customerData.firstName : '',
+        lastName: this.props.customerData ? this.props.customerData.lastName : '',
+        email: this.props.customerData ? this.props.customerData.email : ''
+    };
 
-        this.state = {
-            salutation: props.customerData ? props.customerData.salutation : '',
-            firstName: props.customerData ? props.customerData.firstName : '',
-            lastName: props.customerData ? props.customerData.lastName : '',
-            email: props.customerData ? props.customerData.email : ''
-        };
-    }
-
-    public handleInputChange = (event: { target: IProfileFieldInput }): void => {
+    protected handleInputChange = (event: { target: IProfileFieldInput }): void => {
         const { name, value }: IProfileFieldInput = event.target;
         const cleanValue = value.trim();
 
@@ -41,11 +41,13 @@ export class UpdateProfileComponent extends React.Component<UpdateProfileProps, 
         }
     };
 
-    public handleSubmitUpdateProfile = (event: React.FormEvent<HTMLFormElement>): void => {
+    protected handleSubmitUpdateProfile = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
+
         if (!this.props.customerReference) {
             return;
         }
+
         const {firstName, lastName, salutation, email} = this.state;
 
         if (!firstName || !lastName || !email || !salutation) {
@@ -54,13 +56,14 @@ export class UpdateProfileComponent extends React.Component<UpdateProfileProps, 
                 type: typeNotificationWarning
             });
 
-            return null;
+            return;
         }
+
         const profileData = { salutation, firstName, lastName, email };
         this.props.updateCustomerData(this.props.customerReference, profileData);
     };
 
-    public render = () => {
+    public render = (): JSX.Element => {
         const { classes } = this.props;
 
         const { firstName, lastName, salutation, email } = this.state;

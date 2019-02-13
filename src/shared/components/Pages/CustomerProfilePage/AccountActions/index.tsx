@@ -3,26 +3,22 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { pathLoginPage } from '@routes/contentRoutes';
 
-import { AccountActionsProps, AccountActionsState } from './types';
+import { IAccountActionsProps as Props, IAccountActionsState as State } from './types';
 
 import { Grid, Typography, Divider } from '@material-ui/core';
 import { SprykerButton } from '@components/UI/SprykerButton';
 import { SprykerDialog } from '@components/UI/SprykerDialog';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import { styles } from '../../styles';
+import { styles } from './styles';
 
 @connect
-export class AccountActionsComponent extends React.Component<AccountActionsProps, AccountActionsState> {
-    constructor(props: AccountActionsProps) {
-        super(props);
+export class AccountActionsComponent extends React.Component<Props, State> {
+    readonly state: State = {
+        isDeleteProfileDialogOpen: false
+    };
 
-        this.state = {
-            isDeleteProfileDialogOpen: false
-        };
-    }
-
-    public handleDeleteProfileDialogAgree = (event: React.MouseEvent<HTMLElement>): void => {
+    protected handleDeleteProfileDialogAgree = (event: React.MouseEvent<HTMLElement>): void => {
         if (!this.props.customerReference) {
             return;
         }
@@ -32,15 +28,15 @@ export class AccountActionsComponent extends React.Component<AccountActionsProps
         this.props.routerPush(`${pathLoginPage}`);
     };
 
-    public handleDeleteProfileDialogDisagree = (event: React.MouseEvent<HTMLElement>): void => {
+    protected handleDeleteProfileDialogDisagree = (event: React.MouseEvent<HTMLElement>): void => {
         this.handleDeleteProfileDialogShowing(event);
     };
 
-    public handleDeleteProfileDialogShowing = (event: React.SyntheticEvent<{}>): void => {
+    protected handleDeleteProfileDialogShowing = (event: React.SyntheticEvent<{}>): void => {
         this.setState(prev => ({isDeleteProfileDialogOpen: !prev.isDeleteProfileDialogOpen}));
     };
 
-    public handleSubmitDeleteAccount = (event: React.FormEvent<HTMLFormElement>): void => {
+    protected handleSubmitDeleteAccount = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
 
         this.setState({
@@ -48,10 +44,8 @@ export class AccountActionsComponent extends React.Component<AccountActionsProps
         });
     };
 
-    public render = () => {
-        const {
-            classes,
-        } = this.props;
+    public render = (): JSX.Element => {
+        const { classes } = this.props;
 
         return (
             <>

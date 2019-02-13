@@ -1,22 +1,19 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { reduxify } from 'src/shared/lib/redux-helper';
+import { getRouterHistoryPush } from '@helpers/router';
+
+import { TCustomerReference } from '@interfaces/customer';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+
 import {
     isCustomerProfilePresent,
     isPageCustomerProfileFulfilled,
     isPageCustomerProfileLoading,
     isPageCustomerProfileRejected,
 } from '@stores/reducers/pages/CustomerProfile';
-
-import {
-    TCustomerReference,
-} from 'src/shared/interfaces/customer';
-import {
-    getCustomerProfileAction,
-} from '@stores/actions/pages/customerProfile';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { getCustomerProfileAction } from '@stores/actions/pages/customerProfile';
 import { getCustomerReference } from '@stores/reducers/pages/login';
 import { isAppInitiated } from '@stores/reducers/common/init';
-import { getRouterHistoryPush } from '@helpers/router';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isLoading = isPageCustomerProfileLoading(state, ownProps);

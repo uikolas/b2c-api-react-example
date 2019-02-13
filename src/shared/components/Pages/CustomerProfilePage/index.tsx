@@ -1,17 +1,19 @@
 import * as React from 'react';
 import { connect } from './connect';
-import { ICustomerProfilePageProps } from './types';
+import { FormattedMessage } from 'react-intl';
+
+import { ICustomerProfilePageProps as Props } from './types';
 
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { UpdateProfile } from './containers/updateProfile';
-import { ChangePassword } from './containers/changePassword';
-import { AccountActions } from './containers/accountActions';
+import { UpdateProfile } from './updateProfile';
+import { ChangePassword } from './changePassword';
+import { AccountActions } from './accountActions';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 @connect
-export class CustomerProfilePageBase extends React.Component<ICustomerProfilePageProps> {
+export class CustomerProfilePageBase extends React.Component<Props> {
     public componentDidMount = () => {
         if (!this.props.isCustomerDataExist) {
             this.initRequestData();
@@ -30,11 +32,13 @@ export class CustomerProfilePageBase extends React.Component<ICustomerProfilePag
         }
     };
 
-    public render(): JSX.Element {
+    public render = (): JSX.Element => {
         if (!this.props.isCustomerDataExist) {
             return (
                 <>
-                    <div>Loading...</div>
+                    <div>
+                        <FormattedMessage id={ 'word.loading.title' }  />...
+                    </div>
                 </>
             );
         }

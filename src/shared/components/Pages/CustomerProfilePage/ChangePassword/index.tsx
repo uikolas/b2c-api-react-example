@@ -2,9 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from './connect';
 
-import { ChangePasswordState } from '@components/Pages/CustomerProfilePage/containers/changePassword/types';
-import { IProfileFieldInput } from '@components/Pages/CustomerProfilePage/types';
-import { ChangePasswordProps } from './types';
+import { IChangePasswordProps as Props, IChangePasswordState as State, IProfileFieldInput } from './types';
 
 import { typeNotificationWarning } from '@constants/notifications';
 
@@ -14,17 +12,17 @@ import { SprykerForm } from '@components/UI/SprykerForm';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 import { Grid, withStyles } from '@material-ui/core';
-import { styles } from '../../styles';
+import { styles } from '../styles';
 
 @connect
-export class ChangePasswordComponent extends React.Component<ChangePasswordProps, ChangePasswordState> {
-    readonly state: ChangePasswordState = {
+export class ChangePasswordComponent extends React.Component<Props, State> {
+    readonly state: State = {
         password: '',
         newPassword: '',
         confirmPassword: ''
     };
 
-    public componentDidUpdate = (prevProps: ChangePasswordProps, prevState: ChangePasswordState): void => {
+    public componentDidUpdate = (prevProps: Props, prevState: State): void => {
         if (this.props.passwordUpdated && !prevProps.passwordUpdated) {
             this.clearPasswords();
         }
@@ -49,7 +47,7 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
                 type: typeNotificationWarning
             });
 
-            return null;
+            return;
         }
 
         if (newPassword !== confirmPassword) {
@@ -58,7 +56,7 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
                 type: typeNotificationWarning
             });
 
-            return null;
+            return;
         }
 
         const passwordData = { password, newPassword, confirmPassword };
@@ -73,7 +71,7 @@ export class ChangePasswordComponent extends React.Component<ChangePasswordProps
         });
     };
 
-    public render = () => {
+    public render = (): JSX.Element => {
         const { classes } = this.props;
 
         const { password, newPassword, confirmPassword } = this.state;
