@@ -37,7 +37,7 @@ export class CustomerProfilePageBase extends React.Component<Props> {
             return (
                 <>
                     <div>
-                        <FormattedMessage id={ 'word.loading.title' }  />...
+                        <FormattedMessage id={ 'word.loading.title' }  />
                     </div>
                 </>
             );

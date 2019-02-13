@@ -217,7 +217,7 @@ export const messages: IMessages = {
         'word.total.title': 'Total',
         'word.update.title': 'Update',
         'word.wishlist.title': 'Wishlist',
-        'word.loading.title': 'Loading',
+        'word.loading.title': 'Loading...',
         'zip.code.label': 'Zipcode',
     },
     'de': {
@@ -433,7 +433,7 @@ export const messages: IMessages = {
         'word.total.title': 'Gesamtsumme',
         'word.update.title': 'Speichern',
         'word.wishlist.title': 'Wunschzettel',
-        'word.loading.title': 'Beladung',
+        'word.loading.title': 'Beladung...',
         'zip.code.label': 'PLZ',
     }
 }
