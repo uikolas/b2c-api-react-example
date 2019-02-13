@@ -6,7 +6,7 @@ import { ProductSuperAttributeProps as Props, ProductSuperAttributeState as Stat
 import { styles } from './styles';
 import { ISuperAttribute } from 'src/shared/helpers/product/types';
 
-export class ProductSuperAttributeComponent extends React.PureComponent<Props, State> {
+export class ProductSuperAttributeComponent extends React.Component<Props, State> {
     public state: State = {
         selectedValues: null,
     };
