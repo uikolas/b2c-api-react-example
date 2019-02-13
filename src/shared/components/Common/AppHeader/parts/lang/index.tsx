@@ -9,7 +9,6 @@ import { LangProps as Props, LangState as State, language } from './types';
 import { styles } from './styles';
 import { connect } from './connect';
 import { TAppLocale } from 'src/shared/interfaces/locale';
-import api from '@services/api';
 import { FormattedMessage } from 'react-intl';
 
 const availableLanguages: language[] = [
@@ -36,7 +35,6 @@ export class LangComponent extends React.PureComponent<Props, State> {
     private selectLang = (lang: language) => (event: React.MouseEvent<HTMLElement>) => {
         const locale: TAppLocale = lang.code;
 
-        api.setHeader('Accept-Language', locale);
         this.setState({ anchorEl: null });
         this.props.switchLocaleAction({ locale });
     };
