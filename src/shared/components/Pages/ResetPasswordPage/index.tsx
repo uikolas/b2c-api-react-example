@@ -1,33 +1,39 @@
 import * as React from 'react';
-import withStyles  from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import { resetPasswordAction } from '@stores/actions/pages/login';
-import { AppMain } from 'src/shared/components/Common/AppMain';
-import { ResetPasswordPageProps, ResetPasswordPageState } from './types';
-import { styles } from './styles';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { IResetPasswordPayload } from 'src/shared/interfaces/customer/index';
+import {
+    withStyles,
+    Grid,
+    Paper,
+    Typography,
+    TextField,
+    Button
+} from '@material-ui/core';
+import { AppMain } from '@components/Common/AppMain';
+import {
+    IResetPasswordPageProps as Props,
+    IResetPasswordPageState as State
+} from './types';
+import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
+import { IResetPasswordPayload } from '@interfaces/customer';
 import { FormattedMessage } from 'react-intl';
+import { styles } from './styles';
 
-export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProps, ResetPasswordPageState> {
-    public state: ResetPasswordPageState = {
+export class ResetPasswordPageBase extends React.Component<Props, State> {
+    public readonly state: State = {
         password: '',
         confirmPassword: '',
         submitted: false
     };
 
-    public handleChange = (event: InputChangeEvent) => {
+    protected handleChange = (event: InputChangeEvent): void => {
         const {name, value} = event.target;
         this.setState({
-            ...this.state, [name]: value
+            ...this.state,
+            [name]: value
         });
     };
 
-    public submitRequest = (e: ClickEvent) => {
+    protected submitRequest = (e: ClickEvent): void => {
         this.setState({submitted: true});
         if (this.state.password !== this.state.confirmPassword) {
             return;
@@ -42,7 +48,7 @@ export class ResetPasswordPageBase extends React.Component<ResetPasswordPageProp
         this.props.dispatch(resetPasswordAction(payload));
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes} = this.props;
         const {confirmPassword, password, submitted} = this.state;
 

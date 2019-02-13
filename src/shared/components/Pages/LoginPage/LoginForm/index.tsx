@@ -1,22 +1,24 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { LoginFormProps, LoginFormState } from './types';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { styles } from './styles';
-import { FormEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
+import {
+    withStyles,
+    TextField,
+    Button,
+    Typography
+} from '@material-ui/core';
+import { ILoginFormProps as Props, ILoginFormState as State } from './types';
+import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { styles } from './styles';
 
-export class LoginFormBase extends React.Component<LoginFormProps, LoginFormState> {
-    public state = {
+export class LoginFormBase extends React.Component<Props, State> {
+    public readonly state: State = {
         username: '',
         password: '',
         isSubmitting: false,
         isSubmitted: false
     };
 
-    public handleSubmit = (event: FormEvent): void => {
+    protected handleSubmit = (event: FormEvent): void => {
         event.preventDefault();
         if (!this.state.username || !this.state.password) {
             return null;
@@ -29,7 +31,7 @@ export class LoginFormBase extends React.Component<LoginFormProps, LoginFormStat
         this.props.handleSubmit(payload);
     };
 
-    public handleChange = (name: string) => (event: InputChangeEvent) => {
+    protected handleChange = (name: string) => (event: InputChangeEvent) => {
         this.setState({
             ...this.state,
             [name]: event.target.value

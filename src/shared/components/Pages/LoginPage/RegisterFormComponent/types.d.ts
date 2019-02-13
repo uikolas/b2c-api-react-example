@@ -5,13 +5,13 @@ import {
     TCustomerFirstName,
     TCustomerLastName, TCustomerPassword,
     TCustomerSalutation,
-} from 'src/shared/interfaces/customer/index';
+} from '@interfaces/customer/index';
 
-export interface RegisterFormProps extends WithStyles<typeof styles> {
+export interface IRegisterFormProps extends WithStyles<typeof styles> {
     handleSubmit: Function;
 }
 
-export interface RegisterFormState {
+export interface IRegisterFormState {
     salutation: TCustomerSalutation;
     firstName: TCustomerFirstName;
     lastName: TCustomerLastName;

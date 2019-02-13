@@ -10,9 +10,4 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     });
 };
 
-export const connect = reduxify(
-    mapStateToProps,
-    (dispatch: Function) => ({
-        dispatch
-    })
-);
+export const connect = reduxify(mapStateToProps);

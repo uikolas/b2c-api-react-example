@@ -1,17 +1,25 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { TextField, Button, Typography, MenuItem, Grid, Checkbox, FormControlLabel } from '@material-ui/core';
-import { TSalutationVariant } from '@interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer';
-import { styles } from './styles';
-import { RegisterFormProps as Props, RegisterFormState as State } from './types';
-import { InputChangeEvent, FormEvent } from 'src/shared/interfaces/common/react';
-import { FormattedMessage } from 'react-intl';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { typeNotificationWarning } from 'src/shared/constants/notifications';
+import { FormattedMessage } from 'react-intl';
+import {
+    withStyles,
+    TextField,
+    Button,
+    Typography,
+    MenuItem,
+    Grid,
+    Checkbox,
+    FormControlLabel
+} from '@material-ui/core';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { TSalutationVariant } from '@interfaces/customer';
+import { IRegisterFormProps as Props, IRegisterFormState as State } from './types';
+import { InputChangeEvent, FormEvent } from '@interfaces/common/react';
+import { styles } from './styles';
 
 export class RegisterFormBase extends React.Component<Props, State> {
-    public state = {
+    public state: State = {
         salutation: '',
         firstName: '',
         lastName: '',
@@ -21,19 +29,19 @@ export class RegisterFormBase extends React.Component<Props, State> {
         acceptedTerms: false
     };
 
-    public handleChangeSalutation = (event: InputChangeEvent): void => {
+    protected handleChangeSalutation = (event: InputChangeEvent): void => {
         this.setState(() => ({salutation: event.target.value}));
     };
 
-    public handleChangeAgreement = (event: InputChangeEvent): void => {
+    protected handleChangeAgreement = (event: InputChangeEvent): void => {
         this.setState(() => ({acceptedTerms: !this.state.acceptedTerms}));
     };
 
-    public handleChange = ({target: {name, value}}: InputChangeEvent): void => {
+    protected handleChange = ({target: {name, value}}: InputChangeEvent): void => {
         this.setState(() => ({...this.state, [name]: value}));
     };
 
-    public handleSubmitForm = (e: FormEvent): void => {
+    protected handleSubmitForm = (e: FormEvent): void => {
         e.preventDefault();
         const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
 
@@ -58,7 +66,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
         this.props.handleSubmit(this.state);
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes} = this.props;
 
         return (

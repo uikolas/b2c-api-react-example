@@ -1,33 +1,38 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { connect } from './connect';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import {
+    withStyles,
+    Grid,
+    Paper,
+    Typography,
+    TextField,
+    Button
+} from '@material-ui/core';
 import BackIcon from '@material-ui/icons/ChevronLeft';
-import { ForgotPasswordPageProps, ForgotPasswordPageState } from './types';
-import { AppMain } from 'src/shared/components/Common/AppMain';
+import {
+    IForgotPasswordPageProps as Props,
+    IForgotPasswordPageState as State
+} from './types';
+import { AppMain } from '@components/Common/AppMain';
 import { styles } from './styles';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
+import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
 import { FormattedMessage } from 'react-intl';
 
 @connect
-export class ForgotPasswordPageBase extends React.Component<ForgotPasswordPageProps, ForgotPasswordPageState> {
-    public state: ForgotPasswordPageState = {
+export class ForgotPasswordPageBase extends React.Component<Props, State> {
+    public readonly state: State = {
         email: ''
     };
 
-    public handleChange = (e: InputChangeEvent) => {
+    protected handleChange = (e: InputChangeEvent): void => {
         this.setState({email: e.target.value});
     };
 
-    public submitRequest = (e: ClickEvent) => {
+    protected submitRequest = (e: ClickEvent): void => {
         this.props.sendForgotRequest(this.state.email);
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, routerGoBack} = this.props;
         const {email} = this.state;
 

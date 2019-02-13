@@ -2,11 +2,11 @@ import { WithStyles } from '@material-ui/core';
 import { styles } from './styles';
 import { TCustomerPassword, TCustomerUsername } from '@interfaces/customer';
 
-export interface LoginFormProps extends WithStyles<typeof styles> {
+export interface ILoginFormProps extends WithStyles<typeof styles> {
     handleSubmit: Function;
 }
 
-export interface LoginFormState {
+export interface ILoginFormState {
     username: TCustomerUsername;
     password: TCustomerPassword;
     isSubmitting: boolean;

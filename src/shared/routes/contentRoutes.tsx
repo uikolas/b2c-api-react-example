@@ -6,7 +6,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { LoadableHomePage } from '../components/Pages/HomePage/loadable';
 import { LoadableLoginPage } from '../components/Pages/LoginPage/loadable';
 import { LoadablePasswordForgotPage } from '../components/Pages/ForgotPasswordPage/loadable';
-import { LoadablePasswordResetPage } from '../components/Pages/ResetPassword/loadable';
+import { LoadablePasswordResetPage } from '../components/Pages/ResetPasswordPage/loadable';
 import { LoadableSearchPage } from '../components/Pages/SearchPage/loadable';
 import { LoadableProductPage } from '../components/Pages/ProductPage/loadable';
 import { LoadableCartPage } from '../components/Pages/CartPage/loadable';

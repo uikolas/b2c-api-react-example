@@ -1,31 +1,30 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 import { connect } from './connect';
-import { styles } from './styles';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { LoginPageProps, LoginPageState } from './types';
-import Grid from '@material-ui/core/Grid';
-import { NavLink } from 'react-router-dom';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
+import { NavLink } from 'react-router-dom';
+import { withStyles, Grid } from '@material-ui/core';
 import { AppMain } from '@components/Common/AppMain';
-import { LoginForm } from '@components/containers/LoginForm';
-import { RegisterFormComponent } from '@components/containers/RegisterFormComponent';
-import { FormattedMessage } from 'react-intl';
+import { LoginForm } from './LoginForm';
+import { RegisterFormComponent } from './RegisterFormComponent';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import {
+    ILoginPageProps as Props,
+} from './types';
+import { styles } from './styles';
 
 @(withRouter as Function)
 @connect
-export class LoginPageBase extends React.Component<LoginPageProps, LoginPageState> {
-    public state: LoginPageState = {};
-
-    public componentDidUpdate(prevProps: LoginPageProps) {
+export class LoginPageBase extends React.Component<Props> {
+    public componentDidUpdate(prevProps: Props): void {
         if (!prevProps.isAuth && this.props.isAuth) {
             this.props.getCustomerCart();
             this.props.history.push(pathCustomerPage);
         }
     }
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, handleSubmitLoginForm, handleSubmitRegisterForm} = this.props;
 
         return (
