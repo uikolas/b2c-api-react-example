@@ -94,7 +94,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         this.props.clearActiveFilters();
     };
 
-    public selectCategory = (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>): void => {
+    protected selectCategory = (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>): void => {
         if (this.props.locationCategoryId !== categoryId) {
             this.props.changeLocation(`${pathCategoryPageBase}/${categoryId}`);
             this.setState({
@@ -103,7 +103,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         }
     };
 
-    public updateActiveFilters = (name: string, values: string[]) => {
+    protected updateActiveFilters = (name: string, values: string[]) => {
         this.setState((prevState: ISearchPageState) => ({
             activeFilters: {
                 ...prevState.activeFilters,
@@ -115,7 +115,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         }));
     };
 
-    public updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
+    protected updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
         const currentData = this.props.rangeFilters.filter((filter: RangeFacets) => (filter.name === name))[0];
         const currentDataActiveMin = rangeFilterValueToFront(currentData.activeMin, rangeMinType);
         const currentDataActiveMax = rangeFilterValueToFront(currentData.activeMax, rangeMaxType);
@@ -137,7 +137,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         ));
     };
 
-    public resetRangeFilter = ({name}: IFilterItemToDelete): boolean => {
+    protected resetRangeFilter = ({name}: IFilterItemToDelete): boolean => {
         if (!name) {
             return;
         }
@@ -157,14 +157,14 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         return true;
     };
 
-    public resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
+    protected resetFilterOneValue = ({name, value}: IFilterItemToDelete): boolean => {
         const values = [...this.state.activeFilters[name]].filter((val: TFilterItemValue) => val !== value);
         this.updateActiveFilters(name, values);
 
         return true;
     };
 
-    public updateSearch = (needResetURLParam: boolean = true): boolean => {
+    protected updateSearch = (needResetURLParam: boolean = true): boolean => {
         if (!this.validateData()) {
             console.error('can\'t make request in updateSearch method!!!');
             NotificationsMessage({
@@ -193,30 +193,30 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         return true;
     };
 
-    public updatePageUrl(query: ISearchQuery): void {
+    protected updatePageUrl(query: ISearchQuery): void {
         const queryString = qs.stringify(query);
         this.props.history.push({
             search: `?${queryString}`
         });
     }
 
-    public handleSetSorting = (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode): void => {
+    protected handleSetSorting = (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode): void => {
         this.runSetSorting(event.target.value);
     };
 
-    public handleSetItemsPerPage = (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode): void => {
+    protected handleSetItemsPerPage = (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode): void => {
         this.runSetItemsPerPage(Number(event.target.value));
     };
 
-    public handlePagination = (event: React.ChangeEvent<{}>, value: number | string): void => {
+    protected handlePagination = (event: React.ChangeEvent<{}>, value: number | string): void => {
         this.runSetPaginationPage(value);
     };
 
-    public onSelectProductHandler = (sku: string) => {
+    protected onSelectProductHandler = (sku: string) => {
         this.props.changeLocation(`${pathProductPageBase}/${sku}`);
     };
 
-    public deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) =>
+    protected deleteActiveFilterHandler = (itemToDelete: IFilterItemToDelete) =>
         (event: React.MouseEvent<HTMLElement>): void => {
 
             if (itemToDelete.type === filterTypeFilter) {
@@ -228,15 +228,15 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
             this.setState({isReadyToNewRequest: true});
         };
 
-    public resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
+    protected resetActiveFilters = (event: React.MouseEvent<HTMLDivElement>): void => {
         this.runResetActiveFilters();
     };
 
-    public onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
+    protected onCloseFilterHandler = (event: React.ChangeEvent<{}>): void => {
         this.setState({isReadyToNewRequest: true});
     };
 
-    public onAfterChangeRangeFilterHandler = (value: number[]): void => {
+    protected onAfterChangeRangeFilterHandler = (value: number[]): void => {
         this.setState({isReadyToNewRequest: true});
     };
 
@@ -253,11 +253,11 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         };
     };
 
-    private validateData = (): boolean => (
+    protected validateData = (): boolean => (
         isValidRangeInput(this.state.activeRangeFilters, this.props.rangeFilters)
     );
 
-    private sendCategoryRequest = async (): Promise<void> => {
+    protected sendCategoryRequest = async (): Promise<void> => {
         const parsedGetParams = qs.parse(this.props.location.search);
         let query: ISearchQuery = this.getQueryBaseParams();
 
@@ -271,13 +271,13 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         this.updatePageUrl(query);
     };
 
-    private setPaginationParam = (page: string): void => {
+    protected setPaginationParam = (page: string): void => {
         const searchQuery = new URLSearchParams(this.props.history.location.search);
         searchQuery.set('page', page);
         this.props.history.replace({...this.props.history.location, search: searchQuery.toString()});
     };
 
-    private getQueryBaseParams = (): ISearchQuery => {
+    protected getQueryBaseParams = (): ISearchQuery => {
         let query: ISearchQuery = {};
 
         if (this.props.searchTerm) {
@@ -313,7 +313,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         return query;
     };
 
-    private runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<void> => {
+    protected runResetActiveFilters = async (needUpdateSearch: boolean = true): Promise<void> => {
         this.props.clearActiveFilters();
         await this.setState((prevState: ISearchPageState) => (
             {
@@ -333,23 +333,23 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         }
     };
 
-    private runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<void> => {
+    protected runSetItemsPerPage = async (itemsPerPage: ISearchPageState['itemsPerPage']): Promise<void> => {
         await this.setState({paginationPage: 1, itemsPerPage, isReadyToNewRequest: true});
         await this.updateSearch();
     };
 
-    private runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<void> => {
+    protected runSetPaginationPage = async (page: ISearchPageState['paginationPage']): Promise<void> => {
         await this.setState({paginationPage: page, isReadyToNewRequest: true});
         this.setPaginationParam(String(page));
         await this.updateSearch(false);
     };
 
-    private runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<void> => {
+    protected runSetSorting = async (sortMode: ISearchPageState['sort']): Promise<void> => {
         await this.setState({sort: sortMode, isReadyToNewRequest: true});
         await this.updateSearch();
     };
 
-    private runNewCategoryPage = async (): Promise<void> => {
+    protected runNewCategoryPage = async (): Promise<void> => {
         if (!this.state.isCategoryAsFilter) {
             await this.resetAllFiltersOnNewCategoryPage();
         }
@@ -359,7 +359,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         });
     };
 
-    private resetAllFiltersOnNewCategoryPage = async (): Promise<void> => {
+    protected resetAllFiltersOnNewCategoryPage = async (): Promise<void> => {
         this.updatePageUrl({});
         await this.props.clearSearchTerm();
         await this.props.clearActiveFilters();

@@ -99,28 +99,28 @@ export const getLabeledCategory = (category: string | number): string | null => 
 };
 
 export const getCurrentCategoriesTree = (
-    categiesTree: ICategory[],
+    categoriesTree: ICategory[],
     categoryId: string): IBreadcrumbItem[] | null => {
 
     if (!categoryId) {
         return null;
     }
 
-    for (let i = 0; i < categiesTree.length; i++) {
-        if (categiesTree[i].nodeId.toString() === categoryId) {
+    for (let i = 0; i < categoriesTree.length; i++) {
+        if (categoriesTree[i].nodeId.toString() === categoryId) {
             return [{
-                name: categiesTree[i].name,
-                nodeId: categiesTree[i].nodeId,
+                name: categoriesTree[i].name,
+                nodeId: categoriesTree[i].nodeId,
                 current: true
             }];
         }
 
-        const arrayCategoryParents = getCurrentCategoriesTree(categiesTree[i].children as ICategory[], categoryId);
+        const arrayCategoryParents = getCurrentCategoriesTree(categoriesTree[i].children as ICategory[], categoryId);
 
         if (arrayCategoryParents != null) {
             arrayCategoryParents.unshift({
-                name: categiesTree[i].name,
-                nodeId: categiesTree[i].nodeId
+                name: categoriesTree[i].name,
+                nodeId: categoriesTree[i].nodeId
             });
 
             return arrayCategoryParents;
