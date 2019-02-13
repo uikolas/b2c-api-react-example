@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { ProductAttributes } from '@components/components/ProductAttributes';
+import { ProductAttributes } from './ProductAttributes/index';
 import { IProductDetailProps } from './types';
 import { styles } from './styles';
 
