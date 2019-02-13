@@ -13,7 +13,7 @@ import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
 import { LoadableCustomerPage } from '../components/Pages/CustomerPage/loadable';
 import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
 
-import { LoadableWishListPage } from '../components/Pages/WishListPage/loadable';
+import { LoadableWishListPage } from '../components/Pages/WishlistPage/loadable';
 import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loadable';
 
 import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';

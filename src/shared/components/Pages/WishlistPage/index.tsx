@@ -6,14 +6,14 @@ import { IWishlistPageProps as Props } from './types';
 
 import { AppPageTitle } from '@components/Common/AppPageTitle';
 import { ErrorBoundary } from '@components/Library/ErrorBoundary';
-import { AddNewWishListForm } from './AddNewWishListForm';
-import { WishListsTable } from './WishListsTable';
+import { AddNewWishlistForm } from './AddNewWishlistForm';
+import { WishlistsTable } from './WishlistsTable';
 
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 @connect
-export class WishListBase extends React.Component<Props> {
+export class WishlistPageBase extends React.Component<Props> {
     public componentDidMount() {
         if (!this.props.isInitial) {
             this.props.getWishlistsAction();
@@ -34,11 +34,11 @@ export class WishListBase extends React.Component<Props> {
 
                 <Grid item xs={12}>
                     <ErrorBoundary>
-                        <AddNewWishListForm />
+                        <AddNewWishlistForm />
                     </ErrorBoundary>
 
                     <ErrorBoundary>
-                        <WishListsTable />
+                        <WishlistsTable />
                     </ErrorBoundary>
                 </Grid>
             </Grid>
@@ -46,6 +46,6 @@ export class WishListBase extends React.Component<Props> {
     }
 }
 
-export const WishlistPage = withStyles(styles)(WishListBase);
+export const WishlistPage = withStyles(styles)(WishlistPageBase);
 
 export default WishlistPage;

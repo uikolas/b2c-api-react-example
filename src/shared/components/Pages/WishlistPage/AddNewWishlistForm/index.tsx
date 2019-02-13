@@ -3,13 +3,13 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
 import { InputChangeEvent } from '@interfaces/common/react';
-import { IAddNewWishListFormProps as Props, IAddNewWishListFormState as State } from './types';
+import { IAddNewWishlistFormProps as Props, IAddNewWishlistFormState as State } from './types';
 
 import { Typography, Paper, TextField, Button, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 @connect
-export class AddNewWishListFormComponent extends React.Component<Props, State> {
+export class AddNewWishlistFormComponent extends React.Component<Props, State> {
     readonly state: State = {
         name: '',
     };
@@ -68,4 +68,4 @@ export class AddNewWishListFormComponent extends React.Component<Props, State> {
     }
 }
 
-export const AddNewWishListForm = withStyles(styles)(AddNewWishListFormComponent);
+export const AddNewWishlistForm = withStyles(styles)(AddNewWishlistFormComponent);

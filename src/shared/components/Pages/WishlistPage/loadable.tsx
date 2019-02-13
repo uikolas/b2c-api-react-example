@@ -5,7 +5,7 @@ export const LoadableWishListPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableWishListPage" */
-            'src/shared/components/Pages/WishListPage').then(
+            'src/shared/components/Pages/WishlistPage').then(
             module => module.default,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,

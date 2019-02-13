@@ -3,7 +3,7 @@ import { connect } from './connect';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
-import { IWishListsTableProps as Props, IWishListsTableState as State } from './types';
+import { IWishlistsTableProps as Props, IWishlistsTableState as State } from './types';
 import { IWishlist, TWishListId } from '@interfaces/wishlist';
 import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
 
@@ -17,7 +17,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import { styles } from './styles';
 
 @connect
-export class WishListsTableComponent extends React.Component<Props, State> {
+export class WishlistsTableComponent extends React.Component<Props, State> {
     readonly headerCellPart = 'header-';
     readonly bodyCellPart = 'body-';
     readonly headerCells: ICellInfo[] = [
@@ -147,4 +147,4 @@ export class WishListsTableComponent extends React.Component<Props, State> {
     }
 }
 
-export const WishListsTable = withStyles(styles)(WishListsTableComponent);
+export const WishlistsTable = withStyles(styles)(WishlistsTableComponent);
