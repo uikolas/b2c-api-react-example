@@ -1,4 +1,4 @@
-import { reduxify } from '../../../lib/redux-helper';
+import { reduxify } from 'src/shared/lib/redux-helper';
 import { getOrdersCollectionAction } from '@stores/actions/pages/order';
 import {
     getOrdersCollectionFromStore,

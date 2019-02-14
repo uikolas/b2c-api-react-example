@@ -5,8 +5,8 @@ export const LoadableOrderDetailsPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableOrderDetailsPage" */
-            'src/shared/components/Pages/OrderDetailsPage').then(
-            module => module.default,
+            '@components/Pages/OrderDetailsPage').then(
+            module => module.OrderDetailsContainer,
         ),
     loading: () => <div>Loading...</div>,
 });

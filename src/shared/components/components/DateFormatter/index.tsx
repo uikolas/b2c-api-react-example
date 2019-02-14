@@ -1,25 +1,18 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { connect } from './connect';
 import { FormattedDate } from 'react-intl';
-
-import { styles } from './styles';
-import { IOrderDateProps } from './types';
 import { formatDateToString, getDateUtcUnix } from 'src/shared/helpers/common/dates';
+import { IDateFormatterProps } from './types';
 
-export const OrderDateBase: React.SFC<IOrderDateProps> = (props): JSX.Element => {
-    const {
-        classes,
-        date,
-        title,
-        timeZone,
-    } = props;
+const DateFormatterBase: React.SFC<IDateFormatterProps> = (props): JSX.Element => {
+    const {date, title, timeZone} = props;
     const dateObj = new Date(date);
     const dateToShow = formatDateToString(dateObj);
     const dateUTC = getDateUtcUnix(dateObj);
 
     return (
-        <React.Fragment>
-            {title} {`${dateToShow}, `}
+        <>
+            <span>{title} {`${dateToShow}, `}</span>
             <FormattedDate
                 value={dateUTC}
                 timeZone={timeZone}
@@ -27,8 +20,8 @@ export const OrderDateBase: React.SFC<IOrderDateProps> = (props): JSX.Element =>
                 hour="2-digit"
                 minute="2-digit"
             />
-        </React.Fragment>
+        </>
     );
 };
 
-export const OrderDate = withStyles(styles)(OrderDateBase);
+export const DateFormatter = connect(DateFormatterBase);

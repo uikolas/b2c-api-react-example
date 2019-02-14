@@ -3,8 +3,13 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 export const styles = (theme: Theme) => createStyles({
     root: {
-        borderTop: `1px solid ${theme.appColors.blockDivider}`,
-        marginTop: theme.spacing.unit * 1.5,
+        marginTop: theme.spacing.unit * 3,
+        marginBottom: theme.spacing.unit * 3,
     },
-    container: {},
+    total: {
+        textAlign: 'right',
+    },
+    sku: {
+        color: theme.appColors.grey
+    }
 });

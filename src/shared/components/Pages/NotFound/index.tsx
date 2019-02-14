@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { INotFoundProps as Props, INotFoundState as State } from './types';
 
 import { INotFoundProps as Props, INotFoundState as State } from './types';
 
