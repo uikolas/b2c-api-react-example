@@ -2,7 +2,7 @@ import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
 export interface IAddressPart {
-    text: string | number | null | React.ReactNode;
+    text: string | React.ReactNode;
     isBold?: boolean;
 }
 

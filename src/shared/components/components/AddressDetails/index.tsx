@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { getSalutationToShow } from 'src/shared/helpers/customer/salutation';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { AddressPart } from './AddressPart/index';
-import { IAddressDetailsProps } from './types';
+import { withStyles, Typography, Grid } from '@material-ui/core';
+import { AddressPart } from './AddressPart';
+import { IAddressDetailsProps as Props } from './types';
 import { IAddressPartRow } from './AddressPart/types';
 import { styles } from './styles';
 
-export const AddressDetailsBase: React.SFC<IAddressDetailsProps> = props => {
+export const AddressDetailsBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         blockTitle,

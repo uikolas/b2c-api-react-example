@@ -4,7 +4,7 @@ import { FormattedDate } from 'react-intl';
 import { formatDateToString, getDateUtcUnix } from 'src/shared/helpers/common/dates';
 import { IDateFormatterProps } from './types';
 
-const DateFormatterBase: React.SFC<IDateFormatterProps> = props => {
+const DateFormatterBase: React.SFC<IDateFormatterProps> = (props): JSX.Element => {
     const {date, title, timeZone} = props;
     const dateObj = new Date(date);
     const dateToShow = formatDateToString(dateObj);

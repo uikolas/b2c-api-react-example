@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography/Typography';
+import { withStyles, Typography } from '@material-ui/core';
 import { AppPrice } from '@components/Common/AppPrice';
 import { AppTable } from '@components/Common/AppTable';
-import { IOrderProductListProps } from './types';
+import { IOrderProductListProps as Props } from './types';
 import { IOrderDetailsItem } from '@interfaces/order';
 import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
 import { styles } from './styles';
 
-export const OrderProductListBase: React.SFC<IOrderProductListProps> = props => {
+export const OrderProductListBase: React.SFC<Props> = (props): JSX.Element => {
     const {classes, items} = props;
 
     const headerCellPart = 'header-';

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAddressPart, IAddressPartProps } from './types';
 import { styles } from './styles';
 
-export const AddressPartBase: React.SFC<IAddressPartProps> = props => {
+export const AddressPartBase: React.SFC<IAddressPartProps> = (props): JSX.Element => {
     const {classes, row} = props;
 
     if (!row || !Array.isArray(row) || !row.length) {
@@ -31,8 +31,8 @@ export const AddressPartBase: React.SFC<IAddressPartProps> = props => {
                                 key={`${text}-${index}`}
                                 className={`${classes.item} ${isBold ? classes.bold : ''}`}
                             >
-                                    {text}
-                                </span>
+                                {text}
+                            </span>
                         );
                     }
                 })

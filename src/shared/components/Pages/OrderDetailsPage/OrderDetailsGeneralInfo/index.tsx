@@ -2,15 +2,13 @@ import * as React from 'react';
 import { pathOrderHistoryPage } from 'src/shared/routes/contentRoutes';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
+import { withStyles, Grid, Typography } from '@material-ui/core';
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { DateFormatter } from '@components/components/DateFormatter';
-import { IOrderDetailsGeneralInfoProps } from './types';
+import { IOrderDetailsGeneralInfoProps as Props } from './types';
 import { styles } from './styles';
-import Typography from '@material-ui/core/Typography/Typography';
 
-export const OrderDetailsGeneralInfoBase: React.SFC<IOrderDetailsGeneralInfoProps> = props => {
+export const OrderDetailsGeneralInfoBase: React.SFC<Props> = (props): JSX.Element => {
     const {classes, orderId, date, priceMode, timeZone} = props;
 
     return (

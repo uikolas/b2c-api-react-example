@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Grid from '@material-ui/core/Grid';
+import { withStyles, Grid } from '@material-ui/core';
 import { AddressDetails } from '@components/components/AddressDetails';
 import { IOrderAddressesProps } from './types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
-export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = props => {
+export const OrderAddressesBase: React.SFC<IOrderAddressesProps> = (props): JSX.Element => {
     const {
         classes,
         billingAddress,

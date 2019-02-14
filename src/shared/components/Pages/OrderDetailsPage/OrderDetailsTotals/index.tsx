@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
+import { withStyles, Grid } from '@material-ui/core';
 import { TotalItem } from './TotalItem';
-import { IOrderDetailsTotalsProps } from './types';
+import { IOrderDetailsTotalsProps as Props } from './types';
 import { IOrderDetailsExpenseItem } from '@interfaces/order';
 import { styles } from './styles';
 
-export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = props => {
+export const OrderDetailsTotalsBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         expenses,
@@ -38,10 +37,10 @@ export const OrderDetailsTotalsBase: React.SFC<IOrderDetailsTotalsProps> = props
                     ))
                 }
                 {(expenses.length > 1) &&
-                    <TotalItem
-                        value={expenseTotal}
-                        title={<FormattedMessage id={'order.detail.shipment.total.title'} />}
-                    />
+                <TotalItem
+                    value={expenseTotal}
+                    title={<FormattedMessage id={'order.detail.shipment.total.title'} />}
+                />
                 }
                 <TotalItem
                     value={canceledTotal}
