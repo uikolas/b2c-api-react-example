@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
-import CatalogSearch from '../CatalogSearch';
+import CatalogSearch from '../../containers/CatalogSearch';
 import { Logo } from './parts/logo';
 import { MainNav } from './parts/navMain';
 import { AddNav } from './parts/navAdditional';
