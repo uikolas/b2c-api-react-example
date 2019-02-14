@@ -28,6 +28,7 @@ import { TAppLocale } from 'src/shared/interfaces/locale';
 import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
 import { Notifications } from 'src/shared/components/Common/Notifications';
 import { messages } from 'src/shared/translation/index';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;
@@ -121,7 +122,9 @@ export class PageContentBase extends React.Component<PageContentProps, PageConte
                             onMobileNavToggle={ this.mobileNavToggle }
                             isMobileNavOpened={ mobileNavOpened }
                         />
-                        {getContentRoutes(this.isDataFulfilled())}
+                        <ErrorBoundary>
+                            {getContentRoutes(this.isDataFulfilled())}
+                        </ErrorBoundary>
                         <Notifications />
                         <AppFooter/>
                     </StickyContainer>

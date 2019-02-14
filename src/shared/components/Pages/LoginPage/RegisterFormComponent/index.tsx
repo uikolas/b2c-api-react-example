@@ -1,39 +1,47 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { TextField, Button, Typography, MenuItem, Grid, Checkbox, FormControlLabel } from '@material-ui/core';
-import { TSalutationVariant } from 'src/shared/interfaces/customer';
 import { SalutationVariants } from 'src/shared/constants/customer';
-import { formStyles } from '../styles';
-import { RegisterFormProps as Props, RegisterFormState as State } from './types';
-import { InputChangeEvent, FormEvent } from 'src/shared/interfaces/common/react';
-import { FormattedMessage } from 'react-intl';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { typeNotificationWarning } from 'src/shared/constants/notifications';
+import { FormattedMessage } from 'react-intl';
+import {
+    withStyles,
+    TextField,
+    Button,
+    Typography,
+    MenuItem,
+    Grid,
+    Checkbox,
+    FormControlLabel
+} from '@material-ui/core';
+import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { TSalutationVariant } from '@interfaces/customer';
+import { IRegisterFormProps as Props, IRegisterFormState as State } from './types';
+import { InputChangeEvent, FormEvent } from '@interfaces/common/react';
+import { styles } from './styles';
 
 export class RegisterFormBase extends React.Component<Props, State> {
-    public state = {
+    public state: State = {
         salutation: '',
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         confirmPassword: '',
-        acceptedTerms: false,
+        acceptedTerms: false
     };
 
-    public handleChangeSalutation = (event: InputChangeEvent): void => {
+    protected handleChangeSalutation = (event: InputChangeEvent): void => {
         this.setState(() => ({salutation: event.target.value}));
     };
 
-    public handleChangeAgreement = (event: InputChangeEvent): void => {
+    protected handleChangeAgreement = (event: InputChangeEvent): void => {
         this.setState(() => ({acceptedTerms: !this.state.acceptedTerms}));
     };
 
-    public handleChange = ({target: {name, value}}: InputChangeEvent): void => {
+    protected handleChange = ({target: {name, value}}: InputChangeEvent): void => {
         this.setState(() => ({...this.state, [name]: value}));
     };
 
-    public handleSubmitForm = (e: FormEvent): void => {
+    protected handleSubmitForm = (e: FormEvent): void => {
         e.preventDefault();
         const {salutation, firstName, lastName, email, password, confirmPassword, acceptedTerms} = this.state;
 
@@ -58,13 +66,13 @@ export class RegisterFormBase extends React.Component<Props, State> {
         this.props.handleSubmit(this.state);
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes} = this.props;
 
         return (
             <React.Fragment>
                 <Typography variant="title" color="inherit" noWrap>
-                    <FormattedMessage id={ 'word.register.title' } />
+                    <FormattedMessage id={'word.register.title'} />
                 </Typography>
                 <form
                     className={classes.container}
@@ -77,15 +85,15 @@ export class RegisterFormBase extends React.Component<Props, State> {
                         required
                         id="register-salutation"
                         select
-                        label={<FormattedMessage id={ 'salutation.label' } />}
+                        label={<FormattedMessage id={'salutation.label'} />}
                         name="salutation"
                         className={classes.textField}
                         value={this.state.salutation}
                         onChange={this.handleChangeSalutation}
                         SelectProps={{
                             MenuProps: {
-                                className: classes.menu,
-                            },
+                                className: classes.menu
+                            }
                         }}
                         margin="normal"
                         fullWidth
@@ -99,7 +107,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <TextField
                         required
                         id="register-first-name"
-                        label={<FormattedMessage id={ 'first.name.label' } />}
+                        label={<FormattedMessage id={'first.name.label'} />}
                         name="firstName"
                         type="text"
                         value={this.state.firstName}
@@ -114,7 +122,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <TextField
                         required
                         id="register-last-name"
-                        label={<FormattedMessage id={ 'last.name.label' } />}
+                        label={<FormattedMessage id={'last.name.label'} />}
                         name="lastName"
                         type="text"
                         value={this.state.lastName}
@@ -129,7 +137,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                     <TextField
                         required
                         id="register-email"
-                        label={<FormattedMessage id={ 'email.label' } />}
+                        label={<FormattedMessage id={'email.label'} />}
                         name="email"
                         type="email"
                         value={this.state.email}
@@ -146,7 +154,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                             <TextField
                                 required
                                 id="register-password"
-                                label={<FormattedMessage id={ 'word.password.title' } />}
+                                label={<FormattedMessage id={'word.password.title'} />}
                                 name="password"
                                 type="password"
                                 value={this.state.password}
@@ -162,7 +170,7 @@ export class RegisterFormBase extends React.Component<Props, State> {
                             <TextField
                                 required
                                 id="register-confirm-password"
-                                label={<FormattedMessage id={ 'confirm.password.title' } />}
+                                label={<FormattedMessage id={'confirm.password.title'} />}
                                 name="confirmPassword"
                                 type="password"
                                 value={this.state.confirmPassword}
@@ -183,11 +191,11 @@ export class RegisterFormBase extends React.Component<Props, State> {
                                 name="acceptedTerms"
                             />
                         }
-                        label={<FormattedMessage id={ 'accept.terms.title' } />}
+                        label={<FormattedMessage id={'accept.terms.title'} />}
                     />
 
-                    <Button type="submit" variant="contained" className={ classes.button }>
-                        <FormattedMessage id={ 'word.register.title' } />
+                    <Button type="submit" variant="contained" className={classes.button}>
+                        <FormattedMessage id={'word.register.title'} />
                     </Button>
                 </form>
             </React.Fragment>
@@ -195,4 +203,4 @@ export class RegisterFormBase extends React.Component<Props, State> {
     }
 }
 
-export const RegisterFormComponent = withStyles(formStyles)(RegisterFormBase);
+export const RegisterFormComponent = withStyles(styles)(RegisterFormBase);

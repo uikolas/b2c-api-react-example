@@ -2,7 +2,7 @@ import { IMenuItemsDropdown } from '../../components/UI/DropdownControlled';
 import { IWishlist } from '../../interfaces/wishlist';
 import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
 
-export const createWishListMenuVariants = (
+export const createWishlistMenuVariants = (
     wishlists: IWishlist[] | null
 ): IMenuItemSelect[] | null => {
     if (!wishlists) {

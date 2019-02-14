@@ -1,30 +1,33 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-
-import { SuperAttributeBlock } from './SuperAttributeBlock';
+import { withStyles } from '@material-ui/core';
+import { SuperAttributeBlock } from './SuperAttributeBlock/index';
 import { ProductSuperAttributeProps as Props, ProductSuperAttributeState as State } from './types';
+import { ISuperAttribute } from '@helpers/product/types';
 import { styles } from './styles';
-import { ISuperAttribute } from 'src/shared/helpers/product/types';
 
 export class ProductSuperAttributeComponent extends React.PureComponent<Props, State> {
     public state: State = {
         selectedValues: null,
+        selectedItemValue: ''
     };
 
-    private onChange = ({name, value}: { name: string, value: string }) => {
+    protected onChange = ({name, value}: {name: string, value: string}): void => {
         const {selectedValues} = this.state;
         const updatedValues = selectedValues === null
             ? {[name]: value}
             : {
                 ...selectedValues,
-                [name]: value,
+                [name]: value
             };
 
         this.props.onChange({name, value});
-        this.setState(() => ({selectedValues: updatedValues}));
+        this.setState({
+            selectedValues: updatedValues,
+            selectedItemValue: value
+        });
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, productData} = this.props;
 
         return (
@@ -35,6 +38,7 @@ export class ProductSuperAttributeComponent extends React.PureComponent<Props, S
                             attributeData={attribute}
                             onValueChanged={this.onChange}
                             key={attribute.name}
+                            selectedItemValue={this.state.selectedItemValue}
                         />
                     ))
                 }
