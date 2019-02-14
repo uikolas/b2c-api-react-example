@@ -7,7 +7,7 @@ import {
     isOrderHistoryItems,
     isOrderHistoryLoading,
     isOrderHistoryStateRejected,
-} from '@stores/reducers/pages/orderHistory';
+} from '@stores/reducers/Pages/orderHistory';
 import { isAppInitiated } from '@stores/reducers/common/init';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
@@ -34,10 +34,9 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     });
 };
 
-export const connect = reduxify(
-    mapStateToProps,
-    (dispatch: Function) => ({
-        dispatch,
-        getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
-    }),
-);
+const mapDispatchToProps = (dispatch: Function) => ({
+    dispatch,
+    getOrdersCollection: () => dispatch(getOrdersCollectionAction()),
+});
+
+export const connect = reduxify(mapStateToProps, mapDispatchToProps);
