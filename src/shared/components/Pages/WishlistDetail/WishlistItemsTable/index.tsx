@@ -14,22 +14,22 @@ import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
 
 import { AppTable } from '@components/Common/AppTable';
 import { AppPrice } from '@components/Common/AppPrice';
-import { WishlistItemBaseInfo } from '../../components/wishlistItemBaseInfo';
+import { WishlistItemBaseInfo } from '../WishlistItemBaseInfo';
 
 import { Typography, Paper, Button, Divider, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 
 @connect
-export class WishListItemsTableComponent extends React.Component<WishListItemsTableProps, WishListItemsTableState> {
-    readonly headerCellPart: string = 'header-';
-    readonly headerCells: ICellInfo[] = [
+export class WishlistItemsTableComponent extends React.Component<WishListItemsTableProps, WishListItemsTableState> {
+    protected headerCellPart: string = 'header-';
+    protected headerCells: ICellInfo[] = [
         {content: <FormattedMessage id={ 'word.product.title' } />, id: `${this.headerCellPart}1`},
         {content: <FormattedMessage id={ 'word.price.title' } />, id: `${this.headerCellPart}2`},
         {content: <FormattedMessage id={ 'word.availability.title' } />, id: `${this.headerCellPart}3`},
         {content: '', id: `${this.headerCellPart}4`},
         {content: '', id: `${this.headerCellPart}5`},
     ];
-    readonly bodyCellPart: string = 'body-';
+    protected bodyCellPart: string = 'body-';
 
     readonly state: WishListItemsTableState = {
         movedItem: ''
@@ -63,7 +63,7 @@ export class WishListItemsTableComponent extends React.Component<WishListItemsTa
         this.props.moveToCartHandler(cartId, availableProducts);
     };
 
-    public handleDeleteItem = (sku: string) => (event: ClickEvent): void => {
+    protected handleDeleteItem = (sku: string) => (event: ClickEvent): void => {
         event.persist();
         this.props.deleteItemAction(this.props.wishlist.id, sku);
     };
@@ -73,7 +73,7 @@ export class WishListItemsTableComponent extends React.Component<WishListItemsTa
         this.props.changeLocation(`${pathProductPageBase}/${sku.split('_')[0]}`);
     };
 
-    protected tableRows = (): ITableRow[] => {
+    protected getTableRows = (): ITableRow[] => {
         const { classes, currency } = this.props;
         const tableAction = this.props.cartLoading ? classes.tableActionDisabled : classes.tableAction;
 
@@ -144,11 +144,9 @@ export class WishListItemsTableComponent extends React.Component<WishListItemsTa
 
         prices.forEach((price: IProductPricesItem) => {
             if (price.priceTypeName.toLowerCase() === 'default') {
-                itemPrices.default = price.grossAmount + '';
-            } else {
-                if (price.priceTypeName.toLowerCase() === 'original') {
-                    itemPrices.original = price.grossAmount + '';
-                }
+                itemPrices.default = String(price.grossAmount);
+            } else if (price.priceTypeName.toLowerCase() === 'original') {
+                itemPrices.original = String(price.grossAmount);
             }
         });
 
@@ -162,7 +160,7 @@ export class WishListItemsTableComponent extends React.Component<WishListItemsTa
             return (
                 <Paper elevation={ 0 }>
                     <AppTable classes={ { bodyCell: classes.bodyCell } } headerCells={ this.headerCells }
-                              bodyRows={ this.tableRows() } />
+                              bodyRows={ this.getTableRows() } />
                     <Button
                         className={ classes.addAllBtn }
                         color="primary"
@@ -191,4 +189,4 @@ export class WishListItemsTableComponent extends React.Component<WishListItemsTa
     }
 }
 
-export const WishListItemsTable = withStyles(styles)(WishListItemsTableComponent);
+export const WishlistItemsTable = withStyles(styles)(WishlistItemsTableComponent);

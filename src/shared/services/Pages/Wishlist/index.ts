@@ -75,7 +75,18 @@ export class WishlistService extends ApiServiceAbstract {
             const token = await RefreshTokenService.getActualToken(dispatch);
             setAuthToken(token);
 
-            const response: IApiResponseData = await api.get(`wishlists/${wishlistId}`, {}, {withCredentials: true});
+            const query: string = 'wishlist-items,' +
+                'concrete-products,' +
+                'wishlist-items-products,' +
+                'concrete-product-image-sets,' +
+                'concrete-product-availabilities,' +
+                'concrete-product-prices';
+
+            const response: IApiResponseData = await api.get(
+                `wishlists/${wishlistId}?include=${query}`,
+                {},
+                {withCredentials: true}
+            );
 
             if (response.ok) {
                 let products: IWishlistProduct[] = [];

@@ -6,8 +6,8 @@ import { WishlistPageProps as Props, WishlistPageState as State } from './types'
 
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { AppPageTitle } from '@components/Common/AppPageTitle';
-import { WishListMenu } from './components/wishListMenu';
-import { WishListItemsTable } from './containers/wishListItemsTable';
+import { WishlistMenu } from './WishlistMenu';
+import { WishlistItemsTable } from './WishlistItemsTable';
 
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
@@ -79,10 +79,10 @@ export class WishlistDetailBase extends React.Component<Props, State> {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <WishListMenu wishlist={this.props.wishlist} />
+                    <WishlistMenu wishlist={this.props.wishlist} />
 
                     <ErrorBoundary>
-                        <WishListItemsTable
+                        <WishlistItemsTable
                             wishlist={this.props.wishlist}
                             moveToCartHandler={this.moveToCartHandler}
                             deleteMultiItemsHandler={this.deleteMultiItemsHandler}

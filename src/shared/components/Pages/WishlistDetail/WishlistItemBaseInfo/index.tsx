@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { WishlistRowsProps as Props } from './types';
 import { IProductAttributes } from '@interfaces/product';
 
@@ -15,7 +16,9 @@ const WishlistItemBaseInfoComponent: React.SFC<Props> = ({classes, productItem, 
                 {productItem.name}
             </span>
 
-            <span className={classes.attributes}>SKU: {productItem.sku}</span>
+            <span className={classes.attributes}>
+                <FormattedMessage id={ 'product.sku.title' } />: {productItem.sku}
+            </span>
 
             {
                 productItem.attributes.map((attr: IProductAttributes, idx: number) => (
