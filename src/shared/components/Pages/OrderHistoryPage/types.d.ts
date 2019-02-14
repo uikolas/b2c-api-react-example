@@ -13,5 +13,3 @@ export interface IOrderHistoryPageProps extends WithStyles<typeof styles> {
     isHasOrders: boolean;
     orders: TOrderCollection;
 }
-
-export interface IOrderHistoryPageState {}

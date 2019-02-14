@@ -1,25 +1,22 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-import Grid from '@material-ui/core/Grid';
+import { withStyles, Grid } from '@material-ui/core';
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 import { EmptyOrder } from '@components/Pages/OrderDetailsPage/EmptyOrder';
 import { OrderList } from './OrderList';
-import { IOrderHistoryPageProps, IOrderHistoryPageState } from './types';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { IOrderHistoryPageProps as Props } from './types';
 import { styles } from './styles';
 
 @connect
-class OrderHistoryPageBase extends React.Component<IOrderHistoryPageProps, IOrderHistoryPageState> {
-    public state: IOrderHistoryPageState = {};
-
-    public componentDidMount = () => {
+class OrderHistoryPageBase extends React.Component<Props> {
+    public componentDidMount = (): void => {
         if (!this.props.isLoading && this.props.isAppDataSet) {
             this.props.getOrdersCollection();
         }
     };
 
-    public componentDidUpdate = (prevProps: IOrderHistoryPageProps) => {
+    public componentDidUpdate = (prevProps: Props): void => {
         if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
             return;
         }
