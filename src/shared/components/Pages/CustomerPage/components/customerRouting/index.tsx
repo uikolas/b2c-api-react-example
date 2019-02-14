@@ -25,8 +25,8 @@ export const CustomerRouting: React.SFC = (): JSX.Element => (
         <Route path={ pathCustomerPage } exact component={ LoadableCustomerProfilePage } />
         <Route path={ pathCustomerAddressesPage } exact
                component={ LoadableCustomerAddressPage } />
-        <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
-        <Route path={ pathAddressFormNew } component={ AddressFormPage } />
+        <Route path={ pathAddressFormUpdate } component={ CustomerAddressForm }/>
+        <Route path={ pathAddressFormNew } component={ CustomerAddressForm } />
         <Route path={ pathWishlistsPage } component={ LoadableWishlistPage } />
         <Route path={ pathWishlistDetailPage } component={ LoadableWishlistDetail } />
         <Route path={ pathOrderHistoryPage } exact component={ LoadableOrderHistoryPage } />
