@@ -1,4 +1,5 @@
 import { PRICE_MODE_DEFAULT } from '../../configs/environment';
+import api from '@services/api';
 import { ILocaleItem } from 'src/shared/interfaces/locale';
 import { IStoreRawResponse } from 'src/shared/helpers/init/types';
 import { IInitData } from 'src/shared/interfaces/init';
@@ -17,6 +18,7 @@ export const parseStoreResponse = (data: IStoreRawResponse): IInitData => {
     }
 
     const attributes = data.data[0].attributes;
+
     result.store = data.data[0].id;
     result.currency = attributes.defaultCurrency;
     result.priceMode = PRICE_MODE_DEFAULT;
@@ -26,8 +28,12 @@ export const parseStoreResponse = (data: IStoreRawResponse): IInitData => {
     attributes.locales.forEach((row: ILocaleItem) => {
         row.code === result.store.toLowerCase() ? result.locale = row.code : 'de';
     });
-    // For now it's hardcoded. Change if needed
-    result.locale = attributes.locales[0].code;
+
+    const savedLocale = localStorage.getItem('locale');
+    const currentLocale = !!savedLocale ? savedLocale : attributes.locales[0].code;
+
+    result.locale = currentLocale;
+    api.setHeader('Accept-Language', currentLocale);
 
     return result;
 };

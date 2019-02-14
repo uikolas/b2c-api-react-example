@@ -47,13 +47,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     };
 
     public componentDidMount(): void {
-        if (this.props.product) {
-            this.setInitialData();
-        } else {
-            if (!this.props.isLoading && this.props.isAppDataSet) {
-                this.props.getProductData(this.props.locationProductSKU);
-            }
-        }
+        this.props.getProductData(this.props.locationProductSKU);
     }
 
     public componentDidUpdate(prevProps: Props, prevState: State): void {
@@ -75,7 +69,10 @@ export class ProductPageBase extends React.Component<Props, State> {
             return;
         }
 
-        if (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU) {
+        const isShouldUpdateProductState = (prevProps.isFulfilled !== this.props.isFulfilled) ||
+            !prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU;
+
+        if (isShouldUpdateProductState) {
             this.setInitialData();
         }
     }
