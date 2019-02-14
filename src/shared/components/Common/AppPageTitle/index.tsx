@@ -9,35 +9,32 @@ interface AppPageTitleProps extends WithStyles<typeof styles> {
     title?: string;
     intro?: string | JSX.Element | null;
 }
+
 export const AppPageTitleBase: React.SFC<AppPageTitleProps> = props => {
     const {classes, title, intro} = props;
 
     return (
         <Grid container
-            justify="flex-start"
-            alignItems="center"
-            className={classes.root}
+              justify="flex-start"
+              alignItems="center"
+              className={classes.root}
         >
             <Grid item xs={12}>
-                {title
-                    ? (<Typography
-                            component="h1"
-                            color="inherit"
-                            align="left"
-                            className={classes.pageHeader}
-                            id="pageTitle"
+                {title &&
+                    <Typography
+                        component="h1"
+                        color="inherit"
+                        align="left"
+                        className={classes.pageHeader}
+                        id="pageTitle"
                     >
                         {title}
-                    </Typography>)
-                    : null
+                    </Typography>
                 }
-                {intro
-                    ? (
-                        <Typography color="inherit" paragraph className={classes.paragraph}>
-                            {intro}
-                        </Typography>
-                    )
-                    : null
+                {intro &&
+                    <Typography color="inherit" paragraph className={classes.paragraph}>
+                        {intro}
+                    </Typography>
                 }
             </Grid>
         </Grid>
