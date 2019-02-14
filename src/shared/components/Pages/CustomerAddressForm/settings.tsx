@@ -1,11 +1,14 @@
-import { SalutationVariants } from 'src/shared/constants/customer';
-import { TSalutationVariant } from 'src/shared/interfaces/customer';
-import { IFormField } from 'src/shared/components/UI/SprykerForm/types';
-import { AddressFormState } from './types';
-import { InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { ICountry } from 'src/shared/interfaces/country';
-import { FormattedMessage } from 'react-intl';
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
+import { TSalutationVariant } from '@interfaces/customer';
+import { InputChangeEvent } from '@interfaces/common/react';
+import { ICountry } from '@interfaces/country';
+import { AddressFormState } from './types';
+
+import { IFormField } from '@components/UI/SprykerForm/types';
+
+import { SalutationVariants } from '@constants/customer';
 
 export interface IFieldInput {
     name: string;

@@ -1,21 +1,23 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
 import { reduxify } from 'src/shared/lib/redux-helper';
-import { getRouterHistoryPush } from 'src/shared/helpers/router';
-import { getCustomerReference } from '@stores/reducers/pages/login';
+import { getRouterHistoryPush } from '@helpers/router';
+
+import { IAddressItem } from '@interfaces/addresses';
+
+import {
+    getAddressesAction,
+    setCurrentAddressAction,
+    deleteAddressAction,
+} from '@stores/actions/pages/addresses';
 import {
     getAddressesCollection,
     getCurrentAddress,
     isAddressesInitiated,
     isPageAddressesStateLoading
 } from '@stores/reducers/pages/addresses/selectors';
-import { IAddressItem } from 'src/shared/interfaces/addresses';
-import {
-    getAddressesAction,
-    setCurrentAddressAction,
-    deleteAddressAction,
-} from '@stores/actions/pages/addresses';
-import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
+import { getCustomerReference } from '@stores/reducers/pages/login';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const routerPush: Function = getRouterHistoryPush(state, ownProps);
