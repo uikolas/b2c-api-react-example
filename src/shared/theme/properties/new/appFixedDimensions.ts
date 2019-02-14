@@ -44,7 +44,7 @@ export interface IAppFixedDimensions {
         height: number;
     };
     headerPopover: {
-        overFlow: number;
+        overflow: number;
         triangle: number;
     };
 }
@@ -91,7 +91,7 @@ export const appFixedDimensions: IAppFixedDimensions = {
         height: 283,
     },
     headerPopover: {
-        overFlow: 42,
+        overflow: 42,
         triangle: 17,
     },
 };
