@@ -1,10 +1,8 @@
 import React from 'react';
-import {
-    NotificationsMessageTemplate,
-    INotificationsMessage
-} from 'src/shared/components/Common/Notifications/NotificationsMessageTemplate';
+import { NotificationsMessageTemplate } from '@components/Common/Notifications/NotificationsMessageTemplate';
+import { INotificationsMessage } from 'types.d.ts';
 import { toast } from 'react-toastify';
-import { SuccessIcon, RejectIcon } from '../MessageIcons';
+import { SuccessIcon, RejectIcon } from '../icons';
 import {
     typeNotificationWarning,
     typeNotificationSuccess,

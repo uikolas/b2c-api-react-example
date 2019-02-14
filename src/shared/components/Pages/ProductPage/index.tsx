@@ -10,12 +10,12 @@ import {
 import { withStyles, Grid  } from '@material-ui/core';
 import { AppMain } from '@components/Common/AppMain';
 import { ImageSlider, IImageSlide } from '@components/Common/ImageSlider';
-import { ProductGeneralInfo } from '@components/components/ProductGeneralInfo';
-import { ProductSuperAttribute } from '@components/containers/ProductSuperAttribute';
-import { ProductConfiguratorAddToCart } from '@components/containers/ProductConfiguratorAddToCart';
-import { ProductConfiguratorAddToWishlist } from '@components/containers/ProductConfiguratorAddToWishlist';
+import { ProductGeneralInfo } from './ProductGeneralInfo';
+import { ProductSuperAttribute } from './ProductSuperAttribute';
+import { ProductConfiguratorAddToCart } from './ProductConfiguratorAddToCart';
+import { ProductConfiguratorAddToWishlist } from './ProductConfiguratorAddToWishlist';
+import { ProductDetail } from './ProductDetail';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { ProductDetail } from '@components/components/ProductDetail';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import {
     defaultItemValueDropdown,
@@ -47,13 +47,7 @@ export class ProductPageBase extends React.Component<Props, State> {
     };
 
     public componentDidMount(): void {
-        if (this.props.product) {
-            this.setInitialData();
-        } else {
-            if (!this.props.isLoading && this.props.isAppDataSet) {
-                this.props.getProductData(this.props.locationProductSKU);
-            }
-        }
+        this.props.getProductData(this.props.locationProductSKU);
     }
 
     public componentDidUpdate(prevProps: Props, prevState: State): void {
@@ -75,7 +69,10 @@ export class ProductPageBase extends React.Component<Props, State> {
             return;
         }
 
-        if (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU) {
+        const isShouldUpdateProductState = (prevProps.isFulfilled !== this.props.isFulfilled) ||
+            !prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU;
+
+        if (isShouldUpdateProductState) {
             this.setInitialData();
         }
     }

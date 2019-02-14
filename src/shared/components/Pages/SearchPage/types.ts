@@ -24,6 +24,7 @@ export interface ISearchPageState {
     isFiltersReset: boolean;
     isNeedNewRequest: boolean;
     isReadyToNewRequest: boolean;
+    isCategoryAsFilter: boolean;
     selectedCategory?: string | null;
     paginationPage: number | string | null;
 }

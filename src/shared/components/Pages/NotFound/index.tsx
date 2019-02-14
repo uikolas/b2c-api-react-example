@@ -1,24 +1,26 @@
 import * as React from 'react';
-import { INotFoundProps as Props, INotFoundState as State } from './types';
 import { FormattedMessage } from 'react-intl';
+import { INotFoundProps as Props, INotFoundState as State } from './types';
 
-export class NotFound extends React.PureComponent<Props, State> {
-    public displayName: string = 'NotFound';
+import { INotFoundProps as Props, INotFoundState as State } from './types';
 
-    public componentDidCatch(error: Error | null, info: object) {
-        console.error('NotFound->componentDidCatch->error', error);
-        console.error('NotFound->componentDidCatch->info', info);
-    }
+import { Grid, withStyles } from '@material-ui/core';
+import { styles } from './styles';
 
+export class NotFoundComponent extends React.PureComponent<Props, State> {
     public render() {
+        const { classes } = this.props;
+
         return (
-            <React.Fragment>
+            <Grid container justify="center" className={ classes.root }>
                 <div className={this.props.className || ''}>
                     <FormattedMessage id={ 'page.not.found.message' } />
                 </div>
-            </React.Fragment>
+            </Grid>
         );
     }
 }
+
+export const NotFound = withStyles(styles)(NotFoundComponent);
 
 export default NotFound;

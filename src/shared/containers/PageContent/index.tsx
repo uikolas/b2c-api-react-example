@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { StickyContainer } from 'react-sticky';
 import { addLocaleData, IntlProvider } from 'react-intl';
-
 import { withRouter } from 'react-router';
 import { IComponent } from 'src/typings/app';
 import { getContentRoutes, pathCategoryPageBase, pathSearchPage } from 'src/shared/routes/contentRoutes';
-import { AppHeader } from 'src/shared/components/Common/AppHeader';
-import { AppFooter } from 'src/shared/components/Common/AppFooter';
+import { AppHeader } from 'src/shared/components/containers/AppHeader';
+import { AppFooter } from 'src/shared/components/components/AppFooter';
 import { isStateLoading } from '@stores/reducers';
 import { reduxify } from 'src/shared/lib/redux-helper';
 import {
@@ -25,9 +24,9 @@ import { clearSearchTermAction } from '@stores/actions/pages/search';
 import { WithRouter } from 'src/shared/interfaces/common/react';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { TAppLocale } from 'src/shared/interfaces/locale';
-import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer/index';
+import { ICustomerLoginDataParsed } from 'src/shared/interfaces/customer';
 import { Notifications } from 'src/shared/components/Common/Notifications';
-import { messages } from 'src/shared/translation/index';
+import { messages } from 'src/shared/translation';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 const styles = require('./style.scss');

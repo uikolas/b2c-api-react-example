@@ -3,6 +3,7 @@ import {
     PAGES_SEARCH_REQUEST,
     PAGES_SEARCH_REQUEST_CLEAR,
     PAGES_SEARCH_TERM_CLEAR,
+    PAGES_SEARCH_FILTERS_CLEAR,
     PAGES_SUGGESTION_REQUEST,
 } from '@stores/actionTypes/pages/search';
 import {

@@ -4,7 +4,7 @@ import {
     ISearchPageData,
     RangeFacets,
     ValueFacets
-} from 'src/shared/interfaces/searchPageData';
+} from '@interfaces/searchPageData';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import {
     rangeMaxType,
@@ -14,6 +14,7 @@ import {
 } from 'src/shared/components/Pages/SearchPage/types';
 import { IActiveFilterCategories } from 'src/shared/components/Pages/SearchPage/CategoriesList/types';
 import { labeledCategories } from 'src/shared/routes/categoriesRoutes';
+import { ICategory, IBreadcrumbItem } from '@interfaces/category';
 
 export const isValidRangeInput = (
     activeRanges: TActiveRangeFilters,
@@ -95,4 +96,34 @@ export const getLabeledCategory = (category: string | number): string | null => 
     }
 
     return labelValue;
+};
+
+export const getCurrentCategoriesTree = (
+    categoriesTree: ICategory[],
+    categoryId: string): IBreadcrumbItem[] | null => {
+
+    if (!categoryId) {
+        return null;
+    }
+
+    for (let i = 0; i < categoriesTree.length; i++) {
+        if (categoriesTree[i].nodeId.toString() === categoryId) {
+            return [{
+                name: categoriesTree[i].name,
+                nodeId: categoriesTree[i].nodeId,
+                current: true
+            }];
+        }
+
+        const arrayCategoryParents = getCurrentCategoriesTree(categoriesTree[i].children as ICategory[], categoryId);
+
+        if (arrayCategoryParents != null) {
+            arrayCategoryParents.unshift({
+                name: categoriesTree[i].name,
+                nodeId: categoriesTree[i].nodeId
+            });
+
+            return arrayCategoryParents;
+        }
+    }
 };
