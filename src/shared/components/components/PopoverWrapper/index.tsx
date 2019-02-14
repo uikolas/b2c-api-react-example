@@ -1,22 +1,22 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Popover from '@material-ui/core/Popover/Popover';
+import { IPopoverWrapperProps as Props } from './types';
 import { styles } from './styles';
-import { IPopoverWrapperProps } from './types';
 
-export const PopoverWrapperBase: React.SFC<IPopoverWrapperProps> = props => {
+export const PopoverWrapperBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         children,
         popoverPosLeft,
         popoverPosTop,
-        anchorEl,
+        anchorElement,
         closePopoverHandler,
         extraContentClassName,
         extraHelperClassName,
     } = props;
 
-    const open = Boolean(anchorEl);
+    const isOpen = Boolean(anchorElement);
 
     const popoverStyles = {
         top: popoverPosTop,
@@ -24,8 +24,8 @@ export const PopoverWrapperBase: React.SFC<IPopoverWrapperProps> = props => {
     };
 
     const popoverProps = {
-        open,
-        anchorEl,
+        open: isOpen,
+        anchorEl: anchorElement,
         elevation: 0,
         onClose: closePopoverHandler,
     };
@@ -46,7 +46,7 @@ export const PopoverWrapperBase: React.SFC<IPopoverWrapperProps> = props => {
             <div className={classes.childWrapper}>
                 <div
                     className={
-                        `${open ? `${classes.helper} ${extraHelperClassName ? extraHelperClassName : ''}` : ''}`
+                        `${isOpen ? `${classes.helper} ${extraHelperClassName ? extraHelperClassName : ''}` : ''}`
                     }
                 >
                 </div>

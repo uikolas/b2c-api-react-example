@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
 import { pathLoginPage } from 'src/shared/routes/contentRoutes';
+import { FormattedMessage } from 'react-intl';
+import { withStyles, Typography } from '@material-ui/core';
+import { customerProfileNavLinks } from 'src/shared/constants/navLinks';
+import { AppBtnLink } from '@components/Common/AppBtnLink';
+import { SprykerButton } from '@components/UI/SprykerButton';
+import { INavLinkData } from '@interfaces/navLinks';
 import { IUserDropProps as Props } from './types';
 import { styles } from './styles';
-import { customerProfileNavLinks } from 'src/shared/constants/navLinks/index';
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink/index';
-import { SprykerButton } from 'src/shared/components/UI/SprykerButton/index';
-import { INavLinkData } from 'src/shared/interfaces/navLinks/index';
-import { FormattedMessage } from 'react-intl';
 
-export const UserDropComponent: React.SFC<Props> = props => {
+export const UserDropComponent: React.SFC<Props> = (props): JSX.Element => {
     const {classes, isUserLoggedIn, closePopoverHandler, onLogoutClick} = props;
 
     const loggedInUser = (
@@ -34,6 +33,7 @@ export const UserDropComponent: React.SFC<Props> = props => {
             </div>
         </React.Fragment>
     );
+
     const notLoggedInUser = (
         <div className={classes.userBtns}>
             <AppBtnLink

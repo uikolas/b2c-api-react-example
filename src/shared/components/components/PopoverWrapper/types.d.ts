@@ -4,7 +4,7 @@ import { styles } from './styles';
 export interface IPopoverWrapperProps extends WithStyles<typeof styles> {
     popoverPosLeft: number;
     popoverPosTop: number;
-    anchorEl: HTMLElement | null;
+    anchorElement: HTMLElement | null;
     closePopoverHandler: () => void;
     extraContentClassName?: string;
     extraHelperClassName?: string;

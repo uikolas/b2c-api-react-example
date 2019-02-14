@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { ISprykerLogoWhiteProps } from './types';
+import { FormattedMessage } from 'react-intl';
+import { ISprykerLogoWhiteProps as Props } from './types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { FormattedMessage } from 'react-intl';
 
 /* tslint:disable */
 const path1 = `M198.5,516.8c-1.2,0.9-2.7,1.8-4.2,2.9c-1.5,1-3,2.1-4.4,3.3c-1.2,1.1-2.2,2.3-3,3.8c-0.7,1.3-0.9,2.9-0.5,4.3
@@ -72,7 +72,7 @@ const path15 = `M1333.5,330.3h-17.7c-20.2,0-27.8,10.1-27.8,32.8v60.5l-2.5,2.5h-3
 	l2.5,7.6h2.5c0,0,5.1-10.1,27.8-10.1h15.1l2.5,2.5v25.2L1333.5,330.3z`;
 
 /* tslint:enable */
-export const SprykerLogoWhiteBase: React.SFC<ISprykerLogoWhiteProps> = props => {
+export const SprykerLogoWhiteBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         extraClassName

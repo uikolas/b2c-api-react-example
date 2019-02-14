@@ -1,32 +1,32 @@
 import * as React from 'react';
+import { connect } from './connect';
 import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import { ClickEvent } from 'src/shared/interfaces/common/react';
 import { pathCustomerPage, pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
-import { UserIcon } from './icons';
-import { UserDrop } from './UserDrop/index';
-import { IUserDropNavigationProps as Props, IUserDropNavigationState as State } from './types';
-import { connect } from './connect';
-import { styles } from './styles';
+import { UserDrop } from './UserDrop';
 import { PopoverWrapper } from 'src/shared/components/components/PopoverWrapper';
 import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 import { LogoutSetTimeoutTime } from '@constants/customer';
+import { UserIcon } from './icons';
+import { ClickEvent } from 'src/shared/interfaces/common/react';
+import { IUserDropNavigationProps as Props, IUserDropNavigationState as State } from './types';
+import { styles } from './styles';
 
 @connect
 @(withRouter as Function)
 export class UserDropNavigationComponent extends React.Component<Props, State> {
-    public state: State = {
-        anchorEl: null
+    public readonly state: State = {
+        anchorElement: null
     };
 
-    public componentDidUpdate(prevProps: Props) {
+    public componentDidUpdate(prevProps: Props): void {
         if (this.props.location !== prevProps.location) {
             this.closePopover();
         }
     }
 
-    private openPopover = ({currentTarget}: ClickEvent) => {
+    protected openPopover = ({currentTarget}: ClickEvent): void => {
         if (window.innerWidth < BreakpointsSM) {
             if (this.props.isUserLoggedIn) {
                 this.props.history.push(pathCustomerProfilePage);
@@ -34,13 +34,14 @@ export class UserDropNavigationComponent extends React.Component<Props, State> {
                 this.props.history.push(pathLoginPage);
             }
         } else {
-            this.setState(() => ({anchorEl: currentTarget}));
+            this.setState(() => ({anchorElement: currentTarget}));
         }
     };
-    private closePopover = () => this.setState(() => ({anchorEl: null}));
 
-    public handleLogout = (e: ClickEvent) => {
-        e.preventDefault();
+    protected closePopover = (): void => this.setState({anchorElement: null});
+
+    protected handleLogout = (event: ClickEvent): void => {
+        event.preventDefault();
         if (this.props.location.pathname.includes(pathCustomerPage)) {
             this.props.logout();
         } else {
@@ -49,10 +50,9 @@ export class UserDropNavigationComponent extends React.Component<Props, State> {
         }
     };
 
-    public render() {
-        const {anchorEl} = this.state;
+    public render(): JSX.Element {
+        const {anchorElement} = this.state;
         const {classes, popoverPosLeft, popoverPosTop, isUserLoggedIn} = this.props;
-        const open = Boolean(anchorEl);
 
         return (
             <div>
@@ -63,7 +63,7 @@ export class UserDropNavigationComponent extends React.Component<Props, State> {
                 <PopoverWrapper
                     popoverPosLeft={popoverPosLeft}
                     popoverPosTop={popoverPosTop}
-                    anchorEl={anchorEl}
+                    anchorElement={anchorElement}
                     closePopoverHandler={this.closePopover}
                     extraHelperClassName={classes.popoverTriangle}
                 >

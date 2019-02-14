@@ -1,79 +1,80 @@
 import * as React from 'react';
+import { withRouter } from 'react-router';
+import { FormattedMessage } from 'react-intl';
 import { Sticky, StickyChildArgs } from 'react-sticky';
 import debounce from 'lodash/debounce';
-import { withRouter } from 'react-router';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
+import withStyles from '@material-ui/core/styles/withStyles';
 import CatalogSearch from '@components/containers/CatalogSearch';
 import { AppLogo } from '@components/components/AppLogo';
-import { MainNavigation } from '@components/containers/MainNavigation';
+import { MainNavigation } from '@components/components/MainNavigation';
 import { AdditionalNavigation } from './AdditionalNavigation/index';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { SprykerLogoWhite } from './SprykerLogoWhite';
 import { IAppHeaderProps as Props, IAppHeaderState as State } from './types';
 import { styles } from './styles';
-import { FormattedMessage } from 'react-intl';
-import { SprykerLogoWhite } from './SprykerLogoWhite';
 
 @(withRouter as Function)
 export class AppHeaderComponent extends React.PureComponent<Props, State> {
-    public state: State = {
+    public readonly state: State = {
         showSearch: true,
         stickyTriggerOffset: 0,
         pageWidth: 0,
         pageHeight: 0
     };
 
-    private stickyTriggerRef: React.RefObject<HTMLDivElement> = React.createRef();
+    protected stickyTriggerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         window.addEventListener('resize', this.onWindowResize);
         window.addEventListener('scroll', this.onWindowScroll);
     }
 
-    public componentDidUpdate() {
+    public componentDidUpdate(): void {
         this.onWindowResize();
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
         window.removeEventListener('resize', this.onWindowResize);
         window.removeEventListener('scroll', this.onWindowScroll);
         this.stickyTriggerRef = null;
     }
 
-    private onWindowResize = debounce(() => {
+    protected onWindowResize = debounce((): void => {
         this.setTriggerOffset();
         this.updateWindowDimensions();
     }, 0.3);
 
-    private onWindowScroll = debounce(() => {
+    protected onWindowScroll = debounce((): void => {
         const {showSearch, stickyTriggerOffset} = this.state;
         const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
 
         if (showSearch && scrollPosition > stickyTriggerOffset) {
-            this.setState(() => ({showSearch: false}));
+            this.setState({showSearch: false});
         }
     }, 0.3);
 
-    private updateWindowDimensions = () => {
+    protected updateWindowDimensions = (): void => {
         this.setState({pageWidth: window.innerWidth, pageHeight: window.innerHeight});
     };
 
-    private setTriggerOffset = () => {
+    protected setTriggerOffset = (): void => {
         const stickyTriggerOffset = this.stickyTriggerRef.current.offsetTop;
 
-        this.setState(() => ({stickyTriggerOffset}));
+        this.setState({stickyTriggerOffset});
     };
 
-    private handleSticky = (stickyState: StickyChildArgs) => {
+    protected handleSticky = (stickyState: StickyChildArgs): void => {
         const {stickyTriggerOffset} = this.state;
         const scrollOffset = stickyState.distanceFromTop * -1;
+        const showSearch = scrollOffset < stickyTriggerOffset;
 
-        this.setState(() => ({showSearch: scrollOffset < stickyTriggerOffset}));
+        this.setState({showSearch});
     };
 
-    private handleSearch = () => this.setState(({showSearch}) => ({showSearch: !showSearch}));
+    protected handleSearch = (): void => this.setState(({showSearch}) => ({showSearch: !showSearch}));
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, isMobileNavOpened, onMobileNavToggle, locale} = this.props;
         const {stickyTriggerOffset, showSearch, pageWidth, pageHeight} = this.state;
 

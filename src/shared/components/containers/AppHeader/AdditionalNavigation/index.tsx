@@ -1,15 +1,14 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Search from '@material-ui/icons/Search';
-import IconButton from '@material-ui/core/IconButton/IconButton';
+import { appContainerStyles } from 'src/shared/theme/properties/new/appContainerStyles';
+import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
+import { withStyles, IconButton } from '@material-ui/core';
 import { LanguageSwitcher } from '@components/containers/LanguageSwitcher';
 import { UserDropNavigation } from '@components/containers/UserDropNavigation';
 import { MiniCartDropDown } from '@components/containers/MiniCartDropDown';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import Search from '@material-ui/icons/Search';
 import { IAddNavProps as Props } from './types';
 import { styles } from './styles';
-import { appContainerStyles } from 'src/shared/theme/properties/new/appContainerStyles';
-import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 export const AdditionalNavigationComponent: React.SFC<Props> = props => {
     const {classes, showSearch, handleSearch, isSticky, pageWidth} = props;
@@ -19,29 +18,29 @@ export const AdditionalNavigationComponent: React.SFC<Props> = props => {
             pageWidth,
             isSticky,
             showSearch,
-            overFlow,
+            overflow,
             popoverWidth
         }: {
             pageWidth: number;
             isSticky: boolean;
             showSearch: boolean;
-            overFlow: number;
+            overflow: number;
             popoverWidth: number;
         }): {top: number; left: number} => {
 
         const {headerHeight, customBreakpoints} = appFixedDimensions;
         const containerWidth = Number(appContainerStyles.maxWidth);
         const margin = (pageWidth - containerWidth) / 2;
-        const overFlowNumber = (pageWidth < customBreakpoints.tablet ? 0 : overFlow);
+        const overflowNumber = (pageWidth < customBreakpoints.tablet ? 0 : overflow);
         const fullHeaderHeight = pageWidth < customBreakpoints.smallTablet
             ? headerHeight.tablet
             : headerHeight.desktop;
 
-        const popoverPosLeft: number = margin + containerWidth - popoverWidth + overFlowNumber;
+        const popoverPosLeft: number = margin + containerWidth - popoverWidth + overflowNumber;
         let popoverPosTop: number = headerHeight.sticky;
         if (showSearch) {
             popoverPosTop = fullHeaderHeight;
-        } else if (isSticky && !showSearch) {
+        } else if (isSticky) {
             popoverPosTop = headerHeight.sticky;
         }
 
@@ -55,7 +54,7 @@ export const AdditionalNavigationComponent: React.SFC<Props> = props => {
         pageWidth,
         isSticky,
         showSearch,
-        overFlow: appFixedDimensions.headerPopover.overFlow,
+        overflow: appFixedDimensions.headerPopover.overflow,
         popoverWidth: appFixedDimensions.cartDrop.width
     });
 
@@ -63,7 +62,7 @@ export const AdditionalNavigationComponent: React.SFC<Props> = props => {
         pageWidth,
         isSticky,
         showSearch,
-        overFlow: appFixedDimensions.headerPopover.overFlow,
+        overflow: appFixedDimensions.headerPopover.overflow,
         popoverWidth: appFixedDimensions.userDrop.width
     });
 

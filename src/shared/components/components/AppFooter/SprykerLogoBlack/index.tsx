@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ISprykerLogoBlackProps } from './types';
+import { ISprykerLogoBlackProps as Props } from './types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 
@@ -105,7 +105,7 @@ const path22 = `M913.6,285.9c3.4,3.5,5.1,8.2,5.1,14c0,5.9-1.7,10.6-5.1,14c-3.4,3
     z`;
 
 /* tslint:enable */
-export const SprykerLogoBlackBase: React.SFC<ISprykerLogoBlackProps> = props => {
+export const SprykerLogoBlackBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         extraClassName

@@ -15,5 +15,5 @@ export interface ILangProps extends WithStyles<typeof styles> {
 }
 
 export interface ILangState {
-    anchorEl: HTMLElement | null;
+    anchorElement: HTMLElement | null;
 }

@@ -1,29 +1,27 @@
 import * as React from 'react';
+import { connect } from './connect';
+import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
-import withStyles from '@material-ui/core/styles/withStyles';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Tooltip from '@material-ui/core/Tooltip';
-import { ClickEvent } from 'src/shared/interfaces/common/react';
+import { withStyles, Badge, Tooltip } from '@material-ui/core';
+import { pathCartPage } from 'src/shared/routes/contentRoutes';
+import { PopoverWrapper } from '@components/components/PopoverWrapper';
+import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 import { MiniCartDrop } from './MiniCartDrop';
 import { CartIcon } from './icons';
+import IconButton from '@material-ui/core/IconButton';
+import { ClickEvent } from '@interfaces/common/react';
 import { IMiniCartDropDownProps as Props, IMiniCartDropDownState as State } from './types';
-import { connect } from './connect';
 import { styles } from './styles';
-import { pathCartPage } from 'src/shared/routes/contentRoutes';
-import { PopoverWrapper } from 'src/shared/components/components/PopoverWrapper';
-import { FormattedMessage } from 'react-intl';
-import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 
 @(withRouter as Function)
 @connect
 export class MiniCartDropDownComponent extends React.Component<Props, State> {
-    public state: State = {
-        anchorEl: null,
+    public readonly state: State = {
+        anchorElement: null,
         isCartNotificationOpen: true
     };
 
-    public componentDidUpdate(prevProps: Props) {
+    public componentDidUpdate(prevProps: Props): void {
         if (this.props.location !== prevProps.location) {
             this.closePopover();
         }
@@ -37,7 +35,7 @@ export class MiniCartDropDownComponent extends React.Component<Props, State> {
         }
     }
 
-    private openPopover = ({currentTarget}: ClickEvent) => {
+    protected openPopover = ({currentTarget}: ClickEvent): void => {
         const {cartItemsQuantity} = this.props;
 
         if (window.innerWidth < BreakpointsSM) {
@@ -45,23 +43,18 @@ export class MiniCartDropDownComponent extends React.Component<Props, State> {
                 this.props.history.push(pathCartPage);
             }
         } else {
-            this.setState(() => ({anchorEl: cartItemsQuantity !== 0 ? currentTarget : null}));
+            this.setState(() => ({anchorElement: cartItemsQuantity !== 0 ? currentTarget : null}));
         }
     };
-    private closePopover = () => this.setState(() => ({anchorEl: null}));
+    protected closePopover = (): void => this.setState(() => ({anchorElement: null}));
 
-    private handleCloseCartNotification = () => {
-        this.setState(() => ({isCartNotificationOpen: false}));
-    };
-
-    private handleOpenCartNotification = () => {
+    protected handleOpenCartNotification = (): void => {
         this.setState(() => ({isCartNotificationOpen: true}));
     };
 
-    public render() {
-        const {anchorEl, isCartNotificationOpen} = this.state;
+    public render(): JSX.Element {
+        const {anchorElement} = this.state;
         const {classes, cartItemsQuantity, popoverPosLeft, popoverPosTop} = this.props;
-        const open = Boolean(anchorEl);
 
         const cartButton = (
             <IconButton aria-label="cart" onClick={this.openPopover} color="inherit">
@@ -92,7 +85,7 @@ export class MiniCartDropDownComponent extends React.Component<Props, State> {
                 <PopoverWrapper
                     popoverPosLeft={popoverPosLeft}
                     popoverPosTop={popoverPosTop}
-                    anchorEl={anchorEl}
+                    anchorElement={anchorElement}
                     closePopoverHandler={this.closePopover}
                     extraContentClassName={classes.cartContent}
                     extraHelperClassName={classes.popoverTriangle}

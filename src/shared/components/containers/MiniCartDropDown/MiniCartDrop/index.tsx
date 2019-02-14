@@ -1,19 +1,24 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
+import { connect } from './connect';
 import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
+import { FormattedMessage } from 'react-intl';
+import { withStyles, Typography } from '@material-ui/core';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { MiniCartItem } from '../MiniCartItem';
+import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
 import { IMiniCartDropProps as Props } from './types';
 import { styles } from './styles';
-import { connect } from './connect';
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
-import { FormattedMessage } from 'react-intl';
 
 @connect
 export class MiniCartDropComponent extends React.Component<Props> {
-    private deleteFromCart = (cartItemId: string) => {
-        const {cartDeleteItemAction, removeItemGuestCartAction, cartId, anonymId, isUserLoggedIn} = this.props;
+    protected deleteFromCart = (cartItemId: string): void => {
+        const {
+            cartDeleteItemAction,
+            removeItemGuestCartAction,
+            cartId,
+            anonymId,
+            isUserLoggedIn
+        } = this.props;
 
         if (isUserLoggedIn) {
             cartDeleteItemAction(cartId, cartItemId);
@@ -22,7 +27,7 @@ export class MiniCartDropComponent extends React.Component<Props> {
         }
     };
 
-    public render() {
+    public render(): JSX.Element {
         const {classes, cartItems, totals} = this.props;
 
         return (
@@ -40,7 +45,7 @@ export class MiniCartDropComponent extends React.Component<Props> {
                 </ul>
 
                 <div className={classes.cartTotalContainer}>
-                    {(totals.discountTotal && totals.discountTotal > 0) &&
+                    {(!!totals.discountTotal && totals.discountTotal > 0) &&
                         <div className={classes.cartTotal}>
                             <Typography component="h5" className={classes.fontTotal}>
                                 <FormattedMessage id={'word.discount.title'} />

@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import { NavLink } from 'react-router-dom';
 import { INavigationListProps as Props } from './types';
 import { styles } from './styles';
-import { FormattedMessage } from 'react-intl';
 
-export const NavigationListComponent: React.SFC<Props> = props => {
+export const NavigationListComponent: React.SFC<Props> = (props): JSX.Element => {
     const {classes, title, navigationList, external = false} = props;
 
     return (

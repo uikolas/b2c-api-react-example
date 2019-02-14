@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { pathHomePage } from 'src/shared/routes/contentRoutes';
 import { ILogoProps as Props } from './types';
-import { styles } from './styles';
 import { DefaultLogo } from './icons';
+import { styles } from './styles';
 
-export const AppLogoComponent: React.SFC<Props> = props => {
+export const AppLogoComponent: React.SFC<Props> = (props): JSX.Element => {
     const {classes, copyRights, customLogo} = props;
 
     return (
