@@ -10,12 +10,12 @@ import {
 import { withStyles, Grid  } from '@material-ui/core';
 import { AppMain } from '@components/Common/AppMain';
 import { ImageSlider, IImageSlide } from '@components/Common/ImageSlider';
-import { ProductGeneralInfo } from '@components/components/ProductGeneralInfo';
-import { ProductSuperAttribute } from '@components/containers/ProductSuperAttribute';
-import { ProductConfiguratorAddToCart } from '@components/containers/ProductConfiguratorAddToCart';
-import { ProductConfiguratorAddToWishlist } from '@components/containers/ProductConfiguratorAddToWishlist';
+import { ProductGeneralInfo } from './ProductGeneralInfo';
+import { ProductSuperAttribute } from './ProductSuperAttribute';
+import { ProductConfiguratorAddToCart } from './ProductConfiguratorAddToCart';
+import { ProductConfiguratorAddToWishlist } from './ProductConfiguratorAddToWishlist';
+import { ProductDetail } from './ProductDetail';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { ProductDetail } from '@components/components/ProductDetail';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import {
     defaultItemValueDropdown,

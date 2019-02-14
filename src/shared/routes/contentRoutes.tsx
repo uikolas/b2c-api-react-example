@@ -5,8 +5,8 @@ import { ProtectedRoute } from './ProtectedRoute';
 
 import { LoadableHomePage } from '../components/Pages/HomePage/loadable';
 import { LoadableLoginPage } from '../components/Pages/LoginPage/loadable';
-import { LoadablePasswordForgotPage } from '../components/Pages/LoginPage/ForgotPasswordPage/loadable';
-import { LoadablePasswordResetPage } from '../components/Pages/LoginPage/ResetPassword/loadable';
+import { LoadablePasswordForgotPage } from '../components/Pages/ForgotPasswordPage/loadable';
+import { LoadablePasswordResetPage } from '../components/Pages/ResetPasswordPage/loadable';
 import { LoadableSearchPage } from '../components/Pages/SearchPage/loadable';
 import { LoadableProductPage } from '../components/Pages/ProductPage/loadable';
 import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
@@ -21,7 +21,7 @@ import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/l
 import config from '../configs/server';
 import { AppMain } from 'src/shared/components/Common/AppMain/index';
 import { LoadableOrderDetailsPage } from 'src/shared/components/Pages/OrderDetailsPage/loadable';
-import { AddressFormPage } from 'src/shared/components/Pages/CustomerAddressesPage/AddressForm/index';
+import { CustomerAddressForm } from '@components/Pages/CustomerAddressForm';
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;
@@ -83,7 +83,7 @@ export const getContentRoutes = function(isReadyToShow: boolean) {
             { /* TODO: Change to ProtectedRoute */ }
             <Route path={ pathCheckoutPage } component={ LoadableCheckoutPage }/>
             <Route path={ pathOrderDetailsPage } component={ LoadableOrderDetailsPage }/>
-            <Route path={ pathAddressFormUpdate } component={ AddressFormPage }/>
+            <Route path={ pathAddressFormUpdate } component={ CustomerAddressForm }/>
 
             <Route path={ pathNotFoundPage } component={ LoadableNotFound }/>
         </Switch>

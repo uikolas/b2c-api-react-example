@@ -217,6 +217,8 @@ export const messages: IMessages = {
         'word.total.title': 'Total',
         'word.update.title': 'Update',
         'word.wishlist.title': 'Wishlist',
+        'word.loading.title': 'Loading...',
+        'word.each.title': 'each',
         'zip.code.label': 'Zipcode',
     },
     'de': {
@@ -432,9 +434,11 @@ export const messages: IMessages = {
         'word.total.title': 'Gesamtsumme',
         'word.update.title': 'Speichern',
         'word.wishlist.title': 'Wunschzettel',
+        'word.loading.title': 'Beladung...',
+        'word.each.title': 'jeder',
         'zip.code.label': 'PLZ',
     }
-}
+};
 
 // Console Messages
 export const CartAuthenticateErrorMessage = 'You should login to add item to the cart';
