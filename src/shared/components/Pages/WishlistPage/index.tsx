@@ -1,143 +1,27 @@
 import * as React from 'react';
-import { FormattedDate, FormattedMessage } from 'react-intl';
-import { NavLink } from 'react-router-dom';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Grid, Typography, Paper, TextField, Button, Divider, IconButton } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import { ClickEvent, InputChangeEvent } from 'src/shared/interfaces/common/react';
-import { pathWishlistPageBase } from 'src/shared/routes/contentRoutes';
-import { AppPageTitle } from '../../Common/AppPageTitle';
-import { AppTable } from '../../Common/AppTable';
-import { styles } from './styles';
 import { connect } from './connect';
-import { WishlistPageProps as Props, WishlistPageState as State } from './types';
-import { ICellInfo, ITableRow } from 'src/shared/components/Common/AppTable/types';
-import { IWishlist, TWishlistId } from 'src/shared/interfaces/wishlist/index';
+import { FormattedMessage } from 'react-intl';
+
+import { IWishlistPageProps as Props } from './types';
+
+import { AppPageTitle } from '@components/Common/AppPageTitle';
+import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { AddNewWishlistForm } from './AddNewWishlistForm';
+import { WishlistsTable } from './WishlistsTable';
+
+import { Grid, withStyles } from '@material-ui/core';
+import { styles } from './styles';
 
 @connect
-export class WishlistBase extends React.Component<Props, State> {
-    public state: State = {
-        name: '',
-        updatedName: '',
-        updatedList: '',
-    };
-
+export class WishlistPageBase extends React.Component<Props> {
     public componentDidMount() {
         if (!this.props.isInitial) {
             this.props.getWishlistsAction();
         }
     }
 
-    public handleChangeName = (event: InputChangeEvent): void => {
-        event.persist();
-        this.setState(() => ({name: event.target.value}));
-    };
-
-    public handleChangeUpdatedName = (event: InputChangeEvent): void => {
-        event.persist();
-        this.setState(() => ({updatedName: event.target.value}));
-    };
-
-    public addWishlist = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!this.state.name.trim()) {
-            return;
-        }
-        this.props.addWishlistAction(this.state.name);
-        this.setState(() => ({name: ''}));
-    };
-
-    public handleUpdateWishlist = (e: ClickEvent) => {
-        this.props.updateWishlistAction(this.state.updatedList, this.state.updatedName);
-        this.setState(() => ({updatedList: '', updatedName: ''}));
-    };
-
-    public handleDeleteWishlist = (wishlistId: TWishlistId) => (e: ClickEvent) => {
-        this.props.deleteWishlistAction(wishlistId);
-    };
-
-    private setUpdatedWishlist = (id: string, name: string) => (e: ClickEvent) => {
-        this.setState(() => ({updatedList: id, updatedName: name}));
-    };
-
     public render() {
-        const { classes, wishlists, isLoading } = this.props;
-        const { name } = this.state;
-        const tableAction = isLoading ? classes.tableActionDisabled : classes.tableAction;
-
-        if (!wishlists.length && isLoading) {
-            return null;
-        }
-
-        const headerCellPart = 'header-';
-        const bodyCellPart = 'body-';
-
-        const headerCells: ICellInfo[] = [
-            {content: 'Name', id: `${headerCellPart}1`},
-            {content: 'Items', id: `${headerCellPart}2`},
-            {content: 'Created', id: `${headerCellPart}3`},
-            {content: '', id: `${headerCellPart}4`},
-            {content: '', id: `${headerCellPart}5`},
-        ];
-
-        const bodyRows: ITableRow[] = wishlists.map((item: IWishlist) => ({
-            id: item.id,
-            cells: [
-                {
-                    content: (
-                        this.state.updatedList && this.state.updatedList === item.id
-                            ? (
-                                <form noValidate autoComplete="off" className={classes.updateCell}>
-                                    <TextField
-                                        value={this.state.updatedName}
-                                        onChange={this.handleChangeUpdatedName}
-                                    />
-                                    <IconButton color="primary" onClick={this.handleUpdateWishlist}
-                                                disabled={isLoading}>
-                                        <SaveIcon/>
-                                    </IconButton>
-                                </form>
-                            ) : (
-                                <NavLink
-                                    className={ classes.link }
-                                    to={ `${pathWishlistPageBase}/wishlist/${item.name}` }
-                                >
-                                    {item.name}
-                                </NavLink>
-                            )
-                    ),
-                    id: `${bodyCellPart}1`
-                },
-                {content: item.numberOfItems, id: `${bodyCellPart}2`},
-                {
-                    content: <FormattedDate value={new Date(item.createdAt)} year="numeric" month="short"
-                                            day="2-digit"/>,
-                    id: `${bodyCellPart}3`
-                },
-                {
-                    content: (
-                        <Typography
-                            component="span"
-                            className={tableAction}
-                            onClick={this.setUpdatedWishlist(item.id, item.name)}
-                        >
-                            <FormattedMessage id={ 'word.edit.title' } />
-                        </Typography>
-                    ),
-                    id: `${bodyCellPart}4`
-                },
-                {
-                    content: (
-                        <Typography component="span" className={tableAction}
-                                    onClick={this.handleDeleteWishlist(item.id)}>
-                            <FormattedMessage id={ 'word.delete.title' } />
-                        </Typography>
-                    ),
-                    id: `${bodyCellPart}5`
-                },
-            ],
-        }));
+        const { classes } = this.props;
 
         return (
             <Grid container>
@@ -149,48 +33,19 @@ export class WishlistBase extends React.Component<Props, State> {
                 </Grid>
 
                 <Grid item xs={12}>
-                    <form noValidate autoComplete="off" onSubmit={this.addWishlist} className={classes.form}>
-                        <Typography paragraph className={ classes.titleForm }>
-                            <FormattedMessage id={ 'add.new.wishlist.title' } />
-                        </Typography>
-                        <Paper elevation={0} className={classes.formItem}>
-                            <TextField
-                                className={ classes.textFieldForm }
-                                value={ name }
-                                helperText={ <FormattedMessage id={ 'wishlist.name.title' } /> }
-                                FormHelperTextProps={ {
-                                    classes: {
-                                        root: classes.placeholder,
-                                        filled: name.length > 0 ? classes.filled : null
-                                    }
-                                } }
-                                variant={ 'outlined' }
-                                onChange={ this.handleChangeName }
-                                inputProps={ { className: classes.input } }
-                            />
-                            <Button type="submit" variant="contained" color="primary"
-                                    className={ classes.formSubmit }>
-                                <FormattedMessage id={ 'add.new.wishlist.title' } />
-                            </Button>
-                        </Paper>
-                    </form>
+                    <ErrorBoundary>
+                        <AddNewWishlistForm />
+                    </ErrorBoundary>
 
-                    {bodyRows.length ? (
-                            <AppTable headerCells={headerCells} bodyRows={bodyRows}/>
-                        ) : (
-                            <Paper elevation={0}>
-                                <Divider/>
-                                <Typography paragraph className={classes.noItems}>
-                                    <FormattedMessage id={ 'create.list.message' } />
-                                </Typography>
-                            </Paper>
-                        )
-                    }
+                    <ErrorBoundary>
+                        <WishlistsTable />
+                    </ErrorBoundary>
                 </Grid>
             </Grid>
         );
     }
 }
 
-export const ConnectedWishlistPage = withStyles(styles)(WishlistBase);
-export default ConnectedWishlistPage;
+export const WishlistPage = withStyles(styles)(WishlistPageBase);
+
+export default WishlistPage;
