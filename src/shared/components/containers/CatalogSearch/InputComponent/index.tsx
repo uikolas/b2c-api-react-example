@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as qs from 'query-string';
 import { connect } from './connect';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -32,11 +33,12 @@ export class InputComponent extends React.Component<Props, State> {
             inputProps: {value}
         } = this.props;
         const minimalLettersAmount = 2;
+        const query = {q: value, currency};
 
         if (!isLoading && value.length > minimalLettersAmount) {
-            sendSearchAction({q: value, currency});
+            sendSearchAction(query);
 
-            push(pathSearchPage);
+            push(`${pathSearchPage}?${qs.stringify(query)}`);
             clearSuggestion(value);
         }
     };

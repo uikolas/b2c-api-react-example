@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, withStyles } from '@material-ui/core';
-import { SuperAttributeItemProps as Props } from './types';
+import { ISuperAttributeItemProps as Props } from './types';
 import { styles } from './styles';
 
 export const SuperAttributeItemComponent: React.SFC<Props> = (props): JSX.Element => {

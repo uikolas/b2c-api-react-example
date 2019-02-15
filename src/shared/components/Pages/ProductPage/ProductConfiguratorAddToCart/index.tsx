@@ -13,8 +13,8 @@ import { IFormSettings } from '@components/UI/SprykerForm/types';
 import { ClickEvent } from '@interfaces/common/react';
 import { ICartAddItem } from '@interfaces/cart';
 import {
-    ProductConfiguratorAddToCartProps as Props,
-    ProductConfiguratorAddToCartState as State,
+    IProductConfiguratorAddToCartProps as Props,
+    IProductConfiguratorAddToCartState as State,
     IProductQuantityParams
 } from './types';
 import { styles } from './styles';

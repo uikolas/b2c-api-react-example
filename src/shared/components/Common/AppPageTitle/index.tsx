@@ -21,20 +21,20 @@ export const AppPageTitleBase: React.SFC<AppPageTitleProps> = props => {
         >
             <Grid item xs={12}>
                 {title &&
-                    <Typography
-                        component="h1"
-                        color="inherit"
-                        align="left"
-                        className={classes.pageHeader}
-                        id="pageTitle"
-                    >
-                        {title}
-                    </Typography>
+                <Typography
+                    component="h1"
+                    color="inherit"
+                    align="left"
+                    className={classes.pageHeader}
+                    id="pageTitle"
+                >
+                    {title}
+                </Typography>
                 }
                 {intro &&
-                    <Typography color="inherit" paragraph className={classes.paragraph}>
-                        {intro}
-                    </Typography>
+                <Typography color="inherit" paragraph className={classes.paragraph}>
+                    {intro}
+                </Typography>
                 }
             </Grid>
         </Grid>

@@ -1,57 +1,91 @@
 import * as React from 'react';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-
-import { CheckoutPageContext } from '../../../context';
-import { formStyles } from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/styles';
-import { SprykerForm } from 'src/shared/components/UI/SprykerForm';
-import { checkoutFormsNames } from 'src/shared/components/Pages/CheckoutPage/constants';
+import { connect } from './connect';
+import { withStyles, Grid } from '@material-ui/core';
+import { SprykerForm } from '@components/UI/SprykerForm';
+import { getCreditCardFormSettings } from 'src/shared/helpers/formCreations/checkout/creditCardSettings';
+import { checkFormInputValidity, checkFormValidity } from 'src/shared/helpers/checkout';
+import { checkoutFormsNames, creditCardConfigInputStable } from 'src/shared/constants/checkout';
+import { InputSaveErrorMessage } from 'src/shared/translation';
+import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { ICheckoutCreditCardState } from '@interfaces/checkout';
+import { IPaymentCreditCardParams } from 'src/shared/helpers/formCreations/checkout/types';
 import { ICreditCardPaymentFormProps } from './types';
-import {
-    getCreditCardFormSettings
-} from 'src/shared/components/Pages/CheckoutPage/CheckoutForms/settings/creditCardSettings';
-import { IPaymentCreditCardParams } from 'src/shared/components/Pages/CheckoutPage/types/formSettingsTypes';
-import { creditCardConfigInputStable } from 'src/shared/components/Pages/CheckoutPage/constants/inputsConfig';
+import { styles } from './styles';
 
 export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> = (props): JSX.Element => {
     const {
         classes,
         providersCollection,
+        paymentCreditCardData,
+        mutateStateCreditCard,
+        mutatePaymentSection
     } = props;
 
+    const validateCreditCardInput = (key: string, value: string): boolean => (
+        checkFormInputValidity({ value, fieldConfig: creditCardConfigInputStable[ key ] })
+    );
+
+    const validateCreditCardForm = (formState: ICheckoutCreditCardState): boolean => (
+        checkFormValidity({ form: formState, fieldsConfig: creditCardConfigInputStable })
+    );
+
+    const handleCreditCardInputs = (event: InputChangeEvent): void => {
+        const { name, value } = event.target;
+        if (!paymentCreditCardData.hasOwnProperty(name)) {
+            throw new Error(InputSaveErrorMessage);
+        }
+        const isInputValid = validateCreditCardInput(name, value);
+        const changedFiledData = {
+            key: name,
+            value,
+            isError: !isInputValid
+        };
+
+        mutateStateCreditCard(changedFiledData);
+
+        const namesList = [
+            creditCardConfigInputStable.paymentProvider.inputName,
+            creditCardConfigInputStable.cardExpiryMonth.inputName,
+            creditCardConfigInputStable.cardExpiryYear.inputName
+        ];
+
+        const isSelectChanged = namesList.includes(name);
+
+        if (isSelectChanged) {
+            handleCreditCardValidity();
+        }
+    };
+
+    const handleSubmit = (event: FormEvent): void => {
+        event.preventDefault();
+    };
+
+    const handleCreditCardValidity = (): void => {
+        const isFormValid = validateCreditCardForm(paymentCreditCardData);
+        mutatePaymentSection(isFormValid);
+    };
+
+    const creditCardParams: IPaymentCreditCardParams = {
+        inputsData: paymentCreditCardData,
+        inputsConfig: creditCardConfigInputStable,
+        providersCollection,
+        submitHandler: handleSubmit,
+        inputChangeHandler: handleCreditCardInputs,
+        onBlurHandler: handleCreditCardValidity
+    };
+
+    const creditCardFormSettings = getCreditCardFormSettings(
+        checkoutFormsNames.creditCard,
+        creditCardParams
+    );
+
     return (
-        <CheckoutPageContext.Consumer>
-            {({
-                submitHandler,
-                onBlurHandler,
-                handleCreditCardInputs,
-                paymentCreditCardDataInputs,
-            }) => {
-                const creditCardParams: IPaymentCreditCardParams = {
-                    inputsData: paymentCreditCardDataInputs,
-                    inputsConfig: creditCardConfigInputStable,
-                    providersCollection,
-                    submitHandler,
-                    inputChangeHandler: handleCreditCardInputs,
-                    onBlurHandler: onBlurHandler(checkoutFormsNames.creditCard),
-                };
-
-                const creditCardFormSettings = getCreditCardFormSettings(
-                    checkoutFormsNames.creditCard,
-                    creditCardParams
-                );
-
-                return (
-                    <Grid container className={classes.root}>
-                        <Grid item xs={12}>
-                            <SprykerForm form={creditCardFormSettings} formClassName={classes.creditCardForm}/>
-                        </Grid>
-                    </Grid>
-                );
-            }}
-        </CheckoutPageContext.Consumer>
+        <Grid container>
+            <Grid item xs={ 12 }>
+                <SprykerForm form={ creditCardFormSettings } formClassName={ classes.creditCardForm } />
+            </Grid>
+        </Grid>
     );
 };
 
-export const CreditCardPaymentForm = withStyles(formStyles)(CreditCardPaymentFormBase);
+export const CreditCardPaymentForm = connect(withStyles(styles)(CreditCardPaymentFormBase));

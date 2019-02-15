@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { withStyles } from '@material-ui/core';
-import { SuperAttributeBlock } from './SuperAttributeBlock/index';
-import { ProductSuperAttributeProps as Props, ProductSuperAttributeState as State } from './types';
+import { SuperAttributeBlock } from './SuperAttributeBlock';
+import { IProductSuperAttributeProps as Props, IProductSuperAttributeState as State } from './types';
 import { ISuperAttribute } from '@helpers/product/types';
 import { styles } from './styles';
 
 export class ProductSuperAttributeComponent extends React.Component<Props, State> {
     public state: State = {
-        selectedValues: null,
-        selectedItemValue: ''
+        selectedValues: null
     };
 
     protected onChange = ({name, value}: {name: string, value: string}): void => {
@@ -21,10 +20,7 @@ export class ProductSuperAttributeComponent extends React.Component<Props, State
             };
 
         this.props.onChange({name, value});
-        this.setState({
-            selectedValues: updatedValues,
-            selectedItemValue: value
-        });
+        this.setState({selectedValues: updatedValues});
     };
 
     public render(): JSX.Element {
@@ -38,7 +34,6 @@ export class ProductSuperAttributeComponent extends React.Component<Props, State
                             attributeData={attribute}
                             onValueChanged={this.onChange}
                             key={attribute.name}
-                            selectedItemValue={this.state.selectedItemValue}
                         />
                     ))
                 }

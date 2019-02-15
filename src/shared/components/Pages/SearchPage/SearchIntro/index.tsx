@@ -14,12 +14,12 @@ export const SearchIntroBase: React.SFC<ISearchIntroProps> = props => {
     }
 
     const suggestionTermLink = <NavLink
-                                    to={pathSearchPage}
-                                    className={classes.spellingSuggestion}
-                                    onClick={onLinkClick}
-                                >
-                                    {spellingSuggestion}
-                                </NavLink>;
+        to={pathSearchPage}
+        className={classes.spellingSuggestion}
+        onClick={onLinkClick}
+    >
+        {spellingSuggestion}
+    </NavLink>;
 
     return (
         <FormattedMessage

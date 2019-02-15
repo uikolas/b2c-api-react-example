@@ -6,8 +6,8 @@ import { withStyles, Grid } from '@material-ui/core';
 import { SprykerForm } from '@components/UI/SprykerForm';
 import { SprykerButton } from '@components/UI/SprykerButton';
 import {
-    ProductConfiguratorAddToWishlistProps as Props,
-    ProductConfiguratorAddToWishlistState as State,
+    IProductConfiguratorAddToWishlistProps as Props,
+    IProductConfiguratorAddToWishlistState as State,
     IProductWishlistParams
 } from './types';
 import { concreteProductType, defaultItemValueDropdown } from '@interfaces/product';

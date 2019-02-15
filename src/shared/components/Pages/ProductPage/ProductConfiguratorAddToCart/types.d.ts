@@ -11,7 +11,7 @@ import {
 import { TCartId } from '@interfaces/cart';
 import { ICartCreatePayload } from 'src/shared/services/Common/Cart/types';
 
-export interface ProductConfiguratorAddToCartProps extends WithStyles<typeof styles> {
+export interface IProductConfiguratorAddToCartProps extends WithStyles<typeof styles> {
     product: IProductPropFullData | null;
     productType: TProductType | null;
     sku: TProductSKU | null;
@@ -25,7 +25,7 @@ export interface ProductConfiguratorAddToCartProps extends WithStyles<typeof sty
     anonymId: string;
 }
 
-export interface ProductConfiguratorAddToCartState {
+export interface IProductConfiguratorAddToCartState {
     quantitySelected: TProductQuantity;
     quantity: TProductQuantity | null;
     isBuyBtnDisabled?: boolean;
@@ -36,7 +36,7 @@ export interface ProductConfiguratorAddToCartState {
 
 export interface IProductQuantityParams {
     onChangeHandler: (event: ChangeEvent<HTMLSelectElement>) => void;
-    inputValue: ProductConfiguratorAddToCartState['quantitySelected'];
-    quantity: ProductConfiguratorAddToCartState['quantity'];
+    inputValue: IProductConfiguratorAddToCartState['quantitySelected'];
+    quantity: IProductConfiguratorAddToCartState['quantity'];
     controlsGroupClassName?: string;
 }

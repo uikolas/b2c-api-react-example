@@ -1,26 +1,51 @@
-import { IAddressItemCollection } from 'src/shared/interfaces/addresses/index';
-import { IPaymentMethod, IShipmentMethod } from 'src/shared/interfaces/checkout/index';
+import { IAddressItemCollection } from '@interfaces/addresses';
 import { IReduxState } from 'src/typings/app';
-import { TOrderId } from 'src/shared/interfaces/order/index';
+import { TOrderId } from '@interfaces/order';
 import { IActionData } from 'src/shared/stores/reducers/types';
+import {
+    IPaymentMethod,
+    IShipmentMethod,
+    IBillingAddressState,
+    IBillingSelectionState,
+    ICheckoutCreditCardState,
+    ICheckoutInvoiceState,
+    ICheckoutStepsCompletionState,
+    IDeliveryAddressState,
+    IDeliverySelectionState,
+    IFormUpdatePaymentStatus,
+    IFormFieldMutate
+} from '@interfaces/checkout';
 
 export interface ICheckoutState extends IReduxState {
-  data: ICheckoutStateData;
+    deliverySelection: IDeliverySelectionState;
+    billingSelection: IBillingSelectionState;
+    deliveryNewAddress: IDeliveryAddressState;
+    billingNewAddress: IBillingAddressState;
+    stepsCompletion: ICheckoutStepsCompletionState;
+    shipmentMethod: IShipmentMethod['id'] | null;
+    paymentMethod: IPaymentMethod['paymentMethodName'] | null;
+    paymentCreditCardData: ICheckoutCreditCardState;
+    paymentInvoiceData: ICheckoutInvoiceState;
+    data: ICheckoutStateData;
 }
 
 export interface IPageCheckoutAction extends IActionData {
-  payloadSendFulfilled?: {
-    orderId: TOrderId;
-  };
-  payloadGetFulfilled?: ICheckoutResponseData;
+    payloadSendFulfilled?: {
+        orderId: TOrderId;
+    };
+    payloadGetFulfilled?: ICheckoutResponseData;
+    payloadFormFieldMutate?: IFormFieldMutate;
+    payloadCurrentSelection?: string;
+    payloadFormUpdatePaymentStatus?: IFormUpdatePaymentStatus;
+    payloadUpdateSectionStatus?: boolean;
 }
 
 export interface ICheckoutResponseData {
-  payments: IPaymentMethod[];
-  shipments: IShipmentMethod[];
-  addressesCollection: IAddressItemCollection[];
+    payments: IPaymentMethod[];
+    shipments: IShipmentMethod[];
+    addressesCollection: IAddressItemCollection[];
 }
 
-interface ICheckoutStateData extends ICheckoutResponseData {
-  orderId: TOrderId;
+export interface ICheckoutStateData extends ICheckoutResponseData {
+    orderId: TOrderId;
 }

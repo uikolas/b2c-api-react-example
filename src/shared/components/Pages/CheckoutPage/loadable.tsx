@@ -5,8 +5,8 @@ export const LoadableCheckoutPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableCheckoutPage" */
-            'src/shared/components/Pages/CheckoutPage').then(
-            module => module.default,
+            '@components/Pages/CheckoutPage').then(
+            module => module.CheckoutPage,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,
 });
