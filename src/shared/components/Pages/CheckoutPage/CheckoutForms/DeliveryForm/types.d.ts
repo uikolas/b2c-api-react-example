@@ -20,3 +20,5 @@ export interface IDeliveryFormProps extends WithStyles<typeof styles> {
     mutateStateDeliverySelectionAddNew: () => void;
     mutateStateNewAddressDelivery: (payload: IFormFieldMutate) => void;
 }
+
+export type TCurrentValueDeliverySelection = IAddressItemCollection['id'] | string | null;

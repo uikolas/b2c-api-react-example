@@ -8,19 +8,19 @@ interface AppMainProps extends WithStyles<typeof styles> {
 }
 
 export const AppMainBase: React.SFC<AppMainProps> = props => {
-    const {classes} = props;
+    const { classes } = props;
 
     return (
-        <main className={classes.layout}>
+        <main className={ classes.layout }>
             <Grid
                 item
-                xs={12}
+                xs={ 12 }
                 container
                 direction="row"
                 alignItems="flex-start"
-                className={classes.container}
+                className={ classes.container }
             >
-                {props.children}
+                { props.children }
             </Grid>
         </main>
     );

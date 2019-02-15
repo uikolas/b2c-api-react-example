@@ -19,15 +19,15 @@ export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (prop
     } = props;
 
     const validateInvoiceInput = (key: string, value: string): boolean => (
-        checkFormInputValidity({value, fieldConfig: invoiceConfigInputStable[key]})
+        checkFormInputValidity({ value, fieldConfig: invoiceConfigInputStable[ key ] })
     );
 
     const validateInvoiceForm = (formState: ICheckoutInvoiceState): boolean => (
-        checkFormValidity({form: formState, fieldsConfig: invoiceConfigInputStable})
+        checkFormValidity({ form: formState, fieldsConfig: invoiceConfigInputStable })
     );
 
     const handleInvoiceInputs = (event: InputChangeEvent): void => {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         if (!paymentInvoiceData.hasOwnProperty(name)) {
             throw new Error(InputSaveErrorMessage);
         }
@@ -62,8 +62,8 @@ export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (prop
 
     return (
         <Grid container>
-            <Grid item xs={12}>
-                <SprykerForm form={invoiceFormSettings} />
+            <Grid item xs={ 12 }>
+                <SprykerForm form={ invoiceFormSettings } />
             </Grid>
         </Grid>
     );

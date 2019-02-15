@@ -12,6 +12,8 @@ import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import {
     ICheckoutCreditCardState,
     ICheckoutInvoiceState,
+    IFormFieldMutate,
+    IFormUpdatePaymentStatus,
     IPaymentMethod
 } from '@interfaces/checkout';
 
@@ -32,16 +34,16 @@ const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
 
 const mapDispatchToProps = (dispatch: Function) => ({
     dispatch,
-    mutatePaymentMethod: (payload: string): void => {
+    mutatePaymentMethod: (payload: IFormUpdatePaymentStatus): void => {
         dispatch(mutatePaymentMethodAction(payload));
     },
-    mutateStateInvoiceForm: (payload: any): void => {
+    mutateStateInvoiceForm: (payload: IFormFieldMutate): void => {
         dispatch(mutateStateInvoiceFormAction(payload));
     },
     mutatePaymentSection: (payload: boolean): void => {
         dispatch(mutatePaymentSectionAction(payload));
     },
-    mutateStateCreditCard: (payload: any): void => {
+    mutateStateCreditCard: (payload: IFormFieldMutate): void => {
         dispatch(mutateStateCreditCardAction(payload));
     },
 });

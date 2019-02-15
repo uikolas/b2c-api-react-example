@@ -22,15 +22,15 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
     } = props;
 
     const validateCreditCardInput = (key: string, value: string): boolean => (
-        checkFormInputValidity({value, fieldConfig: creditCardConfigInputStable[key]})
+        checkFormInputValidity({ value, fieldConfig: creditCardConfigInputStable[ key ] })
     );
 
     const validateCreditCardForm = (formState: ICheckoutCreditCardState): boolean => (
-        checkFormValidity({form: formState, fieldsConfig: creditCardConfigInputStable})
+        checkFormValidity({ form: formState, fieldsConfig: creditCardConfigInputStable })
     );
 
     const handleCreditCardInputs = (event: InputChangeEvent): void => {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         if (!paymentCreditCardData.hasOwnProperty(name)) {
             throw new Error(InputSaveErrorMessage);
         }
@@ -43,11 +43,15 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
 
         mutateStateCreditCard(changedFiledData);
 
-        const isSelecrChanged = name === creditCardConfigInputStable.paymentProvider.inputName
-            || name === creditCardConfigInputStable.cardExpiryMonth.inputName
-            || name === creditCardConfigInputStable.cardExpiryYear.inputName;
+        const namesList = [
+            creditCardConfigInputStable.paymentProvider.inputName,
+            creditCardConfigInputStable.cardExpiryMonth.inputName,
+            creditCardConfigInputStable.cardExpiryYear.inputName
+        ];
 
-        if (isSelecrChanged) {
+        const isSelectChanged = namesList.includes(name);
+
+        if (isSelectChanged) {
             handleCreditCardValidity();
         }
     };
@@ -77,8 +81,8 @@ export const CreditCardPaymentFormBase: React.SFC<ICreditCardPaymentFormProps> =
 
     return (
         <Grid container>
-            <Grid item xs={12}>
-                <SprykerForm form={creditCardFormSettings} formClassName={classes.creditCardForm} />
+            <Grid item xs={ 12 }>
+                <SprykerForm form={ creditCardFormSettings } formClassName={ classes.creditCardForm } />
             </Grid>
         </Grid>
     );

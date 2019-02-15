@@ -9,11 +9,11 @@ import { ICheckoutCartProductListProps as Props } from './types';
 import { styles } from './styles';
 
 export const CheckoutCartProductListBase: React.SFC<Props> = (props): JSX.Element => {
-    const {products, classes, heightListItem} = props;
+    const { products, classes, listItemHeight } = props;
 
     return (
         <>
-            {products.map((item: ICartItem) => {
+            { products.map((item: ICartItem) => {
                 const {
                     sku,
                     image,
@@ -27,35 +27,35 @@ export const CheckoutCartProductListBase: React.SFC<Props> = (props): JSX.Elemen
 
                 return (
                     <ListItem
-                        key={sku}
+                        key={ sku }
                         disableGutters
                         divider
-                        className={classes.listItem}
+                        className={ classes.listItem }
                     >
                         <SquareImage
-                            image={image}
-                            size={heightListItem}
-                            alt={name}
+                            image={ image }
+                            size={ listItemHeight }
+                            alt={ name }
                         />
-                        <div className={classes.itemWrapper}>
-                            <div className={classes.itemName}>{name}</div>
-                            <AppPrice value={sumPriceToPayAggregation}
-                                      extraClassName={classes.priceAndQtyInfo}
+                        <div className={ classes.itemWrapper }>
+                            <div className={ classes.itemName }>{ name }</div>
+                            <AppPrice value={ sumPriceToPayAggregation }
+                                      extraClassName={ classes.priceAndQtyInfo }
                             />
-                            {(sumPriceToPayAggregation !== sumGrossPrice) &&
+                            { (sumPriceToPayAggregation !== sumGrossPrice) &&
                                 <AppPrice
-                                    value={sumGrossPrice}
-                                    extraClassName={`${classes.priceAndQtyInfo} ${classes.smallFont}`}
-                                    priceType={priceTypeNameOriginal}
+                                    value={ sumGrossPrice }
+                                    extraClassName={ `${classes.priceAndQtyInfo} ${classes.smallFont}` }
+                                    priceType={ priceTypeNameOriginal }
                                 />
                             }
-                            <div className={`${classes.priceAndQtyInfo} ${classes.marginTopQty}`}>
-                                <FormattedMessage id={'word.quantity.title'} />{`: ${quantity}`}
+                            <div className={ `${classes.priceAndQtyInfo} ${classes.marginTopQty}` }>
+                                <FormattedMessage id={ 'word.quantity.title' } />{ `: ${quantity}` }
                             </div>
                         </div>
                     </ListItem>
                 );
-            })}
+            }) }
         </>
     );
 };

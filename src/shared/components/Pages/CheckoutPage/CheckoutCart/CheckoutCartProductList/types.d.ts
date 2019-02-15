@@ -3,6 +3,6 @@ import { ICartItem } from '@interfaces/cart';
 import { styles } from './styles';
 
 export interface ICheckoutCartProductListProps extends WithStyles<typeof styles> {
-    heightListItem?: number;
+    listItemHeight?: number;
     products: ICartItem[];
 }

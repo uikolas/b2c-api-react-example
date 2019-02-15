@@ -19,8 +19,8 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
     } = props;
 
     const handleSelectionsChange = (event: InputChangeEvent): void => {
-        const {value} = event.target;
-        const {mutateShipmentMethod} = props;
+        const { value } = event.target;
+        const { mutateShipmentMethod } = props;
 
         mutateShipmentMethod(value);
     };
@@ -41,16 +41,16 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
 
     const shipmentMethodsGrouped: IShipmentMethodsGrouped = {};
     for (const shipmentMethod of shipmentMethods) {
-        if (!shipmentMethodsGrouped[shipmentMethod.carrierName]) {
-            shipmentMethodsGrouped[shipmentMethod.carrierName] = [];
+        if (!shipmentMethodsGrouped[ shipmentMethod.carrierName ]) {
+            shipmentMethodsGrouped[ shipmentMethod.carrierName ] = [];
         }
-        shipmentMethodsGrouped[shipmentMethod.carrierName].push(shipmentMethod);
+        shipmentMethodsGrouped[ shipmentMethod.carrierName ].push(shipmentMethod);
     }
 
     const shipmentMethodsForms: JSX.Element[] = [];
     for (const carrierName in shipmentMethodsGrouped) {
         const shipmentMethodsParams: IShippingMethodsParams = {
-            shipmentMethods: shipmentMethodsGrouped[carrierName],
+            shipmentMethods: shipmentMethodsGrouped[ carrierName ],
             currentValueShipmentMethod: shipmentMethod,
             carrierName,
             shipmentCarrierNameToIcon,
@@ -62,13 +62,13 @@ export const ShipmentMethodBase: React.SFC<IShipmentMethodProps> = (props): JSX.
             shipmentMethodsParams
         );
 
-        shipmentMethodsForms.push(<SprykerForm key={carrierName} form={shipmentMethodFormSettings} />);
+        shipmentMethodsForms.push(<SprykerForm key={ carrierName } form={ shipmentMethodFormSettings } />);
     }
 
     return (
         <Grid container>
-            <Grid item xs={12} className={classes.shipmentMethodsParentForms}>
-                {shipmentMethodsForms}
+            <Grid item xs={ 12 } className={ classes.shipmentMethodsParentForms }>
+                { shipmentMethodsForms }
             </Grid>
         </Grid>
     );

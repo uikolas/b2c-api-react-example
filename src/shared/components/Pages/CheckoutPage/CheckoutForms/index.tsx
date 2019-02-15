@@ -9,39 +9,39 @@ import { ICheckoutFormsProps } from './types';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 
 export const CheckoutForms: React.SFC<ICheckoutFormsProps> = (props): JSX.Element => {
-    const {panels} = props;
+    const { panels } = props;
 
     return (
         <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={ 12 }>
                 <ErrorBoundary>
                     <FormWrapper
-                        title={panels.first.title}
-                        isDisabled={panels.first.isDisabled}
+                        title={ panels.first.title }
+                        isDisabled={ panels.first.isDisabled }
                     >
                         <DeliveryForm />
                     </FormWrapper>
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <FormWrapper
-                        title={panels.second.title}
-                        isDisabled={panels.second.isDisabled}
+                        title={ panels.second.title }
+                        isDisabled={ panels.second.isDisabled }
                     >
                         <BillingFormComponent />
                     </FormWrapper>
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <FormWrapper
-                        title={panels.third.title}
-                        isDisabled={panels.third.isDisabled}
+                        title={ panels.third.title }
+                        isDisabled={ panels.third.isDisabled }
                     >
                         <ShipmentMethod />
                     </FormWrapper>
                 </ErrorBoundary>
                 <ErrorBoundary>
                     <FormWrapper
-                        title={panels.fourth.title}
-                        isDisabled={panels.fourth.isDisabled}
+                        title={ panels.fourth.title }
+                        isDisabled={ panels.fourth.isDisabled }
                     >
                         <PaymentMethod />
                     </FormWrapper>

@@ -8,12 +8,12 @@ const pathHermes = 'M13.92 3.123L14.69.5H0l2.54 2.623h11.38zM0 1.176l2.34 1.947h
 /* tslint:enable */
 export const PartnerIconDhl: React.SFC = () => (
     <svg width="64" height="8" viewBox="0 0 64 8">
-        <path fill="#111" fillRule="evenodd" d={pathDhl} opacity=".497"/>
+        <path fill="#111" fillRule="evenodd" d={ pathDhl } opacity=".497" />
     </svg>
 );
 
 export const PartnerIconHermes: React.SFC = () => (
     <svg width="68" height="10" viewBox="0 0 68 10">
-        <path fill="#111" fillRule="evenodd" d={pathHermes} opacity=".497"/>
+        <path fill="#111" fillRule="evenodd" d={ pathHermes } opacity=".497" />
     </svg>
 );

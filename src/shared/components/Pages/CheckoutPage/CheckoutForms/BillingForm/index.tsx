@@ -14,7 +14,7 @@ import {
 import {
     billingConfigInputStable,
     checkoutFormsNames,
-    checkoutSelectionInputs
+    checkoutSelectionInputs, deliveryConfigInputStable
 } from 'src/shared/constants/checkout';
 import { InputSaveErrorMessage } from 'src/shared/translation';
 import {
@@ -44,15 +44,15 @@ export class BillingFormBase extends React.Component<IBillingFormProps> {
     };
 
     protected validateBillingInput = (key: string, value: string): boolean => (
-        checkFormInputValidity({value, fieldConfig: billingConfigInputStable[key]})
+        checkFormInputValidity({ value, fieldConfig: billingConfigInputStable[ key ] })
     );
 
     protected validateBillingNewAddressForm = (formState: IBillingAddressState): boolean => (
-        checkFormValidity({form: formState, fieldsConfig: billingConfigInputStable})
+        checkFormValidity({ form: formState, fieldsConfig: billingConfigInputStable })
     );
 
     protected handleBillingInputs = (event: InputChangeEvent): void => {
-        const {name, value} = event.target;
+        const { name, value } = event.target;
         const {
             mutateStateNewAddressBilling,
             billingNewAddress
@@ -68,10 +68,15 @@ export class BillingFormBase extends React.Component<IBillingFormProps> {
             value,
             isError: !isInputValid
         };
+
         mutateStateNewAddressBilling(changedFiledData);
 
-        const isSelectChanged = name === billingConfigInputStable.salutation.inputName
-            || name === billingConfigInputStable.country.inputName;
+        const namesList = [
+            billingConfigInputStable.salutation.inputName,
+            billingConfigInputStable.country.inputName
+        ];
+
+        const isSelectChanged = namesList.includes(name);
 
         if (isSelectChanged) {
             this.handleBillingNewAddressValidity();
@@ -79,7 +84,7 @@ export class BillingFormBase extends React.Component<IBillingFormProps> {
     };
 
     protected handleBillingNewAddressValidity = (): boolean => {
-        const {mutateBillingStep, billingNewAddress} = this.props;
+        const { mutateBillingStep, billingNewAddress } = this.props;
         const isFormValid = this.validateBillingNewAddressForm(billingNewAddress);
         mutateBillingStep(isFormValid);
 
@@ -87,7 +92,7 @@ export class BillingFormBase extends React.Component<IBillingFormProps> {
     };
 
     protected handleSelectionsChange = (event: InputChangeEvent): void => {
-        const {value} = event.target;
+        const { value } = event.target;
 
         this.handleBillingSelection(value);
     };
@@ -166,25 +171,25 @@ export class BillingFormBase extends React.Component<IBillingFormProps> {
         );
 
         const inputsForm = isSameAsDelivery ? null :
-            <SprykerForm key="inputsForm" form={billingFormSettings} />;
+            <SprykerForm key="inputsForm" form={ billingFormSettings } />;
         const sameAsDeliveryForm = <SprykerForm key="sameAsDeliveryForm"
-                                                form={sameAsDeliveryFormSettings} />;
-        const selectionForm = <SprykerForm key="selectionForm" form={savedAddressFormSettings} />;
+                                                form={ sameAsDeliveryFormSettings } />;
+        const selectionForm = <SprykerForm key="selectionForm" form={ savedAddressFormSettings } />;
 
         return (
             <Grid container>
-                <Grid item xs={12}>
-                    {isUserLoggedIn
+                <Grid item xs={ 12 }>
+                    { isUserLoggedIn
                         ? (
-                            <React.Fragment>
-                                {addressesCollection && addressesCollection.length
+                            <>
+                                { addressesCollection && addressesCollection.length
                                     ? selectionForm
                                     : sameAsDeliveryForm
                                 }
-                                {isAddNew && inputsForm}
-                            </React.Fragment>
+                                { isAddNew && inputsForm }
+                            </>
                         )
-                        : [sameAsDeliveryForm, inputsForm]
+                        : [ sameAsDeliveryForm, inputsForm ]
                     }
                 </Grid>
             </Grid>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { typeNotificationError } from 'src/shared/constants/notifications';
+import { typeNotificationError } from '@constants/notifications';
 import { connect } from './connect';
 import { createCartItemAddToCart } from '@helpers/cart';
 import { createQuantityVariants } from '@helpers/product';

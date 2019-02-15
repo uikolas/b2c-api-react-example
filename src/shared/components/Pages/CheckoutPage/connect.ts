@@ -20,7 +20,9 @@ import {
     ICheckoutRequest,
     ICheckoutStepsCompletionState,
     IDeliveryAddressState,
-    IDeliverySelectionState, IPaymentMethod, IShipmentMethod
+    IDeliverySelectionState,
+    IPaymentMethod,
+    IShipmentMethod
 } from '@interfaces/checkout';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

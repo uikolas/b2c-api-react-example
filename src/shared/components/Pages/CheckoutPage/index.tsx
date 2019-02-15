@@ -15,7 +15,7 @@ import { IAddressItemCollection } from '@interfaces/addresses';
 import { ICheckoutRequest } from '@interfaces/checkout';
 import {
     ICheckoutPageProps as Props,
-    ICheckoutPageState as State,
+    ICheckoutPageState as State
 } from './types';
 import { styles } from './styles';
 import { AppPageSubTitle } from '@components/Common/AppPageSubTitle';
@@ -25,14 +25,14 @@ import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 @connect
 export class CheckoutPageBase extends React.Component<Props, State> {
     public readonly state: State = {
-       isButtonDisabled: true
+        isButtonDisabled: true
     };
 
     public componentDidMount(): void {
         if (this.props.isUserLoggedIn) {
-            this.props.getCheckoutData({idCart: this.props.cartId}, '');
+            this.props.getCheckoutData({ idCart: this.props.cartId }, '');
         } else {
-            this.props.getCheckoutData({idCart: this.props.cartId}, this.props.anonymId);
+            this.props.getCheckoutData({ idCart: this.props.cartId }, this.props.anonymId);
         }
     }
 
@@ -43,20 +43,26 @@ export class CheckoutPageBase extends React.Component<Props, State> {
             }
         }
 
-        const {first, second, third, fourth} = this.props.stepsCompletion;
-        const {first: prevFirst, second: prevSecond, third: prevThird, fourth: prevFourth} = prevProps.stepsCompletion;
+        const { first, second, third, fourth } = this.props.stepsCompletion;
+        const {
+            first: prevFirst,
+            second: prevSecond,
+            third: prevThird,
+            fourth: prevFourth
+        } = prevProps.stepsCompletion;
         const checkCheckoutFormValidity = first && second && third && fourth;
         const prevCheckCheckoutFormValidity = prevFirst && prevSecond && prevThird && prevFourth;
-        const {isCheckoutLoading: previousStateLoading} = prevProps;
-        const isShouldChangeButtonState = (prevCheckCheckoutFormValidity !== checkCheckoutFormValidity) || previousStateLoading;
+        const { isCheckoutLoading: previousStateLoading } = prevProps;
+        const isShouldChangeButtonState = (prevCheckCheckoutFormValidity !== checkCheckoutFormValidity) ||
+            previousStateLoading;
 
         if (isShouldChangeButtonState) {
-            this.setState({isButtonDisabled: !checkCheckoutFormValidity});
+            this.setState({ isButtonDisabled: !checkCheckoutFormValidity });
         }
     };
 
     protected handleSubmit = (event: FormEvent): void => {
-        this.setState({isButtonDisabled: true});
+        this.setState({ isButtonDisabled: true });
         event.preventDefault();
         const {
             addressesCollection,
@@ -80,7 +86,7 @@ export class CheckoutPageBase extends React.Component<Props, State> {
         } else {
             const shippingAddress = addressesCollection.find((address: IAddressItemCollection) =>
                 address.id === deliverySelection.selectedAddressId);
-            payload.shippingAddress = {...shippingAddress, country: ''};
+            payload.shippingAddress = { ...shippingAddress, country: '' };
         }
 
         if (billingSelection.isAddNew) {
@@ -90,17 +96,17 @@ export class CheckoutPageBase extends React.Component<Props, State> {
         } else {
             const billingAddress = addressesCollection.find((address: IAddressItemCollection) =>
                 address.id === deliverySelection.selectedAddressId);
-            payload.billingAddress = {...billingAddress, country: ''};
+            payload.billingAddress = { ...billingAddress, country: '' };
         }
 
         payload.idCart = cartId;
 
-        payload.payments = [{
+        payload.payments = [ {
             paymentProviderName: 'DummyPayment',
             paymentMethodName: paymentMethod
-        }];
+        } ];
 
-        payload.shipment = {idShipmentMethod: parseInt(shipmentMethod, 10)};
+        payload.shipment = { idShipmentMethod: parseInt(shipmentMethod, 10) };
         const customerEmail = isUserLoggedIn ? profile.email : payload.shippingAddress.email;
         const customerSalutation = isUserLoggedIn ? profile.salutation : payload.shippingAddress.salutation;
         const customerFirstName = isUserLoggedIn ? profile.firstName : payload.shippingAddress.firstName;
@@ -127,32 +133,32 @@ export class CheckoutPageBase extends React.Component<Props, State> {
             stepsCompletion,
             isCheckoutLoading
         } = this.props;
-        const {isButtonDisabled} = this.state;
+        const { isButtonDisabled } = this.state;
         const panels = getCheckoutPanelsSettings(stepsCompletion);
 
         const CheckoutFormsView = isCheckoutLoading
-            ? <AppPageSubTitle title={<FormattedMessage id={'form.waiting.for.response.title'} />} />
-            : <CheckoutForms panels={panels} />;
+            ? <AppPageSubTitle title={ <FormattedMessage id={ 'form.waiting.for.response.title' } /> } />
+            : <CheckoutForms panels={ panels } />;
 
         return (
             <AppMain>
-                {!isProductsExists && !orderId
-                    ? <AppPageTitle title={<FormattedMessage id={'no.products.in.checkout.title'} />} />
-                    : <Grid container className={classes.container}>
-                        <Grid item xs={12} md={7} className={classes.leftColumn}>
-                            {orderId
-                                ? <OrderSuccess order={orderId} />
+                { !isProductsExists && !orderId
+                    ? <AppPageTitle title={ <FormattedMessage id={ 'no.products.in.checkout.title' } /> } />
+                    : <Grid container className={ classes.container }>
+                        <Grid item xs={ 12 } md={ 7 } className={ classes.leftColumn }>
+                            { orderId
+                                ? <OrderSuccess order={ orderId } />
                                 : CheckoutFormsView
                             }
                         </Grid>
-                        <Grid item xs={12} md={5} className={classes.rightColumn}>
+                        <Grid item xs={ 12 } md={ 5 } className={ classes.rightColumn }>
                             <ErrorBoundary>
                                 <CheckoutCart
-                                    isSendBtnDisabled={isButtonDisabled}
-                                    sendData={this.handleSubmit}
-                                    order={orderId}
-                                    isUserLoggedIn={isUserLoggedIn}
-                                    anonymId={anonymId}
+                                    isSendBtnDisabled={ isButtonDisabled }
+                                    sendData={ this.handleSubmit }
+                                    order={ orderId }
+                                    isUserLoggedIn={ isUserLoggedIn }
+                                    anonymId={ anonymId }
                                 />
                             </ErrorBoundary>
                         </Grid>

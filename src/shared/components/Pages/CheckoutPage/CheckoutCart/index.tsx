@@ -17,7 +17,7 @@ export class CheckoutCartBase extends React.Component<Props, State> {
     protected designImgWidth: number = 0.33;
 
     public readonly state: State = {
-        heightListItem: 100,
+        listItemHeight: 100,
         products: [],
         totals: null,
         order: null
@@ -25,8 +25,8 @@ export class CheckoutCartBase extends React.Component<Props, State> {
 
     public static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
         if (prevState.order !== nextProps.order) {
-            const {order, products, totals} = nextProps;
-            const {products: prevProducts, totals: prevTotals} = prevState;
+            const { order, products, totals } = nextProps;
+            const { products: prevProducts, totals: prevTotals } = prevState;
             const productList = order ? prevProducts : products;
             const totalsList = order ? prevTotals : totals;
 
@@ -57,48 +57,48 @@ export class CheckoutCartBase extends React.Component<Props, State> {
 
     protected setListItemHeight = (): void => {
         if (this.containerRef && this.containerRef.current) {
-            this.setState({heightListItem: this.containerRef.current.offsetWidth * this.designImgWidth});
+            this.setState({ listItemHeight: this.containerRef.current.offsetWidth * this.designImgWidth });
         }
     };
 
     public render(): JSX.Element {
-        const {classes, order, isSendBtnDisabled, sendData} = this.props;
-        const {products, totals, heightListItem} = this.state;
+        const { classes, order, isSendBtnDisabled, sendData } = this.props;
+        const { products, totals, listItemHeight } = this.state;
 
         return (
-            <div className={classes.root} ref={this.containerRef}>
+            <div className={ classes.root } ref={ this.containerRef }>
                 <CustomerPageTitle
-                    title={order
-                        ? <FormattedMessage id={'word.total.title'} />
-                        : <FormattedMessage id={'word.cart.title'} />}
+                    title={ order
+                        ? <FormattedMessage id={ 'word.total.title' } />
+                        : <FormattedMessage id={ 'word.cart.title' } /> }
                 />
                 <List>
                     <CheckoutCartProductList
-                        products={products}
-                        heightListItem={heightListItem}
+                        products={ products }
+                        listItemHeight={ listItemHeight }
                     />
                 </List>
 
-                {!order &&
-                    <CustomerPageTitle title={<FormattedMessage id={'word.total.title'} />} />
+                { !order &&
+                    <CustomerPageTitle title={ <FormattedMessage id={ 'word.total.title' } /> } />
                 }
 
                 <CartTotal
-                    totals={totals}
-                    title={<FormattedMessage id={`${order ? 'order.amount' : 'grand.total.title'}`} />}
+                    totals={ totals }
+                    title={ <FormattedMessage id={ `${order ? 'order.amount' : 'grand.total.title'}` } /> }
                 />
 
-                {!order &&
+                { !order &&
                     <Button
                         variant="contained"
                         color="primary"
-                        disabled={isSendBtnDisabled}
+                        disabled={ isSendBtnDisabled }
                         fullWidth
-                        className={classes.btnWrapper}
-                        onClick={sendData}
-                    >
-                        {<FormattedMessage id={'place.order.title'} />}
-                    </Button>
+                        className={ classes.btnWrapper }
+                        onClick={ sendData }
+                >
+                    { <FormattedMessage id={ 'place.order.title' } /> }
+                </Button>
                 }
             </div>
         );

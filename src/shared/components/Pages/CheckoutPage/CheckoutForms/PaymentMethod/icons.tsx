@@ -10,18 +10,18 @@ const pathVisa = 'M13.021.081h2.627l-1.644 9.707h-2.61L13.02.081zm10.491.31l-.35
 /* tslint:enable */
 export const PartnerIconMasterCard: React.SFC = () => (
     <svg width="27" height="21" viewBox="0 0 27 21">
-        <path fill="#111" fillRule="evenodd" d={pathMatserCard} opacity=".497"/>
+        <path fill="#111" fillRule="evenodd" d={ pathMatserCard } opacity=".497" />
     </svg>
 );
 
 export const PartnerIconPaypal: React.SFC = () => (
     <svg width="41" height="11" viewBox="0 0 41 11">
-        <path fill="#111" fillRule="evenodd" d={pathPaypal} opacity=".497"/>
+        <path fill="#111" fillRule="evenodd" d={ pathPaypal } opacity=".497" />
     </svg>
 );
 
 export const PartnerIconVisa: React.SFC = () => (
     <svg width="33" height="10" viewBox="0 0 33 10">
-        <path fill="#111" fillRule="evenodd" d={pathVisa} opacity=".497"/>
+        <path fill="#111" fillRule="evenodd" d={ pathVisa } opacity=".497" />
     </svg>
 );

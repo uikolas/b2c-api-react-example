@@ -16,7 +16,7 @@ export interface ICartDataProps extends WithStyles<typeof styles> {
 }
 
 export interface ICartDataState {
-    heightListItem?: number;
+    listItemHeight?: number;
     products: ICartItem[];
     totals: ICartTotals;
     order: string;

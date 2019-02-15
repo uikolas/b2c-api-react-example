@@ -44,29 +44,25 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
     } = props;
 
     const validateInvoiceForm = (formState: ICheckoutInvoiceState): boolean => (
-        checkFormValidity({form: formState, fieldsConfig: invoiceConfigInputStable})
+        checkFormValidity({ form: formState, fieldsConfig: invoiceConfigInputStable })
     );
 
     const validateCreditCardForm = (formState: ICheckoutCreditCardState): boolean => (
-        checkFormValidity({form: formState, fieldsConfig: creditCardConfigInputStable})
+        checkFormValidity({ form: formState, fieldsConfig: creditCardConfigInputStable })
     );
 
     const handleSelectionsChange = (event: InputChangeEvent): void => {
-        const {value} = event.target;
-        const {mutatePaymentMethod} = props;
+        const { value } = event.target;
+        const { mutatePaymentMethod } = props;
+        const { invoice, creditCard } = checkoutPaymentMethodsNames;
 
         const isInvoiceFormValid = validateInvoiceForm(paymentInvoiceData);
         const isCreditCardFormValid = validateCreditCardForm(paymentCreditCardData);
 
-        let isFourthStepCompleted: boolean = false;
+        const isFourthStepCompleted = (value === invoice && isInvoiceFormValid) ||
+            (value === creditCard && isCreditCardFormValid);
 
-        if (value === checkoutPaymentMethodsNames.invoice && isInvoiceFormValid) {
-            isFourthStepCompleted = true;
-        } else if (value === checkoutPaymentMethodsNames.creditCard && isCreditCardFormValid) {
-            isFourthStepCompleted = true;
-        }
-
-        mutatePaymentMethod({value, isFourthStepCompleted});
+        mutatePaymentMethod({ value, isFourthStepCompleted });
     };
 
     const handleSubmit = (event: FormEvent): void => {
@@ -88,36 +84,36 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
 
     const paymentMethodsGrouped: IPaymentMethodsGrouped = {};
     for (const paymentMethod of paymentMethods) {
-        if (!paymentMethodsGrouped[paymentMethod.paymentMethodName]) {
-            paymentMethodsGrouped[paymentMethod.paymentMethodName] = [];
+        if (!paymentMethodsGrouped[ paymentMethod.paymentMethodName ]) {
+            paymentMethodsGrouped[ paymentMethod.paymentMethodName ] = [];
         }
-        paymentMethodsGrouped[paymentMethod.paymentMethodName].push(paymentMethod);
+        paymentMethodsGrouped[ paymentMethod.paymentMethodName ].push(paymentMethod);
     }
 
     const paymentMethodGroupItems: IPaymentMethodsParams['paymentMethodGroupItems'] = [];
 
     for (const groupName in paymentMethodsGrouped) {
         if (!paymentMethodsGrouped.hasOwnProperty(groupName)
-            || !Array.isArray(paymentMethodsGrouped[groupName])
-            || !paymentMethodsGrouped[groupName].length
+            || !Array.isArray(paymentMethodsGrouped[ groupName ])
+            || !paymentMethodsGrouped[ groupName ].length
         ) {
             continue;
         }
         const paymentMethodLabel: React.ReactNode[] = [];
         paymentMethodLabel.push(
             <Typography
-                key={groupName}
+                key={ groupName }
                 align="left"
                 component="p"
                 color="inherit"
             >
-                {groupName}
+                { groupName }
             </Typography>
         );
 
-        paymentMethodsGrouped[groupName].forEach((item: IPaymentMethod) => {
-            if (paymentProviderToIcon[item.paymentProviderName]) {
-                paymentMethodLabel.push(paymentProviderToIcon[item.paymentProviderName]);
+        paymentMethodsGrouped[ groupName ].forEach((item: IPaymentMethod) => {
+            if (paymentProviderToIcon[ item.paymentProviderName ]) {
+                paymentMethodLabel.push(paymentProviderToIcon[ item.paymentProviderName ]);
             }
             if (groupName === checkoutPaymentMethodsNames.creditCard) {
                 creditCardProvidersCollection.push({
@@ -127,7 +123,7 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
             }
         });
 
-        paymentMethodGroupItems.push({value: groupName, label: paymentMethodLabel});
+        paymentMethodGroupItems.push({ value: groupName, label: paymentMethodLabel });
     }
 
     const paymentMethodsParams = {
@@ -144,15 +140,15 @@ export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.El
 
     return (
         <Grid container>
-            <Grid item xs={12}>
-                <SprykerForm form={paymentMethodFormSettings} formClassName={classes.paymentMethodsForm} />
-                {(currentValuePaymentMethod === checkoutPaymentMethodsNames.invoice) &&
-                    <InvoicePaymentForm />
+            <Grid item xs={ 12 }>
+                <SprykerForm form={ paymentMethodFormSettings } formClassName={ classes.paymentMethodsForm } />
+                { (currentValuePaymentMethod === checkoutPaymentMethodsNames.invoice) &&
+                <InvoicePaymentForm />
                 }
-                {(currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard) &&
-                    <CreditCardPaymentForm
-                        providersCollection={creditCardProvidersCollection}
-                    />
+                { (currentValuePaymentMethod === checkoutPaymentMethodsNames.creditCard) &&
+                <CreditCardPaymentForm
+                    providersCollection={ creditCardProvidersCollection }
+                />
                 }
             </Grid>
         </Grid>

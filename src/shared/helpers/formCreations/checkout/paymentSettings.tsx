@@ -49,12 +49,11 @@ const isPaymentMethodsExist = (collection: IPaymentMethodsParams['paymentMethodG
     Boolean(collection && Array.isArray(collection) && collection.length > 0);
 
 const convertPaymentsToRadioItems = (collection: IPaymentMethodsParams['paymentMethodGroupItems']) =>
-    (isPaymentMethodsExist(collection)
-            ? collection.map((item: IPaymentMethodGroupItem) => ({
+    (isPaymentMethodsExist(collection) &&
+            collection.map((item: IPaymentMethodGroupItem) => ({
                 value: item.value,
                 label: createRadioItemLabel(item)
             }))
-            : null
     );
 
 const createRadioItemLabel = (paymentMethod: IPaymentMethodGroupItem) => {
