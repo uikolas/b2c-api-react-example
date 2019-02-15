@@ -7,6 +7,7 @@ import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { IInputComponentProps as Props, IInputComponentState as State } from './types';
 import { ICompletionMatch } from '../types';
+import * as qs from 'query-string';
 
 @connect
 export class InputComponent extends React.Component<Props, State> {
@@ -27,17 +28,16 @@ export class InputComponent extends React.Component<Props, State> {
             isLoading,
             sendSearchAction,
             push,
-            clearSuggestion,
             currency,
             inputProps: {value}
         } = this.props;
         const minimalLettersAmount = 2;
+        const query = {q: value, currency};
 
         if (!isLoading && value.length > minimalLettersAmount) {
-            sendSearchAction({q: value, currency});
+            sendSearchAction(query);
 
-            push(pathSearchPage);
-            clearSuggestion(value);
+            push(`${pathSearchPage}?${qs.stringify(query)}`);
         }
     };
 
