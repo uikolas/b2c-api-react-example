@@ -53,6 +53,7 @@ export const parseGuestCartResponse = (response: IUserCartRawResponseOneValue): 
                 } else {
                     if (row.type === 'guest-cart-items') {
                         result[row.id] = {
+                            ...result[row.id],
                             sku: row.id,
                             quantity: row.attributes.quantity,
                             amount: row.attributes.amount,
