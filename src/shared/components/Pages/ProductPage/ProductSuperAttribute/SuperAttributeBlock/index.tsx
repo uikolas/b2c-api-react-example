@@ -5,7 +5,7 @@ import { SuperAttributeBlockProps as Props, SuperAttributeBlockState as State } 
 import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
 
-export class SuperAttributeBlockComponent extends React.PureComponent<Props, State> {
+export class SuperAttributeBlockComponent extends React.Component<Props, State> {
     public state: State = {
         selectedItemValue: '',
     };
