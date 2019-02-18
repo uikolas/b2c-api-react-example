@@ -12,7 +12,25 @@ import {
 } from 'src/shared/constants/notifications';
 
 export class GuestCartService extends ApiServiceAbstract {
-    public static async guestCartAddItem(dispatch: Function, payload: ICartAddItem, anonymId: string): Promise<void> {
+    protected static endpoint(path: string): string {
+        const includeParams =
+            '?include=guest-cart-items,' +
+            'abstract-product-image-sets,' +
+            'abstract-product-prices,' +
+            'abstract-product-availabilities,' +
+            'concrete-products,' +
+            'concrete-product-image-sets,' +
+            'concrete-product-prices,' +
+            'concrete-product-availabilities';
+
+        return `${path}${includeParams}`;
+    }
+
+    protected static async guestCartAddItem(
+        dispatch: Function,
+        payload: ICartAddItem,
+        anonymId: string
+    ): Promise<void> {
         try {
             removeAuthToken();
 
@@ -24,11 +42,9 @@ export class GuestCartService extends ApiServiceAbstract {
                     attributes: payload
                 }
             };
-
-            const response: IApiResponseData = await api.post(
-                'guest-cart-items',
-                body,
-                {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+            const endpoint = this.endpoint('guest-cart-items');
+            const response: IApiResponseData = await api.post(endpoint, body,
+                { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );
 
             if (response.ok) {
@@ -36,6 +52,7 @@ export class GuestCartService extends ApiServiceAbstract {
                     id: 'items.added.message',
                     type: typeNotificationSuccess
                 });
+
                 const responseParsed = parseGuestCartResponse(response.data);
                 dispatch(cartActions.cartAddItemFulfilledStateAction(responseParsed));
             } else {
@@ -52,15 +69,15 @@ export class GuestCartService extends ApiServiceAbstract {
         }
     }
 
-    public static async getGuestCart(dispatch: Function, anonymId: string): Promise<string> {
+    protected static async getGuestCart(dispatch: Function, anonymId: string): Promise<string> {
         try {
             removeAuthToken();
 
             dispatch(cartActions.getCartsPendingStateAction());
 
-            const response: IApiResponseData = await api.get(
-                '/guest-carts', {},
-                {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+            const endpoint = this.endpoint('guest-carts');
+            const response: IApiResponseData = await api.get(endpoint, {},
+                { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );
 
             if (response.ok) {
@@ -71,9 +88,10 @@ export class GuestCartService extends ApiServiceAbstract {
                 }
 
                 const responseParsed = parseGuestCartResponse({
-                    data: response.data.data[0],
+                    data: response.data.data[ 0 ],
                     included: response.data.included
                 });
+
                 dispatch(cartActions.getCartsFulfilledStateAction(responseParsed));
 
                 return responseParsed.id;
@@ -95,19 +113,20 @@ export class GuestCartService extends ApiServiceAbstract {
         }
     }
 
-    public static async guestCartRemoveItem(dispatch: Function,
-                                            cartUid: string,
-                                            sku: string,
-                                            anonymId: string): Promise<void> {
+    protected static async guestCartRemoveItem(
+        dispatch: Function,
+        cartUid: string,
+        sku: string,
+        anonymId: string
+    ): Promise<void> {
         try {
             removeAuthToken();
 
             dispatch(cartActions.cartDeleteItemPendingStateAction);
 
-            const response: IApiResponseData = await api.delete(
-                `guest-carts/${cartUid}/guest-cart-items/${sku}`,
-                {},
-                {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+            const endpoint = `guest-carts/${cartUid}/guest-cart-items/${sku}`;
+            const response: IApiResponseData = await api.delete(endpoint, {},
+                { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );
 
             if (response.ok) {
@@ -130,10 +149,12 @@ export class GuestCartService extends ApiServiceAbstract {
         }
     }
 
-    public static async guestCartUpdate(dispatch: Function,
-                                        payload: ICartAddItem,
-                                        cartId: TCartId,
-                                        anonymId: string): Promise<void> {
+    protected static async guestCartUpdate(
+        dispatch: Function,
+        payload: ICartAddItem,
+        cartId: TCartId,
+        anonymId: string
+    ): Promise<void> {
         try {
             removeAuthToken();
 
@@ -145,11 +166,11 @@ export class GuestCartService extends ApiServiceAbstract {
                     attributes: payload
                 }
             };
-            const {sku} = payload;
-            const response: IApiResponseData = await api.patch(
-                `guest-carts/${cartId}/guest-cart-items/${sku}`,
-                body,
-                {withCredentials: true, headers: {'X-Anonymous-Customer-Unique-Id': anonymId}}
+            const { sku } = payload;
+
+            const endpoint = this.endpoint(`guest-carts/${cartId}/guest-cart-items/${sku}`);
+            const response: IApiResponseData = await api.patch(endpoint, body,
+                { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );
 
             if (response.ok) {
@@ -174,7 +195,7 @@ export class GuestCartService extends ApiServiceAbstract {
         }
     }
 
-    private static errorMessageInform(response: IResponseError, dispatch: Function): void {
+    protected static errorMessageInform(response: IResponseError, dispatch: Function): void {
         const errorMessage = this.getParsedAPIError(response);
         dispatch(cartActions.cartAddItemRejectedStateAction(errorMessage));
         NotificationsMessage({
