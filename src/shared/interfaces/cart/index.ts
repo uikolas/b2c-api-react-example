@@ -38,20 +38,20 @@ export interface ICartTotals extends IAbstractTotals {
 
 export interface ICartItem {
     sku: TProductSKU | null;
-    name: TProductName | null;
-    image: TProductImageSRC | null;
-    quantity: TProductQuantity | null;
-    amount: TProductPrice | null;
-    prices: IProductPricesItem[];
-    calculations: ICartItemCalculation | null;
-    groupKey: string | null;
-    availability: TProductAvailability | null;
-    availableQuantity: TProductQuantity | null;
-    superAttributes: { [key: string]: string }[] | null;
-    priceOriginalGross: TPriceTypeOriginalGross;
-    priceOriginalNet: TPriceTypeOriginalNet;
-    priceDefaultGross: TPriceTypeDefaultGross;
-    priceDefaultNet: TPriceTypeDefaultNet;
+    name?: TProductName | null;
+    image?: TProductImageSRC | null;
+    quantity?: TProductQuantity | null;
+    amount?: TProductPrice | null;
+    prices?: IProductPricesItem[];
+    calculations?: ICartItemCalculation | null;
+    groupKey?: string | null;
+    availability?: TProductAvailability | null;
+    availableQuantity?: TProductQuantity | null;
+    superAttributes?: { [key: string]: string }[] | null;
+    priceOriginalGross?: TPriceTypeOriginalGross;
+    priceOriginalNet?: TPriceTypeOriginalNet;
+    priceDefaultGross?: TPriceTypeDefaultGross;
+    priceDefaultNet?: TPriceTypeDefaultNet;
 }
 
 export interface ICartDataResponse extends ICommonDataInCart {
