@@ -9,7 +9,7 @@ import {
     isAddressesStateRejected,
     isCurrentAddressPresent,
     isPageAddressesStateLoading
-} from '@stores/reducers/Pages/Addresses/selectors';
+} from '@stores/reducers/pages/addresses/selectors';
 import { IAddressItem } from 'src/shared/interfaces/addresses';
 import { addAddressAction, updateAddressAction, getOneAddressAction } from '@stores/actions/pages/addresses';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';

@@ -1,4 +1,3 @@
-// tslint:disable:max-file-line-count
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import Autosuggest from 'react-autosuggest';
@@ -24,6 +23,7 @@ import { styles } from './styles';
 import { CatalogProps as Props, CatalogState as State } from './types';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
+import * as qs from 'query-string';
 
 @connect
 export class CatalogSearchBase extends React.Component<Props, State> {
@@ -95,11 +95,12 @@ export class CatalogSearchBase extends React.Component<Props, State> {
     private handleFullSearch = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
         const {value} = this.state;
+        const query = {q: value, currency: this.props.currency};
         if (!this.props.isLoading && value.length > 2) {
-            this.props.sendSearchAction({q: value, currency: this.props.currency});
+            this.props.sendSearchAction(query);
 
-            this.props.push(pathSearchPage);
-            this.clearSuggestion(value);
+            this.props.push(`${pathSearchPage}?${qs.stringify(query)}`);
+            this.setState({value: ''});
         }
     };
 

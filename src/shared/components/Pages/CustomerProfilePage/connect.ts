@@ -8,7 +8,7 @@ import {
     isPageCustomerProfileFulfilled,
     isPageCustomerProfileLoading,
     isPageCustomerProfileRejected,
-} from '@stores/reducers/pages/CustomerProfile';
+} from '@stores/reducers/pages/customerProfile';
 import { isAppInitiated } from '@stores/reducers/common/init';
 import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/pages/login';
 import {

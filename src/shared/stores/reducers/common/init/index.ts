@@ -1,4 +1,4 @@
-import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/Common/Init';
+import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/common/init';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
 import { ICartCreatePayload } from '../../../../services/Common/Cart/types';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';

@@ -69,26 +69,11 @@ export class ProductPageBase extends React.Component<Props, State> {
 
     // Component lifecycle methods
     public componentDidMount() {
-        if (this.props.product) {
-            this.setInitialData();
-        } else {
-            if (!this.props.isLoading && this.props.isAppDataSet) {
-                this.props.getProductData(this.props.locationProductSKU);
-            }
-        }
+        this.props.getProductData(this.props.locationProductSKU);
     }
 
     public componentDidUpdate(prevProps: Props, prevState: State) {
         if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
-            return;
-        }
-
-        // First load of the App
-        if (!this.props.isFulfilled
-            && (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU)
-        ) {
-            this.props.getProductData(this.props.locationProductSKU);
-
             return;
         }
 
@@ -99,7 +84,10 @@ export class ProductPageBase extends React.Component<Props, State> {
             return;
         }
 
-        if (!prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU) {
+        const isShouldUpdateProductState = (prevProps.isFulfilled !== this.props.isFulfilled) ||
+            !prevProps.product || prevProps.product.abstractProduct.sku !== this.props.locationProductSKU;
+
+        if (isShouldUpdateProductState) {
             this.setInitialData();
         }
 
