@@ -12,15 +12,19 @@ import {
 } from 'src/shared/constants/notifications';
 
 export class GuestCartService extends ApiServiceAbstract {
-    protected static readonly cartInclude =
-        '?include=guest-cart-items,' +
-        'abstract-product-image-sets,' +
-        'abstract-product-prices,' +
-        'abstract-product-availabilities,' +
-        'concrete-products,' +
-        'concrete-product-image-sets,' +
-        'concrete-product-prices,' +
-        'concrete-product-availabilities';
+    protected static endpoint(path: string): string {
+        const includeParams =
+            '?include=guest-cart-items,' +
+            'abstract-product-image-sets,' +
+            'abstract-product-prices,' +
+            'abstract-product-availabilities,' +
+            'concrete-products,' +
+            'concrete-product-image-sets,' +
+            'concrete-product-prices,' +
+            'concrete-product-availabilities';
+
+        return `${path}${includeParams}`;
+    }
 
     protected static async guestCartAddItem(
         dispatch: Function,
@@ -38,8 +42,7 @@ export class GuestCartService extends ApiServiceAbstract {
                     attributes: payload
                 }
             };
-
-            const endpoint = `guest-cart-items${this.cartInclude}`;
+            const endpoint = this.endpoint('guest-cart-items');
             const response: IApiResponseData = await api.post(endpoint, body,
                 { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );
@@ -72,7 +75,7 @@ export class GuestCartService extends ApiServiceAbstract {
 
             dispatch(cartActions.getCartsPendingStateAction());
 
-            const endpoint = `guest-carts${this.cartInclude}`;
+            const endpoint = this.endpoint('guest-carts');
             const response: IApiResponseData = await api.get(endpoint, {},
                 { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );
@@ -164,7 +167,8 @@ export class GuestCartService extends ApiServiceAbstract {
                 }
             };
             const { sku } = payload;
-            const endpoint = `guest-carts/${cartId}/guest-cart-items/${sku}${this.cartInclude}`;
+
+            const endpoint = this.endpoint(`guest-carts/${cartId}/guest-cart-items/${sku}`);
             const response: IApiResponseData = await api.patch(endpoint, body,
                 { withCredentials: true, headers: { 'X-Anonymous-Customer-Unique-Id': anonymId } }
             );

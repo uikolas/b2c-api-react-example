@@ -20,15 +20,19 @@ import {
 } from 'src/shared/constants/notifications';
 
 export class CartService extends ApiServiceAbstract {
-    protected static readonly cartInclude =
-        '?include=items,' +
-        'abstract-product-image-sets,' +
-        'abstract-product-prices,' +
-        'abstract-product-availabilities,' +
-        'concrete-products,' +
-        'concrete-product-image-sets,' +
-        'concrete-product-prices,' +
-        'concrete-product-availabilities';
+    protected static endpoint(path: string): string {
+        const includeParams =
+            '?include=items,' +
+            'abstract-product-image-sets,' +
+            'abstract-product-prices,' +
+            'abstract-product-availabilities,' +
+            'concrete-products,' +
+            'concrete-product-image-sets,' +
+            'concrete-product-prices,' +
+            'concrete-product-availabilities';
+
+        return `${path}${includeParams}`;
+    }
 
     protected static async getCustomerCarts(dispatch: Function): Promise<string> {
         try {
@@ -38,11 +42,11 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const endpoint = `/carts${this.cartInclude}`;
+            const endpoint = this.endpoint('/carts');
             const response: IApiResponseData = await api.get(endpoint, { withCredentials: true });
 
             if (response.ok) {
-                if (!response.data.data[ 0 ].id) {
+                if (!response.data.data[0].id) {
                     return '';
                 }
 
@@ -82,7 +86,7 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const endpoint = `carts${this.cartInclude}`;
+            const endpoint = this.endpoint('carts');
             const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
 
             if (response.ok) {
@@ -126,7 +130,7 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const endpoint = `carts/${cartId}/items${this.cartInclude}`;
+            const endpoint = this.endpoint(`carts/${cartId}/items`);
             const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
 
             if (response.ok) {
@@ -182,7 +186,9 @@ export class CartService extends ApiServiceAbstract {
                     id: 'items.removed.message',
                     type: typeNotificationSuccess
                 });
-                const newCartResponse: IApiResponseData = await api.get(`carts/${cartId}${this.cartInclude}`);
+
+                const endpoint = this.endpoint(`carts/${cartId}`);
+                const newCartResponse: IApiResponseData = await api.get(endpoint);
 
                 if (newCartResponse.ok) {
                     const responseParsed: ICartDataResponse = parseUserCartResponseOneValue(newCartResponse.data);
@@ -232,7 +238,7 @@ export class CartService extends ApiServiceAbstract {
 
             setAuthToken(token);
 
-            const endpoint = `carts/${cartId}/items/${sku}${this.cartInclude}`;
+            const endpoint = this.endpoint(`carts/${cartId}/items/${sku}`);
             const response: IApiResponseData = await api.patch(endpoint, body, { withCredentials: true });
 
             if (response.ok) {
@@ -347,7 +353,7 @@ export class CartService extends ApiServiceAbstract {
             }
             setAuthToken(token);
 
-            const endpoint = `carts/${cartId}/items${this.cartInclude}`;
+            const endpoint = this.endpoint(`carts/${cartId}/items`);
             const response: IApiResponseData = await api.post(endpoint, body, { withCredentials: true });
 
             return response;
