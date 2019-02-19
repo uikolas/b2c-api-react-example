@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { MiniCartItem } from '../MiniCartItem';
-import { AppBtnLink } from 'src/shared/components/Common/AppBtnLink';
+import { AppBtnLink } from 'src/shared/components/components/AppBtnLink';
 import { IMiniCartDropProps as Props } from './types';
 import { styles } from './styles';
 

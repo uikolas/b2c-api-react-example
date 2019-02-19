@@ -6,7 +6,7 @@ import {
     ICheckoutCreditCardState,
     ICheckoutInvoiceState
 } from '@interfaces/checkout';
-import { IFormField } from '@components/UI/SprykerForm/types';
+import { IFormField } from '@components/components/UI/SprykerForm/types';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     ICreditCardObjectConfigInputStable,

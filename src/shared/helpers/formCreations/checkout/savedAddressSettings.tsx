@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IFormSettings } from '@components/components/UI/SprykerForm/types';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     IAddressesParams,

@@ -7,8 +7,8 @@ import { IChangePasswordProps as Props, IChangePasswordState as State, IProfileF
 import { typeNotificationWarning } from '@constants/notifications';
 
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
-import { SprykerButton } from '@components/UI/SprykerButton';
-import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerButton } from '@components/components/UI/SprykerButton';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 
 import { Grid, withStyles } from '@material-ui/core';

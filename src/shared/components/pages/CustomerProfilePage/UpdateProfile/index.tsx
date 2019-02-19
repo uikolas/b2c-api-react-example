@@ -9,8 +9,8 @@ import {
 } from './types';
 import { TSalutationVariant } from '@interfaces/customer';
 
-import { SprykerButton } from '@components/UI/SprykerButton';
-import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerButton } from '@components/components/UI/SprykerButton';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
 

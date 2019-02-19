@@ -337,7 +337,6 @@ const config = {
         ],
         alias: {
             src: path.resolve(__dirname, 'src'),
-            '@assets': path.resolve(__dirname, 'src/shared/assets'),
             '@constants': path.resolve(__dirname, 'src/shared/constants'),
             '@components': path.resolve(__dirname, 'src/shared/components'),
             '@containers': path.resolve(__dirname, 'src/shared/containers'),

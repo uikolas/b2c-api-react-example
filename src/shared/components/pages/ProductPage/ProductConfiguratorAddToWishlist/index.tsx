@@ -3,15 +3,15 @@ import { FormattedMessage } from 'react-intl';
 import { createWishlistMenuVariants } from '@helpers/wishlist/list';
 import { connect } from './connect';
 import { withStyles, Grid } from '@material-ui/core';
-import { SprykerForm } from '@components/UI/SprykerForm';
-import { SprykerButton } from '@components/UI/SprykerButton';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
+import { SprykerButton } from '@components/components/UI/SprykerButton';
 import {
     IProductConfiguratorAddToWishlistProps as Props,
     IProductConfiguratorAddToWishlistState as State,
     IProductWishlistParams
 } from './types';
 import { concreteProductType, defaultItemValueDropdown } from '@interfaces/product';
-import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IFormSettings } from '@components/components/UI/SprykerForm/types';
 import { ClickEvent } from '@interfaces/common';
 import { TWishlistName } from '@interfaces/wishlist';
 import { styles } from './styles';

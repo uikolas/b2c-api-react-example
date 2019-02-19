@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { withStyles, Grid, Typography } from '@material-ui/core';
-import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { InvoicePaymentForm } from './InvoicePaymentForm';
 import { CreditCardPaymentForm } from './CreditCardPaymentForm';
 import {

@@ -5,11 +5,11 @@ import { connect } from './connect';
 import { createCartItemAddToCart } from '@helpers/cart';
 import { createQuantityVariants } from '@helpers/product';
 import { withStyles, Grid } from '@material-ui/core';
-import { SprykerForm } from '@components/UI/SprykerForm';
-import { SprykerButton } from '@components/UI/SprykerButton';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
+import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { concreteProductType } from '@interfaces/product';
-import { IFormSettings } from '@components/UI/SprykerForm/types';
+import { IFormSettings } from '@components/components/UI/SprykerForm/types';
 import { ClickEvent } from '@interfaces/common';
 import { ICartAddItem } from '@interfaces/cart';
 import {

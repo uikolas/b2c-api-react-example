@@ -8,7 +8,7 @@ import { ClickEvent } from '@interfaces/common';
 import { pathAddressFormNew, pathAddressFormUpdateBase } from '@routes/contentRoutes';
 
 import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
-import { SprykerButton } from '@components/UI/SprykerButton';
+import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { AddressesList } from './AddressesList';
 
 import { Grid, withStyles } from '@material-ui/core';

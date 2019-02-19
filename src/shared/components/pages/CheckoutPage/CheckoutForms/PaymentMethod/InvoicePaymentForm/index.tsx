@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { Grid } from '@material-ui/core';
-import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { getInvoiceFormSettings } from 'src/shared/helpers/formCreations/checkout/invoiceSettings';
 import { checkoutFormsNames, invoiceConfigInputStable } from 'src/shared/constants/checkout';
 import { InputSaveErrorMessage } from 'src/shared/translation';

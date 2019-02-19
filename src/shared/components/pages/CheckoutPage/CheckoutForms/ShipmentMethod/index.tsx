@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { withStyles, Grid } from '@material-ui/core';
-import { SprykerForm } from '@components/UI/SprykerForm';
+import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { getShipmentMethodsFormSettings } from 'src/shared/helpers/formCreations/checkout/shipmentSettings';
 import { PartnerIconHermes, PartnerIconDhl } from './icons';
 import { IShippingMethodsParams } from 'src/shared/helpers/formCreations/checkout/types';

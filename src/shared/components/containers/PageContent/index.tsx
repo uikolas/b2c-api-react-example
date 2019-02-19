@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { connect } from './connect';
 import { StickyContainer } from 'react-sticky';
 import { addLocaleData, IntlProvider } from 'react-intl';
 import { withRouter } from 'react-router';
@@ -17,7 +18,8 @@ import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 const styles = require('./style.scss');
 const className = styles.pageContent;
 
-@(withRouter as any)
+@connect
+@(withRouter as Function)
 export class PageContent extends React.Component<Props, State> {
     public state: State = {
         mobileNavOpened: false
