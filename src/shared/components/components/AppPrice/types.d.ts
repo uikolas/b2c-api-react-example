@@ -1,5 +1,5 @@
 import { WithStyles } from '@material-ui/core';
-import { styles } from 'styles.ts';
+import { styles } from './styles';
 import { TAppCurrency } from '@interfaces/currency';
 import { TPriceTypeName } from '@interfaces/product';
 

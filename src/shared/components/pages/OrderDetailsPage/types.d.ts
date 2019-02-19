@@ -1,5 +1,5 @@
 import { WithStyles } from '@material-ui/core';
-import { styles } from 'styles.ts';
+import { styles } from './styles';
 import { RouteProps } from 'react-router';
 import { TRouterMatchParam } from 'src/shared/helpers/router/types';
 import { IOrderDetailsParsed, IOrderDetailsSelectedItems } from '@interfaces/order';

@@ -1,33 +1,26 @@
 import * as React from 'react';
-import Divider from '@material-ui/core/Divider';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import { AppPrice } from 'src/shared/components/components/AppPrice/index';
-import { ICartTotals } from 'src/shared/interfaces/cart/index';
-import { styles } from './styles';
 import { FormattedMessage } from 'react-intl';
+import { withStyles, Divider } from '@material-ui/core';
+import { AppPrice } from 'src/shared/components/components/AppPrice/index';
+import { ICartTotalProps as Props } from './types';
+import { styles } from './styles';
 
-interface CartTotalProps extends WithStyles<typeof styles> {
-    totals: ICartTotals;
-    title: string;
-    extraClass?: string;
-}
-
-export const CartTotalBase: React.SFC<CartTotalProps> = (props): JSX.Element => {
-    const {classes, totals, title, extraClass} = props;
+export const CartTotalBase: React.SFC<Props> = (props): JSX.Element => {
+    const { classes, totals, title, extraClass } = props;
 
     return (
-        <div className={`${classes.fullWidth} ${extraClass ? extraClass : null}`}>
-            <Divider className={classes.fullWidth}/>
+        <div className={ `${classes.fullWidth} ${extraClass ? extraClass : null}` }>
+            <Divider className={ classes.fullWidth } />
 
             <div className={
                 `${classes.totalMsg} ${((totals && totals.discountTotal) || (totals && totals.taxTotal))
                     ? null
                     : classes.marginBottom}`
             }>
-                <div className={classes.currency}>
-                    <FormattedMessage id={'word.subtotal.title'} />
+                <div className={ classes.currency }>
+                    <FormattedMessage id={ 'word.subtotal.title' } />
                 </div>
-                <div>{totals && <AppPrice value={totals.subtotal} extraClassName={classes.currency} /> }</div>
+                <div>{ totals && <AppPrice value={ totals.subtotal } extraClassName={ classes.currency } /> }</div>
             </div>
             { totals
                 ? (
@@ -57,16 +50,16 @@ export const CartTotalBase: React.SFC<CartTotalProps> = (props): JSX.Element => 
                 ) : null
             }
 
-            <Divider className={classes.fullWidth}/>
+            <Divider className={ classes.fullWidth } />
 
-            <div className={`${classes.totalMsg}`}>
-                <div className={classes.grandTotal}>
-                    {title}
+            <div className={ `${classes.totalMsg}` }>
+                <div className={ classes.grandTotal }>
+                    { title }
                 </div>
-                <div>{totals && <AppPrice value={totals.grandTotal} extraClassName={classes.grandTotal}/>}</div>
+                <div>{ totals && <AppPrice value={ totals.grandTotal } extraClassName={ classes.grandTotal } /> }</div>
             </div>
 
-            <Divider className={classes.fullWidth}/>
+            <Divider className={ classes.fullWidth } />
         </div>
     );
 };
