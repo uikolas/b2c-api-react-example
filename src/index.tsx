@@ -10,10 +10,10 @@ import { Route } from 'react-router';
 import { ScrollToTopRoute } from '@components/hoc/ScrollToTopRoute';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { sprykerTheme } from './shared/theme/sprykerTheme';
+import { sprykerTheme } from './theme/sprykerTheme';
 import { configureStore } from '@stores/configureStore';
 import createHistory from 'history/createBrowserHistory';
-import config from './shared/configs/server';
+import config from './configs/server';
 import { PageContent } from '@components/containers/PageContent';
 
 // Create a history of your choosing (we're using a browser history in this case)

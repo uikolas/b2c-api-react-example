@@ -1,0 +1,14 @@
+import * as React from 'react';
+import { WithStyles } from '@material-ui/core/styles/withStyles';
+import { styles } from './styles';
+import { TActiveFilters, TActiveRangeFilters } from 'src/application/pages/SearchPage/types';
+import { ILocalizedNamesMap, RangeFacets } from 'src/interfaces/searchPageData/index';
+
+export interface IActiveFiltersListProps extends WithStyles<typeof styles> {
+    activeValuesFilters: TActiveFilters;
+    activeValuesRanges: TActiveRangeFilters;
+    rangeFilters?: RangeFacets[];
+    resetHandler: (event: React.MouseEvent<HTMLDivElement>) => void;
+    filtersLocalizedNames: ILocalizedNamesMap | null;
+    rangesLocalizedNames: ILocalizedNamesMap | null;
+}

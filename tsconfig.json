@@ -33,15 +33,14 @@
     "baseUrl": ".",
     "paths": {
       "src": ["src"],
-      "@assets*": ["src/shared/assets*"],
-      "@constants*": ["src/shared/constants*"],
-      "@components*": ["src/shared/components*"],
-      "@containers*": ["src/shared/containers*"],
-      "@helpers*": ["src/shared/helpers*"],
-      "@interfaces*": ["src/shared/interfaces*"],
-      "@routes*": ["src/shared/routes*"],
-      "@stores*": ["src/shared/stores*"],
-      "@services*": ["src/shared/services*"]
+      "@constants*": ["src/constants*"],
+      "@application*": ["src/application*"],
+      "@helpers*": ["src/helpers*"],
+      "@interfaces*": ["src/interfaces*"],
+      "@stores*": ["src/stores*"],
+      "@services*": ["src/services*"],
+      "@configs*": ["src/configs*"],
+      "@translation*": ["src/translation*"]
     }
   },
   "compileOnSave": false,
