@@ -7,15 +7,15 @@ import {
     filterTypeFilter,
     IFilterItem,
     TFilterItemValue,
-} from 'src/application/pages/SearchPage/types';
-import { ActiveFilterItem } from 'src/application/pages/SearchPage/ActiveFilterItem';
-import { AppPageSubTitle } from 'src/application/components/AppPageSubTitle';
-import { isWordHasPrice } from 'src/helpers/common/transform';
-import { RangeFacets } from 'src/interfaces/searchPageData';
+} from '@application/pages/SearchPage/types';
+import { ActiveFilterItem } from '@application/pages/SearchPage/ActiveFilterItem';
+import { AppPageSubTitle } from '@application/components/AppPageSubTitle';
+import { isWordHasPrice } from '@helpers/common/transform';
+import { RangeFacets } from '@interfaces/searchPageData';
 import {
     createRangeFilterItemCombined,
-} from 'src/application/pages/SearchPage/ActiveFiltersList/helper';
-import { IActiveFiltersListProps } from 'src/application/pages/SearchPage/ActiveFiltersList/types';
+} from '@application/pages/SearchPage/ActiveFiltersList/helper';
+import { IActiveFiltersListProps } from '@application/pages/SearchPage/ActiveFiltersList/types';
 import { FormattedMessage } from 'react-intl';
 
 export const ActiveFiltersListBase: React.SFC<IActiveFiltersListProps> = props => {

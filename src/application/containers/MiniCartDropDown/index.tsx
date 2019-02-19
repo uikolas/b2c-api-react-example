@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { withStyles, Badge, Tooltip } from '@material-ui/core';
 import { pathCartPage } from '@constants/routes';
 import { PopoverWrapper } from '@application/components/PopoverWrapper';
-import { BreakpointsSM } from 'src/constants/breakpoints';
+import { BreakpointsSM } from '@constants/breakpoints';
 import { MiniCartDrop } from './MiniCartDrop';
 import { CartIcon } from './icons';
 import IconButton from '@material-ui/core/IconButton';

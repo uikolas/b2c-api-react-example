@@ -5,7 +5,7 @@ import { saveAccessDataToLocalStorage } from 'src/helpers/localStorage';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications';
+import { typeNotificationError } from '@constants/notifications';
 
 export class RefreshTokenService extends ApiServiceAbstract {
     public static async getActualToken(dispatch: Function): Promise<string> {

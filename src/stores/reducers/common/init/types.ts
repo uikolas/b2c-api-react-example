@@ -1,7 +1,7 @@
-import { IInitData } from 'src/interfaces/init';
-import { ICategory } from 'src/interfaces/category';
+import { IInitData } from '@interfaces/init';
+import { ICategory } from '@interfaces/category';
 import { IActionData, IReduxState } from '@stores/reducers/types';
-import { TAppLocale } from 'src/interfaces/locale';
+import { TAppLocale } from '@interfaces/locale';
 
 export interface IInitState extends IReduxState {
     data: IInitData | null;

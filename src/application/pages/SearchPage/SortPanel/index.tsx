@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import { ISortPanelProps } from 'src/application/pages/SearchPage/SortPanel/types';
+import { ISortPanelProps } from '@application/pages/SearchPage/SortPanel/types';
 
 export const SortPanelBase: React.SFC<ISortPanelProps> = props => {
     const {

@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { forgotPasswordAction } from '@stores/actions/pages/login';
 import { getRouterHistoryBack } from '@helpers/router';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';

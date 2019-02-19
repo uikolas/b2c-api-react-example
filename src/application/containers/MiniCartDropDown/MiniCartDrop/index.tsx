@@ -3,9 +3,9 @@ import { connect } from './connect';
 import { pathCartPage, pathCheckoutPage } from '@constants/routes';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
-import { AppPrice } from 'src/application/components/AppPrice';
+import { AppPrice } from '@application/components/AppPrice';
 import { MiniCartItem } from '../MiniCartItem';
-import { AppBtnLink } from 'src/application/components/AppBtnLink';
+import { AppBtnLink } from '@application/components/AppBtnLink';
 import { IMiniCartDropProps as Props } from './types';
 import { styles } from './styles';
 

@@ -5,9 +5,9 @@ import {
     SWITCH_LOCALE
 } from '@stores/actionTypes/common/init';
 import { InitAppService } from '@services/Common/Init';
-import { ICategory } from 'src/interfaces/category';
-import { IInitData } from 'src/interfaces/init';
-import { ICustomerLoginDataParsed } from 'src/interfaces/customer';
+import { ICategory } from '@interfaces/category';
+import { IInitData } from '@interfaces/init';
+import { ICustomerLoginDataParsed } from '@interfaces/customer';
 import { ILocaleActionPayload, IInitAction } from '@stores/reducers/common/Init/types';
 
 export interface IInitApplicationDataPayload {}

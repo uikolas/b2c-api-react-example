@@ -1,5 +1,5 @@
-import { IAvailableLabelsCollection, TLabelId } from 'src/interfaces/searchPageData';
-import { IProductLabel } from 'src/interfaces/product';
+import { IAvailableLabelsCollection, TLabelId } from '@interfaces/searchPageData';
+import { IProductLabel } from '@interfaces/product';
 
 export const getProductLabelCollection = (
     labelsIdArr: TLabelId[] | null,

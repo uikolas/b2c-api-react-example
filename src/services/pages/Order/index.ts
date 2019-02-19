@@ -10,11 +10,11 @@ import {
 } from '@stores/actions/pages/order';
 import { OrderAuthenticateErrorMessage } from 'src/translation';
 import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/helpers/order/response';
-import { TOrderId } from 'src/interfaces/order';
+import { TOrderId } from '@interfaces/order';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications';
+import { typeNotificationError } from '@constants/notifications';
 
 export class OrderService extends ApiServiceAbstract {
     // Get collection of orders

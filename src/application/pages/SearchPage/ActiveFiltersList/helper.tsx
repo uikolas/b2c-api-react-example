@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {
     rangeFilterValueToBack,
-} from 'src/helpers/common/transform';
-import { AppPrice } from 'src/application/components/AppPrice';
+} from '@helpers/common/transform';
+import { AppPrice } from '@application/components/AppPrice';
 import {
     filterTypeRange,
     IFilterItem,
     RangeType,
-} from 'src/application/pages/SearchPage/types';
+} from '@application/pages/SearchPage/types';
 
 /**
  *

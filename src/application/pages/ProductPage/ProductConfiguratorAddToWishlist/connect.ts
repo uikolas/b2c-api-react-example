@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { getAnonymId, getPayloadForCreateCart } from '@stores/reducers/common/init';
 import {
     getWishlistsCollectionFromStore,
@@ -14,7 +14,7 @@ import {
 } from '@stores/actions/common/cart';
 import { getCartId, isCartCreated } from '@stores/reducers/common/cart/selectors';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
-import { ICartCreatePayload } from 'src/services/common/Cart/types';
+import { ICartCreatePayload } from '@services/common/Cart/types';
 import { ICartAddItem, TCartId } from '@interfaces/cart';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

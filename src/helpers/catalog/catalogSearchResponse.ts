@@ -4,7 +4,7 @@ import {
     IProductLabelResponse,
     TLocalizedName,
     ValueFacets,
-} from 'src/interfaces/searchPageData';
+} from '@interfaces/searchPageData';
 import { ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse } from 'src/helpers/catalog/types';
 import { rangeFilterValueToFront } from '@helpers/common/transform';
 import {

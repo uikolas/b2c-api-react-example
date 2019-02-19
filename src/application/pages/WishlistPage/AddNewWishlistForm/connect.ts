@@ -1,5 +1,5 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 
 import { addWishlistAction } from '@stores/actions/pages/wishlist';
 

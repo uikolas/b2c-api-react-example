@@ -5,7 +5,7 @@ export const LoadableOrderHistoryPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableOrderHistoryPage" */
-            'src/application/pages/OrderHistoryPage').then(
+            '@application/pages/OrderHistoryPage').then(
             module => module.OrderHistoryContainer,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,

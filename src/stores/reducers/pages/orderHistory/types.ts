@@ -1,4 +1,4 @@
-import { IOrderCollectionParsed } from 'src/interfaces/order';
+import { IOrderCollectionParsed } from '@interfaces/order';
 import { IActionData, IReduxState } from '@stores/reducers/types';
 
 export interface IOrdersData extends IOrderCollectionParsed {}

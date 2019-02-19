@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { SalutationVariants } from 'src/constants/customer';
-import { typeNotificationWarning } from 'src/constants/notifications';
+import { SalutationVariants } from '@constants/customer';
+import { typeNotificationWarning } from '@constants/notifications';
 import { FormattedMessage } from 'react-intl';
 import {
     withStyles,

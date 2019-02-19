@@ -1,5 +1,5 @@
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
-import { IAddressItem } from 'src/interfaces/addresses';
+import { IAddressItem } from '@interfaces/addresses';
 
 export function isPageAddressesStateLoading(state: IReduxStore, props: IReduxOwnProps): boolean {
     return Boolean(isStateExist(state, props) && state.pageAddresses.pending);

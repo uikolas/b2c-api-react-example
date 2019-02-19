@@ -5,15 +5,15 @@ import {
     RangeFacets,
     ValueFacets
 } from '@interfaces/searchPageData';
-import { rangeFilterValueToFront } from 'src/helpers/common/transform';
+import { rangeFilterValueToFront } from '@helpers/common/transform';
 import {
     rangeMaxType,
     rangeMinType,
     RangeType,
     TActiveRangeFilters
-} from 'src/application/pages/SearchPage/types';
-import { IActiveFilterCategories } from 'src/application/pages/SearchPage/CategoriesList/types';
-import { labeledCategories } from 'src/constants/routes';
+} from '@application/pages/SearchPage/types';
+import { IActiveFilterCategories } from '@application/pages/SearchPage/CategoriesList/types';
+import { labeledCategories } from '@constants/routes';
 import { ICategory, IBreadcrumbItem } from '@interfaces/category';
 
 export const isValidRangeInput = (

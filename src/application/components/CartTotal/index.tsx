@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Divider } from '@material-ui/core';
-import { AppPrice } from 'src/application/components/AppPrice';
+import { AppPrice } from '@application/components/AppPrice';
 import { ICartTotalProps as Props } from './types';
 import { styles } from './styles';
 

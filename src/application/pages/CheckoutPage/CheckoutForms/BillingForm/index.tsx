@@ -2,26 +2,26 @@ import * as React from 'react';
 import { connect } from './connect';
 import { withStyles, Grid } from '@material-ui/core';
 import { SprykerForm } from '@application/components/UI/SprykerForm';
-import { getAddressFormSettings } from 'src/helpers/formCreations/checkout/addressSettings';
-import { getSameAsDeliveryFormSettings } from 'src/helpers/formCreations/checkout/sameAsDeliverySettings';
-import { getBillingSavedAddressFormSettings } from 'src/helpers/formCreations/checkout/savedAddressSettings';
+import { getAddressFormSettings } from '@helpers/formCreations/checkout/addressSettings';
+import { getSameAsDeliveryFormSettings } from '@helpers/formCreations/checkout/sameAsDeliverySettings';
+import { getBillingSavedAddressFormSettings } from '@helpers/formCreations/checkout/savedAddressSettings';
 import {
     checkFormInputValidity,
     checkFormValidity,
     getDefaultAddressId,
     getExtraOptionsToSelection
-} from 'src/helpers/checkout';
+} from '@helpers/checkout';
 import {
     billingConfigInputStable,
     checkoutFormsNames,
     checkoutSelectionInputs, deliveryConfigInputStable
-} from 'src/constants/checkout';
-import { InputSaveErrorMessage } from 'src/translation';
+} from '@constants/checkout';
+import { InputSaveErrorMessage } from '@translation';
 import {
     IAddressParams,
     IBillingAddressesParams,
     ISameAsDeliveryParams
-} from 'src/helpers/formCreations/checkout/types';
+} from '@helpers/formCreations/checkout/types';
 import { IBillingFormProps } from './types';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { IBillingAddressState } from '@interfaces/checkout';

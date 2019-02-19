@@ -1,5 +1,5 @@
 import api, { removeAuthToken } from 'src/services/api';
-import { ICartAddItem, TCartId } from 'src/interfaces/cart';
+import { ICartAddItem, TCartId } from '@interfaces/cart';
 import { parseGuestCartResponse } from 'src/helpers/cart';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from '@stores/actions/common/cart';
@@ -9,7 +9,7 @@ import { NotificationsMessage } from '@application/components/Notifications/Noti
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications';
+} from '@constants/notifications';
 
 export class GuestCartService extends ApiServiceAbstract {
     protected static endpoint(path: string): string {

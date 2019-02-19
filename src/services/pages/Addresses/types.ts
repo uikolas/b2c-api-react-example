@@ -1,4 +1,4 @@
-import { IAddressItem } from 'src/interfaces/addresses';
+import { IAddressItem } from '@interfaces/addresses';
 
 export interface IAddressRawResponse {
     data: IAddressDataRawResponse[];

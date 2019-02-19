@@ -2,14 +2,14 @@ import * as React from 'react';
 import { connect } from './connect';
 import { Grid } from '@material-ui/core';
 import { SprykerForm } from '@application/components/UI/SprykerForm';
-import { getInvoiceFormSettings } from 'src/helpers/formCreations/checkout/invoiceSettings';
-import { checkoutFormsNames, invoiceConfigInputStable } from 'src/constants/checkout';
-import { InputSaveErrorMessage } from 'src/translation';
-import { IPaymentInvoiceParams } from 'src/helpers/formCreations/checkout/types';
+import { getInvoiceFormSettings } from '@helpers/formCreations/checkout/invoiceSettings';
+import { checkoutFormsNames, invoiceConfigInputStable } from '@constants/checkout';
+import { InputSaveErrorMessage } from '@translation';
+import { IPaymentInvoiceParams } from '@helpers/formCreations/checkout/types';
 import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICheckoutInvoiceState } from '@interfaces/checkout';
 import { IInvoicePaymentFormProps } from './types';
-import { checkFormInputValidity, checkFormValidity } from 'src/helpers/checkout';
+import { checkFormInputValidity, checkFormValidity } from '@helpers/checkout';
 
 export const InvoicePaymentFormBase: React.SFC<IInvoicePaymentFormProps> = (props): JSX.Element => {
     const {

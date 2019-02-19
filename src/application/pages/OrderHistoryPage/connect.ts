@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { getOrdersCollectionAction } from '@stores/actions/pages/order';
 import {
     getOrdersCollectionFromStore,
@@ -10,7 +10,7 @@ import {
 } from '@stores/reducers/pages/orderHistory';
 import { isAppInitiated } from '@stores/reducers/common/init';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const isLoading: boolean = isOrderHistoryLoading(state, ownProps);

@@ -1,4 +1,4 @@
-import { ICustomerLoginDataParsed, ILoginDataToLocalStorage } from 'src/interfaces/customer';
+import { ICustomerLoginDataParsed, ILoginDataToLocalStorage } from '@interfaces/customer';
 
 export const saveAccessDataToLocalStorage = (payload: ICustomerLoginDataParsed): boolean => {
     if (!payload) {

@@ -1,5 +1,5 @@
 import { IWishlist } from '../../interfaces/wishlist';
-import { IMenuItemSelect } from 'src/application/components/UI/SprykerSelect/types';
+import { IMenuItemSelect } from '@application/components/UI/SprykerSelect/types';
 
 export const createWishlistMenuVariants = (
     wishlists: IWishlist[] | null

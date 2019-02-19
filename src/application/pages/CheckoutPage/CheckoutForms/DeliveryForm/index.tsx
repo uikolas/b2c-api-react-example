@@ -2,25 +2,25 @@ import * as React from 'react';
 import { connect } from './connect';
 import { Grid, withStyles } from '@material-ui/core';
 import { SprykerForm } from '@application/components/UI/SprykerForm';
-import { getAddressFormSettings } from 'src/helpers/formCreations/checkout/addressSettings';
-import { getDeliverySavedAddressFormSettings } from 'src/helpers/formCreations/checkout/savedAddressSettings';
+import { getAddressFormSettings } from '@helpers/formCreations/checkout/addressSettings';
+import { getDeliverySavedAddressFormSettings } from '@helpers/formCreations/checkout/savedAddressSettings';
 import {
     checkoutFormsNames,
     checkoutSelectionInputs, creditCardConfigInputStable,
     deliveryConfigInputStable
-} from 'src/constants/checkout';
-import { InputSaveErrorMessage } from 'src/translation';
+} from '@constants/checkout';
+import { InputSaveErrorMessage } from '@translation';
 import {
     checkFormInputValidity,
     checkFormValidity,
     getDefaultAddressId,
     getExtraOptionsToSelection
-} from 'src/helpers/checkout';
+} from '@helpers/checkout';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     IAddressParams,
     IDeliveryAddressesParams
-} from 'src/helpers/formCreations/checkout/types';
+} from '@helpers/formCreations/checkout/types';
 import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { IDeliveryFormProps, TCurrentValueDeliverySelection } from './types';
 import { IDeliveryAddressState } from '@interfaces/checkout';

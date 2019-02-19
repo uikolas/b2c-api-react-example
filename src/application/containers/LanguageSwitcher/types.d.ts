@@ -2,7 +2,7 @@ import * as React from 'react';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
-import { TAppLocale } from 'src/interfaces/locale';
+import { TAppLocale } from '@interfaces/locale';
 
 export type TLanguage = {
     name: React.ReactNode,

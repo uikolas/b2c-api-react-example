@@ -1,8 +1,8 @@
 import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '../product';
 import { IAbstractTotals, TCanceledTotal } from '../abstract/totals';
-import { TCartPriceMode } from 'src/interfaces/cart';
-import { IAddressItemOrder } from 'src/interfaces/addresses';
-import { TAppCurrency } from 'src/interfaces/currency';
+import { TCartPriceMode } from '@interfaces/cart';
+import { IAddressItemOrder } from '@interfaces/addresses';
+import { TAppCurrency } from '@interfaces/currency';
 
 type TOrderCreatedAt = string;
 export type TOrderDate = string;

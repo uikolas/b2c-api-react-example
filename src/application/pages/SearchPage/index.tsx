@@ -2,24 +2,24 @@ import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
 import { withRouter } from 'react-router';
-import { RangeFacets, ISearchQuery } from 'src/interfaces/searchPageData';
+import { RangeFacets, ISearchQuery } from '@interfaces/searchPageData';
 import { pathCategoryPageBase, pathProductPageBase } from '@constants/routes';
-import { AppPageTitle } from 'src/application/components/AppPageTitle';
-import { TSprykerRangeSliderName } from 'src/application/components/UI/SprykerRangeSlider/types';
-import { ActiveFiltersList } from 'src/application/pages/SearchPage/ActiveFiltersList';
-import { SortPanel } from 'src/application/pages/SearchPage/SortPanel';
-import { FoundItems } from 'src/application/pages/SearchPage/FoundItems';
-import { SprykerSelect } from 'src/application/components/UI/SprykerSelect';
-import { ProductsList } from 'src/application/pages/SearchPage/ProductsList';
-import { rangeFilterValueToFront } from 'src/helpers/common/transform';
-import { AppPagination } from 'src/application/components/AppPagination';
+import { AppPageTitle } from '@application/components/AppPageTitle';
+import { TSprykerRangeSliderName } from '@application/components/UI/SprykerRangeSlider/types';
+import { ActiveFiltersList } from '@application/pages/SearchPage/ActiveFiltersList';
+import { SortPanel } from '@application/pages/SearchPage/SortPanel';
+import { FoundItems } from '@application/pages/SearchPage/FoundItems';
+import { SprykerSelect } from '@application/components/UI/SprykerSelect';
+import { ProductsList } from '@application/pages/SearchPage/ProductsList';
+import { rangeFilterValueToFront } from '@helpers/common/transform';
+import { AppPagination } from '@application/components/AppPagination';
 import {
     getFiltersLocalizedNames,
     getRangeFiltersLocalizedNames,
     isValidRangeInput,
     getLabeledCategory,
     getCurrentCategoriesTree
-} from 'src/application/pages/SearchPage/helpers';
+} from '@application/pages/SearchPage/helpers';
 import { AppMain } from '../../components/AppMain';
 import {
     filterTypeFilter,
@@ -40,12 +40,12 @@ import { SearchFilterList } from './SearchFilterList';
 import { SearchPageContext } from './context';
 import {
     addToQueryActiveRangeFilters,
-} from 'src/application/pages/SearchPage/helpers/queries';
-import { getCategoryNameById } from 'src/helpers/categories';
+} from '@application/pages/SearchPage/helpers/queries';
+import { getCategoryNameById } from '@helpers/categories';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications';
-import { Breadcrumbs } from 'src/application/pages/SearchPage/CategoriesBreadcrumbs';
+import { typeNotificationError } from '@constants/notifications';
+import { Breadcrumbs } from '@application/pages/SearchPage/CategoriesBreadcrumbs';
 
 @(withRouter as Function)
 @connect

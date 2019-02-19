@@ -1,5 +1,5 @@
 import { RouteProps } from 'react-router';
-import { WithRouter } from 'src/interfaces/common';
+import { WithRouter } from '@interfaces/common';
 
 export interface IScrollToTopRouteProps extends RouteProps, WithRouter {}
 

@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { styles } from './styles';
-import { IFoundItemsProps } from 'src/application/pages/SearchPage/FoundItems/types';
+import { IFoundItemsProps } from '@application/pages/SearchPage/FoundItems/types';
 import { FormattedMessage } from 'react-intl';
 
 export const FoundItemsBase: React.SFC<IFoundItemsProps> = props => {

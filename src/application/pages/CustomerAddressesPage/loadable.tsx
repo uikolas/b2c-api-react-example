@@ -5,7 +5,7 @@ export const LoadableCustomerAddressPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableCustomerAddressPage" */
-            'src/application/pages/CustomerAddressesPage').then(
+            '@application/pages/CustomerAddressesPage').then(
             module => module.default
         ),
     loading: () => <div>Loading...</div>,

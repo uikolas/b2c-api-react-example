@@ -2,12 +2,12 @@ import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
-import { IProductCard, IProductLabel } from 'src/interfaces/product';
+import { IProductCard, IProductLabel } from '@interfaces/product';
 import { sprykerTheme } from 'src/theme/sprykerTheme';
-import { ProductCard } from 'src/application/components/ProductCard';
-import { AppPageHeadline } from 'src/application/components/AppPageHeadline';
-import { getProductLabel } from 'src/helpers/product/label';
-import { IProductsListProps } from 'src/application/pages/SearchPage/ProductsList/types';
+import { ProductCard } from '@application/components/ProductCard';
+import { AppPageHeadline } from '@application/components/AppPageHeadline';
+import { getProductLabel } from '@helpers/product/label';
+import { IProductsListProps } from '@application/pages/SearchPage/ProductsList/types';
 import { FormattedMessage } from 'react-intl';
 
 export const ProductsListBase: React.SFC<IProductsListProps> = props => {

@@ -9,11 +9,11 @@ import {
     getProductDataRejectedStateAction,
 } from '@stores/actions/pages/product';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from 'src/interfaces/product';
+import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from '@interfaces/product';
 import { parseProductAvailabilityResponse } from 'src/helpers/product/productResponse';
 import { IApiResponseData } from 'src/services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications';
+import { typeNotificationError } from '@constants/notifications';
 
 export class ProductService extends ApiServiceAbstract {
     public static async getAbstractData(dispatch: Function, sku: string): Promise<void> {

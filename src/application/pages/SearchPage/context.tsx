@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IFilterItemToDelete, TCategoryId } from 'src/application/pages/SearchPage/types';
+import { IFilterItemToDelete, TCategoryId } from '@application/pages/SearchPage/types';
 
 type TSearchPageContext = {
     selectCategoryHandler: (categoryId: TCategoryId) => (event: React.MouseEvent<HTMLElement>) => void;

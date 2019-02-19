@@ -1,6 +1,6 @@
 import api, { setAuthToken } from 'src/services/api';
-import { TProductSKU } from 'src/interfaces/product';
-import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from 'src/interfaces/cart';
+import { TProductSKU } from '@interfaces/product';
+import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '@interfaces/cart';
 import {
     parseUserCartResponseMultiValue,
     parseCartCreateResponse,
@@ -13,11 +13,11 @@ import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
 import { IResponseError } from 'src/services/apiAbstractions/types';
 import { IApiResponseData } from 'src/services/types';
-import { NotificationsMessage } from 'src/application/components/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications';
+} from '@constants/notifications';
 
 export class CartService extends ApiServiceAbstract {
     protected static endpoint(path: string): string {

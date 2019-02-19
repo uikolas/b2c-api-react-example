@@ -5,7 +5,7 @@ import {
     ICustomerProfileIdentity,
     ICustomerProfilePassword,
     TCustomerReference
-} from 'src/interfaces/customer';
+} from '@interfaces/customer';
 import { parseCustomerDataResponse } from 'src/helpers/customer/customerDataResponse';
 import { RefreshTokenService } from 'src/services/common/RefreshToken';
 import { CustomerProfileAuthenticateErrorMessage } from 'src/translation';
@@ -16,7 +16,7 @@ import { NotificationsMessage } from '@application/components/Notifications/Noti
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications';
+} from '@constants/notifications';
 
 interface IRequestBody {
     data: {

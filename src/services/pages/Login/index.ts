@@ -7,7 +7,7 @@ import {
     loginCustomerRejectedStateAction,
 } from '@stores/actions/pages/login';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/interfaces/customer';
+import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from '@interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/helpers/localStorage';
 import { IApiResponseData } from 'src/services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
@@ -15,7 +15,7 @@ import {
     typeNotificationSuccess,
     typeNotificationError,
     typeNotificationWarning
-} from 'src/constants/notifications';
+} from '@constants/notifications';
 
 export class PagesLoginService extends ApiServiceAbstract {
     public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {

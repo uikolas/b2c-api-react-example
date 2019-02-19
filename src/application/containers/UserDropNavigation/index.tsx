@@ -5,11 +5,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
 import { pathCustomerPage, pathCustomerProfilePage, pathLoginPage } from '@constants/routes';
 import { UserDrop } from './UserDrop';
-import { PopoverWrapper } from 'src/application/components/PopoverWrapper';
-import { BreakpointsSM } from 'src/constants/breakpoints';
+import { PopoverWrapper } from '@application/components/PopoverWrapper';
+import { BreakpointsSM } from '@constants/breakpoints';
 import { LogoutSetTimeoutTime } from '@constants/customer';
 import { UserIcon } from './icons';
-import { ClickEvent } from 'src/interfaces/common';
+import { ClickEvent } from '@interfaces/common';
 import { IUserDropNavigationProps as Props, IUserDropNavigationState as State } from './types';
 import { styles } from './styles';
 

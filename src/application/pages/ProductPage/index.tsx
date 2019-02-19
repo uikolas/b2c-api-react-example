@@ -6,7 +6,7 @@ import {
     getAvailabilityDisplay,
     getInitialSuperAttrSelected,
     getCurrentProductDataObject
-} from 'src/helpers/product';
+} from '@helpers/product';
 import { withStyles, Grid  } from '@material-ui/core';
 import { AppMain } from '@application/components/AppMain';
 import { ImageSlider } from '@application/components/ImageSlider';

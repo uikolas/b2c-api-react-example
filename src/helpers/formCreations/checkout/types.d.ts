@@ -19,7 +19,7 @@ import {
     TCurrentValueDeliverySelection,
     TExtraOptionsToSelection,
     TPaymentProvidersCollection
-} from 'src/constants/checkout/types';
+} from '@constants/checkout/types';
 import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICountry } from '@interfaces/country';
 

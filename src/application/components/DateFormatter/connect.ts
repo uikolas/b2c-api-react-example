@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { getAppTimeZone } from '@stores/reducers/common/init';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { TAppTimeZone } from '@interfaces/locale';

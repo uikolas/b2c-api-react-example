@@ -1,6 +1,6 @@
 import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '@stores/actionTypes/pages/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { IConcreteProductAvailability, IProductDataParsed } from 'src/interfaces/product';
+import { IConcreteProductAvailability, IProductDataParsed } from '@interfaces/product';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 import { IPageProductAction, IProductState } from 'src/stores/reducers/pages/product/types';
 import { IApiErrorResponse } from 'src/services/types';

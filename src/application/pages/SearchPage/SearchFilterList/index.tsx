@@ -3,16 +3,16 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import { SprykerFilterElement } from 'src/application/components/UI/SprykerFilter';
-import { ValueFacets } from 'src/interfaces/searchPageData';
+import { SprykerFilterElement } from '@application/components/UI/SprykerFilter';
+import { ValueFacets } from '@interfaces/searchPageData';
 import { rangeMaxType, rangeMinType, TActiveFilters } from '@application/pages/SearchPage/types';
 import { sprykerTheme } from 'src/theme/sprykerTheme';
-import { FilterWrapper } from 'src/application/pages/SearchPage/FilterWrapper';
-import { rangeFilterValueToFront } from 'src/helpers/common/transform';
-import { AppPageSubTitle } from 'src/application/components/AppPageSubTitle';
-import { SprykerRangeSlider } from 'src/application/components/UI/SprykerRangeSlider';
-import { AppPrice } from 'src/application/components/AppPrice';
-import { ISearchFilterListProps } from 'src/application/pages/SearchPage/SearchFilterList/types';
+import { FilterWrapper } from '@application/pages/SearchPage/FilterWrapper';
+import { rangeFilterValueToFront } from '@helpers/common/transform';
+import { AppPageSubTitle } from '@application/components/AppPageSubTitle';
+import { SprykerRangeSlider } from '@application/components/UI/SprykerRangeSlider';
+import { AppPrice } from '@application/components/AppPrice';
+import { ISearchFilterListProps } from '@application/pages/SearchPage/SearchFilterList/types';
 import { FormattedMessage } from 'react-intl';
 
 export const SearchFilterListBase: React.SFC<ISearchFilterListProps> = props => {

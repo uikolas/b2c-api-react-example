@@ -1,5 +1,5 @@
-import { ISearchQuery } from 'src/interfaces/searchPageData';
-import { TActiveRangeFilters } from 'src/application/pages/SearchPage/types';
+import { ISearchQuery } from '@interfaces/searchPageData';
+import { TActiveRangeFilters } from '@application/pages/SearchPage/types';
 
 export const addToQueryActiveRangeFilters = (activeRangeFilters: TActiveRangeFilters): ISearchQuery => {
     const query: { [key: string]: number | string } = {};

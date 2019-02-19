@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { push } from 'react-router-redux';
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import {
     getAvailableLabels,
     getCategoriesLocalizedName,
@@ -9,17 +9,17 @@ import {
     getSpellingSuggestion
 } from '@stores/reducers/pages/search';
 import { getAppCurrency, getCategoriesTree } from '@stores/reducers/common/init';
-import { ISearchQuery, TSpellingSuggestion } from 'src/interfaces/searchPageData';
-import { getRouterMatchParam } from 'src/helpers/router';
+import { ISearchQuery, TSpellingSuggestion } from '@interfaces/searchPageData';
+import { getRouterMatchParam } from '@helpers/router';
 import {
     sendSearchAction,
     clearActiveFiltersAction,
     clearSearchTermAction
 } from '@stores/actions/pages/search';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { ICategory } from 'src/interfaces/category';
-import { TAppCurrency } from 'src/interfaces/currency';
-import { ISearchState } from 'src/stores/reducers/pages/search/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { ICategory } from '@interfaces/category';
+import { TAppCurrency } from '@interfaces/currency';
+import { ISearchState } from '@stores/reducers/pages/search/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {
     const pageSearchProps: ISearchState = state.pageSearch ? state.pageSearch : null;

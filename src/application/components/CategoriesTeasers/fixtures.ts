@@ -4,7 +4,7 @@ import {
     pathCategoryNotebooks,
     pathCategoryTablets,
     pathCategoryWorkstations
-} from 'src/constants/routes';
+} from '@constants/routes';
 
 const computersSrc = require('./img/computers-min.jpg');
 const notebooksSrc = require('./img/notebooks-min.jpg');

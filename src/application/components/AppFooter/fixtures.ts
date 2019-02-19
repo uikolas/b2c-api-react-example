@@ -6,7 +6,7 @@ import {
     pathCategorySale,
     pathCategoryTablets,
     pathCategoryWorkstations
-} from 'src/constants/routes';
+} from '@constants/routes';
 
 export const categoriesLinks: link[] = [
     {

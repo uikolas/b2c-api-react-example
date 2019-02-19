@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { withStyles, Radio, RadioGroup, FormControlLabel, FormLabel } from '@material-ui/core';
-import { sprykerFormStyles } from 'src/application/components/UI/SprykerForm/sprykerFormStyles';
+import { sprykerFormStyles } from '@application/components/UI/SprykerForm/sprykerFormStyles';
 import { IFieldRadioProps as Props } from './types';
-import { IRadioItem } from 'src/application/components/UI/SprykerForm/types';
+import { IRadioItem } from '@application/components/UI/SprykerForm/types';
 
 export const FieldRadioBase: React.SFC<Props> = (props): JSX.Element => {
     const {

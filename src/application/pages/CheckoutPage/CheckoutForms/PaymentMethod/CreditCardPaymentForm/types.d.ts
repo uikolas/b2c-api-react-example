@@ -1,6 +1,6 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { TPaymentProvidersCollection } from 'src/constants/checkout/types';
+import { TPaymentProvidersCollection } from '@constants/checkout/types';
 import { ICheckoutCreditCardState } from '@interfaces/checkout';
 import { IFormFieldMutate } from '@stores/reducers/pages/checkout/types';
 

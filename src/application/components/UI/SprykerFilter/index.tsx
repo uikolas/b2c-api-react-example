@@ -2,7 +2,7 @@ import * as React from 'react';
 import { withStyles, MenuItem, FormControl, Select, Chip } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
 import { styles } from './styles';
-import { InputChangeEvent } from 'src/interfaces/common';
+import { InputChangeEvent } from '@interfaces/common';
 import { ISprykerFilterProps as Props, ISprykerFilterState as State } from './types';
 
 export class SprykerFilter extends React.Component<Props, State> {

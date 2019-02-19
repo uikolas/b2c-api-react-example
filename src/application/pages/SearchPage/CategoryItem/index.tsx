@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import { styles } from './styles';
 import { SearchPageContext } from '../context';
-import { ICategoryItemProps } from 'src/application/pages/SearchPage/CategoryItem/types';
+import { ICategoryItemProps } from '@application/pages/SearchPage/CategoryItem/types';
 
 export const CategoryItemBase: React.SFC<ICategoryItemProps> = props => {
     const {

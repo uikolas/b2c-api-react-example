@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { getAnonymId, isAppInitiated } from '@stores/reducers/common/init';
 import {
     getProduct,

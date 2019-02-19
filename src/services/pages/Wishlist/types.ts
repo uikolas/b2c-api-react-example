@@ -1,4 +1,4 @@
-import { IWishlist } from 'src/interfaces/wishlist';
+import { IWishlist } from '@interfaces/wishlist';
 import {
     IRowConcreteProductsIncludedResponse,
     IRowProductAvailabilitiesIncludedResponse,

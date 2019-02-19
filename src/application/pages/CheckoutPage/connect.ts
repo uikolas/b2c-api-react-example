@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { getAnonymId } from '@stores/reducers/common/init';
 import { getCustomerReference, isUserAuthenticated } from '@stores/reducers/pages/login';
 import { getCustomerProfile } from '@stores/reducers/pages/customerProfile';

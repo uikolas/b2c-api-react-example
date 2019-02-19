@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { formatDateToString } from 'src/helpers/common/dates';
+import { formatDateToString } from '@helpers/common/dates';
 import { appFixedDimensions } from 'src/theme/properties/new/appFixedDimensions';
 import { pathOrderDetailsPageBase } from '@constants/routes';
 import { AppPrice } from '@application/components/AppPrice';

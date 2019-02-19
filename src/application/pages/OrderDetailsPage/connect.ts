@@ -1,5 +1,5 @@
-import { reduxify } from 'src/application/hoc/Reduxify';
-import { getRouterMatchParam } from 'src/helpers/router';
+import { reduxify } from '@application/hoc/Reduxify';
+import { getRouterMatchParam } from '@helpers/router';
 import {
     getOrderDetailsFromStore,
     isOrderDetailsFulfilled,

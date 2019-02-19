@@ -8,10 +8,10 @@ import {
     IProductPropFullData,
     ISuperAttributes,
     TAppPriceMode,
-} from 'src/interfaces/product';
-import { ICartCreatePayload } from 'src/services/common/Cart/types';
-import { TRouterMatchParam } from 'src/helpers/router/types';
-import { TAppStore } from 'src/interfaces/store';
+} from '@interfaces/product';
+import { ICartCreatePayload } from '@services/common/Cart/types';
+import { TRouterMatchParam } from '@helpers/router/types';
+import { TAppStore } from '@interfaces/store';
 
 export interface ProductPageProps extends WithStyles<typeof styles>, RouteProps {
     product: IProductDataParsed | null;

@@ -1,6 +1,6 @@
-import { IWishlist, IWishlistProduct, TWishlistId } from 'src/interfaces/wishlist';
+import { IWishlist, IWishlistProduct, TWishlistId } from '@interfaces/wishlist';
 import { IActionData, IReduxState } from '@stores/reducers/types';
-import { TProductSKU } from 'src/interfaces/product';
+import { TProductSKU } from '@interfaces/product';
 
 export interface WishlistState extends IReduxState {
     data: {

@@ -3,7 +3,7 @@ import {
     ILoginDataToLocalStorage, IResetPasswordPayload,
     TCustomerEmail,
     TCustomerUsername
-} from 'src/interfaces/customer';
+} from '@interfaces/customer';
 import { IActionData, IReduxState } from '@stores/reducers/types';
 
 export interface ILoginState extends IReduxState {

@@ -3,13 +3,13 @@ import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected 
 import { ICartCreatePayload } from '../../../../services/common/Cart/types';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 import { IApiErrorResponse } from 'src/services/types';
-import { TAppTimeZone } from 'src/interfaces/locale';
-import { TAppCurrency } from 'src/interfaces/currency';
-import { TAppPriceMode } from 'src/interfaces/product';
-import { TAppStore } from 'src/interfaces/store';
-import { ICategory } from 'src/interfaces/category';
-import { ICountry } from 'src/interfaces/country';
-import { IInitData } from 'src/interfaces/init';
+import { TAppTimeZone } from '@interfaces/locale';
+import { TAppCurrency } from '@interfaces/currency';
+import { TAppPriceMode } from '@interfaces/product';
+import { TAppStore } from '@interfaces/store';
+import { ICategory } from '@interfaces/category';
+import { ICountry } from '@interfaces/country';
+import { IInitData } from '@interfaces/init';
 import { IInitState, IInitAction } from 'src/stores/reducers/common/init/types';
 import { APP_LOCALE_DEFAULT } from 'src/configs/environment';
 

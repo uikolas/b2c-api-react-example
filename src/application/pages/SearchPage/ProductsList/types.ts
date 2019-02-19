@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { IProductCard, TProductCurrency } from 'src/interfaces/product';
-import { IAvailableLabelsCollection, IProductsLabeledCollection } from 'src/interfaces/searchPageData';
+import { IProductCard, TProductCurrency } from '@interfaces/product';
+import { IAvailableLabelsCollection, IProductsLabeledCollection } from '@interfaces/searchPageData';
 
 export interface IProductsListProps extends WithStyles<typeof styles> {
     products: IProductCard[];

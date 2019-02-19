@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import { IFilterWrapperProps } from 'src/application/pages/SearchPage/FilterWrapper/types';
+import { IFilterWrapperProps } from '@application/pages/SearchPage/FilterWrapper/types';
 
 export const FilterWrapperBase: React.SFC<IFilterWrapperProps> = props => {
     const {filter, keyValue} = props;

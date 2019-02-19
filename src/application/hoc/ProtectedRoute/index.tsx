@@ -4,7 +4,7 @@ import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '@constants/routes';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationSuccess } from 'src/constants/notifications';
+import { typeNotificationSuccess } from '@constants/notifications';
 
 @connect
 @(withRouter as Function)

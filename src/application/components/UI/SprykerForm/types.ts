@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { GridSize } from '@material-ui/core/Grid';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { SprykerSelectProps } from 'src/application/components/UI/SprykerSelect';
+import { SprykerSelectProps } from '@application/components/UI/SprykerSelect';
 import { sprykerFormStyles } from './sprykerFormStyles';
-import { InputChangeEvent, BlurEvent, FormEvent } from 'src/interfaces/common';
+import { InputChangeEvent, BlurEvent, FormEvent } from '@interfaces/common';
 
 export type TFormInputValue = string | number | boolean;
 

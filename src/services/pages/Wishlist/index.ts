@@ -1,6 +1,6 @@
 import api, { setAuthToken } from 'src/services/api';
 import { RefreshTokenService } from 'src/services/common/RefreshToken';
-import { IWishlist, IWishlistProduct, TWishlistId } from 'src/interfaces/wishlist';
+import { IWishlist, IWishlistProduct, TWishlistId } from '@interfaces/wishlist';
 import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
 import { WishlistAuthenticateErrorMessage } from 'src/translation';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
@@ -15,7 +15,7 @@ import { NotificationsMessage } from '@application/components/Notifications/Noti
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications';
+} from '@constants/notifications';
 
 interface IRequestBody {
     data: {

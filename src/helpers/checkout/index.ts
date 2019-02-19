@@ -13,9 +13,9 @@ import { IParamFormValidity, IParamInputValidity } from './types';
 import {
     TAddressType,
     TExtraOptionsToSelection
-} from 'src/constants/checkout/types';
-import { checkoutSelectionInputs } from 'src/constants/checkout';
-import { RegExpZipCode } from 'src/constants/forms/regexp';
+} from '@constants/checkout/types';
+import { checkoutSelectionInputs } from '@constants/checkout';
+import { RegExpZipCode } from '@constants/forms/regexp';
 import { FormattedMessageTemplate } from 'src/helpers/formattedMessageTemplate';
 
 export const addressDefault: IAddressItem = {

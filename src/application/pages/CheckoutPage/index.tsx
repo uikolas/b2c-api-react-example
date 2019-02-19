@@ -9,7 +9,7 @@ import { AppPageTitle } from '@application/components/AppPageTitle';
 import {
     getCheckoutPanelsSettings,
     getAddressForm
-} from 'src/helpers/checkout';
+} from '@helpers/checkout';
 import { FormEvent } from '@interfaces/common';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { ICheckoutRequest } from '@interfaces/checkout';

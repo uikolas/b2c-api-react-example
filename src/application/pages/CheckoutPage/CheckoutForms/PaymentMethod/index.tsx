@@ -9,8 +9,8 @@ import {
     PartnerIconPaypal,
     PartnerIconMasterCard
 } from './icons';
-import { getPaymentMethodsFormSettings } from 'src/helpers/formCreations/checkout/paymentSettings';
-import { checkFormValidity } from 'src/helpers/checkout';
+import { getPaymentMethodsFormSettings } from '@helpers/formCreations/checkout/paymentSettings';
+import { checkFormValidity } from '@helpers/checkout';
 import {
     IPaymentMethod,
     ICheckoutInvoiceState,
@@ -19,19 +19,19 @@ import {
 import {
     IPaymentMethodsGrouped,
     TPaymentProvidersCollection
-} from 'src/constants/checkout/types';
+} from '@constants/checkout/types';
 import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { IPaymentMethodProps } from './types';
 import {
     IPaymentMethodsParams,
     IPaymentProviderToIcon
-} from 'src/helpers/formCreations/checkout/types';
+} from '@helpers/formCreations/checkout/types';
 import {
     creditCardConfigInputStable,
     invoiceConfigInputStable,
     checkoutFormsNames,
     checkoutPaymentMethodsNames
-} from 'src/constants/checkout';
+} from '@constants/checkout';
 import { styles } from './styles';
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {

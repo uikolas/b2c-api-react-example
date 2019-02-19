@@ -3,15 +3,15 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
-import { CategoryItem } from 'src/application/pages/SearchPage/CategoryItem';
-import { AppPageSubTitle } from 'src/application/components/AppPageSubTitle';
+import { CategoryItem } from '@application/pages/SearchPage/CategoryItem';
+import { AppPageSubTitle } from '@application/components/AppPageSubTitle';
 import {
     IActiveFilterCategories,
     ICategoriesListProps
-} from 'src/application/pages/SearchPage/CategoriesList/types';
+} from '@application/pages/SearchPage/CategoriesList/types';
 import { styles } from './styles';
-import { ICategory } from 'src/interfaces/category';
-import { getFormattedActiveCategories } from 'src/application/pages/SearchPage/helpers';
+import { ICategory } from '@interfaces/category';
+import { getFormattedActiveCategories } from '@application/pages/SearchPage/helpers';
 import { FormattedMessage } from 'react-intl';
 
 export const CategoriesListBase: React.SFC<ICategoriesListProps> = (

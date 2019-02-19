@@ -3,8 +3,8 @@ import {
     ICartItem,
     ICartItemCalculation,
     ICartTotals
-} from 'src/interfaces/cart';
-import { IAbstractRowIncludedResponse } from 'src/interfaces/abstract/rowIncludedresponse';
+} from '@interfaces/cart';
+import { IAbstractRowIncludedResponse } from '@interfaces/abstract/rowIncludedresponse';
 import {
     IRowConcreteProductsIncludedResponse,
     IRowProductAvailabilitiesIncludedResponse,

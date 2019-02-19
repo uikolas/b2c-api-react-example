@@ -9,7 +9,7 @@ import {
     TProductType
 } from '@interfaces/product';
 import { TCartId } from '@interfaces/cart';
-import { ICartCreatePayload } from 'src/services/common/Cart/types';
+import { ICartCreatePayload } from '@services/common/Cart/types';
 
 export interface IProductConfiguratorAddToCartProps extends WithStyles<typeof styles> {
     product: IProductPropFullData | null;

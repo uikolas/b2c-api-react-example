@@ -1,6 +1,6 @@
 import { ORDERS_COLLECTION_REQUEST } from '@stores/actionTypes/pages/order';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { IOrderCollectionParsed, TOrderCollection } from 'src/interfaces/order';
+import { IOrderCollectionParsed, TOrderCollection } from '@interfaces/order';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 import { IOrderHistoryState, IPageOrderHistoryAction } from 'src/stores/reducers/pages/orderHistory/types';
 import { IApiErrorResponse } from 'src/services/types';

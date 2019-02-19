@@ -2,13 +2,13 @@ import * as React from 'react';
 import { connect } from './connect';
 import { withStyles, Grid } from '@material-ui/core';
 import { SprykerForm } from '@application/components/UI/SprykerForm';
-import { getCreditCardFormSettings } from 'src/helpers/formCreations/checkout/creditCardSettings';
-import { checkFormInputValidity, checkFormValidity } from 'src/helpers/checkout';
-import { checkoutFormsNames, creditCardConfigInputStable } from 'src/constants/checkout';
-import { InputSaveErrorMessage } from 'src/translation';
+import { getCreditCardFormSettings } from '@helpers/formCreations/checkout/creditCardSettings';
+import { checkFormInputValidity, checkFormValidity } from '@helpers/checkout';
+import { checkoutFormsNames, creditCardConfigInputStable } from '@constants/checkout';
+import { InputSaveErrorMessage } from '@translation';
 import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICheckoutCreditCardState } from '@interfaces/checkout';
-import { IPaymentCreditCardParams } from 'src/helpers/formCreations/checkout/types';
+import { IPaymentCreditCardParams } from '@helpers/formCreations/checkout/types';
 import { ICreditCardPaymentFormProps } from './types';
 import { styles } from './styles';
 
