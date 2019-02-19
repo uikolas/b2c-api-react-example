@@ -12,7 +12,7 @@ import {
     Checkbox,
     FormControlLabel
 } from '@material-ui/core';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { TSalutationVariant } from '@interfaces/customer';
 import { IRegisterFormProps as Props, IRegisterFormState as State } from './types';
 import { InputChangeEvent, FormEvent } from '@interfaces/common';

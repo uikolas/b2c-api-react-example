@@ -3,7 +3,7 @@ import { connect } from './connect';
 import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
-import { AppPrice } from 'src/shared/components/Common/AppPrice';
+import { AppPrice } from 'src/shared/components/components/AppPrice';
 import { MiniCartItem } from '../MiniCartItem';
 import { AppBtnLink } from 'src/shared/components/components/AppBtnLink';
 import { IMiniCartDropProps as Props } from './types';

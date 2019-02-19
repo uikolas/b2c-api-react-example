@@ -2,11 +2,11 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
 import { withStyles, Typography } from '@material-ui/core';
-import { AppPrice } from '@components/Common/AppPrice';
-import { AppTable } from '@components/Common/AppTable';
+import { AppPrice } from '@components/components/AppPrice';
+import { AppTable } from '@components/components/AppTable';
 import { IOrderProductListProps as Props } from './types';
 import { IOrderDetailsItem } from '@interfaces/order';
-import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
+import { ICellInfo, ITableRow } from 'types.d.ts';
 import { styles } from './styles';
 
 export const OrderProductListBase: React.SFC<Props> = (props): JSX.Element => {

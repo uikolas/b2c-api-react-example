@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DoneIcon from '@material-ui/icons/Done';
-import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { OrderSuccessProps } from './types';
 import { styles } from './styles';
 

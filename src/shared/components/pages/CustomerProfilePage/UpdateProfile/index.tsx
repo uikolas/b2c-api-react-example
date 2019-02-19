@@ -11,8 +11,8 @@ import { TSalutationVariant } from '@interfaces/customer';
 
 import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { SprykerForm } from '@components/components/UI/SprykerForm';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
-import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
+import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 
 import { SalutationVariants } from '@constants/customer';
 import { typeNotificationWarning } from '@constants/notifications';

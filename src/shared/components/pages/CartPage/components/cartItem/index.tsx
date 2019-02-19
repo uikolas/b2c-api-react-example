@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 
 import { CartItemProps } from './types';
 
-import { SquareImage } from '@components/Common/SquareImage';
-import { AppPrice } from '@components/Common/AppPrice';
+import { SquareImage } from '@components/components/SquareImage';
+import { AppPrice } from '@components/components/AppPrice';
 
 import { ListItem, IconButton, MenuItem, TextField, withStyles } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';

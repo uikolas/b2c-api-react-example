@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import { NavLink } from 'react-router-dom';
 import { IAppBtnLinkProps as Props } from './types';

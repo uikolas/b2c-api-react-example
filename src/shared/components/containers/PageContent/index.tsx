@@ -7,7 +7,7 @@ import { getContentRoutes, pathCategoryPageBase, pathSearchPage } from 'src/shar
 import { AppHeader } from 'src/shared/components/containers/AppHeader';
 import { AppFooter } from 'src/shared/components/components/AppFooter';
 import { getLocaleData } from 'src/shared/helpers/locale';
-import { Notifications } from 'src/shared/components/Common/Notifications';
+import { Notifications } from 'src/shared/components/components/Notifications';
 import { messages } from 'src/shared/translation';
 import {
     IPageContentProps as Props,

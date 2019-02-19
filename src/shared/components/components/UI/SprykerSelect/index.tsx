@@ -31,7 +31,7 @@ export interface SprykerSelectProps extends WithStyles<typeof styles> {
     extraSelectFieldClassName?: string;
 }
 
-export const SprykerSelectBase: React.SFC<SprykerSelectProps> = props => {
+export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props): JSX.Element => {
     const {
         classes,
         currentMode,

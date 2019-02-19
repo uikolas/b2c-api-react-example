@@ -5,7 +5,7 @@ import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServi
 import * as cartActions from '@stores/actions/common/cart';
 import { IApiResponseData } from 'src/shared/services/types';
 import { IResponseError } from 'src/shared/services/apiAbstractions/types';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError

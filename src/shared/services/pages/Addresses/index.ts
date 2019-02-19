@@ -9,7 +9,7 @@ import {
     IRequestUpdateAddressBody
 } from 'src/shared/services/pages/Addresses/types';
 import { parseOneAddressRawResponse } from 'src/shared/helpers/address/response';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError

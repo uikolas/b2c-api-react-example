@@ -13,7 +13,7 @@ import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '
 import { TOrderId } from 'src/shared/interfaces/order';
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/shared/services/types';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class OrderService extends ApiServiceAbstract {

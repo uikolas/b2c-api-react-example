@@ -4,7 +4,7 @@ import * as qs from 'query-string';
 import { withRouter } from 'react-router';
 import { RangeFacets, ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { pathCategoryPageBase, pathProductPageBase } from 'src/shared/routes/contentRoutes';
-import { AppPageTitle } from 'src/shared/components/Common/AppPageTitle';
+import { AppPageTitle } from 'src/shared/components/components/AppPageTitle';
 import { TRangeInputName } from 'src/shared/components/components/UI/SprykerRangeFilter/types';
 import { ActiveFiltersList } from 'src/shared/components/pages/SearchPage/ActiveFiltersList';
 import { SortPanel } from 'src/shared/components/pages/SearchPage/SortPanel';
@@ -12,7 +12,7 @@ import { FoundItems } from 'src/shared/components/pages/SearchPage/FoundItems';
 import { SprykerSelect } from 'src/shared/components/components/UI/SprykerSelect';
 import { ProductsList } from 'src/shared/components/pages/SearchPage/ProductsList';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
-import { AppPagination } from 'src/shared/components/Common/AppPagination';
+import { AppPagination } from 'src/shared/components/components/AppPagination';
 import {
     getFiltersLocalizedNames,
     getRangeFiltersLocalizedNames,
@@ -20,7 +20,7 @@ import {
     getLabeledCategory,
     getCurrentCategoriesTree
 } from 'src/shared/components/pages/SearchPage/helpers';
-import { AppMain } from '../../Common/AppMain';
+import { AppMain } from '../../components/AppMain';
 import {
     filterTypeFilter,
     filterTypeRange,
@@ -43,7 +43,7 @@ import {
 } from 'src/shared/components/pages/SearchPage/helpers/queries';
 import { getCategoryNameById } from 'src/shared/helpers/categories';
 import { FormattedMessage } from 'react-intl';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
 import { Breadcrumbs } from 'src/shared/components/pages/SearchPage/CategoriesBreadcrumbs';
 

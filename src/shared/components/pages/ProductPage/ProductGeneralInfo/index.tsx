@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
 import { ProductAvailability } from './ProductAvailability/index';
-import { AppPrice } from '@components/Common/AppPrice';
+import { AppPrice } from '@components/components/AppPrice';
 import { priceTypeNameOriginal } from '@interfaces/product';
 import { IProductGeneralInfoProps } from './types';
 import { styles } from './styles';

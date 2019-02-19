@@ -5,11 +5,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { formatDateToString } from 'src/shared/helpers/common/dates';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
 import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
-import { AppPrice } from '@components/Common/AppPrice';
-import { AppTable } from '@components/Common/AppTable';
+import { AppPrice } from '@components/components/AppPrice';
+import { AppTable } from '@components/components/AppTable';
 import { IOrderListProps as Props } from '@components/pages/OrderHistoryPage/OrderList/types';
 import { IOrderItem } from '@interfaces/order';
-import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
+import { ICellInfo, ITableRow } from 'types.d.ts';
 import { styles } from './styles';
 
 export const OrderListBase: React.SFC<Props> = (props): JSX.Element => {

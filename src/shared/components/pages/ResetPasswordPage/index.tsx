@@ -8,7 +8,7 @@ import {
     TextField,
     Button
 } from '@material-ui/core';
-import { AppMain } from '@components/Common/AppMain';
+import { AppMain } from '@components/components/AppMain';
 import {
     IResetPasswordPageProps as Props,
     IResetPasswordPageState as State

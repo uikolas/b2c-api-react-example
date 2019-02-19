@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid } from '@material-ui/core';
-import { AppMain } from '@components/Common/AppMain';
+import { AppMain } from '@components/components/AppMain';
 import { CheckoutCart } from '@components/pages/CheckoutPage/CheckoutCart';
 import { OrderSuccess } from '@components/pages/CheckoutPage/OrderSuccess';
-import { AppPageTitle } from '@components/Common/AppPageTitle';
+import { AppPageTitle } from '@components/components/AppPageTitle';
 import {
     getCheckoutPanelsSettings,
     getAddressForm
@@ -18,7 +18,7 @@ import {
     ICheckoutPageState as State
 } from './types';
 import { styles } from './styles';
-import { AppPageSubTitle } from '@components/Common/AppPageSubTitle';
+import { AppPageSubTitle } from '@components/components/AppPageSubTitle';
 import { CheckoutForms } from './CheckoutForms';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 

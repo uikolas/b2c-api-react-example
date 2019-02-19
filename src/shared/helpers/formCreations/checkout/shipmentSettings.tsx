@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import { IShippingMethodsParams } from './types';
 import { IFormSettings } from '@components/components/UI/SprykerForm/types';
 import { IShipmentMethod } from '@interfaces/checkout';
-import { AppPrice } from '@components/Common/AppPrice';
+import { AppPrice } from '@components/components/AppPrice';
 import { FormattedMessage } from 'react-intl';
 
 export const getShipmentMethodsFormSettings = (formName: string, params: IShippingMethodsParams): IFormSettings => {

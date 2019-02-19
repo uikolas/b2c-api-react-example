@@ -5,9 +5,9 @@ import { FormattedDate, FormattedMessage } from 'react-intl';
 import { ClickEvent, InputChangeEvent } from '@interfaces/common';
 import { IWishlistsTableProps as Props, IWishlistsTableState as State } from './types';
 import { IWishlist, TWishListId } from '@interfaces/wishlist';
-import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';
+import { ICellInfo, ITableRow } from 'types.d.ts';
 
-import { AppTable } from '@components/Common/AppTable';
+import { AppTable } from '@components/components/AppTable';
 
 import { NavLink } from 'react-router-dom';
 import { pathWishListPageBase } from '@routes/contentRoutes';

@@ -19,7 +19,7 @@ import { LoadableWishlistDetail } from '../components/pages/WishlistDetail/loada
 import { LoadableCheckoutPage } from 'src/shared/components/pages/CheckoutPage/loadable';
 
 import config from '../configs/server';
-import { AppMain } from 'src/shared/components/Common/AppMain/index';
+import { AppMain } from 'src/shared/components/components/AppMain/index';
 import { LoadableOrderDetailsPage } from 'src/shared/components/pages/OrderDetailsPage/loadable';
 import { CustomerAddressForm } from '@components/pages/CustomerAddressForm';
 

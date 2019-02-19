@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { WishlistPageProps as Props, WishlistPageState as State } from './types';
 
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { AppPageTitle } from '@components/Common/AppPageTitle';
+import { AppPageTitle } from '@components/components/AppPageTitle';
 import { WishlistMenu } from './WishlistMenu';
 import { WishlistItemsTable } from './WishlistItemsTable';
 

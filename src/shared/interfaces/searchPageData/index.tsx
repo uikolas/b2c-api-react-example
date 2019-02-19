@@ -1,5 +1,5 @@
 import { IProductCard } from '../product';
-import { IPagination } from 'src/shared/components/Common/AppPagination/types';
+import { IPagination } from 'src/shared/components/components/AppPagination/types';
 import { TCategoryId } from 'src/shared/components/pages/SearchPage/types';
 import { TAppCurrency } from 'src/shared/interfaces/currency';
 import { TActiveFilters, TActiveRangeFilters } from '@components/pages/SearchPage/types';

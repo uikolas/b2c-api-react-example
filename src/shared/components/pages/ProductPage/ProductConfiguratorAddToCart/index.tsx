@@ -7,7 +7,7 @@ import { createQuantityVariants } from '@helpers/product';
 import { withStyles, Grid } from '@material-ui/core';
 import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { SprykerButton } from '@components/components/UI/SprykerButton';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { concreteProductType } from '@interfaces/product';
 import { IFormSettings } from '@components/components/UI/SprykerForm/types';
 import { ClickEvent } from '@interfaces/common';

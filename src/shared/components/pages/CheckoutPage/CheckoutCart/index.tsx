@@ -2,8 +2,8 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, List, Button } from '@material-ui/core';
-import { CartTotal } from '@components/Common/CartTotal';
-import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { CartTotal } from '@components/components/CartTotal';
+import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { CheckoutCartProductList } from './CheckoutCartProductList';
 import {
     ICartDataProps as Props,

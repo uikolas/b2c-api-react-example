@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 
 import { CategoryItem } from 'src/shared/components/pages/SearchPage/CategoryItem';
-import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
+import { AppPageSubTitle } from 'src/shared/components/components/AppPageSubTitle';
 import {
     IActiveFilterCategories,
     ICategoriesListProps

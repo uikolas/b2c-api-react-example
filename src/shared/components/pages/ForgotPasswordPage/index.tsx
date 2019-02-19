@@ -13,7 +13,7 @@ import {
     IForgotPasswordPageProps as Props,
     IForgotPasswordPageState as State
 } from './types';
-import { AppMain } from '@components/Common/AppMain';
+import { AppMain } from '@components/components/AppMain';
 import { styles } from './styles';
 import { ClickEvent, InputChangeEvent } from '@interfaces/common';
 import { FormattedMessage } from 'react-intl';

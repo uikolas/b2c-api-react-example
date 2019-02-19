@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid } from '@material-ui/core';
-import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { EmptyOrder } from '@components/pages/OrderDetailsPage/EmptyOrder';
 import { OrderList } from './OrderList';
 import { IOrderHistoryPageProps as Props } from './types';

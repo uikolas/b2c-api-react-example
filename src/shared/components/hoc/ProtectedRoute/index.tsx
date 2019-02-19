@@ -3,7 +3,7 @@ import { Route, withRouter } from 'react-router';
 import { Props } from './types';
 import { connect } from './connect';
 import { pathLoginPage } from '../../../routes/contentRoutes';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { typeNotificationSuccess } from 'src/shared/constants/notifications/index';
 
 @connect

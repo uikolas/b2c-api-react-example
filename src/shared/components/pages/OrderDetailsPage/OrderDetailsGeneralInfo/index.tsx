@@ -3,7 +3,7 @@ import { pathOrderHistoryPage } from 'src/shared/routes/contentRoutes';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid, Typography } from '@material-ui/core';
-import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { DateFormatter } from '@components/components/DateFormatter';
 import { IOrderDetailsGeneralInfoProps as Props } from './types';
 import { styles } from './styles';

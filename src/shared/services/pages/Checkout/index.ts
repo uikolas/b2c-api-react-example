@@ -13,7 +13,7 @@ import {
 import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServiceAbstract';
 import { ICheckoutResponseData } from 'src/shared/stores/reducers/pages/checkout/types';
 import { IApiResponseData } from 'src/shared/services/types';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError

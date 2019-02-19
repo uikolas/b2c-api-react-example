@@ -20,7 +20,7 @@ interface RangeInputProps extends WithStyles<typeof styles>, IRangeInputError {
     handleBlur: (event: BlurEvent) => void;
 }
 
-export const RangeInputBase: React.SFC<RangeInputProps> = props => {
+export const RangeInputBase: React.SFC<RangeInputProps> = (props): JSX.Element => {
     const {
         classes,
         className,

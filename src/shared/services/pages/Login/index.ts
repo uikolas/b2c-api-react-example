@@ -10,7 +10,7 @@ import { ApiServiceAbstract } from 'src/shared/services/apiAbstractions/ApiServi
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/shared/interfaces/customer';
 import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/shared/helpers/localStorage';
 import { IApiResponseData } from 'src/shared/services/types';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError,

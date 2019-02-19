@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 
 import { CustomerPageProps } from './types';
 
-import { AppMain } from '@components/Common/AppMain';
+import { AppMain } from '@components/components/AppMain';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { SideBar } from './containers/sideBar';
 import { CustomerRouting } from './components/customerRouting';

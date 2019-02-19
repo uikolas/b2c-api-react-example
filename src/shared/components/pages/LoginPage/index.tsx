@@ -5,7 +5,7 @@ import { connect } from './connect';
 import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
 import { NavLink } from 'react-router-dom';
 import { withStyles, Grid } from '@material-ui/core';
-import { AppMain } from '@components/Common/AppMain';
+import { AppMain } from '@components/components/AppMain';
 import { LoginForm } from './LoginForm';
 import { RegisterFormComponent } from './RegisterFormComponent';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';

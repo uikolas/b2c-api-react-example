@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ListItem, withStyles } from '@material-ui/core';
-import { SquareImage } from '@components/Common/SquareImage';
-import { AppPrice } from '@components/Common/AppPrice';
+import { SquareImage } from '@components/components/SquareImage';
+import { AppPrice } from '@components/components/AppPrice';
 import { priceTypeNameOriginal } from '@interfaces/product';
 import { ICartItem } from '@interfaces/cart';
 import { ICheckoutCartProductListProps as Props } from './types';

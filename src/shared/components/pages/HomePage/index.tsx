@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { pathCategoryComputers } from 'src/shared/routes/categoriesRoutes';
 import { CategoriesTeasers } from '@components/components/CategoriesTeasers';
-import { AppMain } from '@components/Common/AppMain';
+import { AppMain } from '@components/components/AppMain';
 import { Banner } from '@components/components/Banner';
 
 const homepageHeroSrc = require('./img/hero_image_2-min.jpg');

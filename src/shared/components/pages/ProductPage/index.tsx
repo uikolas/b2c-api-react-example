@@ -8,8 +8,8 @@ import {
     getCurrentProductDataObject
 } from 'src/shared/helpers/product';
 import { withStyles, Grid  } from '@material-ui/core';
-import { AppMain } from '@components/Common/AppMain';
-import { ImageSlider, IImageSlide } from '@components/Common/ImageSlider';
+import { AppMain } from '@components/components/AppMain';
+import { ImageSlider, IImageSlide } from '@components/components/ImageSlider';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { ProductConfiguratorAddToCart } from './ProductConfiguratorAddToCart';

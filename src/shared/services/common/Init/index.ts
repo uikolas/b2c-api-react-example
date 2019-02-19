@@ -18,7 +18,7 @@ import { IApiResponseData } from 'src/shared/services/types';
 import { ICategory } from 'src/shared/interfaces/category';
 import { IInitData } from 'src/shared/interfaces/init';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from 'src/shared/constants/notifications';
 
 export class InitAppService extends ApiServiceAbstract {

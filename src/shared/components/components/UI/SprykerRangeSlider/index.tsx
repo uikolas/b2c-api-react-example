@@ -28,7 +28,7 @@ export interface SprykerRangeSliderProps extends WithStyles<typeof styles> {
 
 const WithTooltipRange = createSliderWithTooltip(Range);
 
-export const SprykerRangeSliderBase: React.SFC<SprykerRangeSliderProps> = props => {
+export const SprykerRangeSliderBase: React.SFC<SprykerRangeSliderProps> = (props): JSX.Element => {
     const {
         classes,
         title,

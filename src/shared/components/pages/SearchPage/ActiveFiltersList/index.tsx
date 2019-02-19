@@ -9,7 +9,7 @@ import {
     TFilterItemValue,
 } from 'src/shared/components/pages/SearchPage/types';
 import { ActiveFilterItem } from 'src/shared/components/pages/SearchPage/ActiveFilterItem';
-import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
+import { AppPageSubTitle } from 'src/shared/components/components/AppPageSubTitle';
 import { isWordHasPrice } from 'src/shared/helpers/common/transform';
 import { RangeFacets } from 'src/shared/interfaces/searchPageData';
 import {

@@ -15,7 +15,7 @@ interface SprykerNotificationProps extends WithStyles<typeof styles>, SnackbarOr
     isOpen?: boolean;
 }
 
-export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = props => {
+export const SprykerNotificationBase: React.SFC<SprykerNotificationProps> = (props): JSX.Element => {
     const {
         classes,
         message = <FormattedMessage id={ 'empty.message' } />,

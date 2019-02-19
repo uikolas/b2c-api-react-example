@@ -6,10 +6,10 @@ import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { setFormFields, IFieldInput } from './settings';
 
-import { CustomerPageTitle } from '@components/Common/CustomerPageTitle';
+import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { SprykerForm } from '@components/components/UI/SprykerForm';
-import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
+import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 
 import { typeNotificationWarning } from '@constants/notifications';
 

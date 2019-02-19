@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { AppPrice } from '@components/Common/AppPrice';
+import { AppPrice } from '@components/components/AppPrice';
 import { ITotalItemProps } from './types';
 import { styles } from './styles';
 

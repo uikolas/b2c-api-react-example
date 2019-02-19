@@ -7,7 +7,7 @@ import { OrderSummaryProps, OrderSummaryState } from './types';
 import { NavLink } from 'react-router-dom';
 import { pathCheckoutPage } from '@routes/contentRoutes';
 
-import { CartTotal } from '@components/Common/CartTotal';
+import { CartTotal } from '@components/components/CartTotal';
 
 import { Typography, Button, withStyles } from '@material-ui/core';
 import { styles } from './styles';
