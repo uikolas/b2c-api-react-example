@@ -1,35 +1,14 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import {
-    IProductCard,
-    IProductLabel,
-    IProductPricesItem,
-    priceTypeNameDefault,
-    priceTypeNameOriginal,
-    TProductCurrency,
-    TProductName,
-    TProductSKU,
-} from '@interfaces/product';
-import { styles } from './styles';
+import { withStyles, Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from '@interfaces/product';
 import { AppPrice } from '../AppPrice';
 import { ProductLabel } from 'src/shared/components/components/ProductLabel/index';
 import { getOneProductImage } from 'src/shared/helpers/product/imageSetsParser';
 import { ClickEvent } from 'src/shared/interfaces/common/index';
+import { IProductCardProps as Props } from './types';
+import { styles } from './styles';
 
-interface ProductCardProps extends WithStyles<typeof styles>, IProductCard {
-    onSelectProduct: Function;
-    currency: TProductCurrency;
-    name: TProductName;
-    sku: TProductSKU;
-    label: IProductLabel | null;
-}
-
-export const ProductCardBase: React.SFC<ProductCardProps> = (props): JSX.Element => {
+export const ProductCardBase: React.SFC<Props> = (props): JSX.Element => {
     const { classes, images, name = '', prices, sku, label } = props;
 
     let actualPriceGross = 0;
@@ -58,40 +37,40 @@ export const ProductCardBase: React.SFC<ProductCardProps> = (props): JSX.Element
     };
 
     return (
-        <Card className={classes.card} raised={true}>
-            <CardActionArea onClick={handleProductClick} className={classes.actionArea}>
-                {image
+        <Card className={ classes.card } raised={ true }>
+            <CardActionArea onClick={ handleProductClick } className={ classes.actionArea }>
+                { image
                     ? <CardMedia
                         component="img"
-                        className={classes.media}
-                        image={image}
-                        title={name}
+                        className={ classes.media }
+                        image={ image }
+                        title={ name }
                     />
                     : null
                 }
-                <ProductLabel label={label}/>
-                <div className={classes.actionAreaOverlay}></div>
+                <ProductLabel label={ label } />
+                <div className={ classes.actionAreaOverlay }></div>
             </CardActionArea>
-            <CardContent className={classes.cardContent}>
-                <Typography gutterBottom component="h2" className={classes.productName} data-type="productName">
-                    {name}
+            <CardContent className={ classes.cardContent }>
+                <Typography gutterBottom component="h2" className={ classes.productName } data-type="productName">
+                    { name }
                 </Typography>
-                <div className={classes.productPrice}>
+                <div className={ classes.productPrice }>
                     <Typography
                         component="span"
                         color="textPrimary"
                         data-type="priceToShow"
-                        className={classes.productCurrentPrice}
+                        className={ classes.productCurrentPrice }
                     >
-                        <AppPrice value={actualPriceGross}/>
+                        <AppPrice value={ actualPriceGross } />
                     </Typography>
-                    {oldPriceGross
+                    { oldPriceGross
                         ? <Typography
                             component="span"
                             color="textPrimary"
-                            className={classes.productOldPrice}
+                            className={ classes.productOldPrice }
                         >
-                            <AppPrice value={oldPriceGross} priceType={priceTypeNameOriginal}/>
+                            <AppPrice value={ oldPriceGross } priceType={ priceTypeNameOriginal } />
                         </Typography>
                         : null
                     }

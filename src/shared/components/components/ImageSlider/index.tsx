@@ -1,23 +1,11 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { Carousel } from 'react-responsive-carousel';
-
 import 'react-responsive-carousel/lib/styles/carousel.css';
+import { IImageSliderProps as Props } from './types';
 import { styles } from './styles';
 
-export interface IImageSlide {
-    id: string | number;
-    src: string;
-}
-
-interface ImageSliderProps extends WithStyles<typeof styles> {
-    images: IImageSlide[];
-    uniqueKey?: string | number;
-    showThumbs?: boolean;
-    showStatus?: boolean;
-}
-
-export const ImageSliderBase: React.SFC<ImageSliderProps> = (props): JSX.Element => {
+export const ImageSliderBase: React.SFC<Props> = (props): JSX.Element => {
     const {classes, images, uniqueKey, showStatus, showThumbs} = props;
 
     if (!images) {

@@ -1,28 +1,23 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import { withStyles, Badge } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import Badge from '@material-ui/core/Badge';
-
 import { styles } from './styles';
-import { TProductQuantity } from '../../../interfaces/product/index';
+import { IShoppingCartProps as Props } from './types';
 
-interface ShoppingCartProps extends WithStyles<typeof styles> {
-    cartItemsQuantity: TProductQuantity;
-    cartProductsQuantity: TProductQuantity;
-}
+export const ShoppingCartBase: React.SFC<Props> = (props): JSX.Element => {
+    const {cartItemsQuantity, cartProductsQuantity, classes} = props;
 
-export const ShoppingCartBase: React.SFC<ShoppingCartProps> = ({cartItemsQuantity, cartProductsQuantity, classes}) => {
     const shoppingCart = (
-        <ShoppingCartIcon className={classes.icon}/>
+        <ShoppingCartIcon className={ classes.icon } />
     );
 
     const shoppingCartWithQuantity = (
         <Badge
-            badgeContent={cartItemsQuantity}
+            badgeContent={ cartItemsQuantity }
             color="primary"
-            classes={{badge: classes.badge}}
+            classes={ { badge: classes.badge } }
         >
-            {shoppingCart}
+            { shoppingCart }
         </Badge>
     );
 
