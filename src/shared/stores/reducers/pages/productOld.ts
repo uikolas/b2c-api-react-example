@@ -1,4 +1,4 @@
-import { IReduxState } from 'src/typings/app';
+import { IReduxState } from '@stores/reducers/types';
 import { PAGES_PRODUCT_REQUEST } from '@stores/actionTypes/pages/product';
 import { IProductDataParsed } from '@interfaces/product';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';

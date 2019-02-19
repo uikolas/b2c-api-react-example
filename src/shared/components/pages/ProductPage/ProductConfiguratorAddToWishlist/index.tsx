@@ -12,7 +12,7 @@ import {
 } from './types';
 import { concreteProductType, defaultItemValueDropdown } from '@interfaces/product';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 import { TWishlistName } from '@interfaces/wishlist';
 import { styles } from './styles';
 

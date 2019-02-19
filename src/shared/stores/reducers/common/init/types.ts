@@ -1,7 +1,6 @@
 import { IInitData } from 'src/shared/interfaces/init/index';
 import { ICategory } from 'src/shared/interfaces/category/index';
-import { IReduxState } from 'src/typings/app';
-import { IActionData } from 'src/shared/stores/reducers/types';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 import { TAppLocale } from 'src/shared/interfaces/locale';
 
 export interface IInitState extends IReduxState {

@@ -7,7 +7,7 @@ import {
     Typography
 } from '@material-ui/core';
 import { ILoginFormProps as Props, ILoginFormState as State } from './types';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { styles } from './styles';
 
 export class LoginFormBase extends React.Component<Props, State> {

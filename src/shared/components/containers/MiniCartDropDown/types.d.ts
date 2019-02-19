@@ -1,5 +1,5 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { WithRouter } from 'src/shared/interfaces/common/react';
+import { WithRouter } from 'src/shared/interfaces/common/index';
 import { styles } from './styles';
 import { TProductQuantity } from 'src/shared/interfaces/product';
 

@@ -1,6 +1,5 @@
-import { IReduxState } from 'src/typings/app';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 import { IAddressItem } from 'src/shared/interfaces/addresses/index';
-import { IActionData } from 'src/shared/stores/reducers/types';
 
 export interface IAddressesState extends IReduxState {
   data: {

@@ -1,4 +1,4 @@
-import { IReduxState } from '../../../typings/app';
+import { IReduxState } from '@stores/reducers/types';
 
 export const getReducerPartFulfilled = (): IReduxState => ({
     error: null,

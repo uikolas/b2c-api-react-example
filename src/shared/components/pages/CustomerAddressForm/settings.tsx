@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { TSalutationVariant } from '@interfaces/customer';
-import { InputChangeEvent } from '@interfaces/common/react';
+import { InputChangeEvent } from '@interfaces/common';
 import { ICountry } from '@interfaces/country';
 import { AddressFormState } from './types';
 

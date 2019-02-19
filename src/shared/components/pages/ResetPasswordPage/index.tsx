@@ -13,7 +13,7 @@ import {
     IResetPasswordPageProps as Props,
     IResetPasswordPageState as State
 } from './types';
-import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
+import { ClickEvent, InputChangeEvent } from '@interfaces/common';
 import { IResetPasswordPayload } from '@interfaces/customer';
 import { FormattedMessage } from 'react-intl';
 import { styles } from './styles';

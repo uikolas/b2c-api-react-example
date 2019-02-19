@@ -10,7 +10,7 @@ import { SprykerButton } from '@components/UI/SprykerButton';
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { concreteProductType } from '@interfaces/product';
 import { IFormSettings } from '@components/UI/SprykerForm/types';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 import { ICartAddItem } from '@interfaces/cart';
 import {
     IProductConfiguratorAddToCartProps as Props,

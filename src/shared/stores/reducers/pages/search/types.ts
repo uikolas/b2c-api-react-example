@@ -1,8 +1,5 @@
-import { IReduxState } from 'src/typings/app';
-import {
-    FlyoutSearch, ICatalogSearchDataParsed, ISearchPageData
-} from 'src/shared/interfaces/searchPageData/index';
-import { IActionData } from 'src/shared/stores/reducers/types';
+import { IActionData, IReduxState } from '@stores/reducers/types';
+import { FlyoutSearch, ICatalogSearchDataParsed, ISearchPageData } from 'src/shared/interfaces/searchPageData';
 
 export interface ISearchState extends IReduxState {
     data: ISearchPageData;

@@ -1,6 +1,6 @@
-import { IMenuItemsDropdown } from '../../components/UI/DropdownControlled';
+import { IMenuItemsDropdown } from '../../components/components/UI/DropdownControlled';
 import { IWishlist } from '../../interfaces/wishlist';
-import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
+import { IMenuItemSelect } from 'src/shared/components/components/UI/SprykerSelect/types';
 
 export const createWishlistMenuVariants = (
     wishlists: IWishlist[] | null

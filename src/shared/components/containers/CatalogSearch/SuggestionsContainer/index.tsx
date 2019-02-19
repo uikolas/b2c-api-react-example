@@ -11,7 +11,7 @@ import {
     Divider
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 import { ISuggestionsContainerProps as Props } from './types';
 import { styles } from './styles';
 

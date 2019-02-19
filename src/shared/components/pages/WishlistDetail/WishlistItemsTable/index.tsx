@@ -7,7 +7,7 @@ import { createCartItemAddToCart } from '@helpers/cart';
 import { pathProductPageBase } from '@routes/contentRoutes';
 
 import { WishListItemsTableProps, WishListItemsTableState, ItemPrices } from './types';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 import { IWishlistProduct } from '@interfaces/wishlist';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from '@interfaces/product';
 import { ICellInfo, ITableRow } from '@components/Common/AppTable/types';

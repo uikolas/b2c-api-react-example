@@ -9,9 +9,18 @@ import { IOrderHistoryState } from 'src/shared/stores/reducers/pages/orderHistor
 import { IOrderDetailsState } from 'src/shared/stores/reducers/pages/orderDetails/types';
 import { ICustomerDataState } from 'src/shared/stores/reducers/pages/customerProfile/types';
 import { RouteProps } from 'react-router';
-import { WithRouter } from 'src/shared/interfaces/common/react';
+import { WithRouter } from 'src/shared/interfaces/common';
 import { IInitState } from 'src/shared/stores/reducers/common/init/types';
 import { IApiErrorResponse } from 'src/shared/services/types';
+
+export interface IReduxState {
+    dispatch?: Function;
+    error?: string | null;
+    pending?: boolean;
+    fulfilled?: boolean;
+    rejected?: boolean;
+    initiated?: boolean;
+}
 
 export interface IReduxStore {
     pagesLogin: ILoginState;

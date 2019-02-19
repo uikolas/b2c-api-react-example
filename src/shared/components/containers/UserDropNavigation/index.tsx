@@ -9,7 +9,7 @@ import { PopoverWrapper } from 'src/shared/components/components/PopoverWrapper'
 import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 import { LogoutSetTimeoutTime } from '@constants/customer';
 import { UserIcon } from './icons';
-import { ClickEvent } from 'src/shared/interfaces/common/react';
+import { ClickEvent } from 'src/shared/interfaces/common/index';
 import { IUserDropNavigationProps as Props, IUserDropNavigationState as State } from './types';
 import { styles } from './styles';
 

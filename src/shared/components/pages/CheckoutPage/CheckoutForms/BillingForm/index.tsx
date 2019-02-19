@@ -25,7 +25,7 @@ import {
 import { IBillingFormProps } from './types';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { IBillingAddressState } from '@interfaces/checkout';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { styles } from './styles';
 
 @connect

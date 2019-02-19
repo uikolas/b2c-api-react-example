@@ -6,7 +6,7 @@ import { getInvoiceFormSettings } from 'src/shared/helpers/formCreations/checkou
 import { checkoutFormsNames, invoiceConfigInputStable } from 'src/shared/constants/checkout';
 import { InputSaveErrorMessage } from 'src/shared/translation';
 import { IPaymentInvoiceParams } from 'src/shared/helpers/formCreations/checkout/types';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICheckoutInvoiceState } from '@interfaces/checkout';
 import { IInvoicePaymentFormProps } from './types';
 import { checkFormInputValidity, checkFormValidity } from 'src/shared/helpers/checkout';

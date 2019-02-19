@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
-import { InputChangeEvent } from '@interfaces/common/react';
+import { InputChangeEvent } from '@interfaces/common';
 import { IAddNewWishlistFormProps as Props, IAddNewWishlistFormState as State } from './types';
 
 import { Typography, Paper, TextField, Button, withStyles } from '@material-ui/core';

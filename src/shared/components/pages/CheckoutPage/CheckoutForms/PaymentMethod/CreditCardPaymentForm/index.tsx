@@ -6,7 +6,7 @@ import { getCreditCardFormSettings } from 'src/shared/helpers/formCreations/chec
 import { checkFormInputValidity, checkFormValidity } from 'src/shared/helpers/checkout';
 import { checkoutFormsNames, creditCardConfigInputStable } from 'src/shared/constants/checkout';
 import { InputSaveErrorMessage } from 'src/shared/translation';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICheckoutCreditCardState } from '@interfaces/checkout';
 import { IPaymentCreditCardParams } from 'src/shared/helpers/formCreations/checkout/types';
 import { ICreditCardPaymentFormProps } from './types';

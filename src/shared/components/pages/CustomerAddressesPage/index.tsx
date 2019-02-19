@@ -3,7 +3,7 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
 import { ICustomerAddressPageProps as Props, ICustomerAddressPageState as State } from './types';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 
 import { pathAddressFormNew, pathAddressFormUpdateBase } from '@routes/contentRoutes';
 

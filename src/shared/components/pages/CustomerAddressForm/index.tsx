@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { AddressFormProps as Props, AddressFormState as State } from './types';
 import { setFormFields, IFieldInput } from './settings';
 

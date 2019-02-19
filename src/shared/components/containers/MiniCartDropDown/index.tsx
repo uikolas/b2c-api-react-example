@@ -9,7 +9,7 @@ import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 import { MiniCartDrop } from './MiniCartDrop';
 import { CartIcon } from './icons';
 import IconButton from '@material-ui/core/IconButton';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 import { IMiniCartDropDownProps as Props, IMiniCartDropDownState as State } from './types';
 import { styles } from './styles';
 

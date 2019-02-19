@@ -1,5 +1,4 @@
-import { IComponent } from '../../../../typings/app';
-import { WithRouter } from '@interfaces/common/react';
+import { WithRouter, IComponent } from '@interfaces/common';
 import { TAppLocale } from '@interfaces/locale';
 
 interface IPageContentProps extends IComponent, WithRouter {

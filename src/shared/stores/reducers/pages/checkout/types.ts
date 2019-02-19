@@ -1,7 +1,6 @@
 import { IAddressItemCollection } from '@interfaces/addresses';
-import { IReduxState } from 'src/typings/app';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 import { TOrderId } from '@interfaces/order';
-import { IActionData } from 'src/shared/stores/reducers/types';
 import {
     IPaymentMethod,
     IShipmentMethod,

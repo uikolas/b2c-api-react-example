@@ -10,7 +10,7 @@ import {
     getCheckoutPanelsSettings,
     getAddressForm
 } from 'src/shared/helpers/checkout';
-import { FormEvent } from '@interfaces/common/react';
+import { FormEvent } from '@interfaces/common';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { ICheckoutRequest } from '@interfaces/checkout';
 import {

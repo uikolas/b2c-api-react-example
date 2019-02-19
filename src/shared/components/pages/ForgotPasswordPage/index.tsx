@@ -15,7 +15,7 @@ import {
 } from './types';
 import { AppMain } from '@components/Common/AppMain';
 import { styles } from './styles';
-import { ClickEvent, InputChangeEvent } from '@interfaces/common/react';
+import { ClickEvent, InputChangeEvent } from '@interfaces/common';
 import { FormattedMessage } from 'react-intl';
 
 @connect

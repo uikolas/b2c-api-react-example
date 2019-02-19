@@ -1,5 +1,5 @@
 import { PAGES_HOME_GET_DATA_REQUEST } from '@stores/actionTypes/pages/home';
-import { IReduxState } from 'src/typings/app';
+import { IReduxState } from '@stores/reducers/types';
 
 export interface IHomeState extends IReduxState {
     data: {

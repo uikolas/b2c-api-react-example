@@ -1,7 +1,7 @@
 import { ISearchPageData, ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { Location } from 'history';
 import { RouteProps } from 'react-router';
-import { WithRouter } from 'src/shared/interfaces/common/react';
+import { WithRouter } from 'src/shared/interfaces/common/index';
 import { ICategory } from 'src/shared/interfaces/category';
 
 export interface ISearchPageProps extends ISearchPageData, RouteProps, WithRouter {

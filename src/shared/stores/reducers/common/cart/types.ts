@@ -1,6 +1,5 @@
 import { ICartDataResponse } from '@interfaces/cart';
-import { IReduxState } from 'src/typings/app';
-import { IActionData } from 'src/shared/stores/reducers/types';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 
 export interface ICartData extends ICartDataResponse {
   cartCreated: boolean;

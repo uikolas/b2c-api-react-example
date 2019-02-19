@@ -1,6 +1,5 @@
-import { IReduxState } from 'src/typings/app';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 import { IOrderDetailsParsed } from 'src/shared/interfaces/order';
-import { IActionData } from 'src/shared/stores/reducers/types';
 
 export interface IOrderDetailsState extends IReduxState {
     data: IOrderDetailsParsed;

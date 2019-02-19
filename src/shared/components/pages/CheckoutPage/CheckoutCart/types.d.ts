@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 import { ICartItem, ICartTotals } from '@interfaces/cart';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 
 export interface ICartDataProps extends WithStyles<typeof styles> {
     isUserLoggedIn: boolean;

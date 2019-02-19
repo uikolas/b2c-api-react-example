@@ -1,6 +1,5 @@
-import { IReduxState } from 'src/typings/app';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 import { IConcreteProductAvailability, IProductDataParsed } from 'src/shared/interfaces/product/index';
-import { IActionData } from 'src/shared/stores/reducers/types';
 
 export interface IProductState extends IReduxState {
     data: {

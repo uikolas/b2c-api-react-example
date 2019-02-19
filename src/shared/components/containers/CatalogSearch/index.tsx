@@ -7,7 +7,7 @@ import { InputComponent } from './InputComponent';
 import { Suggestions } from './Suggestions';
 import { SuggestionsContainer } from './SuggestionsContainer';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { InputChangeEvent } from '@interfaces/common/react';
+import { InputChangeEvent } from '@interfaces/common';
 import { IProductCard } from '@interfaces/product';
 import {
     ICatalogProps as Props,

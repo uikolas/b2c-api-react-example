@@ -4,8 +4,7 @@ import {
     TCustomerEmail,
     TCustomerUsername
 } from 'src/shared/interfaces/customer/index';
-import { IReduxState } from 'src/typings/app';
-import { IActionData } from 'src/shared/stores/reducers/types';
+import { IActionData, IReduxState } from '@stores/reducers/types';
 
 export interface ILoginState extends IReduxState {
     data: ILoginStateData;

@@ -20,7 +20,7 @@ import {
     IPaymentMethodsGrouped,
     TPaymentProvidersCollection
 } from 'src/shared/constants/checkout/types';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { IPaymentMethodProps } from './types';
 import {
     IPaymentMethodsParams,

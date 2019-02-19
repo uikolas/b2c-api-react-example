@@ -15,7 +15,7 @@ import {
 import { NotificationsMessage } from '@components/Common/Notifications/NotificationsMessage';
 import { TSalutationVariant } from '@interfaces/customer';
 import { IRegisterFormProps as Props, IRegisterFormState as State } from './types';
-import { InputChangeEvent, FormEvent } from '@interfaces/common/react';
+import { InputChangeEvent, FormEvent } from '@interfaces/common';
 import { styles } from './styles';
 
 export class RegisterFormBase extends React.Component<Props, State> {

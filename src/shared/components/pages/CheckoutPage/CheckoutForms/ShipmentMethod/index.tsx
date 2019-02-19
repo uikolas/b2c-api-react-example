@@ -7,7 +7,7 @@ import { PartnerIconHermes, PartnerIconDhl } from './icons';
 import { IShippingMethodsParams } from 'src/shared/helpers/formCreations/checkout/types';
 import { IShipmentMethodsGrouped } from 'src/shared/constants/checkout/types';
 import { checkoutFormsNames } from 'src/shared/constants/checkout';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { IShipmentMethodProps } from './types';
 import { styles } from './styles';
 

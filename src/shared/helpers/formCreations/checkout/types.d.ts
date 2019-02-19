@@ -20,7 +20,7 @@ import {
     TExtraOptionsToSelection,
     TPaymentProvidersCollection
 } from 'src/shared/constants/checkout/types';
-import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICountry } from '@interfaces/country';
 
 // Base handlers for checkout's page forms

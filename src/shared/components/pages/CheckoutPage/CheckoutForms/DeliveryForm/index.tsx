@@ -21,7 +21,7 @@ import {
     IAddressParams,
     IDeliveryAddressesParams
 } from 'src/shared/helpers/formCreations/checkout/types';
-import { FormEvent, InputChangeEvent } from '@interfaces/common/react';
+import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { IDeliveryFormProps, TCurrentValueDeliverySelection } from './types';
 import { IDeliveryAddressState } from '@interfaces/checkout';
 import { styles } from './styles';

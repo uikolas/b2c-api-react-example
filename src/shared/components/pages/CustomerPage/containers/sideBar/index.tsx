@@ -3,7 +3,7 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 
 import { SideBarProps } from './types';
-import { ClickEvent } from '@interfaces/common/react';
+import { ClickEvent } from '@interfaces/common';
 import { INavLinkData } from '@interfaces/navLinks';
 
 import { NavLink } from 'react-router-dom';

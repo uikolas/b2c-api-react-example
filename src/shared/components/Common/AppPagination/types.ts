@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteProps } from 'react-router';
-import { WithRouter } from 'src/shared/interfaces/common/react';
+import { WithRouter } from 'src/shared/interfaces/common/index';
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 

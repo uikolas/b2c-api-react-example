@@ -3,14 +3,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
 import { styles } from './styles';
-import { SprykerFilterElement } from 'src/shared/components/UI/SprykerFilter';
+import { SprykerFilterElement } from 'src/shared/components/components/UI/SprykerFilter';
 import { ValueFacets } from 'src/shared/interfaces/searchPageData';
 import { rangeMaxType, rangeMinType, TActiveFilters } from '@components/pages/SearchPage/types';
 import { sprykerTheme } from 'src/shared/theme/sprykerTheme';
 import { FilterWrapper } from 'src/shared/components/pages/SearchPage/FilterWrapper';
 import { rangeFilterValueToFront } from 'src/shared/helpers/common/transform';
 import { AppPageSubTitle } from 'src/shared/components/Common/AppPageSubTitle';
-import { SprykerRangeSlider } from 'src/shared/components/UI/SprykerRangeSlider';
+import { SprykerRangeSlider } from 'src/shared/components/components/UI/SprykerRangeSlider';
 import { AppPrice } from 'src/shared/components/Common/AppPrice';
 import { ISearchFilterListProps } from 'src/shared/components/pages/SearchPage/SearchFilterList/types';
 import { FormattedMessage } from 'react-intl';

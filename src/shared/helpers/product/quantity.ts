@@ -1,4 +1,4 @@
-import { IMenuItemSelect } from 'src/shared/components/UI/SprykerSelect/types';
+import { IMenuItemSelect } from 'src/shared/components/components/UI/SprykerSelect/types';
 
 export const createQuantityVariants = (quantity: number | null): IMenuItemSelect[] | null => {
     if (!quantity) {
