@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-
 import { CartRowsProps, CartRowsState } from './types';
 import { ICartItem } from '@interfaces/cart';
-
 import { createCartItemAddToCart } from '@helpers/cart/item';
-
-import { CartItem } from '../../components/cartItem';
-
+import { CartItem } from '../CartItem/index';
 import { List, Divider, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

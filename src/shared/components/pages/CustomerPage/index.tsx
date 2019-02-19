@@ -1,13 +1,10 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
-
 import { CustomerPageProps } from './types';
-
 import { AppMain } from '@components/components/AppMain';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { SideBar } from './containers/sideBar';
-import { CustomerRouting } from './components/customerRouting';
-
+import { SideBar } from './SideBar';
+import { CustomerRouting } from './CustomerRouting';
 import { withStyles, Grid } from '@material-ui/core';
 import { styles } from './styles';
 

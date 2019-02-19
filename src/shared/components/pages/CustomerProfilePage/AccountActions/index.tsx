@@ -2,13 +2,10 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { pathLoginPage } from '@routes/contentRoutes';
-
 import { IAccountActionsProps as Props, IAccountActionsState as State } from './types';
-
 import { Grid, Typography, Divider } from '@material-ui/core';
 import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { SprykerDialog } from '@components/components/UI/SprykerDialog';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 

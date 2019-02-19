@@ -2,7 +2,6 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { WishlistRowsProps as Props } from './types';
 import { IProductAttributes } from '@interfaces/product';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 

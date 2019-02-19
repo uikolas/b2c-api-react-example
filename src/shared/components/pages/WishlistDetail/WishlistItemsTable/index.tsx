@@ -1,21 +1,16 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-
 import { createCartItemAddToCart } from '@helpers/cart';
-
 import { pathProductPageBase } from '@routes/contentRoutes';
-
 import { WishListItemsTableProps, WishListItemsTableState, ItemPrices } from './types';
 import { ClickEvent } from '@interfaces/common';
 import { IWishlistProduct } from '@interfaces/wishlist';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from '@interfaces/product';
-import { ICellInfo, ITableRow } from 'types.d.ts';
-
+import { ICellInfo, ITableRow } from '@components/components/AppTable/types';
 import { AppTable } from '@components/components/AppTable';
 import { AppPrice } from '@components/components/AppPrice';
 import { WishlistItemBaseInfo } from '../WishlistItemBaseInfo';
-
 import { Typography, Paper, Button, Divider, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

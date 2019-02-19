@@ -3,6 +3,8 @@ import { styles } from '@components/components/UI/SprykerRangeSlider/styles';
 
 type TSprykerRangeSliderValue = {min: number, max: number};
 
+export type TSprykerRangeSliderName = 'min' | 'max';
+
 export interface ISprykerRangeSliderProps extends WithStyles<typeof styles> {
     title: string;
     attributeName: string;

@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-
 import { ICustomerProfilePageProps as Props } from './types';
-
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { UpdateProfile } from './updateProfile';
 import { ChangePassword } from './changePassword';
 import { AccountActions } from './accountActions';
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 

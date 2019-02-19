@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { RangeFacets, ISearchQuery } from 'src/shared/interfaces/searchPageData';
 import { pathCategoryPageBase, pathProductPageBase } from 'src/shared/routes/contentRoutes';
 import { AppPageTitle } from 'src/shared/components/components/AppPageTitle';
-import { TRangeInputName } from 'src/shared/components/components/UI/SprykerRangeFilter/types';
+import { TSprykerRangeSliderName } from 'src/shared/components/components/UI/SprykerRangeSlider/types';
 import { ActiveFiltersList } from 'src/shared/components/pages/SearchPage/ActiveFiltersList';
 import { SortPanel } from 'src/shared/components/pages/SearchPage/SortPanel';
 import { FoundItems } from 'src/shared/components/pages/SearchPage/FoundItems';
@@ -115,7 +115,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         }));
     };
 
-    protected updateRangeFilters = (name: TRangeInputName, {min, max}: RangeType) => {
+    protected updateRangeFilters = (name: TSprykerRangeSliderName, {min, max}: RangeType) => {
         const currentData = this.props.rangeFilters.filter((filter: RangeFacets) => (filter.name === name))[0];
         const currentDataActiveMin = rangeFilterValueToFront(currentData.activeMin, rangeMinType);
         const currentDataActiveMax = rangeFilterValueToFront(currentData.activeMax, rangeMaxType);

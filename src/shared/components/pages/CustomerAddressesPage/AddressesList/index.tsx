@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-
 import { IAddressesListProps as Props } from './types';
 import { IAddressItem } from '@interfaces/addresses';
-
 import { Chip, Button, Divider, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

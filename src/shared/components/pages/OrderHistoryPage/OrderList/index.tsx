@@ -9,7 +9,7 @@ import { AppPrice } from '@components/components/AppPrice';
 import { AppTable } from '@components/components/AppTable';
 import { IOrderListProps as Props } from '@components/pages/OrderHistoryPage/OrderList/types';
 import { IOrderItem } from '@interfaces/order';
-import { ICellInfo, ITableRow } from 'types.d.ts';
+import { ICellInfo, ITableRow } from '@components/components/AppTable/types';
 import { styles } from './styles';
 
 export const OrderListBase: React.SFC<Props> = (props): JSX.Element => {

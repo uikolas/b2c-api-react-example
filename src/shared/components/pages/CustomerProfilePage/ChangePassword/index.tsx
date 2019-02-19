@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from './connect';
-
 import { IChangePasswordProps as Props, IChangePasswordState as State, IProfileFieldInput } from './types';
-
 import { typeNotificationWarning } from '@constants/notifications';
-
 import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
-
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from '../styles';
 

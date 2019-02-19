@@ -9,13 +9,14 @@ import {
 } from 'src/shared/helpers/product';
 import { withStyles, Grid  } from '@material-ui/core';
 import { AppMain } from '@components/components/AppMain';
-import { ImageSlider, IImageSlide } from '@components/components/ImageSlider';
+import { ImageSlider } from '@components/components/ImageSlider';
 import { ProductGeneralInfo } from './ProductGeneralInfo';
 import { ProductSuperAttribute } from './ProductSuperAttribute';
 import { ProductConfiguratorAddToCart } from './ProductConfiguratorAddToCart';
 import { ProductConfiguratorAddToWishlist } from './ProductConfiguratorAddToWishlist';
 import { ProductDetail } from './ProductDetail';
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { IImageSlide } from '@components/components/ImageSlider/types';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import {
     defaultItemValueDropdown,

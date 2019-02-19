@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedPlural, FormattedMessage } from 'react-intl';
-
 import { CartPageProps } from './types';
-
 import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
 import { AppMain } from '@components/components/AppMain';
-import { CartRows } from './containers/cartRows';
-import { OrderSummary } from './containers/orderSummary';
-
+import { CartRows } from './CartRows';
+import { OrderSummary } from './OrderSummary';
 import { Grid, Typography, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

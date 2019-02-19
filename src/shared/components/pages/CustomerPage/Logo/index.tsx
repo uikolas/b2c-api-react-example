@@ -1,6 +1,5 @@
 import * as React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 import { LogoProfileProps as Props } from './types';
 import { styles } from './styles';
 

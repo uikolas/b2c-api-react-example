@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedDate, FormattedMessage } from 'react-intl';
-
 import { ClickEvent, InputChangeEvent } from '@interfaces/common';
 import { IWishlistsTableProps as Props, IWishlistsTableState as State } from './types';
-import { IWishlist, TWishListId } from '@interfaces/wishlist';
-import { ICellInfo, ITableRow } from 'types.d.ts';
-
+import { IWishlist } from '@interfaces/wishlist';
+import { ICellInfo, ITableRow } from '@components/components/AppTable/types';
 import { AppTable } from '@components/components/AppTable';
-
 import { NavLink } from 'react-router-dom';
-import { pathWishListPageBase } from '@routes/contentRoutes';
-
+import { pathWishlistPageBase } from '@routes/contentRoutes';
 import { Paper, Divider, Typography, TextField, IconButton, withStyles } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { styles } from './styles';
@@ -43,7 +39,7 @@ export class WishlistsTableComponent extends React.Component<Props, State> {
         this.setState(() => ({updatedList: '', updatedName: ''}));
     };
 
-    protected handleDeleteWishlist = (wishlistId: TWishListId) => (event: ClickEvent): void => {
+    protected handleDeleteWishlist = (wishlistId: string) => (event: ClickEvent): void => {
         this.props.deleteWishlistAction(wishlistId);
     };
 
@@ -85,7 +81,7 @@ export class WishlistsTableComponent extends React.Component<Props, State> {
                             ) : (
                                 <NavLink
                                     className={ classes.link }
-                                    to={ `${pathWishListPageBase}/${item.id}` }
+                                    to={ `${pathWishlistPageBase}/${item.id}` }
                                 >
                                     {item.name}
                                 </NavLink>

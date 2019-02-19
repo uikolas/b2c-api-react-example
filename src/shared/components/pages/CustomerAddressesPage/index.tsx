@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-
 import { ICustomerAddressPageProps as Props, ICustomerAddressPageState as State } from './types';
 import { ClickEvent } from '@interfaces/common';
-
 import { pathAddressFormNew, pathAddressFormUpdateBase } from '@routes/contentRoutes';
-
 import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
 import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { AddressesList } from './AddressesList';
-
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

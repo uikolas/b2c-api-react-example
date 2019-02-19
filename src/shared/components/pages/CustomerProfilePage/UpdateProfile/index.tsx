@@ -1,22 +1,18 @@
 import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
-
 import {
     IUpdateProfileProps as Props,
     IUpdateProfileState as State,
     IProfileFieldInput
 } from './types';
 import { TSalutationVariant } from '@interfaces/customer';
-
 import { SprykerButton } from '@components/components/UI/SprykerButton';
 import { SprykerForm } from '@components/components/UI/SprykerForm';
 import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { CustomerPageTitle } from '@components/components/CustomerPageTitle';
-
 import { SalutationVariants } from '@constants/customer';
 import { typeNotificationWarning } from '@constants/notifications';
-
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from '../styles';
 
