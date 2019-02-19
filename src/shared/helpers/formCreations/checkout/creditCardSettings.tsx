@@ -1,7 +1,7 @@
 import React from 'react';
 import { IFormSettings } from '@components/components/UI/SprykerForm/types';
 import { IPaymentCreditCardParams } from './types';
-import { IMenuItemSelect } from 'types.d.ts';
+import { IMenuItemSelect } from '@components/components/UI/SprykerSelect/types';
 import { FormattedMessage } from 'react-intl';
 
 export const getCreditCardFormSettings = (formName: string, params: IPaymentCreditCardParams): IFormSettings => {

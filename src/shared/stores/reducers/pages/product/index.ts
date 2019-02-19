@@ -11,43 +11,6 @@ export const initialState: IProductState = {
     },
 };
 
-/*export const pageProduct = function (state: IProductState = initialState, action: IPageProductAction): IProductState {
-  console.info(action);
-  const res = produce<IProductState>(state, draft => {
->>>>>>> main-dev
-    switch (action.type) {
-      case `${PAGES_PRODUCT_REQUEST}_REJECTED`:
-        draft.error = action.error;
-        draft.pending = false;
-        draft.fulfilled = false;
-        draft.rejected = true;
-        draft.initiated = true;
-        break;
-      case `${PAGES_PRODUCT_REQUEST}_PENDING`:
-        draft.data = {selectedProduct: null};
-        draft.error = false;
-        draft.pending = true;
-        draft.fulfilled = false;
-        draft.rejected = false;
-        draft.initiated = true;
-        break;
-      case `${PAGES_PRODUCT_REQUEST}_FULFILLED`:
-        draft.data = {selectedProduct: action.payload};
-        draft.error = false;
-        draft.pending = false;
-        draft.fulfilled = true;
-        draft.rejected = false;
-        draft.initiated = true;
-        break;
-      default:
-        break;
-    }
-  });
-  console.info(res);
-
-  return res;
-};*/
-
 export const pageProduct = function (state: IProductState = initialState, action: IPageProductAction): IProductState {
     switch (action.type) {
         case `${PAGES_PRODUCT_REQUEST}_REJECTED`:

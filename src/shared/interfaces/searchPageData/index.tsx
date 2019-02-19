@@ -84,7 +84,7 @@ export interface ICatalogSearchDataParsed {
     searchTerm?: TSearchTerm;
 }
 
-export interface ISearchPageData extends ICatalogSearchDataParsed, ISearchTermData {
+export interface ISearchPageData extends ICatalogSearchDataParsed {
     dispatch?: Function;
     flyoutSearch?: FlyoutSearch;
     currency?: TAppCurrency;

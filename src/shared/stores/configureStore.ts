@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import { History } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { reducers } from './reducers';
-import { IReduxStore } from './reducers/types';
 
 export const configureStore = function (history: History, initialState?: any) {
     const middlewares = [
@@ -39,5 +38,3 @@ export const configureStore = function (history: History, initialState?: any) {
 
     return store;
 };
-
-export default configureStore;
