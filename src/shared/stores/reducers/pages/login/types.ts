@@ -13,7 +13,7 @@ export interface ILoginState extends IReduxState {
 
 export interface IPageLoginAction extends IActionData {
     payloadStoreFulfilled?: ILoginDataToLocalStorage;
-    payloadRefreshTokenFulfilled?: ICustomerLoginDataParsed;
+    payloadProfileDataFulfilled?: ICustomerLoginDataParsed;
     payloadAuthFulfilled?: ICustomerLoginDataParsed;
     payloadResetPassword?: IResetPasswordPayload;
 }

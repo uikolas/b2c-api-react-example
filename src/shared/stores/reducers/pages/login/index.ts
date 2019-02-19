@@ -62,7 +62,7 @@ export const pagesLogin = function (state: ILoginState = initialState, action: I
                 data: {
                     ...state.data,
                     isAuth: true,
-                    ...action.payloadRefreshTokenFulfilled,
+                    ...action.payloadProfileDataFulfilled,
                 },
                 ...getReducerPartFulfilled(),
             };

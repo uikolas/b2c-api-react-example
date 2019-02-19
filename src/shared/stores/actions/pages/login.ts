@@ -40,12 +40,12 @@ export const loginCustomerRejectedStateAction = (message: string) => ({
 
 export const loginCustomerFulfilledStateAction = (payload: ICustomerLoginDataParsed) => ({
     type: PAGES_LOGIN_REQUEST + '_FULFILLED',
-    payload
+    payloadProfileDataFulfilled: payload
 });
 
 export const loginCustomerAction = function (payload: ICustomerLoginData) {
     return (dispatch: Function, getState: Function) => {
-        PagesLoginService.loginRequest(dispatch, payload);
+        PagesLoginService.loginRequest(dispatch, payload, '');
     };
 };
 
