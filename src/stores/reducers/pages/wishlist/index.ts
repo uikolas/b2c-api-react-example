@@ -8,7 +8,7 @@ import {
     UPDATE_WISHLIST,
     WISHLIST_ALL_LISTS,
 } from '@stores/actionTypes/pages/wishlist';
-import { IWishlist, IWishlistProduct } from 'src/interfaces/wishlist/index';
+import { IWishlist, IWishlistProduct } from 'src/interfaces/wishlist';
 import { IPageWishlistAction, WishlistState } from 'src/stores/reducers/pages/wishlist/types';
 
 export const initialState: WishlistState = {

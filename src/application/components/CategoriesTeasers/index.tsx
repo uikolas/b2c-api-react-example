@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withStyles, Grid } from '@material-ui/core';
-import { CategoryTeaser } from './CategoryTeaser/index';
+import { CategoryTeaser } from './CategoryTeaser';
 import {
     ICategoriesTeasersData as TeaserData,
     ICategoriesTeasersProps as Props

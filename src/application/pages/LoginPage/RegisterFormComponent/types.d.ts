@@ -5,7 +5,7 @@ import {
     TCustomerFirstName,
     TCustomerLastName, TCustomerPassword,
     TCustomerSalutation,
-} from '@interfaces/customer/index';
+} from '@interfaces/customer';
 
 export interface IRegisterFormProps extends WithStyles<typeof styles> {
     handleSubmit: Function;

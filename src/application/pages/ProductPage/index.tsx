@@ -6,16 +6,16 @@ import {
     getAvailabilityDisplay,
     getInitialSuperAttrSelected,
     getCurrentProductDataObject
-} from 'src/helpers/product/index';
+} from 'src/helpers/product';
 import { withStyles, Grid  } from '@material-ui/core';
 import { AppMain } from '@application/components/AppMain';
 import { ImageSlider } from '@application/components/ImageSlider';
-import { ProductGeneralInfo } from './ProductGeneralInfo/index';
-import { ProductSuperAttribute } from './ProductSuperAttribute/index';
-import { ProductConfiguratorAddToCart } from './ProductConfiguratorAddToCart/index';
-import { ProductConfiguratorAddToWishlist } from './ProductConfiguratorAddToWishlist/index';
-import { ProductDetail } from './ProductDetail/index';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { ProductGeneralInfo } from './ProductGeneralInfo';
+import { ProductSuperAttribute } from './ProductSuperAttribute';
+import { ProductConfiguratorAddToCart } from './ProductConfiguratorAddToCart';
+import { ProductConfiguratorAddToWishlist } from './ProductConfiguratorAddToWishlist';
+import { ProductDetail } from './ProductDetail';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
 import { IImageSlide } from '@application/components/ImageSlider/types';
 import { ProductPageProps as Props, ProductPageState as State } from './types';
 import {

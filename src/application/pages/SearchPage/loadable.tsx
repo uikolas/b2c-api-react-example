@@ -5,7 +5,7 @@ export const LoadableSearchPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableSearch" */
-            'src/application/pages/SearchPage/index').then(
+            'src/application/pages/SearchPage').then(
             module => module.SearchPage,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,

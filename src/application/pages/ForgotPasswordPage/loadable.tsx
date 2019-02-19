@@ -5,7 +5,7 @@ export const LoadablePasswordForgotPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadablePasswordForgot" */
-            '@components/pages/ForgotPasswordPage').then(
+            '@application/pages/ForgotPasswordPage').then(
             module => module.ForgotPasswordPage,
         ),
     loading: () => <div>Loading...</div>,

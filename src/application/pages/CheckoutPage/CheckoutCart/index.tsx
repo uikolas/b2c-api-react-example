@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { withStyles, List, Button } from '@material-ui/core';
 import { CartTotal } from '@application/components/CartTotal';
 import { CustomerPageTitle } from '@application/components/CustomerPageTitle';
-import { CheckoutCartProductList } from './CheckoutCartProductList/index';
+import { CheckoutCartProductList } from './CheckoutCartProductList';
 import {
     ICartDataProps as Props,
     ICartDataState as State

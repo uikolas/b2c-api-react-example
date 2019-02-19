@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
     rangeFilterValueToBack,
 } from 'src/helpers/common/transform';
-import { AppPrice } from 'src/application/components/AppPrice/index';
+import { AppPrice } from 'src/application/components/AppPrice';
 import {
     filterTypeRange,
     IFilterItem,

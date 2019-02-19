@@ -1,4 +1,4 @@
-import { IProductAttributeMap, IProductAttributeNames, IProductAttributes } from '../../interfaces/product/index';
+import { IProductAttributeMap, IProductAttributeNames, IProductAttributes } from '../../interfaces/product';
 import { ISuperAttribute, ISuperAttributeData } from 'src/helpers/product/types';
 
 export const parseSuperAttributes = (

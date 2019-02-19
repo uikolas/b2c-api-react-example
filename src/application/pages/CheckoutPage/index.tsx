@@ -3,13 +3,13 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid } from '@material-ui/core';
 import { AppMain } from '@application/components/AppMain';
-import { CheckoutCart } from '@components/pages/CheckoutPage/CheckoutCart';
-import { OrderSuccess } from '@components/pages/CheckoutPage/OrderSuccess';
+import { CheckoutCart } from '@application/pages/CheckoutPage/CheckoutCart';
+import { OrderSuccess } from '@application/pages/CheckoutPage/OrderSuccess';
 import { AppPageTitle } from '@application/components/AppPageTitle';
 import {
     getCheckoutPanelsSettings,
     getAddressForm
-} from 'src/helpers/checkout/index';
+} from 'src/helpers/checkout';
 import { FormEvent } from '@interfaces/common';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import { ICheckoutRequest } from '@interfaces/checkout';
@@ -19,8 +19,8 @@ import {
 } from './types';
 import { styles } from './styles';
 import { AppPageSubTitle } from '@application/components/AppPageSubTitle';
-import { CheckoutForms } from './CheckoutForms/index';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { CheckoutForms } from './CheckoutForms';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
 
 @connect
 export class CheckoutPageBase extends React.Component<Props, State> {

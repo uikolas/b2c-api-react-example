@@ -5,7 +5,7 @@ export const LoadableCartPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableCartPage" */
-            'src/application/pages/CartPage/index').then(
+            'src/application/pages/CartPage').then(
             module => module.default,
         ),
     loading: () => <div>Loading...</div>,

@@ -5,7 +5,7 @@ export const LoadableCheckoutPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableCheckoutPage" */
-            '@components/pages/CheckoutPage').then(
+            '@application/pages/CheckoutPage').then(
             module => module.CheckoutPage,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,

@@ -1,5 +1,5 @@
-import { TProductQuantity, TProductSKU } from '@interfaces/product/index';
-import { ICartItem, ICartTotals, TCartId } from '@interfaces/cart/index';
+import { TProductQuantity, TProductSKU } from '@interfaces/product';
+import { ICartItem, ICartTotals, TCartId } from '@interfaces/cart';
 import { ICartState } from '@stores/reducers/common/cart/types';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 

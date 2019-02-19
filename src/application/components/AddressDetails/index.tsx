@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { getSalutationToShow } from 'src/helpers/customer/salutation';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { AddressPart } from './AddressPart/index';
+import { AddressPart } from './AddressPart';
 import { IAddressDetailsProps as Props } from './types';
 import { IAddressPartRow } from './AddressPart/types';
 import { styles } from './styles';

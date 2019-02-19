@@ -1,4 +1,4 @@
-import { TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType } from '../login/index';
+import { TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType } from '../login';
 import { TRouterMatchParam } from 'src/helpers/router/types';
 
 export type TCustomerSalutation = string;

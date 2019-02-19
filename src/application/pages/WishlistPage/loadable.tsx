@@ -5,7 +5,7 @@ export const LoadableWishlistPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableWishlistPage" */
-            'src/application/pages/WishlistPage/index').then(
+            'src/application/pages/WishlistPage').then(
             module => module.default,
         ),
     loading: () => <div style={{minHeight: '100vh', textAlign: 'center'}}>Loading...</div>,

@@ -1,4 +1,4 @@
-import { parseImageSets, parseSuperAttributes } from './index';
+import { parseImageSets, parseSuperAttributes } from '.';
 import {
     abstractProductType,
     concreteProductType,
@@ -8,7 +8,7 @@ import {
     IProductPricesItem,
     priceTypeNameDefault,
     priceTypeNameOriginal,
-} from '../../interfaces/product/index';
+} from '../../interfaces/product';
 import {
     IProductAvailabilitiesRawResponse, IProductRawResponse,
     TRowProductResponseIncluded

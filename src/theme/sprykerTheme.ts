@@ -1,4 +1,4 @@
-import { createSprykerTheme } from './index';
+import { createSprykerTheme } from '.';
 import { appContainerStyles } from './properties/new/appContainerStyles';
 import { appPalette } from './properties/overwritten/appPalette';
 import { appTypographyStyles } from './properties/overwritten/appTypography';

@@ -3,7 +3,7 @@ import {
     IProductImageSetsRawResponse,
     TProductImageSetsCollectionRawResponse,
     TProductImageSRC
-} from '../../interfaces/product/index';
+} from '../../interfaces/product';
 
 export const parseImageSets = (imageSets: TProductImageSetsCollectionRawResponse): IProductCardImages[] | null => {
     if (!Array.isArray(imageSets) || !imageSets.length) {

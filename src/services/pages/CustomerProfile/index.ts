@@ -1,14 +1,14 @@
-import api, { setAuthToken } from 'src/services/api/index';
+import api, { setAuthToken } from 'src/services/api';
 import * as CustomerProfileActions from '@stores/actions/pages/customerProfile';
 import {
     ICustomerDataParsed,
     ICustomerProfileIdentity,
     ICustomerProfilePassword,
     TCustomerReference
-} from 'src/interfaces/customer/index';
+} from 'src/interfaces/customer';
 import { parseCustomerDataResponse } from 'src/helpers/customer/customerDataResponse';
-import { RefreshTokenService } from 'src/services/common/RefreshToken/index';
-import { CustomerProfileAuthenticateErrorMessage } from 'src/translation/index';
+import { RefreshTokenService } from 'src/services/common/RefreshToken';
+import { CustomerProfileAuthenticateErrorMessage } from 'src/translation';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import { logout } from '@stores/actions/pages/login';
 import { IApiResponseData } from 'src/services/types';
@@ -16,7 +16,7 @@ import { NotificationsMessage } from '@application/components/Notifications/Noti
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications/index';
+} from 'src/constants/notifications';
 
 interface IRequestBody {
     data: {

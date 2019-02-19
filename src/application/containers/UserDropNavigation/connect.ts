@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { isUserAuthenticated } from '@stores/reducers/pages/login';
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import { logout } from '@stores/actions/pages/login';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 import { getAppLocale } from '@stores/reducers/common/init';

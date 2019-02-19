@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { getRouterMatchParam } from '@helpers/router';
 

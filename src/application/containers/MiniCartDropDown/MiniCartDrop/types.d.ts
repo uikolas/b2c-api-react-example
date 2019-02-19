@@ -1,6 +1,6 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { ICartTotals, TCartId, ICartItem } from 'src/interfaces/cart/index';
-import { TProductSKU } from 'src/interfaces/product/index';
+import { ICartTotals, TCartId, ICartItem } from 'src/interfaces/cart';
+import { TProductSKU } from 'src/interfaces/product';
 import { styles } from './styles';
 
 export interface IMiniCartDropProps extends WithStyles<typeof styles> {

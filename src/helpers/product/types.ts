@@ -3,7 +3,7 @@ import {
     IProductAvailability,
     IProductPricesItem,
     TProductImageSetsCollectionRawResponse,
-} from 'src/interfaces/product/index';
+} from 'src/interfaces/product';
 import { IAbstractRowIncludedResponse } from 'src/interfaces/abstract/rowIncludedresponse';
 
 export interface IProductRawResponse {

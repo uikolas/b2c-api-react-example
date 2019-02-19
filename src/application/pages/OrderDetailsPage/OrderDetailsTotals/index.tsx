@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid } from '@material-ui/core';
-import { TotalItem } from './TotalItem/index';
+import { TotalItem } from './TotalItem';
 import { IOrderDetailsTotalsProps as Props } from './types';
 import { IOrderDetailsExpenseItem } from '@interfaces/order';
 import { styles } from './styles';

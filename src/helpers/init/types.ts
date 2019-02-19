@@ -1,6 +1,6 @@
-import { ICurrencyItem } from 'src/interfaces/currency/index';
-import { ILocaleItem } from 'src/interfaces/locale/index';
-import { ICountry } from 'src/interfaces/country/index';
+import { ICurrencyItem } from 'src/interfaces/currency';
+import { ILocaleItem } from 'src/interfaces/locale';
+import { ICountry } from 'src/interfaces/country';
 
 export interface IStoreRawResponse {
     data: [{

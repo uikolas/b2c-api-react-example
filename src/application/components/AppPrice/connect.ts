@@ -1,4 +1,4 @@
-import { reduxify } from '@components/hoc/Reduxify';
+import { reduxify } from '@application/hoc/Reduxify';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import { TAppCurrency } from '@interfaces/currency';
 import { getAppCurrency } from '@stores/reducers/common/init';

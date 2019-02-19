@@ -3,10 +3,10 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import Autosuggest from 'react-autosuggest';
 import { withStyles, CircularProgress } from '@material-ui/core';
-import { InputComponent } from './InputComponent/index';
-import { Suggestions } from './Suggestions/index';
-import { SuggestionsContainer } from './SuggestionsContainer/index';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { InputComponent } from './InputComponent';
+import { Suggestions } from './Suggestions';
+import { SuggestionsContainer } from './SuggestionsContainer';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
 import { InputChangeEvent } from '@interfaces/common';
 import { IProductCard } from '@interfaces/product';
 import {

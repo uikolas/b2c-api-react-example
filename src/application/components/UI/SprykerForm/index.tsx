@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withStyles, Grid } from '@material-ui/core';
 import { sprykerFormStyles } from 'src/application/components/UI/SprykerForm/sprykerFormStyles';
-import { FieldTextInput } from 'src/application/components/UI/SprykerForm/FieldTextInput/index';
-import { SprykerSelect } from 'src/application/components/UI/SprykerSelect/index';
-import { FieldCheckbox } from 'src/application/components/UI/SprykerForm/FieldCheckbox/index';
-import { FieldRadio } from 'src/application/components/UI/SprykerForm/FieldRadio/index';
+import { FieldTextInput } from 'src/application/components/UI/SprykerForm/FieldTextInput';
+import { SprykerSelect } from 'src/application/components/UI/SprykerSelect';
+import { FieldCheckbox } from 'src/application/components/UI/SprykerForm/FieldCheckbox';
+import { FieldRadio } from 'src/application/components/UI/SprykerForm/FieldRadio';
 import { IFormField, ISprykerFormProps as Props } from './types';
 
 export const SprykerFormBase: React.SFC<Props> = (props): JSX.Element => {

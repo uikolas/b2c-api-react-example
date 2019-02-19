@@ -8,10 +8,10 @@ import {
     IFilterItem,
     TFilterItemValue,
 } from 'src/application/pages/SearchPage/types';
-import { ActiveFilterItem } from 'src/application/pages/SearchPage/ActiveFilterItem/index';
-import { AppPageSubTitle } from 'src/application/components/AppPageSubTitle/index';
+import { ActiveFilterItem } from 'src/application/pages/SearchPage/ActiveFilterItem';
+import { AppPageSubTitle } from 'src/application/components/AppPageSubTitle';
 import { isWordHasPrice } from 'src/helpers/common/transform';
-import { RangeFacets } from 'src/interfaces/searchPageData/index';
+import { RangeFacets } from 'src/interfaces/searchPageData';
 import {
     createRangeFilterItemCombined,
 } from 'src/application/pages/SearchPage/ActiveFiltersList/helper';

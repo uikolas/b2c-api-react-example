@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { baseTheme } from 'src/theme/index';
+import { baseTheme } from 'src/theme';
 import { appColors } from 'src/theme/properties/new/appColors';
 
 export interface IAppModules {

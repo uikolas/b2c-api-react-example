@@ -1,5 +1,5 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import { WishlistState } from '@stores/reducers/pages/Wishlist/types';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 

@@ -1,5 +1,5 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import { sendSearchAction } from '@stores/actions/pages/search';
 import { getAppCurrency, getCategoriesTree } from '@stores/reducers/common/init';
 

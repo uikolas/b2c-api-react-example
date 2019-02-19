@@ -1,6 +1,6 @@
-import { IAddressItem } from 'src/interfaces/addresses/index';
-import { RefreshTokenService } from 'src/services/common/RefreshToken/index';
-import api, { setAuthToken } from 'src/services/api/index';
+import { IAddressItem } from 'src/interfaces/addresses';
+import { RefreshTokenService } from 'src/services/common/RefreshToken';
+import api, { setAuthToken } from 'src/services/api';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/services/types';
 import {
@@ -13,7 +13,7 @@ import { NotificationsMessage } from '@application/components/Notifications/Noti
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications/index';
+} from 'src/constants/notifications';
 
 export class AddressesService extends ApiServiceAbstract {
     public static async getCustomerAddresses(

@@ -1,6 +1,6 @@
-import api, { setAuthToken } from 'src/services/api/index';
-import { RefreshTokenService } from 'src/services/common/RefreshToken/index';
-import { ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod } from 'src/interfaces/checkout/index';
+import api, { setAuthToken } from 'src/services/api';
+import { RefreshTokenService } from 'src/services/common/RefreshToken';
+import { ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod } from 'src/interfaces/checkout';
 import {
     getCheckoutDataInitPendingStateAction,
     getCheckoutDataInitRejectedStateAction,
@@ -17,7 +17,7 @@ import { NotificationsMessage } from '@application/components/Notifications/Noti
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications/index';
+} from 'src/constants/notifications';
 
 interface IRequestBody {
     data: {

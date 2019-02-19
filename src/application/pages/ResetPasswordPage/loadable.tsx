@@ -5,7 +5,7 @@ export const LoadablePasswordResetPage = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadablePasswordReset" */
-            '@components/pages/ResetPasswordPage').then(
+            '@application/pages/ResetPasswordPage').then(
             module => module.ResetPasswordPage,
         ),
     loading: () => <div>Loading...</div>,

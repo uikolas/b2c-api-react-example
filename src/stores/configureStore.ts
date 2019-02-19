@@ -4,7 +4,7 @@ import { routerMiddleware, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 import { History } from 'history';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { reducers } from './reducers/index';
+import { reducers } from './reducers';
 
 export const configureStore = function (history: History, initialState?: any) {
     const middlewares = [

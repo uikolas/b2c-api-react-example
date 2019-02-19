@@ -1,4 +1,4 @@
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import { getAnonymId, getPayloadForCreateCart } from '@stores/reducers/common/init';
 import {
     getWishlistsCollectionFromStore,

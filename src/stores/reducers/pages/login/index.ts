@@ -7,9 +7,9 @@ import {
     RESET_PASSWORD,
 } from '@stores/actionTypes/pages/login';
 import { SET_AUTH_FROM_STORAGE } from '@stores/actionTypes/common/init';
-import { TAccessToken } from 'src/interfaces/login/index';
+import { TAccessToken } from 'src/interfaces/login';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { TCustomerEmail, TCustomerUsername } from 'src/interfaces/customer/index';
+import { TCustomerEmail, TCustomerUsername } from 'src/interfaces/customer';
 import { LOGIN_DATA_SET_TO_STORE } from '@stores/actionTypes/pages/customerProfile';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 import { ILoginState, IPageLoginAction } from 'src/stores/reducers/pages/login/types';

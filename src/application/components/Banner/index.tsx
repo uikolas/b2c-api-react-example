@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { AppBtnLink } from 'src/application/components/AppBtnLink/index';
+import { AppBtnLink } from 'src/application/components/AppBtnLink';
 import { IBannerProps as Props } from './types';
 import { styles } from './styles';
 

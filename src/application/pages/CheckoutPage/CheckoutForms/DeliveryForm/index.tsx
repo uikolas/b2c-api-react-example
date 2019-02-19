@@ -8,14 +8,14 @@ import {
     checkoutFormsNames,
     checkoutSelectionInputs, creditCardConfigInputStable,
     deliveryConfigInputStable
-} from 'src/constants/checkout/index';
-import { InputSaveErrorMessage } from 'src/translation/index';
+} from 'src/constants/checkout';
+import { InputSaveErrorMessage } from 'src/translation';
 import {
     checkFormInputValidity,
     checkFormValidity,
     getDefaultAddressId,
     getExtraOptionsToSelection
-} from 'src/helpers/checkout/index';
+} from 'src/helpers/checkout';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import {
     IAddressParams,

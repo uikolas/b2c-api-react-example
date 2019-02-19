@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import { ProtectedRoute } from '@components/hoc/ProtectedRoute';
+import { ProtectedRoute } from '@application/hoc/ProtectedRoute';
 import { AppMain } from '@application/components/AppMain';
-import { LoadableHomePage } from '@components/pages/HomePage/loadable';
-import { LoadableSearchPage } from '@components/pages/SearchPage/loadable';
-import { LoadableProductPage } from '@components/pages/ProductPage/loadable';
-import { LoadableLoginPage } from '@components/pages/LoginPage/loadable';
-import { LoadableCartPage } from '@components/pages/CartPage/loadable';
-import { LoadableCustomerPage } from '@components/pages/CustomerPage/loadable';
-import { LoadablePasswordForgotPage } from '@components/pages/ForgotPasswordPage/loadable';
-import { LoadablePasswordResetPage } from '@components/pages/ResetPasswordPage/loadable';
-import { LoadableWishlistPage } from '@components/pages/WishlistPage/loadable';
-import { LoadableWishlistDetail } from '@components/pages/WishlistDetail/loadable';
-import { LoadableCheckoutPage } from '@components/pages/CheckoutPage/loadable';
-import { LoadableOrderDetailsPage } from '@components/pages/OrderDetailsPage/loadable';
-import { CustomerAddressForm } from '@components/pages/CustomerAddressForm';
-import { LoadableNotFound } from '@components/pages/NotFound/loadable';
+import { LoadableHomePage } from '@application/pages/HomePage/loadable';
+import { LoadableSearchPage } from '@application/pages/SearchPage/loadable';
+import { LoadableProductPage } from '@application/pages/ProductPage/loadable';
+import { LoadableLoginPage } from '@application/pages/LoginPage/loadable';
+import { LoadableCartPage } from '@application/pages/CartPage/loadable';
+import { LoadableCustomerPage } from '@application/pages/CustomerPage/loadable';
+import { LoadablePasswordForgotPage } from '@application/pages/ForgotPasswordPage/loadable';
+import { LoadablePasswordResetPage } from '@application/pages/ResetPasswordPage/loadable';
+import { LoadableWishlistPage } from '@application/pages/WishlistPage/loadable';
+import { LoadableWishlistDetail } from '@application/pages/WishlistDetail/loadable';
+import { LoadableCheckoutPage } from '@application/pages/CheckoutPage/loadable';
+import { LoadableOrderDetailsPage } from '@application/pages/OrderDetailsPage/loadable';
+import { CustomerAddressForm } from '@application/pages/CustomerAddressForm';
+import { LoadableNotFound } from '@application/pages/NotFound/loadable';
 import {
     pathAddressFormUpdate,
     pathCartPage,

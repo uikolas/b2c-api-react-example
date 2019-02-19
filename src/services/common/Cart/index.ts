@@ -1,23 +1,23 @@
-import api, { setAuthToken } from 'src/services/api/index';
-import { TProductSKU } from 'src/interfaces/product/index';
-import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from 'src/interfaces/cart/index';
+import api, { setAuthToken } from 'src/services/api';
+import { TProductSKU } from 'src/interfaces/product';
+import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from 'src/interfaces/cart';
 import {
     parseUserCartResponseMultiValue,
     parseCartCreateResponse,
     parseUserCartResponseOneValue
-} from 'src/helpers/cart/index';
+} from 'src/helpers/cart';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAuthenticateErrorMessage } from 'src/translation/index';
+import { CartAuthenticateErrorMessage } from 'src/translation';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { RefreshTokenService } from '../RefreshToken/index';
+import { RefreshTokenService } from '../RefreshToken';
 import { ICartCreatePayload } from './types';
 import { IResponseError } from 'src/services/apiAbstractions/types';
 import { IApiResponseData } from 'src/services/types';
-import { NotificationsMessage } from 'src/application/components/Notifications/NotificationsMessage/index';
+import { NotificationsMessage } from 'src/application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications/index';
+} from 'src/constants/notifications';
 
 export class CartService extends ApiServiceAbstract {
     protected static endpoint(path: string): string {

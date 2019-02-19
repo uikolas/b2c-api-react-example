@@ -2,15 +2,15 @@ import * as React from 'react';
 import { connect } from './connect';
 import { withStyles, Grid, Typography } from '@material-ui/core';
 import { SprykerForm } from '@application/components/UI/SprykerForm';
-import { InvoicePaymentForm } from './InvoicePaymentForm/index';
-import { CreditCardPaymentForm } from './CreditCardPaymentForm/index';
+import { InvoicePaymentForm } from './InvoicePaymentForm';
+import { CreditCardPaymentForm } from './CreditCardPaymentForm';
 import {
     PartnerIconVisa,
     PartnerIconPaypal,
     PartnerIconMasterCard
 } from './icons';
 import { getPaymentMethodsFormSettings } from 'src/helpers/formCreations/checkout/paymentSettings';
-import { checkFormValidity } from 'src/helpers/checkout/index';
+import { checkFormValidity } from 'src/helpers/checkout';
 import {
     IPaymentMethod,
     ICheckoutInvoiceState,
@@ -31,7 +31,7 @@ import {
     invoiceConfigInputStable,
     checkoutFormsNames,
     checkoutPaymentMethodsNames
-} from 'src/constants/checkout/index';
+} from 'src/constants/checkout';
 import { styles } from './styles';
 
 export const PaymentMethodBase: React.SFC<IPaymentMethodProps> = (props): JSX.Element => {

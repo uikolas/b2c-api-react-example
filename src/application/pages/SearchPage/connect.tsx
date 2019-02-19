@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { push } from 'react-router-redux';
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import {
     getAvailableLabels,
     getCategoriesLocalizedName,
@@ -9,16 +9,16 @@ import {
     getSpellingSuggestion
 } from '@stores/reducers/pages/search';
 import { getAppCurrency, getCategoriesTree } from '@stores/reducers/common/init';
-import { ISearchQuery, TSpellingSuggestion } from 'src/interfaces/searchPageData/index';
-import { getRouterMatchParam } from 'src/helpers/router/index';
+import { ISearchQuery, TSpellingSuggestion } from 'src/interfaces/searchPageData';
+import { getRouterMatchParam } from 'src/helpers/router';
 import {
     sendSearchAction,
     clearActiveFiltersAction,
     clearSearchTermAction
 } from '@stores/actions/pages/search';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { ICategory } from 'src/interfaces/category/index';
-import { TAppCurrency } from 'src/interfaces/currency/index';
+import { ICategory } from 'src/interfaces/category';
+import { TAppCurrency } from 'src/interfaces/currency';
 import { ISearchState } from 'src/stores/reducers/pages/search/types';
 
 const mapStateToProps = (state: IReduxStore, ownProps: IReduxOwnProps) => {

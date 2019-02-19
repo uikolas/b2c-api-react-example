@@ -1,5 +1,5 @@
-import { TProductQuantity, TProductSKU } from '../../interfaces/product/index';
-import { ICartAddItem, ICartItem } from '../../interfaces/cart/index';
+import { TProductQuantity, TProductSKU } from '../../interfaces/product';
+import { ICartAddItem, ICartItem } from '../../interfaces/cart';
 
 export const createCartItemAddToCart = (sku: TProductSKU, quantity: TProductQuantity): ICartAddItem => ({
     sku,

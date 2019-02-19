@@ -7,7 +7,7 @@ import {
     UPDATE_ADDRESS,
     GET_ONE_ADDRESS,
 } from '@stores/actionTypes/pages/addresses';
-import { IAddressItem } from 'src/interfaces/addresses/index';
+import { IAddressItem } from 'src/interfaces/addresses';
 import { IAddressesState, IPageAddressesAction } from '@stores/reducers/pages/Addresses/types';
 
 const initialState: IAddressesState = {

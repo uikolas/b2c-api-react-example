@@ -1,4 +1,4 @@
-import { IProductAttributes, IProductPricesItem } from '../product/index';
+import { IProductAttributes, IProductPricesItem } from '../product';
 
 export type TWishlistName = string;
 export type TWishlistId = string;

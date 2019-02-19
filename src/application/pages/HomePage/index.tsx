@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { pathCategoryComputers } from 'src/constants/routes/index';
+import { pathCategoryComputers } from 'src/constants/routes';
 import { CategoriesTeasers } from '@application/components/CategoriesTeasers';
 import { AppMain } from '@application/components/AppMain';
 import { Banner } from '@application/components/Banner';

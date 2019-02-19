@@ -10,13 +10,13 @@ import {
     checkFormValidity,
     getDefaultAddressId,
     getExtraOptionsToSelection
-} from 'src/helpers/checkout/index';
+} from 'src/helpers/checkout';
 import {
     billingConfigInputStable,
     checkoutFormsNames,
     checkoutSelectionInputs, deliveryConfigInputStable
-} from 'src/constants/checkout/index';
-import { InputSaveErrorMessage } from 'src/translation/index';
+} from 'src/constants/checkout';
+import { InputSaveErrorMessage } from 'src/translation';
 import {
     IAddressParams,
     IBillingAddressesParams,

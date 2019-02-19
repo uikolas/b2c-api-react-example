@@ -1,5 +1,5 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { ICartTotals } from 'src/interfaces/cart/index';
+import { ICartTotals } from 'src/interfaces/cart';
 import { styles } from './styles';
 
 export interface OrderSummaryProps extends WithStyles<typeof styles> {

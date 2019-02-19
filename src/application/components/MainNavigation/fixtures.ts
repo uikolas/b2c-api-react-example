@@ -5,7 +5,7 @@ import {
     pathCategorySale,
     pathCategoryTablets,
     pathCategoryWorkstations
-} from 'src/constants/routes/index';
+} from 'src/constants/routes';
 
 export const fixtures = [
     {

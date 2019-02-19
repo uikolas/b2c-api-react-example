@@ -3,8 +3,8 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid } from '@material-ui/core';
 import { CustomerPageTitle } from '@application/components/CustomerPageTitle';
-import { EmptyOrder } from '@components/pages/OrderDetailsPage/EmptyOrder';
-import { OrderList } from './OrderList/index';
+import { EmptyOrder } from '@application/pages/OrderDetailsPage/EmptyOrder';
+import { OrderList } from './OrderList';
 import { IOrderHistoryPageProps as Props } from './types';
 import { styles } from './styles';
 

@@ -1,9 +1,9 @@
-import { TAppPriceMode } from 'src/interfaces/product/index';
-import { TAppCurrency } from 'src/interfaces/currency/index';
-import { TAppStore } from 'src/interfaces/store/index';
-import { TAppLocale, TAppTimeZone } from 'src/interfaces/locale/index';
-import { ICategory } from 'src/interfaces/category/index';
-import { ICountry } from 'src/interfaces/country/index';
+import { TAppPriceMode } from 'src/interfaces/product';
+import { TAppCurrency } from 'src/interfaces/currency';
+import { TAppStore } from 'src/interfaces/store';
+import { TAppLocale, TAppTimeZone } from 'src/interfaces/locale';
+import { ICategory } from 'src/interfaces/category';
+import { ICountry } from 'src/interfaces/country';
 
 export interface IInitData {
     ok?: boolean;

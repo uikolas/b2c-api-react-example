@@ -5,12 +5,12 @@ import { Sticky, StickyChildArgs } from 'react-sticky';
 import debounce from 'lodash/debounce';
 import { pathCheckoutPage } from '@constants/routes';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CatalogSearch from '@components/containers/CatalogSearch';
+import CatalogSearch from '@application/containers/CatalogSearch';
 import { AppLogo } from '@application/components/AppLogo';
 import { MainNavigation } from '@application/components/MainNavigation';
-import { AdditionalNavigation } from './AdditionalNavigation/index';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { SprykerLogoWhite } from './SprykerLogoWhite/index';
+import { AdditionalNavigation } from './AdditionalNavigation';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
+import { SprykerLogoWhite } from './SprykerLogoWhite';
 import { IAppHeaderProps as Props, IAppHeaderState as State } from './types';
 import { styles } from './styles';
 

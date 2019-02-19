@@ -1,4 +1,4 @@
-import { SalutationVariants } from 'src/constants/customer/index';
+import { SalutationVariants } from 'src/constants/customer';
 import { TSalutationVariant } from '@interfaces/customer';
 import { IFormSettings } from '@application/components/UI/SprykerForm/types';
 import { IAddressParams } from './types';

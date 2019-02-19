@@ -1,4 +1,4 @@
-import { ICustomerDataParsed } from 'src/interfaces/customer/index';
+import { ICustomerDataParsed } from 'src/interfaces/customer';
 
 interface ICustomerDataResponse {
     data: {

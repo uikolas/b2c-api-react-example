@@ -9,9 +9,9 @@ import {
     TPriceTypeOriginalNet,
     TPriceTypeDefaultGross,
     TPriceTypeDefaultNet
-} from '../product/index';
-import { TProductName, TProductPrice } from 'src/interfaces/product/index';
-import { TAppCurrency } from 'src/interfaces/currency/index';
+} from '../product';
+import { TProductName, TProductPrice } from 'src/interfaces/product';
+import { TAppCurrency } from 'src/interfaces/currency';
 
 export type TCartId = string;
 export type TCartPriceMode = string;

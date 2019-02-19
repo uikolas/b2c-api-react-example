@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { IWishlistPageProps as Props } from './types';
 
 import { AppPageTitle } from '@application/components/AppPageTitle';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { AddNewWishlistForm } from './AddNewWishlistForm/index';
-import { WishlistsTable } from './WishlistsTable/index';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
+import { AddNewWishlistForm } from './AddNewWishlistForm';
+import { WishlistsTable } from './WishlistsTable';
 
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';

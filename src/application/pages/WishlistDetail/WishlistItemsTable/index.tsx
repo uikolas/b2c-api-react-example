@@ -10,7 +10,7 @@ import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from 
 import { ICellInfo, ITableRow } from '@application/components/AppTable/types';
 import { AppTable } from '@application/components/AppTable';
 import { AppPrice } from '@application/components/AppPrice';
-import { WishlistItemBaseInfo } from '../WishlistItemBaseInfo/index';
+import { WishlistItemBaseInfo } from '../WishlistItemBaseInfo';
 import { Typography, Paper, Button, Divider, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

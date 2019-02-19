@@ -7,7 +7,7 @@ import { appFixedDimensions } from 'src/theme/properties/new/appFixedDimensions'
 import { pathOrderDetailsPageBase } from '@constants/routes';
 import { AppPrice } from '@application/components/AppPrice';
 import { AppTable } from '@application/components/AppTable';
-import { IOrderListProps as Props } from '@components/pages/OrderHistoryPage/OrderList/types';
+import { IOrderListProps as Props } from '@application/pages/OrderHistoryPage/OrderList/types';
 import { IOrderItem } from '@interfaces/order';
 import { ICellInfo, ITableRow } from '@application/components/AppTable/types';
 import { styles } from './styles';

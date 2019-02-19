@@ -1,5 +1,5 @@
 import { bindActionCreators, Dispatch } from 'redux';
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 
 import { ICustomerProfileIdentity, TCustomerReference } from '@interfaces/customer';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';

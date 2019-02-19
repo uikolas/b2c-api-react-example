@@ -4,7 +4,7 @@ import {
     IProductLabelResponse,
     TLocalizedName,
     ValueFacets,
-} from 'src/interfaces/searchPageData/index';
+} from 'src/interfaces/searchPageData';
 import { ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse } from 'src/helpers/catalog/types';
 import { rangeFilterValueToFront } from '@helpers/common/transform';
 import {
@@ -12,7 +12,7 @@ import {
     rangeMaxType,
     TActiveFilters,
     TActiveRangeFilters
-} from '@components/pages/SearchPage/types';
+} from '@application/pages/SearchPage/types';
 
 export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed | null => {
     if (!response) {

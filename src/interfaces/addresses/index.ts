@@ -6,7 +6,7 @@ import {
     TCustomerMiddleName,
     TCustomerPoBox,
     TCustomerSalutation,
-} from 'src/interfaces/customer/index';
+} from 'src/interfaces/customer';
 
 export type TAddress = string;
 export type TAddressZipCode = string;

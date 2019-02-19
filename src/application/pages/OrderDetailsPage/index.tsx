@@ -2,11 +2,11 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid } from '@material-ui/core';
-import { OrderDetailsGeneralInfo } from './OrderDetailsGeneralInfo/index';
-import { OrderProductList } from './OrderProductsList/index';
-import { OrderDetailsTotals } from './OrderDetailsTotals/index';
-import { OrderAddresses } from './OrderAddresses/index';
-import { EmptyOrder } from './EmptyOrder/index';
+import { OrderDetailsGeneralInfo } from './OrderDetailsGeneralInfo';
+import { OrderProductList } from './OrderProductsList';
+import { OrderDetailsTotals } from './OrderDetailsTotals';
+import { OrderAddresses } from './OrderAddresses';
+import { EmptyOrder } from './EmptyOrder';
 import { IOrderDetailsPageProps as Props, IOrderDetailsPageState as State } from './types';
 import { styles } from './styles';
 

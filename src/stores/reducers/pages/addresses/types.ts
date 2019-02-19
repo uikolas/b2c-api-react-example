@@ -1,5 +1,5 @@
 import { IActionData, IReduxState } from '@stores/reducers/types';
-import { IAddressItem } from 'src/interfaces/addresses/index';
+import { IAddressItem } from 'src/interfaces/addresses';
 
 export interface IAddressesState extends IReduxState {
   data: {

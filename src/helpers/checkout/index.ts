@@ -1,9 +1,9 @@
 import {
     ICheckoutFormsProps,
-} from '@components/pages/CheckoutPage/CheckoutForms/types';
+} from '@application/pages/CheckoutPage/CheckoutForms/types';
 import {
     ICheckoutPageProps
-} from '@components/pages/CheckoutPage/types';
+} from '@application/pages/CheckoutPage/types';
 import {
     ICheckoutAddressState,
     ICheckoutStepsCompletionState
@@ -14,9 +14,9 @@ import {
     TAddressType,
     TExtraOptionsToSelection
 } from 'src/constants/checkout/types';
-import { checkoutSelectionInputs } from 'src/constants/checkout/index';
+import { checkoutSelectionInputs } from 'src/constants/checkout';
 import { RegExpZipCode } from 'src/constants/forms/regexp';
-import { FormattedMessageTemplate } from 'src/helpers/formattedMessageTemplate/index';
+import { FormattedMessageTemplate } from 'src/helpers/formattedMessageTemplate';
 
 export const addressDefault: IAddressItem = {
     firstName: '',

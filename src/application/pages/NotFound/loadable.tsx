@@ -5,7 +5,7 @@ export const LoadableNotFound = Loadable({
     loader: () =>
         import(
             /* webpackPrefetch: true, webpackChunkName: "LoadableNotFound" */
-            'src/application/pages/NotFound/index').then(
+            'src/application/pages/NotFound').then(
             module => module.default,
         ),
     loading: () => <div>Loading...</div>,

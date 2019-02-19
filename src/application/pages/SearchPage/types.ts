@@ -1,8 +1,8 @@
-import { ISearchPageData, ISearchQuery } from 'src/interfaces/searchPageData/index';
+import { ISearchPageData, ISearchQuery } from 'src/interfaces/searchPageData';
 import { Location } from 'history';
 import { RouteProps } from 'react-router';
-import { WithRouter } from 'src/interfaces/common/index';
-import { ICategory } from 'src/interfaces/category/index';
+import { WithRouter } from 'src/interfaces/common';
+import { ICategory } from 'src/interfaces/category';
 
 export interface ISearchPageProps extends ISearchPageData, RouteProps, WithRouter {
     isLoading: boolean;

@@ -1,5 +1,5 @@
 import { TSalutationVariant } from '@interfaces/customer';
-import { FormattedMessageTemplate } from 'src/helpers/formattedMessageTemplate/index';
+import { FormattedMessageTemplate } from 'src/helpers/formattedMessageTemplate';
 
 const SalutationVariantMrValue = 'Mr';
 const SalutationVariantMrsValue = 'Mrs';

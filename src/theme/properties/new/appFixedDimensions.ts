@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { GridSpacing } from '@material-ui/core/Grid';
-import { baseTheme } from 'src/theme/index';
+import { baseTheme } from 'src/theme';
 
 export interface IAppFixedDimensions {
     card: {

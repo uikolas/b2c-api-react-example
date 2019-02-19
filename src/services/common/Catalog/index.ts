@@ -1,12 +1,12 @@
-import api from 'src/services/api/index';
+import api from 'src/services/api';
 import { parseCatalogSearchResponse } from 'src/helpers/catalog/catalogSearchResponse';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { IProductCard } from 'src/interfaces/product/index';
-import { ISearchQuery } from 'src/interfaces/searchPageData/index';
+import { IProductCard } from 'src/interfaces/product';
+import { ISearchQuery } from 'src/interfaces/searchPageData';
 import { IApiResponseData } from 'src/services/types';
 import { TRowProductResponseIncluded } from 'src/helpers/product/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications/index';
+import { typeNotificationError } from 'src/constants/notifications';
 import {
     sendSearchPendingState,
     sendSearchRejectState,

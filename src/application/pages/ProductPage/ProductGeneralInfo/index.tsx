@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
-import { ProductAvailability } from './ProductAvailability/index';
+import { ProductAvailability } from './ProductAvailability';
 import { AppPrice } from '@application/components/AppPrice';
 import { priceTypeNameOriginal } from '@interfaces/product';
 import { IProductGeneralInfoProps } from './types';

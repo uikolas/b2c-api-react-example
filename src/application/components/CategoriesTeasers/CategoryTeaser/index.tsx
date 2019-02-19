@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography, Grid } from '@material-ui/core';
-import { AppBtnLink } from 'src/application/components/AppBtnLink/index';
+import { AppBtnLink } from 'src/application/components/AppBtnLink';
 import { ICategoryTeaserProps as Props } from './types';
 import { styles } from './styles';
 

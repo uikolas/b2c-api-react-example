@@ -1,5 +1,5 @@
-import { IProductCard } from 'src/interfaces/product/index';
-import { IProductLabelResponse, RangeFacets, ValueFacets } from 'src/interfaces/searchPageData/index';
+import { IProductCard } from 'src/interfaces/product';
+import { IProductLabelResponse, RangeFacets, ValueFacets } from 'src/interfaces/searchPageData';
 
 export interface ICatalogSearchRawResponse {
     data: [{

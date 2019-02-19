@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { NavigationList } from './NavigationList/index';
-import { PartnerLogos } from './PartnerLogos/index';
+import { NavigationList } from './NavigationList';
+import { PartnerLogos } from './PartnerLogos';
 import { categoriesLinks, socialMediaLinks } from './fixtures';
 import { AppLogo } from '@application/components/AppLogo';
-import { SprykerLogoBlack } from './SprykerLogoBlack/index';
+import { SprykerLogoBlack } from './SprykerLogoBlack';
 import { IAppFooterProps as Props } from './types';
 import { styles } from './styles';
 

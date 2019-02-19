@@ -6,7 +6,7 @@ import {
     IUserCartRawResponseOneValue,
     TRowCustomerCartIncludedResponse
 } from 'src/helpers/cart/types';
-import { parseCommonDataInCartResponse } from 'src/helpers/cart/index';
+import { parseCommonDataInCartResponse } from 'src/helpers/cart';
 import { getCartItemBlueprint } from 'src/helpers/cart/item';
 
 // TODO: Maybe it is a copypast of parseUserCartResponseMultiValue && parseUserCartResponseOneValue ???

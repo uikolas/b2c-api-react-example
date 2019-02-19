@@ -1,4 +1,4 @@
-import api, { nodeApi } from 'src/services/api/index';
+import api, { nodeApi } from 'src/services/api';
 import {
     categoriesFulfilledState,
     categoriesPendingState,
@@ -15,11 +15,11 @@ import {
 import { parseStoreResponse } from 'src/helpers/init/store';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/services/types';
-import { ICategory } from 'src/interfaces/category/index';
-import { IInitData } from 'src/interfaces/init/index';
+import { ICategory } from 'src/interfaces/category';
+import { IInitData } from 'src/interfaces/init';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications/index';
+import { typeNotificationError } from 'src/constants/notifications';
 
 export class InitAppService extends ApiServiceAbstract {
     public static async getInitData(dispatch: Function, payload?: IInitApplicationDataPayload): Promise<void> {

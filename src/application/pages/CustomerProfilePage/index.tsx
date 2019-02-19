@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { ICustomerProfilePageProps as Props } from './types';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { UpdateProfile } from './UpdateProfile/index';
-import { ChangePassword } from './ChangePassword/index';
-import { AccountActions } from './AccountActions/index';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
+import { UpdateProfile } from './UpdateProfile';
+import { ChangePassword } from './ChangePassword';
+import { AccountActions } from './AccountActions';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
 

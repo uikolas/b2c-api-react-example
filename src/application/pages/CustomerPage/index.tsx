@@ -2,9 +2,9 @@ import * as React from 'react';
 import { withRouter } from 'react-router';
 import { CustomerPageProps } from './types';
 import { AppMain } from '@application/components/AppMain';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
-import { SideBar } from './SideBar/index';
-import { CustomerRouting } from './CustomerRouting/index';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
+import { SideBar } from './SideBar';
+import { CustomerRouting } from './CustomerRouting';
 import { withStyles, Grid } from '@material-ui/core';
 import { styles } from './styles';
 

@@ -1,5 +1,5 @@
 import { IAddressRawResponseOneValue } from 'src/services/pages/Addresses/types';
-import { IAddressItem } from 'src/interfaces/addresses/index';
+import { IAddressItem } from 'src/interfaces/addresses';
 
 export const parseOneAddressRawResponse = (response: IAddressRawResponseOneValue): IAddressItem | null => {
     if (!response) {

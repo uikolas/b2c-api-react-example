@@ -5,16 +5,16 @@ import { addLocaleData, IntlProvider } from 'react-intl';
 import { withRouter } from 'react-router';
 import { getContentRoutes } from '@application/components/Routes';
 import { pathCategoryPageBase, pathSearchPage } from '@constants/routes';
-import { AppHeader } from 'src/application/containers/AppHeader/index';
-import { AppFooter } from 'src/application/components/AppFooter/index';
-import { getLocaleData } from 'src/helpers/locale/index';
-import { Notifications } from 'src/application/components/Notifications/index';
-import { messages } from 'src/translation/index';
+import { AppHeader } from 'src/application/containers/AppHeader';
+import { AppFooter } from 'src/application/components/AppFooter';
+import { getLocaleData } from 'src/helpers/locale';
+import { Notifications } from 'src/application/components/Notifications';
+import { messages } from 'src/translation';
 import {
     IPageContentProps as Props,
     IPageContentState as State
 } from './types';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
 
 const styles = require('./style.scss');
 const className = styles.pageContent;

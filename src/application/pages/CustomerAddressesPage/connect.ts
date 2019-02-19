@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 
-import { reduxify } from 'src/application/hoc/Reduxify/index';
+import { reduxify } from 'src/application/hoc/Reduxify';
 import { getRouterHistoryPush } from '@helpers/router';
 
 import { IAddressItem } from '@interfaces/addresses';

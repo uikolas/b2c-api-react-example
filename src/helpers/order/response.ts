@@ -6,7 +6,7 @@ import {
     IOrderDetailsResponse,
     IOrderItem,
     IOrderItemResponse,
-} from '../../interfaces/order/index';
+} from '../../interfaces/order';
 
 export const parseGetOrdersCollectionResponse = (data: IOrderCollectionResponse): IOrderCollectionParsed | null => {
     if (!Array.isArray(data.data) || !data.data.length) {

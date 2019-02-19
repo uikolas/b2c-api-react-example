@@ -1,8 +1,8 @@
 import { PRICE_MODE_DEFAULT } from '../../configs/environment';
 import api from '@services/api';
-import { ILocaleItem } from 'src/interfaces/locale/index';
+import { ILocaleItem } from 'src/interfaces/locale';
 import { IStoreRawResponse } from 'src/helpers/init/types';
-import { IInitData } from 'src/interfaces/init/index';
+import { IInitData } from 'src/interfaces/init';
 
 export const parseStoreResponse = (data: IStoreRawResponse): IInitData => {
     const result: IInitData = {

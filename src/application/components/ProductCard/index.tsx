@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { withStyles, Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from '@interfaces/product';
-import { AppPrice } from '../AppPrice/index';
-import { ProductLabel } from 'src/application/components/ProductLabel/index';
+import { AppPrice } from '../AppPrice';
+import { ProductLabel } from 'src/application/components/ProductLabel';
 import { getOneProductImage } from 'src/helpers/product/imageSetsParser';
-import { ClickEvent } from 'src/interfaces/common/index';
+import { ClickEvent } from 'src/interfaces/common';
 import { IProductCardProps as Props } from './types';
 import { styles } from './styles';
 

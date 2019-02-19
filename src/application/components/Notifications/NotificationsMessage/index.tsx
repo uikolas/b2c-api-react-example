@@ -7,7 +7,7 @@ import {
     typeNotificationWarning,
     typeNotificationSuccess,
     typeNotificationError
-} from 'src/constants/notifications/index';
+} from 'src/constants/notifications';
 
 export const NotificationsMessage: Function = (props: INotificationsMessage) => {
     const {type} = props;

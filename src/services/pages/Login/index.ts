@@ -1,21 +1,21 @@
-import api from 'src/services/api/index';
+import api from 'src/services/api';
 import { saveLoginDataToStoreAction } from '@stores/actions/pages/customerProfile';
-import { parseLoginDataResponse } from 'src/helpers/customer/index';
+import { parseLoginDataResponse } from 'src/helpers/customer';
 import {
     loginCustomerFulfilledStateAction,
     loginCustomerPendingStateAction,
     loginCustomerRejectedStateAction,
 } from '@stores/actions/pages/login';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/interfaces/customer/index';
-import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/helpers/localStorage/index';
+import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from 'src/interfaces/customer';
+import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/helpers/localStorage';
 import { IApiResponseData } from 'src/services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,
     typeNotificationError,
     typeNotificationWarning
-} from 'src/constants/notifications/index';
+} from 'src/constants/notifications';
 
 export class PagesLoginService extends ApiServiceAbstract {
     public static async register(ACTION_TYPE: string, dispatch: Function, payload: ICustomerProfile): Promise<void> {

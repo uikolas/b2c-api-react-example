@@ -1,4 +1,4 @@
-import { INavLinkData } from 'src/interfaces/navLinks/index';
+import { INavLinkData } from 'src/interfaces/navLinks';
 import {
     pathCustomerAddressesPage,
     pathCustomerProfilePage,

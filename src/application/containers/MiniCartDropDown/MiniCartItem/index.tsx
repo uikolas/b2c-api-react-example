@@ -3,11 +3,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { AppPrice } from 'src/application/components/AppPrice/index';
+import { AppPrice } from 'src/application/components/AppPrice';
 import { IMiniCartItemProps as Props } from './types';
 import { styles, cartProductImageSize } from './styles';
-import { SquareImage } from 'src/application/components/SquareImage/index';
-import { priceTypeNameOriginal } from 'src/interfaces/product/index';
+import { SquareImage } from 'src/application/components/SquareImage';
+import { priceTypeNameOriginal } from 'src/interfaces/product';
 import { FormattedMessage } from 'react-intl';
 
 export const MiniCartItemComponent: React.SFC<Props> = props => {

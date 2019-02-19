@@ -1,5 +1,5 @@
-import { ICustomerLoginDataParsed, TCustomerId } from 'src/interfaces/customer/index';
-import { TAccessToken } from 'src/interfaces/login/index';
+import { ICustomerLoginDataParsed, TCustomerId } from 'src/interfaces/customer';
+import { TAccessToken } from 'src/interfaces/login';
 import jwtDecoder from 'jwt-decode';
 
 interface ICustomerLoginDataResponse {

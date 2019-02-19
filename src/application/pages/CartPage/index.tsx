@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedPlural, FormattedMessage } from 'react-intl';
 import { CartPageProps } from './types';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
 import { AppMain } from '@application/components/AppMain';
-import { CartRows } from './CartRows/index';
-import { OrderSummary } from './OrderSummary/index';
+import { CartRows } from './CartRows';
+import { OrderSummary } from './OrderSummary';
 import { Grid, Typography, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

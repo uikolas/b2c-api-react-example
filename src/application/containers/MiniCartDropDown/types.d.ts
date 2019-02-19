@@ -1,7 +1,7 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
-import { WithRouter } from 'src/interfaces/common/index';
+import { WithRouter } from 'src/interfaces/common';
 import { styles } from './styles';
-import { TProductQuantity } from 'src/interfaces/product/index';
+import { TProductQuantity } from 'src/interfaces/product';
 
 export interface IMiniCartDropDownProps extends WithStyles<typeof styles>, WithRouter {
     cartItemsQuantity?: TProductQuantity;

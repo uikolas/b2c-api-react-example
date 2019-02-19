@@ -1,4 +1,4 @@
-import { absentProductType, IProductCardImages, IProductPropFullData } from 'src/interfaces/product/index';
+import { absentProductType, IProductCardImages, IProductPropFullData } from 'src/interfaces/product';
 
 export const getCurrentProductDataObject = (
     abstractProduct: IProductPropFullData,

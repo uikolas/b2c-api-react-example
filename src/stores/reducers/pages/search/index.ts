@@ -12,10 +12,10 @@ import {
     IProductsLabeledCollection,
     TLocalizedName,
     TSpellingSuggestion,
-} from 'src/interfaces/searchPageData/index';
+} from 'src/interfaces/searchPageData';
 import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
 import { IPageSearchAction, ISearchState } from 'src/stores/reducers/pages/search/types';
-import { DefaultItemsPerPage } from 'src/constants/search/index';
+import { DefaultItemsPerPage } from 'src/constants/search';
 
 export const initialState: ISearchState = {
     data: {

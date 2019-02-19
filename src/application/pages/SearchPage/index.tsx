@@ -2,25 +2,25 @@ import * as React from 'react';
 import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
 import { withRouter } from 'react-router';
-import { RangeFacets, ISearchQuery } from 'src/interfaces/searchPageData/index';
+import { RangeFacets, ISearchQuery } from 'src/interfaces/searchPageData';
 import { pathCategoryPageBase, pathProductPageBase } from '@constants/routes';
-import { AppPageTitle } from 'src/application/components/AppPageTitle/index';
+import { AppPageTitle } from 'src/application/components/AppPageTitle';
 import { TSprykerRangeSliderName } from 'src/application/components/UI/SprykerRangeSlider/types';
-import { ActiveFiltersList } from 'src/application/pages/SearchPage/ActiveFiltersList/index';
-import { SortPanel } from 'src/application/pages/SearchPage/SortPanel/index';
-import { FoundItems } from 'src/application/pages/SearchPage/FoundItems/index';
-import { SprykerSelect } from 'src/application/components/UI/SprykerSelect/index';
-import { ProductsList } from 'src/application/pages/SearchPage/ProductsList/index';
+import { ActiveFiltersList } from 'src/application/pages/SearchPage/ActiveFiltersList';
+import { SortPanel } from 'src/application/pages/SearchPage/SortPanel';
+import { FoundItems } from 'src/application/pages/SearchPage/FoundItems';
+import { SprykerSelect } from 'src/application/components/UI/SprykerSelect';
+import { ProductsList } from 'src/application/pages/SearchPage/ProductsList';
 import { rangeFilterValueToFront } from 'src/helpers/common/transform';
-import { AppPagination } from 'src/application/components/AppPagination/index';
+import { AppPagination } from 'src/application/components/AppPagination';
 import {
     getFiltersLocalizedNames,
     getRangeFiltersLocalizedNames,
     isValidRangeInput,
     getLabeledCategory,
     getCurrentCategoriesTree
-} from 'src/application/pages/SearchPage/helpers/index';
-import { AppMain } from '../../components/AppMain/index';
+} from 'src/application/pages/SearchPage/helpers';
+import { AppMain } from '../../components/AppMain';
 import {
     filterTypeFilter,
     filterTypeRange,
@@ -34,18 +34,18 @@ import {
     TFilterItemValue,
 } from './types';
 import { connect } from './connect';
-import { SearchIntro } from './SearchIntro/index';
-import { CategoriesList } from './CategoriesList/index';
-import { SearchFilterList } from './SearchFilterList/index';
+import { SearchIntro } from './SearchIntro';
+import { CategoriesList } from './CategoriesList';
+import { SearchFilterList } from './SearchFilterList';
 import { SearchPageContext } from './context';
 import {
     addToQueryActiveRangeFilters,
 } from 'src/application/pages/SearchPage/helpers/queries';
-import { getCategoryNameById } from 'src/helpers/categories/index';
+import { getCategoryNameById } from 'src/helpers/categories';
 import { FormattedMessage } from 'react-intl';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications/index';
-import { Breadcrumbs } from 'src/application/pages/SearchPage/CategoriesBreadcrumbs/index';
+import { typeNotificationError } from 'src/constants/notifications';
+import { Breadcrumbs } from 'src/application/pages/SearchPage/CategoriesBreadcrumbs';
 
 @(withRouter as Function)
 @connect

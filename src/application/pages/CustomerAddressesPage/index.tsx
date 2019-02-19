@@ -6,7 +6,7 @@ import { ClickEvent } from '@interfaces/common';
 import { pathAddressFormNew, pathAddressFormUpdateBase } from '@constants/routes';
 import { CustomerPageTitle } from '@application/components/CustomerPageTitle';
 import { SprykerButton } from '@application/components/UI/SprykerButton';
-import { AddressesList } from './AddressesList/index';
+import { AddressesList } from './AddressesList';
 import { Grid, withStyles } from '@material-ui/core';
 import { styles } from './styles';
 

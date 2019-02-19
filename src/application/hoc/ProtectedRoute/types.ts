@@ -1,5 +1,5 @@
 import { RouteProps } from 'react-router';
-import { WithRouter } from 'src/interfaces/common/index';
+import { WithRouter } from 'src/interfaces/common';
 
 export interface Props extends RouteProps, WithRouter {
     pageTitle?: string;

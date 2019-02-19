@@ -1,6 +1,6 @@
 import { WithStyles } from '@material-ui/core/styles/withStyles';
 import { styles } from './styles';
-import { TOrderCollection } from 'src/interfaces/order/index';
+import { TOrderCollection } from 'src/interfaces/order';
 
 export interface IOrderHistoryPageProps extends WithStyles<typeof styles> {
     getOrdersCollection: Function;

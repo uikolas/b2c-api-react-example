@@ -6,9 +6,9 @@ import { pathCustomerPage, pathForgotPassword } from '@constants/routes';
 import { NavLink } from 'react-router-dom';
 import { withStyles, Grid } from '@material-ui/core';
 import { AppMain } from '@application/components/AppMain';
-import { LoginForm } from './LoginForm/index';
-import { RegisterFormComponent } from './RegisterFormComponent/index';
-import { ErrorBoundary } from '@components/hoc/ErrorBoundary';
+import { LoginForm } from './LoginForm';
+import { RegisterFormComponent } from './RegisterFormComponent';
+import { ErrorBoundary } from '@application/hoc/ErrorBoundary';
 import {
     ILoginPageProps as Props,
 } from './types';

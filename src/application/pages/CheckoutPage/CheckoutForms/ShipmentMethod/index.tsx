@@ -6,7 +6,7 @@ import { getShipmentMethodsFormSettings } from 'src/helpers/formCreations/checko
 import { PartnerIconHermes, PartnerIconDhl } from './icons';
 import { IShippingMethodsParams } from 'src/helpers/formCreations/checkout/types';
 import { IShipmentMethodsGrouped } from 'src/constants/checkout/types';
-import { checkoutFormsNames } from 'src/constants/checkout/index';
+import { checkoutFormsNames } from 'src/constants/checkout';
 import { FormEvent, InputChangeEvent } from '@interfaces/common';
 import { IShipmentMethodProps } from './types';
 import { styles } from './styles';

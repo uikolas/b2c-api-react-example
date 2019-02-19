@@ -1,11 +1,11 @@
-import api from 'src/services/api/index';
+import api from 'src/services/api';
 import { REFRESH_TOKEN_REQUEST } from '@stores/actionTypes/pages/login';
 import { parseLoginDataResponse } from 'src/helpers/customer/loginDataResponse';
-import { saveAccessDataToLocalStorage } from 'src/helpers/localStorage/index';
+import { saveAccessDataToLocalStorage } from 'src/helpers/localStorage';
 import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
 import { IApiResponseData } from 'src/services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
-import { typeNotificationError } from 'src/constants/notifications/index';
+import { typeNotificationError } from 'src/constants/notifications';
 
 export class RefreshTokenService extends ApiServiceAbstract {
     public static async getActualToken(dispatch: Function): Promise<string> {

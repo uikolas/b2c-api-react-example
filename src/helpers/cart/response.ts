@@ -9,7 +9,7 @@ import {
     TRowCustomerCartIncludedResponse,
     IUserCartRawResponseOneValue
 } from 'src/helpers/cart/types';
-import { parseCommonDataInCartResponse } from 'src/helpers/cart/index';
+import { parseCommonDataInCartResponse } from 'src/helpers/cart';
 import { getCartItemBlueprint } from 'src/helpers/cart/item';
 
 export const parseCartCreateResponse = (response: IUserCartRawResponseMultiValue): ICartDataResponse | null => {
