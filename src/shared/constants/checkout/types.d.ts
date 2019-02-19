@@ -1,5 +1,5 @@
 import { IRadioItem } from '@components/components/UI/SprykerForm/types';
-import { IMenuItemSelect } from '@components/components/UI/SprykerSelect/types';
+import { IMenuItemSelect } from 'types.d.ts';
 import { IPaymentMethod, IShipmentMethod } from '@interfaces/checkout';
 import { IAddressItemCollection } from '@interfaces/addresses';
 

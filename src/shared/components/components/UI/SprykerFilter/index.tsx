@@ -1,36 +1,12 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
+import { withStyles, MenuItem, FormControl, Select, Chip } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
-
 import { styles } from './styles';
-import { InputChangeEvent } from 'src/shared/interfaces/common/index';
+import { InputChangeEvent } from 'src/shared/interfaces/common';
+import { ISprykerFilterProps as Props, ISprykerFilterState as State } from './types';
 
-export interface IMenuItemsDropdown {
-    value: string | number;
-    doc_count: string | number;
-}
-
-export interface SprykerFilterProps extends WithStyles<typeof styles> {
-    attributeName?: string;
-    handleChange?: Function;
-    menuItems?: IMenuItemsDropdown[];
-    activeValues?: string[];
-    extraClassName?: string;
-    isShowSelected?: boolean;
-    handleClose?: Function;
-    title?: string;
-}
-
-interface SprykerFilterState {
-    isOpen: boolean;
-}
-
-export class SprykerFilter extends React.Component<SprykerFilterProps, SprykerFilterState> {
-    public state: SprykerFilterState = {
+export class SprykerFilter extends React.Component<Props, State> {
+    public state: State = {
         isOpen: false,
     };
 

@@ -1,16 +1,13 @@
 import * as React from 'react';
-
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-
+import { withStyles, Grid } from '@material-ui/core';
 import { sprykerFormStyles } from 'src/shared/components/components/UI/SprykerForm/sprykerFormStyles';
-import { IFormField, ISprykerFormProps } from 'src/shared/components/components/UI/SprykerForm/types';
-import { FieldTextInput } from 'src/shared/components/components/UI/SprykerForm/FieldTextInput/index';
-import { SprykerSelect } from 'src/shared/components/components/UI/SprykerSelect/index';
-import { FieldCheckbox } from 'src/shared/components/components/UI/SprykerForm/FieldCheckbox/index';
-import { FieldRadio } from 'src/shared/components/components/UI/SprykerForm/FieldRadio/index';
+import { FieldTextInput } from 'src/shared/components/components/UI/SprykerForm/FieldTextInput';
+import { SprykerSelect } from 'src/shared/components/components/UI/SprykerSelect';
+import { FieldCheckbox } from 'src/shared/components/components/UI/SprykerForm/FieldCheckbox';
+import { FieldRadio } from 'src/shared/components/components/UI/SprykerForm/FieldRadio';
+import { IFormField, ISprykerFormProps as Props } from './types';
 
-export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Element => {
+export const SprykerFormBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         form: {
@@ -19,78 +16,78 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
             onSubmitHandler,
             onBlurHandler,
             fields,
-            controlsGroupClassName,
+            controlsGroupClassName
         },
         formClassName,
-        SubmitButton,
+        SubmitButton
     } = props;
 
     const isRowsExist = (fields.length > 0);
 
     const getTextInput = (field: IFormField) => (
         <FieldTextInput
-            formName={formName}
-            inputName={field.inputName}
-            inputValue={field.inputValue}
-            inputType={field.inputType}
-            isRequired={field.isRequired ? field.isRequired : false}
-            onChangeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
-            onBlurHandler={field.onBlurOwnHandler ? field.onBlurOwnHandler : onBlurHandler}
-            label={field.label ? field.label : null}
-            isError={field.isError ? field.isError : false}
+            formName={ formName }
+            inputName={ field.inputName }
+            inputValue={ field.inputValue }
+            inputType={ field.inputType }
+            isRequired={ field.isRequired ? field.isRequired : false }
+            onChangeHandler={ field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler }
+            onBlurHandler={ field.onBlurOwnHandler ? field.onBlurOwnHandler : onBlurHandler }
+            label={ field.label ? field.label : null }
+            isError={ field.isError ? field.isError : false }
         />
     );
 
     const getSelectField = (field: IFormField) => (
         <SprykerSelect
-            currentMode={field.inputValue}
-            changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
-            menuItems={field.menuItems}
-            name={field.inputName}
-            label={field.label ? field.label : null}
-            selectClassName={classes.input}
-            isFullWidth={true}
-            isRequired={field.isRequired ? field.isRequired : false}
-            menuItemFirst={field.menuItemFirst ? field.menuItemFirst : null}
-            extraTitleClassName={`${classes.selectLabel} ${classes.label}`}
-            extraFormControlClassName={classes.selectFormControlClassName}
-            extraRootClassName={classes.selectRoot}
-            extraInputRootClassName={classes.selectInputRoot}
-            extraSelectFieldClassName={classes.inputRoot}
+            currentMode={ field.inputValue }
+            changeHandler={ field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler }
+            menuItems={ field.menuItems }
+            name={ field.inputName }
+            label={ field.label ? field.label : null }
+            selectClassName={ classes.input }
+            isFullWidth={ true }
+            isRequired={ field.isRequired ? field.isRequired : false }
+            menuItemFirst={ field.menuItemFirst ? field.menuItemFirst : null }
+            extraTitleClassName={ `${classes.selectLabel} ${classes.label}` }
+            extraFormControlClassName={ classes.selectFormControlClassName }
+            extraRootClassName={ classes.selectRoot }
+            extraInputRootClassName={ classes.selectInputRoot }
+            extraSelectFieldClassName={ classes.inputRoot }
         />
     );
 
     const getCheckboxField = (field: IFormField) => (
         <FieldCheckbox
-            inputName={field.inputName}
-            label={field.label ? field.label : null}
-            isChecked={field.inputValue}
-            changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
+            inputName={ field.inputName }
+            label={ field.label ? field.label : null }
+            isChecked={ field.inputValue }
+            changeHandler={ field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler }
         />
     );
 
     const getRadioField = (field: IFormField) => (
         <FieldRadio
-            inputName={field.inputName}
-            currentMode={field.inputValue}
-            radioItems={field.radioItems}
-            label={field.label ? field.label : null}
-            labelIcon={field.labelIcon ? field.labelIcon : null}
-            isItemsInRow={field.isItemsInRow}
-            changeHandler={field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler}
+            inputName={ field.inputName }
+            currentMode={ field.inputValue }
+            radioItems={ field.radioItems }
+            label={ field.label ? field.label : null }
+            labelIcon={ field.labelIcon ? field.labelIcon : null }
+            isItemsInRow={ field.isItemsInRow }
+            changeHandler={ field.onChangeOwnHandler ? field.onChangeOwnHandler : onChangeHandler }
         />
     );
 
     return (
         <form
-            className={`${classes.form} ${formClassName ? formClassName : ''}`}
+            className={ `${classes.form} ${formClassName ? formClassName : ''}` }
             noValidate
             autoComplete="off"
-            onSubmit={onSubmitHandler}
-            id={`${formName}`}
-            name={`${formName}`}
+            onSubmit={ onSubmitHandler }
+            id={ `${formName}` }
+            name={ `${formName}` }
         >
-            {isRowsExist && fields.map((row: IFormField[], indexRow: number) => {
+            { isRowsExist && fields.map((row: IFormField[], indexRow: number) => {
                 const isFieldsExist = (row.length > 0);
 
                 return (
@@ -98,11 +95,11 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                         container
                         justify="flex-start"
                         alignItems="flex-end"
-                        className={`${classes.controlsGroup} ${controlsGroupClassName ? controlsGroupClassName : ''}`}
-                        key={`${formName}-${row[0].inputName}`}
-                        data-form-row={indexRow}
+                        className={ `${classes.controlsGroup} ${controlsGroupClassName ? controlsGroupClassName : ''}` }
+                        key={ `${formName}-${row[0].inputName}` }
+                        data-form-row={ indexRow }
                     >
-                        {isFieldsExist && row.map((field: IFormField, indexColumn: number) => {
+                        { isFieldsExist && row.map((field: IFormField, indexColumn: number) => {
                             let fieldComponent: JSX.Element | null;
                             if (field.type === 'input') {
                                 fieldComponent = getTextInput(field);
@@ -119,23 +116,23 @@ export const SprykerFormBase: React.SFC<ISprykerFormProps> = (props): JSX.Elemen
                             return (
                                 <Grid
                                     item
-                                    xs={12}
-                                    sm={field.spaceNumber}
+                                    xs={ 12 }
+                                    sm={ field.spaceNumber }
                                     className={
                                         `${classes.control}
                                         ${field.spaceNumber === 12 ? classes.controlFullWidth : ''}`
                                     }
-                                    key={field.inputName}
-                                    data-form-column={`${indexRow}-${indexColumn}`}
+                                    key={ field.inputName }
+                                    data-form-column={ `${indexRow}-${indexColumn}` }
                                 >
-                                    {fieldComponent}
+                                    { fieldComponent }
                                 </Grid>
                             );
-                        })}
+                        }) }
                     </Grid>
                 );
-            })}
-            {SubmitButton || null}
+            }) }
+            { SubmitButton || null }
         </form>
     );
 };

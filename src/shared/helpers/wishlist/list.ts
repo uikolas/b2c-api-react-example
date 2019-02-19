@@ -1,4 +1,3 @@
-import { IMenuItemsDropdown } from '../../components/components/UI/DropdownControlled';
 import { IWishlist } from '../../interfaces/wishlist';
 import { IMenuItemSelect } from 'src/shared/components/components/UI/SprykerSelect/types';
 

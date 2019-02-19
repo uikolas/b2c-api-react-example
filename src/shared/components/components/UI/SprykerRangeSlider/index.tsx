@@ -1,34 +1,22 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-
-import Grid from '@material-ui/core/Grid';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
+import {
+    withStyles,
+    Grid,
+    ExpansionPanel,
+    ExpansionPanelSummary,
+    ExpansionPanelDetails,
+    Typography
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { createSliderWithTooltip, Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
-
+import { ISprykerRangeSliderProps as Props } from './types';
 import { styles } from './styles';
-import { TSprykerRangeSliderValue } from 'src/shared/components/components/UI/SprykerRangeSlider/types';
-
-export interface SprykerRangeSliderProps extends WithStyles<typeof styles> {
-    title: string;
-    attributeName: string;
-    handleChange: (name: string, {min, max}: TSprykerRangeSliderValue) => void;
-    handleAfterChange: (value: number[]) => void;
-    min: number;
-    max: number;
-    currentValue?: { min: number, max: number };
-    valueFormatter?: Function | null;
-    extraClassName?: string;
-}
 
 const WithTooltipRange = createSliderWithTooltip(Range);
 
-export const SprykerRangeSliderBase: React.SFC<SprykerRangeSliderProps> = (props): JSX.Element => {
+export const SprykerRangeSliderBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         title,

@@ -1,37 +1,11 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Typography from '@material-ui/core/Typography';
-import { ChevronLeft } from '@material-ui/icons';
-import InputLabel from '@material-ui/core/InputLabel';
-import { styles } from './styles';
-import { IMenuItemFirst, IMenuItemSelect } from 'src/shared/components/components/UI/SprykerSelect/types';
 import { FormattedMessage } from 'react-intl';
+import { withStyles, Grid, Select, MenuItem, FormControl, Typography, InputLabel } from '@material-ui/core';
+import { ChevronLeft } from '@material-ui/icons';
+import { styles } from './styles';
+import { ISprykerSelectProps as Props } from './types';
 
-export interface SprykerSelectProps extends WithStyles<typeof styles> {
-    currentMode: string | number | boolean;
-    changeHandler: (event: React.ChangeEvent<HTMLSelectElement>, child: React.ReactNode) => void;
-    name: string;
-    menuItems: IMenuItemSelect[];
-    menuItemFirst?: IMenuItemFirst | null;
-    title?: string;
-    label?: string;
-    extraLabelClassName?: string;
-    isRequired?: boolean;
-    isFullWidth?: boolean;
-    extraTitleClassName?: string;
-    selectClassName?: string;
-    menuItemClassName?: string;
-    extraRootClassName?: string;
-    extraFormControlClassName?: string;
-    extraInputRootClassName?: string;
-    extraSelectFieldClassName?: string;
-}
-
-export const SprykerSelectBase: React.SFC<SprykerSelectProps> = (props): JSX.Element => {
+export const SprykerSelectBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         currentMode,

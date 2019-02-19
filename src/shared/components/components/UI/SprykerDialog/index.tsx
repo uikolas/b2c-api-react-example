@@ -1,28 +1,19 @@
 import * as React from 'react';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slide from '@material-ui/core/Slide';
-import { styles } from './styles';
+import {
+    withStyles,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Slide
+} from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
+import { ISprykerDialogProps as Props } from './types';
+import { styles } from './styles';
 
-interface SprykerDialogProps extends WithStyles<typeof styles> {
-    title?: string;
-    content: string;
-    extraClasses?: string;
-    handleShow: (event: React.SyntheticEvent<{}>) => void;
-    handleAgree: (event: React.MouseEvent<HTMLElement>) => void;
-    handleDisagree: (event: React.MouseEvent<HTMLElement>) => void;
-    isOpen: boolean;
-    titleAgree?: string;
-    titleDisagree?: string;
-}
-
-export const SprykerDialogBase: React.SFC<SprykerDialogProps> = (props): JSX.Element => {
+export const SprykerDialogBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         extraClasses = '',
@@ -36,7 +27,7 @@ export const SprykerDialogBase: React.SFC<SprykerDialogProps> = (props): JSX.Ele
         titleDisagree = <FormattedMessage id={ 'word.disagree.title' } />,
     } = props;
 
-    const Transition = (props: SprykerDialogProps) => (
+    const Transition = (props: Props) => (
         <Slide direction="up" {...props} />
     );
 

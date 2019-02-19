@@ -1,11 +1,10 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import TextField from '@material-ui/core/TextField';
-import { IFieldTextInputProps } from 'src/shared/components/components/UI/SprykerForm/FieldTextInput/types';
+import { withStyles, TextField } from '@material-ui/core';
+import { IFieldTextInputProps as Props } from './types';
 import { sprykerFormStyles } from 'src/shared/components/components/UI/SprykerForm/sprykerFormStyles';
 import { FormattedMessage } from 'react-intl';
 
-export const FieldTextInputBase: React.SFC<IFieldTextInputProps> = (props): JSX.Element => {
+export const FieldTextInputBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         inputValue,

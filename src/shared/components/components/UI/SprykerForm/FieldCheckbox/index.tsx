@@ -1,13 +1,9 @@
 import * as React from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-
+import { withStyles, Checkbox, FormControlLabel } from '@material-ui/core';
 import { sprykerFormStyles } from 'src/shared/components/components/UI/SprykerForm/sprykerFormStyles';
-import { IFieldCheckboxProps } from 'src/shared/components/components/UI/SprykerForm/FieldCheckbox/types';
+import { IFieldCheckboxProps as Props } from './types';
 
-export const FieldCheckboxBase: React.SFC<IFieldCheckboxProps> = (props): JSX.Element => {
+export const FieldCheckboxBase: React.SFC<Props> = (props): JSX.Element => {
     const {
         classes,
         inputName,
