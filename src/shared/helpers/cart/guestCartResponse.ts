@@ -52,11 +52,14 @@ export const parseGuestCartResponse = (response: IUserCartRawResponseOneValue): 
                     result[row.id].availableQuantity = row.attributes.quantity;
                 } else {
                     if (row.type === 'guest-cart-items') {
-                        result[row.id].sku = row.id;
-                        result[row.id].quantity = row.attributes.quantity;
-                        result[row.id].amount = row.attributes.amount;
-                        result[row.id].calculations = row.attributes.calculations;
-                        result[row.id].groupKey = row.attributes.groupKey;
+                        result[row.id] = {
+                            ...result[row.id],
+                            sku: row.id,
+                            quantity: row.attributes.quantity,
+                            amount: row.attributes.amount,
+                            calculations: row.attributes.calculations,
+                            groupKey: row.attributes.groupKey
+                        };
                         totalQty += row.attributes.quantity;
                     }
                 }
