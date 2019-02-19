@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 import { connect } from './connect';
-import { pathCustomerPage, pathForgotPassword } from 'src/shared/routes/contentRoutes';
+import { pathCustomerPage, pathForgotPassword } from '@constants/routes';
 import { NavLink } from 'react-router-dom';
 import { withStyles, Grid } from '@material-ui/core';
 import { AppMain } from '@components/components/AppMain';

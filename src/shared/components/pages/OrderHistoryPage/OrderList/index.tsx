@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { formatDateToString } from 'src/shared/helpers/common/dates';
 import { appFixedDimensions } from 'src/shared/theme/properties/new/appFixedDimensions';
-import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
+import { pathOrderDetailsPageBase } from '@constants/routes';
 import { AppPrice } from '@components/components/AppPrice';
 import { AppTable } from '@components/components/AppTable';
 import { IOrderListProps as Props } from '@components/pages/OrderHistoryPage/OrderList/types';

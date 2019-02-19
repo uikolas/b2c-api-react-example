@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { pathProductPageBase } from '@routes/contentRoutes';
+import { pathProductPageBase } from '@constants/routes';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { NavLink } from 'react-router-dom';

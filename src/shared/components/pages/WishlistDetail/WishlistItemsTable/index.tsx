@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { createCartItemAddToCart } from '@helpers/cart';
-import { pathProductPageBase } from '@routes/contentRoutes';
+import { pathProductPageBase } from '@constants/routes';
 import { WishListItemsTableProps, WishListItemsTableState, ItemPrices } from './types';
 import { ClickEvent } from '@interfaces/common';
 import { IWishlistProduct } from '@interfaces/wishlist';

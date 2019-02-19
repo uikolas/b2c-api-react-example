@@ -3,7 +3,7 @@ import { connect } from './connect';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 import { withStyles, Badge, Tooltip } from '@material-ui/core';
-import { pathCartPage } from 'src/shared/routes/contentRoutes';
+import { pathCartPage } from '@constants/routes';
 import { PopoverWrapper } from '@components/components/PopoverWrapper';
 import { BreakpointsSM } from 'src/shared/constants/breakpoints';
 import { MiniCartDrop } from './MiniCartDrop';

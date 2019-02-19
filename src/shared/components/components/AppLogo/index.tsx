@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { pathHomePage } from 'src/shared/routes/contentRoutes';
+import { pathHomePage } from '@constants/routes';
 import { ILogoProps as Props } from './types';
 import { DefaultLogo } from './icons';
 import { styles } from './styles';

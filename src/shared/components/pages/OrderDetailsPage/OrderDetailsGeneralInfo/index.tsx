@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { pathOrderHistoryPage } from 'src/shared/routes/contentRoutes';
+import { pathOrderHistoryPage } from '@constants/routes';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Grid, Typography } from '@material-ui/core';

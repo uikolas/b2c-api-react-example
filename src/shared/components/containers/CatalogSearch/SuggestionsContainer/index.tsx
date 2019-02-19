@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from './connect';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { pathCategoryPageBase, pathSearchPage } from '@routes/contentRoutes';
+import { pathCategoryPageBase, pathSearchPage } from '@constants/routes';
 import { getCategoryIdByName } from '@helpers/categories';
 import {
     withStyles,

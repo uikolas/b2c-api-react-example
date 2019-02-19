@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-import { pathOrderDetailsPageBase } from 'src/shared/routes/contentRoutes';
+import { pathOrderDetailsPageBase } from '@constants/routes';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DoneIcon from '@material-ui/icons/Done';
 import { CustomerPageTitle } from '@components/components/CustomerPageTitle';

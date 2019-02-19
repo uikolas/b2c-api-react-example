@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import * as qs from 'query-string';
 import { withRouter } from 'react-router';
 import { RangeFacets, ISearchQuery } from 'src/shared/interfaces/searchPageData';
-import { pathCategoryPageBase, pathProductPageBase } from 'src/shared/routes/contentRoutes';
+import { pathCategoryPageBase, pathProductPageBase } from '@constants/routes';
 import { AppPageTitle } from 'src/shared/components/components/AppPageTitle';
 import { TSprykerRangeSliderName } from 'src/shared/components/components/UI/SprykerRangeSlider/types';
 import { ActiveFiltersList } from 'src/shared/components/pages/SearchPage/ActiveFiltersList';

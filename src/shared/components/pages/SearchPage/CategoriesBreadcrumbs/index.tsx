@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { pathCategoryPageBase, pathHomePage } from '@routes/contentRoutes';
+import { pathCategoryPageBase, pathHomePage } from '@constants/routes';
 import { NavLink } from 'react-router-dom';
 import { IBreadcrumbItem } from '@interfaces/category';
 import { WithStyles } from '@material-ui/core';

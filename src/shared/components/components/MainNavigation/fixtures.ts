@@ -5,7 +5,7 @@ import {
     pathCategorySale,
     pathCategoryTablets,
     pathCategoryWorkstations
-} from 'src/shared/routes/categoriesRoutes';
+} from 'src/shared/constants/routes/index';
 
 export const fixtures = [
     {

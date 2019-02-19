@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { pathLoginPage } from 'src/shared/routes/contentRoutes';
+import { pathLoginPage } from '@constants/routes';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
 import { customerProfileNavLinks } from 'src/shared/constants/navLinks';

@@ -13,7 +13,7 @@ import {
     TActiveRangeFilters
 } from 'src/shared/components/pages/SearchPage/types';
 import { IActiveFilterCategories } from 'src/shared/components/pages/SearchPage/CategoriesList/types';
-import { labeledCategories } from 'src/shared/routes/categoriesRoutes';
+import { labeledCategories } from 'src/shared/constants/routes/index';
 import { ICategory, IBreadcrumbItem } from '@interfaces/category';
 
 export const isValidRangeInput = (

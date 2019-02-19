@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { Sticky, StickyChildArgs } from 'react-sticky';
 import debounce from 'lodash/debounce';
-import { pathCheckoutPage } from 'src/shared/routes/contentRoutes';
+import { pathCheckoutPage } from '@constants/routes';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CatalogSearch from '@components/containers/CatalogSearch';
 import { AppLogo } from '@components/components/AppLogo';

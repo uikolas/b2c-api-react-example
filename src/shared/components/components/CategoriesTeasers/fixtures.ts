@@ -4,7 +4,7 @@ import {
     pathCategoryNotebooks,
     pathCategoryTablets,
     pathCategoryWorkstations
-} from 'src/shared/routes/categoriesRoutes';
+} from 'src/shared/constants/routes/index';
 
 const computersSrc = require('./img/computers-min.jpg');
 const notebooksSrc = require('./img/notebooks-min.jpg');

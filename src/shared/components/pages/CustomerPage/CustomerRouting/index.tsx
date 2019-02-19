@@ -10,7 +10,7 @@ import {
     pathOrderHistoryPage,
     pathWishlistDetailPage,
     pathWishlistsPage,
-} from '@routes/contentRoutes';
+} from '@constants/routes';
 import { LoadableOrderHistoryPage } from '@components/pages/OrderHistoryPage/loadable';
 import { LoadableCustomerAddressPage } from '@components/pages/CustomerAddressesPage/loadable';
 import { LoadableWishlistPage } from '@components/pages/WishListPage/loadable';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from './connect';
-import { pathCartPage, pathCheckoutPage } from 'src/shared/routes/contentRoutes';
+import { pathCartPage, pathCheckoutPage } from '@constants/routes';
 import { FormattedMessage } from 'react-intl';
 import { withStyles, Typography } from '@material-ui/core';
 import { AppPrice } from 'src/shared/components/components/AppPrice';

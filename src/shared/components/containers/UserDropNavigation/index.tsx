@@ -3,7 +3,7 @@ import { connect } from './connect';
 import { withRouter } from 'react-router';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton/IconButton';
-import { pathCustomerPage, pathCustomerProfilePage, pathLoginPage } from 'src/shared/routes/contentRoutes';
+import { pathCustomerPage, pathCustomerProfilePage, pathLoginPage } from '@constants/routes';
 import { UserDrop } from './UserDrop';
 import { PopoverWrapper } from 'src/shared/components/components/PopoverWrapper';
 import { BreakpointsSM } from 'src/shared/constants/breakpoints';

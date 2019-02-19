@@ -7,7 +7,7 @@ import { IWishlist } from '@interfaces/wishlist';
 import { ICellInfo, ITableRow } from '@components/components/AppTable/types';
 import { AppTable } from '@components/components/AppTable';
 import { NavLink } from 'react-router-dom';
-import { pathWishlistPageBase } from '@routes/contentRoutes';
+import { pathWishlistPageBase } from '@constants/routes';
 import { Paper, Divider, Typography, TextField, IconButton, withStyles } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { styles } from './styles';

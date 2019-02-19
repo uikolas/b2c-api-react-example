@@ -3,7 +3,7 @@ import * as qs from 'query-string';
 import { connect } from './connect';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import { pathSearchPage } from '@routes/contentRoutes';
+import { pathSearchPage } from '@constants/routes';
 import { TextField, InputAdornment, IconButton } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { IInputComponentProps as Props, IInputComponentState as State } from './types';

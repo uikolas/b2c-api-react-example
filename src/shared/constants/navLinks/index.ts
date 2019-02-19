@@ -4,7 +4,7 @@ import {
     pathCustomerProfilePage,
     pathOrderHistoryPage,
     pathWishlistsPage
-} from 'src/shared/routes/contentRoutes';
+} from '@constants/routes';
 
 export const customerProfileNavLinks: INavLinkData[] = [
     { path: pathCustomerProfilePage, title: 'word.profile.title' },

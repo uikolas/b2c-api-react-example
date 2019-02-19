@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, withRouter } from 'react-router';
 import { Props } from './types';
 import { connect } from './connect';
-import { pathLoginPage } from '../../../routes/contentRoutes';
+import { pathLoginPage } from '@constants/routes';
 import { NotificationsMessage } from '@components/components/Notifications/NotificationsMessage';
 import { typeNotificationSuccess } from 'src/shared/constants/notifications/index';
 
