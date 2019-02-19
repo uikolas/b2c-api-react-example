@@ -1,4 +1,4 @@
-import { reduxify } from 'src/shared/lib/redux-helper';
+import { reduxify } from 'src/shared/components/hoc/Reduxify/index';
 import { switchLocaleAction } from '@stores/actions/common/init';
 import { getAppLocale } from '@stores/reducers/common/init';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';

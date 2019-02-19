@@ -1,5 +1,5 @@
 import { getAppLocale, getCategoriesTree } from '@stores/reducers/common/init';
-import { reduxify } from 'src/shared/lib/redux-helper';
+import { reduxify } from 'src/shared/components/hoc/Reduxify/index';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { ICategory } from 'src/shared/interfaces/category/index';
 

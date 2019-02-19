@@ -1,4 +1,4 @@
-import { reduxify } from 'src/shared/lib/redux-helper';
+import { reduxify } from 'src/shared/components/hoc/Reduxify/index';
 import { getTotalItemsQuantity, getTotalProductsQuantity } from '@stores/reducers/common/cart/selectors';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { getAppLocale } from '@stores/reducers/common/init';

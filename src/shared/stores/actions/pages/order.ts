@@ -1,5 +1,5 @@
 import { ORDER_DETAILS_REQUEST, ORDERS_COLLECTION_REQUEST } from '@stores/actionTypes/pages/order';
-import { OrderService } from '@services/Pages/Order';
+import { OrderService } from '@services/pages/Order';
 import { IOrderCollectionParsed, IOrderDetailsParsed, TOrderId } from '@interfaces/order';
 import { IPageOrderHistoryAction } from '@stores/reducers/pages/orderHistory/types';
 import { IPageOrderDetailsAction } from '@stores/reducers/pages/orderDetails/types';

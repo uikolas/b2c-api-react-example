@@ -1,27 +1,27 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
-import { ProtectedRoute } from './ProtectedRoute';
+import { ProtectedRoute } from '@components/hoc/ProtectedRoute';
 
-import { LoadableHomePage } from '../components/Pages/HomePage/loadable';
-import { LoadableLoginPage } from '../components/Pages/LoginPage/loadable';
-import { LoadablePasswordForgotPage } from '../components/Pages/ForgotPasswordPage/loadable';
-import { LoadablePasswordResetPage } from '../components/Pages/ResetPasswordPage/loadable';
-import { LoadableSearchPage } from '../components/Pages/SearchPage/loadable';
-import { LoadableProductPage } from '../components/Pages/ProductPage/loadable';
-import { LoadableCartPage } from '../components/Pages/CartPage/loadable';
-import { LoadableCustomerPage } from '../components/Pages/CustomerPage/loadable';
-import { LoadableNotFound } from '../components/Pages/NotFound/loadable';
+import { LoadableHomePage } from '../components/pages/HomePage/loadable';
+import { LoadableLoginPage } from '../components/pages/LoginPage/loadable';
+import { LoadablePasswordForgotPage } from '../components/pages/ForgotPasswordPage/loadable';
+import { LoadablePasswordResetPage } from '../components/pages/ResetPasswordPage/loadable';
+import { LoadableSearchPage } from '../components/pages/SearchPage/loadable';
+import { LoadableProductPage } from '../components/pages/ProductPage/loadable';
+import { LoadableCartPage } from '../components/pages/CartPage/loadable';
+import { LoadableCustomerPage } from '../components/pages/CustomerPage/loadable';
+import { LoadableNotFound } from '../components/pages/NotFound/loadable';
 
-import { LoadableWishlistPage } from '../components/Pages/WishlistPage/loadable';
-import { LoadableWishlistDetail } from '../components/Pages/WishlistDetail/loadable';
+import { LoadableWishlistPage } from '../components/pages/WishlistPage/loadable';
+import { LoadableWishlistDetail } from '../components/pages/WishlistDetail/loadable';
 
-import { LoadableCheckoutPage } from 'src/shared/components/Pages/CheckoutPage/loadable';
+import { LoadableCheckoutPage } from 'src/shared/components/pages/CheckoutPage/loadable';
 
 import config from '../configs/server';
 import { AppMain } from 'src/shared/components/Common/AppMain/index';
-import { LoadableOrderDetailsPage } from 'src/shared/components/Pages/OrderDetailsPage/loadable';
-import { CustomerAddressForm } from '@components/Pages/CustomerAddressForm';
+import { LoadableOrderDetailsPage } from 'src/shared/components/pages/OrderDetailsPage/loadable';
+import { CustomerAddressForm } from '@components/pages/CustomerAddressForm';
 
 export const pathHomePage = `${config.WEB_PATH}`;
 export const pathSearchPage = `${config.WEB_PATH}search`;

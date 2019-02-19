@@ -1,9 +1,9 @@
 import {
     ICheckoutFormsProps,
-} from '@components/Pages/CheckoutPage/CheckoutForms/types';
+} from '@components/pages/CheckoutPage/CheckoutForms/types';
 import {
     ICheckoutPageProps
-} from '@components/Pages/CheckoutPage/types';
+} from '@components/pages/CheckoutPage/types';
 import {
     ICheckoutAddressState,
     ICheckoutStepsCompletionState
@@ -16,7 +16,7 @@ import {
 } from 'src/shared/constants/checkout/types';
 import { checkoutSelectionInputs } from 'src/shared/constants/checkout';
 import { RegExpZipCode } from 'src/shared/constants/forms/regexp';
-import { FormattedMessageTemplate } from 'src/shared/lib/formatted-message-template';
+import { FormattedMessageTemplate } from 'src/shared/helpers/formattedMessageTemplate/index';
 
 export const addressDefault: IAddressItem = {
     firstName: '',

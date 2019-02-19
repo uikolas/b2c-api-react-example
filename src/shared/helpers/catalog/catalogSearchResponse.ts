@@ -12,7 +12,7 @@ import {
     rangeMaxType,
     TActiveFilters,
     TActiveRangeFilters
-} from '@components/Pages/SearchPage/types';
+} from '@components/pages/SearchPage/types';
 
 export const parseCatalogSearchResponse = (response: ICatalogSearchRawResponse): ICatalogSearchDataParsed | null => {
     if (!response) {

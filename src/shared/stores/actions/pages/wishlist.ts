@@ -7,7 +7,7 @@ import {
     UPDATE_WISHLIST,
     WISHLIST_ALL_LISTS,
 } from '@stores/actionTypes/pages/wishlist';
-import { WishlistService } from '@services/Pages/Wishlist';
+import { WishlistService } from '@services/pages/Wishlist';
 import { TWishlistId } from 'src/shared/interfaces/wishlist';
 
 export const getAllListPendingState = {

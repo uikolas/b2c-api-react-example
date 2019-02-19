@@ -16,7 +16,7 @@ import {
     CHECKOUT_MUTATE_CREDIT_CARD_FORM,
     CHECKOUT_MUTATE_INVOICE_FORM
 } from '@stores/actionTypes/pages/checkout';
-import { CheckoutService } from '@services/Pages/Checkout';
+import { CheckoutService } from '@services/pages/Checkout';
 import {
     ICheckoutRequest,
     IFormFieldMutate,

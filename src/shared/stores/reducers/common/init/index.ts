@@ -1,6 +1,6 @@
 import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/common/init';
 import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { ICartCreatePayload } from '../../../../services/Common/Cart/types';
+import { ICartCreatePayload } from '../../../../services/common/Cart/types';
 import { IReduxOwnProps, IReduxStore } from 'src/shared/stores/reducers/types';
 import { IApiErrorResponse } from 'src/shared/services/types';
 import { TAppTimeZone } from 'src/shared/interfaces/locale/index';

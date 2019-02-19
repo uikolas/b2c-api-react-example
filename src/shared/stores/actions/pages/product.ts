@@ -1,7 +1,7 @@
 import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '@stores/actionTypes/pages/product';
-import { ProductService } from '@services/Pages/Product';
+import { ProductService } from '@services/pages/Product';
 import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from '@interfaces/product';
-import { IPageProductAction } from '@stores/reducers/Pages/Product/types';
+import { IPageProductAction } from '@stores/reducers/pages/Product/types';
 
 export const getProductDataItemPendingStateAction = (): IPageProductAction => ({
     type: PAGES_PRODUCT_REQUEST + '_PENDING',

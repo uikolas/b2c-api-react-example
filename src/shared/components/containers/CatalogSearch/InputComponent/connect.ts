@@ -1,6 +1,6 @@
 import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'react-router-redux';
-import { reduxify } from 'src/shared/lib/redux-helper';
+import { reduxify } from 'src/shared/components/hoc/Reduxify/index';
 import { sendSearchAction } from '@stores/actions/pages/search';
 import { getAppCurrency } from '@stores/reducers/common/init';
 import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';

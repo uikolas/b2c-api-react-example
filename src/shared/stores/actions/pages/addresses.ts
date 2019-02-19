@@ -7,7 +7,7 @@ import {
     GET_ONE_ADDRESS
 } from '@stores/actionTypes/pages/addresses';
 import { IAddressItem } from '@interfaces/addresses';
-import { AddressesService } from '@services/Pages/Addresses';
+import { AddressesService } from '@services/pages/Addresses';
 
 export const getAllListPendingState = {
     type: ADDRESSES_LIST + '_PENDING',
