@@ -1,4 +1,4 @@
-import { baseTheme } from '@theme';
+import { baseTheme } from '@theme/';
 import { appFixedDimensions } from '@theme/properties/new/appFixedDimensions';
 
 export interface IAppContainerStyles {
