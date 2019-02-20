@@ -14,7 +14,7 @@ import { styles } from './styles';
 export class CustomerAddressBase extends React.Component<Props, State> {
     public state: State = {};
 
-    public componentDidMount() {
+    public componentDidMount = (): void => {
         this.props.setCurrentAddressAction(null);
 
         this.initRequestData();

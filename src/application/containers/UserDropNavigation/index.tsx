@@ -20,7 +20,7 @@ export class UserDropNavigationComponent extends React.Component<Props, State> {
         anchorElement: null
     };
 
-    public componentDidUpdate(prevProps: Props): void {
+    public componentDidUpdate = (prevProps: Props): void => {
         if (this.props.location !== prevProps.location) {
             this.closePopover();
         }

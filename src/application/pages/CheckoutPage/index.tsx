@@ -28,7 +28,7 @@ export class CheckoutPageBase extends React.Component<Props, State> {
         isButtonDisabled: true
     };
 
-    public componentDidMount(): void {
+    public componentDidMount = (): void => {
         if (this.props.isUserLoggedIn) {
             this.props.getCheckoutData({ idCart: this.props.cartId }, '');
         } else {

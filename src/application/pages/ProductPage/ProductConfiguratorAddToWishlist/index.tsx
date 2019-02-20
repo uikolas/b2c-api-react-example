@@ -22,11 +22,11 @@ export class ProductConfiguratorAddToWishlistBase extends React.Component<Props,
         wishlistSelected: null
     };
 
-    public componentDidMount(): void {
+    public componentDidMount = (): void => {
         this.initRequestWishlistsData();
     }
 
-    public componentDidUpdate(): void {
+    public componentDidUpdate = (): void => {
         this.setInitialWishlist();
         this.initRequestWishlistsData();
     }

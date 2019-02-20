@@ -47,11 +47,11 @@ export class ProductPageBase extends React.Component<Props, State> {
         attributeNames: null
     };
 
-    public componentDidMount(): void {
+    public componentDidMount = (): void => {
         this.props.getProductData(this.props.locationProductSKU);
     }
 
-    public componentDidUpdate(prevProps: Props, prevState: State): void {
+    public componentDidUpdate = (prevProps: Props, prevState: State): void => {
         if (this.props.isRejected || this.props.isLoading || !this.props.isAppDataSet) {
             return;
         }

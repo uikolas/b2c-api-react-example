@@ -16,7 +16,7 @@ export class InputComponent extends React.Component<Props, State> {
         matches: []
     };
 
-    public componentDidUpdate(prevProps: Props): void {
+    public componentDidUpdate = (prevProps: Props): void => {
         if (prevProps.completion !== this.props.completion) {
             this.suggestQuery();
         }

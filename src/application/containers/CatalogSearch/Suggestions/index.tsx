@@ -17,12 +17,12 @@ export class SuggestionsBase extends React.Component<Props, State> {
         listItemHeight: 100
     };
 
-    public componentDidMount(): void {
+    public componentDidMount = (): void => {
         window.addEventListener('resize', this.setListItemHeight);
         this.setListItemHeight();
     }
 
-    public componentWillUnmount(): void {
+    public componentWillUnmount = (): void => {
         window.removeEventListener('resize', this.setListItemHeight);
     }
 

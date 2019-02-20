@@ -25,16 +25,16 @@ export class AppHeaderComponent extends React.PureComponent<Props, State> {
 
     protected stickyTriggerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    public componentDidMount(): void {
+    public componentDidMount = (): void => {
         window.addEventListener('resize', this.onWindowResize);
         window.addEventListener('scroll', this.onWindowScroll);
     }
 
-    public componentDidUpdate(): void {
+    public componentDidUpdate = (): void => {
         this.onWindowResize();
     }
 
-    public componentWillUnmount(): void {
+    public componentWillUnmount = (): void => {
         window.removeEventListener('resize', this.onWindowResize);
         window.removeEventListener('scroll', this.onWindowScroll);
         this.stickyTriggerRef = null;

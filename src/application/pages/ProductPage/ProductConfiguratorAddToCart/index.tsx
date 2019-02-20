@@ -32,7 +32,7 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         sku: null
     };
 
-    public static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
+    public static getDerivedStateFromProps = (nextProps: Props, prevState: State): State => {
         const isSwitchedOnNewProduct = nextProps.productType === concreteProductType && nextProps.sku !== prevState.sku;
 
         if (isSwitchedOnNewProduct) {
@@ -47,7 +47,7 @@ export class ProductConfiguratorAddToCartBase extends React.Component<Props, Sta
         return null;
     }
 
-    public componentDidUpdate(prevProps: Props, prevState: State): void {
+    public componentDidUpdate = (prevProps: Props, prevState: State): void => {
         this.checkBuyBtnStatus();
     }
 

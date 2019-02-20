@@ -26,7 +26,7 @@ export class PageContent extends React.Component<Props, State> {
         mobileNavOpened: false
     };
 
-    public componentDidMount() {
+    public componentDidMount = (): void => {
         const accessToken: string = localStorage.getItem('accessToken');
         const expiresIn: string = localStorage.getItem('tokenExpire');
         const refreshToken: string = localStorage.getItem('refreshToken');
@@ -48,7 +48,7 @@ export class PageContent extends React.Component<Props, State> {
         }
     }
 
-    public componentDidUpdate(prevProps: Props, prevState: State) {
+    public componentDidUpdate = (prevProps: Props, prevState: State): void => {
         this.clearFlyoutSearchHandler(prevProps);
 
         if (!prevProps.isAppDataSet && this.props.isAppDataSet) {

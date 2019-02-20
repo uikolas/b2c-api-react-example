@@ -23,7 +23,7 @@ export class CheckoutCartBase extends React.Component<Props, State> {
         order: null
     };
 
-    public static getDerivedStateFromProps(nextProps: Props, prevState: State): State {
+    public static getDerivedStateFromProps = (nextProps: Props, prevState: State): State => {
         if (prevState.order !== nextProps.order) {
             const { order, products, totals } = nextProps;
             const { products: prevProducts, totals: prevTotals } = prevState;
@@ -46,12 +46,12 @@ export class CheckoutCartBase extends React.Component<Props, State> {
         return null;
     }
 
-    public componentDidMount(): void {
+    public componentDidMount = (): void => {
         window.addEventListener('resize', this.setListItemHeight);
         this.setListItemHeight();
     }
 
-    public componentWillUnmount(): void {
+    public componentWillUnmount = (): void => {
         window.removeEventListener('resize', this.setListItemHeight);
     }
 

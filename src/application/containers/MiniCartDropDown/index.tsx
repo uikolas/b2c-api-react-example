@@ -21,7 +21,7 @@ export class MiniCartDropDownComponent extends React.Component<Props, State> {
         isCartNotificationOpen: true
     };
 
-    public componentDidUpdate(prevProps: Props): void {
+    public componentDidUpdate = (prevProps: Props): void => {
         if (this.props.location !== prevProps.location) {
             this.closePopover();
         }

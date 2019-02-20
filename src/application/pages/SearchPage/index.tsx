@@ -90,7 +90,7 @@ export class SearchPage extends React.Component<ISearchPageProps, ISearchPageSta
         }
     };
 
-    public componentWillUnmount = () => {
+    public componentWillUnmount = (): void => {
         this.props.clearActiveFilters();
     };
 

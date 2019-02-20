@@ -17,7 +17,7 @@ import { styles } from './styles';
 @(withRouter as Function)
 @connect
 export class LoginPageBase extends React.Component<Props> {
-    public componentDidUpdate(prevProps: Props): void {
+    public componentDidUpdate = (prevProps: Props): void => {
         if (!prevProps.isAuth && this.props.isAuth) {
             this.props.getCustomerCart();
             this.props.history.push(pathCustomerPage);

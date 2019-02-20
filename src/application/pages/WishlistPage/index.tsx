@@ -14,7 +14,7 @@ import { styles } from './styles';
 
 @connect
 export class WishlistPageBase extends React.Component<Props> {
-    public componentDidMount() {
+    public componentDidMount = (): void => {
         if (!this.props.isInitial) {
             this.props.getWishlistsAction();
         }
