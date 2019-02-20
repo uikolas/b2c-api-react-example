@@ -19,11 +19,19 @@ import { LoadableNotFound } from '@application/pages/NotFound/loadable';
 import {
     pathAddressFormUpdate,
     pathCartPage,
-    pathCategoryPage, pathCheckoutPage, pathCustomerPage, pathForgotPassword,
+    pathCategoryPage,
+    pathCheckoutPage,
+    pathCustomerPage,
+    pathForgotPassword,
     pathHomePage,
-    pathLoginPage, pathNotFoundPage, pathOrderDetailsPage,
-    pathProductPage, pathResetPassword,
-    pathSearchPage, pathWishlistDetailPage, pathWishlistsPage
+    pathLoginPage,
+    pathNotFoundPage,
+    pathOrderDetailsPage,
+    pathProductPage,
+    pathResetPassword,
+    pathSearchPage,
+    pathWishlistDetailPage,
+    pathWishlistsPage
 } from '@constants/routes';
 
 export const getContentRoutes = (isReadyToShow: boolean): JSX.Element => {
