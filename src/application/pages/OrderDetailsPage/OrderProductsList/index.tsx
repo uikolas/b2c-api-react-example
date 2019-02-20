@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { appFixedDimensions } from 'src/theme/properties/new/appFixedDimensions';
+import { appFixedDimensions } from '@theme/properties/new/appFixedDimensions';
 import { withStyles, Typography } from '@material-ui/core';
 import { AppPrice } from '@application/components/AppPrice';
 import { AppTable } from '@application/components/AppTable';

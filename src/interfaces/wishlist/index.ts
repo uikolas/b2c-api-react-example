@@ -1,4 +1,4 @@
-import { IProductAttributes, IProductPricesItem } from '../product';
+import { IProductAttributes, IProductPricesItem } from '@interfaces/product';
 
 export type TWishlistName = string;
 export type TWishlistId = string;

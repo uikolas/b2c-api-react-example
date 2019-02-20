@@ -13,8 +13,8 @@ import {
     TLocalizedName,
     TSpellingSuggestion,
 } from '@interfaces/searchPageData';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { IPageSearchAction, ISearchState } from 'src/stores/reducers/pages/search/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { IPageSearchAction, ISearchState } from '@stores/reducers/pages/search/types';
 import { DefaultItemsPerPage } from '@constants/search';
 
 export const initialState: ISearchState = {

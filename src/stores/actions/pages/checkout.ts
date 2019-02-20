@@ -24,7 +24,7 @@ import {
 } from '@interfaces/checkout';
 import { TOrderId } from '@interfaces/order';
 import { ICheckoutResponseData, IPageCheckoutAction,
-} from 'src/stores/reducers/pages/checkout/types';
+} from '@stores/reducers/pages/checkout/types';
 
 export const getCheckoutDataInitPendingStateAction = (): IPageCheckoutAction => ({
     type: CHECKOUT_DATA_INIT_REQUEST + '_PENDING',

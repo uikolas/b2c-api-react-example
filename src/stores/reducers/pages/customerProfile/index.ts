@@ -4,11 +4,11 @@ import {
     CUSTOMER_DELETE_ENTITY,
     CUSTOMER_PASSWORD_UPDATE
 } from '@stores/actionTypes/pages/customerProfile';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 import { ICustomerDataParsed } from '@interfaces/customer';
 import { ICustomerDataState, IPageCustomerProfileAction } from './types';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { IApiErrorResponse } from 'src/services/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { IApiErrorResponse } from '@services/types';
 
 export const initialState: ICustomerDataState = {
     data: {

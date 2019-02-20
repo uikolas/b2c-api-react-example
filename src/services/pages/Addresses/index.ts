@@ -1,14 +1,14 @@
 import { IAddressItem } from '@interfaces/addresses';
-import { RefreshTokenService } from 'src/services/common/RefreshToken';
-import api, { setAuthToken } from 'src/services/api';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { IApiResponseData } from 'src/services/types';
+import { RefreshTokenService } from '@services/common/RefreshToken';
+import api, { setAuthToken } from '@services/api';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
+import { IApiResponseData } from '@services/types';
 import {
     IAddressDataRawResponse,
     IRequestAddAddressBody,
     IRequestUpdateAddressBody
-} from 'src/services/pages/Addresses/types';
-import { parseOneAddressRawResponse } from 'src/helpers/address/response';
+} from '@services/pages/Addresses/types';
+import { parseOneAddressRawResponse } from '@helpers/address/response';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,

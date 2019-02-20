@@ -1,6 +1,6 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { appTypographyStyles } from 'src/theme/properties/overwritten/appTypography';
+import { appTypographyStyles } from '@theme/properties/overwritten/appTypography';
 
 export const styles = (theme: Theme) => createStyles({
     root: {

@@ -9,16 +9,14 @@ import {
 import { IFormField } from '@application/components/UI/SprykerForm/types';
 import { IAddressItemCollection } from '@interfaces/addresses';
 import {
-    ICreditCardObjectConfigInputStable,
-    IInvoiceObjectConfigInputStable,
-    IObjectConfigInputStable
-} from 'src/chared/constants/checkout/types';
-import {
     IPaymentMethodGroupItem,
     TCurrentValueBillingSelection,
     TCurrentValueDeliverySelection,
     TExtraOptionsToSelection,
-    TPaymentProvidersCollection
+    TPaymentProvidersCollection,
+    ICreditCardObjectConfigInputStable,
+    IInvoiceObjectConfigInputStable,
+    IObjectConfigInputStable
 } from '@constants/checkout/types';
 import { BlurEvent, FormEvent, InputChangeEvent } from '@interfaces/common';
 import { ICountry } from '@interfaces/country';

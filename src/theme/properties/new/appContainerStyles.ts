@@ -1,5 +1,5 @@
-import { baseTheme } from 'src/theme';
-import { appFixedDimensions } from 'src/theme/properties/new/appFixedDimensions';
+import { baseTheme } from '@theme';
+import { appFixedDimensions } from '@theme/properties/new/appFixedDimensions';
 
 export interface IAppContainerStyles {
     maxWidth: React.CSSProperties['width'];

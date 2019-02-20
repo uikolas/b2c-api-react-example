@@ -14,7 +14,7 @@ import {
     TCustomerReference,
 } from '@interfaces/customer';
 import { IPageCustomerProfileAction } from '@stores/reducers/pages/customerProfile/types';
-import { IPageLoginAction } from 'src/stores/reducers/pages/login/types';
+import { IPageLoginAction } from '@stores/reducers/pages/login/types';
 
 // Retrieve customer data.
 export const getCustomerProfilePendingStateAction = (): IPageCustomerProfileAction => ({

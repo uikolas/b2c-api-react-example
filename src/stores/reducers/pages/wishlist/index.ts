@@ -9,7 +9,7 @@ import {
     WISHLIST_ALL_LISTS,
 } from '@stores/actionTypes/pages/wishlist';
 import { IWishlist, IWishlistProduct } from '@interfaces/wishlist';
-import { IPageWishlistAction, WishlistState } from 'src/stores/reducers/pages/wishlist/types';
+import { IPageWishlistAction, WishlistState } from '@stores/reducers/pages/wishlist/types';
 
 export const initialState: WishlistState = {
     data: {

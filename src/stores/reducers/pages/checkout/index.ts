@@ -17,7 +17,7 @@ import {
     CHECKOUT_MUTATE_INVOICE_FORM,
     CHECKOUT_MUTATE_CREDIT_CARD_FORM
 } from '@stores/actionTypes/pages/checkout';
-import { ICheckoutState, IPageCheckoutAction } from 'src/stores/reducers/pages/checkout/types';
+import { ICheckoutState, IPageCheckoutAction } from '@stores/reducers/pages/checkout/types';
 import {
     deliverySelectionDefault,
     deliveryNewAddressDefault,

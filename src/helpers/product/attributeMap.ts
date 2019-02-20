@@ -1,4 +1,4 @@
-import { defaultItemValueDropdown, IProductAttributeMap, IProductAttributes } from '../../interfaces/product';
+import { defaultItemValueDropdown, IProductAttributeMap, IProductAttributes } from '@interfaces/product';
 
 // Created path from object of superAttrSelected
 export const createPathToIdProductConcrete = (selected: IProductAttributes) => {

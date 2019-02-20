@@ -1,5 +1,5 @@
 import { ICartDataResponse } from '@interfaces/cart';
-import { parseImageSets } from '../product/imageSetsParser';
+import { parseImageSets } from '@helpers/product/imageSetsParser';
 import { IProductPricesItem, priceTypeNameDefault, priceTypeNameOriginal } from '@interfaces/product';
 import {
     ICartItemDataShort,
@@ -8,9 +8,9 @@ import {
     IUserCartRawResponse,
     TRowCustomerCartIncludedResponse,
     IUserCartRawResponseOneValue
-} from 'src/helpers/cart/types';
-import { parseCommonDataInCartResponse } from 'src/helpers/cart';
-import { getCartItemBlueprint } from 'src/helpers/cart/item';
+} from '@helpers/cart/types';
+import { parseCommonDataInCartResponse } from '@helpers/cart';
+import { getCartItemBlueprint } from '@helpers/cart/item';
 
 export const parseCartCreateResponse = (response: IUserCartRawResponseMultiValue): ICartDataResponse | null => {
     if (!response) {

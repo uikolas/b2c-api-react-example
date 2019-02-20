@@ -1,5 +1,5 @@
-import api from 'src/services/api';
-import { parseProductResponse } from 'src/helpers/product';
+import api from '@services/api';
+import { parseProductResponse } from '@helpers/product';
 import {
     getProductAvailabilityFulfilledStateAction,
     getProductAvailabilityPendingStateAction,
@@ -8,10 +8,10 @@ import {
     getProductDataItemPendingStateAction,
     getProductDataRejectedStateAction,
 } from '@stores/actions/pages/product';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
 import { IConcreteProductAvailability, IProductDataParsed, TProductSKU } from '@interfaces/product';
-import { parseProductAvailabilityResponse } from 'src/helpers/product/productResponse';
-import { IApiResponseData } from 'src/services/types';
+import { parseProductAvailabilityResponse } from '@helpers/product/productResponse';
+import { IApiResponseData } from '@services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from '@constants/notifications';
 

@@ -1,7 +1,7 @@
 import { IReduxState } from '@stores/reducers/types';
 import { PAGES_PRODUCT_REQUEST } from '@stores/actionTypes/pages/product';
 import { IProductDataParsed } from '@interfaces/product';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 
 export interface IProductState extends IReduxState {
     data: {

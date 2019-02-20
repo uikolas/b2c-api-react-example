@@ -4,7 +4,7 @@ import {
     IRowProductAvailabilitiesIncludedResponse,
     IRowProductImageSetsIncludedResponse,
     IRowProductPricesIncludedResponse
-} from 'src/helpers/product/types';
+} from '@helpers/product/types';
 
 export interface IWishlistRawResponse {
     data: IWishlistRawData[];

@@ -8,11 +8,11 @@ import {
 } from '@stores/actionTypes/pages/login';
 import { SET_AUTH_FROM_STORAGE } from '@stores/actionTypes/common/init';
 import { TAccessToken } from '@interfaces/login';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 import { TCustomerEmail, TCustomerUsername } from '@interfaces/customer';
 import { LOGIN_DATA_SET_TO_STORE } from '@stores/actionTypes/pages/customerProfile';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { ILoginState, IPageLoginAction } from 'src/stores/reducers/pages/login/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { ILoginState, IPageLoginAction } from '@stores/reducers/pages/login/types';
 
 export const initialState: ILoginState = {
     data: {

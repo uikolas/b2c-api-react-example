@@ -7,9 +7,9 @@ import {
 } from '@stores/actionTypes/common/cart';
 import { PAGES_CUSTOMER_LOGOUT } from '@stores/actionTypes/pages/login';
 import { ICartDataResponse, ICartItem } from '@interfaces/cart';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 import { ICartAction, ICartState } from './types';
-import { IApiErrorResponse } from 'src/services/types';
+import { IApiErrorResponse } from '@services/types';
 
 export const initialState: ICartState = {
     data: {

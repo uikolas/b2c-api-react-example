@@ -1,5 +1,5 @@
-import api, { setAuthToken } from 'src/services/api';
-import { RefreshTokenService } from 'src/services/common/RefreshToken';
+import api, { setAuthToken } from '@services/api';
+import { RefreshTokenService } from '@services/common/RefreshToken';
 import { ICheckoutRequest, IcheckoutResponse, IShipmentMethod, IPaymentMethod } from '@interfaces/checkout';
 import {
     getCheckoutDataInitPendingStateAction,
@@ -10,9 +10,9 @@ import {
     sendCheckoutDataFulfilledStateAction,
 } from '@stores/actions/pages/checkout';
 
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { ICheckoutResponseData } from 'src/stores/reducers/pages/checkout/types';
-import { IApiResponseData } from 'src/services/types';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
+import { ICheckoutResponseData } from '@stores/reducers/pages/checkout/types';
+import { IApiResponseData } from '@services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,

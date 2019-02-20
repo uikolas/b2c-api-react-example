@@ -20,7 +20,7 @@ import {
     getLabeledCategory,
     getCurrentCategoriesTree
 } from '@application/pages/SearchPage/helpers';
-import { AppMain } from '../../components/AppMain';
+import { AppMain } from '@application/components/AppMain';
 import {
     filterTypeFilter,
     filterTypeRange,

@@ -4,7 +4,7 @@ import {
     ICreditCardObjectConfigInputStable,
     IDeliveryObjectConfigInputStable,
     IInvoiceObjectConfigInputStable
-} from 'src/chared/constants/checkout/types';
+} from '@constants/checkout/types';
 import { TFormInputValue } from '@application/components/UI/SprykerForm/types';
 import {
     IBillingAddressState,

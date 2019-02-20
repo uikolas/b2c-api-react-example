@@ -1,18 +1,18 @@
-import api, { setAuthToken } from 'src/services/api';
+import api, { setAuthToken } from '@services/api';
 import { TProductSKU } from '@interfaces/product';
 import { ICartAddItem, ICartDataResponse, TCartAddItemCollection, TCartId } from '@interfaces/cart';
 import {
     parseUserCartResponseMultiValue,
     parseCartCreateResponse,
     parseUserCartResponseOneValue
-} from 'src/helpers/cart';
+} from '@helpers/cart';
 import * as cartActions from '@stores/actions/common/cart';
-import { CartAuthenticateErrorMessage } from 'src/translation';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { RefreshTokenService } from '../RefreshToken';
+import { CartAuthenticateErrorMessage } from '@translation';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
+import { RefreshTokenService } from '@services/common/RefreshToken';
 import { ICartCreatePayload } from './types';
-import { IResponseError } from 'src/services/apiAbstractions/types';
-import { IApiResponseData } from 'src/services/types';
+import { IResponseError } from '@services/apiAbstractions/types';
+import { IApiResponseData } from '@services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,

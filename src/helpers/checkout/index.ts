@@ -16,7 +16,7 @@ import {
 } from '@constants/checkout/types';
 import { checkoutSelectionInputs } from '@constants/checkout';
 import { RegExpZipCode } from '@constants/forms/regexp';
-import { FormattedMessageTemplate } from 'src/helpers/formattedMessageTemplate';
+import { FormattedMessageTemplate } from '@helpers/formattedMessageTemplate';
 
 export const addressDefault: IAddressItem = {
     firstName: '',

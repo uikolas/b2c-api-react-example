@@ -1,10 +1,10 @@
-import api from 'src/services/api';
-import { parseCatalogSearchResponse } from 'src/helpers/catalog/catalogSearchResponse';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
+import api from '@services/api';
+import { parseCatalogSearchResponse } from '@helpers/catalog/catalogSearchResponse';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
 import { IProductCard } from '@interfaces/product';
 import { ISearchQuery } from '@interfaces/searchPageData';
-import { IApiResponseData } from 'src/services/types';
-import { TRowProductResponseIncluded } from 'src/helpers/product/types';
+import { IApiResponseData } from '@services/types';
+import { TRowProductResponseIncluded } from '@helpers/product/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from '@constants/notifications';
 import {

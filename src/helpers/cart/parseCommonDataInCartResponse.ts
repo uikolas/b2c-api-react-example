@@ -1,4 +1,4 @@
-import { ICustomerCartDataRawResponse } from 'src/helpers/cart/types';
+import { ICustomerCartDataRawResponse } from '@helpers/cart/types';
 import { ICommonDataInCart } from '@interfaces/cart';
 
 export const parseCommonDataInCartResponse = (data: ICustomerCartDataRawResponse): ICommonDataInCart => (

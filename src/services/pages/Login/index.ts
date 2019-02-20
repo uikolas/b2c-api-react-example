@@ -1,15 +1,15 @@
-import api from 'src/services/api';
+import api from '@services/api';
 import { saveLoginDataToStoreAction } from '@stores/actions/pages/customerProfile';
-import { parseLoginDataResponse } from 'src/helpers/customer';
+import { parseLoginDataResponse } from '@helpers/customer';
 import {
     loginCustomerFulfilledStateAction,
     loginCustomerPendingStateAction,
     loginCustomerRejectedStateAction,
 } from '@stores/actions/pages/login';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
 import { ICustomerLoginData, ICustomerProfile, IResetPasswordPayload } from '@interfaces/customer';
-import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from 'src/helpers/localStorage';
-import { IApiResponseData } from 'src/services/types';
+import { saveAccessDataToLocalStorage, saveCustomerUsernameToLocalStorage } from '@helpers/localStorage';
+import { IApiResponseData } from '@services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,

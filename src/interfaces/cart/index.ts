@@ -1,4 +1,4 @@
-import { IAbstractTotals } from '../abstract/totals';
+import { IAbstractTotals } from '@interfaces/abstract/totals';
 import {
     TProductQuantity,
     TProductSKU,
@@ -8,9 +8,10 @@ import {
     TPriceTypeOriginalGross,
     TPriceTypeOriginalNet,
     TPriceTypeDefaultGross,
-    TPriceTypeDefaultNet
-} from '../product';
-import { TProductName, TProductPrice } from '@interfaces/product';
+    TPriceTypeDefaultNet,
+    TProductName,
+    TProductPrice
+} from '@interfaces/product';
 import { TAppCurrency } from '@interfaces/currency';
 
 export type TCartId = string;

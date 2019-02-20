@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { appContainerStyles } from 'src/theme/properties/new/appContainerStyles';
-import { appFixedDimensions } from 'src/theme/properties/new/appFixedDimensions';
+import { appContainerStyles } from '@theme/properties/new/appContainerStyles';
+import { appFixedDimensions } from '@theme/properties/new/appFixedDimensions';
 import { withStyles, IconButton } from '@material-ui/core';
 import { LanguageSwitcher } from '@application/containers/LanguageSwitcher';
 import { UserDropNavigation } from '@application/containers/UserDropNavigation';

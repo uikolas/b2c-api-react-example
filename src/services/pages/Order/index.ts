@@ -1,5 +1,5 @@
-import api, { setAuthToken } from 'src/services/api';
-import { RefreshTokenService } from 'src/services/common/RefreshToken';
+import api, { setAuthToken } from '@services/api';
+import { RefreshTokenService } from '@services/common/RefreshToken';
 import {
     orderDetailsFulfilledStateAction,
     orderDetailsPendingStateAction,
@@ -8,11 +8,11 @@ import {
     ordersCollectionPendingStateAction,
     ordersCollectionRejectedStateAction,
 } from '@stores/actions/pages/order';
-import { OrderAuthenticateErrorMessage } from 'src/translation';
-import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from 'src/helpers/order/response';
+import { OrderAuthenticateErrorMessage } from '@translation';
+import { parseGetOrderDetailsResponse, parseGetOrdersCollectionResponse } from '@helpers/order/response';
 import { TOrderId } from '@interfaces/order';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { IApiResponseData } from 'src/services/types';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
+import { IApiResponseData } from '@services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from '@constants/notifications';
 

@@ -5,7 +5,7 @@ import {
     TLocalizedName,
     ValueFacets,
 } from '@interfaces/searchPageData';
-import { ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse } from 'src/helpers/catalog/types';
+import { ICatalogSearchRawResponse, IRowCatalogSearchIncludedResponse } from '@helpers/catalog/types';
 import { rangeFilterValueToFront } from '@helpers/common/transform';
 import {
     rangeMinType,

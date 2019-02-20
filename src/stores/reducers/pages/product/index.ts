@@ -1,9 +1,9 @@
 import { PAGES_PRODUCT_REQUEST, PRODUCT_AVAILABILITY_REQUEST } from '@stores/actionTypes/pages/product';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 import { IConcreteProductAvailability, IProductDataParsed } from '@interfaces/product';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { IPageProductAction, IProductState } from 'src/stores/reducers/pages/product/types';
-import { IApiErrorResponse } from 'src/services/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { IPageProductAction, IProductState } from '@stores/reducers/pages/product/types';
+import { IApiErrorResponse } from '@services/types';
 
 export const initialState: IProductState = {
     data: {

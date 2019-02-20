@@ -1,12 +1,12 @@
 import { ORDER_DETAILS_REQUEST } from '@stores/actionTypes/pages/order';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 import { IOrderDetailsParsed } from '@interfaces/order';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 import {
     IOrderDetailsState,
     IPageOrderDetailsAction,
-} from 'src/stores/reducers/pages/orderDetails/types';
-import { IApiErrorResponse } from 'src/services/types';
+} from '@stores/reducers/pages/orderDetails/types';
+import { IApiErrorResponse } from '@services/types';
 
 export const initialState: IOrderDetailsState = {
     data: {

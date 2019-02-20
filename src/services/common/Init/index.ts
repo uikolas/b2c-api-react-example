@@ -1,4 +1,4 @@
-import api, { nodeApi } from 'src/services/api';
+import api, { nodeApi } from '@services/api';
 import {
     categoriesFulfilledState,
     categoriesPendingState,
@@ -12,9 +12,9 @@ import {
     switchLocaleRejectedState,
     getCategoriesAction
 } from '@stores/actions/common/init';
-import { parseStoreResponse } from 'src/helpers/init/store';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { IApiResponseData } from 'src/services/types';
+import { parseStoreResponse } from '@helpers/init/store';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
+import { IApiResponseData } from '@services/types';
 import { ICategory } from '@interfaces/category';
 import { IInitData } from '@interfaces/init';
 import { ILocaleActionPayload } from '@stores/reducers/common/Init/types';

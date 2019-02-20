@@ -1,10 +1,10 @@
-import api, { removeAuthToken } from 'src/services/api';
+import api, { removeAuthToken } from '@services/api';
 import { ICartAddItem, TCartId } from '@interfaces/cart';
-import { parseGuestCartResponse } from 'src/helpers/cart';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
+import { parseGuestCartResponse } from '@helpers/cart';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from '@stores/actions/common/cart';
-import { IApiResponseData } from 'src/services/types';
-import { IResponseError } from 'src/services/apiAbstractions/types';
+import { IApiResponseData } from '@services/types';
+import { IResponseError } from '@services/apiAbstractions/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,

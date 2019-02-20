@@ -1,16 +1,16 @@
-import api, { setAuthToken } from 'src/services/api';
-import { RefreshTokenService } from 'src/services/common/RefreshToken';
+import api, { setAuthToken } from '@services/api';
+import { RefreshTokenService } from '@services/common/RefreshToken';
 import { IWishlist, IWishlistProduct, TWishlistId } from '@interfaces/wishlist';
 import { ADD_WISHLIST } from '@stores/actionTypes/pages/wishlist';
-import { WishlistAuthenticateErrorMessage } from 'src/translation';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
+import { WishlistAuthenticateErrorMessage } from '@translation';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
 import * as cartActions from '@stores/actions/common/cart';
-import { IApiResponseData } from 'src/services/types';
+import { IApiResponseData } from '@services/types';
 import {
     IWishlistRawData,
     IWishlistRawResponse,
     TRowWishlistIncludedResponse
-} from 'src/services/pages/Wishlist/types';
+} from '@services/pages/Wishlist/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import {
     typeNotificationSuccess,

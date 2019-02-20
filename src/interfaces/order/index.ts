@@ -1,5 +1,5 @@
-import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '../product';
-import { IAbstractTotals, TCanceledTotal } from '../abstract/totals';
+import { TProductName, TProductPrice, TProductQuantity, TProductSKU } from '@interfaces/product';
+import { IAbstractTotals, TCanceledTotal } from '@interfaces/abstract/totals';
 import { TCartPriceMode } from '@interfaces/cart';
 import { IAddressItemOrder } from '@interfaces/addresses';
 import { TAppCurrency } from '@interfaces/currency';

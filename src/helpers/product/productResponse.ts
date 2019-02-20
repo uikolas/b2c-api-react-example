@@ -8,11 +8,11 @@ import {
     IProductPricesItem,
     priceTypeNameDefault,
     priceTypeNameOriginal,
-} from '../../interfaces/product';
+} from '@interfaces/product';
 import {
     IProductAvailabilitiesRawResponse, IProductRawResponse,
     TRowProductResponseIncluded
-} from 'src/helpers/product/types';
+} from '@helpers/product/types';
 
 export const parseProductResponse = (response: IProductRawResponse): IProductDataParsed | null => {
     if (!response) {

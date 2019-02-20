@@ -1,9 +1,9 @@
-import api from 'src/services/api';
+import api from '@services/api';
 import { REFRESH_TOKEN_REQUEST } from '@stores/actionTypes/pages/login';
-import { parseLoginDataResponse } from 'src/helpers/customer/loginDataResponse';
-import { saveAccessDataToLocalStorage } from 'src/helpers/localStorage';
-import { ApiServiceAbstract } from 'src/services/apiAbstractions/ApiServiceAbstract';
-import { IApiResponseData } from 'src/services/types';
+import { parseLoginDataResponse } from '@helpers/customer/loginDataResponse';
+import { saveAccessDataToLocalStorage } from '@helpers/localStorage';
+import { ApiServiceAbstract } from '@services/apiAbstractions/ApiServiceAbstract';
+import { IApiResponseData } from '@services/types';
 import { NotificationsMessage } from '@application/components/Notifications/NotificationsMessage';
 import { typeNotificationError } from '@constants/notifications';
 

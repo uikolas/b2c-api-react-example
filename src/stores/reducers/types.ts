@@ -1,17 +1,17 @@
-import { ILoginState } from 'src/stores/reducers/pages/login/types';
-import { ISearchState } from 'src/stores/reducers/pages/search/types';
-import { IProductState } from 'src/stores/reducers/pages/product/types';
-import { WishlistState } from 'src/stores/reducers/pages/wishlist/types';
-import { IAddressesState } from 'src/stores/reducers/pages/addresses/types';
-import { ICheckoutState } from 'src/stores/reducers/pages/checkout/types';
-import { ICartState } from 'src/stores/reducers/common/cart/types';
-import { IOrderHistoryState } from 'src/stores/reducers/pages/orderHistory/types';
-import { IOrderDetailsState } from 'src/stores/reducers/pages/orderDetails/types';
-import { ICustomerDataState } from 'src/stores/reducers/pages/customerProfile/types';
+import { ILoginState } from '@stores/reducers/pages/login/types';
+import { ISearchState } from '@stores/reducers/pages/search/types';
+import { IProductState } from '@stores/reducers/pages/product/types';
+import { WishlistState } from '@stores/reducers/pages/wishlist/types';
+import { IAddressesState } from '@stores/reducers/pages/addresses/types';
+import { ICheckoutState } from '@stores/reducers/pages/checkout/types';
+import { ICartState } from '@stores/reducers/common/cart/types';
+import { IOrderHistoryState } from '@stores/reducers/pages/orderHistory/types';
+import { IOrderDetailsState } from '@stores/reducers/pages/orderDetails/types';
+import { ICustomerDataState } from '@stores/reducers/pages/customerProfile/types';
 import { RouteProps } from 'react-router';
 import { WithRouter } from '@interfaces/common';
-import { IInitState } from 'src/stores/reducers/common/init/types';
-import { IApiErrorResponse } from 'src/services/types';
+import { IInitState } from '@stores/reducers/common/init/types';
+import { IApiErrorResponse } from '@services/types';
 
 export interface IReduxState {
     dispatch?: Function;

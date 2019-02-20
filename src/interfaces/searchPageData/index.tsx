@@ -1,4 +1,4 @@
-import { IProductCard } from '../product';
+import { IProductCard } from '@interfaces/product';
 import { IPagination } from '@application/components/AppPagination/types';
 import { TCategoryId } from '@application/pages/SearchPage/types';
 import { TAppCurrency } from '@interfaces/currency';

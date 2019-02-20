@@ -1,13 +1,13 @@
 import { ICartDataResponse } from '@interfaces/cart';
-import { parseImageSets } from '../product/imageSetsParser';
+import { parseImageSets } from '@helpers/product/imageSetsParser';
 import {
     ICartItemDataShort,
     ICartResultData,
     IUserCartRawResponseOneValue,
     TRowCustomerCartIncludedResponse
-} from 'src/helpers/cart/types';
-import { parseCommonDataInCartResponse } from 'src/helpers/cart';
-import { getCartItemBlueprint } from 'src/helpers/cart/item';
+} from '@helpers/cart/types';
+import { parseCommonDataInCartResponse } from '@helpers/cart';
+import { getCartItemBlueprint } from '@helpers/cart/item';
 
 // TODO: Maybe it is a copypast of parseUserCartResponseMultiValue && parseUserCartResponseOneValue ???
 export const parseGuestCartResponse = (response: IUserCartRawResponseOneValue): ICartDataResponse | null => {

@@ -1,7 +1,7 @@
 import { TProductQuantity, TProductSKU } from '@interfaces/product';
 import { ICartItem, ICartTotals, TCartId } from '@interfaces/cart';
 import { ICartState } from '@stores/reducers/common/cart/types';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
 
 // Number of products(including quantity per each product) in the cart
 export function getTotalProductsQuantity(state: IReduxStore, props: IReduxOwnProps): TProductQuantity {

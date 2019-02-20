@@ -1,8 +1,8 @@
 import { CATEGORIES_TREE_REQUEST, INIT_APP_ACTION_TYPE, SWITCH_LOCALE } from '@stores/actionTypes/common/init';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
-import { ICartCreatePayload } from '../../../../services/common/Cart/types';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { IApiErrorResponse } from 'src/services/types';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
+import { ICartCreatePayload } from '@services/common/Cart/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { IApiErrorResponse } from '@services/types';
 import { TAppTimeZone } from '@interfaces/locale';
 import { TAppCurrency } from '@interfaces/currency';
 import { TAppPriceMode } from '@interfaces/product';
@@ -10,8 +10,8 @@ import { TAppStore } from '@interfaces/store';
 import { ICategory } from '@interfaces/category';
 import { ICountry } from '@interfaces/country';
 import { IInitData } from '@interfaces/init';
-import { IInitState, IInitAction } from 'src/stores/reducers/common/init/types';
-import { APP_LOCALE_DEFAULT } from 'src/configs/environment';
+import { IInitState, IInitAction } from '@stores/reducers/common/init/types';
+import { APP_LOCALE_DEFAULT } from '@configs/environment';
 
 export const initialState: IInitState = {
     data: {

@@ -1,4 +1,4 @@
-import { IProductAttributes, TProductName } from '../../interfaces/product';
+import { IProductAttributes, TProductName } from '@interfaces/product';
 
 export const displayProductNameWithSuperAttr = (
     name: TProductName,

@@ -1,5 +1,5 @@
-import { TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType } from '../login';
-import { TRouterMatchParam } from 'src/helpers/router/types';
+import { TAccessToken, TExpiresInAccessToken, TRefreshToken, TTokenType } from '@interfaces/login';
+import { TRouterMatchParam } from '@helpers/router/types';
 
 export type TCustomerSalutation = string;
 export type TCustomerFirstName = string;

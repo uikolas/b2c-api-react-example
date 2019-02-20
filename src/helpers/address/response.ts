@@ -1,4 +1,4 @@
-import { IAddressRawResponseOneValue } from 'src/services/pages/Addresses/types';
+import { IAddressRawResponseOneValue } from '@services/pages/Addresses/types';
 import { IAddressItem } from '@interfaces/addresses';
 
 export const parseOneAddressRawResponse = (response: IAddressRawResponseOneValue): IAddressItem | null => {

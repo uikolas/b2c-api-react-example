@@ -6,7 +6,7 @@ import { styles } from './styles';
 import { SprykerFilterElement } from '@application/components/UI/SprykerFilter';
 import { ValueFacets } from '@interfaces/searchPageData';
 import { rangeMaxType, rangeMinType, TActiveFilters } from '@application/pages/SearchPage/types';
-import { sprykerTheme } from 'src/theme/sprykerTheme';
+import { sprykerTheme } from '@theme/sprykerTheme';
 import { FilterWrapper } from '@application/pages/SearchPage/FilterWrapper';
 import { rangeFilterValueToFront } from '@helpers/common/transform';
 import { AppPageSubTitle } from '@application/components/AppPageSubTitle';

@@ -6,7 +6,7 @@ import {
     IBillingAddressesParams,
     IDeliveryAddressesParams
 } from './types';
-import { getSalutationToShow } from 'src/helpers/customer/salutation';
+import { getSalutationToShow } from '@helpers/customer/salutation';
 import { FormattedMessage } from 'react-intl';
 
 export const getDeliverySavedAddressFormSettings = (

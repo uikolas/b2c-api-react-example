@@ -344,7 +344,8 @@ const config = {
             '@stores': path.resolve(__dirname, 'src/stores'),
             '@services': path.resolve(__dirname, 'src/services'),
             '@configs': path.resolve(__dirname, 'src/configs'),
-            '@translation': path.resolve(__dirname, 'src/translation')
+            '@translation': path.resolve(__dirname, 'src/translation'),
+            '@theme': path.resolve(__dirname, 'src/theme')
         }
     },
     module: {

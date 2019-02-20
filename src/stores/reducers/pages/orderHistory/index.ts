@@ -1,9 +1,9 @@
 import { ORDERS_COLLECTION_REQUEST } from '@stores/actionTypes/pages/order';
-import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '../../parts';
+import { getReducerPartFulfilled, getReducerPartPending, getReducerPartRejected } from '@stores/reducers/parts';
 import { IOrderCollectionParsed, TOrderCollection } from '@interfaces/order';
-import { IReduxOwnProps, IReduxStore } from 'src/stores/reducers/types';
-import { IOrderHistoryState, IPageOrderHistoryAction } from 'src/stores/reducers/pages/orderHistory/types';
-import { IApiErrorResponse } from 'src/services/types';
+import { IReduxOwnProps, IReduxStore } from '@stores/reducers/types';
+import { IOrderHistoryState, IPageOrderHistoryAction } from '@stores/reducers/pages/orderHistory/types';
+import { IApiErrorResponse } from '@services/types';
 
 export const initialState: IOrderHistoryState = {
     data: {

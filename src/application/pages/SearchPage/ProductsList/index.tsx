@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import { styles } from './styles';
 import { IProductCard, IProductLabel } from '@interfaces/product';
-import { sprykerTheme } from 'src/theme/sprykerTheme';
+import { sprykerTheme } from '@theme/sprykerTheme';
 import { ProductCard } from '@application/components/ProductCard';
 import { AppPageHeadline } from '@application/components/AppPageHeadline';
 import { getProductLabel } from '@helpers/product/label';
