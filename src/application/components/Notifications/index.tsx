@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { INotifications } from './types';
 import { styles } from './styles';
-
-interface INotifications extends WithStyles<typeof styles> {}
 
 export const NotificationsBase: React.SFC<INotifications> = (props): JSX.Element => {
     const { classes } = props;

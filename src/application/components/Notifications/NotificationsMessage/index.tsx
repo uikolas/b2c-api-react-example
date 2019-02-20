@@ -2,7 +2,7 @@ import React from 'react';
 import { NotificationsMessageTemplate } from '@application/components/Notifications/NotificationsMessageTemplate';
 import { INotificationsMessage } from '../types';
 import { toast } from 'react-toastify';
-import { SuccessIcon, RejectIcon } from '../icons';
+import { SuccessIcon, RejectIcon } from './icons';
 import {
     typeNotificationWarning,
     typeNotificationSuccess,
