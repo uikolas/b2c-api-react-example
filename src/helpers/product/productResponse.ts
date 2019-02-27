@@ -14,6 +14,8 @@ import {
     TRowProductResponseIncluded
 } from '@helpers/product/types';
 
+const defaultAmountOfQuantity = 10;
+
 export const parseProductResponse = (response: IProductRawResponse): IProductDataParsed | null => {
     if (!response) {
         return null;
@@ -132,7 +134,7 @@ export const parseProductResponse = (response: IProductRawResponse): IProductDat
 
                                     if (row.attributes.isNeverOutOfStock) {
                                         result.concreteProducts[row.id].availability = true;
-                                        result.concreteProducts[row.id].quantity = 10;
+                                        result.concreteProducts[row.id].quantity = defaultAmountOfQuantity;
                                     }
                                 }
                             }
@@ -162,7 +164,7 @@ export const parseProductAvailabilityResponse = (response: IProductAvailabilitie
 
     if (attributes.isNeverOutOfStock) {
         attributes.availability = true;
-        attributes.quantity = 10;
+        attributes.quantity = defaultAmountOfQuantity;
     }
 
     return {
