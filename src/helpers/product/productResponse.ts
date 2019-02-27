@@ -135,6 +135,9 @@ export const parseProductResponse = (response: IProductRawResponse): IProductDat
                                     if (row.attributes.isNeverOutOfStock) {
                                         result.concreteProducts[row.id].availability = true;
                                         result.concreteProducts[row.id].quantity = defaultAmountOfQuantity;
+
+                                        result.abstractProduct.availability = true;
+                                        result.abstractProduct.quantity = defaultAmountOfQuantity;
                                     }
                                 }
                             }
