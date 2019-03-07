@@ -25,31 +25,35 @@ export const OrderListBase: React.SFC<Props> = (props): JSX.Element => {
         {id: `${headerCellPart}4`, content: ''},
     ];
 
-    const bodyRows: ITableRow[] = orders.map((item: IOrderItem) => ({
-        id: `${rowPart}${item.id}`,
-        cells: [
-            {id: `id-${item.id}`, content: `#${item.id}`},
-            {id: `date-${item.id}`, content: formatDateToString(new Date(item.dateCreated))},
-            {
-                id: `price-${item.id}`,
-                content: <AppPrice
-                    value={item.totals.grandTotal}
-                    specificCurrency={item.currency}
-                    extraClassName={classes.price}
-                    isStylesInherited={true}
-                />
-            },
-            {
-                id: `actions-${item.id}`,
-                content: <NavLink
-                    to={`${pathOrderDetailsPageBase}/${item.id}`}
-                    className={classes.orderBtn}
-                >
-                    <FormattedMessage id={ 'orders.view.order.title' } />
-                </NavLink>
-            },
-        ],
-    }));
+    const bodyRows: ITableRow[] = orders.map((item: IOrderItem) => {
+        const date = (item.dateCreated).split(' ')[0];
+
+        return {
+            id: `${rowPart}${item.id}`,
+            cells: [
+                {id: `id-${item.id}`, content: `#${item.id}`},
+                {id: `date-${item.id}`, content: formatDateToString(new Date(date))},
+                {
+                    id: `price-${item.id}`,
+                    content: <AppPrice
+                        value={item.totals.grandTotal}
+                        specificCurrency={item.currency}
+                        extraClassName={classes.price}
+                        isStylesInherited={true}
+                    />
+                },
+                {
+                    id: `actions-${item.id}`,
+                    content: <NavLink
+                        to={`${pathOrderDetailsPageBase}/${item.id}`}
+                        className={classes.orderBtn}
+                    >
+                        <FormattedMessage id={ 'orders.view.order.title' } />
+                    </NavLink>
+                },
+            ],
+        };
+    });
 
     return (
         <div className={classes.root}>

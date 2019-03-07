@@ -10,6 +10,7 @@ import { styles } from './styles';
 
 export const OrderDetailsGeneralInfoBase: React.SFC<Props> = (props): JSX.Element => {
     const {classes, orderId, date, priceMode, timeZone} = props;
+    const formattedDate = (date).split(' ')[0];
 
     return (
         <Grid container justify="space-between" className={classes.titleContainer}>
@@ -22,7 +23,7 @@ export const OrderDetailsGeneralInfoBase: React.SFC<Props> = (props): JSX.Elemen
                     intro={
                         <>
                             <DateFormatter
-                                date={date}
+                                date={formattedDate}
                                 timeZone={timeZone}
                                 title={<FormattedMessage id={'order.detail.date.title'} />}
                             />
