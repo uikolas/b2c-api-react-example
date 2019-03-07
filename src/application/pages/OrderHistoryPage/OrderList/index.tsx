@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import withStyles from '@material-ui/core/styles/withStyles';
-import { formatDateToString } from '@helpers/common/dates';
+import { formatDateToString, formattedDate } from '@helpers/common/dates';
 import { appFixedDimensions } from '@theme/properties/new/appFixedDimensions';
 import { pathOrderDetailsPageBase } from '@constants/routes';
 import { AppPrice } from '@application/components/AppPrice';
@@ -26,7 +26,7 @@ export const OrderListBase: React.SFC<Props> = (props): JSX.Element => {
     ];
 
     const bodyRows: ITableRow[] = orders.map((item: IOrderItem) => {
-        const date = (item.dateCreated).split(' ')[0];
+        const date = formattedDate(item.dateCreated);
 
         return {
             id: `${rowPart}${item.id}`,
