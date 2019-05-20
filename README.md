@@ -5,7 +5,7 @@
 `npm run serve:local`
 
 
-
+[About this example](https://documentation.spryker.com/glue_rest_api/b2c_api_react_example/b2c-api-react-example.htm])
 
 B2C API React Example
 ===========
