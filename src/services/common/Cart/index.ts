@@ -46,7 +46,7 @@ export class CartService extends ApiServiceAbstract {
             const response: IApiResponseData = await api.get(endpoint, { withCredentials: true });
 
             if (response.ok) {
-                if (!response.data.data[0].id) {
+                if (!response.data.data[0]) {
                     return '';
                 }
 

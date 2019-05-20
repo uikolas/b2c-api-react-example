@@ -5,6 +5,7 @@ import { TRouterMatchParam } from '@helpers/router/types';
 export interface IResetPasswordPageProps extends WithStyles<typeof styles> {
     dispatch?: Function;
     restoreKey?: TRouterMatchParam;
+    resetPasswordAction: Function;
 }
 
 export interface IResetPasswordPageState {

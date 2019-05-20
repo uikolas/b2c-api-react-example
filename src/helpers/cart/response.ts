@@ -46,6 +46,8 @@ const parseUserCartResponse = (response: IUserCartRawResponse): ICartDataRespons
     const result: ICartResultData = {};
     let totalQty: number = 0;
 
+    console.log('parseUserCartResponse: ', data)
+
     // Fill data with concrete products ids
     if (data.relationships && data.relationships.items) {
         data.relationships.items.data.forEach((datum: ICartItemDataShort) => {
@@ -56,7 +58,11 @@ const parseUserCartResponse = (response: IUserCartRawResponse): ICartDataRespons
     included && included.forEach((row: TRowCustomerCartIncludedResponse) => {
         if (row.type === 'concrete-product-image-sets' && !result[row.id].image) {
             const images = parseImageSets(row.attributes.imageSets);
-            result[row.id].image = images[0].externalUrlSmall ? images[0].externalUrlSmall : null;
+            if (images !== null && images.length > 0) {
+                result[row.id].image = images[0].externalUrlSmall ? images[0].externalUrlSmall : null;
+            } else {
+                result[row.id].image = null;
+            }
         } else {
             if (row.type === 'items' && !result[row.id].sku) {
                 result[row.id].sku = row.id;

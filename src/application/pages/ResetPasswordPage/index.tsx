@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { resetPasswordAction } from '@stores/actions/pages/login';
+import { connect } from './connect';
 import {
     withStyles,
     Grid,
@@ -18,6 +19,7 @@ import { IResetPasswordPayload } from '@interfaces/customer';
 import { FormattedMessage } from 'react-intl';
 import { styles } from './styles';
 
+@connect
 export class ResetPasswordPageBase extends React.Component<Props, State> {
     public readonly state: State = {
         password: '',
@@ -45,7 +47,10 @@ export class ResetPasswordPageBase extends React.Component<Props, State> {
             confirmPassword: this.state.confirmPassword
         };
 
-        this.props.dispatch(resetPasswordAction(payload));
+        console.log('IResetPasswordPayload: ', payload)
+
+        //this.props.dispatch(resetPasswordAction(payload));
+        this.props.resetPasswordAction(payload);
     };
 
     public render(): JSX.Element {
