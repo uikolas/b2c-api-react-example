@@ -1,3 +1,12 @@
+## Run in separated console windows:
+
+`npm start`
+
+`npm run serve:local`
+
+
+
+
 B2C API React Example
 ===========
 ## React single page application with devserver, typescript, redux for Spryker Glue API.
