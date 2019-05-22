@@ -5,6 +5,11 @@
 `npm run serve:local`
 
 
+Create `config_local.php` file inside config folder and paste this:
+```
+$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = 'http://' . getenv('GLUE_MDE_DOMAIN') . ':3000';
+```
+
 [About this example](https://documentation.spryker.com/glue_rest_api/b2c_api_react_example/b2c-api-react-example.htm])
 
 B2C API React Example
